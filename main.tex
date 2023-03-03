@@ -95,18 +95,30 @@
 
 \frontmatter
 
-\include{sections/frontmatter/titlepage}
+\include{sections/front/titlepage}
 \restoregeometry%
 
-\include{sections/frontmatter/abstract}
-\include{sections/frontmatter/acknowledgements}
+\include{sections/front/abstract}
+\include{sections/front/acknowledgements}
 
 \setcounter{tocdepth}{2}
 \tableofcontents
 
 \mainmatter%
 
-\include{sections/mainmatter/chapter}
+\part{Digital circuits}
+
+\include{sections/background/categories}
+\include{sections/circuits/semantics}
+\include{sections/circuits/synthesis}
+\include{sections/circuits/equational}
+
+\part{Graph rewriting}
+
+\include{sections/graphs/hypergraphs}
+\include{sections/graphs/interpretation}
+\include{sections/graphs/rewriting}
+
 \include{sections/mainmatter/conclusion}
 
 \backmatter%
