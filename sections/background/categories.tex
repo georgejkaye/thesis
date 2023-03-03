@@ -1,1 +1,60 @@
 \chapter{Monoidal categories and theories}
+
+\section{Category}
+
+\begin{definition}[Category]
+    A \emph{category} \(\mcc\) is a tuple \((\ob(\mcc), \mcc(-,=), - \circ -)\)
+    where
+    \begin{itemize}
+        \item \(\ob(\mcc)\) is a class of \emph{objects};
+        \item \(\mcc(X, Y)\) is a class of \emph{morphisms} for any two objects
+                        \(X, Y \in \ob(\mcc)\); and
+        \item \(
+                    \morph{- \circ -}{\mcc(Y, Z) \times \mcc(X, Y)}{\mcc(X, Z)}
+                \) is a \emph{composition} operation for any three objects \(
+                    X, Y, Z \in \ob(\mcc)
+                \)
+    \end{itemize}
+    such that composition is \emph{unital} and \emph{associative}:
+    \begin{itemize}
+        \item for every object \(X \in \ob(\mcc)\) there exists an
+                \emph{identity} morphism \(\id[X] \in \mcc(X, X)\) which
+                satisfies \[
+                    f \circ \id[X] = f = \id[Y] \circ f
+                \] for any \(f~\in~\mcc(X, Y)\); and
+        \item for any morphisms \(
+                    f \in \mcc(X, Y)
+                \), \(
+                    g \in \mcc(Y, Z)
+                \) and \(h \in \mcc(Z, W)\), \[
+                    (h \circ g) \circ f = h \circ (g \circ f).
+                \]
+    \end{itemize}
+\end{definition}
+
+We normally write a morphism \(f \in \mcc(X, Y)\) as \(\morph{f}{X}{Y}\).
+We also often work with so-called \emph{diagrammatic-order} composition \[
+    \morph{- \seq -}{\mcc(X, Y) \times \mcc(Y, Z)}{\mcc(X, Z)}
+\] which is defined as \(f \seq g := g \circ f\).
+
+\begin{definition}[Functor]
+    Given two categories \(\mcc\) and \(\mcd\), a \emph{functor} \(
+        \morph{F}{\mcc}{\mcd}
+    \) maps objects and morphisms in \(\mcc\) to objects and morphisms in
+    \(\mcd\) such that
+    \begin{itemize}
+        \item \(F(\id[X]) = \id[FX]\) for every \(X \in \ob(\mcc)\); and
+        \item \(F(g \circ f) = F(g) \circ F(f)\) for every \(\morph{f}{X}{Y}\)
+        and \(\morph{g}{Y}{Z}\).
+    \end{itemize}
+\end{definition}
+
+
+
+\begin{definition}[Monoidal category]
+    A \emph{monoidal category} is a tuple \((\mcc, \tensor, I)\) where
+    \begin{itemize}
+        \item \(\mcc\) is a category;
+        \item \(\morph{- \tensor -}{\mcc \times \mcc}{\mcc}\) is a bifunctor.
+    \end{itemize}
+\end{definition}
