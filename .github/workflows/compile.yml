@@ -1,0 +1,54 @@
+name: Compile thesis
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  compile:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Enable nomencl
+        run: cat .latexmkrc >> $HOME/.latexmkrc
+      - name: Package the thesis file
+        uses: xu-cheng/texlive-action/full@v1
+        with:
+          run: python3 ./scripts/src/package.py . main ${{ github.event.repository.name }}
+      - name: Zip up the thesis package
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r ${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}
+      - name: Set release name
+        id: name
+        run: echo "name=$(date +'%Y-%m-%d-%H%M')" >> $GITHUB_OUTPUT
+      - name: Create a new release
+        uses: actions/create-release@v1
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_name: ${{ steps.name.outputs.name }}
+          tag_name: ${{ steps.name.outputs.name }}
+      - name: Upload paper to the release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: main.pdf
+          asset_name: main.pdf
+          asset_content_type: pdf
+      - name: Upload the zip to the release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.event.repository.name }}.zip
+          asset_name: ${{ github.event.repository.name }}-${{ steps.name.outputs.name }}.zip
+          asset_content_type: zip

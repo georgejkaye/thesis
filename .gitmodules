@@ -1,0 +1,12 @@
+[submodule "refs"]
+	path = refs
+	url = git@github.com:georgejkaye/refs
+[submodule "figures"]
+	path = figures
+	url = git@github.com:georgejkaye/figures
+[submodule "macros"]
+	path = macros
+	url = git@github.com:georgejkaye/macros
+[submodule "scripts"]
+	path = scripts
+	url = git@github.com:georgejkaye/latex-scripts
