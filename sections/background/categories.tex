@@ -192,6 +192,33 @@ a special kind of functor.
     \end{center}
 \end{definition}
 
+We adopt the convention that \(f \tensor g \seq h \tensor k\) should be
+bracketed as \((f \tensor g) \seq (h \tensor k)\), i.e.\ \(\tensor\) binds
+more strongly than \(\seq\).
+However, later in this chapter we will provide an alternative notation for terms
+in monoidal categories which will make this distinction redundant.
+
 \section{Symmetric monoidal categories}
 
+
+\begin{definition}[Symmetric monoidal category]
+    A \emph{symmetric monoidal category} (SMC) is a monoidal category \(\mcc\)
+    equipped with natural isomorphisms \(
+        \swap{A}{B} \colon A \tensor B \cong B \tensor A
+    \) such that the following diagrams commute:
+    \begin{center}
+        \includestandalone{figures/category/coherences/symmetry-unit}
+        \includestandalone{figures/category/coherences/symmetry-inverse}
+
+        \includestandalone{figures/category/coherences/hexagon}
+    \end{center}
+\end{definition}
+
+
+\section{String diagrams}
+
+One could describe morp
+
 \section{Symmetric traced monoidal categories}
+
+\section{Symmetric monoidal theories}
