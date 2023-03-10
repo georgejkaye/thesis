@@ -6,59 +6,59 @@ We begin by recalling some basic notions from category theory.
 
 \begin{definition}[Category]
     A \emph{category} \(\mcc\) consists of a class of \emph{objects}
-    \(\ob{\mcc}\); a class of \emph{morphisms} \(\mor{\mcc}{X}{Y}\)
-    for every pair of objects \(X, Y \in \ob{\mcc}\); and a \emph{composition}
+    \(\ob{\mcc}\); a class of \emph{morphisms} \(\mor{\mcc}{A}{B}\)
+    for every pair of objects \(A, B \in \ob{\mcc}\); and a \emph{composition}
     operation \(
         \morph{
             {-} \circ {=}
         }{
-            \mor{\mcc}{Y}{Z} \times \mor{\mcc}{X}{Y}
+            \mor{\mcc}{B}{C} \times \mor{\mcc}{A}{B}
         }{
-            \mor{\mcc}{X}{Z}
+            \mor{\mcc}{A}{C}
         }
     \) such that
     \begin{itemize}
         \item composition is \emph{unital}: for every \(
-                    X \in \ob{\mcc}
+                    A \in \ob{\mcc}
                 \) there exists an \emph{identity morphism} \(
-                    \id[X] \in \mor{\mcc}{X}{X}
+                    \id[A] \in \mor{\mcc}{A}{A}
                 \) satisfying \(
-                    f \circ \id[X] = f = \id[Y] \circ f
+                    f \circ \id[A] = f = \id[B] \circ f
                 \) for any \(
-                    f \in \mor{\mcc}{X}{Y}
+                    f \in \mor{\mcc}{A}{B}
                 \); and
         \item composition is \emph{associative}: for any morphisms \(
-                    f \in \mor{\mcc}{X}{Y}
+                    f \in \mor{\mcc}{A}{B}
                 \), \(
-                    g \in \mor{\mcc}{Y}{Z}
-                \) and \(h \in \mor{\mcc}{Z}{W}\), \(
+                    g \in \mor{\mcc}{B}{C}
+                \) and \(h \in \mor{\mcc}{C}{D}\), \(
                     (h \circ g) \circ f = h \circ (g \circ f).
                 \)
     \end{itemize}
 \end{definition}
 
-A morphism \(f \in \mor{\mcc}{X}{Y}\) is also called an \emph{arrow}, and will
-often be written \(\morph{f}{X}{Y}\) accordingly.
+A morphism \(f \in \mor{\mcc}{A}{B}\) is also called an \emph{arrow}, and will
+often be written \(\morph{f}{A}{B}\) accordingly.
 The subscripts on the object and morphism classes are also often omitted.
-
-Properties in category theory are often expressed using
-\emph{commuting diagrams} to aid clarity.
-For example, the two properties of composition can be expressed as follows:
+Equations in category theory can be expressed using \emph{commutative diagrams}.
+For example, the unitality and associativity of composition can be illustrated
+as follows:
 
 \begin{center}
-    Commuting diagrams
+    \includestandalone{figures/category/coherences/unitality}
+    \quad
+    \includestandalone{figures/category/coherences/associativity}
 \end{center}
 
+We say that the above two diagrams \emph{commute} precisely because \(
+    \id[B] \circ f = f \circ \id[A]
+\): the results of following two paths that diverge then intersect are equal.
+When expressing conditions using commutative diagrams, it becomes natural to
+also consider an alternative notation for composition.
+
 \begin{notation}
-    We also often work with so-called \emph{diagrammatic-order} composition \(
-        \morph{
-            {-} \seq {=}
-        }{
-            \mor{\mcc}{X}{Y} \times \mor{\mcc}{Y}{Z}
-        }{
-            \mor{\mcc}{X}{Z}
-        }
-    \) which is defined as \(f \seq g := g \circ f\).
+    \emph{Diagrammatic-order} composition is defined as
+    \(f \seq g := g \circ f\).
 \end{notation}
 
 We are particularly interested in using categories to model \emph{processes},
@@ -67,6 +67,17 @@ in which the morphisms are used to transform source objects into target objects.
 \begin{example}
     We define a category of...
 \end{example}
+
+There is a particularly important class of morphisms which have a notion of
+\emph{invertability}.
+
+\begin{definition}[Isomorphism]
+    A morphism \(\morph{f}{A}{B} \in \mcc\) is called an \emph{isomorphism} if
+    there also exists morphism \(\morph{\inverse{f}}{B}{A} \in \mcc\) such
+    that \(\inverse{f} \circ f = \id[A]\) and \(f \circ \inverse{f} = \id[B]\).
+\end{definition}
+
+\section{Functors}
 
 It is rare that one only ever works with a single category at a time.
 Consequently we require a way to map between them.
@@ -77,42 +88,64 @@ Consequently we require a way to map between them.
     \) maps objects and morphisms in \(\mcc\) to objects and morphisms in
     \(\mcd\) such that
     \begin{itemize}
-        \item \(F(\id[X]) = \id[FX]\) for every \(X \in \ob{\mcc})\); and
-        \item \(F(g \circ f) = F(g) \circ F(f)\) for every \(\morph{f}{X}{Y}\)
-        and \(\morph{g}{Y}{Z}\).
+        \item \(F(\id[A]) = \id[FA]\) for every \(A \in \ob{\mcc})\); and
+        \item \(F(g \circ f) = F(g) \circ F(f)\) for every \(\morph{f}{A}{B}\)
+        and \(\morph{g}{B}{C}\).
     \end{itemize}
 \end{definition}
 
+One may even wish to compare functors themselves.
+
 \begin{definition}[Natural transformation]
     Given two functors \(\morph{F, G}{\mcc}{\mcd}\), a
-    \emph{natural transformation} \(\eta\) is a family of morphisms \(
-        \eta_X \in \mor{\mcd}{FX}{GX}
-    \) for each \(X \in \ob{\mcc}\) such that \(
-        \eta_Y \circ Ff = Gf \circ \eta_X
-    \).
+    \emph{natural transformation} \(\morph{\eta}{F}{G}\) is a family of
+    morphisms \(
+        \eta_A \in \mor{\mcd}{FA}{GA}
+    \) called \emph{components} for each \(A \in \ob{\mcc}\) such that \(
+        \eta_B \circ Ff = Gf \circ \eta_A
+    \), i.e.\ the following diagram commutes:
+    \begin{center}
+        \includestandalone{figures/category/coherences/natural}
+    \end{center}
+    A natural transformation is called a \emph{natural isomorphism} if
+    every component is an isomorphism.
 \end{definition}
+
+\begin{remark}
+    There exists a category \(\cat\) in which `small' categories are the objects
+    and functors are the morphisms.
+    As natural transformations are morphisms between functors, in \(\cat\) they
+    are morphisms between morphisms!
+    A category with this structure is known as a \(2\)-category in higher
+    category lingo, but will keep our feet firmly in the realm of
+    \(1\)-categories in this thesis.
+\end{remark}
 
 \section{Monoidal categories}
 
 As we have seen, categories allow us to string together multiple processes to
 create a composite process.
 However, these processes are not particularly interesting: processes cannot have
-more than one input or output, and there is no notion of parellism.
+more than one input or output, and there is no notion of parallelism.
 These issues can be allayed by adding structure to elevate a category into a
-\emph{monoidal} category.
+\emph{monoidal} category, which has a notion of \emph{parallel} composition in
+addition to the already defined \emph{sequential} composition.
+
+The parallel composition structure can be added to a regular category by using
+a special kind of functor.
 
 \begin{definition}[Product category]
     Given two categories \(\mcc\) and \(\mcd\), their \emph{product category}
-    \(\mcc \times \mcd\) is the category in which \(
+    \(\mcc \times \mcd\) is the category in which the objects are defined as \(
         \ob{(\mcc \times \mcd)} := \ob{\mcc} \times \ob{\mcd}
-    \) and \[
-        \mor{(\mcc \times \mcd)}{(X, X^\prime)}{(Y, Y^\prime)}
+    \) and the morphisms as \[
+        \mor{(\mcc \times \mcd)}{(A, A^\prime)}{(A, A^\prime)}
         :=
         \{
             (f, f^\prime)
             \,|\,
-            f \in \mor{\mcc}{X}{Y},
-            f^\prime \in \mor{\mcd}{X^\prime}{Y^\prime}
+            f \in \mor{\mcc}{A}{B},
+            f^\prime \in \mor{\mcd}{A^\prime}{B^\prime}
         \}
     \]
 \end{definition}
@@ -122,14 +155,41 @@ These issues can be allayed by adding structure to elevate a category into a
     a functor of the form \(\mcc \times \mcd \to \mce\).
 \end{definition}
 
-
 \begin{definition}[Monoidal category]
-    A \emph{monoidal category} is a tuple \((\mcc, \tensor, I)\) where
+    A \emph{monoidal category} is a category \(\mcc\) equipped with a
+    bifunctor \(\morph{{-} \tensor {=}}{\mcc \times \mcc}{\mcc}\) called the
+    \emph{tensor product} and an additional object \(I\) called the
+    \emph{monoidal unit},
+    along with natural isomorphisms
     \begin{itemize}
-        \item \(\mcc\) is a category;
-        \item \(\morph{- \tensor -}{\mcc \times \mcc}{\mcc}\) is a bifunctor.
-        \item \(I \in \ob{\mcc}\) is a
+        \item \(
+            \associator{A}{B}{C}
+            \colon
+            A \tensor (B \tensor C)
+            \cong
+            (A \tensor B) \tensor C
+            \) called the \emph{associator};
+        \item \(
+            \leftunitor{A}
+            \colon
+            I \tensor A
+            \cong
+            A
+            \) called the \emph{left unitor}; and
+        \item \(
+            \rightunitor{A}
+            \colon
+            A \tensor I
+            \cong
+            A
+            \) called the \emph{right unitor}
     \end{itemize}
+    such that the \emph{pentagon} and the \emph{triangle} diagrams below
+    commute:
+    \begin{center}
+        \includestandalone{figures/category/coherences/pentagon}
+        \includestandalone{figures/category/coherences/triangle}
+    \end{center}
 \end{definition}
 
 \section{Symmetric monoidal categories}
