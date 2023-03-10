@@ -41,7 +41,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: main.pdf
-          asset_name: main.pdf
+          asset_name: main-${{ steps.name.outputs.name }}.pdf
           asset_content_type: pdf
       - name: Upload the zip to the release
         uses: actions/upload-release-asset@v1
@@ -52,3 +52,10 @@ jobs:
           asset_path: ${{ github.event.repository.name }}.zip
           asset_name: ${{ github.event.repository.name }}-${{ steps.name.outputs.name }}.zip
           asset_content_type: zip
+      - name: Delete older releases
+        uses: dev-drprasad/delete-older-releases@v0.2.0
+        with:
+          keep_latest: 1
+          delete_tags: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
