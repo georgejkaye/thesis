@@ -54,6 +54,7 @@
   \declaretheorem[sibling=theorem]{lemma,proposition,corollary}
   \declaretheorem[sibling=theorem,style=definition]{definition}
   \declaretheorem[sibling=theorem,style=definition]{example}
+  \declaretheorem[sibling=theorem,style=definition]{notation}
   \declaretheorem[sibling=theorem,style=remark]{remark}
   % Now we set the shading using the tcolorbox package.
   %
@@ -79,6 +80,7 @@
   \tcolorboxenvironment{proposition}{shadedenv={ShadeOfPurple}}
   \tcolorboxenvironment{corollary}  {shadedenv={ShadeOfPurple}}
   \tcolorboxenvironment{definition} {shadedenv={ShadeOfYellow}}
+  \tcolorboxenvironment{notation}   {shadedenv={ShadeOfYellow}}
   \tcolorboxenvironment{example}    {shadedenv={ShadeOfGreen}}
   \tcolorboxenvironment{remark}     {shadedenv={ShadeOfBrown}}
   \tcolorboxenvironment{proof}      {shadedenv={ShadeOfGray}}
@@ -122,7 +124,7 @@
 \include{sections/graphs/interpretation}
 \include{sections/graphs/rewriting}
 
-\include{sections/mainmatter/conclusion}
+\include{sections/conclusion}
 
 \backmatter%
 \printbibliography[heading=bibintoc]%
