@@ -2,40 +2,74 @@
 
 \section{Category}
 
+We begin by recalling some basic notions from category theory.
+
 \begin{definition}[Category]
-    A \emph{category} \(\mcc\) is a tuple \((\ob(\mcc), \mcc(-,=), - \circ -)\)
-    where
+    A \emph{category} \(\mcc\) consists of a class of \emph{objects}
+    \(\ob{\mcc}\); a class of \emph{morphisms} \(\mor{\mcc}{X}{Y}\)
+    for every pair of objects \(X, Y \in \ob{\mcc}\); and a \emph{composition}
+    operation \(
+        \morph{
+            {-} \circ {=}
+        }{
+            \mor{\mcc}{Y}{Z} \times \mor{\mcc}{X}{Y}
+        }{
+            \mor{\mcc}{X}{Z}
+        }
+    \) such that
     \begin{itemize}
-        \item \(\ob(\mcc)\) is a class of \emph{objects};
-        \item \(\mcc(X, Y)\) is a class of \emph{morphisms} for any two objects
-                        \(X, Y \in \ob(\mcc)\); and
-        \item \(
-                    \morph{- \circ -}{\mcc(Y, Z) \times \mcc(X, Y)}{\mcc(X, Z)}
-                \) is a \emph{composition} operation for any three objects \(
-                    X, Y, Z \in \ob(\mcc)
-                \)
-    \end{itemize}
-    such that composition is \emph{unital} and \emph{associative}:
-    \begin{itemize}
-        \item for every object \(X \in \ob(\mcc)\) there exists an
-                \emph{identity} morphism \(\id[X] \in \mcc(X, X)\) which
-                satisfies \[
+        \item composition is \emph{unital}: for every \(
+                    X \in \ob{\mcc}
+                \) there exists an \emph{identity morphism} \(
+                    \id[X] \in \mor{\mcc}{X}{X}
+                \) satisfying \(
                     f \circ \id[X] = f = \id[Y] \circ f
-                \] for any \(f~\in~\mcc(X, Y)\); and
-        \item for any morphisms \(
-                    f \in \mcc(X, Y)
+                \) for any \(
+                    f \in \mor{\mcc}{X}{Y}
+                \); and
+        \item composition is \emph{associative}: for any morphisms \(
+                    f \in \mor{\mcc}{X}{Y}
                 \), \(
-                    g \in \mcc(Y, Z)
-                \) and \(h \in \mcc(Z, W)\), \[
+                    g \in \mor{\mcc}{Y}{Z}
+                \) and \(h \in \mor{\mcc}{Z}{W}\), \(
                     (h \circ g) \circ f = h \circ (g \circ f).
-                \]
+                \)
     \end{itemize}
 \end{definition}
 
-We normally write a morphism \(f \in \mcc(X, Y)\) as \(\morph{f}{X}{Y}\).
-We also often work with so-called \emph{diagrammatic-order} composition \[
-    \morph{- \seq -}{\mcc(X, Y) \times \mcc(Y, Z)}{\mcc(X, Z)}
-\] which is defined as \(f \seq g := g \circ f\).
+A morphism \(f \in \mor{\mcc}{X}{Y}\) is also called an \emph{arrow}, and will
+often be written \(\morph{f}{X}{Y}\) accordingly.
+The subscripts on the object and morphism classes are also often omitted.
+
+Properties in category theory are often expressed using
+\emph{commuting diagrams} to aid clarity.
+For example, the two properties of composition can be expressed as follows:
+
+\begin{center}
+    Commuting diagrams
+\end{center}
+
+\begin{notation}
+    We also often work with so-called \emph{diagrammatic-order} composition \(
+        \morph{
+            {-} \seq {=}
+        }{
+            \mor{\mcc}{X}{Y} \times \mor{\mcc}{Y}{Z}
+        }{
+            \mor{\mcc}{X}{Z}
+        }
+    \) which is defined as \(f \seq g := g \circ f\).
+\end{notation}
+
+We are particularly interested in using categories to model \emph{processes},
+in which the morphisms are used to transform source objects into target objects.
+
+\begin{example}
+    We define a category of...
+\end{example}
+
+It is rare that one only ever works with a single category at a time.
+Consequently we require a way to map between them.
 
 \begin{definition}[Functor]
     Given two categories \(\mcc\) and \(\mcd\), a \emph{functor} \(
@@ -43,12 +77,50 @@ We also often work with so-called \emph{diagrammatic-order} composition \[
     \) maps objects and morphisms in \(\mcc\) to objects and morphisms in
     \(\mcd\) such that
     \begin{itemize}
-        \item \(F(\id[X]) = \id[FX]\) for every \(X \in \ob(\mcc)\); and
+        \item \(F(\id[X]) = \id[FX]\) for every \(X \in \ob{\mcc})\); and
         \item \(F(g \circ f) = F(g) \circ F(f)\) for every \(\morph{f}{X}{Y}\)
         and \(\morph{g}{Y}{Z}\).
     \end{itemize}
 \end{definition}
 
+\begin{definition}[Natural transformation]
+    Given two functors \(\morph{F, G}{\mcc}{\mcd}\), a
+    \emph{natural transformation} \(\eta\) is a family of morphisms \(
+        \eta_X \in \mor{\mcd}{FX}{GX}
+    \) for each \(X \in \ob{\mcc}\) such that \(
+        \eta_Y \circ Ff = Gf \circ \eta_X
+    \).
+\end{definition}
+
+\section{Monoidal categories}
+
+As we have seen, categories allow us to string together multiple processes to
+create a composite process.
+However, these processes are not particularly interesting: processes cannot have
+more than one input or output, and there is no notion of parellism.
+These issues can be allayed by adding structure to elevate a category into a
+\emph{monoidal} category.
+
+\begin{definition}[Product category]
+    Given two categories \(\mcc\) and \(\mcd\), their \emph{product category}
+    \(\mcc \times \mcd\) is the category in which \(
+        \ob{(\mcc \times \mcd)} := \ob{\mcc} \times \ob{\mcd}
+    \) and \[
+        \mor{(\mcc \times \mcd)}{(X, X^\prime)}{(Y, Y^\prime)}
+        :=
+        \{
+            (f, f^\prime)
+            \,|\,
+            f \in \mor{\mcc}{X}{Y},
+            f^\prime \in \mor{\mcd}{X^\prime}{Y^\prime}
+        \}
+    \]
+\end{definition}
+
+\begin{definition}[Bifunctor]
+    A \emph{bifunctor} is a functor with a product category as its domain, i.e.\
+    a functor of the form \(\mcc \times \mcd \to \mce\).
+\end{definition}
 
 
 \begin{definition}[Monoidal category]
@@ -56,5 +128,10 @@ We also often work with so-called \emph{diagrammatic-order} composition \[
     \begin{itemize}
         \item \(\mcc\) is a category;
         \item \(\morph{- \tensor -}{\mcc \times \mcc}{\mcc}\) is a bifunctor.
+        \item \(I \in \ob{\mcc}\) is a
     \end{itemize}
 \end{definition}
+
+\section{Symmetric monoidal categories}
+
+\section{Symmetric traced monoidal categories}
