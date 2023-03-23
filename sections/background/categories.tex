@@ -218,29 +218,77 @@ in monoidal categories which will make this distinction redundant.
 
 \section{Symmetric monoidal theories}
 
-\begin{definition}[PROP~\cite{maclane1965categorical}]
-    A \emph{PROP} (category of \emph{PRO}ducts and \emph{P}ermutations) is a
-    symmetric monoidal category with objects the
-\end{definition}
+Modellin
 
-\begin{definition}[Freely generated monoidal category]
+\begin{definition}[Term]
+    \label{def:terms}
     Let \(\generators\) be a set of \emph{generators} with functions \(
         \morph{\dom,\cod}{\generators}{\nat}
     \) representing their \emph{arities} and \emph{coarities}.
+    Then the set of \(\generators\)-\emph{terms} is generated as follows:
+    \begin{center}
+        \begin{prooftree}
+            \AxiomC{\(\phi \in \generators\)}
+            \UnaryInfC{\(\morph{\phi}{\dom[\phi]}{\cod[\phi]}\)}
+        \end{prooftree}
+        \begin{prooftree}
+            \AxiomC{}
+            \UnaryInfC{\(\morph{\id[n]}{n}{n}\)}
+        \end{prooftree}
+        \begin{prooftree}
+            \AxiomC{}
+            \UnaryInfC{\(\morph{\swap{m}{n}}{m+n}{n+m}\)}
+        \end{prooftree}
+
+        \begin{prooftree}
+            \AxiomC{\(\morph{f}{m}{n}\)}
+            \AxiomC{\(\morph{g}{n}{p}\)}
+            \BinaryInfC{\(\morph{f \seq g}{m}{p}\)}
+        \end{prooftree}
+        \begin{prooftree}
+            \AxiomC{\(\morph{f}{m}{n}\)}
+            \AxiomC{\(\morph{g}{p}{q}\)}
+            \BinaryInfC{\(\morph{f \tensor g}{m+p}{n+q}\)}
+        \end{prooftree}
+    \end{center}
+    \begin{itemize}
+        \item each \(\morph{\phi}{\dom[\phi]}{\cod[\phi]} \in \generators\) is
+                a \(\generators\)-term;
+        \item \(\morph{\id[n]}{n}{n}\) is a \(\generators\)-term;
+        \item \(\morph{\swap{m}{n}}{m+n}{m+n}\) is a \(\generators\)-term;
+        \item if \(\morph{f}{m}{n}\) and \(\morph{g}{n}{p}\) are
+                \(\generators\)-terms, then \(\morph{f \seq g}{m}{p}\) is a
+                \(\generators\)-term; and
+        \item if \(\morph{f}{m}{n}\) and \(\morph{g}{p}{q}\) are
+                \(\generators\)-terms, then \(\morph{f \tensor g}{m+p}{n+q}\) is
+                a \(\generators\)-term.
+    \end{itemize}
+\end{definition}
+
+\(\Sigma\)-terms may be abbreviated to simply `terms' when the signature is
+clear from context.
+
+
+\begin{definition}[PROP~\cite{maclane1965categorical}]
+    A \emph{PROP} (category of \emph{PRO}ducts and \emph{P}ermutations) is a
+    symmetric monoidal category with the natural numbers as objects and addition
+    as tensor product.
+\end{definition}
+
+\begin{definition}[Freely generated PROP]
+    For a set of generators \(\generators\), let \(\smc{\generators}\) be the
+    PROP with the \(\Sigma\)-terms as the morphisms.
 \end{definition}
 
 Symmetric monoidal categories
 
 \begin{definition}[Monoidal theory]
-    Let \(\smc{\generators}\) be teh
-
-
     A single-sorted symmetric monoidal theory (SMT) is a tuple \(
-        (\generators, \dom, \cod, \equations)
-    \) where \(\generators\) is a set of \emph{generators}, \(\dom\) is an
-    \emph{arity} \(\morph{\dom}{\generators}{\nat}\), \(\cod\) is an
-    \emph{coarity} \(\morph{\cod}{\generators}{\nat}\), and \(\equations\) is a
-    set of \emph{equations}
+        (\generators, \equations)
+    \) where \(\generators\) is a set of generators with arities and coarities
+    as in \cref{def:terms} and \(\equations\) is a set of \emph{equations}:
+    pairs \(\langle l, r\rangle\) where \(\morph{l, r}{m}{n}\) are
+    \(\generators\)-terms with the same arity and coarity.
 \end{definition}
 
 \section{String diagrams}
