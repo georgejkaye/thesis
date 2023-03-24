@@ -94,6 +94,10 @@ backrefstyle=two]%
 \usepackage{stmaryrd}
 
 \usepackage{bussproofs}
+% allow for multiple proof trees on one line
+\newenvironment{bprooftree}
+  {\leavevmode\hbox\bgroup}
+  {\DisplayProof\egroup}
 
 % tocbibind allows us to have the toc in the toc
 \usepackage[notbib,notindex]{tocbibind}

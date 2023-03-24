@@ -146,6 +146,10 @@ One may even wish to compare functors themselves.
     every component is an isomorphism.
 \end{definition}
 
+The key point to take here is that for functors \(\morph{F,G}{\mcc}{\mcd}\), a
+natural transformation \(\morph{\eta}{F}{G}\) is a \emph{family of morphisms}
+\(\morph{\eta_A}{FA}{GA} \in \mcd\) for each object \(A \in \mcd\).
+
 \begin{remark}
     There exists a category \(\cat\) in which `small' categories are the objects
     and functors are the morphisms.
@@ -158,14 +162,17 @@ One may even wish to compare functors themselves.
 
 \section{Monoidal categories}
 
-As we have seen, categories allow us to string together multiple processes to
-create a composite process.
-However, these processes are not particularly interesting: processes cannot have
-more than one input or output, and there is no notion of parallelism.
+Our interest in categories stems from modelling compositional \emph{processes}.
+Processes can be viewed as morphisms: a morphism \(\morph{f}{A}{B}\) is a
+process that transforms some input of type \(A\) into an output of type \(B\).
+Composition allows us to string together multiple processes \(f, g, h\) in
+sequence to create a composite process \(f \seq g \seq h\).
+
+However, these processes are not particularly interesting: the inputs and
+outputs can only be single types of and there is no notion of parallelism.
 These issues can be allayed by adding structure to elevate a category into a
 \emph{monoidal} category, which has a notion of \emph{parallel} composition in
 addition to the already defined \emph{sequential} composition.
-
 The parallel composition structure can be added to a regular category by using
 a special kind of functor.
 
@@ -223,6 +230,9 @@ a special kind of functor.
     commute:
     \begin{center}
         \includestandalone{figures/category/coherences/pentagon}
+
+        \vspace{1em}
+
         \includestandalone{figures/category/coherences/triangle}
     \end{center}
 \end{definition}
@@ -233,8 +243,31 @@ more strongly than \(\seq\).
 However, later in this chapter we will provide an alternative notation for terms
 in monoidal categories which will make this distinction redundant.
 
+\begin{example}
+    \(\set\) is a monoidal category, with the Cartesian product as the tensor
+    product, and the unit as the singleton set \(\{\bullet\}\).
+    The natural isomorphisms are just identities.
+\end{example}
+
+This situation where the natural isomorphisms are identities arises frequently,
+so it has its own name.
+
+\begin{definition}[Strict monoidal category]
+    A monoidal category is called \emph{strict} if the natural isomorphisms \(
+        \associator{A}{B}{C}
+    \), \(
+        \leftunitor{A}
+    \) and \(
+        \rightunitor{B}
+    \) are identities.
+\end{definition}
+
+We are generally only concerned with strict categories in this thesis.
+
 \section{Symmetric monoidal categories}
 
+We can now construct morphisms by composing them in sequence and in parallel.
+However, there is one more facet of processes
 
 \begin{definition}[Symmetric monoidal category]
     A \emph{symmetric monoidal category} (SMC) is a monoidal category \(\mcc\)
@@ -247,62 +280,21 @@ in monoidal categories which will make this distinction redundant.
 
         \vspace{1em}
 
-        \includestandalone{figures/category/coherences/hexagon}
+        \includestandalone[scale=0.95]{figures/category/coherences/hexagon}
     \end{center}
 \end{definition}
+
+\begin{example}
+    \(\set\) is a symmetric monoidal category, with \(
+        \morph{\swap{A}{B}}{A \times B}{B \times A}
+    \) defined as the function that swaps elements of a pair.
+\end{example}
 
 \section{Symmetric monoidal theories}
 
-Modellin
-
-\begin{definition}[Term]
-    \label{def:terms}
-    Let \(\generators\) be a set of \emph{generators} with functions \(
-        \morph{\dom,\cod}{\generators}{\nat}
-    \) representing their \emph{arities} and \emph{coarities}.
-    Then the set of \(\generators\)-\emph{terms} is generated as follows:
-    \begin{center}
-        \begin{prooftree}
-            \AxiomC{\(\phi \in \generators\)}
-            \UnaryInfC{\(\morph{\phi}{\dom[\phi]}{\cod[\phi]}\)}
-        \end{prooftree}
-        \begin{prooftree}
-            \AxiomC{}
-            \UnaryInfC{\(\morph{\id[n]}{n}{n}\)}
-        \end{prooftree}
-        \begin{prooftree}
-            \AxiomC{}
-            \UnaryInfC{\(\morph{\swap{m}{n}}{m+n}{n+m}\)}
-        \end{prooftree}
-
-        \begin{prooftree}
-            \AxiomC{\(\morph{f}{m}{n}\)}
-            \AxiomC{\(\morph{g}{n}{p}\)}
-            \BinaryInfC{\(\morph{f \seq g}{m}{p}\)}
-        \end{prooftree}
-        \begin{prooftree}
-            \AxiomC{\(\morph{f}{m}{n}\)}
-            \AxiomC{\(\morph{g}{p}{q}\)}
-            \BinaryInfC{\(\morph{f \tensor g}{m+p}{n+q}\)}
-        \end{prooftree}
-    \end{center}
-    \begin{itemize}
-        \item each \(\morph{\phi}{\dom[\phi]}{\cod[\phi]} \in \generators\) is
-                a \(\generators\)-term;
-        \item \(\morph{\id[n]}{n}{n}\) is a \(\generators\)-term;
-        \item \(\morph{\swap{m}{n}}{m+n}{m+n}\) is a \(\generators\)-term;
-        \item if \(\morph{f}{m}{n}\) and \(\morph{g}{n}{p}\) are
-                \(\generators\)-terms, then \(\morph{f \seq g}{m}{p}\) is a
-                \(\generators\)-term; and
-        \item if \(\morph{f}{m}{n}\) and \(\morph{g}{p}{q}\) are
-                \(\generators\)-terms, then \(\morph{f \tensor g}{m+p}{n+q}\) is
-                a \(\generators\)-term.
-    \end{itemize}
-\end{definition}
-
-\(\Sigma\)-terms may be abbreviated to simply `terms' when the signature is
-clear from context.
-
+The syntax of symmetric monoidal categories is a good fit for modelling
+compositional \emph{processes}.
+There is a particular subclass of SMCs in which this is especially natural.
 
 \begin{definition}[PROP~\cite{maclane1965categorical}]
     A \emph{PROP} (category of \emph{PRO}ducts and \emph{P}ermutations) is a
@@ -310,9 +302,54 @@ clear from context.
     as tensor product.
 \end{definition}
 
+\begin{definition}[Term]
+    \label{def:terms}
+    Let \(\generators\) be a set of \emph{generators} with functions \(
+        \morph{\dom,\cod}{\generators}{\nat}
+    \) for their \emph{arities} and \emph{coarities}.
+    Then the set \(\generators_\mathsf{t}\) of \(\generators\)-\emph{terms} is
+    generated as follows:
+    \begin{center}
+        \begin{bprooftree}
+            \AxiomC{\(\phi \in \generators\)}
+            \UnaryInfC{\(
+                \morph{\phi}{\dom[\phi]}{\cod[\phi]} \in \generators_\mathsf{t}
+            \)}
+        \end{bprooftree}
+        \begin{bprooftree}
+            \AxiomC{\phantom{\(\phi\)}}
+            \UnaryInfC{\(\morph{\id[n]}{n}{n} \in \generators_\mathsf{t}\)}
+        \end{bprooftree}
+        \begin{bprooftree}
+            \AxiomC{\phantom{\(\phi\)}}
+            \UnaryInfC{\(
+                \morph{\swap{m}{n}}{m+n}{n+m} \in \generators_\mathsf{t}
+            \)}
+        \end{bprooftree}
+
+        \vspace{1em}
+
+        \begin{bprooftree}
+            \AxiomC{\(\morph{f}{m}{n} \in \generators_\mathsf{t}\)}
+            \AxiomC{\(\morph{g}{n}{p} \in \generators_\mathsf{t}\)}
+            \BinaryInfC{\(\morph{f \seq g}{m}{p}  \in \generators_\mathsf{t}\)}
+        \end{bprooftree}
+        \begin{bprooftree}
+            \AxiomC{\(\morph{f}{m}{n} \in \generators_\mathsf{t}\)}
+            \AxiomC{\(\morph{g}{p}{q} \in \generators_\mathsf{t}\)}
+            \BinaryInfC{\(
+                \morph{f \tensor g}{m+p}{n+q} \in \generators_\mathsf{t}
+            \)}
+        \end{bprooftree}
+    \end{center}
+\end{definition}
+
+\(\Sigma\)-terms may be abbreviated to simply `terms' when the signature is
+clear from context.
+
 \begin{definition}[Freely generated PROP]
     For a set of generators \(\generators\), let \(\smc{\generators}\) be the
-    PROP with the \(\Sigma\)-terms as the morphisms.
+    PROP with the set of \(\Sigma\)-terms as the morphisms.
 \end{definition}
 
 Symmetric monoidal categories
