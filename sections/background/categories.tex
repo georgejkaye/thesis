@@ -52,7 +52,7 @@ as follows:
 
 We say that the above two diagrams \emph{commute} precisely because \(
     \id[B] \circ f = f \circ \id[A]
-\): the results of following two paths that diverge then intersect are equal.
+\): no matter which path one takes, the results are equal.
 When expressing conditions using commutative diagrams, it becomes natural to
 also consider an alternative notation for composition.
 
@@ -61,21 +61,56 @@ also consider an alternative notation for composition.
     \(f \seq g := g \circ f\).
 \end{notation}
 
-We are particularly interested in using categories to model \emph{processes},
-in which the morphisms are used to transform source objects into target objects.
-
-\begin{example}
-    We define a category of...
+\begin{example}[Preorder]
+    A \emph{preorder} is a binary relation \(\leq\) on a set \(X\) which is
+    reflexive and transitive.
+    Any preorder generates a category \(\mcc_\leq\): the objects are the
+    elements of \(X\) and \(\mcc_\leq(x, y)\) contains exactly one morphism if
+    \(x \leq y\) and none otherwise.
 \end{example}
 
-There is a particularly important class of morphisms which have a notion of
-\emph{invertability}.
+\begin{example}[Category of sets]
+    The category \(\set\) has sets as objects and functions as morphisms.
+    Composition is then just function composition.
+\end{example}
+
+Considering the category of sets is useful, as many concepts in category theory
+are generalisations of more familiar notions from set theory.
+Firstly, we consider the categorical view on \emph{injective} functions.
+
+\begin{definition}[Monomorphism]
+    A morphism \(\morph{f}{A}{B}\) is a called a \emph{monomorphism} (or simply
+    \emph{mono} for short) if for all morphisms \(\morph{g,h}{C}{A}\), \(
+        f \circ g = f \circ h \Rightarrow g = h
+    \).
+\end{definition}
+
+\begin{example}
+    A morphism in \(\set\) is mono if and only if it is an injection.
+\end{example}
+
+Morphisms can also be \emph{invertible}.
 
 \begin{definition}[Isomorphism]
-    A morphism \(\morph{f}{A}{B} \in \mcc\) is called an \emph{isomorphism} if
-    there also exists morphism \(\morph{\inverse{f}}{B}{A} \in \mcc\) such
-    that \(\inverse{f} \circ f = \id[A]\) and \(f \circ \inverse{f} = \id[B]\).
+    A morphism \(\morph{f}{A}{B} \in \mcc\) is called an \emph{isomorphism} (or
+    simply \emph{iso} for short) if there also exists a morphism \(
+        \morph{\inverse{f}}{B}{A} \in \mcc
+    \) such that \(
+        \inverse{f} \circ f = \id[A]
+    \) and \(
+        f \circ \inverse{f} = \id[B]
+    \).
 \end{definition}
+
+\begin{example}
+    A morphism in \(\set\) is an iso if and only if it is a bijection.
+\end{example}
+
+\begin{remark}
+    There is also a categorical parallel to the \emph{surjective} functions
+    known as an \emph{epimorphism} (or \emph{epi}), but we do not need to
+    consider these in our work.
+\end{remark}
 
 \section{Functors}
 
