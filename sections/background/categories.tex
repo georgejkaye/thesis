@@ -5,6 +5,7 @@
 We begin by recalling some basic notions from category theory.
 
 \begin{definition}[Category]
+    \label{def:category}
     A \emph{category} \(\mcc\) consists of a class of \emph{objects}
     \(\ob{\mcc}\); a class of \emph{morphisms} \(\mor{\mcc}{A}{B}\)
     for every pair of objects \(A, B \in \ob{\mcc}\); and a \emph{composition}
@@ -129,7 +130,8 @@ Consequently we require a way to map between them.
     \end{itemize}
 \end{definition}
 
-One may even wish to compare functors themselves.
+Functors map between two categories.
+It is natural to also consider maps between functors themselves.
 
 \begin{definition}[Natural transformation]
     Given two functors \(\morph{F, G}{\mcc}{\mcd}\), a
@@ -147,7 +149,7 @@ One may even wish to compare functors themselves.
 \end{definition}
 
 The key point to take here is that for functors \(\morph{F,G}{\mcc}{\mcd}\), a
-natural transformation \(\morph{\eta}{F}{G}\) is a \emph{family of morphisms}
+natural transformation \(\morph{\eta}{F}{G}\) is a \emph{family} of morphisms
 \(\morph{\eta_A}{FA}{GA} \in \mcd\) for each object \(A \in \mcd\).
 
 \begin{remark}
@@ -198,6 +200,7 @@ a special kind of functor.
 \end{definition}
 
 \begin{definition}[Monoidal category]
+    \label{def:monoidal-category}
     A \emph{monoidal category} is a category \(\mcc\) equipped with a
     bifunctor \(\morph{{-} \tensor {=}}{\mcc \times \mcc}{\mcc}\) called the
     \emph{tensor product} and an additional object \(I\) called the
@@ -244,9 +247,10 @@ However, later in this chapter we will provide an alternative notation for terms
 in monoidal categories which will make this distinction redundant.
 
 \begin{example}
-    \(\set\) is a monoidal category, with the Cartesian product as the tensor
-    product, and the unit as the singleton set \(\{\bullet\}\).
-    The natural isomorphisms are just identities.
+    \(\set\) is a monoidal category, with the tensor product defined as the
+    Cartesian product (\(A \tensor B := A \times B\)) and the unit as the
+    singleton set (\(I := \mathbbm{1}\)).
+    The natural isomorphisms are identities.
 \end{example}
 
 This situation where the natural isomorphisms are identities arises frequently,
@@ -267,9 +271,13 @@ We are generally only concerned with strict categories in this thesis.
 \section{Symmetric monoidal categories}
 
 We can now construct morphisms by composing them in sequence and in parallel.
-However, there is one more facet of processes
+However, there is one more facet of processes that needs modelling.
+Imagine we have a process with output \(A \tensor B\) and another with inputs
+\(B \tensor A\): it is often desirable to connect these together by swapping
+over the outputs of the former.
 
 \begin{definition}[Symmetric monoidal category]
+    \label{def:symmetric-monoidal-category}
     A \emph{symmetric monoidal category} (SMC) is a monoidal category \(\mcc\)
     equipped with natural isomorphisms \(
         \swap{A}{B} \colon A \tensor B \cong B \tensor A
@@ -292,15 +300,23 @@ However, there is one more facet of processes
 
 \section{Symmetric monoidal theories}
 
-The syntax of symmetric monoidal categories is a good fit for modelling
-compositional \emph{processes}.
+As we have mentioned previously, the syntax of symmetric monoidal categories is
+a good fit for modelling compositional processes.
+We will now formally describe how to specify such a category of processes.
 There is a particular subclass of SMCs in which this is especially natural.
 
 \begin{definition}[PROP~\cite{maclane1965categorical}]
     A \emph{PROP} (category of \emph{PRO}ducts and \emph{P}ermutations) is a
-    symmetric monoidal category with the natural numbers as objects and addition
-    as tensor product.
+    symmetric monoidal category with the objects as natural numbers as objects
+    and tensor product as addition.
 \end{definition}
+
+Note that this definition means that \(0\) is the unit object in any PROP.
+A morphism \(m \to n\) in a PROP can be thought of as a process with \(m\)
+inputs and \(n\) outputs.
+
+We will now construct a monoidal category of processes constructed from some
+primitive \emph{generators}.
 
 \begin{definition}[Term]
     \label{def:terms}
@@ -352,17 +368,69 @@ clear from context.
     PROP with the set of \(\Sigma\)-terms as the morphisms.
 \end{definition}
 
-Symmetric monoidal categories
+The symmetric monoidal structure means that \(\smc{\generators}\) is subject to
+numerous `structural' equations which show how the identity, symmetry,
+composition and tensor interact with each other and the generators in
+\(\generators\).
+These equations can be derived from the diagrams in
+\cref{def:category,def:monoidal-category,def:symmetric-monoidal-category}, and
+are explicitly listed in \cref{fig:prop-axioms}.
 
-\begin{definition}[Monoidal theory]
+\begin{figure}
+    \centering
+    \begin{gather*}
+        \id[m] \seq  f = f
+        \quad
+        f = f \seq \id[n]
+        \quad
+        (f \seq g) \seq h = f \seq (g \seq h)
+        \\[0.5em]
+        \id[0] \tensor f = f
+        \quad
+        f \tensor \id[0] = f
+        \quad
+        (f \tensor g) \tensor h = f \tensor (g \tensor h)
+        \\[0.5em]
+        \id[m] \tensor \id[n] = \id[m+n]
+        \quad
+        (f \tensor g) \seq (h \tensor k) = (f \seq h) \tensor (g \seq k)
+        \\[0.5em]
+        (f \tensor g) \seq \swap{n}{q} = \swap{m}{p} \seq (g \tensor f)
+        \quad
+        (\swap{m}{n} \tensor \id[p]) \seq (\id[n] \tensor \swap{m}{p}) = \swap{m}{n+p}
+        \\[0.5em]
+        \swap{0}{n} = \id[n]
+        \quad
+        \swap{m}{0} = \id[m]
+        \quad
+        \swap{m}{n} \seq \swap{n}{m} = \id[m+n]
+    \end{gather*}
+    \caption{Summary of `structural' axioms that hold in \(\smc{\generators}\).}
+    \label{fig:prop-axioms}
+\end{figure}
+
+However, these structural equations do not illustrate how the generators in
+\(\generators\) interact with each other, which is crucial for modelling and
+evaluating processes.
+These equations are provided by a \emph{monoidal theory}.
+
+\begin{definition}[Monoidal theory~\cite{bonchi2022string}]
     A single-sorted symmetric monoidal theory (SMT) is a tuple \(
         (\generators, \equations)
-    \) where \(\generators\) is a set of generators with arities and coarities
-    as in \cref{def:terms} and \(\equations\) is a set of \emph{equations}:
-    pairs \(\langle l, r\rangle\) where \(\morph{l, r}{m}{n}\) are
-    \(\generators\)-terms with the same arity and coarity.
+    \) where \(\generators\) is a set of generators as in \cref{def:terms} and
+    \(\equations\) is a set of \emph{equations}: pairs \(\langle l, r\rangle\)
+    where \(\morph{l, r}{m}{n}\) are \(\generators\)-terms with the same arity
+    and coarity.
 \end{definition}
 
 \section{String diagrams}
+
+One could reason exclusively with the one-dimensional terms detailed in the
+previous section, but this quickly becomes unwieldy.
+Although the structural axioms make sense, they are tedious to apply and
+obfuscate the interesting equations between generators.
+
+Fortunately there is an alternative: the graphical calculus of
+\emph{string diagrams}~\cite{joyal1991geometry}.
 
 \section{Symmetric traced monoidal categories}
