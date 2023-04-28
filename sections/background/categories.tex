@@ -1,8 +1,76 @@
 \chapter{Monoidal categories and theories}
 
+\section{Terms}
+
+Processes are modelled as \emph{terms}.
+
+Given a set \(X\), the set of lists of elements of \(X\) is denoted
+\(\freemon{X}\).
+
+\begin{definition}[Generators]
+    A set of \emph{generators} is a set \(\generators\) equipped with two functions
+    \(\morph{\dom,\cod}{\generators}{\freemon{\nat}}\).
+\end{definition}
+
+Generators are the primitive building blocks of terms: their domains and
+codomains specify the widths of their input and output wires respectively.
+Terms are defined by combining these primitive generators together
+
+\begin{definition}[Term]
+    \label{def:terms}
+    Let \(\generators\) be a set of generators.
+    A \(\generators\)-term is written \(\morph{f}{\overline{m}}{\overline{n}}\)
+    where \(\overline{m}, \overline{n} \in \freemon{\nat}\).
+    The set of \(\generators\)-terms is generated as follows:
+    \begin{center}
+        \begin{bprooftree}
+            \AxiomC{\(\phi \in \generators\)}
+            \UnaryInfC{\(
+                \morph{\phi}{\dom[\phi]}{\cod[\phi]} \in \generators_\mathsf{t}
+            \)}
+        \end{bprooftree}
+        \begin{bprooftree}
+            \AxiomC{\phantom{\(\phi\)}}
+            \UnaryInfC{\(\morph{\id[n]}{[n]}{[n]} \in \generators_\mathsf{t}\)}
+        \end{bprooftree}
+        \begin{bprooftree}
+            \AxiomC{\phantom{\(\phi\)}}
+            \UnaryInfC{\(
+                \morph{\swap{m}{n}}{[m,n]}{[n,m]} \in \generators_\mathsf{t}
+            \)}
+        \end{bprooftree}
+
+        \vspace{1em}
+
+        \begin{bprooftree}
+            \AxiomC{\(\morph{f}{\overline{m}}{\overline{n}} \in \generators_\mathsf{t}\)}
+            \AxiomC{\(\morph{g}{\overline{n}}{\overline{p}} \in \generators_\mathsf{t}\)}
+            \BinaryInfC{\(\morph{f \seq g}{\overline{m}}{\overline{p}} \in \generators_\mathsf{t}\)}
+        \end{bprooftree}
+        \begin{bprooftree}
+            \AxiomC{\(\morph{f}{\overline{m}}{\overline{n}} \in \generators_\mathsf{t}\)}
+            \AxiomC{\(\morph{g}{\overline{p}}{\overline{q}} \in \generators_\mathsf{t}\)}
+            \BinaryInfC{\(
+                \morph{f \tensor g}{\overline{m} \concat \overline{p}}{\overline{n} \concat \overline{q}} \in \generators_\mathsf{t}
+            \)}
+        \end{bprooftree}
+    \end{center}
+\end{definition}
+
+\(\Sigma\)-terms will be abbreviated to `terms' when the signature is clear from
+context.
+The first base case on the top row is to introduce a generator with appropriate
+input
+\emph{identity} (an empty wire with no generator), and a \emph{symmetry}
+(swapping over two wires).
+The two inductive cases on the bottom row are called \emph{composition} and
+\emph{tensor}.
+These can be thought of as sequential and parallel composition respectively.
+
 \section{Category}
 
-We begin by recalling some basic notions from category theory.
+So far, terms are purely syntax, and have no associated behaviour.
+ we introduce our first elements of category theory.
 
 \begin{definition}[Category]
     \label{def:category}
@@ -318,50 +386,6 @@ inputs and \(n\) outputs.
 We will now construct a monoidal category of processes constructed from some
 primitive \emph{generators}.
 
-\begin{definition}[Term]
-    \label{def:terms}
-    Let \(\generators\) be a set of \emph{generators} with functions \(
-        \morph{\dom,\cod}{\generators}{\nat}
-    \) for their \emph{arities} and \emph{coarities}.
-    Then the set \(\generators_\mathsf{t}\) of \(\generators\)-\emph{terms} is
-    generated as follows:
-    \begin{center}
-        \begin{bprooftree}
-            \AxiomC{\(\phi \in \generators\)}
-            \UnaryInfC{\(
-                \morph{\phi}{\dom[\phi]}{\cod[\phi]} \in \generators_\mathsf{t}
-            \)}
-        \end{bprooftree}
-        \begin{bprooftree}
-            \AxiomC{\phantom{\(\phi\)}}
-            \UnaryInfC{\(\morph{\id[n]}{n}{n} \in \generators_\mathsf{t}\)}
-        \end{bprooftree}
-        \begin{bprooftree}
-            \AxiomC{\phantom{\(\phi\)}}
-            \UnaryInfC{\(
-                \morph{\swap{m}{n}}{m+n}{n+m} \in \generators_\mathsf{t}
-            \)}
-        \end{bprooftree}
-
-        \vspace{1em}
-
-        \begin{bprooftree}
-            \AxiomC{\(\morph{f}{m}{n} \in \generators_\mathsf{t}\)}
-            \AxiomC{\(\morph{g}{n}{p} \in \generators_\mathsf{t}\)}
-            \BinaryInfC{\(\morph{f \seq g}{m}{p}  \in \generators_\mathsf{t}\)}
-        \end{bprooftree}
-        \begin{bprooftree}
-            \AxiomC{\(\morph{f}{m}{n} \in \generators_\mathsf{t}\)}
-            \AxiomC{\(\morph{g}{p}{q} \in \generators_\mathsf{t}\)}
-            \BinaryInfC{\(
-                \morph{f \tensor g}{m+p}{n+q} \in \generators_\mathsf{t}
-            \)}
-        \end{bprooftree}
-    \end{center}
-\end{definition}
-
-\(\Sigma\)-terms may be abbreviated to simply `terms' when the signature is
-clear from context.
 
 \begin{definition}[Freely generated PROP]
     For a set of generators \(\generators\), let \(\smc{\generators}\) be the
@@ -414,14 +438,7 @@ However, these structural equations do not illustrate how the generators in
 evaluating processes.
 These equations are provided by a \emph{monoidal theory}.
 
-\begin{definition}[Monoidal theory~\cite{bonchi2022string}]
-    A single-sorted symmetric monoidal theory (SMT) is a tuple \(
-        (\generators, \equations)
-    \) where \(\generators\) is a set of generators as in \cref{def:terms} and
-    \(\equations\) is a set of \emph{equations}: pairs \(\langle l, r\rangle\)
-    where \(\morph{l, r}{m}{n}\) are \(\generators\)-terms with the same arity
-    and coarity.
-\end{definition}
+
 
 \section{String diagrams}
 
