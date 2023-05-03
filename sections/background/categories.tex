@@ -3,76 +3,97 @@
 \section{Terms}
 
 Processes are modelled as \emph{terms}.
+Before terms, their components must be specified.
 
-Given a set \(X\), the set of lists of elements of \(X\) is denoted
-\(\freemon{X}\).
+\begin{notation}[Lists]
+    Given a set \(X\), the set of lists of elements of \(X\) is denoted
+    \(\freemon{X}\).
+    Arbitrary lists are written with an overline \(
+        \overline{x}, \overline{y}, \overline{z}... \in \freemon{X}
+    \); given two lists \(\overline{x}, \overline{y}\), their concatenation is
+    denoted \(\overline{x} \concat \overline{y}\).
+\end{notation}
 
 \begin{definition}[Generators]
-    A set of \emph{generators} is a set \(\generators\) equipped with two functions
-    \(\morph{\dom,\cod}{\generators}{\freemon{\nat}}\).
+    A set of \emph{generators} is a set \(\generators\) equipped with two
+    functions \(\morph{\dom,\cod}{\generators}{\freemon{\nat}}\).
 \end{definition}
 
 Generators are the primitive building blocks of terms: their domains and
 codomains specify the widths of their input and output wires respectively.
-Terms are defined by combining these primitive generators together
+Terms are then defined by combining these primitive generators together.
 
 \begin{definition}[Term]
     \label{def:terms}
     Let \(\generators\) be a set of generators.
     A \(\generators\)-term is written \(\morph{f}{\overline{m}}{\overline{n}}\)
     where \(\overline{m}, \overline{n} \in \freemon{\nat}\).
-    The set of \(\generators\)-terms is generated as follows:
+    The set of \(\generators\)-terms, denoted \(\sigmaterms\), is
+    generated as follows:
     \begin{center}
         \begin{bprooftree}
             \AxiomC{\(\phi \in \generators\)}
             \UnaryInfC{\(
-                \morph{\phi}{\dom[\phi]}{\cod[\phi]} \in \generators_\mathsf{t}
+                \morph{\phi}{\dom[\phi]}{\cod[\phi]} \in \sigmaterms
             \)}
         \end{bprooftree}
         \begin{bprooftree}
             \AxiomC{\phantom{\(\phi\)}}
-            \UnaryInfC{\(\morph{\id[n]}{[n]}{[n]} \in \generators_\mathsf{t}\)}
+            \UnaryInfC{\(\morph{\id[n]}{[n]}{[n]} \in \sigmaterms\)}
         \end{bprooftree}
         \begin{bprooftree}
             \AxiomC{\phantom{\(\phi\)}}
             \UnaryInfC{\(
-                \morph{\swap{m}{n}}{[m,n]}{[n,m]} \in \generators_\mathsf{t}
+                \morph{\swap{m}{n}}{[m,n]}{[n,m]} \in \sigmaterms
             \)}
         \end{bprooftree}
 
         \vspace{1em}
 
         \begin{bprooftree}
-            \AxiomC{\(\morph{f}{\overline{m}}{\overline{n}} \in \generators_\mathsf{t}\)}
-            \AxiomC{\(\morph{g}{\overline{n}}{\overline{p}} \in \generators_\mathsf{t}\)}
-            \BinaryInfC{\(\morph{f \seq g}{\overline{m}}{\overline{p}} \in \generators_\mathsf{t}\)}
+            \AxiomC{\(\morph{f}{\overline{m}}{\overline{n}} \in \sigmaterms\)}
+            \AxiomC{\(\morph{g}{\overline{n}}{\overline{p}} \in \sigmaterms\)}
+            \BinaryInfC{\(\morph{f \seq g}{\overline{m}}{\overline{p}} \in \sigmaterms\)}
         \end{bprooftree}
         \begin{bprooftree}
-            \AxiomC{\(\morph{f}{\overline{m}}{\overline{n}} \in \generators_\mathsf{t}\)}
-            \AxiomC{\(\morph{g}{\overline{p}}{\overline{q}} \in \generators_\mathsf{t}\)}
+            \AxiomC{\(\morph{f}{\overline{m}}{\overline{n}} \in \sigmaterms\)}
+            \AxiomC{\(\morph{g}{\overline{p}}{\overline{q}} \in \sigmaterms\)}
             \BinaryInfC{\(
-                \morph{f \tensor g}{\overline{m} \concat \overline{p}}{\overline{n} \concat \overline{q}} \in \generators_\mathsf{t}
+                \morph{f \tensor g}{\overline{m} \concat \overline{p}}{\overline{n} \concat \overline{q}} \in \sigmaterms
             \)}
         \end{bprooftree}
     \end{center}
 \end{definition}
 
+\(\Sigma\)-terms are constructed inductively.
+There are three base cases: a generator from \(\generators\) with appropriate
+inputs and outputs;
+an \emph{identity} for empty wires with no generators;
+and a \emph{symmetry} for swapping over two wires.
+The two inductive cases are called \emph{composition} and \emph{tensor}
+respectively.
+Intuitively, these can be thought of generating larger terms by sequencing
+subterms in sequence or parallel.
+
 \(\Sigma\)-terms will be abbreviated to `terms' when the signature is clear from
 context.
-The first base case on the top row is to introduce a generator with appropriate
-input
-\emph{identity} (an empty wire with no generator), and a \emph{symmetry}
-(swapping over two wires).
-The two inductive cases on the bottom row are called \emph{composition} and
-\emph{tensor}.
-These can be thought of as sequential and parallel composition respectively.
 
-\section{Category}
+\section{Structural equations}
 
-So far, terms are purely syntax, and have no associated behaviour.
- we introduce our first elements of category theory.
+So far, terms are purely syntax, and terms are only equal if they are
+constructed in the same way.
+Even without considering the interaction of generators with each other, there
+are numerous `structural equations' which need to hold to be useful for
+modelling processes.
 
-\begin{definition}[Category]
+For example, the term \(\id \seq \phi\) (`doing nothing followed by \(\phi\)'),
+and \(\phi \seq \id\) (`\(\phi\) followed by doing nothing') should be equal
+from the point of view of processes, but currently they are not.
+
+These `structural equations' are the laws of
+\emph{symmetric monoidal categories}, which will now be introduced.
+
+\begin{definition}[Categories]
     \label{def:category}
     A \emph{category} \(\mcc\) consists of a class of \emph{objects}
     \(\ob{\mcc}\); a class of \emph{morphisms} \(\mor{\mcc}{A}{B}\)
@@ -122,13 +143,6 @@ as follows:
 We say that the above two diagrams \emph{commute} precisely because \(
     \id[B] \circ f = f \circ \id[A]
 \): no matter which path one takes, the results are equal.
-When expressing conditions using commutative diagrams, it becomes natural to
-also consider an alternative notation for composition.
-
-\begin{notation}
-    \emph{Diagrammatic-order} composition is defined as
-    \(f \seq g := g \circ f\).
-\end{notation}
 
 \begin{example}[Preorder]
     A \emph{preorder} is a binary relation \(\leq\) on a set \(X\) which is
@@ -232,11 +246,12 @@ natural transformation \(\morph{\eta}{F}{G}\) is a \emph{family} of morphisms
 
 \section{Monoidal categories}
 
-Our interest in categories stems from modelling compositional \emph{processes}.
-Processes can be viewed as morphisms: a morphism \(\morph{f}{A}{B}\) is a
-process that transforms some input of type \(A\) into an output of type \(B\).
+Now we have some categorical knowledge, it is easy to see how processes can be
+viewed as morphisms: a morphism \(\morph{f}{A}{B}\) is a process that transforms
+some input of type \(A\) into an output of type \(B\).
 Composition allows us to string together multiple processes \(f, g, h\) in
-sequence to create a composite process \(f \seq g \seq h\).
+sequence to create a composite process \(f \seq g \seq h\), where we use
+\emph{diagrammatic order} composition \(f \seq g := g \circ f\).
 
 However, these processes are not particularly interesting: the inputs and
 outputs can only be single types of and there is no notion of parallelism.
@@ -311,7 +326,7 @@ a special kind of functor.
 We adopt the convention that \(f \tensor g \seq h \tensor k\) should be
 bracketed as \((f \tensor g) \seq (h \tensor k)\), i.e.\ \(\tensor\) binds
 more strongly than \(\seq\).
-However, later in this chapter we will provide an alternative notation for terms
+Later in this chapter we will provide an alternative notation for terms
 in monoidal categories which will make this distinction redundant.
 
 \begin{example}
@@ -339,10 +354,8 @@ We are generally only concerned with strict categories in this thesis.
 \section{Symmetric monoidal categories}
 
 We can now construct morphisms by composing them in sequence and in parallel.
-However, there is one more facet of processes that needs modelling.
-Imagine we have a process with output \(A \tensor B\) and another with inputs
-\(B \tensor A\): it is often desirable to connect these together by swapping
-over the outputs of the former.
+However, there is one more facet of processes that needs modelling: recall that
+we have the \emph{symmetries} for crossing over wires.
 
 \begin{definition}[Symmetric monoidal category]
     \label{def:symmetric-monoidal-category}
@@ -366,26 +379,21 @@ over the outputs of the former.
     \) defined as the function that swaps elements of a pair.
 \end{example}
 
-\section{Symmetric monoidal theories}
+\section{Monoidal theories}
 
-As we have mentioned previously, the syntax of symmetric monoidal categories is
-a good fit for modelling compositional processes.
-We will now formally describe how to specify such a category of processes.
+We will now formally describe how to specify terms as morphisms in a symmetric
 There is a particular subclass of SMCs in which this is especially natural.
 
-\begin{definition}[PROP~\cite{maclane1965categorical}]
-    A \emph{PROP} (category of \emph{PRO}ducts and \emph{P}ermutations) is a
-    symmetric monoidal category with the objects as natural numbers as objects
-    and tensor product as addition.
+\begin{definition}[Multi-sorted PROP~\cite{maclane1965categorical}]
+    A multi-sorted \emph{PROP} (category of \emph{PRO}ducts and
+    \emph{P}ermutations) is a symmetric monoidal category with the objects as
+    lists of natural numbers and tensor product as list concatenation.
 \end{definition}
 
-Note that this definition means that \(0\) is the unit object in any PROP.
-A morphism \(m \to n\) in a PROP can be thought of as a process with \(m\)
-inputs and \(n\) outputs.
-
-We will now construct a monoidal category of processes constructed from some
-primitive \emph{generators}.
-
+Note that this definition means that the empty list \([]\) is the unit object in
+any PROP.
+A morphism \(\overline{m} \to \overline{n}\) in a PROP can be thought of as a
+process with \(\overline{m}\) inputs and \(\overline{n}\) outputs.
 
 \begin{definition}[Freely generated PROP]
     For a set of generators \(\generators\), let \(\smc{\generators}\) be the
@@ -437,8 +445,6 @@ However, these structural equations do not illustrate how the generators in
 \(\generators\) interact with each other, which is crucial for modelling and
 evaluating processes.
 These equations are provided by a \emph{monoidal theory}.
-
-
 
 \section{String diagrams}
 
