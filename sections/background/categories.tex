@@ -394,9 +394,9 @@ There is a particular subclass of SMCs in which this is especially natural.
 Note that this definition means that the empty word \(\epsilon\) is the unit
 object in any \(\mcc\)-sorted PROP.
 
-\begin{definition}[Freely generated PROP]
+\begin{definition}
     For a set of generators \(\generators\), let \(\smc{\generators}\) be the
-    \(\nat\)-sorted PROP with the set of \(\Sigma\)-terms as the morphisms.
+    \(\natplus\)-sorted PROP with the set of \(\Sigma\)-terms as the morphisms.
 \end{definition}
 
 The symmetric monoidal structure of \(\smc{\generators}\) means that terms
@@ -405,7 +405,7 @@ symmetry, composition and tensor interact with each other and the generators in
 \(\generators\).
 These equations can be derived from the diagrams in
 \cref{def:category,def:monoidal-category,def:symmetric-monoidal-category}, and
-are explicitly listed in \cref{fig:prop-axioms}.
+are explicitly listed in \cref{fig:structural-equations}.
 
 \begin{figure}
     \centering
@@ -437,7 +437,7 @@ are explicitly listed in \cref{fig:prop-axioms}.
         \swap{m}{n} \seq \swap{n}{m} = \id[m+n]
     \end{gather*}
     \caption{Summary of `structural' axioms that hold in \(\smc{\generators}\).}
-    \label{fig:prop-axioms}
+    \label{fig:structural-equations}
 \end{figure}
 
 However, these equations do not illustrate how the generators in \(\generators\)
@@ -470,5 +470,44 @@ obfuscate the interesting equations between generators.
 
 Fortunately there is an alternative: the graphical calculus of
 \emph{string diagrams}~\cite{joyal1991geometry}.
+
+
+Generators are drawn as boxes, with wires on the left and right representing
+each element of their input and output lists respectively.
+For example, a generator \(\morph{\phi}{[m]}{[n]}\) is drawn as \(
+    \iltikzfig{strings/category/generator}[\phi][white][m][n]
+\) and a generator \(\morph{\psi}{[m,n]}{[p]}\) is drawn \(
+    \iltikzfig{strings/category/generator-2-1}[\psi][white][m][n][p]
+\).
+The identity on \(n\) is drawn as \(
+    \iltikzfig{strings/category/identity}[white][n]
+\) and the symmetry on \([m, n]\) is drawn as \(
+    \iltikzfig{strings/symmetric/symmetry}[white][m][n]
+\).
+The special case of the identity on \(0\) is drawn as empty space \(
+    \iltikzfig{strings/monoidal/empty}
+\).
+Sometimes for clarity it will be advantageous to merge multiple wires into one,
+so \(\psi\) above can also be drawn as \(
+    \iltikzfig{strings/category/generator}[\psi][white][[m,n]][p]
+\).
+
+Composite terms are drawn as wider boxes \(
+    \iltikzfig{strings/category/f}[f][white][\overline{m}][\overline{n}]
+\).
+Composition is then drawn as \emph{horizontal juxtaposition} \(
+    \iltikzfig{strings/category/composition}[f][g][white][\overline{m}][\overline{n}][\overline{p}]
+\) and tensor as \emph{vertical juxtaposition} \(
+    \iltikzfig{strings/monoidal/tensor}[f][g][white][\overline{m}][\overline{n}][\overline{p}][\overline{q}]
+\).
+Note that
+
+
+
+\begin{definition}[String diagram]
+    A \emph{string diagram} is an equivalence class of \(\Sigma\)-terms
+    quotiented by the equations in \cref{fig:structural-equations}.
+\end{definition}
+
 
 \section{Symmetric traced monoidal categories}
