@@ -3,7 +3,8 @@
 \section{Terms}
 
 Processes are modelled as \emph{terms}.
-Before terms, their components must be specified.
+Before we can begin, the components that make up processes in a given system
+must be sepcified.
 
 \begin{notation}[Words]
     Given a set \(X\), the set of words of elements of \(X\) is denoted
@@ -14,20 +15,24 @@ Before terms, their components must be specified.
     denoted \(\overline{x}\overline{y}\).
 \end{notation}
 
+\begin{definition}
+    Let \(\natplus\) be the set of non-zero natural numbers.
+\end{definition}
+
 \begin{definition}[Generators]
     A set of \emph{generators} is a set \(\generators\) equipped with two
-    functions \(\morph{\dom,\cod}{\generators}{\freemon{\nat}}\).
+    functions \(\morph{\dom,\cod}{\generators}{\natplus^\star}\).
 \end{definition}
 
 Generators are the primitive building blocks of terms: their domains and
 codomains specify the widths of their input and output wires respectively.
-Terms are then defined by combining these primitive generators together.
+Terms are defined by combining these primitives together.
 
 \begin{definition}[Term]
     \label{def:terms}
     Let \(\generators\) be a set of generators.
     A \(\generators\)-term is written \(\morph{f}{\overline{m}}{\overline{n}}\)
-    where \(\overline{m}, \overline{n} \in \freemon{\nat}\).
+    where \(\overline{m}, \overline{n} \in \natplus^\star\).
     The set of \(\generators\)-terms, denoted \(\sigmaterms\), is
     generated as follows:
     \begin{center}
@@ -65,7 +70,7 @@ Terms are then defined by combining these primitive generators together.
     \end{center}
 \end{definition}
 
-\(\Sigma\)-terms are constructed inductively.
+\(\Sigma\)-terms are constructed recursively.
 There are three base cases: a generator from \(\generators\) with appropriate
 inputs and outputs;
 an \emph{identity} for empty wires with no generators;
@@ -81,17 +86,23 @@ context.
 \section{Structural equations}
 
 So far, terms are purely syntax, and terms are only equal if they are
-constructed in the same way.
+constructed in precisely the same way.
 Even without considering the interaction of generators with each other, there
 are numerous `structural equations' which need to hold to be useful for
 modelling processes.
 
-For example, the term \(\id \seq \phi\) (`doing nothing followed by \(\phi\)'),
-and \(\phi \seq \id\) (`\(\phi\) followed by doing nothing') should be equal
-from the point of view of processes, but currently they are not.
+\begin{example}
+    Consider the term \(f \seq \id[n]\), which can be read as `run \(f\) and
+    then do nothing'.
+    Since we are only concerned with the \emph{input-output} behaviour of
+    processes, this morally should be the same as just \(f\).
+    However, as it stands \(f \seq \id[n]\) and \(f\) are not equal.
+\end{example}
 
-These `structural equations' are the laws of
-\emph{symmetric monoidal categories}, which will now be introduced.
+One could just add all the `right' equations manually, but what are the `right'
+equations?
+It turns out that an elegant mathematical formalism exists in the form of
+\emph{symmetric monoidal categories}.
 
 \begin{definition}[Categories]
     \label{def:category}
@@ -354,11 +365,12 @@ we have the \emph{symmetries} for crossing over wires.
     \) defined as the function that swaps elements of a pair.
 \end{example}
 
-\section{Syntactic categories}
+\section{PROPs}
 
-
-We will now formally describe how to specify terms as morphisms in a symmetric
-There is a particular subclass of SMCs in which this is especially natural.
+We have described the categorical structure required to interpret the
+constructors for \(\generators\)-terms.
+Now we will describe the precise categorical setting in which we can model
+terms.
 
 \begin{definition}[Multi-sorted PROP~\cite{maclane1965categorical}]
     Given a set of \emph{sorts} \(\mcc\), a \(\mcc\)-sorted \emph{PROP}
@@ -369,6 +381,9 @@ There is a particular subclass of SMCs in which this is especially natural.
 
 Note that this definition means that the empty word \(\epsilon\) is the unit
 object in any \(\mcc\)-sorted PROP.
+As the domain and codomains of generators in \(\generators\) are words of
+natural numbers, it is clear to see how a multi-sorted PROP can be used for our
+scenario.
 
 \begin{definition}
     Given a set of generators \(\generators\), let \(\smc{\generators}\) be the
@@ -406,7 +421,7 @@ are explicitly listed in \cref{fig:structural-equations}.
         \\[0.5em]
         (f \tensor g) \seq \swap{n}{q} = \swap{m}{p} \seq (g \tensor f)
         \quad
-        (\swap{m}{n} \tensor \id[p]) \seq (\id[n] \tensor \swap{m}{p}) = \swap{m}{n+p}
+        (\swap{m}{n} \tensor \id[p]) \seq (\id[n] \tensor \swap{m}{p}) = \swap{m}{[n,p]}
         \\[0.5em]
         \swap{0}{n} = \id[n]
         \quad
@@ -463,17 +478,140 @@ Composition is then drawn as \emph{horizontal juxtaposition} \(
     quotiented by the equations in \cref{fig:structural-equations}.
 \end{definition}
 
+The beauty of using string diagrams is that we no longer have to concern
+ourselves with the structural equations: they are taken care of by the notation.
+This means we can concentrate on the more important equations.
+
+\begin{figure}
+    \centering
+    \begin{gather*}
+        \iltikzfig{strings/category/identity}[white]
+        \seq
+        \iltikzfig{strings/category/f}[f][white]
+        =
+        \iltikzfig{strings/category/f}[f][white]
+        \quad
+        \iltikzfig{strings/category/f}[f][white]
+        \seq
+        \iltikzfig{strings/category/identity}[white]
+        =
+        \iltikzfig{strings/category/f}[f][white]
+        \quad
+        \iltikzfig{strings/category/f}[f][white]
+        \seq
+        \iltikzfig{strings/category/composition}[g][h][white]
+        =
+        \iltikzfig{strings/category/composition}[f][g][white]
+        \seq
+        \iltikzfig{strings/category/f}[h][white]
+        \\[0.5em]
+        \begin{array}{cc}
+            \iltikzfig{strings/monoidal/empty} \\
+            \tensor \\
+            \iltikzfig{strings/category/f}[f][white]
+        \end{array}
+        =
+        \iltikzfig{strings/category/f}[f][white]
+        \quad
+        \begin{array}{cc}
+            \iltikzfig{strings/category/f}[f][white] \\
+            \tensor \\
+            \iltikzfig{strings/monoidal/empty}
+        \end{array}
+        =
+        \iltikzfig{strings/category/f}[f][white]
+        \quad
+        \begin{array}{cc}
+            \iltikzfig{strings/category/f}[f][white] \\
+            \tensor \\
+            \iltikzfig{strings/monoidal/tensor}[g][h][white]
+        \end{array}
+        =
+        \begin{array}{cc}
+            \iltikzfig{strings/monoidal/tensor}[f][g][white] \\
+            \tensor \\
+            \iltikzfig{strings/category/f}[h][white]
+        \end{array}
+        \quad
+        \begin{array}{cc}
+            \iltikzfig{strings/category/identity}[white][m] \\
+            \tensor \\
+            \iltikzfig{strings/category/identity}[white][n]
+        \end{array}
+        =
+        \iltikzfig{strings/category/identity}[white][[m,n]]
+        \\[0.5em]
+        \begin{array}{cc}
+            \iltikzfig{strings/category/f}[f][white] \\
+            \tensor \\
+            \iltikzfig{strings/category/f}[g][white]
+        \end{array}
+        \seq
+        \begin{array}{cc}
+            \iltikzfig{strings/category/f}[h][white] \\
+            \tensor \\
+            \iltikzfig{strings/category/f}[k][white]
+        \end{array}
+        =
+        \begin{array}{cc}
+            \iltikzfig{strings/category/f}[f][white]
+            \seq
+            \iltikzfig{strings/category/f}[h][white] \\
+            \tensor \\
+            \iltikzfig{strings/category/f}[g][white]
+            \seq
+            \iltikzfig{strings/category/f}[k][white]
+        \end{array}
+        \\[0.5em]
+        \iltikzfig{strings/monoidal/tensor}[f][g][white]
+        \seq
+        \iltikzfig{strings/symmetric/symmetry}[white]
+        =
+        \iltikzfig{strings/symmetric/symmetry}[white]
+        \seq
+        \iltikzfig{strings/monoidal/tensor}[g][f][white]
+        \quad
+        \begin{array}{cc}
+            \iltikzfig{strings/symmetric/symmetry}[white][m][n] \\
+            \tensor \\
+            \iltikzfig{strings/category/identity}[white][p]
+        \end{array}
+        \seq
+        \begin{array}{cc}
+            \iltikzfig{strings/category/identity}[white][n] \\
+            \tensor \\
+            \iltikzfig{strings/symmetric/symmetry}[white][m][p]
+        \end{array}
+        =
+        \iltikzfig{strings/symmetric/symmetry}[white][m][[n,p]]
+        \\[0.5em]
+        \swap{0}{n} = \id[n]
+        \quad
+        \swap{m}{0} = \id[m]
+        \quad
+        \swap{m}{n} \seq \swap{n}{m} = \id[[m,n]]
+    \end{gather*}
+    \caption{
+        The structural equations from \cref{fig:structural-equations}
+        represented in string diagram notation.
+    }
+    \label{fig:structural-equations-strings}
+\end{figure}
+
 \begin{example}
-    One of the more common issues that arises when reasoning with text-based
-    term strings is having to incorporate repeated uses of the
-    \emph{interchange law} (\(
+    A common issue that arises when reasoning with textual term strings is
+    having to repeatedly apply the \emph{interchange law} (\(
         (f \tensor g) \seq (h \tensor k) = (f \seq h) \tensor (g \seq k)
     \) from \cref{fig:structural-equations}) in order to reorder the
     applications of composition and tensor.
-    In the string diagram syntax, these are both drawn as \(
+    However, in the string diagram syntax these are both drawn as \(
         \iltikzfig{strings/monoidal/interchange}[f][g][h][k][white]
-    \).
+    \): it does not matter which order we apply the operations!
 \end{example}
+
+Another advantage of the graphical notation is that, as long as the connectivity
+of boxes remains unchanged, we can deform diagrams as we please without altering
+the underlying term.
 
 \section{Monoidal theories}
 
@@ -537,3 +675,16 @@ Note that when \(\equations\) is empty,
 
 
 \section{Symmetric traced monoidal categories}
+
+
+
+\section{Related work}
+
+There has recently been an explosion in the use of symmetric monoidal categories
+for modelling of processes, such as for quantum
+protocols~\cite{abramsky2004categorical}, signal flow
+diagrams~\cite{bonchi2014categorical,bonchi2015full}, linear
+algebra~\cite{bonchi2017interacting,zanasi2015interacting,bonchi2019graphical,boisseau2022graphical},
+dynamical systems~\cite{baez2015categories,fong2016categorical}, electrical
+circuits~\cite{boisseau2022string} and automatic
+differentiation~\cite{alvarez-picallo2023functorial}.
