@@ -157,48 +157,22 @@ We say that the above two diagrams \emph{commute} precisely because \(
     Composition is then just function composition.
 \end{example}
 
-Considering the category of sets is useful, as many concepts in category theory
-are generalisations of more familiar notions from set theory.
-Firstly, we consider the categorical view on \emph{injective} functions.
+\section{Monoidal categories}
 
-\begin{definition}[Monomorphism]
-    A morphism \(\morph{f}{A}{B}\) is a called a \emph{monomorphism} (or simply
-    \emph{mono} for short) if for all morphisms \(\morph{g,h}{C}{A}\), \(
-        f \circ g = f \circ h \Rightarrow g = h
-    \).
-\end{definition}
+It is easy to see how processes can be viewed as morphisms: a morphism
+\(\morph{f}{A}{B}\) is a process that transforms some input of type \(A\) into
+an output of type \(B\).
+Composition allows us to string together multiple processes \(f, g, h\) in
+sequence to create a composite process \(f \seq g \seq h\), where we use
+\emph{diagrammatic order} composition \(f \seq g := g \circ f\).
 
-\begin{example}
-    A morphism in \(\set\) is mono if and only if it is an injection.
-\end{example}
-
-Morphisms can also be \emph{invertible}.
-
-\begin{definition}[Isomorphism]
-    A morphism \(\morph{f}{A}{B} \in \mcc\) is called an \emph{isomorphism} (or
-    simply \emph{iso} for short) if there also exists a morphism \(
-        \morph{\inverse{f}}{B}{A} \in \mcc
-    \) such that \(
-        \inverse{f} \circ f = \id[A]
-    \) and \(
-        f \circ \inverse{f} = \id[B]
-    \).
-\end{definition}
-
-\begin{example}
-    A morphism in \(\set\) is an iso if and only if it is a bijection.
-\end{example}
-
-\begin{remark}
-    There is also a categorical parallel to the \emph{surjective} functions
-    known as an \emph{epimorphism} (or \emph{epi}), but we do not need to
-    consider these in our work.
-\end{remark}
-
-\section{Functors}
-
-It is rare that one only ever works with a single category at a time.
-Consequently we require a way to map between them.
+However, these processes are not particularly interesting: the inputs and
+outputs can only be single types of and there is no notion of parallelism.
+These issues can be allayed by adding structure to elevate a category into a
+\emph{monoidal} category, which has a notion of \emph{parallel} composition in
+addition to the already defined \emph{sequential} composition.
+The parallel composition structure can be added to a regular category by using
+another notion from category theory: that of a \emph{functor}.
 
 \begin{definition}[Functor]
     Given two categories \(\mcc\) and \(\mcd\), a \emph{functor} \(
@@ -212,8 +186,13 @@ Consequently we require a way to map between them.
     \end{itemize}
 \end{definition}
 
-Functors map between two categories.
-It is natural to also consider maps between functors themselves.
+A functor \(F\) is a mapping between categories: it maps an object \(X\) in one
+category to an object \(FX\) in another, and morphisms \(\morph{f}{X}{Y}\) to
+\(\morph{Ff}{FX}{FY}\).
+
+\begin{definition}[Endofunctor]
+    An \emph{endofunctor} is a functor from a category to itself.
+\end{definition}
 
 \begin{definition}[Natural transformation]
     Given two functors \(\morph{F, G}{\mcc}{\mcd}\), a
@@ -226,40 +205,13 @@ It is natural to also consider maps between functors themselves.
     \begin{center}
         \includestandalone{figures/category/coherences/natural}
     \end{center}
-    A natural transformation is called a \emph{natural isomorphism} if
-    every component is an isomorphism.
 \end{definition}
 
-The key point to take here is that for functors \(\morph{F,G}{\mcc}{\mcd}\), a
+The key point to take is that for functors \(\morph{F,G}{\mcc}{\mcd}\), a
 natural transformation \(\morph{\eta}{F}{G}\) is a \emph{family} of morphisms
 \(\morph{\eta_A}{FA}{GA} \in \mcd\) for each object \(A \in \mcd\).
 
-\begin{remark}
-    There exists a category \(\cat\) in which `small' categories are the objects
-    and functors are the morphisms.
-    As natural transformations are morphisms between functors, in \(\cat\) they
-    are morphisms between morphisms!
-    A category with this structure is known as a \(2\)-category in higher
-    category lingo, but will keep our feet firmly in the realm of
-    \(1\)-categories in this thesis.
-\end{remark}
 
-\section{Monoidal categories}
-
-Now we have some categorical knowledge, it is easy to see how processes can be
-viewed as morphisms: a morphism \(\morph{f}{A}{B}\) is a process that transforms
-some input of type \(A\) into an output of type \(B\).
-Composition allows us to string together multiple processes \(f, g, h\) in
-sequence to create a composite process \(f \seq g \seq h\), where we use
-\emph{diagrammatic order} composition \(f \seq g := g \circ f\).
-
-However, these processes are not particularly interesting: the inputs and
-outputs can only be single types of and there is no notion of parallelism.
-These issues can be allayed by adding structure to elevate a category into a
-\emph{monoidal} category, which has a notion of \emph{parallel} composition in
-addition to the already defined \emph{sequential} composition.
-The parallel composition structure can be added to a regular category by using
-a special kind of functor.
 
 \begin{definition}[Product category]
     Given two categories \(\mcc\) and \(\mcd\), their \emph{product category}
@@ -281,6 +233,29 @@ a special kind of functor.
     A \emph{bifunctor} is a functor with a product category as its domain, i.e.\
     a functor of the form \(\mcc \times \mcd \to \mce\).
 \end{definition}
+
+\begin{definition}[Isomorphism]
+    A morphism \(\morph{f}{A}{B} \in \mcc\) is called an \emph{isomorphism} (or
+    simply \emph{iso} for short) if there also exists a morphism \(
+        \morph{\inverse{f}}{B}{A} \in \mcc
+    \) such that \(
+        \inverse{f} \circ f = \id[A]
+    \) and \(
+        f \circ \inverse{f} = \id[B]
+    \).
+\end{definition}
+
+\begin{example}
+    A morphism in \(\set\) is an iso if and only if it is a bijection.
+\end{example}
+
+\begin{definition}[Natural isomorphism]
+    A natural transformation is called a \emph{natural isomorphism} if every
+    component is an isomorphism.
+\end{definition}
+
+We now have all the components necessary in order to define a monoidal category,
+a category with notions of both sequential and parallel composition.
 
 \begin{definition}[Monoidal category]
     \label{def:monoidal-category}
@@ -500,14 +475,23 @@ Composition is then drawn as \emph{horizontal juxtaposition} \(
 \) and tensor as \emph{vertical juxtaposition} \(
     \iltikzfig{strings/monoidal/tensor}[f][g][white][\overline{m}][\overline{n}][\overline{p}][\overline{q}]
 \).
-Note that
-
-
 
 \begin{definition}[String diagram]
     A \emph{string diagram} is an equivalence class of \(\Sigma\)-terms
     quotiented by the equations in \cref{fig:structural-equations}.
 \end{definition}
+
+\begin{example}
+    One of the more common issues that arises when reasoning with text-based
+    term strings is having to incorporate repeated uses of the
+    \emph{interchange law} (\(
+        (f \tensor g) \seq (h \tensor k) = (f \seq h) \tensor (g \seq k)
+    \) from \cref{fig:structural-equations}) in order to reorder the
+    applications of composition and tensor.
+    In the string diagram syntax, these are both drawn as \(
+        \iltikzfig{strings/monoidal/interchange}[f][g][h][k][white]
+    \).
+\end{example}
 
 
 \section{Symmetric traced monoidal categories}
