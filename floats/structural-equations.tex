@@ -1,0 +1,32 @@
+\begin{figure}
+    \centering
+    \begin{gather*}
+        \id[\overline{m}] \seq  f = f
+        \quad
+        f = f \seq \id[\overline{n}]
+        \quad
+        (f \seq g) \seq h = f \seq (g \seq h)
+        \\[0.5em]
+        \id[\epsilon] \tensor f = f
+        \quad
+        f \tensor \id[\epsilon] = f
+        \quad
+        (f \tensor g) \tensor h = f \tensor (g \tensor h)
+        \\[0.5em]
+        \id[\overline{m}] \tensor \id[\overline{n}] = \id[\overline{mn}]
+        \quad
+        (f \tensor g) \seq (h \tensor k) = (f \seq h) \tensor (g \seq k)
+        \\[0.5em]
+        (f \tensor g) \seq \swap{\overline{n}}{\overline{q}} = \swap{\overline{m}}{\overline{p}} \seq (g \tensor f)
+        \quad
+        (\swap{\overline{m}}{\overline{n}} \tensor \id[\overline{p}]) \seq (\id[\overline{n}] \tensor \swap{\overline{m}}{\overline{p}}) = \swap{\overline{m}}{\overline{np}}
+        \\[0.5em]
+        \swap{\epsilon}{\overline{n}} = \id[\overline{n}]
+        \quad
+        \swap{m}{\epsilon} = \id[\overline{m}]
+        \quad
+        \swap{\overline{m}}{\overline{n}} \seq \swap{\overline{n}}{\overline{m}} = \id[\overline{mn}]
+    \end{gather*}
+    \caption{Summary of `structural' axioms that hold in \(\smc{\generators}\).}
+    \label{fig:structural-equations}
+\end{figure}

@@ -400,38 +400,7 @@ These equations can be derived from the diagrams in
 \cref{def:category,def:monoidal-category,def:symmetric-monoidal-category}, and
 are explicitly listed in \cref{fig:structural-equations}.
 
-\begin{figure}
-    \centering
-    \begin{gather*}
-        \id[m] \seq  f = f
-        \quad
-        f = f \seq \id[n]
-        \quad
-        (f \seq g) \seq h = f \seq (g \seq h)
-        \\[0.5em]
-        \id[0] \tensor f = f
-        \quad
-        f \tensor \id[0] = f
-        \quad
-        (f \tensor g) \tensor h = f \tensor (g \tensor h)
-        \\[0.5em]
-        \id[m] \tensor \id[n] = \id[m+n]
-        \quad
-        (f \tensor g) \seq (h \tensor k) = (f \seq h) \tensor (g \seq k)
-        \\[0.5em]
-        (f \tensor g) \seq \swap{n}{q} = \swap{m}{p} \seq (g \tensor f)
-        \quad
-        (\swap{m}{n} \tensor \id[p]) \seq (\id[n] \tensor \swap{m}{p}) = \swap{m}{[n,p]}
-        \\[0.5em]
-        \swap{0}{n} = \id[n]
-        \quad
-        \swap{m}{0} = \id[m]
-        \quad
-        \swap{m}{n} \seq \swap{n}{m} = \id[m+n]
-    \end{gather*}
-    \caption{Summary of `structural' axioms that hold in \(\smc{\generators}\).}
-    \label{fig:structural-equations}
-\end{figure}
+\input{floats/structural-equations}
 
 \section{String diagrams}
 
@@ -440,9 +409,10 @@ previous section, but this quickly becomes unwieldy.
 Although the structural axioms make sense, they are tedious to apply and
 obfuscate the interesting equations between generators.
 
-Fortunately there is an alternative: the graphical calculus of
-\emph{string diagrams}~\cite{joyal1991geometry}.
-
+Fortunately there is an alternative: the calculus of \emph{string diagrams}.
+Originally introduced by Joyal and Street in \cite{joyal1991geometry}, the use
+of string diagrams has exploded recently for use in a whole host of categorical
+settings~\cite{selinger2011survey}.
 
 Generators are drawn as boxes, with wires on the left and right representing
 each element of their input and output lists respectively.
@@ -456,162 +426,55 @@ The identity on \(n\) is drawn as \(
 \) and the symmetry on \([m, n]\) is drawn as \(
     \iltikzfig{strings/symmetric/symmetry}[white][m][n]
 \).
-The special case of the identity on \(0\) is drawn as empty space \(
+The special case of the identity on \(\epsilon\) is usually drawn as empty space
+\(
     \iltikzfig{strings/monoidal/empty}
+\); when it is necessary to indicate that a unit is being used in an equation
+then it will be drawn as a faded wire \(
+    \iltikzfig{strings/monoidal/unit-wire}[white][\epsilon]
 \).
 Sometimes for clarity it will be advantageous to merge multiple wires into one,
 so \(\psi\) above can also be drawn as \(
     \iltikzfig{strings/category/generator}[\psi][white][[m,n]][p]
 \).
 
-Composite terms are drawn as wider boxes \(
+Of course, this just syntax; rather than writing symbols we are drawing boxes
+instead.
+The power of string diagrams comes from the representation of composition as
+\emph{juxtaposition} rather than using \(\seq\) or \(\tensor\).
+Given two composite terms, drawn as wider boxes \(
     \iltikzfig{strings/category/f}[f][white][\overline{m}][\overline{n}]
-\).
-Composition is then drawn as \emph{horizontal juxtaposition} \(
+\), composition and tensor are drawn as \emph{horizontal} and \emph{vertical}
+juxtaposition respectively. \[
+    \iltikzfig{strings/category/f}[f][white][\overline{m}][\overline{n}]
+    \seq
+    \iltikzfig{strings/category/f}[g][white][\overline{n}][\overline{p}] :=
     \iltikzfig{strings/category/composition}[f][g][white][\overline{m}][\overline{n}][\overline{p}]
-\) and tensor as \emph{vertical juxtaposition} \(
-    \iltikzfig{strings/monoidal/tensor}[f][g][white][\overline{m}][\overline{n}][\overline{p}][\overline{q}]
-\).
+    \qquad
+    \iltikzfig{strings/category/f}[f][white][\overline{m}][\overline{n}]
+    \tensor
+    \iltikzfig{strings/category/f}[g][white][\overline{p}][\overline{q}] :=
+    \iltikzfig{strings/monoidal/tensor}[f][g][white][\overline{m}][\overline{n}][\overline{p}][\overline{q}].
+\]
+
+When drawing out the structural equations from \cref{fig:structural-equations}
+as string diagrams in \cref{fig:structural-equations-strings}, it is clear to
+see that applying these equations is reduced to manipulating diagrams while
+retaining their connectivity.
+This leads us to a formal definition of a string diagram.
 
 \begin{definition}[String diagram]
     A \emph{string diagram} is an equivalence class of \(\Sigma\)-terms
     quotiented by the equations in \cref{fig:structural-equations}.
 \end{definition}
 
-The beauty of using string diagrams is that we no longer have to concern
-ourselves with the structural equations: they are taken care of by the notation.
-This means we can concentrate on the more important equations.
 
-\begin{figure}
-    \centering
-    \begin{gather*}
-        \iltikzfig{strings/category/identity}[white]
-        \seq
-        \iltikzfig{strings/category/f}[f][white]
-        =
-        \iltikzfig{strings/category/f}[f][white]
-        \quad
-        \iltikzfig{strings/category/f}[f][white]
-        \seq
-        \iltikzfig{strings/category/identity}[white]
-        =
-        \iltikzfig{strings/category/f}[f][white]
-        \quad
-        \iltikzfig{strings/category/f}[f][white]
-        \seq
-        \iltikzfig{strings/category/composition}[g][h][white]
-        =
-        \iltikzfig{strings/category/composition}[f][g][white]
-        \seq
-        \iltikzfig{strings/category/f}[h][white]
-        \\[0.5em]
-        \begin{array}{cc}
-            \iltikzfig{strings/monoidal/empty} \\
-            \tensor \\
-            \iltikzfig{strings/category/f}[f][white]
-        \end{array}
-        =
-        \iltikzfig{strings/category/f}[f][white]
-        \quad
-        \begin{array}{cc}
-            \iltikzfig{strings/category/f}[f][white] \\
-            \tensor \\
-            \iltikzfig{strings/monoidal/empty}
-        \end{array}
-        =
-        \iltikzfig{strings/category/f}[f][white]
-        \quad
-        \begin{array}{cc}
-            \iltikzfig{strings/category/f}[f][white] \\
-            \tensor \\
-            \iltikzfig{strings/monoidal/tensor}[g][h][white]
-        \end{array}
-        =
-        \begin{array}{cc}
-            \iltikzfig{strings/monoidal/tensor}[f][g][white] \\
-            \tensor \\
-            \iltikzfig{strings/category/f}[h][white]
-        \end{array}
-        \quad
-        \begin{array}{cc}
-            \iltikzfig{strings/category/identity}[white][m] \\
-            \tensor \\
-            \iltikzfig{strings/category/identity}[white][n]
-        \end{array}
-        =
-        \iltikzfig{strings/category/identity}[white][[m,n]]
-        \\[0.5em]
-        \begin{array}{cc}
-            \iltikzfig{strings/category/f}[f][white] \\
-            \tensor \\
-            \iltikzfig{strings/category/f}[g][white]
-        \end{array}
-        \seq
-        \begin{array}{cc}
-            \iltikzfig{strings/category/f}[h][white] \\
-            \tensor \\
-            \iltikzfig{strings/category/f}[k][white]
-        \end{array}
-        =
-        \begin{array}{cc}
-            \iltikzfig{strings/category/f}[f][white]
-            \seq
-            \iltikzfig{strings/category/f}[h][white] \\
-            \tensor \\
-            \iltikzfig{strings/category/f}[g][white]
-            \seq
-            \iltikzfig{strings/category/f}[k][white]
-        \end{array}
-        \\[0.5em]
-        \iltikzfig{strings/monoidal/tensor}[f][g][white]
-        \seq
-        \iltikzfig{strings/symmetric/symmetry}[white]
-        =
-        \iltikzfig{strings/symmetric/symmetry}[white]
-        \seq
-        \iltikzfig{strings/monoidal/tensor}[g][f][white]
-        \quad
-        \begin{array}{cc}
-            \iltikzfig{strings/symmetric/symmetry}[white][m][n] \\
-            \tensor \\
-            \iltikzfig{strings/category/identity}[white][p]
-        \end{array}
-        \seq
-        \begin{array}{cc}
-            \iltikzfig{strings/category/identity}[white][n] \\
-            \tensor \\
-            \iltikzfig{strings/symmetric/symmetry}[white][m][p]
-        \end{array}
-        =
-        \iltikzfig{strings/symmetric/symmetry}[white][m][[n,p]]
-        \\[0.5em]
-        \swap{0}{n} = \id[n]
-        \quad
-        \swap{m}{0} = \id[m]
-        \quad
-        \swap{m}{n} \seq \swap{n}{m} = \id[[m,n]]
-    \end{gather*}
-    \caption{
-        The structural equations from \cref{fig:structural-equations}
-        represented in string diagram notation.
-    }
-    \label{fig:structural-equations-strings}
-\end{figure}
-
-\begin{example}
-    A common issue that arises when reasoning with textual term strings is
-    having to repeatedly apply the \emph{interchange law} (\(
-        (f \tensor g) \seq (h \tensor k) = (f \seq h) \tensor (g \seq k)
-    \) from \cref{fig:structural-equations}) in order to reorder the
-    applications of composition and tensor.
-    However, in the string diagram syntax these are both drawn as \(
-        \iltikzfig{strings/monoidal/interchange}[f][g][h][k][white]
-    \): it does not matter which order we apply the operations!
-\end{example}
 
 Another advantage of the graphical notation is that, as long as the connectivity
 of boxes remains unchanged, we can deform diagrams as we please without altering
 the underlying term.
+
+\input{floats/structural-equations-strings}
 
 \section{Monoidal theories}
 
@@ -651,32 +514,35 @@ in which all of the equations are identified in this way.
 
 Note that when \(\equations\) is empty,
 \(\smc{\generators, \emptyset} = \smc{\generators}\).
+Monoidal theories can be used to reason with many structures in mathematics; we
+will now give such an example.
 
 \begin{example}\label{ex:frobenius}
     The monoidal theory of
-    \emph{special commutative Frobenius algebras} is defined as \(
-        (\generators[\frob], \equations[\frob])
-    \) where \(
-        \generators[\frob] := \{
+    \emph{commutative monoids} is \(
+        (\generators[\cmon], \equations[\cmon])
+    \), where \(
+        \generators[\cmon] := \{
             \iltikzfig{strings/structure/monoid/merge}[white],
             \iltikzfig{strings/structure/monoid/init}[white]
-            \iltikzfig{strings/structure/comonoid/copy}[white],
-            \iltikzfig{strings/structure/comonoid/discard}[white]
         \}
-    \) and the equations of \(\equations[\frob]\) are listed in
-    \cref{fig:monoid-equations,fig:comonoid-equations,fig:frobenius-equations}.
-    We write \(\frob := \smc{\generators[\frob], \equations[\frob]}\).
+    \) representing the \emph{multiplication} and the \emph{unit} respectively,
+    and \(\equations[\frob]\) comprises the equations
+    \begin{center}
+        \iltikzfig{strings/structure/monoid/unitality-l-lhs}
+        \(=\)
+        \iltikzfig{strings/structure/monoid/unitality-l-rhs}
+        \quad
+        \iltikzfig{strings/structure/monoid/associativity-lhs}
+        \(=\)
+        \iltikzfig{strings/structure/monoid/associativity-rhs}
+        \quad
+        \iltikzfig{strings/structure/monoid/commutativity-lhs}
+        \(=\)
+        \iltikzfig{strings/structure/monoid/commutativity-rhs}
+    \end{center}
+    We write \(\cmon := \smc{\generators[\cmon], \equations[\cmon]}\).
 \end{example}
-
-\input{floats/monoids}
-\input{floats/comonoids}
-\input{floats/frobenius}
-
-
-
-\section{Symmetric traced monoidal categories}
-
-
 
 \section{Related work}
 
