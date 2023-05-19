@@ -1,0 +1,156 @@
+\chapter{Digital circuits}
+
+It is time to use monoidal theories for our desired use case: that of
+\emph{digital circuits}.
+
+\section{Circuit signatures}
+
+\begin{definition}[Circuit signature, value, gate symbol]
+    A \emph{circuit signature} \(\circuitsignature\) is a tuple \((
+        \circuitsignaturevalues,
+        \disconnected,
+        \circuitsignaturegates,
+        \circuitsignaturearity,
+        \circuitsignaturecoarity
+    )\) where \(\circuitsignaturevalues\) is a finite set of \emph{values}, \(
+        \disconnected \in \circuitsignaturevalues
+    \) is a \emph{disconnected} value, \(\circuitsignaturegates\) is a (usually
+    finite) set of \emph{gate symbols}, \(
+        \morph{\circuitsignaturearity}{\circuitsignaturegates}{\natplus^\star}
+    \) is an \emph{arity} function and \(
+        \morph{\circuitsignaturecoarity}{\circuitsignaturegates}{\natplus^\star}
+    \) is a \emph{coarity} function.
+\end{definition}
+
+A particularly important signature is that of gate-level circuits, the most
+common level of abstraction for digital circuits.
+
+\begin{example}[Gate-level circuits]\label{ex:sig}
+    The signature for \emph{gate-level circuits} is \(
+        \belnapsignature = (
+            \belnapvalues,
+            \belnapnone,
+            \belnapgates,
+            \belnaparity,
+            \belnapcoarity
+    )\), where \(
+        \belnapvalues := \{\belnapnone, \belnapfalse, \belnaptrue, \belnapboth\}
+    \), respectively representing \emph{no} signal, a \emph{false} signal, a
+        \emph{true} signal and \emph{both} signals at once, \(
+        \belnapgates := \{\andgate,\orgate,\notgate\}
+    \), \(
+        \belnaparity :=
+            \andgate \mapsto [1,1],
+            \orgate \mapsto [1,1],
+            \notgate \mapsto [1]
+    \) and \(
+        \belnapcoarity := - \mapsto [1],
+    \)
+\end{example}
+
+\section{Combinational circuits}
+
+\begin{definition}[Combinational circuit generators]
+    Given a circuit signature \(
+        \circuitsignature = (
+            \circuitsignaturevalues,
+            \bullet,
+            \circuitsignaturegates,
+            \circuitsignaturearity,
+            \circuitsignaturecoarity
+        )
+    \), let the set \(\generators[\ccirc{}]\) of
+    \emph{combinational circuit generators} be defined as the set containing \(
+        \iltikzfig{circuits/components/gates/gate}[g][\circuitsignaturearity(g)]
+    \) for each \(g \in \circuitsignaturegates\),
+    \(\iltikzfig{strings/structure/monoid/init}[comb]\),
+    \(\iltikzfig{strings/structure/comonoid/copy}[comb]\),
+    \(\iltikzfig{strings/structure/monoid/merge}[comb]\),
+    \(\iltikzfig{strings/structure/comonoid/discard}[comb]\),
+    \(\iltikzfig{strings/strictifiers/expand}[comb][m][n]\), and
+    \(\iltikzfig{strings/strictifiers/collapse}[comb][m][n]\).
+    We write \(\ccircsigma\) for the freely generated PROP
+    \(\smc{\generators[\ccirc{}]}\).
+\end{definition}
+
+Rectangular light blue generators are \emph{gates} for each gate symbol in the
+signature \(\Sigma\).
+The remaining generators are \emph{structural} generators for manipulating
+wires: these are present regardless of the signature.
+In order, they are for \emph{introducing} wires, \emph{forking}
+wires, \emph{joining} wires and \emph{stubbing} wires.
+
+\begin{example}
+    The gate generators of \(\ccirc{\belnapsignature}\) are \(
+        \iltikzfig{circuits/components/gates/and}
+    \), \(
+        \iltikzfig{circuits/components/gates/or}
+    \), and \(
+        \iltikzfig{circuits/components/gates/not}
+    \).
+\end{example}
+
+When drawing circuits, the coloured backgrounds of generators will often be
+omitted in the interests of clarity.
+Since the category is freely generated, morphisms are defined by
+juxtaposing the generators in a given signature sequentially or in parallel with
+each other, the symmetry \iltikzfig{strings/symmetric/symmetry}[comb] and the
+identity \iltikzfig{strings/category/identity}[comb].
+Arbitrary combinational circuit morphisms defined in this way are drawn as light
+boxes \iltikzfig{circuits/components/circuits/f}[f][comb][m][n].
+
+\begin{notation}\label{not:arbitrary-width-structure}
+    It is a simple exercise to define the structural generators, the identity
+    and symmetry on arbitrary bit inputs and outputs using the axioms of
+    symmetric monoidal categories.
+    In diagrams, these are drawn as their single-bit
+    counterparts:
+    \[
+        \iltikzfig{strings/structure/monoid/init}[comb][n]
+        \quad
+        \iltikzfig{strings/structure/comonoid/copy}[comb][n]
+        \quad
+        \iltikzfig{strings/structure/monoid/merge}[comb][n]
+        \quad
+        \iltikzfig{strings/structure/comonoid/discard}[comb][n]
+        \quad
+        \iltikzfig{strings/category/identity}[comb][n]
+        \quad
+        \iltikzfig{strings/symmetric/symmetry}[comb][m][n]
+    \]
+\end{notation}
+
+\section{Sequential circuits}
+
+Combinational circuits compute functions of their inputs, but have no internal
+state.
+Real-world circuits often involve \emph{delay} and \emph{feedback}: these are
+known as \emph{sequential circuits}.
+To model feedback, extra structure must be added to the category of
+combinational circuits in the form of a \emph{trace}.
+
+\begin{definition}[Symmetric traced monoidal category]
+    \cite{joyal1996traced}
+    A \emph{symmetric traced monoidal category}, often abbreviated as STMC, is a
+    symmetric monoidal category \(\mcc\) equipped with a family of functions
+    \(
+        \morph{
+            \trace{X}[A][B]{-}
+        }{
+            \mcc(X \tensor A, X \tensor B)
+        }{
+            \mcc(X, Y)
+        }
+    \) satisfying the axioms of STMCs:
+\end{definition}
+
+In string diagrams, the trace is represented by joining some of the
+inputs of a circuit to its outputs.
+
+\begin{center}
+    \(
+        \trace{x}[m][n]{\iltikzfig{strings/traced/trace-lhs}[f][comb][x][m][n]}
+        \stackrel{\text{def}}{=}
+        \iltikzfig{strings/traced/trace-rhs}[f][comb][m][n]
+    \)
+\end{center}
