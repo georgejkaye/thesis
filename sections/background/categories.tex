@@ -95,7 +95,7 @@ modelling processes.
     Consider the term \(f \seq \id[n]\), which can be read as `run \(f\) and
     then do nothing'.
     Since we are only concerned with the \emph{input-output} behaviour of
-    processes, this morally should be the same as just \(f\).
+    processes, this should be the same as just \(f\).
     However, as it stands \(f \seq \id[n]\) and \(f\) are not equal.
 \end{example}
 
@@ -155,12 +155,26 @@ We say that the above two diagrams \emph{commute} precisely because \(
     \id[B] \circ f = f \circ \id[A]
 \): no matter which path one takes, the results are equal.
 
+Categories generalise a plethora of mathematical structures: some examples will
+now be provided.
+
 \begin{example}[Preorder]
     A \emph{preorder} is a binary relation \(\leq\) on a set \(X\) which is
     reflexive and transitive.
     Any preorder generates a category \(\mcc_\leq\): the objects are the
     elements of \(X\) and \(\mcc_\leq(x, y)\) contains exactly one morphism if
     \(x \leq y\) and none otherwise.
+\end{example}
+
+\begin{example}[Monoid]
+    A \emph{monoid} is a tuple \((X, *, \varepsilon)\) where \(X\) is a set,
+    \(*\) is an associative operation \(X \times X \to X\), and
+    \(\varepsilon \in X\) is a \emph{unit}, i.e.
+    \(\varepsilon * x = x = x * \varepsilon\).
+    Any monoid generates a category with a single object \(X\); the morphisms
+    \(X \to X\) are the (partially applied) functions \(- * x\) for each
+    \(x \in X\).
+    The identity morphism is \(- * \varepsilon\).
 \end{example}
 
 \begin{example}[Category of sets]
@@ -368,9 +382,8 @@ we have the \emph{symmetries} for crossing over wires.
 \section{PROPs}
 
 We have described the categorical structure required to interpret the
-constructors for \(\generators\)-terms.
-Now we will describe the precise categorical setting in which we can model
-terms.
+constructors for \(\generators\)-terms: it is time to instantiate terms in a
+category of their own.
 
 \begin{definition}[Multi-sorted PROP~\cite{maclane1965categorical}]
     Given a set of \emph{sorts} \(\mcc\), a \(\mcc\)-sorted \emph{PROP}
@@ -379,7 +392,7 @@ terms.
     product as concatenation.
 \end{definition}
 
-Note that this definition means that the empty word \(\epsilon\) is the unit
+Note that this definition means that the empty word \(\varepsilon\) is the unit
 object in any \(\mcc\)-sorted PROP.
 As the domain and codomains of generators in \(\generators\) are words of
 natural numbers, it is clear to see how a multi-sorted PROP can be used for our
@@ -426,20 +439,19 @@ The identity on \(n\) is drawn as \(
 \) and the symmetry on \([m, n]\) is drawn as \(
     \iltikzfig{strings/symmetric/symmetry}[white][m][n]
 \).
-The special case of the identity on \(\epsilon\) is usually drawn as empty space
+The special case of the identity on \(\varepsilon\) is usually drawn as empty space
 \(
     \iltikzfig{strings/monoidal/empty}
 \); when it is necessary to indicate that a unit is being used in an equation
 then it will be drawn as a faded wire \(
-    \iltikzfig{strings/monoidal/unit-wire}[white][\epsilon]
+    \iltikzfig{strings/monoidal/unit-wire}[white][\varepsilon]
 \).
 Sometimes for clarity it will be advantageous to merge multiple wires into one,
 so \(\psi\) above can also be drawn as \(
     \iltikzfig{strings/category/generator}[\psi][white][[m,n]][p]
 \).
 
-Of course, this just syntax; rather than writing symbols we are drawing boxes
-instead.
+Of course, this is just syntax; instead of writing symbols we are drawing boxes.
 The power of string diagrams comes from the representation of composition as
 \emph{juxtaposition} rather than using \(\seq\) or \(\tensor\).
 Given two composite terms, drawn as wider boxes \(
@@ -468,20 +480,16 @@ This leads us to a formal definition of a string diagram.
     quotiented by the equations in \cref{fig:structural-equations}.
 \end{definition}
 
-
-
-Another advantage of the graphical notation is that, as long as the connectivity
-of boxes remains unchanged, we can deform diagrams as we please without altering
-the underlying term.
-
 \input{floats/structural-equations-strings}
 
 \section{Monoidal theories}
 
-However, these equations do not illustrate how the generators in \(\generators\)
-interact with each other, which is crucial for modelling and evaluating
-processes.
-We need to
+So far we have only concerned ourselves with \emph{structural} equations:
+equations that show how the same term can be constructed using different
+combinations of composition, tensor, the identity and symmetry.
+However, these only serve as a form of housekeeping: the true `computational
+content' of processes comes from equations that show how the generators interact
+with \emph{each other}.
 These equations are provided by a \emph{monoidal theory}.
 
 \begin{definition}[Monoidal theory]
