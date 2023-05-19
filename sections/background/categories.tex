@@ -166,17 +166,6 @@ now be provided.
     \(x \leq y\) and none otherwise.
 \end{example}
 
-\begin{example}[Monoid]
-    A \emph{monoid} is a tuple \((X, *, \varepsilon)\) where \(X\) is a set,
-    \(*\) is an associative operation \(X \times X \to X\), and
-    \(\varepsilon \in X\) is a \emph{unit}, i.e.
-    \(\varepsilon * x = x = x * \varepsilon\).
-    Any monoid generates a category with a single object \(X\); the morphisms
-    \(X \to X\) are the (partially applied) functions \(- * x\) for each
-    \(x \in X\).
-    The identity morphism is \(- * \varepsilon\).
-\end{example}
-
 \begin{example}[Category of sets]
     The category \(\set\) has sets as objects and functions as morphisms.
     Composition is then just function composition.
@@ -522,10 +511,13 @@ in which all of the equations are identified in this way.
 
 Note that when \(\equations\) is empty,
 \(\smc{\generators, \emptyset} = \smc{\generators}\).
-Monoidal theories can be used to reason with many structures in mathematics; we
-will now give such an example.
 
-\begin{example}\label{ex:frobenius}
+\subsection{Case study: commutative monoids}
+
+Monoidal theories can be used to reason with many structures in mathematics.
+One such structure is that of \emph{commutative monoids}.
+
+\begin{definition}[Commutative monoids]\label{def:commutative-monoid}
     The monoidal theory of
     \emph{commutative monoids} is \(
         (\generators[\cmon], \equations[\cmon])
@@ -550,7 +542,68 @@ will now give such an example.
         \iltikzfig{strings/structure/monoid/commutativity-rhs}
     \end{center}
     We write \(\cmon := \smc{\generators[\cmon], \equations[\cmon]}\).
-\end{example}
+\end{definition}
+
+The two generators of the theory are a \emph{multiplication} and a \emph{unit}.
+The equations describe the properties of the multiplication: it is unital with
+respect to the unit; it is associative; and it is commutative.
+These equations could be described textually, but the string diagrams provide
+intuitive visual interpretations; often it is insightful to reason
+\emph{diagrammatically}.
+
+\begin{lemma}[Right unitality]
+    \(
+        \iltikzfig{strings/structure/monoid/unitality-r-lhs}
+        =
+        \iltikzfig{strings/structure/monoid/unitality-r-rhs}
+    \) is a valid equation in \(\cmon\).
+\end{lemma}
+\begin{proof}
+    \(
+        \iltikzfig{strings/structure/monoid/unitality-r-lhs}
+        \eqaxioms[(\dagger)]
+        \iltikzfig{strings/structure/monoid/right-unitality/step-1}
+        =
+        \iltikzfig{strings/structure/monoid/unitality-l-lhs}
+        =
+        \iltikzfig{strings/structure/monoid/unitality-l-rhs}
+    \)
+\end{proof}
+
+Note that the first step \((\dagger)\) of the proof is performed solely by
+deforming the string diagram; recall that as connectivity is preserved this is
+still valid.
+While this proof was fairly simple, the same principles apply to reasoning about
+more complex terms.
+
+\begin{lemma}
+    \(
+        \iltikzfig{strings/structure/monoid/example/step-0}
+        =
+        \iltikzfig{strings/structure/monoid/example/step-7}
+    \)
+    is a valid equation in \(\cmon\).
+\end{lemma}
+\begin{proof}
+    \(
+        \iltikzfig{strings/structure/monoid/example/step-0}
+        =
+        \iltikzfig{strings/structure/monoid/example/step-1}
+        =
+        \iltikzfig{strings/structure/monoid/example/step-2}
+        =
+        \iltikzfig{strings/structure/monoid/example/step-3}
+        =
+        \\[1em]
+        \iltikzfig{strings/structure/monoid/example/step-4}
+        =
+        \iltikzfig{strings/structure/monoid/example/step-5}
+        =
+        \iltikzfig{strings/structure/monoid/example/step-6}
+        =
+        \iltikzfig{strings/structure/monoid/example/step-7}
+    \)
+\end{proof}
 
 \section{Related work}
 
