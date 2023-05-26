@@ -6,18 +6,25 @@ Processes are modelled as \emph{terms}.
 Before we can begin, the components that make up processes in a given system
 must be sepcified.
 
-\begin{notation}[Words]
+\begin{notation}[Word, word sum]
     Given a set \(X\), the set of words of elements of \(X\) is denoted
     \(\freemon{X}\).
-    Arbitrary words are written with an overline \(
+    Words are written \([x_0, x_1, x_2, \cdots, x_{n-1}]\); variables
+    representing arbitrary words are generally written with an overline \(
         \overline{x}, \overline{y}, \overline{z}... \in \freemon{X}
-    \); given two words \(\overline{x}, \overline{y}\), their concatenation is
+    \).
+    Given two words \(\overline{x}, \overline{y}\), their concatenation is
     denoted \(\overline{x}\overline{y}\).
+    Given a word \(\overline{x}\), its \emph{length} is denoted
+    \(\wordlen{\overline{x}}\); for \(i < \wordlen{\overline{x}}\), its
+    \(i\)\emph{th element} is denoted \(\overline{x}(i)\); and its
+    \emph{word sum}, denoted \(\wordsum{\overline{x}}\), is computed as
+    \(\Sigma_{i < |\overline{m}|}\overline{m}(i)\).
 \end{notation}
 
-\begin{definition}
+\begin{notation}
     Let \(\natplus\) be the set of non-zero natural numbers.
-\end{definition}
+\end{notation}
 
 \begin{definition}[Generators]
     A set of \emph{generators} is a set \(\generators\) equipped with two
@@ -44,12 +51,21 @@ Terms are defined by combining these primitives together.
         \end{bprooftree}
         \begin{bprooftree}
             \AxiomC{\phantom{\(\phi\)}}
-            \UnaryInfC{\(\morph{\id[n]}{[n]}{[n]} \in \sigmaterms\)}
+            \UnaryInfC{\(\morph{\id[\overline{n}]}{\overline{n}}{\overline{n}} \in \sigmaterms\)}
         \end{bprooftree}
+
+        \vspace{1em}
+
         \begin{bprooftree}
             \AxiomC{\phantom{\(\phi\)}}
             \UnaryInfC{\(
-                \morph{\swap{m}{n}}{[m,n]}{[n,m]} \in \sigmaterms
+                \morph{\swap{\overline{m}}{\overline{n}}}{\overline{m}\overline{n}}{\overline{n}{\overline{m}}} \in \sigmaterms
+            \)}
+        \end{bprooftree}
+        \begin{bprooftree}
+            \AxiomC{\(\wordsum{\overline{m}} = \wordsum{\overline{n}}\)}
+            \UnaryInfC{\(
+                \morph{\bundle{\overline{m}}{\overline{n}}}{\overline{m}}{\overline{n}} \in \sigmaterms
             \)}
         \end{bprooftree}
 
@@ -64,17 +80,18 @@ Terms are defined by combining these primitives together.
             \AxiomC{\(\morph{f}{\overline{m}}{\overline{n}} \in \sigmaterms\)}
             \AxiomC{\(\morph{g}{\overline{p}}{\overline{q}} \in \sigmaterms\)}
             \BinaryInfC{\(
-                \morph{f \tensor g}{\overline{m} \concat \overline{p}}{\overline{n} \concat \overline{q}} \in \sigmaterms
+                \morph{f \tensor g}{\overline{mp}}{\overline{nq}} \in \sigmaterms
             \)}
         \end{bprooftree}
     \end{center}
 \end{definition}
 
 \(\Sigma\)-terms are constructed recursively.
-There are three base cases: a generator from \(\generators\) with appropriate
+There are four base cases: a generator from \(\generators\) with appropriate
 inputs and outputs;
 an \emph{identity} for empty wires with no generators;
-and a \emph{symmetry} for swapping over two wires.
+a \emph{symmetry} for swapping over two wires;
+and a \emph{bundler} for reorganising lists of wires.
 The two inductive cases are called \emph{composition} and \emph{tensor}
 respectively.
 Intuitively, these can be thought of generating larger terms by sequencing
@@ -368,6 +385,11 @@ we have the \emph{symmetries} for crossing over wires.
     \) defined as the function that swaps elements of a pair.
 \end{example}
 
+\section{Bundlers}
+
+\cite{wilson2023string}
+\iltikzfig{strings/strictifiers/bundle}
+
 \section{PROPs}
 
 We have described the categorical structure required to interpret the
@@ -551,13 +573,13 @@ These equations could be described textually, but the string diagrams provide
 intuitive visual interpretations; often it is insightful to reason
 \emph{diagrammatically}.
 
-\begin{lemma}[Right unitality]
+\begin{example}[Right unitality]
     \(
         \iltikzfig{strings/structure/monoid/unitality-r-lhs}
         =
         \iltikzfig{strings/structure/monoid/unitality-r-rhs}
     \) is a valid equation in \(\cmon\).
-\end{lemma}
+\end{example}
 \begin{proof}
     \(
         \iltikzfig{strings/structure/monoid/unitality-r-lhs}
@@ -576,14 +598,14 @@ still valid.
 While this proof was fairly simple, the same principles apply to reasoning about
 more complex terms.
 
-\begin{lemma}
+\begin{example}
     \(
         \iltikzfig{strings/structure/monoid/example/step-0}
         =
         \iltikzfig{strings/structure/monoid/example/step-7}
     \)
     is a valid equation in \(\cmon\).
-\end{lemma}
+\end{example}
 \begin{proof}
     \(
         \iltikzfig{strings/structure/monoid/example/step-0}
