@@ -385,16 +385,12 @@ we have the \emph{symmetries} for crossing over wires.
     \) defined as the function that swaps elements of a pair.
 \end{example}
 
-\section{Bundlers}
-
-\cite{wilson2023string}
-\iltikzfig{strings/strictifiers/bundle}
-
 \section{PROPs}
 
-We have described the categorical structure required to interpret the
-constructors for \(\generators\)-terms: it is time to instantiate terms in a
-category of their own.
+We have described the categorical structure required to interpret five of the
+constructors listed in \cref{def:terms}; only the `bundlers'
+\(\bundle{\overline{m}}{\overline{n}}\) remain.
+However, to give these meaning we must consider a slightly
 
 \begin{definition}[Multi-sorted PROP~\cite{maclane1965categorical}]
     Given a set of \emph{sorts} \(\mcc\), a \(\mcc\)-sorted \emph{PROP}
@@ -425,6 +421,28 @@ These equations can be derived from the diagrams in
 are explicitly listed in \cref{fig:structural-equations}.
 
 \input{floats/structural-equations}
+
+\section{Interpreting the bundlers}
+
+In the context of PROPs, the bundler generators
+\(\bundle{\overline{m}}{\overline{n}}\) have a
+
+This framework was first proposed under the name \emph{strictifiers} in , however it can also be used in our strict case to translate be
+
+\begin{definition}[Bundled completion]
+    Given a multi-sorted PROP \(\mcc\), its \emph{bundled completion} is
+    a multi-sorted PROP \(\bundled{\mcc}\) with the same objects as \(\mcc\)
+    but equipped with additional natural isomorphisms \(
+        \bundleexpand{\overline{m}}{\overline{np}}
+        \colon \overline{m} \cong \overline{np}
+    \) and \(
+        \bundlecontract{\overline{m}}{\overline{np}}
+        \colon \overline{np} \cong \overline{p}
+    \),
+    for every \(\overline{m}, \overline{n}, \overline{p} \in \ob{\mcc}\) where
+    \(\wordsum{\overline{m}} = \wordsum{\overline{n}} + \wordsum{\overline{p}}\),
+    such that the following diagrams commute:
+\end{definition}
 
 \section{String diagrams}
 
