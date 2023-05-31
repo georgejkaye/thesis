@@ -379,6 +379,14 @@ we have the \emph{symmetries} for crossing over wires.
     \end{center}
 \end{definition}
 
+The lower equation (also known as the \emph{pentagon equation}) demonstrates
+how composite symmetries can be created from the primitive ones.
+For example, the composite symmetry \(
+    \morph{\swap{A}{B \tensor C}}{A \tensor (B \tensor C)}{(B \tensor C) \tensor A}
+\) is defined to be \(
+    \swap{A}{B} \tensor \id[C] \seq \id[B] \tensor \swap{A}{C}
+\).
+
 \begin{example}
     \(\set\) is a symmetric monoidal category, with \(
         \morph{\swap{A}{B}}{A \times B}{B \times A}
