@@ -28,7 +28,7 @@ must be sepcified.
 
 \begin{definition}[Generators]
     A set of \emph{generators} is a set \(\generators\) equipped with two
-    functions \(\morph{\dom,\cod}{\generators}{\natplus^\star}\).
+    functions \(\morph{\domw,\codw}{\generators}{\natplus^\star}\).
 \end{definition}
 
 Generators are the primitive building blocks of terms: their domains and
@@ -46,12 +46,12 @@ Terms are defined by combining these primitives together.
         \begin{bprooftree}
             \AxiomC{\(\phi \in \generators\)}
             \UnaryInfC{\(
-                \morph{\phi}{\dom[\phi]}{\cod[\phi]} \in \sigmaterms
+                \morph{\phi}{\domw[\phi]}{\codw[\phi]} \in \sigmaterms
             \)}
         \end{bprooftree}
         \begin{bprooftree}
             \AxiomC{\phantom{\(\phi\)}}
-            \UnaryInfC{\(\morph{\id[\overline{n}]}{\overline{n}}{\overline{n}} \in \sigmaterms\)}
+            \UnaryInfC{\(\morph{\id[n]}{[n]}{[n]} \in \sigmaterms\)}
         \end{bprooftree}
 
         \vspace{1em}
@@ -59,7 +59,7 @@ Terms are defined by combining these primitives together.
         \begin{bprooftree}
             \AxiomC{\phantom{\(\phi\)}}
             \UnaryInfC{\(
-                \morph{\swap{\overline{m}}{\overline{n}}}{\overline{m}\overline{n}}{\overline{n}{\overline{m}}} \in \sigmaterms
+                \morph{\swap{m}{n}}{[m,n]}{[n,m]} \in \sigmaterms
             \)}
         \end{bprooftree}
         \begin{bprooftree}
