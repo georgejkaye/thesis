@@ -100,7 +100,7 @@ subterms in sequence or parallel.
 \(\Sigma\)-terms will be abbreviated to `terms' when the signature is clear from
 context.
 
-\section{Structural equations}
+\section{Symmetric monoidal categories}
 
 So far, terms are purely syntax, and terms are only equal if they are
 constructed in precisely the same way.
@@ -188,8 +188,6 @@ now be provided.
     Composition is then just function composition.
 \end{example}
 
-\section{Monoidal categories}
-
 It is easy to see how processes can be viewed as morphisms: a morphism
 \(\morph{f}{A}{B}\) is a process that transforms some input of type \(A\) into
 an output of type \(B\).
@@ -202,131 +200,24 @@ outputs can only be single types of and there is no notion of parallelism.
 These issues can be allayed by adding structure to elevate a category into a
 \emph{monoidal} category, which has a notion of \emph{parallel} composition in
 addition to the already defined \emph{sequential} composition.
-The parallel composition structure can be added to a regular category by using
-another notion from category theory: that of a \emph{functor}.
-
-\begin{definition}[Functor]
-    Given two categories \(\mcc\) and \(\mcd\), a \emph{functor} \(
-        \morph{F}{\mcc}{\mcd}
-    \) maps objects and morphisms in \(\mcc\) to objects and morphisms in
-    \(\mcd\) such that
-    \begin{itemize}
-        \item \(F(\id[A]) = \id[FA]\) for every \(A \in \ob{\mcc})\); and
-        \item \(F(g \circ f) = F(g) \circ F(f)\) for every \(\morph{f}{A}{B}\)
-        and \(\morph{g}{B}{C}\).
-    \end{itemize}
-\end{definition}
-
-A functor \(F\) is a mapping between categories: it maps an object \(X\) in one
-category to an object \(FX\) in another, and morphisms \(\morph{f}{X}{Y}\) to
-\(\morph{Ff}{FX}{FY}\).
-
-\begin{definition}[Endofunctor]
-    An \emph{endofunctor} is a functor from a category to itself.
-\end{definition}
-
-\begin{definition}[Natural transformation]
-    Given two functors \(\morph{F, G}{\mcc}{\mcd}\), a
-    \emph{natural transformation} \(\morph{\eta}{F}{G}\) is a family of
-    morphisms \(
-        \eta_A \in \mor{\mcd}{FA}{GA}
-    \) called \emph{components} for each \(A \in \ob{\mcc}\) such that \(
-        \eta_B \circ Ff = Gf \circ \eta_A
-    \), i.e.\ the following diagram commutes:
-    \begin{center}
-        \includestandalone{figures/category/coherences/natural}
-    \end{center}
-\end{definition}
-
-The key point to take is that for functors \(\morph{F,G}{\mcc}{\mcd}\), a
-natural transformation \(\morph{\eta}{F}{G}\) is a \emph{family} of morphisms
-\(\morph{\eta_A}{FA}{GA} \in \mcd\) for each object \(A \in \mcd\).
-
-
-
-\begin{definition}[Product category]
-    Given two categories \(\mcc\) and \(\mcd\), their \emph{product category}
-    \(\mcc \times \mcd\) is the category with objects are defined as \(
-        \ob{(\mcc \times \mcd)} := \ob{\mcc} \times \ob{\mcd}
-    \) and the morphisms as \[
-        \mor{(\mcc \times \mcd)}{(A, A^\prime)}{(B, B^\prime)}
-        :=
-        \{
-            (f, f^\prime)
-            \,|\,
-            f \in \mor{\mcc}{A}{B},
-            f^\prime \in \mor{\mcd}{A^\prime}{B^\prime}
-        \}
-    \]
-\end{definition}
-
-\begin{definition}[Bifunctor]
-    A \emph{bifunctor} is a functor with a product category as its domain, i.e.\
-    a functor of the form \(\mcc \times \mcd \to \mce\).
-\end{definition}
-
-\begin{definition}[Isomorphism]
-    A morphism \(\morph{f}{A}{B} \in \mcc\) is called an \emph{isomorphism} (or
-    simply \emph{iso} for short) if there also exists a morphism \(
-        \morph{\inverse{f}}{B}{A} \in \mcc
-    \) such that \(
-        \inverse{f} \circ f = \id[A]
-    \) and \(
-        f \circ \inverse{f} = \id[B]
-    \).
-\end{definition}
-
-\begin{example}
-    A morphism in \(\set\) is an iso if and only if it is a bijection.
-\end{example}
-
-\begin{definition}[Natural isomorphism]
-    A natural transformation is called a \emph{natural isomorphism} if every
-    component is an isomorphism.
-\end{definition}
-
-We now have all the components necessary in order to define a monoidal category,
-a category with notions of both sequential and parallel composition.
 
 \begin{definition}[Monoidal category]
     \label{def:monoidal-category}
-    A \emph{monoidal category} is a category \(\mcc\) equipped with a
-    bifunctor \(\morph{{-} \tensor {=}}{\mcc \times \mcc}{\mcc}\) called the
-    \emph{tensor product} and an additional object \(I\) called the
-    \emph{monoidal unit},
-    along with natural isomorphisms
-    \begin{itemize}
-        \item \(
-            \associator{A}{B}{C}
-            \colon
-            A \tensor (B \tensor C)
-            \cong
-            (A \tensor B) \tensor C
-            \) called the \emph{associator};
-        \item \(
-            \leftunitor{A}
-            \colon
-            I \tensor A
-            \cong
-            A
-            \) called the \emph{left unitor}; and
-        \item \(
-            \rightunitor{A}
-            \colon
-            A \tensor I
-            \cong
-            A
-            \) called the \emph{right unitor}
-    \end{itemize}
-    such that the \emph{pentagon} and the \emph{triangle} diagrams below
-    commute:
-    \begin{center}
-        \includestandalone{figures/category/coherences/pentagon}
-
-        \vspace{1em}
-
-        \includestandalone{figures/category/coherences/triangle}
-    \end{center}
+    A \emph{(strict) monoidal category} is a category \(\mcc\) equipped with an
+    operational called the \emph{tensor product} and an additional object \(I\)
+    called the \emph{monoidal unit}, such that the following equations hold for
+    any morphisms \(f\), \(g\), \(h\) and \(k\):
+    \begin{gather*}
+        f \tensor \id[I] = f
+        \quad
+        \id[I] \tensor f = f
+        \quad
+        (f \tensor g) \tensor h = f \tensor (g \tensor h)
+        \\
+        (f \tensor g) \seq (h \tensor k) = (f \seq h) \tensor (f \seq k)
+        \quad
+        \id[A \tensor B] = \id[A] \tensor \id[B]
+    \end{gather*}
 \end{definition}
 
 We adopt the convention that \(f \tensor g \seq h \tensor k\) should be
@@ -339,53 +230,39 @@ in monoidal categories which will make this distinction redundant.
     \(\set\) is a monoidal category, with the tensor product defined as the
     Cartesian product (\(A \tensor B := A \times B\)) and the unit as the
     singleton set (\(I := \mathbbm{1}\)).
-    The natural isomorphisms are identities.
 \end{example}
 
-This situation where the natural isomorphisms are identities arises frequently,
-so it has its own name.
-
-\begin{definition}[Strict monoidal category]
-    A monoidal category is called \emph{strict} if the natural isomorphisms \(
-        \associator{A}{B}{C}
-    \), \(
-        \leftunitor{A}
-    \) and \(
-        \rightunitor{B}
-    \) are identities.
-\end{definition}
-
-We are generally only concerned with strict categories in this thesis.
-
-\section{Symmetric monoidal categories}
+\begin{remark}
+    This definition of monoidal category is a pared-down version compared to
+    what one may encounter in category theory textbooks, where there are notions
+    of \emph{associators} and \emph{unitors} floating around, and the last two
+    equations arise since the tensor is a \emph{bifunctor}.
+    Since we work in a much less general setting, we have chosen to omit these
+    finer details for a clearer presentation.
+\end{remark}
 
 We can now construct morphisms by composing them in sequence and in parallel.
-However, there is one more facet of processes that needs modelling: recall that
-we have the \emph{symmetries} for crossing over wires.
+The next construct to consider are the \emph{symmetries}.
 
 \begin{definition}[Symmetric monoidal category]
     \label{def:symmetric-monoidal-category}
     A \emph{symmetric monoidal category} (SMC) is a monoidal category \(\mcc\)
     equipped with natural isomorphisms \(
         \swap{A}{B} \colon A \tensor B \cong B \tensor A
-    \) such that the following diagrams commute:
-    \begin{center}
-        \includestandalone{figures/category/coherences/symmetry-unit}
-        \includestandalone{figures/category/coherences/symmetry-inverse}
-
-        \vspace{1em}
-
-        \includestandalone[scale=0.95]{figures/category/coherences/hexagon}
-    \end{center}
+    \) such that the following equations hold for any objects \(A\), \(B\) and
+    \(C\):
+    \begin{gather*}
+        \swap{A}{I} = \id[A]
+        \quad
+        \swap{I}{A} = \id[A]
+        \quad
+        \swap{A}{B} \seq \swap{B}{A} = \id[A \tensor B]
+        \quad
+        \swap{A}{B \tensor C}
+        =
+        \swap{A}{B} \tensor \id[C] \seq \id[B] \tensor \swap{A}{C}
+    \end{gather*}
 \end{definition}
-
-The lower equation (also known as the \emph{pentagon equation}) demonstrates
-how composite symmetries can be created from the primitive ones.
-For example, the composite symmetry \(
-    \morph{\swap{A}{B \tensor C}}{A \tensor (B \tensor C)}{(B \tensor C) \tensor A}
-\) is defined to be \(
-    \swap{A}{B} \tensor \id[C] \seq \id[B] \tensor \swap{A}{C}
-\).
 
 \begin{example}
     \(\set\) is a symmetric monoidal category, with \(
@@ -393,12 +270,13 @@ For example, the composite symmetry \(
     \) defined as the function that swaps elements of a pair.
 \end{example}
 
-\section{PROPs}
+\subsection{PROPs}
 
 We have described the categorical structure required to interpret five of the
 constructors listed in \cref{def:terms}; only the `bundlers'
 \(\bundle{\overline{m}}{\overline{n}}\) remain.
-However, to give these meaning we must consider a slightly
+However, to give these meaning we must consider a slightly more specialised
+setting; a subclass of symmetric monoidal categories known as \emph{PROPs}.
 
 \begin{definition}[Multi-sorted PROP~\cite{maclane1965categorical}]
     Given a set of \emph{sorts} \(\mcc\), a \(\mcc\)-sorted \emph{PROP}
@@ -424,9 +302,8 @@ The symmetric monoidal structure of \(\smc{\generators}\) means that
 \(\generators\)-terms are now subject to equations which show how the identity,
 symmetry, composition and tensor interact with each other and the generators in
 \(\generators\).
-These equations can be derived from the diagrams in
-\cref{def:category,def:monoidal-category,def:symmetric-monoidal-category}, and
-are explicitly listed in \cref{fig:structural-equations}.
+A summary of these equations, specialised for the case of \(\smc{\generators}\),
+is shown in \cref{fig:structural-equations}.
 
 \input{floats/structural-equations}
 
@@ -652,6 +529,91 @@ more complex terms.
         \iltikzfig{strings/structure/monoid/example/step-7}
     \)
 \end{proof}
+
+\section{Semantics}
+
+\begin{definition}[Functor]
+    Given two categories \(\mcc\) and \(\mcd\), a \emph{functor} \(
+        \morph{F}{\mcc}{\mcd}
+    \) maps objects and morphisms in \(\mcc\) to objects and morphisms in
+    \(\mcd\) such that
+    \begin{itemize}
+        \item \(F(\id[A]) = \id[FA]\) for every \(A \in \ob{\mcc})\); and
+        \item \(F(g \circ f) = F(g) \circ F(f)\) for every \(\morph{f}{A}{B}\)
+        and \(\morph{g}{B}{C}\).
+    \end{itemize}
+\end{definition}
+
+A functor \(F\) is a mapping between categories: it maps an object \(X\) in one
+category to an object \(FX\) in another, and morphisms \(\morph{f}{X}{Y}\) to
+\(\morph{Ff}{FX}{FY}\).
+
+\begin{definition}[Endofunctor]
+    An \emph{endofunctor} is a functor from a category to itself.
+\end{definition}
+
+\begin{definition}[Natural transformation]
+    Given two functors \(\morph{F, G}{\mcc}{\mcd}\), a
+    \emph{natural transformation} \(\morph{\eta}{F}{G}\) is a family of
+    morphisms \(
+        \eta_A \in \mor{\mcd}{FA}{GA}
+    \) called \emph{components} for each \(A \in \ob{\mcc}\) such that \(
+        \eta_B \circ Ff = Gf \circ \eta_A
+    \), i.e.\ the following diagram commutes:
+    \begin{center}
+        \includestandalone{figures/category/coherences/natural}
+    \end{center}
+\end{definition}
+
+The key point to take is that for functors \(\morph{F,G}{\mcc}{\mcd}\), a
+natural transformation \(\morph{\eta}{F}{G}\) is a \emph{family} of morphisms
+\(\morph{\eta_A}{FA}{GA} \in \mcd\) for each object \(A \in \mcd\).
+
+
+
+\begin{definition}[Product category]
+    Given two categories \(\mcc\) and \(\mcd\), their \emph{product category}
+    \(\mcc \times \mcd\) is the category with objects are defined as \(
+        \ob{(\mcc \times \mcd)} := \ob{\mcc} \times \ob{\mcd}
+    \) and the morphisms as \[
+        \mor{(\mcc \times \mcd)}{(A, A^\prime)}{(B, B^\prime)}
+        :=
+        \{
+            (f, f^\prime)
+            \,|\,
+            f \in \mor{\mcc}{A}{B},
+            f^\prime \in \mor{\mcd}{A^\prime}{B^\prime}
+        \}
+    \]
+\end{definition}
+
+\begin{definition}[Bifunctor]
+    A \emph{bifunctor} is a functor with a product category as its domain, i.e.\
+    a functor of the form \(\mcc \times \mcd \to \mce\).
+\end{definition}
+
+\begin{definition}[Isomorphism]
+    A morphism \(\morph{f}{A}{B} \in \mcc\) is called an \emph{isomorphism} (or
+    simply \emph{iso} for short) if there also exists a morphism \(
+        \morph{\inverse{f}}{B}{A} \in \mcc
+    \) such that \(
+        \inverse{f} \circ f = \id[A]
+    \) and \(
+        f \circ \inverse{f} = \id[B]
+    \).
+\end{definition}
+
+\begin{example}
+    A morphism in \(\set\) is an iso if and only if it is a bijection.
+\end{example}
+
+\begin{definition}[Natural isomorphism]
+    A natural transformation is called a \emph{natural isomorphism} if every
+    component is an isomorphism.
+\end{definition}
+
+We now have all the components necessary in order to define a monoidal category,
+a category with notions of both sequential and parallel composition.
 
 \section{Related work}
 
