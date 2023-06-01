@@ -54,19 +54,19 @@
         add to width=1.1mm,
         enlarge left by=-0.6mm}
     }
-    \newcommand{\colourbox}[2]{%
+    \newcommand{\setenvcolor}[2]{%
         \tcolorboxenvironment{#1}{shadedenv={#2}}
         \addtotheorempreheadhook[#1]{\tikzcdset{background color=#2}}
     }
-    \colourbox{theorem}{ShadeOfPurple}
-    \colourbox{lemma}{ShadeOfPurple}
-    \colourbox{proposition}{ShadeOfPurple}
-    \colourbox{corollary}{ShadeOfPurple}
-    \colourbox{definition}{ShadeOfYellow}
-    \colourbox{notation}{ShadeOfYellow}
-    \colourbox{example}{ShadeOfGreen}
-    \colourbox{remark}{ShadeOfBrown}
-    \colourbox{proof}{ShadeOfGray}
+    \setenvcolor{theorem}{ShadeOfPurple}
+    \setenvcolor{lemma}{ShadeOfPurple}
+    \setenvcolor{proposition}{ShadeOfPurple}
+    \setenvcolor{corollary}{ShadeOfPurple}
+    \setenvcolor{definition}{ShadeOfYellow}
+    \setenvcolor{notation}{ShadeOfYellow}
+    \setenvcolor{example}{ShadeOfGreen}
+    \setenvcolor{remark}{ShadeOfBrown}
+    \setenvcolor{proof}{ShadeOfGray}
 }{
     % Use closing symbols if we don't have colours
     \declaretheorem[sibling=equation]{theorem}
