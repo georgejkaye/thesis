@@ -121,6 +121,11 @@ equations?
 It turns out that an elegant mathematical formalism exists in the form of
 \emph{symmetric monoidal categories}.
 
+\subsection{Category}
+
+We begin by defining the structure underlying much of the work to come; that of
+a \emph{category}.
+
 \begin{definition}[Categories]
     \label{def:category}
     A \emph{category} \(\mcc\) consists of a class of \emph{objects}
@@ -158,6 +163,9 @@ It turns out that an elegant mathematical formalism exists in the form of
 A morphism \(f \in \mor{\mcc}{A}{B}\) is also called an \emph{arrow}, and will
 often be written \(\morph{f}{A}{B}\) accordingly.
 The subscripts on the object and morphism classes are also often omitted.
+
+\subsubsection{Commutative diagrams}
+
 Equations in category theory can be expressed using \emph{commutative diagrams}.
 For example, the unitality and associativity of composition can be illustrated
 as follows:
@@ -171,11 +179,18 @@ as follows:
 We say that the above two diagrams \emph{commute} precisely because \(
     \id[B] \circ f = f \circ \id[A]
 \): no matter which path one takes, the results are equal.
+When using commutative diagrams, another notation for composition
 
 \begin{notation}
     \emph{Diagrammtic order} composition is written as
     \(f \seq g := g \circ f\).
 \end{notation}
+
+The eagle-eyed reader may note this coincides with the notation for composition
+of terms (\cref{def:terms}): this is because we will be interpreting composition
+of terms as composition in a category.
+
+\subsubsection{Examples of categories}
 
 Categories generalise a plethora of mathematical structures: some examples will
 now be provided.
@@ -188,23 +203,148 @@ now be provided.
     \(x \leq y\) and none otherwise.
 \end{example}
 
-\begin{example}[Category of sets]
+\begin{example}[Sets]
     The category \(\set\) has sets as objects and functions as morphisms.
     Composition is then just function composition.
+    Compare this with the category \(\rel\), which has sets as objects and
+    \emph{relations} as morphisms
 \end{example}
 
-It is easy to see how processes can be viewed as morphisms: a morphism
-\(\morph{f}{A}{B}\) is a process that transforms some input of type \(A\) into
-an output of type \(B\).
-Composition allows us to string together multiple processes \(f, g, h\) in
-sequence to create a composite process \(f \seq g \seq h\), where we use
-\emph{diagrammatic order} composition \(f \seq g := g \circ f\).
+\begin{example}[Posets]
+    A \emph{partial order} on a set \(X\) is a reflexive, antisymmetric and
+    transitive relation \(\leq \subseteq X \times X\).
+    A set equipped with a partial order is called a
+    \emph{partially ordered set}, or \emph{poset} for short.
+    A function \(\morph{f}{X}{Y}\) between posets is called \emph{monotone} if
+    \(x \leq y\) implies that \(f(x) \leq f(y)\).
 
-However, these processes are not particularly interesting: the inputs and
-outputs can only be single types of and there is no notion of parallelism.
-These issues can be allayed by adding structure to elevate a category into a
-\emph{monoidal} category, which has a notion of \emph{parallel} composition in
-addition to the already defined \emph{sequential} composition.
+    Much like how sets form a category, posets form the category \(\pos\), where
+    \(\ob{\pos}\) are sets and \(\hom{\pos}{X}{Y}\) are the monotone functions
+    \(X \to Y\).
+\end{example}
+
+\begin{example}[Monoids]
+    A \emph{monoid} is a tuple \((X, *, \bullet)\) where \(X\) is a set called
+    the \emph{carrier}, \(\morph{*}{X \times X}{X}\) is a binary operation
+    called the \emph{multiplication}, and \(\bullet \in X\) is an element called
+    the \emph{unit}, such that \(x * \bullet = x = \bullet * x\) for any
+    \(x \in X\).
+    A \emph{monoid homomorphism} between two monoids \((X, *, e_X)\) and
+    \((Y, +, e_Y)\) is a map \(\morph{h}{X}{Y}\) such that
+    \(h(x * y) = h(x) + h(y)\) and \(h(e_X) = e_Y\).
+    There is a category \(\mon\) with the objects as monoids and morphisms as
+    their homomorphisms.
+\end{example}
+
+\subsection{Functors}
+
+It is actually quite rare that we are only making use of one category at a time.
+In order to compare categories, we need a notion of \emph{mapping between} them.
+A class of maps that enjoy some useful properties are known as \emph{functors}.
+
+\begin{definition}[Functor]
+    Given two categories \(\mcc\) and \(\mcd\), a \emph{functor} \(
+        \morph{F}{\mcc}{\mcd}
+    \) maps objects and morphisms in \(\mcc\) to objects and morphisms in
+    \(\mcd\) such that
+    \begin{itemize}
+        \item \(F(\id[A]) = \id[FA]\) for every \(A \in \ob{\mcc})\); and
+        \item \(F(g \circ f) = F(g) \circ F(f)\) for every \(\morph{f}{A}{B}\)
+        and \(\morph{g}{B}{C}\).
+    \end{itemize}
+\end{definition}
+
+A functor \(F\) maps an object \(X\) in one category to an object \(FX\) in
+another, and morphisms \(\morph{f}{X}{Y}\) to
+\(\morph{Ff}{FX}{FY}\).
+
+\begin{definition}[Endofunctor]
+    An \emph{endofunctor} is a functor from a category to itself.
+\end{definition}
+
+\begin{example}[Identity functor]
+    A trivial endofunctor for any category \(\mcc\) is the
+    \emph{identity functor} \(\morph{\idf}{\mcc}{\mcc}\) which acts as the
+    identity on objects and morphisms.
+\end{example}
+
+\begin{example}[Powerset functor]
+    The notion of powerset can be interpreted as an endofunctor \(
+        \morph{\powerset}{\set}{\set}
+    \), mapping a set \(X\) to its powerset \(\powerset(X)\) and a morphism
+    \(\morph{f}{X}{Y}\) to the function \(\powerset(X) \to \powerset(Y)\) which
+    applies \(f\) pointwise.
+\end{example}
+
+\begin{example}[List functor]\label{ex:list-functor}
+    A functor that crops up frequently in computer science is the
+    \emph{list functor} \(\morph{\listf}{\set}{\set}\), which sends a set
+    \(X\) to its set of lists \(\freemon{X}\), and sends a function
+    \(\morph{f}{X}{Y}\) to the function
+    \(\morph{\freemon{f}}{\freemon{X}}{\freemon{Y}}\): which applies \(f\)
+    to each element of a list.
+\end{example}
+
+\begin{example}[Free monoid]\label{ex:free-monoid}
+    When talking about a mathematical structure \(S\), there is often a notion
+    of the \emph{free \(S\)}, which can be viewed as the most `bare-bones'
+    version of \(S\).
+    For example. the set of lists \(\freemon{X}\) are the carrier of the
+    \emph{free monoid} on \(X\).
+    This means there is a functor \(\morph{F}{\set}{\mon}\) (the
+    \emph{free functor}) that acts on objects as \(
+        X \mapsto (\freemon{X}, \concat, [])
+    \) and sends morphisms \(X \to Y\) to the corresponding monoid homomorphism
+    \(\freemon{X} \to \freemon{Y}\).
+\end{example}
+
+\subsection{Natural transformations}
+
+As we have seen, functors are useful for mapping objects and morphisms from one
+category to another in a way that respects the underlying compositional
+structure.
+Of course, there may be many such functors \(\mcc \to \mcd\); the logical next
+step is to consider maps between functors themselves.
+These maps are known as \emph{natural transformations}.
+
+\begin{definition}[Natural transformation]
+    Given two functors \(\morph{F, G}{\mcc}{\mcd}\), a
+    \emph{natural transformation} \(\morph{\eta}{F}{G}\) is a family of
+    morphisms \(
+        \eta_A \in \mor{\mcd}{FA}{GA}
+    \) for each \(A \in \ob{\mcc}\), called the \emph{components} of \(\eta\),
+    such that \(
+        \eta_B \circ Ff = Gf \circ \eta_A
+    \), i.e.\ the following diagram commutes:
+    \begin{center}
+        \includestandalone{figures/category/coherences/natural}
+    \end{center}
+\end{definition}
+
+The key point to take is that for functors \(\morph{F,G}{\mcc}{\mcd}\), a
+natural transformation \(\morph{\eta}{F}{G}\) is a \emph{family} of morphisms
+\(\morph{\eta_A}{FA}{GA} \in \mcd\) for each object \(A \in \mcd\).
+Subsequently, one can think of a natural transformation as a way of inducing
+morphisms of a certain structure across an \emph{entire category}.
+
+\begin{example}[Singleton]
+    Recall the \(\listf\) functor from \cref{ex:list-functor}.
+    An example of a natural transformation is the
+    \emph{singleton transformation} \(\morph{[-]}{\idf}{\listf}\), which
+    induces a function \(\morph{[-]}{X}{\freemon{X}}\) for each set \(X\),
+    defined as \(x \mapsto [x]\).
+\end{example}
+
+\begin{example}[Reduce]
+
+\end{example}
+
+\subsection{Monoidal categories}
+
+We will now apply the concepts of functors and natural transformations in order
+to interpret \emph{parallel} composition \(\tensor\).
+A setting with both sequential and parallel composition can be modelled by a\
+\emph{monoidal category}.
 
 \begin{definition}[Monoidal category]
     \label{def:monoidal-category}
@@ -231,6 +371,10 @@ more strongly than \(\seq\).
 Later in this chapter we will provide an alternative notation for terms
 in monoidal categories which will make this distinction redundant.
 
+\begin{example}[Fold]
+
+\end{example}
+
 \begin{example}
     \(\set\) is a monoidal category, with the tensor product defined as the
     Cartesian product (\(A \tensor B := A \times B\)) and the unit as the
@@ -252,7 +396,7 @@ The next construct to consider are the \emph{symmetries}.
 \begin{definition}[Symmetric monoidal category]
     \label{def:symmetric-monoidal-category}
     A \emph{symmetric monoidal category} (SMC) is a monoidal category \(\mcc\)
-    equipped with natural isomorphisms \(
+    equipped with morphisms \(
         \swap{A}{B} \colon A \tensor B \cong B \tensor A
     \) such that the following equations hold for any objects \(A\), \(B\) and
     \(C\):
