@@ -296,6 +296,11 @@ another, and morphisms \(\morph{f}{X}{Y}\) to
         X \mapsto (\freemon{X}, \concat, [])
     \) and sends morphisms \(X \to Y\) to the corresponding monoid homomorphism
     \(\freemon{X} \to \freemon{Y}\).
+    There is also a \emph{forgetful} or \emph{underlying} functor
+    \(\morph{U}{\mon}{\set}\) which sends a monoid \((X, *, e)\) to its carrier
+    set \(X\) and `forgets' the monoid structure.
+    These functors form a relationship known as an \emph{adjunction}, but this
+    is beyond the scope of this thesis.
 \end{example}
 
 \subsection{Natural transformations}
@@ -336,7 +341,22 @@ morphisms of a certain structure across an \emph{entire category}.
 \end{example}
 
 \begin{example}[Reduce]
+    Recall the functors \(\morph{F}{\set}{\mon}\) and \(\morph{U}{\mon}{\set}\)
+    from \cref{ex:free-monoid}.
+    Functors can be composed just like morphisms can, so \(F \circ U\) is a
+    functor \(\mon \to \mon\): such a functor has action \(
+        (X, *, e) \mapsto (\freemon{X}, \concat, [])
+    \).
+    Subsequently, the component of a natural transformation \(
+        F \circ U \to \idf
+    \) at object \((X, *, e)\) is a monoid homomorphism \(
+        (\freemon{X}, \concat, []) \to (X, *, e)
+    \), i.e.\ a function \(\freemon{X} \to X\).
 
+    One example of such a natural transformation is the \emph{reduce} or
+    \emph{fold} operation, which takes a list in \(\freemon{X}\) and reduces it
+    to an element of \(X\) by starting with the unit \(e\) and multiplying it
+    with each element of the list in turn.
 \end{example}
 
 \subsection{Monoidal categories}
@@ -348,10 +368,48 @@ A setting with both sequential and parallel composition can be modelled by a\
 
 \begin{definition}[Monoidal category]
     \label{def:monoidal-category}
-    A \emph{(strict) monoidal category} is a category \(\mcc\) equipped with an
-    operational called the \emph{tensor product} and an additional object \(I\)
-    called the \emph{monoidal unit}, such that the following equations hold for
-    any morphisms \(f\), \(g\), \(h\) and \(k\):
+    A \emph{monoidal category} is a category \(\mcc\) equipped with a
+    bifunctor \(\morph{{-} \tensor {=}}{\mcc \times \mcc}{\mcc}\) called the
+    \emph{tensor product} and an additional object \(I\) called the
+    \emph{monoidal unit},
+    along with natural isomorphisms
+    \begin{itemize}
+        \item \(
+            \associator{A}{B}{C}
+            \colon
+            A \tensor (B \tensor C)
+            \cong
+            (A \tensor B) \tensor C
+            \) called the \emph{associator};
+        \item \(
+            \leftunitor{A}
+            \colon
+            I \tensor A
+            \cong
+            A
+            \) called the \emph{left unitor}; and
+        \item \(
+            \rightunitor{A}
+            \colon
+            A \tensor I
+            \cong
+            A
+            \) called the \emph{right unitor}
+    \end{itemize}
+    such that the \emph{pentagon} and the \emph{triangle} diagrams below
+    commute:
+    \begin{center}
+        \includestandalone{figures/category/coherences/pentagon}
+
+        \vspace{1em}
+
+        \includestandalone{figures/category/coherences/triangle}
+    \end{center}
+\end{definition}
+
+\begin{corollary}\label{cor:mc-equations}
+    The following equations hold in any monoidal category, given morphisms
+    \(f\), \(g\), \(h\) and \(k\):
     \begin{gather*}
         f \tensor \id[I] = f
         \quad
@@ -363,7 +421,7 @@ A setting with both sequential and parallel composition can be modelled by a\
         \quad
         \id[A \tensor B] = \id[A] \tensor \id[B]
     \end{gather*}
-\end{definition}
+\end{corollary}
 
 We adopt the convention that \(f \tensor g \seq h \tensor k\) should be
 bracketed as \((f \tensor g) \seq (h \tensor k)\), i.e.\ \(\tensor\) binds
