@@ -10,7 +10,7 @@ SOURCE=$(SECTIONS) $(REFS) $(FIGS) $(PROOFS) $(MACROS)
 
 main: main.pdf
 
-main.pdf: main.tex $(SOURCE)
+main.pdf:
 	latexmk -pdf $(basename $@).tex
 
 tidy:
