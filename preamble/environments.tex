@@ -64,7 +64,10 @@
     }}
     \newcommand{\setenvcolor}[2]{%
         \tcolorboxenvironment{#1}{shadedenv={#2}}
-        \addtotheorempreheadhook[#1]{\tikzcdset{background color=#2}}
+        \addtotheorempreheadhook[#1]{
+            \tikzcdset{background color=#2}
+            \renewcommand{\bgcolour}{#2}
+        }
     }
     \setenvcolor{theorem}{ShadeOfPurple}
     \setenvcolor{lemma}{ShadeOfPurple}
