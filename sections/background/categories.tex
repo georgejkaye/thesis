@@ -287,6 +287,56 @@ There is also a categorical generalisation of \emph{invertible} morphisms.
     isomorphisms are the surjective functions.
 \end{example}
 
+\subsection{String diagrams}
+
+Since composition is associative in a category, we can drop any brackets around
+terms like \(
+    f \seq ((g \seq h) \seq k)
+\) and simply write them as \(
+    f \seq g \seq h \seq k
+\), which is much easier to read.
+However, as we add more structure in the upcoming sections the textual
+descriptions will quickly become indecipherable.
+Therefore, it is useful to consider an alternative \emph{graphical} notation
+known as \emph{string diagrams}~\cite{joyal1991geometry}.
+In a string diagram, a morphism \(\morph{f}{A}{B}\) is drawn as a box \(
+    \iltikzfig{strings/category/f}[f][white][A][B]
+\), and the identity \(\morph{\id[A]}{A}{A}\) is drawn as a wire \(
+    \iltikzfig{strings/category/identity}[white][A]
+\).
+Composition is depicted as \emph{horizontal juxtaposition}. \[
+    \iltikzfig{strings/category/f}[f][white][A][B]
+    \seq
+    \iltikzfig{strings/category/f}[g][white][B][C] :=
+    \iltikzfig{strings/category/composition}[f][g][white][A][B][C]
+\]
+The power of string diagrams comes from how they `absorb' the equations of a
+category. \[
+    \iltikzfig{strings/category/identity-l-lhs}[f][white][A]
+    =
+    \iltikzfig{strings/category/f}[f][white][A][B]
+    \quad
+    \iltikzfig{strings/category/identity-r-lhs}[f][white][A][B]
+    =
+    \iltikzfig{strings/category/f}[f][white]
+    \quad
+    \iltikzfig{strings/category/associativity-lhs}[f][g][h][white][A][C]
+    =
+    \iltikzfig{strings/category/associativity-rhs}[f][g][h][white][A][C]
+\]
+Aside from being convenient from a notational point of view, the diagrams are
+also far more intuitive!
+The extra structure we will introduce later also has an elegant graphical
+interpretation, which will make understanding terms and equations much easier.
+
+\begin{remark}
+    The direction that the `flow' of string diagrams travels from inputs to
+    outputs is a hotly-debated topic; in this thesis we adopt the left-to-right
+    approach.
+    If you prefer another, you could rotate the document by ninety degrees or
+    use a mirror.
+\end{remark}
+
 \subsection{Functors}
 
 It is actually quite rare that we are only making use of one category at a time.
@@ -516,6 +566,30 @@ category in terms of equations.
 \begin{proof}
 
 \end{proof}
+
+
+\begin{gather*}
+    \iltikzfig{strings/monoidal/unit-l-lhs}[f][white][A][B]
+    =
+    \iltikzfig{strings/category/f}[f][white][A][B]
+    \quad
+    \iltikzfig{strings/monoidal/unit-r-lhs}[f][white][A][B]
+    =
+    \iltikzfig{strings/category/f}[f][white][A][B]
+    \quad
+    \iltikzfig{strings/monoidal/associativity-lhs}[f][g][h][white]
+    =
+    \iltikzfig{strings/monoidal/associativity-rhs}[f][g][h][white]
+    \\[0.5em]
+    \iltikzfig{strings/monoidal/identity-tensor-lhs}[white][\overline{m}][\overline{n}]
+    =
+    \iltikzfig{strings/category/identity}[white][\overline{mn}]
+    \quad
+    \iltikzfig{strings/monoidal/interchange-lhs}[f][g][h][k][white]
+    =
+    \iltikzfig{strings/monoidal/interchange-rhs}[f][g][h][k][white]
+\end{gather*}
+
 
 We can now construct morphisms by composing them in sequence and in parallel.
 The next construct to consider are the \emph{symmetries}.
