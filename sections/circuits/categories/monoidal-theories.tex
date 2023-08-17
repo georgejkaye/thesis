@@ -1,0 +1,133 @@
+\section{Monoidal theories}
+
+So far we have only concerned ourselves with \emph{structural} equations:
+equations that show how the same term can be constructed using different
+combinations of composition, tensor, the identity and symmetry.
+However, these only serve as a form of housekeeping: the true `computational
+content' of processes comes from equations that show how the generators interact
+with \emph{each other}.
+These equations are provided by a \emph{monoidal theory}.
+
+\begin{definition}[Monoidal theory]
+    A \emph{monoidal theory} is a tuple \((\generators, \equations)\) where
+    \(\generators\) is a set of generators and \(\equations\) is a set of
+    equations.
+\end{definition}
+
+An equation \(f = g\) in a monoidal theory \emph{identifies} the two morphisms
+\(f\) and \(g\).
+When reasoning with a monoidal theory, we therefore need to work in a category
+in which all of the equations are identified in this way.
+
+\begin{definition}[Quotient category]
+    Given a category \(\mathbf{C}\) and a set of equations \(\mce\) between
+    morphisms in \(\mathbf{C}\) with the same source and target, the
+    \emph{quotient category} \(\mathbf{C} / \mce\) is the category in which
+    \(\ob{(\mathbf{C} / \mce)} := \ob{\mathbf{C}}\) and \(
+            \mor{(\mathbf{C} / \mce)}{X}{Y}
+            :=
+            \mor{\mathbf{C}}{X}{Y} / \mce
+    \): i.e.\ morphisms are the \emph{equivalence classes} of morphisms
+    modulo \(\mce\).
+\end{definition}
+
+\begin{definition}
+    Given a monoidal theory \((\generators, \equations)\), let
+    \(\smc{\generators, \equations} := \smc{\generators} / \equations\).
+\end{definition}
+
+Note that when \(\equations\) is empty,
+\(\smc{\generators, \emptyset} = \smc{\generators}\).
+
+\subsection{Case study: commutative monoids}
+
+Monoidal theories can be used to reason with many structures in mathematics.
+One such structure is that of \emph{commutative monoids}.
+
+\begin{definition}[Commutative monoids]\label{def:commutative-monoid}
+    The monoidal theory of
+    \emph{commutative monoids} is \(
+        (\generators[\cmon], \equations[\cmon])
+    \), where \(
+        \generators[\cmon] := \{
+            \iltikzfig{strings/structure/monoid/merge}[white],
+            \iltikzfig{strings/structure/monoid/init}[white]
+        \}
+    \) representing the \emph{multiplication} and the \emph{unit} respectively,
+    and \(\equations[\frob]\) comprises the equations
+    \begin{center}
+        \iltikzfig{strings/structure/monoid/unitality-l-lhs}
+        \(=\)
+        \iltikzfig{strings/structure/monoid/unitality-l-rhs}
+        \quad
+        \iltikzfig{strings/structure/monoid/associativity-lhs}
+        \(=\)
+        \iltikzfig{strings/structure/monoid/associativity-rhs}
+        \quad
+        \iltikzfig{strings/structure/monoid/commutativity-lhs}
+        \(=\)
+        \iltikzfig{strings/structure/monoid/commutativity-rhs}
+    \end{center}
+    We write \(\cmon := \smc{\generators[\cmon], \equations[\cmon]}\).
+\end{definition}
+
+The two generators of the theory are a \emph{multiplication} and a \emph{unit}.
+The equations describe the properties of the multiplication: it is unital with
+respect to the unit; it is associative; and it is commutative.
+These equations could be described textually, but the string diagrams provide
+intuitive visual interpretations; often it is insightful to reason
+\emph{diagrammatically}.
+
+\begin{example}[Right unitality]
+    \(
+        \iltikzfig{strings/structure/monoid/unitality-r-lhs}
+        =
+        \iltikzfig{strings/structure/monoid/unitality-r-rhs}
+    \) is a valid equation in \(\cmon\).
+\end{example}
+\begin{proof}
+    \(
+        \iltikzfig{strings/structure/monoid/unitality-r-lhs}
+        \eqaxioms[(\dagger)]
+        \iltikzfig{strings/structure/monoid/right-unitality/step-1}
+        =
+        \iltikzfig{strings/structure/monoid/unitality-l-lhs}
+        =
+        \iltikzfig{strings/structure/monoid/unitality-l-rhs}
+    \)
+\end{proof}
+
+Note that the first step \((\dagger)\) of the proof is performed solely by
+deforming the string diagram; recall that as connectivity is preserved this is
+still valid.
+While this proof was fairly simple, the same principles apply to reasoning about
+more complex terms.
+
+\begin{example}
+    \(
+        \iltikzfig{strings/structure/monoid/example/step-0}
+        =
+        \iltikzfig{strings/structure/monoid/example/step-7}
+    \)
+    is a valid equation in \(\cmon\).
+\end{example}
+\begin{proof}
+    \(
+        \iltikzfig{strings/structure/monoid/example/step-0}
+        =
+        \iltikzfig{strings/structure/monoid/example/step-1}
+        =
+        \iltikzfig{strings/structure/monoid/example/step-2}
+        =
+        \iltikzfig{strings/structure/monoid/example/step-3}
+        =
+        \\[1em]
+        \iltikzfig{strings/structure/monoid/example/step-4}
+        =
+        \iltikzfig{strings/structure/monoid/example/step-5}
+        =
+        \iltikzfig{strings/structure/monoid/example/step-6}
+        =
+        \iltikzfig{strings/structure/monoid/example/step-7}
+    \)
+\end{proof}

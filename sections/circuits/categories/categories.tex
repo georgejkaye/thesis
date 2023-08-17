@@ -1,0 +1,182 @@
+\section{Categories}
+
+So far, terms are purely syntax, and terms are only equal if they are
+constructed in precisely the same way.
+Even without considering the interaction of generators with each other, there
+are numerous `structural equations' which need to hold to be useful for
+modelling processes.
+
+\begin{example}
+    Consider the term \(f \seq \id[n]\), which can be read as `run \(f\) and
+    then do nothing'.
+    Since we are only concerned with the \emph{input-output} behaviour of
+    processes, this should be the same as just \(f\).
+    However, as it stands \(f \seq \id[n]\) and \(f\) are not equal.
+\end{example}
+
+One could just add all the `right' equations manually, but what are the `right'
+equations?
+It turns out that an elegant mathematical formalism exists in the form of
+\emph{symmetric monoidal categories}.
+
+We begin by defining the structure underlying much of the work to come; that of
+a \emph{category}.
+
+\begin{definition}[Categories]
+    \label{def:category}
+    A \emph{category} \(\mcc\) consists of a class of \emph{objects}
+    \(\ob{\mcc}\); a class of \emph{morphisms} \(\mor{\mcc}{A}{B}\)
+    for every pair of objects \(A, B \in \ob{\mcc}\); and a \emph{composition}
+    operation \(
+        \morph{
+            {-} \circ {=}
+        }{
+            \mor{\mcc}{B}{C} \times \mor{\mcc}{A}{B}
+        }{
+            \mor{\mcc}{A}{C}
+        }
+    \) such that
+    \begin{itemize}
+        \item composition is \emph{unital}: for every \(
+                    A \in \ob{\mcc}
+                \) there exists an \emph{identity morphism} \(
+                    \id[A] \in \mor{\mcc}{A}{A}
+                \) satisfying \(
+                    f \circ \id[A] = f = \id[B] \circ f
+                \) for any \(
+                    f \in \mor{\mcc}{A}{B}
+                \); and
+        \item composition is \emph{associative}: for any morphisms \(
+                    f \in \mor{\mcc}{A}{B}
+                \), \(
+                    g \in \mor{\mcc}{B}{C}
+                \) and \(h \in \mor{\mcc}{C}{D}\), \(
+                    (h \circ g) \circ f = h \circ (g \circ f).
+                \)
+    \end{itemize}
+\end{definition}
+
+A morphism \(f \in \mor{\mcc}{A}{B}\) is also called an \emph{arrow}, and will
+often be written \(\morph{f}{A}{B}\) accordingly.
+The subscripts on the object and morphism classes are also often omitted.
+
+\subsubsection{Commutative diagrams}
+
+Equations in category theory can be expressed using \emph{commutative diagrams}.
+For example, the unitality and associativity of composition can be illustrated
+as follows:
+
+\begin{center}
+    \includestandalone{figures/category/coherences/unitality}
+    \quad
+    \includestandalone{figures/category/coherences/associativity}
+\end{center}
+
+We say that the above two diagrams \emph{commute} precisely because \(
+    \id[B] \circ f = f = f \circ \id[A]
+\) and \((h \circ g) \circ f = h \circ (g \circ f)\): no matter which path one
+takes, the results are equal.
+Using commutative diagrams suggests another notation for composition.
+
+\begin{notation}
+    \emph{Diagrammtic order} composition is written as
+    \(f \seq g := g \circ f\).
+\end{notation}
+
+\subsubsection{Examples of categories}
+
+Categories generalise a plethora of mathematical structures: some examples will
+now be provided.
+
+\begin{example}[Preorder]
+    A \emph{preorder} is a binary relation \(\leq\) on a set \(X\) which is
+    reflexive and transitive.
+    Any preorder generates a category \(\mcc_\leq\): the objects are the
+    elements of \(X\) and \(\mcc_\leq(x, y)\) contains exactly one morphism if
+    \(x \leq y\) and none otherwise.
+\end{example}
+
+\begin{example}[Sets]
+    The category \(\set\) has sets as objects and functions as morphisms.
+    Composition is then just function composition.
+    Note that the monomorphisms of \(\set\) are the injective functions and the
+    isomorphisms the bijective functions.
+    Compare this with the category \(\rel\), which has sets as objects and
+    \emph{relations} as morphisms.
+\end{example}
+
+\begin{example}[Posets]
+    A \emph{partial order} on a set \(X\) is a reflexive, antisymmetric and
+    transitive relation \(\leq \subseteq X \times X\).
+    A set equipped with a partial order is called a
+    \emph{partially ordered set}, or \emph{poset} for short.
+    A function \(\morph{f}{X}{Y}\) between posets is called \emph{monotone} if
+    \(x \leq y\) implies that \(f(x) \leq f(y)\).
+
+    Much like how sets form a category, posets form the category \(\pos\), where
+    \(\ob{\pos}\) are sets and \(\hom{\pos}{X}{Y}\) are the monotone functions
+    \(X \to Y\).
+\end{example}
+
+\begin{example}[Monoids]
+    A \emph{monoid} is a tuple \((X, *, \bullet)\) where \(X\) is a set called
+    the \emph{carrier}, \(\morph{*}{X \times X}{X}\) is a binary operation
+    called the \emph{multiplication}, and \(\bullet \in X\) is an element called
+    the \emph{unit}, such that \(x * \bullet = x = \bullet * x\) for any
+    \(x \in X\).
+    A \emph{monoid homomorphism} between two monoids \((X, *, e_X)\) and
+    \((Y, +, e_Y)\) is a map \(\morph{h}{X}{Y}\) such that
+    \(h(x * y) = h(x) + h(y)\) and \(h(e_X) = e_Y\).
+    There is a category \(\mon\) with the objects as monoids and morphisms as
+    their homomorphisms.
+\end{example}
+
+\begin{example}[Product category]
+    Given two categories \(\mcc\) and \(\mcd\), their \emph{product category}
+    \(\mcc \times \mcd\) is the category with objects are defined as \(
+        \ob{(\mcc \times \mcd)} := \ob{\mcc} \times \ob{\mcd}
+    \) and the morphisms as \[
+        \mor{(\mcc \times \mcd)}{(A, A^\prime)}{(B, B^\prime)}
+        :=
+        \{
+            (f, f^\prime)
+            \,|\,
+            f \in \mor{\mcc}{A}{B},
+            f^\prime \in \mor{\mcd}{A^\prime}{B^\prime}
+        \}
+    \]
+\end{example}
+
+\subsubsection{Properties of morphisms}
+
+When using category theory as a tool for reasoning, often the objects are not
+particular interesting: it is the \emph{morphisms} that hold the useful
+information.
+There are many properties that morphsims can hold; we will detail two which will
+be useful in this thesis.
+
+\begin{definition}[Monomorphism]
+    A morphism \(\morph{f}{A}{B} \in \mcc\) is called a \emph{monomorphism} (or
+    simply \emph{mono} for short) if for any two morphisms
+    \(\morph{g_1,g_2}{C}{A}\), if \(f \circ g_1 = f \circ g_2\), then
+    \(g_1 = g_2\).
+\end{definition}
+
+One can think of monomorphisms are \emph{left-cancellative} morphisms.
+There is also a categorical generalisation of \emph{invertible} morphisms.
+
+\begin{definition}[Isomorphism]
+    A morphism \(\morph{f}{A}{B} \in \mcc\) is called an \emph{isomorphism} (or
+    simply \emph{iso} for short) if there also exists a morphism \(
+        \morph{\inverse{f}}{B}{A} \in \mcc
+    \) such that \(
+        \inverse{f} \circ f = \id[A]
+    \) and \(
+        f \circ \inverse{f} = \id[B]
+    \).
+\end{definition}
+
+\begin{example}
+    In \(\set\), the monomorphisms are the injective functions and the
+    isomorphisms are the surjective functions.
+\end{example}

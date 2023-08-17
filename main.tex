@@ -40,10 +40,15 @@
 
 \mainmatter%
 
+\include{sections/intro}
+
 \part{Digital circuits}
 
-\include{sections/background/categories}
-\include{sections/circuits/circuits}
+\include{sections/circuits/categories/index}
+
+\include{sections/circuits/syntax}
+\include{sections/circuits/semantics}
+\include{sections/circuits/mealy}
 \include{sections/circuits/synthesis}
 \include{sections/circuits/equational}
 
@@ -51,11 +56,25 @@
 
 \include{sections/graphs/hypergraphs}
 \include{sections/graphs/interpretation}
+\include{sections/graphs/trace}
 \include{sections/graphs/rewriting}
+
+\part{Applications}
+
+\include{sections/applications/applications}
+
+% This should be after hdl, but for some reason it needs to be here
+\addtocontents{toc}{\bigskip}
+
+\include{sections/applications/hdl}
+
+
+\bookmarksetup{startatroot}
 
 \include{sections/conclusion}
 
 \backmatter%
+
 \printbibliography[heading=bibintoc]%
 \printnomenclature%
 \printindex

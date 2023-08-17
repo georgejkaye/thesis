@@ -1,0 +1,40 @@
+\subsection{String diagrams}
+
+Since composition is associative in a category, we can drop any brackets around
+terms like \(
+    f \seq ((g \seq h) \seq k)
+\) and simply write them as \(
+    f \seq g \seq h \seq k
+\), which is much easier to read.
+However, as we add more structure in the upcoming sections the textual
+descriptions will quickly become indecipherable.
+Therefore, it is useful to consider an alternative \emph{graphical} notation
+known as \emph{string diagrams}~\cite{joyal1991geometry}.
+In a string diagram, a morphism \(\morph{f}{A}{B}\) is drawn as a box \(
+    \iltikzfig{strings/category/f}[f][white][A][B]
+\), and the identity \(\morph{\id[A]}{A}{A}\) is drawn as a wire \(
+    \iltikzfig{strings/category/identity}[white][A]
+\).
+Composition is depicted as \emph{horizontal juxtaposition}. \[
+    \iltikzfig{strings/category/f}[f][white][A][B]
+    \seq
+    \iltikzfig{strings/category/f}[g][white][B][C] :=
+    \iltikzfig{strings/category/composition}[f][g][white][A][B][C]
+\]
+The power of string diagrams comes from how they `absorb' the equations of a
+category, as shown in \cref{fig:c-equations}.
+
+\input{floats/c-equations}
+
+Aside from being convenient from a notational point of view, the diagrams are
+also far more intuitive!
+The extra structure we will introduce later also has an elegant graphical
+interpretation in the string diagram notation.
+
+\begin{remark}
+    The direction that the `flow' of string diagrams travels from inputs to
+    outputs is a hotly-debated topic; in this thesis we adopt the left-to-right
+    approach.
+    If you prefer another, you could rotate the document by ninety degrees or
+    use a mirror.
+\end{remark}

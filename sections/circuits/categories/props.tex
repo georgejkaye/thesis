@@ -1,0 +1,33 @@
+\subsection{PROPs}
+
+We have described the categorical structure required to interpret five of the
+constructors listed in \cref{def:terms}; only the `bundlers'
+\(\bundle{\overline{m}}{\overline{n}}\) remain.
+However, to give these meaning we must consider a slightly more specialised
+setting; a subclass of symmetric monoidal categories known as \emph{PROPs}.
+
+\begin{definition}[Multi-sorted PROP~\cite{maclane1965categorical}]
+    Given a set of \emph{sorts} \(\mcc\), a \(\mcc\)-sorted \emph{PROP}
+    (category of \emph{PRO}ducts and \emph{P}ermutations) is a strict symmetric
+    monoidal category with the objects as words in \(\freemon{\mcc}\) and tensor
+    product as concatenation.
+\end{definition}
+
+Note that this definition means that the empty word \(\varepsilon\) is the unit
+object in any \(\mcc\)-sorted PROP.
+As the domain and codomains of generators in \(\generators\) are words of
+natural numbers, it is clear to see how a multi-sorted PROP can be used for our
+scenario.
+
+\begin{definition}\label{def:freely-generated-prop}
+    Given a set of generators \(\generators\), let \(\smc{\generators}\) be the
+    \(\natplus\)-sorted PROP where \(
+        \smc{\generators}(\overline{m}, \overline{n})
+    \) is the set of \(\Sigma\)-terms of type \(\overline{m} \to \overline{n}\).
+\end{definition}
+
+The symmetric monoidal structure of \(\smc{\generators}\) means that
+\(\generators\)-terms are now subject to the equations listed in
+\cref{fig:structural-equations-strings}
+
+\input{floats/structural-equations-strings}

@@ -1,0 +1,67 @@
+\subsection{Interpreting the bundlers}
+
+In the context of \(\natplus\)-sorted PROPs, the bundler generators
+\(\bundle{\overline{m}}{\overline{n}}\) have an interpretation as morphisms
+\(\overline{m} \to \overline{n}\) where the source and target words have the
+same sum, but constructed in a different way, such as \([1,2] \to [2,1]\).
+These constructs were first proposed by Wilson et al in~\cite{wilson2023string}
+as a notation for \emph{non-strict categories}.
+However, it is also noted that it could be used in the strict case as a way of
+grouping and splitting wires.
+We present a slight variation of their construction specialised for
+\(\natplus\)-sorted PROPs.
+
+\begin{definition}[Bundled PROP]
+    Given a \(\natplus\)-sorted PROP \(\mcc\), its \emph{bundled PROP} is
+    a \(\natplus\)-sorted PROP \(\bundled{\mcc}\) with the same objects as
+    \(\mcc\) but equipped with additional generators \(
+        \morph{\bundleexpand{n}}{n}{1^n}
+    \) and \(
+        \morph{\bundlecontract{n}}{1^n}{n}
+    \),
+    for every \(n \in \natplus\), such that \(\bundleexpand{n}\) and
+    \(\bundlecontract{n}\) are inverses, i.e.\ \(
+        \bundleexpand{n} \seq \bundlecontract{n} = \id[n]
+    \) and \(
+        \bundlecontract{n} \seq \bundleexpand{n} = \id[1^n]
+    \).
+\end{definition}
+
+From these primitive generators, we can inductively define bundlers for
+larger lists of wires.
+
+\begin{definition}[Composite bundlers]
+    For a list \(\overline{m} \in \natplus^\star\), the \emph{composite bundles}
+    are defined as follows:
+    \begin{gather*}
+        \morph{
+            \bundleexpand{\overline{m}}
+        }{
+            \overline{m}
+        }{
+            1^{\wordsum{\overline{m}}}
+        }
+        :=
+        \bigtensor_{n \in \overline{m}} \bundleexpand{n}
+        \quad
+        \morph{
+            \bundlecontract{\overline{m}}
+        }{
+            1^{\wordsum{\overline{m}}}
+        }{
+            \overline{m}
+        }
+        :=
+        \bigtensor_{n \in \overline{m}} \bundlecontract{n}
+        \quad
+        \morph{
+            \bundle{\overline{m}}{\overline{n}}
+        }{
+            \overline{m}
+        }{
+            \overline{n}
+        }
+        :=
+        \bundleexpand{\overline{m}} \seq \bundlecontract{\overline{n}}
+    \end{gather*}
+\end{definition}

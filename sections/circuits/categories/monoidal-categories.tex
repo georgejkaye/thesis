@@ -1,0 +1,127 @@
+\section{Monoidal categories}
+
+We will now apply the concepts of functors and natural transformations in order
+to interpret \emph{parallel} composition \(\tensor\).
+A setting with both sequential and parallel composition can be modelled by a
+\emph{monoidal category}.
+
+\begin{definition}[Bifunctor]
+    A \emph{bifunctor} is a functor with a product category as its domain, i.e.\
+    a functor of the form \(\mcc \times \mcd \to \mce\).
+\end{definition}
+
+We adapt the notation of functorial boxes to show how bifunctors map from two
+categories into one.
+\[
+    \iltikzfig{strings/category/functors/bif}[f][g][white][F][X][Y][Z][W]
+\]
+The diagrammatic notation suggests that a bifunctor is exactly what we need to
+model parallel composition!
+
+\begin{definition}[Monoidal category]
+    \label{def:monoidal-category}
+    A \emph{monoidal category} is a category \(\mcc\) equipped with a
+    bifunctor \(\morph{{-} \tensor {=}}{\mcc \times \mcc}{\mcc}\) called the
+    \emph{tensor product} and an additional object \(I\) called the
+    \emph{monoidal unit},
+    along with natural isomorphisms
+    \begin{itemize}
+        \item \(
+            \associator{A}{B}{C}
+            \colon
+            A \tensor (B \tensor C)
+            \cong
+            (A \tensor B) \tensor C
+            \) called the \emph{associator};
+        \item \(
+            \leftunitor{A}
+            \colon
+            I \tensor A
+            \cong
+            A
+            \) called the \emph{left unitor}; and
+        \item \(
+            \rightunitor{A}
+            \colon
+            A \tensor I
+            \cong
+            A
+            \) called the \emph{right unitor}
+    \end{itemize}
+    such that the \emph{pentagon} and the \emph{triangle} diagrams below
+    commute:
+    \begin{center}
+        \includestandalone{figures/category/coherences/pentagon}
+
+        \vspace{1em}
+
+        \includestandalone{figures/category/coherences/triangle}
+    \end{center}
+\end{definition}
+
+\begin{example}
+    \(\set\) is a monoidal category, with the tensor product defined as the
+    Cartesian product (\(A \tensor B := A \times B\)) and the unit as the
+    singleton set (\(I := \mathbbm{1}\)).
+\end{example}
+
+
+We adopt the convention that \(f \tensor g \seq h \tensor k\) should be
+bracketed as \((f \tensor g) \seq (h \tensor k)\), i.e.\ \(\tensor\) binds
+more strongly than \(\seq\).
+As with the case of regular categories, using a string diagrammatic notation
+will make this distinction irrelevant.
+
+The definition of monoidal category we have presented is quite general,
+particularly with regards to the natural isomorphisms for unitors and
+associators.
+Most of the time, it is sufficient for these isomorphisms to hold `on the nose'.
+
+\begin{definition}[Strict monoidal category]
+    A monoidal category is \emph{strict} if \(\lambda\), \(\rho\) and \(\alpha\)
+    are identities.
+\end{definition}
+
+In a strict monoidal category, the unitality and associativity of the tensor
+hold as equations, as they do for regular composition in a category.
+With this in mind, it can be instructive to view the coherences of a monoidal
+category in terms of equations.
+
+\input{floats/mc-equations}
+
+\begin{example}
+    \(\set\) is a monoidal category, with the tensor product defined as the
+    Cartesian product (\(A \tensor B := A \times B\)) and the unit as the
+    singleton set (\(I := \mathbbm{1}\)).
+\end{example}
+
+
+We can now construct morphisms by composing them in sequence and in parallel.
+The next construct to consider are the \emph{symmetries}.
+
+\begin{definition}[Symmetric monoidal category]
+    \label{def:symmetric-monoidal-category}
+    A \emph{symmetric monoidal category} (SMC) is a monoidal category \(\mcc\)
+    equipped with natural isomorphisms \(
+        \swap{A}{B} \colon A \tensor B \cong B \tensor A
+    \) such that the following diagrams commute:
+    \begin{center}
+        \includestandalone{figures/category/coherences/symmetry-unit}
+        \includestandalone{figures/category/coherences/symmetry-inverse}
+
+        \vspace{1em}
+
+        \includestandalone[scale=0.95]{figures/category/coherences/hexagon}
+    \end{center}
+\end{definition}
+
+\begin{example}
+    \(\set\) is a symmetric monoidal category, with \(
+        \morph{\swap{A}{B}}{A \times B}{B \times A}
+    \) defined as the function that swaps elements of a pair.
+\end{example}
+
+As with monoidal categories, it is natural to consider \emph{strict} symmetric
+monoidal categories and view them in terms of their equations.
+
+\input{floats/smc-equations}

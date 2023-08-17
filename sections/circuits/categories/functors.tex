@@ -1,0 +1,82 @@
+\subsection{Functors}
+
+It is actually quite rare that we are only making use of one category at a time.
+In order to compare categories, we need a notion of \emph{mapping between} them.
+A class of maps that enjoy some useful properties are known as \emph{functors}.
+
+\begin{definition}[Functor]
+    Given two categories \(\mcc\) and \(\mcd\), a \emph{functor} \(
+        \morph{F}{\mcc}{\mcd}
+    \) maps objects and morphisms in \(\mcc\) to objects and morphisms in
+    \(\mcd\) such that
+    \begin{itemize}
+        \item \(F(\id[A]) = \id[FA]\) for every \(A \in \ob{\mcc})\); and
+        \item \(F(g \circ f) = F(g) \circ F(f)\) for every \(\morph{f}{A}{B}\)
+        and \(\morph{g}{B}{C}\).
+    \end{itemize}
+\end{definition}
+
+A functor \(F\) maps an object \(X\) in one category to an object \(FX\) in
+another, and morphisms \(\morph{f}{X}{Y}\) to \(\morph{Ff}{FX}{FY}\).
+The two equations are known as the \emph{functoriality} equations; if a map
+satisfies these it is \emph{functorial} i.e.\ it is a functor.
+
+Functors have a graphical representation as `functorial
+boxes'~\cite{mellies2006functorial}; applying a functor \(\morph{F}{\mcc}{\mcd}\)
+to a morphism \(\morph{f}{X}{Y}\) is drawn as
+\[
+    \iltikzfig{strings/category/functors/f}[f][F][white][X][Y]
+\]
+As always, the wire labels are optional and will be omitted if unambious.
+The functoriality equations are represented as in
+\cref{fig:functoriality-equations}.
+
+\input{floats/functoriality-equations}
+
+\begin{definition}[Endofunctor]
+    An \emph{endofunctor} on a category \(\mcc\) is a functor \(\mcc \to \mcc\).
+\end{definition}
+
+\subsubsection{Examples of functors}
+
+\begin{example}[Identity functor]
+    A trivial endofunctor for any category \(\mcc\) is the
+    \emph{identity functor} \(\morph{\idf}{\mcc}{\mcc}\) which acts as the
+    identity on objects and morphisms.
+\end{example}
+
+\begin{example}[Powerset functor]
+    The notion of powerset can be interpreted as an endofunctor \(
+        \morph{\powerset}{\set}{\set}
+    \), mapping a set \(X\) to its powerset \(\powerset(X)\) and a morphism
+    \(\morph{f}{X}{Y}\) to the function \(\powerset(X) \to \powerset(Y)\) which
+    applies \(f\) pointwise.
+\end{example}
+
+\begin{example}[List functor]\label{ex:list-functor}
+    A functor that crops up frequently in computer science is the
+    \emph{list functor} \(\morph{\listf}{\set}{\set}\), which sends a set
+    \(X\) to its set of lists \(\freemon{X}\), and sends a function
+    \(\morph{f}{X}{Y}\) to the function
+    \(\morph{\freemon{f}}{\freemon{X}}{\freemon{Y}}\): which applies \(f\)
+    to each element of a list.
+\end{example}
+
+\begin{example}[Free monoid]\label{ex:free-monoid}
+    When talking about a mathematical structure \(S\), there is often a notion
+    of the \emph{free \(S\)}, which can be viewed as the most `bare-bones'
+    version of \(S\).
+    For example, the set of lists \(\freemon{X}\) is the carrier of the
+    \emph{free monoid} on \(X\).
+    This means there is a functor \(\morph{F}{\set}{\mon}\) (the
+    \emph{free functor}) that acts on objects as \(
+        X \mapsto (\freemon{X}, \concat, [])
+    \) and sends morphisms \(X \to Y\) to the corresponding monoid homomorphism
+    \(\freemon{X} \to \freemon{Y}\).
+
+    There is also a \emph{forgetful} or \emph{underlying} functor
+    \(\morph{U}{\mon}{\set}\) which sends a monoid \((X, *, e)\) to its carrier
+    set \(X\) and `forgets' the monoid structure.
+    These functors form a relationship known as an \emph{adjunction}, but this
+    is beyond the scope of this thesis.
+\end{example}
