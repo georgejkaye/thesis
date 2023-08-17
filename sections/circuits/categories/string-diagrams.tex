@@ -11,15 +11,15 @@ descriptions will quickly become indecipherable.
 Therefore, it is useful to consider an alternative \emph{graphical} notation
 known as \emph{string diagrams}~\cite{joyal1991geometry}.
 In a string diagram, a morphism \(\morph{f}{A}{B}\) is drawn as a box \(
-    \iltikzfig{strings/category/f}[f][white][A][B]
+    \iltikzfig{strings/category/f}[name=f,dom=A,cod=B,col=white]
 \), and the identity \(\morph{\id[A]}{A}{A}\) is drawn as a wire \(
-    \iltikzfig{strings/category/identity}[white][A]
+    \iltikzfig{strings/category/identity}[][white][A]
 \).
 Composition is depicted as \emph{horizontal juxtaposition}. \[
-    \iltikzfig{strings/category/f}[f][white][A][B]
+    \iltikzfig{strings/category/f}[name=f,dom=A,cod=B,col=white]
     \seq
-    \iltikzfig{strings/category/f}[g][white][B][C] :=
-    \iltikzfig{strings/category/composition}[f][g][white][A][B][C]
+    \iltikzfig{strings/category/f}[name=g,dom=B,cod=C,col=white] :=
+    \iltikzfig{strings/category/composition}[][f][g][white][A][B][C]
 \]
 The power of string diagrams comes from how they `absorb' the equations of a
 category, as shown in \cref{fig:c-equations}.

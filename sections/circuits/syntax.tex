@@ -61,12 +61,12 @@ common level of abstraction for digital circuits.
         )
     \), let the set \(\generators[\ccirc{}]\) of
     \emph{combinational circuit generators} be defined as the set containing \(
-        \iltikzfig{circuits/components/gates/gate}[g][comb][][\circuitsignaturearity(g)]
+        \iltikzfig{circuits/components/gates/gate}[][g][comb][][\circuitsignaturearity(g)]
     \) for each \(g \in \circuitsignaturegates\),
-    \(\iltikzfig{strings/structure/monoid/init}[comb]\),
-    \(\iltikzfig{strings/structure/comonoid/copy}[comb]\),
-    \(\iltikzfig{strings/structure/monoid/merge}[comb]\), and
-    \(\iltikzfig{strings/structure/comonoid/discard}[comb]\).
+    \(\iltikzfig{strings/structure/monoid/init}[][comb]\),
+    \(\iltikzfig{strings/structure/comonoid/copy}[][comb]\),
+    \(\iltikzfig{strings/structure/monoid/merge}[][comb]\), and
+    \(\iltikzfig{strings/structure/comonoid/discard}[][comb]\).
     We write \(\ccircsigma\) for the freely generated PROP
     \(\smc{\generators[\ccirc{}]}\).
 \end{definition}
@@ -92,10 +92,10 @@ When drawing circuits, the coloured backgrounds of generators will often be
 omitted in the interests of clarity.
 Since the category is freely generated, morphisms are defined by
 juxtaposing the generators in a given signature sequentially or in parallel with
-each other, the symmetry \iltikzfig{strings/symmetric/symmetry}[comb] and the
-identity \iltikzfig{strings/category/identity}[comb].
+each other, the symmetry \iltikzfig{strings/symmetric/symmetry}[][comb] and the
+identity \iltikzfig{strings/category/identity}[][comb].
 Arbitrary combinational circuit morphisms defined in this way are drawn as light
-boxes \iltikzfig{circuits/components/circuits/f}[f][comb][m][n].
+boxes \iltikzfig{circuits/components/circuits/f}[][f][comb][m][n].
 
 \begin{notation}\label{not:arbitrary-width-structure}
     It is a simple exercise to define the structural generators, the identity
@@ -104,17 +104,17 @@ boxes \iltikzfig{circuits/components/circuits/f}[f][comb][m][n].
     In diagrams, these are drawn as their single-bit
     counterparts:
     \[
-        \iltikzfig{strings/structure/monoid/init}[comb][n]
+        \iltikzfig{strings/structure/monoid/init}[][comb][n]
         \quad
-        \iltikzfig{strings/structure/comonoid/copy}[comb][n]
+        \iltikzfig{strings/structure/comonoid/copy}[][comb][n]
         \quad
-        \iltikzfig{strings/structure/monoid/merge}[comb][n]
+        \iltikzfig{strings/structure/monoid/merge}[][comb][n]
         \quad
-        \iltikzfig{strings/structure/comonoid/discard}[comb][n]
+        \iltikzfig{strings/structure/comonoid/discard}[][comb][n]
         \quad
-        \iltikzfig{strings/category/identity}[comb][n]
+        \iltikzfig{strings/category/identity}[][comb][n]
         \quad
-        \iltikzfig{strings/symmetric/symmetry}[comb][m][n]
+        \iltikzfig{strings/symmetric/symmetry}[][comb][m][n]
     \]
 \end{notation}
 
@@ -149,6 +149,6 @@ inputs of a circuit to its outputs.
     \(
         \trace{x}[m][n]{\iltikzfig{strings/traced/trace-lhs}[f][comb][x][m][n]}
         \stackrel{\text{def}}{=}
-        \iltikzfig{strings/traced/trace-rhs}[f][comb][m][n]
+        \iltikzfig{strings/traced/trace-rhs}[][f][comb][m][n]
     \)
 \end{center}

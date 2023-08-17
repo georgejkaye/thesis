@@ -2,21 +2,20 @@
 
 We will now apply the concepts of functors and natural transformations in order
 to interpret \emph{parallel} composition \(\tensor\).
-A setting with both sequential and parallel composition can be modelled by a
-\emph{monoidal category}.
+To do this, we use a special kind of functor known as a \emph{bifunctor}.
 
 \begin{definition}[Bifunctor]
     A \emph{bifunctor} is a functor with a product category as its domain, i.e.\
     a functor of the form \(\mcc \times \mcd \to \mce\).
 \end{definition}
 
-We adapt the notation of functorial boxes to show how bifunctors map from two
-categories into one.
+The notation for functor boxes can be extended in order to show how bifunctors
+map from two categories into one.
 \[
-    \iltikzfig{strings/category/functors/bif}[f][g][white][F][X][Y][Z][W]
+    \iltikzfig{strings/category/functors/bif}[][f][g][white][F][X][Y][Z][W]
 \]
-The diagrammatic notation suggests that a bifunctor is exactly what we need to
-model parallel composition!
+This notation suggests that a bifunctor is exactly what we need to model
+parallel composition!
 
 \begin{definition}[Monoidal category]
     \label{def:monoidal-category}
@@ -95,6 +94,7 @@ category in terms of equations.
     singleton set (\(I := \mathbbm{1}\)).
 \end{example}
 
+\subsection{Symmetric monoidal categories}
 
 We can now construct morphisms by composing them in sequence and in parallel.
 The next construct to consider are the \emph{symmetries}.
