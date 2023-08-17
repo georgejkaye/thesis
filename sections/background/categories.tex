@@ -1,5 +1,11 @@
 \chapter{Monoidal categories and theories}
 
+We begin with a meander through the categorical definitions and notation
+required for our framework of sequential circuits.
+While a similar outline can be found in any category theory textbook,
+inspiration was taken in particular from the opening of
+\cite{ghica2023hierarchical}.
+
 \section{Terms}
 
 Processes are modelled as \emph{terms}.
@@ -353,19 +359,22 @@ The two equations are known as the \emph{functoriality} equations; if a map
 satisfies these it is \emph{functorial} i.e.\ it is a functor.
 
 Functors have a graphical representation as `functorial
-boxes'~\cite{mellies2006functorial}.
+boxes'~\cite{mellies2006functorial}; applying a functor \(\morph{F}{\mcc}{\mcd}\)
+to a morphism \(\morph{f}{X}{Y}\) is drawn as
 \[
     \iltikzfig{strings/category/functors/f}[f][F][white][X][Y]
 \]
 As always, the wire labels are optional and will be omitted if unambious.
 The functoriality equations are represented as in
-\cref{fig:functoriality-equations}
+\cref{fig:functoriality-equations}.
 
 \input{floats/functoriality-equations}
 
 \begin{definition}[Endofunctor]
-    An \emph{endofunctor} is a functor from a category to itself.
+    An \emph{endofunctor} on a category \(\mcc\) is a functor \(\mcc \to \mcc\).
 \end{definition}
+
+\subsubsection{Examples of functors}
 
 \begin{example}[Identity functor]
     A trivial endofunctor for any category \(\mcc\) is the
@@ -438,7 +447,10 @@ natural transformation \(\morph{\eta}{F}{G}\) is a \emph{family} of morphisms
 Subsequently, one can think of a natural transformation as a way of inducing
 morphisms of a certain structure across an \emph{entire category}.
 
-\todo[inline]{Discuss natural transformation string diagrams}
+Graphically, the naturality equation can be seen as how a natural transformation
+can be `pushed through' morphisms, as shown in \cref{fig:naturality-equations}.
+
+\input{floats/naturality-equations}
 
 \begin{example}[Singleton]
     Recall the \(\listf\) functor from \cref{ex:list-functor}.
@@ -451,7 +463,7 @@ morphisms of a certain structure across an \emph{entire category}.
 \begin{example}[Reduce]
     Recall the functors \(\morph{F}{\set}{\mon}\) and \(\morph{U}{\mon}{\set}\)
     from \cref{ex:free-monoid}.
-    Functors can be composed just like morphisms can, so \(F \circ U\) is a
+    Functors can be composed just like morphisms, so \(F \circ U\) is a
     functor \(\mon \to \mon\): such a functor has action \(
         (X, *, e) \mapsto (\freemon{X}, \concat, [])
     \).
@@ -705,71 +717,6 @@ larger lists of wires.
     \end{gather*}
 \end{definition}
 
-\section{String diagrams}
-
-One could reason exclusively with the one-dimensional terms detailed in the
-previous section, but this quickly becomes unwieldy.
-Although the structural axioms make sense, they are tedious to apply and
-obfuscate the interesting equations between generators.
-
-Fortunately there is an alternative: the calculus of \emph{string diagrams}.
-Originally introduced by Joyal and Street in \cite{joyal1991geometry}, the use
-of string diagrams has exploded recently for use in a whole host of categorical
-settings~\cite{selinger2011survey}.
-
-Generators are drawn as boxes, with wires on the left and right representing
-each element of their input and output lists respectively.
-For example, a generator \(\morph{\phi}{[m]}{[n]}\) is drawn as \(
-    \iltikzfig{strings/category/generator}[\phi][white][m][n]
-\) and a generator \(\morph{\psi}{[m,n]}{[p]}\) is drawn \(
-    \iltikzfig{strings/category/generator-2-1}[\psi][white][m][n][p]
-\).
-The identity on \(n\) is drawn as \(
-    \iltikzfig{strings/category/identity}[white][n]
-\) and the symmetry on \([m, n]\) is drawn as \(
-    \iltikzfig{strings/symmetric/symmetry}[white][m][n]
-\).
-The special case of the identity on \(\varepsilon\) is usually drawn as empty space
-\(
-    \iltikzfig{strings/monoidal/empty}
-\); when it is necessary to indicate that a unit is being used in an equation
-then it will be drawn as a faded wire \(
-    \iltikzfig{strings/monoidal/unit-wire}[white][\varepsilon]
-\).
-Sometimes for clarity it will be advantageous to merge multiple wires into one,
-so \(\psi\) above can also be drawn as \(
-    \iltikzfig{strings/category/generator}[\psi][white][[m,n]][p]
-\).
-
-Of course, this is just syntax; instead of writing symbols we are drawing boxes.
-The power of string diagrams comes from the representation of composition as
-\emph{juxtaposition} rather than using \(\seq\) or \(\tensor\).
-Given two composite terms, drawn as wider boxes \(
-    \iltikzfig{strings/category/f}[f][white][\overline{m}][\overline{n}]
-\), composition and tensor are drawn as \emph{horizontal} and \emph{vertical}
-juxtaposition respectively. \[
-    \iltikzfig{strings/category/f}[f][white][\overline{m}][\overline{n}]
-    \seq
-    \iltikzfig{strings/category/f}[g][white][\overline{n}][\overline{p}] :=
-    \iltikzfig{strings/category/composition}[f][g][white][\overline{m}][\overline{n}][\overline{p}]
-    \qquad
-    \iltikzfig{strings/category/f}[f][white][\overline{m}][\overline{n}]
-    \tensor
-    \iltikzfig{strings/category/f}[g][white][\overline{p}][\overline{q}] :=
-    \iltikzfig{strings/monoidal/tensor}[f][g][white][\overline{m}][\overline{n}][\overline{p}][\overline{q}].
-\]
-
-When drawing out the structural equations from \cref{fig:structural-equations}
-as string diagrams in \cref{fig:structural-equations-strings}, it is clear to
-see that applying these equations is reduced to manipulating diagrams while
-retaining their connectivity.
-This leads us to a formal definition of a string diagram.
-
-\begin{definition}[String diagram]
-    A \emph{string diagram} is an equivalence class of \(\Sigma\)-terms
-    quotiented by the equations in \cref{fig:structural-equations}.
-\end{definition}
-
 \section{Monoidal theories}
 
 So far we have only concerned ourselves with \emph{structural} equations:
@@ -905,52 +852,6 @@ more complex terms.
 \end{proof}
 
 \section{Semantics}
-
-\begin{definition}[Functor]
-    Given two categories \(\mcc\) and \(\mcd\), a \emph{functor} \(
-        \morph{F}{\mcc}{\mcd}
-    \) maps objects and morphisms in \(\mcc\) to objects and morphisms in
-    \(\mcd\) such that
-    \begin{itemize}
-        \item \(F(\id[A]) = \id[FA]\) for every \(A \in \ob{\mcc})\); and
-        \item \(F(g \circ f) = F(g) \circ F(f)\) for every \(\morph{f}{A}{B}\)
-        and \(\morph{g}{B}{C}\), and \(
-            \bundleexpand{1} = \bundlecontract{1} = \id[1]
-        \).
-    \end{itemize}
-\end{definition}
-
-A functor \(F\) is a mapping between categories: it maps an object \(X\) in one
-category to an object \(FX\) in another, and morphisms \(\morph{f}{X}{Y}\) to
-\(\morph{Ff}{FX}{FY}\).
-
-\begin{definition}[Endofunctor]
-    An \emph{endofunctor} is a functor from a category to itself.
-\end{definition}
-
-\begin{definition}[Natural transformation]
-    Given two functors \(\morph{F, G}{\mcc}{\mcd}\), a
-    \emph{natural transformation} \(\morph{\eta}{F}{G}\) is a family of
-    morphisms \(
-        \eta_A \in \mor{\mcd}{FA}{GA}
-    \) called \emph{components} for each \(A \in \ob{\mcc}\) such that \(
-        \eta_B \circ Ff = Gf \circ \eta_A
-    \), i.e.\ the following diagram commutes:
-    \begin{center}
-        \includestandalone{figures/category/coherences/natural}
-    \end{center}
-\end{definition}
-
-The key point to take is that for functors \(\morph{F,G}{\mcc}{\mcd}\), a
-natural transformation \(\morph{\eta}{F}{G}\) is a \emph{family} of morphisms
-\(\morph{\eta_A}{FA}{GA} \in \mcd\) for each object \(A \in \mcd\).
-
-\begin{example}
-    A morphism in \(\set\) is an iso if and only if it is a bijection.
-\end{example}
-
-We now have all the components necessary in order to define a monoidal category,
-a category with notions of both sequential and parallel composition.
 
 \section{Related work}
 
