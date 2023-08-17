@@ -1,57 +1,57 @@
 \begin{figure}
     \centering
     \begin{gather*}
-        \iltikzfig{strings/category/identity-l-lhs}[f][white][\overline{m}][\overline{n}[]]
+        \iltikzfig{strings/category/identity-l-lhs}[box=f,colour=white,dom=\overline{m},cod=\overline{n}]
         =
-        \iltikzfig{strings/category/f}[f][white][\overline{m}][\overline{n}[]]
+        \iltikzfig{strings/category/f}[box=f,colour=white,dom=\overline{m},cod=\overline{n}]
         \quad
-        \iltikzfig{strings/category/identity-r-lhs}[f][white][\overline{m}][\overline{n}[]]
+        \iltikzfig{strings/category/identity-r-lhs}[box=f,colour=white,dom=\overline{m},cod=\overline{n}]
         =
-        \iltikzfig{strings/category/f}[][f][white]
+        \iltikzfig{strings/category/f}[box=f,dom=\overline{m},cod=\overline{n},colour=white]
         \quad
-        \iltikzfig{strings/category/associativity-lhs}[f][g][h][white][\overline{m}][\overline{p}[]]
+        \iltikzfig{strings/category/associativity-lhs}[box1=f,box2=g,box3=h,colour=white,dom=\listvar{m},cod=\listvar{p}]
         =
-        \iltikzfig{strings/category/associativity-rhs}[f][g][h][white][\overline{m}][\overline{p}[]]
+        \iltikzfig{strings/category/associativity-rhs}[box1=f,box2=g,box3=h,colour=white,dom=\listvar{m},cod=\listvar{p}]
         \\[0.5em]
-        \iltikzfig{strings/monoidal/unit-l-lhs}[f][white][\overline{m}][\overline{n}[]]
+        \iltikzfig{strings/monoidal/unit-l-lhs}[box=f,colour=white,dom=\overline{m},cod=\overline{n}]
         =
-        \iltikzfig{strings/category/f}[f][white][\overline{m}][\overline{n}[]]
+        \iltikzfig{strings/category/f}[box=f,colour=white,dom=\overline{m},cod=\overline{n}]
         \quad
-        \iltikzfig{strings/monoidal/unit-r-lhs}[f][white][\overline{m}][\overline{n}[]]
+        \iltikzfig{strings/monoidal/unit-r-lhs}[box=f,colour=white,dom=\overline{m},cod=\overline{n}]
         =
-        \iltikzfig{strings/category/f}[f][white][\overline{m}][\overline{n}[]]
+        \iltikzfig{strings/category/f}[box=f,colour=white,dom=\overline{m},cod=\overline{n}]
         \quad
-        \iltikzfig{strings/monoidal/associativity-lhs}[][f][g][h][white]
+        \iltikzfig{strings/monoidal/associativity-lhs}[box1=f,box2=g,box3=h,colour=white,dom1=\overline{m},cod1=\overline{n},dom2=\overline{p},cod2=\overline{q},dom3=\overline{r},cod3=\overline{s}]
         =
-        \iltikzfig{strings/monoidal/associativity-rhs}[][f][g][h][white]
+        \iltikzfig{strings/monoidal/associativity-rhs}[box1=f,box2=g,box3=h,colour=white,dom1=\overline{m},cod1=\overline{n},dom2=\overline{p},cod2=\overline{q},dom3=\overline{r},cod3=\overline{s}]
         \\[0.5em]
-        \iltikzfig{strings/monoidal/identity-tensor-lhs}[white][\overline{m}][\overline{n}[]]
+        \iltikzfig{strings/monoidal/identity-tensor-lhs}[colour=white,obj1=\overline{m},obj2=\overline{n}]
         =
-        \iltikzfig{strings/category/identity}[white][\overline{mn}[]]
+        \iltikzfig{strings/category/identity}[colour=white,obj=\overline{mn}]
         \quad
-        \iltikzfig{strings/monoidal/interchange-lhs}[][f][g][h][k][white]
+        \iltikzfig{strings/monoidal/interchange-lhs}[box1=f,box2=g,box3=h,box4=k,colour=white,dom1=\overline{m},cod1=\overline{p},dom2=\overline{r},cod2=\overline{t}]
         =
-        \iltikzfig{strings/monoidal/interchange-rhs}[][f][g][h][k][white]
+        \iltikzfig{strings/monoidal/interchange-rhs}[box1=f,box2=g,box3=h,box4=k,colour=white,dom1=\overline{m},cod1=\overline{p},dom2=\overline{r},cod2=\overline{t}]
         \\[0.5em]
-        \iltikzfig{strings/symmetric/naturality-lhs}[f][g][white][\overline{m}][\overline{n}][\overline{p}][\overline{q}[]]
+        \iltikzfig{strings/symmetric/naturality-lhs}[box1=f,box2=g,dom1=\overline{m},cod1=\overline{n},dom2=\overline{p},cod2=\overline{q},colour=white]
         =
-        \iltikzfig{strings/symmetric/naturality-rhs}[f][g][white][\overline{m}][\overline{n}][\overline{p}][\overline{q}[]]
+        \iltikzfig{strings/symmetric/naturality-rhs}[box1=f,box2=g,dom1=\overline{m},cod1=\overline{n},dom2=\overline{p},cod2=\overline{q},colour=white]
         \quad
-        \iltikzfig{strings/symmetric/hexagon-lhs}[white][\overline{m}][\overline{n}][\overline{p}[]]
+        \iltikzfig{strings/symmetric/hexagon-lhs}[colour=white,obj1=\overline{m},obj2=\overline{n},obj3=\overline{p}]
         =
-        \iltikzfig{strings/symmetric/symmetry}[white][\overline{m}][\overline{np}[]]
+        \iltikzfig{strings/symmetric/symmetry}[colour=white,obj1=\overline{m},obj2={\overline{mn}}]
         \\[0.5em]
-        \iltikzfig{strings/symmetric/unit-l-lhs}[white][\epsilon][\overline{n}[]]
+        \iltikzfig{strings/symmetric/unit-l-lhs}[colour=white,obj=\overline{m},unit=\varepsilon]
         =
-        \iltikzfig{strings/category/identity}[white][\overline{n}[]]
+        \iltikzfig{strings/category/identity}[colour=white,obj=\overline{m}]
         \quad
-        \iltikzfig{strings/symmetric/unit-r-lhs}[white][\overline{m}[]][\epsilon]
+        \iltikzfig{strings/symmetric/unit-r-lhs}[colour=white,obj=\overline{m},unit=\varepsilon]
         =
-        \iltikzfig{strings/category/identity}[white][\overline{m}[]]
+        \iltikzfig{strings/category/identity}[colour=white,obj=\overline{m}]
         \quad
-        \iltikzfig{strings/symmetric/self-inverse-lhs}[white][\overline{m}][\overline{n}[]]
+        \iltikzfig{strings/symmetric/self-inverse-lhs}[colour=white,obj1=\overline{m},obj2=\overline{n}]
         =
-        \iltikzfig{strings/category/identity}[white][\overline{mn}[]]
+        \iltikzfig{strings/category/identity}[colour=white,obj=\overline{mn}]
     \end{gather*}
     \caption{
         Equations of \(\smc{\Sigma}\)

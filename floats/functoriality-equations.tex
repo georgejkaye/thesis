@@ -1,12 +1,12 @@
 \begin{figure}
     \begin{gather*}
-        \iltikzfig{strings/category/functors/identity-lhs}[][F][X]
+        \iltikzfig{strings/category/functors/identity-lhs}[functor=F,object=X]
         =
-        \iltikzfig{strings/category/functors/identity-rhs}[][F][X]
+        \iltikzfig{strings/category/functors/identity-rhs}[functor=F,object=X]
         \quad
-        \iltikzfig{strings/category/functors/composition-lhs}[][f][g][F][white][X][Z]
+        \iltikzfig{strings/category/functors/composition-lhs}[box1=f,box2=g,functor=F,colour=white,dom=X,cod=Z]
         =
-        \iltikzfig{strings/category/functors/composition-rhs}[][f][g][F][white][X][Z]
+        \iltikzfig{strings/category/functors/composition-rhs}[box1=f,box2=g,functor=F,colour=white,dom=X,cod=Z]
     \end{gather*}
     \caption{
         Equations of functoriality in string diagram notation
