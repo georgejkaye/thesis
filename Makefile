@@ -19,7 +19,7 @@ tidy:
 
 clean:
 	latexmk -C
-	rm -f *nlo *nls *run.xml
+	rm -f *nlo *nls *run.xml *synctex\(busy\)
 
 test:
 	echo $(SOURCE)
