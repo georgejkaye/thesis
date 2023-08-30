@@ -1,27 +1,19 @@
 \begin{figure}
     \begin{gather*}
-        \iltikzfig{strings/symmetric/naturality-lhs}[box1=f,box2=g,colour=white,dom1=A,cod1=B,dom2=C,cod2=D]
-        =
-        \iltikzfig{strings/symmetric/naturality-rhs}[box1=f,box2=g,colour=white,dom1=A,cod1=B,dom2=C,cod2=D]
+        f \tensor g \seq \swap{B}{D} = \swap{A}{C} \seq g \tensor f
         \quad
-        \iltikzfig{strings/symmetric/hexagon-lhs}[obj1=A,obj2=B,obj3=C,colour=white]
+        \swap{A}{B} \tensor \id[C] \seq \id[B] \tensor \swap{A}{C}
         =
-        \iltikzfig{strings/symmetric/symmetry}[obj1=A,obj2=B tensor C,colour=white]
+        \swap{A}{B \tensor C}
         \\[0.5em]
-        \iltikzfig{strings/symmetric/unit-l-lhs}[colour=white,obj=A,unit=I]
-        =
-        \iltikzfig{strings/category/identity}[obj=A,colour=white]
+        \swap{I}{A} = \id[A]
         \quad
-        \iltikzfig{strings/symmetric/unit-r-lhs}[colour=white,obj=A,unit=I]
-        =
-        \iltikzfig{strings/category/identity}[obj=A,colour=white]
+        \swap{A}{I} = \id[A]
         \quad
-        \iltikzfig{strings/symmetric/self-inverse-lhs}[colour=white,obj1=A,obj2=B]
-        =
-        \iltikzfig{strings/category/identity}[obj=A \tensor B,colour=white]
+        \swap{A}{B} \seq \swap{B}{A} = \id[A \tensor B]
     \end{gather*}
     \caption{
-        Equations of a symmetric monoidal category in string diagram notation
+        Equations of a strict symmetric monoidal category
     }
     \label{fig:smc-equations}
 \end{figure}

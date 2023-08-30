@@ -65,16 +65,33 @@ parallel composition!
 \end{example}
 
 
-We adopt the convention that \(f \tensor g \seq h \tensor k\) should be
-bracketed as \((f \tensor g) \seq (h \tensor k)\), i.e.\ \(\tensor\) binds
-more strongly than \(\seq\).
-As with the case of regular categories, using a string diagrammatic notation
-will make this distinction irrelevant.
+\begin{notation}
+    We adopt the convention that \(f \tensor g \seq h \tensor k\) should be
+    bracketed as \((f \tensor g) \seq (h \tensor k)\), i.e.\ \(\tensor\) binds
+    more strongly than \(\seq\).
+\end{notation}
+
+We will use the \(\tensor\) bifunctor extensively through this thesis.
+For this reason, when drawing string diagrams for monoidal categories we will
+not forego drawing the (bi)functor boxes and usually draw wires exclusively in
+their `deconstructed' state: instead of a single wire \(A \tensor B\) we will
+draw two wires \(A\) and \(B\).
+
+\begin{gather*}
+    \iltikzfig{strings/monoidal/tensor-notation-compact}[dom1=A,dom2=C,cod1=B,cod2=D,box1=f,box2=g]
+    :=
+    \iltikzfig{strings/monoidal/tensor-notation-boxes}[dom1=A,dom2=C,cod1=B,cod2=D,box1=f,box2=g]
+    :=
+    \iltikzfig{strings/monoidal/tensor-notation-hybrid}[dom1=A,dom2=C,cod1=B,cod2=D,box1=f,box2=g]
+    :=
+    \iltikzfig{strings/monoidal/tensor-notation-noboxes}[dom1=A,dom2=C,cod1=B,cod2=D,box1=f,box2=g]
+\end{gather*}
 
 The definition of monoidal category we have presented is quite general,
 particularly with regards to the natural isomorphisms for unitors and
 associators.
-Most of the time, it is sufficient for these isomorphisms to hold `on the nose'.
+In our setting, it is normally sufficient for these isomorphisms to hold `on the
+nose'.
 
 \begin{definition}[Strict monoidal category]
     A monoidal category is \emph{strict} if \(\lambda\), \(\rho\) and \(\alpha\)
@@ -83,10 +100,14 @@ Most of the time, it is sufficient for these isomorphisms to hold `on the nose'.
 
 In a strict monoidal category, the unitality and associativity of the tensor
 hold as equations, as they do for regular composition in a category.
-With this in mind, it can be instructive to view the coherences of a monoidal
-category in terms of equations.
+With this in mind, it can be instructive to view the coherences of a strict
+monoidal category in terms of equations: these are listed in
+\cref{fig:mc-equations}.
+Once again, intuition is better gleaned when these equations are drawn as string
+diagrams, as illustrated in \cref{fig:mc-equations-strings}.
 
 \input{floats/mc-equations}
+\input{floats/mc-equations-strings}
 
 \begin{example}
     \(\set\) is a monoidal category, with the tensor product defined as the
@@ -97,7 +118,9 @@ category in terms of equations.
 \subsection{Symmetric monoidal categories}
 
 We can now construct morphisms by composing them in sequence and in parallel.
-The next construct to consider are the \emph{symmetries}.
+However, there is no way to cross over the wires that connect boxes together.
+This can be achieved by equipping the categorical setting with another natural
+isormorphism.
 
 \begin{definition}[Symmetric monoidal category]
     \label{def:symmetric-monoidal-category}
@@ -115,13 +138,29 @@ The next construct to consider are the \emph{symmetries}.
     \end{center}
 \end{definition}
 
+Recall that as \(\swap{-}{=}\) is a natural isomorphism, it induces
+a \emph{family} of morphisms \(
+    \morph{\swap{A}{B}}{A \tensor B}{B \tensor A}
+\) for every pair of objects \(A\) and \(B\).
+In string diagrams, each such morphism \(\swap{A}{B}\) is drawn as \(
+    \iltikzfig{strings/symmetric/symmetry}[obj1=A, obj2=B, colour=white]
+\): the swapping of wires \(A\) and \(B\).
+As with identities, the use of this morphism is so common that we usually
+drop the box around it.
+
+Once again, we are primarily concerned with \emph{strict} symmetric
+monoidal categories.
+The equations of strict symmetric monoidal categories are listed in
+\cref{fig:smc-equations} and their string diagram interpretations in
+\cref{fig:smc-equations-strings}.
+
+\input{floats/smc-equations}
+
+\input{floats/smc-equations-strings}
+
+
 \begin{example}
     \(\set\) is a symmetric monoidal category, with \(
         \morph{\swap{A}{B}}{A \times B}{B \times A}
     \) defined as the function that swaps elements of a pair.
 \end{example}
-
-As with monoidal categories, it is natural to consider \emph{strict} symmetric
-monoidal categories and view them in terms of their equations.
-
-\input{floats/smc-equations}
