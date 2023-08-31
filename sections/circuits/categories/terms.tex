@@ -10,17 +10,17 @@ must be sepcified.
     Words are written \([x_0, x_1, x_2, \cdots, x_{n-1}]\); the brackets around
     single element lists may be dropped when clear from context \(x := [x]\);
     and variables representing arbitrary lists are generally written with an
-    overline \(
-        \overline{x}, \overline{y}, \overline{z}... \in \freemon{X}
+    listvar \(
+        \listvar{x}, \listvar{y}, \listvar{z}... \in \freemon{X}
     \).
-    Given two words \(\overline{x}, \overline{y}\), their concatenation is
-    denoted \(\overline{x}\overline{y}\).
+    Given two words \(\listvar{x}, \listvar{y}\), their concatenation is
+    denoted \(\listvar{x}\listvar{y}\).
     The list of length \(n\) containing just element \(x\) is written \(x^n\).
-    Given a list \(\overline{x}\), its \emph{length} is denoted
-    \(\wordlen{\overline{x}}\); for \(i < \wordlen{\overline{x}}\), its
-    \(i\)\emph{th element} is denoted \(\overline{x}(i)\); and its
-    \emph{sum}, denoted \(\wordsum{\overline{x}}\), is computed as
-    \(\Sigma_{i < |\overline{m}|}\overline{m}(i)\).
+    Given a list \(\listvar{x}\), its \emph{length} is denoted
+    \(\wordlen{\listvar{x}}\); for \(i < \wordlen{\listvar{x}}\), its
+    \(i\)\emph{th element} is denoted \(\listvar{x}(i)\); and its
+    \emph{sum}, denoted \(\wordsum{\listvar{x}}\), is computed as
+    \(\Sigma_{i < |\listvar{m}|}\listvar{m}(i)\).
 \end{notation}
 
 \begin{notation}
@@ -39,8 +39,8 @@ Terms are defined by combining these primitives together.
 \begin{definition}[Term]
     \label{def:terms}
     Let \(\generators\) be a set of generators.
-    A \(\generators\)-term is written \(\morph{f}{\overline{m}}{\overline{n}}\)
-    where \(\overline{m}, \overline{n} \in \natplus^\star\).
+    A \(\generators\)-term is written \(\morph{f}{\listvar{m}}{\listvar{n}}\)
+    where \(\listvar{m}, \listvar{n} \in \natplus^\star\).
     The set of \(\generators\)-terms, denoted \(\sigmaterms\), is
     generated as follows:
     \begin{center}
@@ -58,30 +58,36 @@ Terms are defined by combining these primitives together.
         \vspace{1em}
 
         \begin{bprooftree}
-            \AxiomC{\phantom{\(\phi\)}}
+            \AxiomC{}
             \UnaryInfC{\(
                 \morph{\swap{m}{n}}{[m,n]}{[n,m]} \in \sigmaterms
             \)}
         \end{bprooftree}
         \begin{bprooftree}
-            \AxiomC{\(\wordsum{\overline{m}} = \wordsum{\overline{n}}\)}
+            \AxiomC{}
             \UnaryInfC{\(
-                \morph{\bundle{\overline{m}}{\overline{n}}}{\overline{m}}{\overline{n}} \in \sigmaterms
+                \morph{\bundleexpand{\listvar{n}}}{\listvar{n}}{1^{\wordsum{\listvar{n}}}} \in \sigmaterms
+            \)}
+        \end{bprooftree}
+        \begin{bprooftree}
+            \AxiomC{}
+            \UnaryInfC{\(
+                \morph{\bundlecontract{\listvar{n}}}{1^{\wordsum{\listvar{n}}}}{\listvar{n}} \in \sigmaterms
             \)}
         \end{bprooftree}
 
         \vspace{1em}
 
         \begin{bprooftree}
-            \AxiomC{\(\morph{f}{\overline{m}}{\overline{n}} \in \sigmaterms\)}
-            \AxiomC{\(\morph{g}{\overline{n}}{\overline{p}} \in \sigmaterms\)}
-            \BinaryInfC{\(\morph{f \seq g}{\overline{m}}{\overline{p}} \in \sigmaterms\)}
+            \AxiomC{\(\morph{f}{\listvar{m}}{\listvar{n}} \in \sigmaterms\)}
+            \AxiomC{\(\morph{g}{\listvar{n}}{\listvar{p}} \in \sigmaterms\)}
+            \BinaryInfC{\(\morph{f \seq g}{\listvar{m}}{\listvar{p}} \in \sigmaterms\)}
         \end{bprooftree}
         \begin{bprooftree}
-            \AxiomC{\(\morph{f}{\overline{m}}{\overline{n}} \in \sigmaterms\)}
-            \AxiomC{\(\morph{g}{\overline{p}}{\overline{q}} \in \sigmaterms\)}
+            \AxiomC{\(\morph{f}{\listvar{m}}{\listvar{n}} \in \sigmaterms\)}
+            \AxiomC{\(\morph{g}{\listvar{p}}{\listvar{q}} \in \sigmaterms\)}
             \BinaryInfC{\(
-                \morph{f \tensor g}{\overline{mp}}{\overline{nq}} \in \sigmaterms
+                \morph{f \tensor g}{\listvar{mp}}{\listvar{nq}} \in \sigmaterms
             \)}
         \end{bprooftree}
     \end{center}
@@ -92,7 +98,8 @@ There are four base cases: a generator from \(\generators\) with appropriate
 inputs and outputs;
 an \emph{identity} for empty wires with no generators;
 a \emph{symmetry} for swapping over two wires;
-and a \emph{bundler} for reorganising lists of wires.
+a \emph{splitter} for transforming a list of `thicker' wires into a list of
+`thin' one-bit wires, and a \emph{combiner} for the reverse operation.
 The two inductive cases are called \emph{composition} and \emph{tensor}
 respectively.
 Intuitively, these can be thought of generating larger terms by sequencing

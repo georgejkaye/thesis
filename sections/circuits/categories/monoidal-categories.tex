@@ -125,7 +125,7 @@ isormorphism.
 \begin{definition}[Symmetric monoidal category]
     \label{def:symmetric-monoidal-category}
     A \emph{symmetric monoidal category} (SMC) is a monoidal category \(\mcc\)
-    equipped with natural isomorphisms \(
+    equipped with a natural isomorphism \(
         \swap{A}{B} \colon A \tensor B \cong B \tensor A
     \) such that the following diagrams commute:
     \begin{center}
@@ -138,7 +138,7 @@ isormorphism.
     \end{center}
 \end{definition}
 
-Recall that as \(\swap{-}{=}\) is a natural isomorphism, it induces
+Recall that as \(\sigma\) is a natural isomorphism, it induces
 a \emph{family} of morphisms \(
     \morph{\swap{A}{B}}{A \tensor B}{B \tensor A}
 \) for every pair of objects \(A\) and \(B\).
@@ -151,7 +151,7 @@ drop the box around it.
 Once again, we are primarily concerned with \emph{strict} symmetric
 monoidal categories.
 The equations of strict symmetric monoidal categories are listed in
-\cref{fig:smc-equations} and their string diagram interpretations in
+\cref{fig:smc-equations} and the string diagram interpretations in
 \cref{fig:smc-equations-strings}.
 
 \input{floats/smc-equations}
