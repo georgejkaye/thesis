@@ -1,81 +1,112 @@
-\section{Splitting and combining}
+\section{Divisible PROPs}
 
 In the context of \(\natplus\)-sorted PROPs, the bundler generators
 \(\bundleexpand{\listvar{n}}\) and \(\bundlecontract{\listvar{n}}\) have an
 interpretation as morphisms
 \(\listvar{m} \to \listvar{n}\) where the source and target words have the
 same sum, but constructed in a different way, such as \([1,2] \to [2,1]\).
+
+
 These constructs were first proposed by Wilson et al in~\cite{wilson2023string}
 as a notation for \emph{non-strict categories}.
-However, it is also noted that it could be used in the strict case as a way of
-grouping and splitting wires.
-We present a slight variation of their construction specialised for
-\(\natplus\)-sorted PROPs.
+However, it was noted that a similar idea could also be applied to strict
+categories as a way to group and split wires.
+Here, we will formalise this notion as \emph{divisible PROPs}.
 
 \begin{notation}
     We write \(m^n\) for the list of length \(n\) containing only \(m\).
+    Given a function \(\morph{f}{X^\star}{\nat}\) and list
+    \(\listvar{x} \in X^\star\), we write \(\Sigma{f^\star(\listvar{x})}\) to
+    denote the sum of the elements of the list obtained by applying \(f\)
+    pointwise to \(\listvar{x}\).
 \end{notation}
 
-\begin{definition}
-    A \emph{bundled} \(\natplus\)-\emph{PROP} is a \(\natplus\)-sorted PROP
-    equipped with natural isomorphisms \(
-        \morph{\bundleexpand{\listvar{n}}}{\listvar{n}}{1^{\wordsum{\listvar{n}}}}
+\begin{definition}[Divisible PROP]
+    A \emph{divisble} PROP is a \(\mcc\)-sorted PROP equipped
+    with a sort \(b \in \mcc\) called the \emph{base} and a function \(
+        \morph{\splitfn}{\mcc}{\natplus}
+    \) such that \(\splitfn(u) = 1\), along with natural isomorphisms \(
+        \morph{\bundleexpand{A}}{A}{1^{\Sigma\splitfn^\star{A}}}
     \) and \(
-        \morph{\bundlecontract{\listvar{n}}}{1^{\wordsum{\listvar{n}}}}{\listvar{n}}
-    \), such that
+        \morph{\bundlecontract{A}}{1^{\Sigma\splitfn^\star{A}}}{A}
+    \) such that
     \begin{itemize}
-        \item \(\bundleexpand{\listvar{n}}\) and \(\bundlecontract{\listvar{n}}\)
+        \item \(\bundleexpand{A}\) and \(\bundlecontract{A}\)
                 are \emph{inverses}, i.e.\ \(
-                    \bundleexpand{n} \seq \bundlecontract{n} = \id[n]
+                    \bundleexpand{A} \seq \bundlecontract{A} = \id[A]
                 \) and \(
-                    \bundlecontract{n} \seq \bundleexpand{n} = \id[1^n]
-                \); and
-        \item objects of the form \(1^{\listvar{n}}\) are \emph{annihilators},
+                    \bundlecontract{A} \seq \bundleexpand{A} = \id[u^{\Sigma\splitfn A}]
+                \);
+        \item objects of the form \(b^{n}\) are \emph{annihilators},
                 i.e.\ \(
-                    \bundleexpand{1^n} = \id[1^n]
+                    \bundleexpand{b^n} = \id[b^n]
                 \) and \(
-                    \bundlecontract{1^n} = \id[1^n]
+                    \bundlecontract{b^n} = \id[b^n]
+                \); and
+        \item \(\bundleexpand{A}\) and \(\bundlecontract{A}\) respect the
+                tensor, i.e.\ \(
+                    \bundleexpand{A} \tensor \bundleexpand{B}
+                    =
+                    \bundleexpand{A \tensor B}
+                \) and \(
+                    \bundlecontract{A} \tensor \bundlecontract{B}
+                    =
+                    \bundlecontract{A \tensor B}
                 \).
     \end{itemize}
 \end{definition}
 
-The two generators \(
+In a divisible PROP, every sort can be expressed as a power of the base sort.
+The components \(
     \bundleexpand{\listvar{n}}
-\) and \(
+\), called the \emph{splitters}, turns a list of `thick' wires into a list
+solely comprised of the base sort; the components \(
     \bundlecontract{\listvar{n}}
-\) are called the \emph{splitter} and \emph{cosplitter} respectively.
-In string diagrams, we draw them both as \(
-    \iltikzfig{strings/strictifiers/bundle}[colour=white]
-\)
+\), called the \emph{cosplitters}, perform the reverse operation.
+
+\begin{example}
+    Any \(\natplus\) sorted PROP is divisible with factor \(1\) and
+    \(\splitfn\) as the identity.
+\end{example}
+
+In string diagrams, we draw the splitter and cosplitter as an elongated `bubble'
+\(
+    \iltikzfig{strings/strictifiers/bundle}[colour=white,dom=A,cod=B]
+\), with the appropriate number of wires on either side.
+The equations of divisible PROPs illustrated as string diagrams are shown in
+\cref{fig:divisible-prop-equations}
+
+\begin{example}
+    The splitter \(
+        \morph{\bundleexpand{[2,3]}}{[2,3]}{1^5}
+    \) and is drawn as \(
+        \iltikzfig{strings/strictifiers/splitter-example}
+    \) and the cosplitter \(
+        \morph{\bundlecontract{[1,3,1]}}{1^5}{[1,3,1]}
+    \), and drawn as \(
+        \iltikzfig{strings/strictifiers/cosplitter-example}
+    \).
+\end{example}
+
+\input{floats/bundler-equations}
 
 It is often the case that we do not want to split a wire into \emph{all} of its
 constituent bits, but merely rearrange which wires are bundled together.
 
 \begin{definition}[Bundler]
-    Given objects \(\listvar{m},\listvar{n}\) in a bundled PROP, the
-    \(\morph{\bundle{\listvar{m}}{\listvar{n}}}{\listvar{m}}{\listvar{n}}\) is
-    defined as \(
-        \bundleexpand{\listvar{m}} \seq \bundlecontract{\listvar{n}}
-    \)
+    Given objects \(A,B\) in a divisible PROP, the \emph{bundler}
+    \(\morph{\bundle{A}{B}}{A}{B}\) is defined as \(
+        \bundleexpand{A} \seq \bundlecontract{B}
+    \).
 \end{definition}
 
+Abusing notation somewhat, we draw a bundler in the same way as the
+(co)splitters.
 
 \begin{example}
-    Let \(\listvar{m} := [2, 3]\).
-    Then the splitter on \(\listvar{m}\) is defined as \(
-        \morph{\bundleexpand{\listvar{m}}}{\listvar{m}}{1^5}
-    \), and drawn as \(
-        \iltikzfig{strings/strictifiers/splitter-example}
-    \).
-    Let \(\listvar{n} := [1,3,1]\).
-    The cosplitter on \(\listvar{n}\) is defined as \(
-        \morph{\bundlecontract{\listvar{n}}}{1^5}{\listvar{n}}
-    \), and drawn as \(
-        \iltikzfig{strings/strictifiers/cosplitter-example}
-    \).
-    The bundler \(\morph{\bundle{\listvar{m}}{\listvar{n}}}{\listvar{m}}{\listvar{n}}\)
-    is then derivable as \(\bundleexpand{\listvar{m}} \seq \bundlecontract{\listvar{n}}\)
-    and drawn as \(
+
+    The bundler \(\morph{\bundle{[2,3]}{[1,3,1]}}{[2,3]}{[1,3,1]}\)
+    is drawn as \(
         \iltikzfig{strings/strictifiers/bundle-example}
     \).
 \end{example}
