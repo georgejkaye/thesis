@@ -1,30 +1,50 @@
 \section{PROPs}
 
-Symmetrical monoidal categories provide en
+By this point, it should be clear that symmetric monoidal categories provide
+an excellent setting for modelling terms modulo `structural equations'.
+However, we do not need the full generality of an arbitrary SMC; we can restrict
+to a more specialised setting known as \emph{PROPs}.
 
+\begin{definition}[PROP~\cite{maclane1965categorical}]
+    A \emph{PROP} (category of \emph{PRO}ducts and \emph{P}ermutations) is a
+    strict symmetric monoidal category with the natural numbers as objects and
+    addition as tensor product on objects.
+\end{definition}
 
-We have described the categorical structure required to interpret five of the
-constructors listed in \cref{def:terms}; only the `bundlers'
-\(\bundle{\overline{m}}{\overline{n}}\) remain.
-However, to give these meaning we must consider a slightly more specialised
-setting; a subclass of symmetric monoidal categories known as \emph{PROPs}.
+PROPs are an especially good fit for reasoning with string diagrams; as any
+object \(n\) is equal to \(\bigotimes_{i < n} 1\), we can represent a morphism
+\(m \to n\) as a box with \(m\) incoming wires and \(n\) outgoing wires.
 
-\begin{definition}[Multi-sorted PROP~\cite{maclane1965categorical}]
+However, the generators of our term language do not just have natural numbers
+as their (co)domains, but \emph{lists} of natural numbers.
+Fortunately, there is a generalisation of PROPs
+
+\begin{definition}[Multi-sorted PROP]
     Given a set of \emph{sorts} \(\mcc\), a \(\mcc\)-sorted \emph{PROP}
     (category of \emph{PRO}ducts and \emph{P}ermutations) is a strict symmetric
-    monoidal category with the objects as words in \(\freemon{\mcc}\) and tensor
+    monoidal category with the objects as lists in \(\freemon{\mcc}\) and tensor
     product as concatenation.
 \end{definition}
 
-Note that this definition means that the empty word \(\varepsilon\) is the unit
-object in any \(\mcc\)-sorted PROP.
-As the domain and codomains of generators in \(\generators\) are words of
-natural numbers, it is clear to see how a multi-sorted PROP can be used for our
-scenario.
+\begin{remark}
+    If the set of sorts is the singleton \(\{\bullet\}\), then the category is
+    isomorphic to a `vanilla' PROP.
+\end{remark}
 
-\begin{definition}\label{def:freely-generated-prop}
-    Given a set of generators \(\generators\), let \(\smc{\generators}\) be the
-    \(\natplus\)-sorted PROP where \(
-        \smc{\generators}(\overline{m}, \overline{n})
-    \) is the set of \(\Sigma\)-terms of type \(\overline{m} \to \overline{n}\).
-\end{definition}
+Note that this definition means that the empty list \(\varepsilon\) is the unit
+object in any \(\mcc\)-sorted PROP.
+As the domain and codomains of generators in \(\generators\) are lists of
+natural numbers, it is clear to see how a multi-sorted PROP can be used for our
+scenario, by setting the set of sorts \(\mcc\) to the positive naturals
+\(\natplus\).
+
+\begin{remark}
+    Of course, we could just model generators with `flat' (co)domains, and
+    reason entirely with PROPs.
+    We have chosen the list approach to better reflect systems which have
+    distinct input buses of different widths: this will prove useful when
+    considering equational theories and rewrite systems.
+    As a bonus, diagrams get less cluttered as `thicker' buses can be drawn
+    as single wires without using `syntax sugar' as is often the case in string
+    diagrammatic theories.
+\end{remark}
