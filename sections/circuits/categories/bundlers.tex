@@ -18,15 +18,64 @@ We present a slight variation of their construction specialised for
 
 \begin{definition}
     A \emph{bundled} \(\natplus\)-\emph{PROP} is a \(\natplus\)-sorted PROP
-    equipped with natural transformations \(
-        \morph{\bundleexpand{n}}{n}{1^n}
+    equipped with natural isomorphisms \(
+        \morph{\bundleexpand{\listvar{n}}}{\listvar{n}}{1^{\wordsum{\listvar{n}}}}
     \) and \(
-        \morph{\bundlecontract{n}}{1^n}{n}
-    \), such that \(\bundleexpand{1^n} = \id[1^n]\), \(\bundlecontract{1^n} = \id[1^n]\),
-    and \(\bundleexpand{n}\) and \(\bundlecontract{n}\) are inverses,
-    i.e.\ \(
-        \bundleexpand{n} \seq \bundlecontract{n} = \id[n]
-    \) and \(
-        \bundlecontract{n} \seq \bundleexpand{n} = \id[1^n]
-    \).
+        \morph{\bundlecontract{\listvar{n}}}{1^{\wordsum{\listvar{n}}}}{\listvar{n}}
+    \), such that
+    \begin{itemize}
+        \item \(\bundleexpand{\listvar{n}}\) and \(\bundlecontract{\listvar{n}}\)
+                are \emph{inverses}, i.e.\ \(
+                    \bundleexpand{n} \seq \bundlecontract{n} = \id[n]
+                \) and \(
+                    \bundlecontract{n} \seq \bundleexpand{n} = \id[1^n]
+                \); and
+        \item objects of the form \(1^{\listvar{n}}\) are \emph{annihilators},
+                i.e.\ \(
+                    \bundleexpand{1^n} = \id[1^n]
+                \) and \(
+                    \bundlecontract{1^n} = \id[1^n]
+                \).
+    \end{itemize}
 \end{definition}
+
+The two generators \(
+    \bundleexpand{\listvar{n}}
+\) and \(
+    \bundlecontract{\listvar{n}}
+\) are called the \emph{splitter} and \emph{cosplitter} respectively.
+In string diagrams, we draw them both as \(
+    \iltikzfig{strings/strictifiers/bundle}[colour=white]
+\)
+
+It is often the case that we do not want to split a wire into \emph{all} of its
+constituent bits, but merely rearrange which wires are bundled together.
+
+\begin{definition}[Bundler]
+    Given objects \(\listvar{m},\listvar{n}\) in a bundled PROP, the
+    \(\morph{\bundle{\listvar{m}}{\listvar{n}}}{\listvar{m}}{\listvar{n}}\) is
+    defined as \(
+        \bundleexpand{\listvar{m}} \seq \bundlecontract{\listvar{n}}
+    \)
+\end{definition}
+
+
+\begin{example}
+    Let \(\listvar{m} := [2, 3]\).
+    Then the splitter on \(\listvar{m}\) is defined as \(
+        \morph{\bundleexpand{\listvar{m}}}{\listvar{m}}{1^5}
+    \), and drawn as \(
+        \iltikzfig{strings/strictifiers/splitter-example}
+    \).
+    Let \(\listvar{n} := [1,3,1]\).
+    The cosplitter on \(\listvar{n}\) is defined as \(
+        \morph{\bundlecontract{\listvar{n}}}{1^5}{\listvar{n}}
+    \), and drawn as \(
+        \iltikzfig{strings/strictifiers/cosplitter-example}
+    \).
+    The bundler \(\morph{\bundle{\listvar{m}}{\listvar{n}}}{\listvar{m}}{\listvar{n}}\)
+    is then derivable as \(\bundleexpand{\listvar{m}} \seq \bundlecontract{\listvar{n}}\)
+    and drawn as \(
+        \iltikzfig{strings/strictifiers/bundle-example}
+    \).
+\end{example}
