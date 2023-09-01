@@ -2,19 +2,19 @@
 
 Processes are modelled as \emph{terms}.
 Before we can begin, the components that make up processes in a given system
-must be sepcified.
+must be specified.
 
-\begin{notation}[List, sum]
+\begin{notation}[Lists]
     Given a set \(X\), the set of lists of elements of \(X\) is denoted
     \(\freemon{X}\).
-    Words are written \([x_0, x_1, x_2, \cdots, x_{n-1}]\); the brackets around
+    Lists are written \([x_0, x_1, x_2, \cdots, x_{n-1}]\); the brackets around
     single element lists may be dropped when clear from context \(x := [x]\);
     and variables representing arbitrary lists are generally written with an
-    listvar \(
+    overline \(
         \listvar{x}, \listvar{y}, \listvar{z}... \in \freemon{X}
     \).
-    Given two words \(\listvar{x}, \listvar{y}\), their concatenation is
-    denoted \(\listvar{x}\listvar{y}\).
+    Given two lists \(\listvar{x}, \listvar{y}\), their concatenation is
+    denoted \(\listvar{xy}\).
     The list of length \(n\) containing just element \(x\) is written \(x^n\).
     Given a list \(\listvar{x}\), its \emph{length} is denoted
     \(\wordlen{\listvar{x}}\); for \(i < \wordlen{\listvar{x}}\), its
@@ -52,7 +52,7 @@ Terms are defined by combining these primitives together.
         \end{bprooftree}
         \begin{bprooftree}
             \AxiomC{\phantom{\(\phi\)}}
-            \UnaryInfC{\(\morph{\id[n]}{[n]}{[n]} \in \sigmaterms\)}
+            \UnaryInfC{\(\morph{\id[\overline{n}]}{\overline{n}}{\overline{n}} \in \sigmaterms\)}
         \end{bprooftree}
 
         \vspace{1em}
@@ -60,7 +60,7 @@ Terms are defined by combining these primitives together.
         \begin{bprooftree}
             \AxiomC{}
             \UnaryInfC{\(
-                \morph{\swap{m}{n}}{[m,n]}{[n,m]} \in \sigmaterms
+                \morph{\swap{\overline{m}}{\overline{n}}}{\overline{mn}}{\overline{nm}} \in \sigmaterms
             \)}
         \end{bprooftree}
         \begin{bprooftree}
