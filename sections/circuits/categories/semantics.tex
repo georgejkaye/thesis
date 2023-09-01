@@ -1,1 +1,13 @@
 \section{Semantics}
+
+All the pieces are now in place to define the categorical setting for reasoning
+about terms.
+
+\begin{definition}\label{def:freely-generated-prop}
+    Given a set of generators \(\generators\), let \(\smc{\generators}\) be the
+    \(\natplus\)-sorted PROP where \(
+        \smc{\generators}(\overline{m}, \overline{n})
+    \) is the set of \(\Sigma\)-terms of type \(\overline{m} \to \overline{n}\).
+\end{definition}
+
+Such a category is known as a \emph{PROP freely generated over} \(\Sigma\).
