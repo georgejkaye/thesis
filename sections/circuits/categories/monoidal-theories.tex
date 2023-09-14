@@ -100,34 +100,80 @@ intuitive visual interpretations; often it is insightful to reason
 Note that the first step \((\dagger)\) of the proof is performed solely by
 deforming the string diagram; recall that as connectivity is preserved this is
 still valid.
-While this proof was fairly simple, the same principles apply to reasoning about
-more complex terms.
+Deforming the string diagram corresponds to implicitly `applying' equations
+of symmetric monoidal categories.
 
-\begin{example}
-    \(
-        \iltikzfig{strings/structure/monoid/example/step-0}
-        =
-        \iltikzfig{strings/structure/monoid/example/step-7}
-    \)
-    is a valid equation in \(\cmon\).
-\end{example}
-\begin{proof}
-    \(
-        \iltikzfig{strings/structure/monoid/example/step-0}
-        =
-        \iltikzfig{strings/structure/monoid/example/step-1}
-        =
-        \iltikzfig{strings/structure/monoid/example/step-2}
-        =
-        \iltikzfig{strings/structure/monoid/example/step-3}
-        =
-        \\[1em]
-        \iltikzfig{strings/structure/monoid/example/step-4}
-        =
-        \iltikzfig{strings/structure/monoid/example/step-5}
-        =
-        \iltikzfig{strings/structure/monoid/example/step-6}
-        =
-        \iltikzfig{strings/structure/monoid/example/step-7}
-    \)
-\end{proof}
+\begin{gather*}
+    \iltikzfig{strings/structure/monoid/right-unitality/lhs-unit}
+    \eqaxioms[\text{self-inverse}]
+    \iltikzfig{strings/structure/monoid/right-unitality/step-1a}
+    \eqaxioms[\text{naturality}]
+    \iltikzfig{strings/structure/monoid/right-unitality/step-1b}
+    \eqaxioms[\text{unitality of symmetry}]
+    \iltikzfig{strings/structure/monoid/right-unitality/step-1c}
+    \eqaxioms[\text{unitality of tensor}]
+    \iltikzfig{strings/structure/monoid/right-unitality/step-1d}
+\end{gather*}
+
+Already much more verbose than the simple deformation, this does not
+even take into account the repeated applications of associativity of both
+compositionality and tensor required if reasoning in the term language!
+
+\begin{align*}
+    \id[n] \tensor \eta \seq \mu
+    &=
+    \id[n] \tensor (\eta \seq \id[n]) \seq \mu
+    &
+    \text{unit of } \seq
+    \\
+    &=
+    (\id[n] \seq \id[n]) \tensor (\eta \seq \id[n]) \seq \mu
+    &
+    \text{unit of } \seq
+    \\
+    &=
+    ((\id[n] \tensor \eta) \seq (\id[n] \tensor \id[n])) \seq \mu
+    &
+    \text{functoriality of } \tensor
+    \\
+    &=
+    ((\id[n] \tensor \eta) \seq (\swap{n}{n} \seq \swap{n}{n})) \seq \mu
+    &
+    \sigma \text{ is self inverse}
+    \\
+    &=
+    (((\id[n] \tensor \eta) \seq \swap{n}{n}) \seq \swap{n}{n}) \seq \mu
+    &
+    \text{associativity of } \seq
+    \\
+    &=
+    ((\swap{\varepsilon}{n} \seq (\eta \tensor \id[n])) \seq \swap{n}{n}) \seq \mu
+    &
+    \text{naturality of } \sigma
+    \\
+    &=
+    ((\id[n] \seq (\eta \tensor \id[n])) \seq \swap{n}{n}) \seq \mu
+    &
+    \text{unit of } \sigma
+    \\
+    &=
+    ((\eta \tensor \id[n]) \seq \swap{n}{n}) \seq \mu
+    &
+    \text{unit of } \seq
+    \\
+    &=
+    (\eta \tensor \id[n]) \seq (\swap{n}{n} \seq \mu)
+    &
+    \text{associativity of} \seq
+    \\
+    &=
+    (\eta \tensor \id[n]) \seq \mu
+    &
+    \text{commutativity of } \mu
+    \\
+    &=
+    \id[n]
+    &
+    \text{left unitality of } \mu
+\end{align*}
+It should be clear that reasoning string diagrammatically
