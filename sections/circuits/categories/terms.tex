@@ -17,10 +17,8 @@ must be specified.
     denoted \(\listvar{xy}\).
     The list of length \(n\) containing just element \(x\) is written \(x^n\).
     Given a list \(\listvar{x}\), its \emph{length} is denoted
-    \(\wordlen{\listvar{x}}\); for \(i < \wordlen{\listvar{x}}\), its
-    \(i\)\emph{th element} is denoted \(\listvar{x}(i)\); and its
-    \emph{sum}, denoted \(\wordsum{\listvar{x}}\), is computed as
-    \(\Sigma_{i < |\listvar{m}|}\listvar{m}(i)\).
+    \(\wordlen{\listvar{x}}\); for \(i < \wordlen{\listvar{x}}\) and its
+    \(i\)\emph{th element} is denoted \(\listvar{x}(i)\).
 \end{notation}
 
 \begin{notation}
@@ -51,8 +49,12 @@ Terms are defined by combining these primitives together.
             \)}
         \end{bprooftree}
         \begin{bprooftree}
+            \AxiomC{\(n \in \natplus\)}
+            \UnaryInfC{\(\morph{\id[n]}{[n]}{[n]} \in \sigmaterms\)}
+        \end{bprooftree}
+        \begin{bprooftree}
             \AxiomC{\phantom{\(\phi\)}}
-            \UnaryInfC{\(\morph{\id[\overline{n}]}{\overline{n}}{\overline{n}} \in \sigmaterms\)}
+            \UnaryInfC{\(\morph{\id[0]}{\varepsilon}{\varepsilon} \in \sigmaterms\)}
         \end{bprooftree}
 
         \vspace{1em}
@@ -60,19 +62,19 @@ Terms are defined by combining these primitives together.
         \begin{bprooftree}
             \AxiomC{}
             \UnaryInfC{\(
-                \morph{\swap{\overline{m}}{\overline{n}}}{\overline{mn}}{\overline{nm}} \in \sigmaterms
+                \morph{\swap{m}{n}}{[m,n]}{[n,m]} \in \sigmaterms
             \)}
         \end{bprooftree}
         \begin{bprooftree}
             \AxiomC{}
             \UnaryInfC{\(
-                \morph{\bundleexpand{\listvar{n}}}{\listvar{n}}{1^{\wordsum{\listvar{n}}}} \in \sigmaterms
+                \morph{\bundleexpand{m}}{[m]}{1^m} \in \sigmaterms
             \)}
         \end{bprooftree}
         \begin{bprooftree}
             \AxiomC{}
             \UnaryInfC{\(
-                \morph{\bundlecontract{\listvar{n}}}{1^{\wordsum{\listvar{n}}}}{\listvar{n}} \in \sigmaterms
+                \morph{\bundlecontract{n}}{1^n}{[n]} \in \sigmaterms
             \)}
         \end{bprooftree}
 
@@ -105,5 +107,46 @@ respectively.
 Intuitively, these can be thought of generating larger terms by sequencing
 subterms in sequence or parallel.
 
+\begin{notation}
+    Identities for lists of wires are defined inductively as \begin{gather*}
+        \id[\varepsilon] := \id[0]
+        \quad
+        \id[n^\prime \streamcons \overline{n}]
+        :=
+        \id[n^\prime] \tensor \id[\overline{n}]
+    \end{gather*}
+    Symmetries for lists of wires are defined inductively as \begin{gather*}
+        \swap{\varepsilon}{\listvar{n}}
+        :=
+        \id[\listvar{n}]
+        \quad
+        \swap{\varepsilon}{\listvar{n}}
+        := \id[\listvar{n}]
+        \\
+        \swap{m}{n^\prime \streamcons \listvar{n}}
+        :=
+        \swap{m}{n^\prime} \tensor \id[\listvar{n}]
+        \seq
+        \id[y^\prime] \tensor \swap{m}{\listvar{n}}
+        \quad
+        \swap{m^\prime \streamcons \listvar{m}}{\listvar{n}}
+        :=
+        \id[m^\prime] \tensor \swap{\listvar{m}}{\listvar{n}}
+        \seq
+        \swap{[m^\prime]}{\listvar{n}} \tensor \id[\listvar{m}]
+    \end{gather*}
+\end{notation}
+
 \(\Sigma\)-terms will be abbreviated to `terms' when the signature is clear from
 context.
+
+\begin{example}
+    \todo[inline]{Think of a funky example}
+\end{example}
+
+\begin{remark}
+    It is clear that even simple terms described using one-dimensional text
+    strings quickly become indecipherable.
+    In the next section we will detail a \emph{graphical syntax} which should
+    make things much clearer.
+\end{remark}
