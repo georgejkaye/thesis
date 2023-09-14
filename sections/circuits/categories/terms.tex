@@ -107,7 +107,7 @@ respectively.
 Intuitively, these can be thought of generating larger terms by sequencing
 subterms in sequence or parallel.
 
-\begin{notation}
+\begin{notation}[Composite identities]\cref{not:composite-identities}
     Identities for lists of wires are defined inductively as \begin{gather*}
         \id[\varepsilon] := \id[0]
         \quad
@@ -115,6 +115,8 @@ subterms in sequence or parallel.
         :=
         \id[n^\prime] \tensor \id[\overline{n}]
     \end{gather*}
+\end{notation}
+\begin{notation}[Composite symmetries]\cref{not:composite-symmetries}
     Symmetries for lists of wires are defined inductively as \begin{gather*}
         \swap{\varepsilon}{\listvar{n}}
         :=
