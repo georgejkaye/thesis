@@ -53,25 +53,30 @@ One such structure is that of \emph{commutative monoids}.
             \iltikzfig{strings/structure/monoid/merge}[colour=white],
             \iltikzfig{strings/structure/monoid/init}[colour=white]
         \}
-    \) representing the \emph{multiplication} and the \emph{unit} respectively,
+    \) called the \emph{multiplication} and the \emph{unit} respectively,
     and \(\equations[\frob]\) comprises the equations
-    \begin{center}
+    \begin{gather*}
         \iltikzfig{strings/structure/monoid/unitality-l-lhs}
-        \(=\)
+        =
         \iltikzfig{strings/structure/monoid/unitality-l-rhs}
         \quad
+        \text{(left unitality)}
+        \qquad
         \iltikzfig{strings/structure/monoid/associativity-lhs}
-        \(=\)
+        =
         \iltikzfig{strings/structure/monoid/associativity-rhs}
         \quad
+        \text{(associativity)}
+        \\[0.5em]
         \iltikzfig{strings/structure/monoid/commutativity-lhs}
-        \(=\)
+        =
         \iltikzfig{strings/structure/monoid/commutativity-rhs}
-    \end{center}
+        \quad
+        \text{(commutativity)}
+    \end{gather*}
     We write \(\cmon := \smc{\generators[\cmon], \equations[\cmon]}\).
 \end{definition}
 
-The two generators of the theory are a \emph{multiplication} and a \emph{unit}.
 The equations describe the properties of the multiplication: it is unital with
 respect to the unit; it is associative; and it is commutative.
 These equations could be described textually, but the string diagrams provide
@@ -102,25 +107,26 @@ deforming the string diagram; as connectivity is preserved this is a valid
 proof step.
 Deforming the string diagram corresponds to implicitly applying equations
 of symmetric monoidal categories.
+These explicit steps are shown below, explicitly drawing the unit wire in grey:
 %
 \begin{gather*}
     \iltikzfig{strings/structure/monoid/right-unitality/lhs-unit}
-    \eqaxioms[\text{unit of } \seq]
+    \eqaxioms[\text{unitality of } \seq]
     \iltikzfig{strings/structure/monoid/right-unitality/step-1-1}
     \eqaxioms[\text{self-inverse}]
     \iltikzfig{strings/structure/monoid/right-unitality/step-1-2}
     \\[0.5em]
     \eqaxioms[\text{naturality of } \sigma]
     \iltikzfig{strings/structure/monoid/right-unitality/step-1-3}
-    \eqaxioms[\text{unit of } \sigma]
+    \eqaxioms[\text{unitality of } \sigma]
     \iltikzfig{strings/structure/monoid/right-unitality/step-1-4}
-    \eqaxioms[\text{unit of } \seq]
+    \eqaxioms[\text{unitality of } \seq]
     \iltikzfig{strings/structure/monoid/right-unitality/step-1-5}
 \end{gather*}
 %
 Already much more verbose than the simple deformation, this does not
 even take into account the repeated applications of associativity of both
-compositionality and tensor required if reasoning in the term language!
+composition and tensor required if reasoning in the term language!
 If we write \(
     \iltikzfig{strings/structure/monoid/merge}[colour=white]
 \) as \(\mu\) and \(
@@ -131,12 +137,12 @@ If we write \(
     &=
     \id[n] \tensor (\eta \seq \id[n]) \seq \mu
     &
-    \text{unit of } \seq
+    \text{unitality of } \seq
     \\
     &=
     (\id[n] \seq \id[n]) \tensor (\eta \seq \id[n]) \seq \mu
     &
-    \text{unit of } \seq
+    \text{unitality of } \seq
     \\
     &=
     ((\id[n] \tensor \eta) \seq (\id[n] \tensor \id[n])) \seq \mu
@@ -161,12 +167,12 @@ If we write \(
     &=
     ((\id[n] \seq (\eta \tensor \id[n])) \seq \swap{n}{n}) \seq \mu
     &
-    \text{unit of } \sigma
+    \text{unitality of } \sigma
     \\
     &=
     ((\eta \tensor \id[n]) \seq \swap{n}{n}) \seq \mu
     &
-    \text{unit of } \seq
+    \text{unitality of } \seq
     \\
     &=
     (\eta \tensor \id[n]) \seq (\swap{n}{n} \seq \mu)
@@ -181,7 +187,7 @@ If we write \(
     &=
     \id[n]
     &
-    \text{left unit of } \mu
+    \text{left unitality of } \mu
 \end{align*}
 
 It should be clear that reasoning string diagrammatically makes things a lot
