@@ -11,7 +11,7 @@ Instead it is desirable to perform reasoning with string diagrams
 \emph{computationally}.
 Although computers do not deal well with topological objects like string
 diagrams `as is', they are very well acquainted with combinatorial objects: for
-a computer to reason effectively with string diagrams, they must first be 
+a computer to reason effectively with string diagrams, they must first be
 interpreted as \emph{graphs}.
 
 \section{String diagram rewriting}
@@ -62,5 +62,19 @@ Research followed on rewriting modulo
 and our work~\cite{ghica2023rewriting} on rewriting modulo
 \emph{traced comonoid structure}.
 The latter is the basis for this part of the thesis.
+
+\section{Hypergraphs}
+
+Hypergraphs are formally defined as a functor cateogory.
+
+\todo[inline]{Blackboard 1}
+
+\begin{definition}[Hypergraph]
+    Let \(\mathcal{X}\) be the category with set of objects
+    \((\nat \times \nat) + 1\) and \(k + l\) morphisms from an object
+    \((k, l)\) to \(\star\).
+    The category of hypergraphs \(\hyp\) is the functor category
+    \([\mathcal{X}, \set]\).
+\end{definition}
 
 \todo[inline]{Adapt from FSCD paper section 2}
