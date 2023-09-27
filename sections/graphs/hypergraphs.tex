@@ -42,7 +42,7 @@ many sources and targets, rather than just one each.
 With hypergraphs, generators are represented as hyperedges, and connections
 between generators indicated by if their sources and targets overlap.
 The beauty of the hypergraph formalism is that there is no restriction for
-vertices to only be incident on a single source and target, so one can easily
+nodes to only be incident on a single source and target, so one can easily
 model structures such as monoids or comonoids.
 It turns out when modelling string diagrams as hypergraphs, the equations of
 a \emph{special commutative Frobenius algebra} are `absorbed': string diagrams
@@ -69,33 +69,36 @@ Hypergraphs are formally defined as a functor category.
 
 \todo[inline]{Blackboard 1}
 
-\begin{definition}[Hypergraph]
-    Let \(\mathbf{X}\) be the category with set of objects
-    \((\nat \times \nat) + 1\) and \(k + l\) morphisms from an object
-    \((k, l)\) to \(\star\).
+\begin{definition}[Hypergraph~\cite{bonchi2016rewriting}]
+    Let \(\mathbf{X}\) be the category with objects
+    \((\nat \times \nat) + 1\) and morphisms
+    \(\morph{\sources{i}}{(k,l)}{\star}\) for each \(i < k\) and
+    \(\morph{\targets{j}}{(k,l)}{\star}\) for each \(j < l\).
     The category of hypergraphs \(\hyp\) is the functor category
     \([\mathbf{X}, \set]\).
 \end{definition}
 
 One can think of the category \(\mathbf{X}\) as a `template' for the structure
 of a hypergraph: the object \(\star\) represents the nodes and each object
-\((k, l)\) represents hyperedges with \(k\) sources and \(l\)
-targets; each such edge must pick \(k\) source nodes and \(l\) target nodes
-from \(\star\).
+\((k, l)\) represents hyperedges with \(k\) sources and \(l\) targets; each such
+edge must pick \(k\) sources and \(l\) targets from \(\star\).
 
-Each object in \(\hyp\) is a functor that instantiates each object in
-\(\mathbf{X}\) to a concrete set.
-Evoking this notation of applying a functor to objects in \(\mathbf{X}\), for a
-hypergraph \(F \in \hyp\) we write \(\vertices{F}\) for its set of
-nodes and \(\edges{F}{k}{l}\) for the set of edges with \(k\) sources and \(l\)
-targets.
+Objects in \(\hyp\) are functors that instantiates each object in \(\mathbf{X}\)
+to a concrete set.
+Subsequently, for a hypergraph \(F \in \hyp\) we write \(\vertices{F}\) for its
+set of nodes and \(\edges{F}{k}{l}\) for the set of edges with \(k\) sources and
+\(l\) targets.
+Morphisms in \(\hyp\) are morphisms between hypergraphs which preserve their
+structure.
 
-\todo[inline]{Definition of hypergraph morphisms}
-
-A morphism in \(\hyp\) between hypergraphs \(F\) and \(G\) consists of functions
-\(\morph{\vertices{f}}{\vertices{F}}{\vertices{G}}\) and
-\(\morph{\edges{f}{k}{l}}{\edges{F}{k}{l}}{\edges{G}{k}{l}}\) preserving sources
-and targets in the obvious way.
+\begin{definition}[Hypergraph homomorphism]
+    Given two hypergraphs \(F, G \in \hyp\), \emph{hypergraph homomorphism}
+    \(F \to G\) consists of functions
+    \(\morph{\vertices{f}}{\vertices{F}}{\vertices{G}}\) and
+    \(\morph{\edges{f}{k}{l}}{\edges{F}{k}{l}}{\edges{G}{k}{l}}\) such that the
+    following diagrams commute:
+    \input{floats/hypergraph-homs}
+\end{definition}
 
 Much like with regular graphs, it is much more intuitive to draw out hypergraphs
 rather than look at their combinatorial representation.
@@ -106,22 +109,61 @@ on the left and right that connect to source and target nodes respectively.
     \todo[inline]{Do hypergraph example}
 \end{example}
 
-
-\subsubsection{Labelled hypergraphs}
+\subsection{Labelled hypergraphs}
 
 From the example drawn above, it should be clear to see how hypergraphs are a
 suitable representation of string diagrams: generators correspond to hyperedges
 and wires to the nodes between them.
-However, the hyperedges are currently not \emph{labelled}.
+However, the hyperedges are currently not \emph{labelled} with symbols from the
+signature.
+To do this, we must first translate the notion of signature to hypergraphs.
+
+\begin{definition}[Hypergraph signature~\cite{bonchi2016rewriting}]
+    For a set of generators \(\signature\) as defined in \cref{def:generators},
+    the \emph{hypergraph signature} \(\hypsignature{\Sigma} \in \hyp\) is
+    defined as follows:
+    \begin{gather*}
+        \vertices{\hypsignature{\Sigma}} := \{ v_n \,|\, n \in \natplus\}
+        \quad
+        \edges{\hypsignature{\Sigma}} := \{ e_g \,|\, g \in \signature\}
+        \\
+        \sources{i}(e_g) := v_{\dom[e_g](i)}
+        \quad
+        \targets{j}(e_g) := v_{\cod[e_g]{j}}
+    \end{gather*}
+\end{definition}
+
+\begin{example}
+    \todo[inline]{Do hypergraph signature example}
+\end{example}
+
+Labels can then be assigned to the edges of a hypergraph \(F\) using a
+homomorphism \(F \to \hypsignature{\Sigma}\).
+To do this to \emph{all} the hypergraphs in \(\hyp\), we utilise some
+categorical machinery.
 
 \begin{definition}[Slice category~\cite{lawvere1963functorial}]
-    Given a category \(\mathbf{C}\) and an object \(C \in \mathbf{C}\), the
+    For a category \(\mathbf{C}\) and an object \(C \in \mathbf{C}\), the
     \emph{slice category} \(\mathbf{C} / C\) has objects the morphisms of
     \(\mathbf{C}\) with target \(C\) and morphisms
     \((\morph{f}{X}{C}) \to (\morph{g}{X^\prime}{C})\) the morphisms
-    \(\morph{g}{X}{X^\prime} \in \mathbf{C}\) such that \(f^\prime circ g = f\).
+    \(\morph{g}{X}{X^\prime} \in \mathbf{C}\) such that \(f^\prime\circ g = f\).
 \end{definition}
 
+\begin{definition}[Labelled hypergraphs~\cite{bonchi2016rewriting}]
+    Let \(\hypsigma\) be the category of hypergraphs labelled over a set of
+    generators \(\Sigma\), defined as the slice category
+    \(\hyp / \hypsignature{\Sigma}\).
+\end{definition}
+
+\subsection{Cospans of hypergraphs}
+
+String diagrams also \emph{input} and \emph{output} interfaces.
+Labelled hypergraphs may have suggestively dangling nodes in the pictures,
+but and are not ordered, and moreover we may wish to set a non-dangling node
+as an interface.
+To set the interfaces of a hypergraph, we will use more hypergraph homomorphisms
+to `pick' the appropriate nodes.
 
 
 \todo[inline]{Adapt from FSCD paper section 2}
