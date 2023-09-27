@@ -65,16 +65,63 @@ The latter is the basis for this part of the thesis.
 
 \section{Hypergraphs}
 
-Hypergraphs are formally defined as a functor cateogory.
+Hypergraphs are formally defined as a functor category.
 
 \todo[inline]{Blackboard 1}
 
 \begin{definition}[Hypergraph]
-    Let \(\mathcal{X}\) be the category with set of objects
+    Let \(\mathbf{X}\) be the category with set of objects
     \((\nat \times \nat) + 1\) and \(k + l\) morphisms from an object
     \((k, l)\) to \(\star\).
     The category of hypergraphs \(\hyp\) is the functor category
-    \([\mathcal{X}, \set]\).
+    \([\mathbf{X}, \set]\).
 \end{definition}
+
+One can think of the category \(\mathbf{X}\) as a `template' for the structure
+of a hypergraph: the object \(\star\) represents the nodes and each object
+\((k, l)\) represents hyperedges with \(k\) sources and \(l\)
+targets; each such edge must pick \(k\) source nodes and \(l\) target nodes
+from \(\star\).
+
+Each object in \(\hyp\) is a functor that instantiates each object in
+\(\mathbf{X}\) to a concrete set.
+Evoking this notation of applying a functor to objects in \(\mathbf{X}\), for a
+hypergraph \(F \in \hyp\) we write \(\vertices{F}\) for its set of
+nodes and \(\edges{F}{k}{l}\) for the set of edges with \(k\) sources and \(l\)
+targets.
+
+\todo[inline]{Definition of hypergraph morphisms}
+
+A morphism in \(\hyp\) between hypergraphs \(F\) and \(G\) consists of functions
+\(\morph{\vertices{f}}{\vertices{F}}{\vertices{G}}\) and
+\(\morph{\edges{f}{k}{l}}{\edges{F}{k}{l}}{\edges{G}{k}{l}}\) preserving sources
+and targets in the obvious way.
+
+Much like with regular graphs, it is much more intuitive to draw out hypergraphs
+rather than look at their combinatorial representation.
+We draw nodes as black dots, and hyperedges as `bubbles' with ordered tentacles
+on the left and right that connect to source and target nodes respectively.
+
+\begin{example}
+    \todo[inline]{Do hypergraph example}
+\end{example}
+
+
+\subsubsection{Labelled hypergraphs}
+
+From the example drawn above, it should be clear to see how hypergraphs are a
+suitable representation of string diagrams: generators correspond to hyperedges
+and wires to the nodes between them.
+However, the hyperedges are currently not \emph{labelled}.
+
+\begin{definition}[Slice category~\cite{lawvere1963functorial}]
+    Given a category \(\mathbf{C}\) and an object \(C \in \mathbf{C}\), the
+    \emph{slice category} \(\mathbf{C} / C\) has objects the morphisms of
+    \(\mathbf{C}\) with target \(C\) and morphisms
+    \((\morph{f}{X}{C}) \to (\morph{g}{X^\prime}{C})\) the morphisms
+    \(\morph{g}{X}{X^\prime} \in \mathbf{C}\) such that \(f^\prime circ g = f\).
+\end{definition}
+
+
 
 \todo[inline]{Adapt from FSCD paper section 2}
