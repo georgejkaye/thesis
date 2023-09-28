@@ -1,29 +1,5 @@
 \begin{center}
-    \begin{tikzcd}
-        \edges{F}{k}{l}
-        \arrow{r}{\edges{f}{k}{l}}
-        \arrow{d}{\sources{i}}
-        &
-        \edges{G}{k}{l}
-        \arrow{d}{\sources{i}}
-        \\
-        \vertices{F}
-        \arrow{r}{\vertices{f}}
-        &
-        \vertices{G}
-    \end{tikzcd}
+    \includestandalone{figures/graphs/category/sources-preserved}
     \qquad
-    \begin{tikzcd}
-        \edges{F}{k}{l}
-        \arrow{r}{\edges{f}{k}{l}}
-        \arrow{d}{\targets{i}}
-        &
-        \edges{G}{k}{l}
-        \arrow{d}{\targets{i}}
-        \\
-        \vertices{F}
-        \arrow{r}{\vertices{f}}
-        &
-        \vertices{G}
-    \end{tikzcd}
+    \includestandalone{figures/graphs/category/targets-preserved}
 \end{center}

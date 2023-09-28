@@ -65,15 +65,15 @@ The latter is the basis for this part of the thesis.
 
 \section{Hypergraphs}
 
+We will begin by defining the categories of hypergraphs required, following the
+pattern detailed in \cite{bonchi2022string}.
 Hypergraphs are formally defined as a functor category.
 
-\todo[inline]{Blackboard 1}
-
 \begin{definition}[Hypergraph~\cite{bonchi2016rewriting}]
-    Let \(\mathbf{X}\) be the category with objects
-    \((\nat \times \nat) + 1\) and morphisms
-    \(\morph{\sources{i}}{(k,l)}{\star}\) for each \(i < k\) and
-    \(\morph{\targets{j}}{(k,l)}{\star}\) for each \(j < l\).
+    Let \(\mathbf{X}\) be the category with object set
+    \((\nat \times \nat) + \star\) and morphisms
+    \(\morph{\sources{i}}{(k,l)}{\star}\) for each \(i < k\)
+    and \(\morph{\targets{j}}{(k,l)}{\star}\) for each \(j < l\).
     The category of hypergraphs \(\hyp\) is the functor category
     \([\mathbf{X}, \set]\).
 \end{definition}
@@ -88,8 +88,8 @@ to a concrete set.
 Subsequently, for a hypergraph \(F \in \hyp\) we write \(\vertices{F}\) for its
 set of nodes and \(\edges{F}{k}{l}\) for the set of edges with \(k\) sources and
 \(l\) targets.
-Morphisms in \(\hyp\) are morphisms between hypergraphs which preserve their
-structure.
+Since it is a functor category, the morphisms in \(\hyp\) are natural
+transformations: structure-preserving maps between hypergraphs.
 
 \begin{definition}[Hypergraph homomorphism]
     Given two hypergraphs \(F, G \in \hyp\), \emph{hypergraph homomorphism}
@@ -114,8 +114,8 @@ on the left and right that connect to source and target nodes respectively.
 From the example drawn above, it should be clear to see how hypergraphs are a
 suitable representation of string diagrams: generators correspond to hyperedges
 and wires to the nodes between them.
-However, the hyperedges are currently not \emph{labelled} with symbols from the
-signature.
+However, the hyperedges are currently not \emph{labelled} with generator
+symbols.
 To do this, we must first translate the notion of signature to hypergraphs.
 
 \begin{definition}[Hypergraph signature~\cite{bonchi2016rewriting}]
@@ -125,11 +125,11 @@ To do this, we must first translate the notion of signature to hypergraphs.
     \begin{gather*}
         \vertices{\hypsignature{\Sigma}} := \{ v_n \,|\, n \in \natplus\}
         \quad
-        \edges{\hypsignature{\Sigma}} := \{ e_g \,|\, g \in \signature\}
+        \edges{\hypsignature{\Sigma}}{k}{l} := \{ e_g \,|\, g \in \signature\}
         \\
         \sources{i}(e_g) := v_{\dom[e_g](i)}
         \quad
-        \targets{j}(e_g) := v_{\cod[e_g]{j}}
+        \targets{j}(e_g) := v_{\cod[e_g](j)}
     \end{gather*}
 \end{definition}
 
@@ -139,8 +139,8 @@ To do this, we must first translate the notion of signature to hypergraphs.
 
 Labels can then be assigned to the edges of a hypergraph \(F\) using a
 homomorphism \(F \to \hypsignature{\Sigma}\).
-To do this to \emph{all} the hypergraphs in \(\hyp\), we utilise some
-categorical machinery.
+To do this to \emph{all} the hypergraphs in \(\hyp\) and create a category of
+\emph{labelled} hypergraphs, we make use of some more categorical machinery.
 
 \begin{definition}[Slice category~\cite{lawvere1963functorial}]
     For a category \(\mathbf{C}\) and an object \(C \in \mathbf{C}\), the
@@ -156,14 +156,69 @@ categorical machinery.
     \(\hyp / \hypsignature{\Sigma}\).
 \end{definition}
 
+\begin{example}
+    \todo[inline]{Do labelled hypergraph example}
+\end{example}
+
 \subsection{Cospans of hypergraphs}
 
-String diagrams also \emph{input} and \emph{output} interfaces.
-Labelled hypergraphs may have suggestively dangling nodes in the pictures,
+String diagrams also have \emph{input} and \emph{output} interfaces.
+(Labelled) hypergraphs may have suggestively dangling nodes in the pictures,
 but and are not ordered, and moreover we may wish to set a non-dangling node
 as an interface.
-To set the interfaces of a hypergraph, we will use more hypergraph homomorphisms
+To set the interfaces of a hypergraph, hypergraph homomorphisms are used
 to `pick' the appropriate nodes.
+
+\begin{definition}[Cospan]
+    A \emph{cospan} in a category \(\mcc\) is a pair of morphisms \(X \to A\)
+    and \(X \to B\) in \(\mcc\), usually written \(\cospan{X}{A}{Y}\).
+
+    A \emph{cospan morphism} \(
+        (\cospan{X}[f]{A}[g]{Y}) \to (\cospan{X}[h]{B}[k]{Y})
+    \) is a morphism \(\morph{\alpha}{A}{B}\) in \(\mathbf{C}\)
+    such that the following diagram commutes:
+    \begin{center}
+        \includestandalone{figures/graphs/cospans/morphism}
+    \end{center}
+    Two cospans \(\cospan{X}{A}{Y}\) and \(\cospan{X}{B}{Y}\) are
+    \emph{isomorphic} if there exists a morphism of cospans as above where
+    \(\alpha\) is an isomorphism.
+\end{definition}
+
+
+As with all the constructions so far, cospans must be assembled into a category
+to be useful for our purpose.
+This means a notion of \emph{composition} of cospans is required.
+
+\begin{definition}[Composition of cospans]
+    \label{def:cospan-composition}
+    In a category \(\mcc\) with pushouts, the composition of two cospans
+    \(\cospan{X}[f]{A}[g]{Y}\) and \(\cospan{Y}[h]{B}[k]{Z}\), their composition
+    is by pushout:
+    \begin{center}
+        \includestandalone{figures/category/diagrams/cospan-composition}
+    \end{center}
+\end{definition}
+
+
+\begin{definition}[Categories of cospans~\cite{benabou1967introduction}]
+    Let \(\mcc\) be a category with pushouts and a terminal object.
+    The category of cospans over \(\mathbf{C}\), denoted \(\csp{\mathbf{C}}\),
+    has as objects the objects of \(\mathbf{C}\) and as morphisms the
+    isomorphism classes of cospans.
+    Composition is by pushout as detailed in \cref{def:cospan-composition} and
+    the identity is \(X \xrightarrow{\id[X]} X \xleftarrow{\id[X]} X\).
+
+    This category is symmetric monoidal with tensor given by the coproduct in
+    \(\mathbf{C}\), unit the initial object \(0 \in \mathbf{C}\), and symmetry
+    by \(\cospan{A+B}{A+B}{B+A}\).
+\end{definition}
+
+
+\begin{definition}[Discrete hypergraph]
+    A \emph{discrete hypergraph} is a hypergraph in which each edge set is
+    empty.
+\end{definition}
 
 
 \todo[inline]{Adapt from FSCD paper section 2}
