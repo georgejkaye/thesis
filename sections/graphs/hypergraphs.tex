@@ -119,11 +119,11 @@ symbols.
 To do this, we must first translate the notion of signature to hypergraphs.
 
 \begin{definition}[Hypergraph signature~\cite{bonchi2016rewriting}]
-    For a set of generators \(\signature\) as defined in \cref{def:generators},
-    the \emph{hypergraph signature} \(\hypsignature{\Sigma} \in \hyp\) is
-    defined as follows:
+    For a set of generators \(\signature\) and sorts \(\mathcal{S}\) as defined
+    in \cref{def:generators}, the \emph{hypergraph signature}
+    \(\hypsignature{(\Sigma, S)} \in \hyp\) is defined as follows:
     \begin{gather*}
-        \vertices{\hypsignature{\Sigma}} := \{ v_n \,|\, n \in \natplus\}
+        \vertices{\hypsignature{\Sigma}} := \{ v_n \,|\, s \in S\}
         \quad
         \edges{\hypsignature{\Sigma}}{k}{l} := \{ e_g \,|\, g \in \signature\}
         \\
@@ -144,16 +144,16 @@ To do this to \emph{all} the hypergraphs in \(\hyp\) and create a category of
 
 \begin{definition}[Slice category~\cite{lawvere1963functorial}]
     For a category \(\mathbf{C}\) and an object \(C \in \mathbf{C}\), the
-    \emph{slice category} \(\mathbf{C} / C\) has objects the morphisms of
+    \emph{slice category} \(\mathbf{C} \slice C\) has objects the morphisms of
     \(\mathbf{C}\) with target \(C\) and morphisms
     \((\morph{f}{X}{C}) \to (\morph{g}{X^\prime}{C})\) the morphisms
     \(\morph{g}{X}{X^\prime} \in \mathbf{C}\) such that \(f^\prime\circ g = f\).
 \end{definition}
 
 \begin{definition}[Labelled hypergraphs~\cite{bonchi2016rewriting}]
-    Let \(\hypsigma\) be the category of hypergraphs labelled over a set of
-    generators \(\Sigma\), defined as the slice category
-    \(\hyp / \hypsignature{\Sigma}\).
+    Let \(\hypsigmas\) be the category of hypergraphs labelled over a set of
+    generators \(\Sigma\) and sorts \(\mathcal{S}\), defined as the slice category
+    \(\hyp \slice \hypsignature{(\Sigma,C)}\).
 \end{definition}
 
 \begin{example}
@@ -194,20 +194,19 @@ This means a notion of \emph{composition} of cospans is required.
 
 \begin{definition}[Composition of cospans]
     \label{def:cospan-composition}
-    In a category \(\mcc\) with pushouts, the composition of two cospans
-    \(\cospan{X}[f]{A}[g]{Y}\) and \(\cospan{Y}[h]{B}[k]{Z}\), their composition
-    is by pushout:
+    In a category \(\mcc\) with pushouts, the composition of cospans
+    \(\cospan{X}[f]{A}[g]{Y}\) and \(\cospan{Y}[h]{B}[k]{Z}\) is by pushout:
     \begin{center}
         \includestandalone{figures/category/diagrams/cospan-composition}
     \end{center}
 \end{definition}
 
-
-\begin{definition}[Categories of cospans~\cite{benabou1967introduction}]
-    Let \(\mcc\) be a category with pushouts and a terminal object.
+\begin{definition}[Categories of cospans]
+    Let \(\mcc\) be a category with pushouts and an initial object.
     The category of cospans over \(\mathbf{C}\), denoted \(\csp{\mathbf{C}}\),
-    has as objects the objects of \(\mathbf{C}\) and as morphisms the
-    isomorphism classes of cospans.
+    has as objects the objects of \(\mathbf{C}\) and as morphisms \(A \to B\)
+    the isomorphism classes of cospans \(\cospan{A}{X}{B}\) for some
+    \(X \in \mcc\).
     Composition is by pushout as detailed in \cref{def:cospan-composition} and
     the identity is \(X \xrightarrow{\id[X]} X \xleftarrow{\id[X]} X\).
 
@@ -216,11 +215,56 @@ This means a notion of \emph{composition} of cospans is required.
     by \(\cospan{A+B}{A+B}{B+A}\).
 \end{definition}
 
+Interfaces are assigned to a hypergraph \(F\) by having it occupy the `apex' of
+a cospan and having the `legs' on either side pick inputs and outputs
+respectively.
 
 \begin{definition}[Discrete hypergraph]
     A \emph{discrete hypergraph} is a hypergraph in which each edge set is
     empty.
 \end{definition}
 
+A discrete hypergraph with \(n\) nodes is written as \(n\) when clear from
+context.
+Discrete hypergraphs can represent the \emph{number} of interface nodes; all
+that remains is the \emph{order}.
+
+\begin{theorem}[\cite{bonchi2022string}, Thm. 3.6]
+    Let \(\mathbb{X}\) be a PROP whose monoidal product is a coproduct,
+    \(\mathbf{C}\) a category with pushouts and an initial object, and \(
+        \morph{F}{\mathbb{X}}{\mathbf{C}}
+    \) a coproduct-preserving functor.
+    Then there exists a PROP \(\csp[F]{\mathbf{C}}\) whose arrows \(m \to n\)
+    are isomorphism classes of \(\mathbf{C}\) cospans \(\cospan{Fm}{C}{Fn}\).
+\end{theorem}
+
+
+\begin{theorem}[\cite{bonchi2022string}, Thm. 3.8]
+    \label{thm:cospan-homomorphism}
+    Let \(\mathbb{X}\) be a PROP whose monoidal product is a coproduct,
+    \(\mathbf{C}\) a category with a pushout and an initial object, and
+    \(\morph{F}{\mathbb{X}}{\mathbf{C}}\) a coproduct-preserving functor.
+    Then there is a homomorphism of PROPs \(
+        \morph{\tilde{F}}{\csp{\mathbb{X}}}{\csp[F]{\mathbf{C}}}
+    \) that sends \(\cospan{m}[f]{X}[g]{n}\) to \(\cospan{Fm}[Ff]{FX}[Fg]{Fn}\).
+    If \(F\) is full and faithful, then \(\tilde{F}\) is faithful.
+\end{theorem}
+
+\begin{definition}
+    Let \(\finset\) be the PROP with morphisms \(m \to n\) the functions
+    between finite sets \([m] \to [n]\).
+\end{definition}
+
+Since we are working in a setting with a set of sorts \(C\), we need to work
+with \emph{multi-sorted} finite sets; these can be obtained by using the slice
+category \(\finset \slice C\).
+
+\begin{definition}[\cite{bonchi2022string}]
+    Let \(C\) be a set of sorts, and let
+    \(\morph{D}{\finset \slice C}{\hypsigma}\) be the faithful,
+    coproduct-preserving functor that sends each object
+    \(\listvar{x} \in \finset\) to the discrete hypergraph \(m \in \hypsigma\)
+    and each morphism to the induced homomorphism of discrete hypergraphs.
+\end{definition}
 
 \todo[inline]{Adapt from FSCD paper section 2}
