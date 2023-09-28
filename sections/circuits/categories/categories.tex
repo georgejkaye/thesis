@@ -60,7 +60,7 @@ A morphism \(f \in \mor{\mcc}{A}{B}\) is also called an \emph{arrow}, and will
 often be written \(\morph{f}{A}{B}\) accordingly.
 The subscripts on the object and morphism classes are also often omitted.
 
-\subsubsection{Commutative diagrams}
+\subsection{Commutative diagrams}
 
 Equations in category theory can be expressed using \emph{commutative diagrams}.
 For example, the unitality and associativity of composition can be illustrated
@@ -83,7 +83,7 @@ Using commutative diagrams suggests another notation for composition.
     \(f \seq g := g \circ f\).
 \end{notation}
 
-\subsubsection{Examples of categories}
+\subsection{Examples of categories}
 
 Categories generalise a plethora of mathematical structures: some examples will
 now be provided.
@@ -147,7 +147,7 @@ now be provided.
     \]
 \end{example}
 
-\subsubsection{Properties of objects and morphisms}
+\subsection{Properties of objects and morphisms}
 
 There are several properties that objects and morphisms can hold which will come
 in useful in this thesis.
@@ -157,13 +157,27 @@ in useful in this thesis.
     object \(X \in \mcc\) there exists a unique morphism \(C \to X\).
 \end{definition}
 
+\begin{example}
+    In \(\set\), the initial object is the empty set \(\emptyset\), as there is
+    a unique function from \(\emptyset\) to any set \(X\).
+\end{example}
+
+In category theory there is often the notion of a \emph{dual} construction, in
+which all the arrows are flipped.
+
 \begin{definition}[Terminal object]
     An object \(C\) in a category \(\mcc\) is \emph{terminal} if, for any other
     object \(X \in \mcd\) there exists a unique morphism \(X \to C\).
 \end{definition}
 
-However, it is often the case that the objects are not particular interesting;
-it is the \emph{morphisms} that hold the useful information.
+\begin{example}
+    In \(\set\), the terminal object is the singleton set \(\{\star\}\):
+    from any set \(X\) there is a unique function \(X \to \{\star\}\); namely
+    the function with action \(x \mapsto \star\).
+\end{example}
+
+Morphisms are usually the interesting part of any category; sometimes we are
+only concerned with certain subclasses of morphisms.
 
 \begin{definition}[Monomorphism]
     A morphism \(\morph{f}{A}{B} \in \mcc\) is called a \emph{monomorphism} (or
@@ -189,4 +203,32 @@ There is also a categorical generalisation of \emph{invertible} morphisms.
 \begin{example}
     In \(\set\), the monomorphisms are the injective functions and the
     isomorphisms are the surjective functions.
+\end{example}
+
+Finally, we will look at a useful construction concerning \emph{pairs} of
+morphisms with a common domain.
+
+\begin{definition}[Pushout]
+    Given morphisms \(\morph{f}{A}{B}\) and \(\morph{g}{A}{C}\), a
+    \emph{pushout} is an object \(D\) and a pair of morphisms
+    \(\morph{h}{B}{D}\) and \(\morph{k}{h}{k}\) such that for any other pair of
+    morphisms \(\morph{h^\prime}{B}{Z}\) and \(\morph{k^\prime}{C}{Z}\) there
+    exists a unique morphism \(\morph{u}{D}{Z}\), i.e.\ the following diagram
+    commutes:
+    \begin{center}
+        \includestandalone{figures/category/diagrams/pushout}
+    \end{center}
+    A category \(\mcc\) is said to \emph{have pushouts} if a pushout exists for
+    any pair of morphisms.
+\end{definition}
+
+\begin{example}
+    \(\set\) has pushouts: given morphisms \(\morph{f}{X}{Y}\) and
+    \(\morph{g}{X}{Z}\), the pushout is the union of \(Y\) and \(Z\) identifying
+    elements with a common preimage in \(X\).
+    Concretely, let \({\sim} \subseteq Y \cup Z\) be a relation defined as
+    \(\{(y, z) \,|\, \exists x \in X.\, y = f(x) \wedge z = g(x)\}\).
+    Then the pushout set \(U\) is defined as \(X \cup Y / \sim\) and the
+    morphisms \(\morph{h}{Y}{U}\) and \(\morph{k}{Z}{U}\) to the appropriate
+    elements.
 \end{example}
