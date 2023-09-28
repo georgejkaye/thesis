@@ -21,31 +21,41 @@ must be specified.
     \(i\)\emph{th element} is denoted \(\listvar{x}(i)\).
 \end{notation}
 
-\begin{notation}
-    Let \(\natplus\) be the set of non-zero natural numbers.
-\end{notation}
-
 \begin{definition}[Generators]
-    A set of \emph{generators} is a set \(\generators\) equipped with two
-    functions \(\morph{\domw,\codw}{\generators}{\natplus^\star}\).
+    Let \(\mcs\) be a set of \emph{sorts} (`types').
+    A set of \emph{generators over} \(\mcs\) is a set \(\generators\)
+    equipped with two functions \(\morph{\dom,\cod}{\generators}{\mcs}\).
 \end{definition}
 
 Generators are the primitive building blocks of terms: their domains and
 codomains specify the widths of their input and output wires respectively.
 Terms are defined by combining these primitives together.
 
+For our definition of terms, we will
+
+\begin{definition}
+    A set of \emph{decomposable sorts} (`types') is a set \(\mcs\) equipped with
+    a distinguished sort \(B \in \mcs\) called the \emph{base} and a function \(
+        \morph{\splitfn}{\mcc}{\natplus}
+    \) such that \(\splitfn(B) = 1\).
+\end{definition}
+
+In a set of decomposable sorts, every sort represents a multiple of the base
+sort.
+
 \begin{definition}[Term]
     \label{def:terms}
-    Let \(\generators\) be a set of generators.
-    A \(\generators\)-term is written \(\morph{f}{\listvar{m}}{\listvar{n}}\)
-    where \(\listvar{m}, \listvar{n} \in \natplus^\star\).
+    Let \(\generators\) be a set of generators. and \((\mcs,B,\splitfn)\) be a
+    set of decomposable sorts.
+    A \((\generators,\mcs)\)-term is written \(\morph{f}{\listvar{m}}{\listvar{n}}\)
+    where \(\listvar{m}, \listvar{n} \in \mcs^\star\).
     The set of \(\generators\)-terms, denoted \(\sigmaterms\), is
     generated as follows:
     \begin{center}
         \begin{bprooftree}
             \AxiomC{\(\phi \in \generators\)}
             \UnaryInfC{\(
-                \morph{\phi}{\domw[\phi]}{\codw[\phi]} \in \sigmaterms
+                \morph{\phi}{\dom[\phi]}{\cod[\phi]} \in \sigmaterms
             \)}
         \end{bprooftree}
         \begin{bprooftree}
@@ -68,13 +78,13 @@ Terms are defined by combining these primitives together.
         \begin{bprooftree}
             \AxiomC{}
             \UnaryInfC{\(
-                \morph{\bundleexpand{m}}{[m]}{1^m} \in \sigmaterms
+                \morph{\bundleexpand{m}}{[m]}{B^{\splitfn(m)}} \in \sigmaterms
             \)}
         \end{bprooftree}
         \begin{bprooftree}
             \AxiomC{}
             \UnaryInfC{\(
-                \morph{\bundlecontract{n}}{1^n}{[n]} \in \sigmaterms
+                \morph{\bundlecontract{n}}{B^{\splitfn(n)}}{[n]} \in \sigmaterms
             \)}
         \end{bprooftree}
 
