@@ -32,7 +32,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          release_name: ${{ steps.name.outputs.name }}
+          release_name: Latest draft
           tag_name: ${{ steps.name.outputs.name }}
       - name: Upload paper to the release
         uses: actions/upload-release-asset@v1
