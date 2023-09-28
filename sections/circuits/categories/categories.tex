@@ -205,6 +205,58 @@ There is also a categorical generalisation of \emph{invertible} morphisms.
     isomorphisms are the surjective functions.
 \end{example}
 
+\subsection{Universal constructions}
+
+Category theory is useful because it generalises many structures found in
+mathematics, allowing us to apply core results in a plethora of settings.
+The core idea is that of a \emph{universal property}: a unique morphism that
+shows that a certain candidate construction is indeed the `best'.
+If something satisfies a universal property, then we know that we can safely
+apply the relevant results without worrying about the precise construction.
+
+We will now detail some common universal properties that will occur in this
+thesis.
+
+\begin{definition}[Product]
+    Given a category \(\mcc\) and objects \(A,B \in \mcc\), their \emph{product}
+    is an object \(A \times B\) equipped with a pair of morphisms
+    \(\morph{p_0}{A \times B}{A}\) and \(\morph{p_1}{A \times B}{B}\) called
+    \emph{projections} such that for every other object \(Z\) with pair of
+    morphisms \(\morph{f}{Z}{A}\) and \(\morph{g}{Z}{B}\), there exists a unique
+    morphism \(\morph{u}{Z}{A \times B}\) such that the following diagram
+    commutes:
+    \begin{center}
+        \includestandalone{figures/category/diagrams/product}
+    \end{center}
+    A category \(\mcc\) is said to \emph{have products} if the product exists
+    for all pairs of objects \(A,B \in \mcc\).
+\end{definition}
+
+\begin{example}
+    \(\set\) has products: the Cartesian product.
+\end{example}
+
+As usual, there is the dual notion to consider.
+
+\begin{definition}[Coproduct]
+    Given a category \(\mcc\) and objects \(A,B \in \mcc\), their \emph{coproduct}
+    is an object \(A + B\) equipped with a pair of morphisms
+    \(\morph{i_0}{A}{A + B}\) and \(\morph{i_1}{B}{A + B}\) called
+    \emph{injections} such that for every other object \(Z\) with pair of
+    morphisms \(\morph{f}{A}{B}\) and \(\morph{g}{B}{Z}\), there exists a unique
+    morphism \(\morph{u}{A + B}{Z}\) such that the following diagram
+    commutes:
+    \begin{center}
+        \includestandalone{figures/category/diagrams/coproduct}
+    \end{center}
+    A category \(\mcc\) is said to \emph{have coproducts} if the coproduct
+    exists for all pairs of objects \(A,B \in \mcc\).
+\end{definition}
+
+\begin{example}
+    \(\set\) has coproducts: the disjoint union.
+\end{example}
+
 Finally, we will look at a useful construction concerning \emph{pairs} of
 morphisms with a common domain.
 
@@ -222,6 +274,9 @@ morphisms with a common domain.
     any pair of morphisms.
 \end{definition}
 
+A pushout square is normally indicated with a \raisebox{-0.25em}{\(\ulcorner\)}
+symbol as shown above.
+
 \begin{example}
     \(\set\) has pushouts: given morphisms \(\morph{f}{X}{Y}\) and
     \(\morph{g}{X}{Z}\), the pushout is the union of \(Y\) and \(Z\) identifying
@@ -232,3 +287,23 @@ morphisms with a common domain.
     morphisms \(\morph{h}{Y}{U}\) and \(\morph{k}{Z}{U}\) to the appropriate
     elements.
 \end{example}
+
+Using universal properties means we do not need to restrict ourselves to a
+concrete category when using or proving results; we can instead say, for
+example, that the result holds in all categories with products.
+It is also often the case that if a category satisfies some universal
+properties, then others follow for free!
+We demonstrate this with a well-known result.
+
+\begin{lemma}
+    If a category \(\mcc\) has pushouts and an initial object, then \(\mcc\)
+    also has coproducts.
+\end{lemma}
+\begin{proof}
+    Given objects \(A,B \in \mcc\), the coproduct \(A + B\) is constructed as
+    follows:
+    \begin{center}
+        \includestandalone{figures/category/diagrams/coproduct-pushout}%
+    \end{center}
+    This is a coproduct due to the universal property of pushouts.
+\end{proof}
