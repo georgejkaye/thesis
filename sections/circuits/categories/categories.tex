@@ -147,13 +147,23 @@ now be provided.
     \]
 \end{example}
 
-\subsubsection{Properties of morphisms}
+\subsubsection{Properties of objects and morphisms}
 
-When using category theory as a tool for reasoning, often the objects are not
-particular interesting: it is the \emph{morphisms} that hold the useful
-information.
-There are many properties that morphisms can hold; we will detail two which will
-be useful in this thesis.
+There are several properties that objects and morphisms can hold which will come
+in useful in this thesis.
+
+\begin{definition}[Initial object]
+    An object \(C\) in a category \(\mcc\) is \emph{initial} if, for any other
+    object \(X \in \mcc\) there exists a unique morphism \(C \to X\).
+\end{definition}
+
+\begin{definition}[Terminal object]
+    An object \(C\) in a category \(\mcc\) is \emph{terminal} if, for any other
+    object \(X \in \mcd\) there exists a unique morphism \(X \to C\).
+\end{definition}
+
+However, it is often the case that the objects are not particular interesting;
+it is the \emph{morphisms} that hold the useful information.
 
 \begin{definition}[Monomorphism]
     A morphism \(\morph{f}{A}{B} \in \mcc\) is called a \emph{monomorphism} (or
