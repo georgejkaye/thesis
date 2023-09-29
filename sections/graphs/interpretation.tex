@@ -1,3 +1,330 @@
 \chapter{String diagrams as hypergraphs}
 
+It is now time to establish the correspondence between cospans of hypergraphs
+and string diagrams.
+We will first recount the constructions used by Bonchi et al for the
+Frobenius~\cite{bonchi2022string} and symmetric
+monoidal~\cite{bonchi2022stringa} cases, befofe showing how we can use their
+ingredients for a \emph{traced} setting either with or without a comonoid
+structure.
+
+\section{Frobenius terms}
+
+As we shall soon see, it is actually simpler to start with the more complicated
+Frobenius terms.
+This is because \emph{every} Frobenius term corresponds to a cospan of
+hypergraphs and vice versa.
+
+\begin{definition}[\cite{bonchi2022string}]\label{def:hyp-morphisms}
+    Let \(\morph{\termtohypsigmas}{\smcsigmas}{\cspdshyp}\) be a PROP
+    morphism defined as
+    \begin{gather*}
+        \termtohyp[\iltikzfig{strings/category/generator}[box=\phi,colour=white,dom=m,cod=n]]{\Sigma}
+        :=
+        \cospan{m}{\iltikzfig{graphs/terms/generator}
+        }{n}
+        \\
+        \termtohyp[\iltikzfig{strings/category/identity}[colour=white,obj=n]]{\Sigma}
+        :=
+        \cospan{n}[\id]{n}[\id]{n}
+        \qquad
+        \termtohyp[\iltikzfig{strings/symmetric/symmetry}[colour=white,obj1=m,obj2=n]]{\Sigma}
+        :=
+        \cospan{m+n}[[\id,\id]]{m+n}[[\id,\id]]{n+m}
+    \end{gather*}
+\end{definition}
+
+\begin{proposition}[\cite{bonchi2022string}]
+    \(\termtohypsigmas\) is faithful.
+\end{proposition}
+
+This handles the regular symmetric monoidal generators; we also need to map from
+the Frobenius generators.
+Recall the definition of a \emph{hypergraph category} from
+\cref{def:hypergraph-category}; perhaps confusingly, the category of hypergraphs
+\(\hyp\) is \emph{not} a hypergraph category but the category of \emph{cospans}
+of hypergraphs is!
+
+\begin{proposition}[\cite{carboni1987cartesian,bonchi2022string}]
+    \label{prop:frobenius-map}
+    \(\cspdshyp\) is a hypergraph category.
+\end{proposition}
+\begin{proof}
+    A Frobenius structure can be defined on \(\cspdhyp\) for each \(n \in \nat\)
+    as follows:
+    \begin{gather*}
+        \iltikzfig{strings/structure/monoid/merge}[colour=white, obj=n]
+        :=
+        \cospan{n + n}{n}{n}
+        \quad
+        \iltikzfig{strings/structure/monoid/init}[colour=white, obj=n]
+        :=
+        \cospan{0}{n}{n}
+        \\
+        \iltikzfig{strings/structure/comonoid/copy}[colour=white, obj=n]
+        :=
+        \cospan{n}{n}{n+n}
+        \quad
+        \iltikzfig{strings/structure/comonoid/discard}[colour=white, obj=n]
+        :=
+        \cospan{n}{n}{0}
+        \qedhere
+    \end{gather*}
+\end{proof}
+
+\begin{definition}
+    Let \(\morph{\frobtohypsigmas}{\frobs}{\cspdshyp}\) be a PROP morphism
+    defined as in \cref{prop:frobenius-map}.
+\end{definition}
+
+This means we can map from both generators of symmetric monoidal terms and the
+Frobenius structure to cospans of hypergraphs.
+Therefore to map from Frobenius terms, we simply put them together.
+
+\begin{definition}
+    Let \(
+        \morph{\termandfrobtohypsigmas}{\smcsigmas + \frobs}{\cspdshyp}
+    \) be the copairing of \(\termtohypsigmas\) and
+    \(\frobtohypsigmas\).
+\end{definition}
+
+\begin{proposition}[\cite{bonchi2022string}, ]
+
+\end{proposition}
+
+\begin{proposition}[\cite{bonchi2022string}]\label{prop:tohyp-faithful}
+    \(\termtohypsigmas\) and \(\frobtohypsigmas\) are faithful
+\end{proposition}
+\begin{proof}
+
+\end{proof}
+
 \todo[inline]{Adapt from FSCD paper section 2}
+
+\section{Traced terms}
+
+We now turn our attention to \emph{traced} terms.
+Recall that every compact closed category has a \emph{canonical trace} by
+\cref{thm:canonical-trace}, and that every hypergraph category is self-dual
+compact closed.
+Using this, we can reuse the PROP morphisms from the previous section for our
+scenario.
+Since we have a map from \(\smcsigma + \frob\) to cospans of hypergraphs, we
+need to interpret every term in \(\stmcsigma\) in terms of components from
+either \(\smcsigma\) or \(\frob\).
+
+% TODO this might be already done in the circuits section
+\begin{lemma}\label{lem:smc-core}
+    Let \(\iltikzfig{strings/category/f}[box=f,colour=white,dom=m,cod=n]\) be a
+    term in \(\stmc{\Sigma}\).
+    Then there exists at least one \(
+        \iltikzfig{strings/category/f-2-2}[box=g,colour=white,dom1=x,dom2=m,cod1=x,cod2=n]
+        \in \smc{\Sigma}
+    \) such that \(
+        \trace{x}{\iltikzfig{strings/category/f-2-2}[box=g, colour=white]}
+        =
+        \iltikzfig{strings/category/f}[box=f,colour=white]
+    \).
+\end{lemma}
+\begin{proof}
+    Any trace can be made a `global trace' by tightening and superposing.
+\end{proof}
+
+\begin{proposition}
+    There exists a faithful PROP morphism \(
+        \morph{\tracedtosymandfrobsigmas}{\stmc{\Sigma}}{\smc{\Sigma} + \frobs}
+    \).
+\end{proposition}
+\begin{proof}
+    \cref{lem:smc-core} is used to isolate a term in \(\smc{\Sigma}\).
+    The corresponding term in \(\smc{\Sigma} + \frob\) is then the canonical
+    trace of this term.
+    There may be many such terms in \(\smc{\Sigma}\), but the canonical trace
+    being a trace means that any possible outcomes post-trace are all equal.
+    The equations of \(\frob\) do not merge any morphisms
+    since the only use of the generators of \(\frob\) is in the canonical trace,
+    to which the Frobenius equations do not apply.
+\end{proof}
+
+This means that a term in \(\stmcsigma\) is translated into a cospan of
+hypergraphs by applying
+\(\termandfrobtohypsigmas \circ \tracedtosymandfrobsigmas\).
+
+\begin{corollary}
+    \(\termandfrobtohypsigmas \circ \tracedtosymandfrobsigmas\) is faithful.
+\end{corollary}
+\begin{proof}
+    \(\tracedtosymandfrobsigmas\) is faithful by definition and
+    \(\termandfrobtohypsigmas\) is faithful by \cref{prop:tohyp-faithful}.
+\end{proof}
+
+This means that every distinct traced term has a \emph{unique} cospan of
+partial monogamous hypergraphs up to isomorphism.
+All that remains to show is that every
+
+\begin{definition}
+    Let \(\perms\) be the sub-PROP of \(\finset\) containing only the
+    bijective functions.
+\end{definition}
+
+\begin{lemma}\label{lem:symmetries-prop}
+    \(\smc{} \cong \perms\).
+\end{lemma}
+\begin{proof}
+    The morphism \(\morph{\phi}{\smc{}}{\perms}\) is defined over
+    generators in \(\smc{}\) as \[
+        \phi(\iltikzfig{strings/monoidal/empty}) = \{\}
+        \quad
+        \phi(\iltikzfig{strings/category/identity}[colour=white])
+        =
+        \{0 \mapsto 0\}
+        \quad
+        \phi(\iltikzfig{strings/symmetric/symmetry}[colour=white])
+        =
+        \{0 \mapsto 1, 1 \mapsto 0\}
+    \]
+    Since any term in \(\smc{}\) can be expressed using these generators,
+    this defines the complete transformation.
+
+    The reverse morphism \(\morph{\psi}{\finset}{\smc{}}\) is inductively
+    over the size of \(m\).
+    For the base case \(\morph{f}{[0]}{[0]}\), let \(
+        \phi(f) := \iltikzfig{strings/monoidal/empty}
+    \).
+    For \(
+        \morph{f}{[k+1]}{[k+1]}
+    \), let \(i\) such that \(f(i) = k+1\), and define the function \(
+        \morph{f^\prime}{\nat_{k}}{\nat_{k}}
+    \) as the function such that \(
+        f^\prime(j) = f(j)
+    \) if \(j < i\), and \(f(j+1)\) otherwise.
+    Then \[
+        \psi(f) := \iltikzfig{strings/symmetric/f-construction}.
+    \]
+
+    These are shown to be inverses by a simple induction in both directions.
+\end{proof}
+
+\begin{lemma}\label{lem:monog-discrete-cospan}
+    Given a monogamous cospan \(\cospan{m}[f]{m}[g]{m}\), there exists a unique
+    term \(
+        \iltikzfig{strings/category/f}[box=h,colour=white,cod=m,dom=m]
+        \in \smc{}
+    \) up to the axioms of SMCs such that \(
+        \termtohyp[\iltikzfig{strings/category/f}[box=h,colour=white]]{\Sigma}
+        =
+        \cospan{m}[f]{m}[g]{m}
+    \).
+\end{lemma}
+\begin{proof}
+    Since the cospan is monogamous, \(f\) and \(g\) are mono.
+    As the cospan is also discrete, there exists a (unique) bijective
+    function \(\morph{h^\prime}{[m]}{[m]}\) such that \(h^\prime(i) = j\) if
+    \(f(i) = g(j)\).
+    By \cref{lem:symmetries-prop}, there is a corresponding term \(
+        \iltikzfig{strings/category/f}[box=h,colour=white,cod=m,dom=m]
+        \in \smc{}
+    \) that is unique up to SMC axioms: a simple induction shows that \(
+        \termtohyp[\iltikzfig{strings/category/f}[box=h,colour=white]]{\Sigma}
+        =
+        \cospan{m}[f]{m}[g]{m}
+    \).
+\end{proof}
+
+These cospans are used to construct a term in \(\stmcsigma\) for a given cospan
+of partial monogamous hypergraphs, establishing partial monogamy as the
+defining characteristic of cospans in the image of \(
+    \termandfrobtohypsigma \circ \tracedtosymandfrob{\Sigma}
+\).
+
+\begin{theorem}\label{thm:termtohyp-image}
+    A cospan \(\cospan{m}{F}{n}\) is in the image of \(
+        \termandfrobtohypsigma \circ \tracedtosymandfrob{\Sigma}\) if
+    and only if it is partial monogamous.
+\end{theorem}
+\begin{proof}
+    To show that \(\tracedtosymandfrob[\termtohyp[f]{\Sigma}]{\Sigma}\) is partial
+    monogamous for any \(f \in \stmc{\Sigma}\) we use induction on the structure of
+    \(f\).
+    Generators, identities and symmetries are partial monogamous, as
+    semi-monogamicity is preserved by composition, tensor and trace.
+    So \(\termtohyp[f]{\Sigma}\) is partial monogamous.
+
+    Now we show that any partial monogamous cospan \(
+        \cospan{m}[f]{F}[g]{n}
+    \)
+    must be in the image of \(
+        \termtohyp{\Sigma} \circ \tracedtosymandfrob{\Sigma}
+    \).
+    To do this, we will now construct a cospan that is isomorphic to
+    \(\cospan{m}[f]{F}[g]{n}\), but from which it is possible to read off a
+    unique term in \(\stmc{\Sigma}\).
+    The components of the new cospan are as follows:
+    \begin{itemize}
+        \item let \(L\) be the hypergraph containing vertices with degree
+                \((0,0)\) that are not in the image of \(f\) or \(g\);
+        \item let \(E\) be the hypergraph containing hyperedges of \(F\) and
+                their source and target vertices, but disconnected;
+        \item let \(V\) be the discrete hypergraph containing all the
+                vertices of \(F\); and
+        \item let \(S\) and \(T\) be the discrete hypergraphs containing
+                the source and target vertices of hyperedges in \(F\)
+                respectively, with the ordering determined by some order
+                \(e_1,e_2,\cdots,e_n\) on the edges in \(F\).
+    \end{itemize}
+
+    These parts can be composed and a trace applied to obtain the follow
+    cospan:
+    \begin{gather}
+        \trace{T}{
+            \cospan{T + m}[\id + f]{V}[\id + g]{S + n}
+            \,\seq\,
+            \cospan{\emptyset + S + n}[\id]{L + E + n}[\id]{\emptyset + T + n}
+        }
+        \label{gat:cospan}
+    \end{gather}
+
+    This can be checked to be isomorphic to the original cospan
+    \(\cospan{m}[f]{F}[g]{n}\) by applying the pushouts.
+    From this we can read off a term in \(\stmc{\Sigma}\):
+    Since the first cospan is monogamous, it corresponds to a term \(
+        \iltikzfig{strings/category/f-2-2}[box=f,colour=white,dom1={|\vertices{T}|},dom2=m,cod1={|\vertices{S}|},cod2=n]
+    \) by \cref{lem:monog-discrete-cospan}.
+    The second cospan corresponds to \(
+        \iltikzfig{strings/category/f}[box=g,colour=white,dom={|\vertices{S}|},cod={|\vertices{T}|}]
+        :=
+        \bigtensor_{v \in \vertices{L}}
+        \iltikzfig{strings/traced/trace-id}
+        \tensor
+        \bigtensor_{e \in 0 \leq i \leq n}
+        \iltikzfig{graphs/isomorphism/label-e}
+        \tensor
+        \iltikzfig{strings/category/identity}[colour=white,obj=n]
+    \), where \(\elabel{}(e)\) is the generator in \(\generators\) that \(e\) is
+    labelled with.
+    Putting this all together yields \(
+        h := \termtohypsigma[\iltikzfig{graphs/isomorphism/construction}]
+    \).
+    While there may be multiple orderings on the edges, the possible terms
+    are equal by sliding and the naturality of symmetry, so there is one
+    unique term \(
+        \iltikzfig{strings/category/f}[box=h,colour=white]
+    \) that corresponds to cospan (\ref{gat:cospan}).
+    It is clear by definition that \(
+        \termtohypsigma[\iltikzfig{strings/category/f}[box=h,colour=white]]
+    \) produces (\ref{gat:cospan}), which is isomorphic to the original
+    cospan \(\cospan{m}[f]{F}[g]{n}\), so it is in the image of
+    \(\termtohypsigma \circ \tracedtosymandfrob{\Sigma}\).
+\end{proof}
+
+This shows that \(
+    \termandfrobtohypsigma \circ \tracedtosymandfrob{\Sigma}
+\) is a \emph{full} mapping from \(\stmcsigma\) to \(\pmcspdhyp\).
+As \(\tracedtosymandfrob{\Sigma}\) is faithful by definition and
+\(\termandfrobtohypsigma\) are faithful by \cref{prop:tohyp-faithful}, the
+entire mapping is also faithful: \(\stmcsigma\) is mapped to a \emph{unique}
+cospan of hypergraphs up to isomorphism.
+
+\begin{corollary}\label{cor:stmc-graph-iso}
+    \(\stmc{\Sigma} \cong \pmcspfihyp\).
+\end{corollary}

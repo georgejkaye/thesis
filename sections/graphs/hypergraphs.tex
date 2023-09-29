@@ -119,11 +119,11 @@ symbols.
 To do this, we must first translate the notion of signature to hypergraphs.
 
 \begin{definition}[Hypergraph signature~\cite{bonchi2016rewriting}]
-    For a set of generators \(\signature\) and sorts \(\mathcal{S}\) as defined
+    For a set of generators \(\signature\) and sorts \(\mcs\) as defined
     in \cref{def:generators}, the \emph{hypergraph signature}
     \(\hypsignature{(\Sigma, S)} \in \hyp\) is defined as follows:
     \begin{gather*}
-        \vertices{\hypsignature{\Sigma}} := \{ v_n \,|\, s \in S\}
+        \vertices{\hypsignature{\Sigma}} := \{ v_n \,|\, s \in \mcs\}
         \quad
         \edges{\hypsignature{\Sigma}}{k}{l} := \{ e_g \,|\, g \in \signature\}
         \\
@@ -137,8 +137,9 @@ To do this, we must first translate the notion of signature to hypergraphs.
     \todo[inline]{Do hypergraph signature example}
 \end{example}
 
-Labels can then be assigned to the edges of a hypergraph \(F\) using a
-homomorphism \(F \to \hypsignature{\Sigma}\).
+The vertices and edges of a hypergraph \(F\) can then be assigned sorts from
+\(\mcs\) and symbols from \(\Sigma\) using a homomorphism
+\(F \to \hypsignature{\Sigma,\mcs}\).
 To do this to \emph{all} the hypergraphs in \(\hyp\) and create a category of
 \emph{labelled} hypergraphs, we make use of some more categorical machinery.
 
@@ -152,8 +153,8 @@ To do this to \emph{all} the hypergraphs in \(\hyp\) and create a category of
 
 \begin{definition}[Labelled hypergraphs~\cite{bonchi2016rewriting}]
     Let \(\hypsigmas\) be the category of hypergraphs labelled over a set of
-    generators \(\Sigma\) and sorts \(\mathcal{S}\), defined as the slice category
-    \(\hyp \slice \hypsignature{(\Sigma,C)}\).
+    generators \(\Sigma\) and sorts \(\mcs\), defined as the slice category
+    \(\hyp \slice \hypsignature{(\Sigma, \mcs)}\).
 \end{definition}
 
 \begin{example}
@@ -224,8 +225,8 @@ respectively.
     empty.
 \end{definition}
 
-A discrete hypergraph with \(n\) nodes is written as \(n\) when clear from
-context.
+A discrete hypergraph with \(n\) nodes all of a sort \(s\) is written as \(s^n\)
+when clear from context.
 Discrete hypergraphs can represent the \emph{number} of interface nodes; all
 that remains is the \emph{order}.
 
@@ -234,10 +235,10 @@ that remains is the \emph{order}.
     \(\mathbf{C}\) a category with pushouts and an initial object, and \(
         \morph{F}{\mathbb{X}}{\mathbf{C}}
     \) a coproduct-preserving functor.
-    Then there exists a PROP \(\csp[F]{\mathbf{C}}\) whose arrows \(m \to n\)
-    are isomorphism classes of \(\mathbf{C}\) cospans \(\cospan{Fm}{C}{Fn}\).
+    Then there exists a multi-sorted PROP \(\csp[F]{\mathbf{C}}\) whose arrows
+    \(\listvar{m} \to \listvar{n}\) are isomorphism classes of \(\mathbf{C}\)
+    cospans \(\cospan{F\listvar{n}}{C}{Fn}\).
 \end{theorem}
-
 
 \begin{theorem}[\cite{bonchi2022string}, Thm. 3.8]
     \label{thm:cospan-homomorphism}
@@ -246,7 +247,8 @@ that remains is the \emph{order}.
     \(\morph{F}{\mathbb{X}}{\mathbf{C}}\) a coproduct-preserving functor.
     Then there is a homomorphism of PROPs \(
         \morph{\tilde{F}}{\csp{\mathbb{X}}}{\csp[F]{\mathbf{C}}}
-    \) that sends \(\cospan{m}[f]{X}[g]{n}\) to \(\cospan{Fm}[Ff]{FX}[Fg]{Fn}\).
+    \) that sends \(\cospan{\listvar{m}}[f]{X}[g]{\listvar{{n}}}\) to
+    \(\cospan{F\listvar{m}}[Ff]{FX}[Fg]{F\listvar{n}}\).
     If \(F\) is full and faithful, then \(\tilde{F}\) is faithful.
 \end{theorem}
 
