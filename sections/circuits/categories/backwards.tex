@@ -95,7 +95,36 @@ We will now consider another setting in which this is not the case.
     which every object \(X\) has a \emph{dual} \(\dual{X}\) equipped with
     morphisms called the \emph{unit} \(
         \morph{\ccunit[A]}{I}{\dual{A} \tensor A}
-    \) (`cup') and the \emph{counit} \(
+    \) and the \emph{counit} \(
         \morph{\cccounit[A]}{A \tensor \dual{A}}{I}
-    \) (`cap') satisfying the following \emph{snake equations}:
+    \) satisfying the following \emph{snake equations}:
+    \begin{center}
+        \includestandalone{figures/category/coherences/snake-1}
+        \quad
+        \includestandalone{figures/category/coherences/snake-2}
+    \end{center}
 \end{definition}
+
+\begin{definition}[Self-dual compact closed category]
+
+\end{definition}
+
+\subsection{Traced vs compact closed}
+
+The graphical notation is particularly suggestive of links between the
+construction of the trace and the generators of a compact closed cateogry.
+Indeed, there are well-known results linking traced and compact closed
+categories.
+
+\begin{proposition}[Canonical trace (\cite{joyal1996traced}, Prop. 3.1)]
+    \label{prop:canonical-trace}
+    Any compact closed category has a trace called the \emph{canonical trace},
+    defined as
+\end{proposition}
+
+\begin{remark}
+    It is also possible to consider the other direction.
+    Using the \emph{Int-construction}~\cite{joyal1996traced}, given any STMC
+    \(\mcc\) one can construct a compact closed category \(\mathsf{Int}(\mcc)\).
+    However, this will not be of relevance to us.
+\end{remark}
