@@ -84,3 +84,18 @@ simply as \(\trace{X}{f}\).
 \input{floats/stmc-equations}
 
 \subsection{Compact closed categories}
+
+In a traced category, while wires can flow backwards across the page, regular
+left-to-right flow must still be in effect at a wire's \emph{endpoints}.
+This means that outputs will always be connected to inputs.
+We will now consider another setting in which this is not the case.
+
+\begin{definition}[Compact closed category]
+    A \emph{compact closed category} (CCC) is a symmetric monoidal category in
+    which every object \(X\) has a \emph{dual} \(\dual{X}\) equipped with
+    morphisms called the \emph{unit} \(
+        \morph{\ccunit[A]}{I}{\dual{A} \tensor A}
+    \) (`cup') and the \emph{counit} \(
+        \morph{\cccounit[A]}{A \tensor \dual{A}}{I}
+    \) (`cap') satisfying the following \emph{snake equations}:
+\end{definition}
