@@ -105,9 +105,34 @@ We will now consider another setting in which this is not the case.
     \end{center}
 \end{definition}
 
-\begin{definition}[Self-dual compact closed category]
+In string diagrams, the dual is drawn as a wire flowing from right-to-left
+instead of left-to-right; when labelling wires with objects we will drop the
+notation for duals and recover the information solely from directionality of the
+wires.
+The unit and counit `bend' wires: the unit is drawn as \(
+    \iltikzfig{strings/compact-closed/cup}[obj=A,colour=white]
+\) and the counit as \(
+    \iltikzfig{strings/compact-closed/cap}[obj=A,colour=white]
+\).
+As a result of this units and counits are often referred to as \emph{cups} and
+\emph{caps} respectively.
+The equations are depicted graphically as in \cref{fig:ccc-equations}, which
+sheds some light on the name `snake equations'.
 
+\input{floats/ccc-equations}
+
+If one thinks of an object \(A\) as flowing from left-to-right, then its dual
+\(\dual{A}\) flows from right-to-left.
+However, there are some cases where the actual directionality of wires
+irrelevant; we only care about the ability to bend wires.
+
+\begin{definition}[Self-dual compact closed category]
+    A compact closed category is \emph{self-dual} if any object \(A\) is
+    isomorphic to \(\dual{A}\).
 \end{definition}
+
+In a self-dual compact closed category, we do not need to label wires with
+arrows.
 
 \subsection{Traced vs compact closed}
 
