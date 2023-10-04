@@ -116,19 +116,17 @@ The unit and counit `bend' wires: the unit is drawn as \(
 \).
 As a result of this units and counits are often referred to as \emph{cups} and
 \emph{caps} respectively.
-The equations are depicted graphically as in \cref{fig:ccc-equations}, which
-sheds some light on the name `snake equations'.
+The snake equations are depicted as in \cref{fig:ccc-equations}, which
+sheds some light on their name!
 
 \input{floats/ccc-equations}
 
-If one thinks of an object \(A\) as flowing from left-to-right, then its dual
-\(\dual{A}\) flows from right-to-left.
-However, there are some cases where the actual directionality of wires
-irrelevant; we only care about the ability to bend wires.
+There are some cases where the actual directionality of wires is irrelevant;
+we only care about the ability to bend wires.
 
 \begin{definition}[Self-dual compact closed category]
-    A compact closed category is \emph{self-dual} if any object \(A\) is
-    isomorphic to \(\dual{A}\).
+    A compact closed category is \emph{self-dual} if for every object \(A\),
+    \(\dual{A} := A\).
 \end{definition}
 
 In a self-dual compact closed category, we do not need to label wires with
@@ -137,14 +135,24 @@ arrows.
 \subsection{Traced vs compact closed}
 
 The graphical notation is particularly suggestive of links between the
-construction of the trace and the generators of a compact closed cateogry.
-Indeed, there are well-known results linking traced and compact closed
-categories.
+trace, the cup and the cap.
+\todo[inline]{Maybe more prose?}
 
 \begin{proposition}[Canonical trace (\cite{joyal1996traced}, Prop. 3.1)]
     \label{prop:canonical-trace}
     Any compact closed category has a trace called the \emph{canonical trace},
-    defined as
+    defined as \[
+        \trace{X}{f}
+        :=
+        \ccunit[X] \tensor \id[A]
+        \seq
+        \id[\dual{X}] \tensor f
+        \seq
+        (\swap{\dual{X}}{X} \seq \cccounit[X]) \tensor \id[B]
+    \]
+    \[
+        \iltikzfig{strings/compact-closed/canonical-trace}[colour=white,box=f,dom=A,cod=B,trace=X]
+    \]
 \end{proposition}
 
 \begin{remark}
