@@ -83,6 +83,17 @@ simply as \(\trace{X}{f}\).
 
 \input{floats/stmc-equations}
 
+\begin{example}
+    The classic example of a symmetric traced monoidal category is the category
+    \(\finvectk[k]\) in which the objects are finite dimensional vector spaces
+    over a field \(k\) and the morphisms are linear maps.
+    The monoidal product is the usual tensor product of vector spaces and the
+    trace by an operation known as the `partial trace'.
+\end{example}
+
+Traces are often used to model \emph{fixpoints}.
+
+
 \subsection{Compact closed categories}
 
 In a traced category, while wires can flow backwards across the page, regular
@@ -136,7 +147,8 @@ arrows.
 
 The graphical notation is particularly suggestive of links between the
 trace, the cup and the cap.
-\todo[inline]{Maybe more prose?}
+This is no coincidence, as there is a well-known result that allows one to
+construct a trace in a compact closed setting.
 
 \begin{proposition}[Canonical trace (\cite{joyal1996traced}, Prop. 3.1)]
     \label{prop:canonical-trace}
@@ -155,9 +167,13 @@ trace, the cup and the cap.
     \]
 \end{proposition}
 
+In this thesis we are primarily concerned with traced categories, but a plethora
+of related work is based in the compact closed realm.
+The canonical trace allows us to adapt existing results for our setting as well.
+
 \begin{remark}
-    It is also possible to consider the other direction.
-    Using the \emph{Int-construction}~\cite{joyal1996traced}, given any STMC
+    It is also possible to consider the other direction: using the
+    \emph{Int-construction}~\cite{joyal1996traced}, given any STMC
     \(\mcc\) one can construct a compact closed category \(\mathsf{Int}(\mcc)\).
     However, this will not be of relevance to us.
 \end{remark}
