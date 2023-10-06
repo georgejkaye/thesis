@@ -83,10 +83,87 @@ The functoriality equations are represented as in
 
 \subsection{Properties of functors}
 
-\begin{definition}[Faithful functor]
+Functors can also have useful properties.
 
+\begin{notation}
+    Given a functor \(\morph{F}{\mcc}{\mcd}\), let \(
+        \morph{F_{A,B}}{\mor{\mcc}{A}{B}}{\mor{\mcd}{FA}{FB}}
+    \) be the induced map sending classes of morphisms \(A \to B\) in \(\mcc\)
+    to the classes of morphisms \(FA \to FB\) in \(\mcd\).
+\end{notation}
+
+\begin{definition}[Faithful functor~\cite{maclane1978categories}]
+    A functor \(\morph{F}{\mcc}{\mcd}\) is \emph{faithful} if \(F_{A,B}\) is
+    injective for all \(A,B \in \mcc\).
 \end{definition}
 
-\begin{definition}[Full functor]
+A faithful functor \(\morph{F}{\mcc}{\mcd}\) does not coalesce morphisms: every
+morphism \(f \in \mor{\mcc}{A}{B}\) has a unique morphism
+\(Ff \in \mor{\mcd}{FA}{FB}\).
 
+\begin{example}
+    Consider the categories \(\set\) and \(\rel\).
+    The functor \(\set \to \rel\) that is the identity on objects and maps
+    functions in \(\set\) to the corresponding relation in \(\rel\) is faithful
+    every function induces a unique relation.
+\end{example}
+
+\begin{definition}[Full functor~\cite{maclane1978categories}]
+    A functor \(\morph{F}{\mcc}{\mcd}\) is \emph{full} if \(F_{A,B}\) is
+    surjective for all \(A,B \in \mcc\).
 \end{definition}
+
+Every morphism \(FA \to FB\) is in the image of a full functor.
+
+\begin{example}
+    \todo[inline]{Full functor example}
+\end{example}
+
+\begin{definition}[Fully faithful functor~\cite{maclane1978categories}]
+    A functor \(\morph{F}{\mcc}{\mcd}\) is \emph{fully faithful} if \(F_{A,B}\)
+    is bijective; i.e.\ the functor is full and faithful.
+\end{definition}
+
+\begin{example}
+    \todo[inline]{Fully faithful functor example}
+\end{example}
+
+These definitions of fullness and faithfulness are useful when considering
+\emph{subcategories}: categories with `some of the bits taken out'.
+
+\begin{definition}[Subcategory]
+    Given a category \(\mcc\), a \emph{subcategory} of \(\mcc\) is a category
+    \(\mcd\) with objects and morphisms subclasses of the objects and morphisms
+    in \(\mcc\) subject to the following conditions:
+    \begin{itemize}
+        \item for every object \(A \in \mcd\), \(\id[A] \in \mor{\mcd}{A}{A}\);
+        \item for every morphism \(\morph{f}{A}{B} \in \mor{\mcd}{A}{B}\),
+                \(A\) and \(B\) are in \(\mcd\); and
+        \item for morphisms \(f \in \mor{\mcd}{A}{B}\) and
+                \(g \in \mor{\mcd}{B}{C}\), \(g \circ f \in \mor{\mcd}{A}{C}\).
+    \end{itemize}
+\end{definition}
+
+Given a category \(\mcc\) and a subcategory \(\mcd\), there is an obvious
+induced functor \(\morph{S}{\mcd}{\mcc}\) mapping objects and morphisms
+in \(\mcd\) to the same objects in \(\mcc\); this is called an
+\emph{inclusion functor}.
+
+\begin{example}
+    \todo[inline]{Subcategory example}
+\end{example}
+
+An inclusion functor is clearly faithful, since there cannot be two morphisms in
+the subcategory that map to the same morphism in the parent category.
+Inclusions functors that are also \emph{full} are of particular interest.
+
+\begin{definition}[Full subcategory]
+    A subcategory \(\mcd\) is a \emph{full subcategory} if its inclusion functor
+    \(\mcd \to \mcc\) is full and faithful; i.e.\ for all objects
+    \(A, B \in \mcd\), the morphisms \(A \to B \in \mcd\) are precisely the
+    morphisms \(A \to B \in \mcc\).
+\end{definition}
+
+\begin{example}
+    \todo[inline]{Full subcategory example (finite sets and sets)}
+\end{example}
