@@ -163,15 +163,15 @@ partial monogamous hypergraphs up to isomorphism.
 All that remains to show is that every
 
 \begin{definition}
-    Let \(\perms\) be the sub-PROP of \(\finset\) containing only the
+    Let \(\permsprop\) be the sub-PROP of \(\finsetprop\) containing only the
     bijective functions.
 \end{definition}
 
 \begin{lemma}\label{lem:symmetries-prop}
-    \(\smc{} \cong \perms\).
+    \(\smc{} \cong \permsprop\).
 \end{lemma}
 \begin{proof}
-    The morphism \(\morph{\phi}{\smc{}}{\perms}\) is defined over
+    The morphism \(\morph{\phi}{\smc{}}{\permsprop}\) is defined over
     generators in \(\smc{}\) as \[
         \phi(\iltikzfig{strings/monoidal/empty}) = \{\}
         \quad
@@ -186,7 +186,7 @@ All that remains to show is that every
     Since any term in \(\smc{}\) can be expressed using these generators,
     this defines the complete transformation.
 
-    The reverse morphism \(\morph{\psi}{\finset}{\smc{}}\) is inductively
+    The reverse morphism \(\morph{\psi}{\finsetprop}{\smc{}}\) is inductively
     over the size of \(m\).
     For the base case \(\morph{f}{[0]}{[0]}\), let \(
         \phi(f) := \iltikzfig{strings/monoidal/empty}
