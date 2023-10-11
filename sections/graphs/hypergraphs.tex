@@ -240,6 +240,8 @@ that remains is the \emph{order}.
     cospans \(\cospan{F\listvar{n}}{C}{Fn}\).
 \end{theorem}
 
+
+
 \begin{theorem}[\cite{bonchi2022string}, Thm. 3.8]
     \label{thm:cospan-homomorphism}
     Let \(\mathbb{X}\) be a PROP whose monoidal product is a coproduct,
@@ -252,20 +254,141 @@ that remains is the \emph{order}.
     If \(F\) is full and faithful, then \(\tilde{F}\) is faithful.
 \end{theorem}
 
+All that remains is to identify the exact functor to be used for
+interpreting string diagrams as cospans of hypergraphs.
+
 \begin{definition}
-    Let \(\finset\) be the PROP with morphisms \(m \to n\) the functions
+    Let \(\finsetprop\) be the PROP with morphisms \(m \to n\) the functions
     between finite sets \([m] \to [n]\).
 \end{definition}
 
+\begin{lemma}[\cite{lack2004composing}, Ex. 5.4]
+    \label{lem:frob-finset}
+    There is an isomorphism of PROPs \(\frob \cong \csp{\finset}\).
+\end{lemma}
+
+We omit the formal proof and sketch the correspondence between the two
+categories.
+Terms in \(\frob\) are formed of all the ways of combining \(
+    \iltikzfig{strings/structure/monoid/merge}[colour=white],
+    \iltikzfig{strings/structure/monoid/init}[colour=white],
+    \iltikzfig{strings/structure/comonoid/copy}[colour=white],
+    \iltikzfig{strings/structure/comonoid/discard}[colour=white],
+    \iltikzfig{strings/category/identity}[colour=white],
+\) and \(
+    \iltikzfig{strings/symmetric/symmetry}[colour=white]
+\) in sequence and parallel, so a string diagram for a term \(\morph{f}{m}{n}\)
+is depicted as \(x\) connected components drawing paths from \(m\) inputs to
+\(n\) outputs, as illustrated with the example below.
+
+\begin{center}
+    \iltikzfig{strings/structure/frobenius/example}
+\end{center}
+
+Note there is no requirement for each component to connect to one or both
+interfaces as the \(
+    \iltikzfig{strings/structure/monoid/init}[colour=white]
+\) and \(
+    \iltikzfig{strings/structure/comonoid/discard}[colour=white]
+\) generators can introduce and stub wires.
+A term \(\morph{f}{m}{n}\) with \(x\) connected components corresponds to
+a cospan of finite sets \(\cospan{[m]}[i]{[x]}[j]{[n]}\), where the functions
+\(i\) and \(j\) map the inputs and outputs to the components they connect to.
+
+\begin{example}
+    Consider the term \(\morph{f}{5}{4}\) drawn on the left below.
+    This corresponds to a cospan \(\cospan{[5]}{[3]}{[4]}\) as shown on the
+    right below.
+    \begin{center}
+        \iltikzfig{strings/structure/frobenius/example}
+        \(\Leftrightarrow\)
+        \iltikzfig{strings/structure/frobenius/example-cospan}
+    \end{center}
+\end{example}
+
+The cospan representation shows how all connected Frobenius structures can be
+`squished' into a single blob.
+
+
+However, we are operating in a \emph{multi-sorted} setting, in which wires may
+be different \emph{colours}.
+This is easily remedied by having a copy of \(\frob\) for each colour.
+
+\begin{definition}
+    For a set of (potentially infinite) colours \(C\), let
+    \(\cfrob{C} := \sum_{c \in C}\frob\).
+\end{definition}
+
+\begin{definition}
+    Let \(\finsetprop + \nat\) be the category \(\finset\) augmented with an
+    additional object \(\nat\).
+    Then, for an object \(C \in \finsetprop + \nat\), let
+    \(\finsub(\finsetprop + \nat \slice C)\) be defined as the full subcategory
+    of \(\finsetprop + \nat \slice \nat\) containing only the objects
+    \((X, X \to C)\) for \(X \in \finsetprop\).
+\end{definition}
+
+For a (potentially infinite) set of colours \(C\), the objects of
+\(\finsub(\finsetprop + \nat \slice C)\) are pairs \(([m], [m] \to C)\) of a
+finite cardinal and a colour-assigning map.
+
+\begin{lemma}
+    \(\finsub(\finsetprop + \nat \slice \nat)\) is a coloured PROP.
+\end{lemma}
+\begin{proof}
+    Objects of \(\finsub(\finsetprop + \nat \slice \nat)\)
+\end{proof}
+
+\begin{lemma}
+    Let \(C \in \finsetprop\) be a finite cardinal.
+    Then \(\finsub(\finsetprop + \nat \slice C) \cong \finsetprop \slice C\).
+\end{lemma}
+\begin{proof}
+    The morphisms in \(\finsub(\finsetprop + \nat \slice C)\)
+\end{proof}
+
+\begin{theorem}[\cite{bonchi2022string}, Thm. 2.24]
+    For a finite cardinal \(\mcc \in \finset\), there is an isomorphism of
+    coloured PROPs \(\cfrob{C} \cong \csp{\finsetprop \slice C}\).
+\end{theorem}
+\begin{proof}
+    We know by \cref{lem:frob-finset} that \(\frob \cong \csp{\finsetprop}\).
+    This generalises to the multi-sorted
+    \[
+        \cfrob{C}
+        :=
+        \sum_{c \in C}\frob
+        \cong
+        \sum_{c \in C}\csp{\finsetprop}
+        \cong
+        \sum_{c \in C}\csp{\finsetprop \slice 1}
+        \cong^\dagger
+        \csp{\finset \slice \sum_{c \in C} 1}
+        \cong
+        \csp{\finsetprop \slice C}
+    \]
+\end{proof}
+
+
+\begin{theorem}
+    There is an isomorphism of coloured PROPs \(\cfrob{\nat} \cong \csp{\finset +}\)
+\end{theorem}
+
+
+\begin{corollary}[\cite{bonchi2022string}, Cor. 3.9]
+    There is a faithful PROP homomorphism
+    \(\morph{\tilde{D_\mcs}}{\csp{\finsetprop}}{\cspdhyp}\)
+\end{corollary}
+
 Since we are working in a setting with a set of sorts \(C\), we need to work
 with \emph{multi-sorted} finite sets; these can be obtained by using the slice
-category \(\finset \slice C\).
+category \(\finsetprop \slice C\).
 
 \begin{definition}[\cite{bonchi2022string}]
-    Let \(C\) be a set of sorts, and let
-    \(\morph{D}{\finset \slice C}{\hypsigma}\) be the faithful,
+    Let \(\mcs\) be a set of sorts, and let
+    \(\morph{D}{\finsetprop \slice \mcs}{\hypsigma}\) be the faithful,
     coproduct-preserving functor that sends each object
-    \(\listvar{x} \in \finset\) to the discrete hypergraph \(m \in \hypsigma\)
+    \(\listvar{x} \in \finsetprop\) to the discrete hypergraph \(m \in \hypsigma\)
     and each morphism to the induced homomorphism of discrete hypergraphs.
 \end{definition}
 
