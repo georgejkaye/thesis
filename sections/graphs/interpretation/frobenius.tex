@@ -1,0 +1,311 @@
+\chapter{String diagrams as hypergraphs}
+
+It is now time to establish the correspondence between cospans of hypergraphs
+and string diagrams.
+We will first recount the constructions used by Bonchi et al for the
+Frobenius~\cite{bonchi2022string} and symmetric
+monoidal~\cite{bonchi2022stringa} cases, before showing how we can use their
+ingredients for a \emph{traced} setting either with or without a comonoid
+structure.
+
+\section{Frobenius terms}
+
+As we shall soon see, it is actually simpler to start with the more complicated
+Frobenius terms.
+This is because \emph{every} Frobenius term corresponds to a cospan of
+hypergraphs and vice versa.
+
+\begin{definition}[\cite{bonchi2022string}]\label{def:hyp-morphisms}
+    Let \(\morph{\termtohypsigmac}{\smcsigmas}{\cspdchyp}\) be a PROP
+    morphism defined as
+    \begin{gather*}
+        \termtohyp[\iltikzfig{strings/category/generator}[box=\phi,colour=white,dom=m,cod=n]]{\Sigma}
+        :=
+        \cospan{m}{\iltikzfig{graphs/terms/generator}
+        }{n}
+        \\
+        \termtohyp[\iltikzfig{strings/category/identity}[colour=white,obj=n]]{\Sigma}
+        :=
+        \cospan{n}[\id]{n}[\id]{n}
+        \qquad
+        \termtohyp[\iltikzfig{strings/symmetric/symmetry}[colour=white,obj1=m,obj2=n]]{\Sigma}
+        :=
+        \cospan{m+n}[[\id,\id]]{m+n}[[\id,\id]]{n+m}
+    \end{gather*}
+\end{definition}
+
+\begin{proposition}[\cite{bonchi2022string}]
+    \(\termtohypsigmac\) is faithful.
+\end{proposition}
+
+\subsection{Frobenius structure}
+
+\begin{theorem}[\cite{bonchi2022string}, Thm. 3.8]
+    \label{thm:cospan-homomorphism}
+    Let \(\mathbb{X}\) be a PROP whose monoidal product is a coproduct,
+    \(\mathbf{C}\) a category with pushouts and an initial object, and
+    \(\morph{F}{\mathbb{X}}{\mathbf{C}}\) a coproduct-preserving functor.
+    Then there is a homomorphism of PROPs \(
+        \morph{\tilde{F}}{\csp{\mathbb{X}}}{\csp[F]{\mathbf{C}}}
+    \) that sends \(\cospan{\listvar{m}}[f]{X}[g]{\listvar{{n}}}\) to
+    \(\cospan{F\listvar{m}}[Ff]{FX}[Fg]{F\listvar{n}}\).
+    If \(F\) is full and faithful, then \(\tilde{F}\) is faithful.
+\end{theorem}
+
+All that remains is to identify the exact functor to be used for
+interpreting string diagrams as cospans of hypergraphs.
+
+\begin{proposition}[\cite{lack2004composing}, Ex. 5.4]
+    \label{prop:frob-finset}
+    There is an isomorphism of PROPs \(\frob \cong \csp{\finsetprop}\).
+\end{proposition}
+
+We omit the formal proof and sketch the correspondence between the two
+categories.
+Terms in \(\frob\) are formed of all the ways of combining \(
+    \iltikzfig{strings/structure/monoid/merge}[colour=white],
+    \iltikzfig{strings/structure/monoid/init}[colour=white],
+    \iltikzfig{strings/structure/comonoid/copy}[colour=white],
+    \iltikzfig{strings/structure/comonoid/discard}[colour=white],
+    \iltikzfig{strings/category/identity}[colour=white],
+\) and \(
+    \iltikzfig{strings/symmetric/symmetry}[colour=white]
+\) in sequence and parallel, so a string diagram for a term \(\morph{f}{m}{n}\)
+is depicted as \(x\) connected components drawing paths from \(m\) inputs to
+\(n\) outputs, as illustrated with the example below.
+
+\begin{center}
+    \iltikzfig{strings/structure/frobenius/example}
+\end{center}
+
+Note there is no requirement for each component to connect to one or both
+interfaces as the \(
+    \iltikzfig{strings/structure/monoid/init}[colour=white]
+\) and \(
+    \iltikzfig{strings/structure/comonoid/discard}[colour=white]
+\) generators can introduce and stub wires.
+A term \(\morph{f}{m}{n}\) with \(x\) connected components corresponds to
+a cospan of finite sets \(\cospan{[m]}[i]{[x]}[j]{[n]}\), where the functions
+\(i\) and \(j\) map the inputs and outputs to the components they connect to.
+
+\begin{example}
+    Consider the term \(\morph{f}{5}{4}\) drawn on the left below.
+    This corresponds to a cospan \(\cospan{[5]}{[3]}{[4]}\) as shown on the
+    right below.
+    \begin{center}
+        \iltikzfig{strings/structure/frobenius/example}
+        \(\Leftrightarrow\)
+        \scalebox{0.75}{\tikzfig{strings/structure/frobenius/example-cospan}}
+    \end{center}
+\end{example}
+
+The cospan representation shows how all connected Frobenius structures can be
+`squished' into a single blob.
+
+However, we are operating in a \emph{coloured} setting, in which wires may
+be different \emph{colours}.
+This is easily remedied by having a copy of \(\frob\) for each colour.
+
+\begin{theorem}[\cite{baez2018props}, Corollary 5.3]
+    \(\prop\) has coproducts.
+\end{theorem}
+
+This easily generalises to \(\cprop\) by replacing natural numbers with words.
+This means that given coloured PROPs \(\mcc\) and \(\mcd\) with objects the
+words in \(\freemon{C}\) and \(\freemon{D}\) respectively, there is also a
+coloured PROP \(\mcc + \mcd\) with objects the words in \(\freemon{(C + D)}\)
+and morphisms defined in the obvious way.
+We can use this to define a multi-coloured version of \(\frob\) as
+a coproduct of copies of \(\frob\) each representing a separate colour.
+
+\begin{definition}[\cite{bonchi2022string}]
+    \label{def:coloured-frob}
+    For a countable set of colours \(C\), let \(\cfrob{C} \in \cprop\) be
+    defined as \(\cfrob{C} := \sum_{c \in C}\frob\).
+\end{definition}
+
+As shown by \cref{prop:frob-finset}, to model terms in \(\frob\) combinatorially
+we use the cospan category \(\csp{\finsetprop}\).
+In \cite{bonchi2022string} this is extended for a finite set of colours \(C\) by
+working in the slice category \(\finsetprop \slice C\).
+Objects of this category are pairs \(([m], \morph{w}{[m]}{C})\); this pair can
+be viewed as a word in \(\freemon{C}\) of length \(m\), with the \(i\)th letter
+as \(w(i)\).
+
+\begin{theorem}[\cite{bonchi2022string}, Theorem 2.24]
+    \label{thm:frobc-iso-finset-slice-c}
+    For a finite set of colours \(C \in \finsetprop\), there is an isomorphism
+    of coloured PROPs \(\cfrob{C} \cong \csp{\finsetprop \slice C}\).
+\end{theorem}
+\begin{proof}
+    By definition of \(\cfrob{C}\),
+    \cref{def:coloured-frob,prop:frob-finset,lem:slice-iso-terminal}
+    we have that \[
+        \cfrob{C}
+        :=
+        \sum_{c \in C}\frob
+        \cong
+        \sum_{c \in C}\csp{\finsetprop}
+        \cong
+        \sum_{c \in C}\csp{\finsetprop \slice 1}
+    \]
+    In the other direction we have that \(
+        \csp{\finsetprop \slice C}
+        \cong
+        \csp{\finsetprop \slice \sum_{c \in C} 1}
+    \) as \(C\) is countable.
+    So we need to show that \(
+        \sum_{c \in C}\csp{\finsetprop \slice 1}
+        \cong
+        \csp{\finsetprop \slice \sum_{c \in C} 1}
+    \).
+    The objects of the former are coproducts of objects in
+    \(\finsetprop \slice C\); as this is a coloured prop the coproduct is
+    concatenation and subsequently the objects can be viewed as words in
+    \(\freemon{C}\).
+    Similarly, the objects of the latter are objects of
+    \(\finsetprop \slice \sum_{c \in C} 1\), which can clearly also be
+    seen as words in \(\freemon{C}\).
+
+    The morphisms of the former are coproducts of cospans, which can
+    equivalently be viewed as a single cospan with coproducts in the legs and
+    apex; using the reasoning above this means it is a cospan of words in
+    \(\freemon{C}\); it is easy to see that this is also the case for morphisms
+    in the latter.
+\end{proof}
+
+We need to show a version of this for the case where \(C\) may be
+\emph{countably infinite}.
+
+\begin{lemma}
+    \label{lem:slice-iso-terminal}
+    In a category \(\mcc\) with a terminal object \(1\),
+    \(\mcc \cong \mcc \slice 1\).
+\end{lemma}
+\begin{proof}
+    Since \(1\) is terminal, there is a unique morphism \(A \to 1\) for each
+    object \(A\) in \(\mcc\), so there is an object \((A, A \to 1)\) in
+    \(\mcc \slice 1\) for each object in \(\mcc\).
+    There is a morphism \((A, \morph{!_A}{A}{1}) \to (B, \morph{!_B}{B}{1})\) in
+    \(\mcc \slice 1\) for every morphism \(\morph{f}{A}{B}\) in \(\mcc\) such
+    that \(f \seq !_B = !_A\); since both \(f \seq !_B\) and \(!_A\) are
+    morphisms \(A \to 1\) this condition holds for any morphism \(f\) in
+    \(\mcc\).
+    Therefore \(\mcc \cong \mcc \slice 1\).
+\end{proof}
+
+The strategy for this proof is much the same as that used in
+\cref{thm:frobc-iso-finset-slice-c}, but relies on one small observation.
+
+\begin{lemma}
+    \label{lem:finsetprop-finite}
+    Let \(C \in \finsetprop\) be a finite cardinal.
+    Then \(\finsetpropwithnat \slice C \cong \finsetprop \slice C\).
+\end{lemma}
+\begin{proof}
+    The morphisms in \(\finsetpropwithnat \slice C\) are the morphisms
+    \([m] \to C\) for finite \(C\), which are precisely the morphisms of
+    \(\finsetprop \slice C\).
+\end{proof}
+
+\begin{theorem}
+    \label{thm:frobc-iso-hatfinset-slice-c}
+    For a countable set of sorts \(C\), there is an isomorphism of coloured
+    PROPs \(\cfrob{C} \cong \csp{\finsetpropwithnat \slice C}\).
+\end{theorem}
+\begin{proof}
+    The proof is almost the same as \cref{thm:frobc-iso-finset-slice-c} but with
+    the addition of \cref{lem:finsetprop-finite}
+
+    By definition of \(\cfrob{C}\),
+    \cref{def:coloured-frob,prop:frob-finset,lem:slice-iso-terminal,lem:finsetprop-finite}
+    we have that \[
+        \cfrob{C}
+        :=
+        \sum_{c \in C}\frob
+        \cong
+        \sum_{c \in C}\csp{\finsetprop}
+        \cong
+        \sum_{c \in C}\csp{\finsetprop \slice 1}
+        \cong
+        \sum_{c \in C}\csp{\finsetpropwithnat \slice 1}.
+    \]
+    In the other direction we still have that \(
+        \csp{\finsetpropwithnat \slice C}
+        \cong
+        \csp{\finsetpropwithnat \slice \sum_{c \in C} 1}
+    \) even though \(C\) is not finite as it is still countable.
+    So as before we need to show that \(
+        \sum_{c \in C}\csp{\finsetpropwithnat \slice 1}
+        \cong
+        \csp{\finsetpropwithnat \slice \sum_{c \in C} 1}
+    \), which follows by the same reasoning as in the prequel.
+\end{proof}
+
+\begin{corollary}[\cite{bonchi2022string}, Cor. 3.9]
+    There is a faithful PROP homomorphism
+    \(\morph{\tilde{D_\mcs}}{\csp{\finsetprop}}{\cspdhyp}\)
+\end{corollary}
+
+
+
+Recall the definition of a \emph{hypergraph category} from
+\cref{def:hypergraph-category}; perhaps confusingly, the category of hypergraphs
+\(\hyp\) is \emph{not} a hypergraph category but the category of \emph{cospans}
+of hypergraphs is!
+
+\begin{proposition}[\cite{carboni1987cartesian,bonchi2022string}]
+    \label{prop:frobenius-map}
+    \(\cspdchyp\) is a hypergraph category.
+\end{proposition}
+\begin{proof}
+    A Frobenius structure can be defined on \(\cspdhyp\) for each \(n \in \nat\)
+    as follows:
+    \begin{gather*}
+        \iltikzfig{strings/structure/monoid/merge}[colour=white, obj=n]
+        :=
+        \cospan{n + n}{n}{n}
+        \quad
+        \iltikzfig{strings/structure/monoid/init}[colour=white, obj=n]
+        :=
+        \cospan{0}{n}{n}
+        \\
+        \iltikzfig{strings/structure/comonoid/copy}[colour=white, obj=n]
+        :=
+        \cospan{n}{n}{n+n}
+        \quad
+        \iltikzfig{strings/structure/comonoid/discard}[colour=white, obj=n]
+        :=
+        \cospan{n}{n}{0}
+        \qedhere
+    \end{gather*}
+\end{proof}
+
+\begin{definition}
+    Let \(\morph{\frobtohypsigmac}{\frobs}{\cspdchyp}\) be a PROP morphism
+    defined as in \cref{prop:frobenius-map}.
+\end{definition}
+
+This means we can map from both generators of symmetric monoidal terms and the
+Frobenius structure to cospans of hypergraphs.
+Therefore to map from Frobenius terms, we simply put them together.
+
+\begin{definition}
+    Let \(
+        \morph{\termandfrobtohypsigmac}{\smcsigmas + \frobs}{\cspdchyp}
+    \) be the copairing of \(\termtohypsigmac\) and
+    \(\frobtohypsigmac\).
+\end{definition}
+
+\begin{proposition}[\cite{bonchi2022string}, ]
+
+\end{proposition}
+
+\begin{proposition}[\cite{bonchi2022string}]\label{prop:tohyp-faithful}
+    \(\termtohypsigmac\) and \(\frobtohypsigmac\) are faithful
+\end{proposition}
+\begin{proof}
+
+\end{proof}
+
+\todo[inline]{Adapt from FSCD paper section 2}

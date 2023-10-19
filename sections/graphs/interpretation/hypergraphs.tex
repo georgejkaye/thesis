@@ -1,0 +1,97 @@
+\section{Hypergraphs}
+
+We will begin by defining the categories of hypergraphs required, following the
+pattern detailed in \cite{bonchi2022string}.
+Hypergraphs are formally defined as a functor category.
+
+\begin{definition}[Hypergraph~\cite{bonchi2016rewriting}]
+    Let \(\mathbf{X}\) be the category with object set
+    \((\nat \times \nat) + \star\) and morphisms
+    \(\morph{\sources{i}}{(k,l)}{\star}\) for each \(i < k\)
+    and \(\morph{\targets{j}}{(k,l)}{\star}\) for each \(j < l\).
+    The category of hypergraphs \(\hyp\) is the functor category
+    \([\mathbf{X}, \set]\).
+\end{definition}
+
+One can think of the category \(\mathbf{X}\) as a `template' for the structure
+of a hypergraph: the object \(\star\) represents the nodes and each object
+\((k, l)\) represents hyperedges with \(k\) sources and \(l\) targets; each such
+edge must pick \(k\) sources and \(l\) targets from \(\star\).
+
+Objects in \(\hyp\) are functors that instantiates each object in \(\mathbf{X}\)
+to a concrete set.
+Subsequently, for a hypergraph \(F \in \hyp\) we write \(\vertices{F}\) for its
+set of nodes and \(\edges{F}{k}{l}\) for the set of edges with \(k\) sources and
+\(l\) targets.
+Since it is a functor category, the morphisms in \(\hyp\) are natural
+transformations: structure-preserving maps between hypergraphs.
+
+\begin{definition}[Hypergraph homomorphism]
+    Given two hypergraphs \(F, G \in \hyp\), \emph{hypergraph homomorphism}
+    \(F \to G\) consists of functions
+    \(\morph{\vertices{f}}{\vertices{F}}{\vertices{G}}\) and
+    \(\morph{\edges{f}{k}{l}}{\edges{F}{k}{l}}{\edges{G}{k}{l}}\) such that the
+    following diagrams commute:
+    \input{floats/hypergraph-homs}
+\end{definition}
+
+Much like with regular graphs, it is much more intuitive to draw out hypergraphs
+rather than look at their combinatorial representation.
+We draw nodes as black dots, and hyperedges as `bubbles' with ordered tentacles
+on the left and right that connect to source and target nodes respectively.
+
+\begin{example}
+    \todo[inline]{Do hypergraph example}
+\end{example}
+
+\subsection{Labelled hypergraphs}
+
+From the example drawn above, it should be clear to see how hypergraphs are a
+suitable representation of string diagrams: generators correspond to hyperedges
+and wires to the nodes between them.
+However, the hyperedges are currently not \emph{labelled} with generator
+symbols.
+To do this, we must first translate the notion of signature to hypergraphs.
+
+\begin{definition}[Hypergraph signature~\cite{bonchi2016rewriting}]
+    For a set of generators \(\signature\) and sorts \(\mcs\) as defined
+    in \cref{def:generators}, the \emph{hypergraph signature}
+    \(\hypsignature{(\Sigma, S)} \in \hyp\) is defined as follows:
+    \begin{gather*}
+        \vertices{\hypsignature{\Sigma}} := \{ v_n \,|\, s \in \mcs\}
+        \quad
+        \edges{\hypsignature{\Sigma}}{k}{l} := \{ e_g \,|\, g \in \signature\}
+        \\
+        \sources{i}(e_g) := v_{\dom[e_g](i)}
+        \quad
+        \targets{j}(e_g) := v_{\cod[e_g](j)}
+    \end{gather*}
+\end{definition}
+
+\begin{example}
+    \todo[inline]{Do hypergraph signature example}
+\end{example}
+
+The vertices and edges of a hypergraph \(F\) can then be assigned sorts from
+\(\mcs\) and symbols from \(\Sigma\) using a homomorphism
+\(F \to \hypsignature{\Sigma,\mcs}\).
+To do this to \emph{all} the hypergraphs in \(\hyp\) and create a category of
+\emph{labelled} hypergraphs, we make use of some more categorical machinery.
+
+\begin{definition}[Slice category~\cite{lawvere1963functorial}]
+    For a category \(\mathbf{C}\) and an object \(C \in \mathbf{C}\), the
+    \emph{slice category} \(\mathbf{C} \slice C\) has objects the morphisms of
+    \(\mathbf{C}\) with target \(C\) and morphisms
+    \((\morph{f}{X}{C}) \to (\morph{g}{X^\prime}{C})\) the morphisms
+    \(\morph{g}{X}{X^\prime} \in \mathbf{C}\) such that \(f^\prime\circ g = f\).
+\end{definition}
+
+\begin{definition}[Labelled hypergraphs~\cite{bonchi2016rewriting}]
+    Let \(\hypsigmac\) be the category of hypergraphs labelled over a set of
+    generators \(\Sigma\) and sorts \(\mcs\), defined as the slice category
+    \(\hyp \slice \hypsignature{(\Sigma, \mcs)}\).
+\end{definition}
+
+\begin{example}
+    \todo[inline]{Do labelled hypergraph example}
+\end{example}
