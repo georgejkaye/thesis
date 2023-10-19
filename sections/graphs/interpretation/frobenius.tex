@@ -1,44 +1,96 @@
-\chapter{String diagrams as hypergraphs}
+\section{Frobenius terms as hypergraphs}
 
-It is now time to establish the correspondence between cospans of hypergraphs
+It is now time to establish the correspondences between cospans of hypergraphs
 and string diagrams.
-We will first recount the constructions used by Bonchi et al for the
-Frobenius~\cite{bonchi2022string} and symmetric
-monoidal~\cite{bonchi2022stringa} cases, before showing how we can use their
-ingredients for a \emph{traced} setting either with or without a comonoid
-structure.
+We will first recount the constructions used by Bonchi et al in
+\cite{bonchi2022string} for settings with a Frobenius structure before showing
+how we can use their ingredients for a \emph{traced} setting either with or
+without a comonoid structure.
 
-\section{Frobenius terms}
+\subsection{Frobenius structures}
 
-As we shall soon see, it is actually simpler to start with the more complicated
-Frobenius terms.
-This is because \emph{every} Frobenius term corresponds to a cospan of
-hypergraphs and vice versa.
+Monoids and comonoids are structures that crop up all over mathematics.
+However, things become really interesting when multiple such structures
+\emph{interact}.
+One particular combination of a monoid and comonoid structure is known as a
+\emph{Frobenius structure}; such structures are particularly relevant to us
+because symmetric monoidal terms equipped with a Frobenius structure correspond
+precisely to the cospans of hypergraphs defined in the previous section.
 
-\begin{definition}[\cite{bonchi2022string}]\label{def:hyp-morphisms}
-    Let \(\morph{\termtohypsigmac}{\smcsigmas}{\cspdchyp}\) be a PROP
-    morphism defined as
+\begin{definition}
+    The monoidal theory of \emph{special commutative Frobenius algebras} is
+    defined as \((\generators[\frob], \equations[\frob])\), where \(
+        \generators[\frob] := \{
+            \iltikzfig{strings/structure/monoid/merge}[colour=white],
+            \iltikzfig{strings/structure/monoid/init}[colour=white],
+            \iltikzfig{strings/structure/comonoid/copy}[colour=white],
+            \iltikzfig{strings/structure/comonoid/discard}[colour=white]
+        \}
+    \) and the equations of \(\equations[\frob]\) are listed in
+    \cref{fig:frobenius-equations}.
+    We write \(\frob := \smc{\generators[\frob], \equations[\frob]}\).
+\end{definition}
+
+
+\input{floats/frobenius}
+
+The equations of special Frobenius algebras include those of commutative monoids and
+commutative comonoids along with the `Frobenius equation' and the
+`special equation'.
+
+\(\frob\) is a monochromatic PROP.
+To define a \emph{coloured} version of \(\frob\) we simply use a different copy
+of \(\frob\) to represent each colour, using a fact about \(\prop\) and
+\(\cprop\).
+
+\begin{theorem}[\cite{baez2018props}, Corollary 5.3]
+    \(\prop\) has coproducts.
+\end{theorem}
+
+This easily generalises to \(\cprop\) by replacing natural numbers with words.
+This means that given coloured PROPs \(\mcc\) and \(\mcd\) with objects the
+words in \(\freemon{C}\) and \(\freemon{D}\) respectively, there is also a
+coloured PROP \(\mcc + \mcd\) with objects the words in \(\freemon{(C + D)}\)
+and morphisms defined in the obvious way.
+We can use this to define a multi-coloured version of \(\frob\) as
+a coproduct of copies of \(\frob\).
+
+\begin{definition}[\cite{bonchi2022string}]
+    \label{def:coloured-frob}
+    For a countable set of colours \(C\), let \(\cfrob{C} \in \cprop\) be
+    defined as \(\cfrob{C} := \sum_{c \in C}\frob\).
+\end{definition}
+
+\begin{lemma}
+    \(\hypcsigmac \cong \smcsigmac + \cfrob{C}\)
+\end{lemma}
+
+
+\subsection{From terms to graphs}
+
+
+
+First, we define the mapping from \(\smcsigma\) to cospans of hypergraphs.
+Since both \(\smcsigma\) are \(\cspdchyp\) are freely generated, it suffices to
+specify this solely on the generators of the former.
+
+\begin{definition}[\cite{bonchi2022string}, Sec. 4.1]\label{def:hyp-morphisms}
+    Let \(\morph{\termtohypsigmac}{\smcsigmac}{\cspdchyp}\) be a coloured PROP
+    morphism with its action on generators defined as
     \begin{gather*}
-        \termtohyp[\iltikzfig{strings/category/generator}[box=\phi,colour=white,dom=m,cod=n]]{\Sigma}
+        \termtohypsigmac[\iltikzfig{%
+                strings/category/generator%
+            }[box=\phi,colour=white,dom=\listvar{m},cod=\listvar{n}]
+        ]
         :=
-        \cospan{m}{\iltikzfig{graphs/terms/generator}
-        }{n}
-        \\
-        \termtohyp[\iltikzfig{strings/category/identity}[colour=white,obj=n]]{\Sigma}
-        :=
-        \cospan{n}[\id]{n}[\id]{n}
-        \qquad
-        \termtohyp[\iltikzfig{strings/symmetric/symmetry}[colour=white,obj1=m,obj2=n]]{\Sigma}
-        :=
-        \cospan{m+n}[[\id,\id]]{m+n}[[\id,\id]]{n+m}
+        \cospan{\listvar{m}}{\iltikzfig{graphs/terms/generator}}{\listvar{n}}
     \end{gather*}
 \end{definition}
 
-\begin{proposition}[\cite{bonchi2022string}]
-    \(\termtohypsigmac\) is faithful.
-\end{proposition}
+Next the Frobenius structure must be considered.
 
-\subsection{Frobenius structure}
+
+
 
 \begin{theorem}[\cite{bonchi2022string}, Thm. 3.8]
     \label{thm:cospan-homomorphism}
@@ -51,9 +103,6 @@ hypergraphs and vice versa.
     \(\cospan{F\listvar{m}}[Ff]{FX}[Fg]{F\listvar{n}}\).
     If \(F\) is full and faithful, then \(\tilde{F}\) is faithful.
 \end{theorem}
-
-All that remains is to identify the exact functor to be used for
-interpreting string diagrams as cospans of hypergraphs.
 
 \begin{proposition}[\cite{lack2004composing}, Ex. 5.4]
     \label{prop:frob-finset}
@@ -101,36 +150,11 @@ a cospan of finite sets \(\cospan{[m]}[i]{[x]}[j]{[n]}\), where the functions
 
 The cospan representation shows how all connected Frobenius structures can be
 `squished' into a single blob.
-
-However, we are operating in a \emph{coloured} setting, in which wires may
-be different \emph{colours}.
-This is easily remedied by having a copy of \(\frob\) for each colour.
-
-\begin{theorem}[\cite{baez2018props}, Corollary 5.3]
-    \(\prop\) has coproducts.
-\end{theorem}
-
-This easily generalises to \(\cprop\) by replacing natural numbers with words.
-This means that given coloured PROPs \(\mcc\) and \(\mcd\) with objects the
-words in \(\freemon{C}\) and \(\freemon{D}\) respectively, there is also a
-coloured PROP \(\mcc + \mcd\) with objects the words in \(\freemon{(C + D)}\)
-and morphisms defined in the obvious way.
-We can use this to define a multi-coloured version of \(\frob\) as
-a coproduct of copies of \(\frob\) each representing a separate colour.
-
-\begin{definition}[\cite{bonchi2022string}]
-    \label{def:coloured-frob}
-    For a countable set of colours \(C\), let \(\cfrob{C} \in \cprop\) be
-    defined as \(\cfrob{C} := \sum_{c \in C}\frob\).
-\end{definition}
-
-As shown by \cref{prop:frob-finset}, to model terms in \(\frob\) combinatorially
-we use the cospan category \(\csp{\finsetprop}\).
-In \cite{bonchi2022string} this is extended for a finite set of colours \(C\) by
-working in the slice category \(\finsetprop \slice C\).
-Objects of this category are pairs \(([m], \morph{w}{[m]}{C})\); this pair can
-be viewed as a word in \(\freemon{C}\) of length \(m\), with the \(i\)th letter
-as \(w(i)\).
+For \(\cfrob{C}\) we replace \(\finsetprop\) with the coloured version
+\(\finsetpropwithnat \slice C\) seen in the previous section.
+A coloured version of \cref{prop:frob-finset} was shown for a \emph{finite} set
+of colours in \cite{bonchi2022string}; we recall its proof before extending this
+to the \emph{countable} setting we work in.
 
 \begin{theorem}[\cite{bonchi2022string}, Theorem 2.24]
     \label{thm:frobc-iso-finset-slice-c}
@@ -215,11 +239,8 @@ The strategy for this proof is much the same as that used in
 \end{theorem}
 \begin{proof}
     The proof is almost the same as \cref{thm:frobc-iso-finset-slice-c} but with
-    the addition of \cref{lem:finsetprop-finite}
-
-    By definition of \(\cfrob{C}\),
-    \cref{def:coloured-frob,prop:frob-finset,lem:slice-iso-terminal,lem:finsetprop-finite}
-    we have that \[
+    the addition of \cref{lem:finsetprop-finite}.
+    We have that \[
         \cfrob{C}
         :=
         \sum_{c \in C}\frob
@@ -234,8 +255,8 @@ The strategy for this proof is much the same as that used in
         \csp{\finsetpropwithnat \slice C}
         \cong
         \csp{\finsetpropwithnat \slice \sum_{c \in C} 1}
-    \) even though \(C\) is not finite as it is still countable.
-    So as before we need to show that \(
+    \) as \(C\) is still countable.
+    As before we need to show that \(
         \sum_{c \in C}\csp{\finsetpropwithnat \slice 1}
         \cong
         \csp{\finsetpropwithnat \slice \sum_{c \in C} 1}
@@ -243,47 +264,15 @@ The strategy for this proof is much the same as that used in
 \end{proof}
 
 \begin{corollary}[\cite{bonchi2022string}, Cor. 3.9]
+    \label{cor:finset-to-hyp}
     There is a faithful PROP homomorphism
-    \(\morph{\tilde{D_\mcs}}{\csp{\finsetprop}}{\cspdhyp}\)
+    \(\morph{\tilde{\pickinterfacesc{C}}}{\csp{\finsetpropwithnat}}{\cspdchyp}\)
 \end{corollary}
 
-
-
-Recall the definition of a \emph{hypergraph category} from
-\cref{def:hypergraph-category}; perhaps confusingly, the category of hypergraphs
-\(\hyp\) is \emph{not} a hypergraph category but the category of \emph{cospans}
-of hypergraphs is!
-
-\begin{proposition}[\cite{carboni1987cartesian,bonchi2022string}]
-    \label{prop:frobenius-map}
-    \(\cspdchyp\) is a hypergraph category.
-\end{proposition}
-\begin{proof}
-    A Frobenius structure can be defined on \(\cspdhyp\) for each \(n \in \nat\)
-    as follows:
-    \begin{gather*}
-        \iltikzfig{strings/structure/monoid/merge}[colour=white, obj=n]
-        :=
-        \cospan{n + n}{n}{n}
-        \quad
-        \iltikzfig{strings/structure/monoid/init}[colour=white, obj=n]
-        :=
-        \cospan{0}{n}{n}
-        \\
-        \iltikzfig{strings/structure/comonoid/copy}[colour=white, obj=n]
-        :=
-        \cospan{n}{n}{n+n}
-        \quad
-        \iltikzfig{strings/structure/comonoid/discard}[colour=white, obj=n]
-        :=
-        \cospan{n}{n}{0}
-        \qedhere
-    \end{gather*}
-\end{proof}
-
 \begin{definition}
-    Let \(\morph{\frobtohypsigmac}{\frobs}{\cspdchyp}\) be a PROP morphism
-    defined as in \cref{prop:frobenius-map}.
+    Let \(\morph{\frobtohypsigmac}{\cfrob{C}}{\cspdchyp}\) be the PROP morphism
+    defined by using \cref{thm:frobc-iso-hatfinset-slice-c} followed by
+    \cref{cor:finset-to-hyp}.
 \end{definition}
 
 This means we can map from both generators of symmetric monoidal terms and the
@@ -292,7 +281,7 @@ Therefore to map from Frobenius terms, we simply put them together.
 
 \begin{definition}
     Let \(
-        \morph{\termandfrobtohypsigmac}{\smcsigmas + \frobs}{\cspdchyp}
+        \morph{\termandfrobtohypsigmac}{\smcsigmac + \frobs}{\cspdchyp}
     \) be the copairing of \(\termtohypsigmac\) and
     \(\frobtohypsigmac\).
 \end{definition}

@@ -108,11 +108,20 @@ definition of \(\finsetprop\) must first be tweaked.
 
 Then the PROP of finite sets \emph{coloured} over some countable set \(C\) is
 the slice \(\finsetpropwithnat \slice C\).
-Note that we do not include the morphisms \(\nat \to [m]\) in
-\(\finsetpropwithnat\); this is because when we view objects of
-\(\finsetpropwithnat \slice C\) as words in \(\freemon{C}\), we still only want
-to consider finite words despite there being potentially countably infinite
-colours.
+Objects of this category are pairs \(([m], \morph{w}{[m]}{C})\); this pair can
+be viewed as a word in \(\freemon{C}\) of length \(m\), with the \(i\)th letter
+as \(w(i)\).
+
+\begin{remark}
+    Note that we do not include the morphisms \(\nat \to [m]\) in
+    \(\finsetpropwithnat\); this is because when we view objects of
+    \(\finsetpropwithnat \slice C\) as words in \(\freemon{C}\), we still only
+    want to consider finite words despite there being potentially countably
+    infinite colours.
+\end{remark}
+
+All that remains is to verify that \(\finsetpropwithnat \slice C\) is indeed a
+coloured PROP.
 
 \begin{lemma}
     \label{lem:slice-coproducts}

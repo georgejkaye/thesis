@@ -2,8 +2,20 @@
 
 We now turn our attention to \emph{traced} terms.
 Recall that every compact closed category has a \emph{canonical trace} by
-\cref{thm:canonical-trace}, and that every hypergraph category is self-dual
+\cref{thm:canonical-trace}
+and that every hypergraph category is self-dual
 compact closed.
+
+\begin{definition}[Hypergraph category~\cite{fong2019hypergraph}]
+    \label{def:hypergraph-category}
+    A \emph{hypergraph category} is a category in which every object is equipped
+    with a special commutative Frobenius algebra subject to the equations in
+    \cref{fig:hypergraph-coherence}.
+\end{definition}
+
+\input{floats/hypergraph-coherence}
+
+
 Using this, we can reuse the PROP morphisms from the previous section for our
 scenario.
 Since we have a map from \(\smcsigma + \frob\) to cospans of hypergraphs, we

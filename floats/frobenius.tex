@@ -1,20 +1,42 @@
 \begin{figure}[t]
     \centering
-    \iltikzfig{strings/structure/frobenius/frobenius-l}
-    \(=\)
-    \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
-    \quad
-    \iltikzfig{strings/structure/frobenius/frobenius-r}
-    \(=\)
-    \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
-    \quad
-    \iltikzfig{strings/structure/frobenius/copy-merge-lhs}
-    \(=\)
-    \iltikzfig{strings/structure/frobenius/copy-merge-rhs}
+
+    \begin{alignat*}{3}
+        \iltikzfig{strings/structure/monoid/unitality-l-lhs}
+        &=
+        \iltikzfig{strings/structure/monoid/unitality-l-rhs}
+        \qquad
+        \iltikzfig{strings/structure/monoid/associativity-lhs}
+        &=
+        \iltikzfig{strings/structure/monoid/associativity-rhs}
+        \qquad
+        \iltikzfig{strings/structure/monoid/commutativity-lhs}
+        &=
+        \iltikzfig{strings/structure/monoid/commutativity-rhs}
+        \qquad
+        \iltikzfig{strings/structure/frobenius/frobenius-l}
+        =
+        \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
+        \\
+        \iltikzfig{strings/structure/comonoid/unitality-l-lhs}
+        &=
+        \iltikzfig{strings/structure/comonoid/unitality-l-rhs}
+        \qquad
+        \iltikzfig{strings/structure/comonoid/associativity-lhs}
+        &=
+        \iltikzfig{strings/structure/comonoid/associativity-rhs}
+        \qquad
+        \iltikzfig{strings/structure/comonoid/commutativity-lhs}
+        &=
+        \iltikzfig{strings/structure/comonoid/commutativity-rhs}
+        \qquad
+        \iltikzfig{strings/structure/frobenius/copy-merge-lhs}
+        =
+        \iltikzfig{strings/structure/frobenius/copy-merge-rhs}
+    \end{alignat*}
     \caption{
         Equations \(\equations[\frob]\) of a
-        \emph{special commutative Frobenius algebra}, in addition to those in
-        \cref{fig:monoid-equations,fig:comonoid-equations}.
+        \emph{special commutative Frobenius algebra}.
     }
     \label{fig:frobenius-equations}
 \end{figure}
