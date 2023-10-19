@@ -16,7 +16,7 @@ This is because \emph{every} Frobenius term corresponds to a cospan of
 hypergraphs and vice versa.
 
 \begin{definition}[\cite{bonchi2022string}]\label{def:hyp-morphisms}
-    Let \(\morph{\termtohypsigmas}{\smcsigmas}{\cspdshyp}\) be a PROP
+    Let \(\morph{\termtohypsigmac}{\smcsigmas}{\cspdchyp}\) be a PROP
     morphism defined as
     \begin{gather*}
         \termtohyp[\iltikzfig{strings/category/generator}[box=\phi,colour=white,dom=m,cod=n]]{\Sigma}
@@ -35,7 +35,7 @@ hypergraphs and vice versa.
 \end{definition}
 
 \begin{proposition}[\cite{bonchi2022string}]
-    \(\termtohypsigmas\) is faithful.
+    \(\termtohypsigmac\) is faithful.
 \end{proposition}
 
 This handles the regular symmetric monoidal generators; we also need to map from
@@ -47,7 +47,7 @@ of hypergraphs is!
 
 \begin{proposition}[\cite{carboni1987cartesian,bonchi2022string}]
     \label{prop:frobenius-map}
-    \(\cspdshyp\) is a hypergraph category.
+    \(\cspdchyp\) is a hypergraph category.
 \end{proposition}
 \begin{proof}
     A Frobenius structure can be defined on \(\cspdhyp\) for each \(n \in \nat\)
@@ -73,7 +73,7 @@ of hypergraphs is!
 \end{proof}
 
 \begin{definition}
-    Let \(\morph{\frobtohypsigmas}{\frobs}{\cspdshyp}\) be a PROP morphism
+    Let \(\morph{\frobtohypsigmac}{\frobs}{\cspdchyp}\) be a PROP morphism
     defined as in \cref{prop:frobenius-map}.
 \end{definition}
 
@@ -83,9 +83,9 @@ Therefore to map from Frobenius terms, we simply put them together.
 
 \begin{definition}
     Let \(
-        \morph{\termandfrobtohypsigmas}{\smcsigmas + \frobs}{\cspdshyp}
-    \) be the copairing of \(\termtohypsigmas\) and
-    \(\frobtohypsigmas\).
+        \morph{\termandfrobtohypsigmac}{\smcsigmas + \frobs}{\cspdchyp}
+    \) be the copairing of \(\termtohypsigmac\) and
+    \(\frobtohypsigmac\).
 \end{definition}
 
 \begin{proposition}[\cite{bonchi2022string}, ]
@@ -93,7 +93,7 @@ Therefore to map from Frobenius terms, we simply put them together.
 \end{proposition}
 
 \begin{proposition}[\cite{bonchi2022string}]\label{prop:tohyp-faithful}
-    \(\termtohypsigmas\) and \(\frobtohypsigmas\) are faithful
+    \(\termtohypsigmac\) and \(\frobtohypsigmac\) are faithful
 \end{proposition}
 \begin{proof}
 
@@ -148,14 +148,14 @@ either \(\smcsigma\) or \(\frob\).
 
 This means that a term in \(\stmcsigma\) is translated into a cospan of
 hypergraphs by applying
-\(\termandfrobtohypsigmas \circ \tracedtosymandfrobsigmas\).
+\(\termandfrobtohypsigmac \circ \tracedtosymandfrobsigmas\).
 
 \begin{corollary}
-    \(\termandfrobtohypsigmas \circ \tracedtosymandfrobsigmas\) is faithful.
+    \(\termandfrobtohypsigmac \circ \tracedtosymandfrobsigmas\) is faithful.
 \end{corollary}
 \begin{proof}
     \(\tracedtosymandfrobsigmas\) is faithful by definition and
-    \(\termandfrobtohypsigmas\) is faithful by \cref{prop:tohyp-faithful}.
+    \(\termandfrobtohypsigmac\) is faithful by \cref{prop:tohyp-faithful}.
 \end{proof}
 
 This means that every distinct traced term has a \emph{unique} cospan of

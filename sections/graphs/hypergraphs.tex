@@ -1,4 +1,4 @@
-\chapter{Graphs}
+\chapter{Hypergraphs}
 
 String diagrams are an appealing way of reasoning with pen and paper: they bring
 intuition to confusing one-dimensional text strings, can often shed light on the
@@ -152,7 +152,7 @@ To do this to \emph{all} the hypergraphs in \(\hyp\) and create a category of
 \end{definition}
 
 \begin{definition}[Labelled hypergraphs~\cite{bonchi2016rewriting}]
-    Let \(\hypsigmas\) be the category of hypergraphs labelled over a set of
+    Let \(\hypsigmac\) be the category of hypergraphs labelled over a set of
     generators \(\Sigma\) and sorts \(\mcs\), defined as the slice category
     \(\hyp \slice \hypsignature{(\Sigma, \mcs)}\).
 \end{definition}
@@ -225,27 +225,78 @@ respectively.
     empty.
 \end{definition}
 
-A discrete hypergraph with \(n\) nodes all of a sort \(s\) is written as \(s^n\)
-when clear from context.
-Discrete hypergraphs can represent the \emph{number} of interface nodes; all
-that remains is the \emph{order}.
+\subsection{Ordering the interfaces}
+
+Even though our hypergraphs still have input and output interfaces specified
+using cospans, there is still information missing: what is the \emph{ordering}
+of the vertices in these interfaces?
+Without this data \(\csp{\hypsigmac}\) is not even a PROP.
+
+A cospan \(\cospan{M}{F}{N}\) is a morphism
+\(M \to N \in \csp{\hypsigmac}\).
+Therefore, to restrict this category to a coloured PROP, we need to ensure that
+the legs of each cospan of hypergraphs can be viewed as a word in
+\(\freemon{C}\) for some countable set of colours \(C\).
+This is formally performed by another functor.
 
 \begin{theorem}[\cite{bonchi2022string}, Thm. 3.6]
-    Let \(\mathbb{X}\) be a PROP whose monoidal product is a coproduct,
+    Let \(\mathbb{X}\) be a coloured PROP whose monoidal product is a coproduct,
     \(\mathbf{C}\) a category with pushouts and an initial object, and \(
         \morph{F}{\mathbb{X}}{\mathbf{C}}
     \) a coproduct-preserving functor.
-    Then there exists a multi-sorted PROP \(\csp[F]{\mathbf{C}}\) whose arrows
+    Then there exists a coloured PROP \(\csp[F]{\mathbf{C}}\) whose arrows
     \(\listvar{m} \to \listvar{n}\) are isomorphism classes of \(\mathbf{C}\)
-    cospans \(\cospan{F\listvar{n}}{C}{Fn}\).
+    cospans \(\cospan{F\listvar{m}}{C}{F\listvar{n}}\).
 \end{theorem}
 
+\(F\) is the functor that imbues the objects in the legs of the cospan with the
+structure of words in some coloured PROP \(\mathbb{X}\).
+In our case, this PROP will be the PROP of coloured finite sets.
+
+\begin{definition}
+    Let \(\finsetprop\) be the PROP with morphisms \(m \to n\) the functions
+    between finite sets \([m] \to [n]\).
+\end{definition}
+
+\(\finsetprop\) is a (monochromatic) PROP; as with hypergraphs colours can be
+assigned using a slice category.
+Since we are working with potentially countably infinite sets of colours, the
+definition of \(\finsetprop\) must first be tweaked.
+
+\begin{definition}
+    Let \(\finsetpropwithnat\) be the category \(\finsetprop\) augmented with the
+    set of natural numbers and the functions \([m] \to \nat\) for each finite
+    set \([m]\).
+\end{definition}
+
+Then the PROP of finite sets \emph{coloured} over some countable set \(C\) is
+the slice \(\finsetpropwithnat \slice C\).
+Note that we do not include the morphisms \(\nat \to [m]\) in
+\(\finsetpropwithnat\); this is because when we view objects of
+\(\finsetpropwithnat \slice C\) as words in \(\freemon{C}\), we still only want
+to consider finite words despite there being potentially countably infinite
+colours.
+
+\begin{definition}[\cite{bonchi2022string}, Rem. 3.12]
+    Let \(\morph{\pickinterfacesc{C}}{\finsetpropwithnat \slice C}{\hypsigmac}\)
+    be defined as functor sending a word \(\overline{n}\) to the corresponding
+    discrete coloured hypergraph containing vertices coloured as in
+    \(\overline{n}\), and sending a function \(\overline{m} \to \overline{n}\)
+    to the induced homomorphism of discrete hypergraphs.
+\end{definition}
+
+Subsequently we obtain a coloured PROP \(
+    \csp[\pickinterfacesc{C}]{\hypsigmac}
+\), which will serve as the domain in which we interpret string diagrams
+combinatorially.
+
+\subsection{Frobenius structure and hypergraphs}
 
 
 \begin{theorem}[\cite{bonchi2022string}, Thm. 3.8]
     \label{thm:cospan-homomorphism}
     Let \(\mathbb{X}\) be a PROP whose monoidal product is a coproduct,
-    \(\mathbf{C}\) a category with a pushout and an initial object, and
+    \(\mathbf{C}\) a category with pushouts and an initial object, and
     \(\morph{F}{\mathbb{X}}{\mathbf{C}}\) a coproduct-preserving functor.
     Then there is a homomorphism of PROPs \(
         \morph{\tilde{F}}{\csp{\mathbb{X}}}{\csp[F]{\mathbf{C}}}
@@ -256,11 +307,6 @@ that remains is the \emph{order}.
 
 All that remains is to identify the exact functor to be used for
 interpreting string diagrams as cospans of hypergraphs.
-
-\begin{definition}
-    Let \(\finsetprop\) be the PROP with morphisms \(m \to n\) the functions
-    between finite sets \([m] \to [n]\).
-\end{definition}
 
 \begin{proposition}[\cite{lack2004composing}, Ex. 5.4]
     \label{prop:frob-finset}
@@ -309,7 +355,7 @@ a cospan of finite sets \(\cospan{[m]}[i]{[x]}[j]{[n]}\), where the functions
 The cospan representation shows how all connected Frobenius structures can be
 `squished' into a single blob.
 
-However, we are operating in a \emph{multi-sorted} setting, in which wires may
+However, we are operating in a \emph{coloured} setting, in which wires may
 be different \emph{colours}.
 This is easily remedied by having a copy of \(\frob\) for each colour.
 
@@ -340,33 +386,49 @@ be viewed as a word in \(\freemon{C}\) of length \(m\), with the \(i\)th letter
 as \(w(i)\).
 
 \begin{theorem}[\cite{bonchi2022string}, Theorem 2.24]
+    \label{thm:frobc-iso-finset-slice-c}
     For a finite set of colours \(C \in \finsetprop\), there is an isomorphism
     of coloured PROPs \(\cfrob{C} \cong \csp{\finsetprop \slice C}\).
 \end{theorem}
 \begin{proof}
-    The proof is very similar to \cref{thm:cfrobc-iso-hatfinsetprop-slice-c}
-    below, so we omit it.
+    By definition of \(\cfrob{C}\),
+    \cref{def:coloured-frob,prop:frob-finset,lem:slice-iso-terminal}
+    we have that \[
+        \cfrob{C}
+        :=
+        \sum_{c \in C}\frob
+        \cong
+        \sum_{c \in C}\csp{\finsetprop}
+        \cong
+        \sum_{c \in C}\csp{\finsetprop \slice 1}
+    \]
+    In the other direction we have that \(
+        \csp{\finsetprop \slice C}
+        \cong
+        \csp{\finsetprop \slice \sum_{c \in C} 1}
+    \) as \(C\) is countable.
+    So we need to show that \(
+        \sum_{c \in C}\csp{\finsetprop \slice 1}
+        \cong
+        \csp{\finsetprop \slice \sum_{c \in C} 1}
+    \).
+    The objects of the former are coproducts of objects in
+    \(\finsetprop \slice C\); as this is a coloured prop the coproduct is
+    concatenation and subsequently the objects can be viewed as words in
+    \(\freemon{C}\).
+    Similarly, the objects of the latter are objects of
+    \(\finsetprop \slice \sum_{c \in C} 1\), which can clearly also be
+    seen as words in \(\freemon{C}\).
+
+    The morphisms of the former are coproducts of cospans, which can
+    equivalently be viewed as a single cospan with coproducts in the legs and
+    apex; using the reasoning above this means it is a cospan of words in
+    \(\freemon{C}\); it is easy to see that this is also the case for morphisms
+    in the latter.
 \end{proof}
 
 We need to show a version of this for the case where \(C\) may be
 \emph{countably infinite}.
-
-\begin{notation}
-    We say that a set \(C\) is \emph{countable} if it is finite or countably
-    infinite, i.e.\ there is a bijection \(C \cong \nat\).
-\end{notation}
-
-\begin{definition}
-    Let \(\hat{\finsetprop}\) be the category \(\finsetprop\) augmented with the
-    set of natural numbers and the functions \([m] \to \nat\) for each finite
-    set \([m]\).
-\end{definition}
-
-Note that we do not include the morphisms \(\nat \to [m]\) in the category
-\(\hat{\finsetprop}\).
-This is because when we view objects of \(\hat{\finsetprop} \slice C\) as words
-in \(\freemon{C}\), we still only want to consider finite words despite there
-being potentially countably infinite colours.
 
 It is first necessary to show that \(\hat{\finset} \slice C\) is a coloured
 PROP.
@@ -385,20 +447,20 @@ We recall a lemma of slice categories.
 
 \begin{proposition}
     \label{prop:hatfinsetprop-slice-is-coloured-prop}
-    For a countable set \(C\), \(\hat{\finsetprop} \slice C\) is a
+    For a countable set \(C\), \(\finsetpropwithnat \slice C\) is a
     coloured PROP.
 \end{proposition}
 \begin{proof}
     This follows the same strategy as \cite[Prop. 2.23]{bonchi2022string}.
-    As established, the objects of \(\hat{\finsetprop} \slice C\) can be viewed
+    As established, the objects of \(\finsetpropwithnat \slice C\) can be viewed
     as words in \(\freemon{C}\).
     As slice categories preserve coproducts by \cref{lem:slice-coproducts},
-    \(\hat{\finsetprop} \slice C\) is strict symmetric monoidal, and the
+    \(\finsetpropwithnat \slice C\) is strict symmetric monoidal, and the
     coproduct acts as concatenation of words.
 \end{proof}
 
 We can now move towards showing an isomorphism \(
-    \cfrob{C} \cong \csp{\hat{\finsetprop} \slice C}
+    \cfrob{C} \cong \csp{\finsetpropwithnat \slice C}
 \) for countable \(C\).
 
 \begin{lemma}
@@ -419,27 +481,28 @@ We can now move towards showing an isomorphism \(
 \end{proof}
 
 The strategy for this proof is much the same as that used in
-\cite{bonchi2022string} for the finite case, but relies on one small
-observation.
+\cref{thm:frobc-iso-finset-slice-c}, but relies on one small observation.
 
 \begin{lemma}
     \label{lem:finsetprop-finite}
     Let \(C \in \finsetprop\) be a finite cardinal.
-    Then \(\hat{\finsetprop} \slice C \cong \finsetprop \slice C\).
+    Then \(\finsetpropwithnat \slice C \cong \finsetprop \slice C\).
 \end{lemma}
 \begin{proof}
-    The morphisms in \(\hat{\finsetprop} \slice C\) are the morphisms
+    The morphisms in \(\finsetpropwithnat \slice C\) are the morphisms
     \([m] \to C\) for finite \(C\), which are precisely the morphisms of
     \(\finsetprop \slice C\).
 \end{proof}
 
 \begin{theorem}
-    \label{thm:cfrobc-iso-hatfinsetprop-slice-c}
+    \label{thm:frobc-iso-hatfinset-slice-c}
     For a countable set of sorts \(C\), there is an isomorphism of coloured
-    PROPs \(\cfrob{C} \cong \csp{\hat{\finsetprop} \slice C}\).
+    PROPs \(\cfrob{C} \cong \csp{\finsetpropwithnat \slice C}\).
 \end{theorem}
 \begin{proof}
-    The proof is similar to \cite[Thm. 2.24]{bonchi2022string}.
+    The proof is almost the same as \cref{thm:frobc-iso-finset-slice-c} but with
+    the addition of \cref{lem:finsetprop-finite}
+
     By definition of \(\cfrob{C}\),
     \cref{def:coloured-frob,prop:frob-finset,lem:slice-iso-terminal,lem:finsetprop-finite}
     we have that \[
@@ -451,33 +514,19 @@ observation.
         \cong
         \sum_{c \in C}\csp{\finsetprop \slice 1}
         \cong
-        \sum_{c \in C}\csp{\hat{\finsetprop} \slice 1}.
+        \sum_{c \in C}\csp{\finsetpropwithnat \slice 1}.
     \]
-    In the other direction we have that \(
-        \csp{\hat{\finsetprop} \slice C}
+    In the other direction we still have that \(
+        \csp{\finsetpropwithnat \slice C}
         \cong
-        \csp{\hat{\finsetprop} \slice \sum_{c \in C} 1}
-    \) as \(C\) is countable.
-    So we need to show that \(
-        \sum_{c \in C}\csp{\hat{\finsetprop} \slice 1}
+        \csp{\finsetpropwithnat \slice \sum_{c \in C} 1}
+    \) even though \(C\) is not finite as it is still countable.
+    So as before we need to show that \(
+        \sum_{c \in C}\csp{\finsetpropwithnat \slice 1}
         \cong
-        \csp{\hat{\finsetprop} \slice \sum_{c \in C} 1}
-    \).
-    The objects of the former are coproducts of objects in
-    \(\hat{\finsetprop} \slice C\); as this is a coloured prop the coproduct is
-    concatenation and subsequently the objects can be viewed as words in
-    \(\freemon{C}\).
-    Similarly, the objects of the latter are objects of
-    \(\hat{\finsetprop} \slice \sum_{c \in C} 1\), which can clearly also be
-    seen as words in \(\freemon{C}\).
-
-    The morphisms of the former are coproducts of cospans, which can
-    equivalently be viewed as a single cospan with coproducts in the legs and
-    apex; using the reasoning above this means it is a cospan of words in
-    \(\freemon{C}\); it is easy to see that this is also the case for morphisms
-    in the latter.
+        \csp{\finsetpropwithnat \slice \sum_{c \in C} 1}
+    \), which follows by the same reasoning as in the prequel.
 \end{proof}
-
 
 \begin{corollary}[\cite{bonchi2022string}, Cor. 3.9]
     There is a faithful PROP homomorphism
@@ -486,9 +535,9 @@ observation.
 
 \begin{definition}[\cite{bonchi2022string}]
     Let \(\mcs\) be a set of sorts, and let
-    \(\morph{D}{\hat{\finsetprop} \slice \mcs}{\hypsigma}\) be the faithful,
+    \(\morph{D}{\finsetpropwithnat \slice \mcs}{\hypsigma}\) be the faithful,
     coproduct-preserving functor that sends each word
-    \(\listvar{x} \in \hat{\finsetprop}\) to the discrete hypergraph
+    \(\listvar{x} \in \finsetpropwithnat\) to the discrete hypergraph
     \(m \in \hypsigma\) and each morphism to the induced homomorphism of
     discrete hypergraphs.
 \end{definition}
