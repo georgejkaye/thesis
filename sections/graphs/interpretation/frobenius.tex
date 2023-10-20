@@ -7,7 +7,7 @@ We will first recount the constructions used by Bonchi et al in
 how we can use their ingredients for a \emph{traced} setting either with or
 without a comonoid structure.
 
-\subsection{Frobenius structures}
+\subsection{Hypergraph categories}
 
 Monoids and comonoids are structures that crop up all over mathematics.
 However, things become really interesting when multiple such structures
@@ -18,6 +18,7 @@ because symmetric monoidal terms equipped with a Frobenius structure correspond
 precisely to the cospans of hypergraphs defined in the previous section.
 
 \begin{definition}
+    \label{def:frob}
     The monoidal theory of \emph{special commutative Frobenius algebras} is
     defined as \((\generators[\frob], \equations[\frob])\), where \(
         \generators[\frob] := \{
@@ -30,7 +31,6 @@ precisely to the cospans of hypergraphs defined in the previous section.
     \cref{fig:frobenius-equations}.
     We write \(\frob := \smc{\generators[\frob], \equations[\frob]}\).
 \end{definition}
-
 
 \input{floats/frobenius}
 
@@ -56,53 +56,86 @@ We can use this to define a multi-coloured version of \(\frob\) as
 a coproduct of copies of \(\frob\).
 
 \begin{definition}[\cite{bonchi2022string}]
-    \label{def:coloured-frob}
-    For a countable set of colours \(C\), let \(\cfrob{C} \in \cprop\) be
-    defined as \(\cfrob{C} := \sum_{c \in C}\frob\).
+    \label{def:frobc}
+    For a countable set of colours \(C\), let \(\frobc{C} \in \cprop\) be
+    defined as \(\frobc{C} := \sum_{c \in C}\frob\).
 \end{definition}
+
+Frobenius structures have turned out to be very useful in studying compositional
+processes such as quantum processes~\cite{coecke2008interacting} and signal flow
+graphs~\cite{bonchi2014categorical,bonchi2015full}.
+As with other structures, it is useful to talk about the categorical setting in
+which \emph{every} object in a category is equipped with such a structure.
+
+\begin{definition}[Hypergraph category~\cite{fong2019hypergraph}]
+    \label{def:hypergraph-category}
+    A \emph{hypergraph category} is a category in which every object is equipped
+    with a special commutative Frobenius algebra subject to the
+    \emph{coherence equations} in \cref{fig:hypergraph-coherence}.
+\end{definition}
+
+\input{floats/hypergraph-coherence}
+
+\begin{remark}
+    The notion of a hypergraph category is so natural that it has been
+    rediscovered numerous times over the years!
+    They were originally called \emph{well-supported compact closed categories}
+    by Carboni and Walters~\cite{carboni1987cartesian}, and have subsequently
+    appeared as
+    \emph{dgs-monoidal categories}~\cite{katis1997bicategories,gadducci1998inductive,gadducci1999bicategorical,bruni2002normal}
+    and \emph{dungeon categories}~\cite{morton2014belief}.
+    The term \emph{hypergraph categories} was coined more recently but has
+    become the standard in the compositional processes
+    community~\cite{kissinger2015finite,fong2015decorated,baez2016compositional,baez2018compositional}.
+\end{remark}
+
+As the Frobenius structure is their entire raison d'\^{e}tre, it is unsurprising
+that two examples of hypergraph categories are the PROPs defined in
+\cref{def:frob} and \cref{def:frobc}.
 
 \begin{lemma}
-    \(\hypcsigmac \cong \smcsigmac + \cfrob{C}\)
+    \(\frob\) and \(\frobc{C}\) are hypergraph categories.
 \end{lemma}
+\begin{proof}
+    The generators in \(\frob\) and \(\frobc{C}\) provide the Frobenius
+    structure for the object \(1\) in the former and the base colours
+    \(c \in C\) in the latter.
+    The Frobenius structure for the other objects constructed through
+    \(\tensor\) can be derived by parallel composition, following the recipes
+    given in the coherence equations in \cref{fig:hypergraph-coherence}.
+\end{proof}
 
+When we say `Frobenius terms', what we really mean to say is that we are
+working with terms in a hypergraph category freely generated over some
+generators.
 
-\subsection{From terms to graphs}
-
-
-
-First, we define the mapping from \(\smcsigma\) to cospans of hypergraphs.
-Since both \(\smcsigma\) are \(\cspdchyp\) are freely generated, it suffices to
-specify this solely on the generators of the former.
-
-\begin{definition}[\cite{bonchi2022string}, Sec. 4.1]\label{def:hyp-morphisms}
-    Let \(\morph{\termtohypsigmac}{\smcsigmac}{\cspdchyp}\) be a coloured PROP
-    morphism with its action on generators defined as
-    \begin{gather*}
-        \termtohypsigmac[\iltikzfig{%
-                strings/category/generator%
-            }[box=\phi,colour=white,dom=\listvar{m},cod=\listvar{n}]
-        ]
-        :=
-        \cospan{\listvar{m}}{\iltikzfig{graphs/terms/generator}}{\listvar{n}}
-    \end{gather*}
+\begin{definition}
+    For a set of colours \(C\) and generators \(\generators\), let
+    \(\hypc{C,\generators}\) be the coloured PROP freely generated over the
+    generators in \(\generators\) and those in \(\frobc{C}\).
 \end{definition}
 
-Next the Frobenius structure must be considered.
+There is a simple observation to be made about \(\hypcsigmac\).
 
+\begin{lemma}
+    \(\hypcsigmac \cong \smcsigmac + \frobc{C}\)
+\end{lemma}
+\begin{proof}
+    Every term in \(\hypcsigmac\) can be expressed as a combination of
+    generators either in \(\smcsigmac\) or \(\frobc{C}\).
+\end{proof}
 
+Viewing \(\hypcsigmac\) as a coproduct in \(\cprop\) will prove to be beneficial
+when establishing a correspondence between \(\hypcsigmac\) and \(\cspdchyp\) in
+the upcoming sections.
 
+\subsection{Hypergraph categories and hypergraphs}
 
-\begin{theorem}[\cite{bonchi2022string}, Thm. 3.8]
-    \label{thm:cospan-homomorphism}
-    Let \(\mathbb{X}\) be a PROP whose monoidal product is a coproduct,
-    \(\mathbf{C}\) a category with pushouts and an initial object, and
-    \(\morph{F}{\mathbb{X}}{\mathbf{C}}\) a coproduct-preserving functor.
-    Then there is a homomorphism of PROPs \(
-        \morph{\tilde{F}}{\csp{\mathbb{X}}}{\csp[F]{\mathbf{C}}}
-    \) that sends \(\cospan{\listvar{m}}[f]{X}[g]{\listvar{{n}}}\) to
-    \(\cospan{F\listvar{m}}[Ff]{FX}[Fg]{F\listvar{n}}\).
-    If \(F\) is full and faithful, then \(\tilde{F}\) is faithful.
-\end{theorem}
+Perhaps confusingly, the category of \emph{hypergraphs} \(\hypsigmac\) is
+\emph{not} a hypergraph category, but the category of \emph{cospans} of
+hypergraphs is!
+To show this, we exploit a correspondence between \(\frob\) and PROPs of
+\emph{finite sets}.
 
 \begin{proposition}[\cite{lack2004composing}, Ex. 5.4]
     \label{prop:frob-finset}
@@ -150,7 +183,7 @@ a cospan of finite sets \(\cospan{[m]}[i]{[x]}[j]{[n]}\), where the functions
 
 The cospan representation shows how all connected Frobenius structures can be
 `squished' into a single blob.
-For \(\cfrob{C}\) we replace \(\finsetprop\) with the coloured version
+For \(\frobc{C}\) we replace \(\finsetprop\) with the coloured version
 \(\finsetpropwithnat \slice C\) seen in the previous section.
 A coloured version of \cref{prop:frob-finset} was shown for a \emph{finite} set
 of colours in \cite{bonchi2022string}; we recall its proof before extending this
@@ -159,13 +192,13 @@ to the \emph{countable} setting we work in.
 \begin{theorem}[\cite{bonchi2022string}, Theorem 2.24]
     \label{thm:frobc-iso-finset-slice-c}
     For a finite set of colours \(C \in \finsetprop\), there is an isomorphism
-    of coloured PROPs \(\cfrob{C} \cong \csp{\finsetprop \slice C}\).
+    of coloured PROPs \(\frobc{C} \cong \csp{\finsetprop \slice C}\).
 \end{theorem}
 \begin{proof}
-    By definition of \(\cfrob{C}\),
-    \cref{def:coloured-frob,prop:frob-finset,lem:slice-iso-terminal}
+    By definition of \(\frobc{C}\),
+    \cref{def:frobc,prop:frob-finset,lem:slice-iso-terminal}
     we have that \[
-        \cfrob{C}
+        \frobc{C}
         :=
         \sum_{c \in C}\frob
         \cong
@@ -234,14 +267,14 @@ The strategy for this proof is much the same as that used in
 
 \begin{theorem}
     \label{thm:frobc-iso-hatfinset-slice-c}
-    For a countable set of sorts \(C\), there is an isomorphism of coloured
-    PROPs \(\cfrob{C} \cong \csp{\finsetpropwithnat \slice C}\).
+    For a countable set of colours \(C\), there is an isomorphism of coloured
+    PROPs \(\frobc{C} \cong \csp{\finsetpropwithnat \slice C}\).
 \end{theorem}
 \begin{proof}
     The proof is almost the same as \cref{thm:frobc-iso-finset-slice-c} but with
     the addition of \cref{lem:finsetprop-finite}.
     We have that \[
-        \cfrob{C}
+        \frobc{C}
         :=
         \sum_{c \in C}\frob
         \cong
@@ -263,6 +296,20 @@ The strategy for this proof is much the same as that used in
     \), which follows by the same reasoning as in the prequel.
 \end{proof}
 
+
+\begin{theorem}[\cite{bonchi2022string}, Thm. 3.8]
+    \label{thm:cospan-homomorphism}
+    Let \(\mathbb{X}\) be a PROP whose monoidal product is a coproduct,
+    \(\mathbf{C}\) a category with pushouts and an initial object, and
+    \(\morph{F}{\mathbb{X}}{\mathbf{C}}\) a coproduct-preserving functor.
+    Then there is a homomorphism of PROPs \(
+        \morph{\tilde{F}}{\csp{\mathbb{X}}}{\csp[F]{\mathbf{C}}}
+    \) that sends \(\cospan{\listvar{m}}[f]{X}[g]{\listvar{{n}}}\) to
+    \(\cospan{F\listvar{m}}[Ff]{FX}[Fg]{F\listvar{n}}\).
+    If \(F\) is full and faithful, then \(\tilde{F}\) is faithful.
+\end{theorem}
+
+
 \begin{corollary}[\cite{bonchi2022string}, Cor. 3.9]
     \label{cor:finset-to-hyp}
     There is a faithful PROP homomorphism
@@ -270,9 +317,28 @@ The strategy for this proof is much the same as that used in
 \end{corollary}
 
 \begin{definition}
-    Let \(\morph{\frobtohypsigmac}{\cfrob{C}}{\cspdchyp}\) be the PROP morphism
+    Let \(\morph{\frobtohypsigmac}{\frobc{C}}{\cspdchyp}\) be the PROP morphism
     defined by using \cref{thm:frobc-iso-hatfinset-slice-c} followed by
     \cref{cor:finset-to-hyp}.
+\end{definition}
+
+
+\subsection{From terms to graphs}
+
+Our goal is to map from terms in \(\hypcsigmac\) into cospans in \(\cspdchyp\).
+
+\begin{definition}[\cite{bonchi2022string}, Sec. 4.1]\label{def:hyp-morphisms}
+    Let \(\morph{\termtohypsigmac}{\smcsigmac}{\cspdchyp}\) be a coloured PROP
+    morphism with its action on generators defined as
+    \begin{gather*}
+        \termtohypsigmac[\iltikzfig{%
+                strings/category/generator%
+            }[box=\phi,colour=white,dom=\listvar{m},cod=\listvar{n}]
+        ]
+        :=
+        \cospan{\listvar{m}}{\iltikzfig{graphs/terms/generator}}{\listvar{n}}
+    \end{gather*}
+    \todo[inline]{Coloured version of generator map somehow?}
 \end{definition}
 
 This means we can map from both generators of symmetric monoidal terms and the
