@@ -415,10 +415,11 @@ Already we have all we need to state one of the key results of
 \cite{bonchi2022string}: the correspondence between hypergraph terms and
 cospans of hypergraphs.
 
-\begin{proposition}[\cite{bonchi2022string}, Theorem 4.4]
+\begin{theorem}[\cite{bonchi2022string}, Theorem 4.4]
+    \label{thm:isomorphism-smcfrob-cospans}
     There is an isomorphism of \(C\)-coloured PROPs
     \(\smcsigmac + \frobc \cong \cspdchyp\).
-\end{proposition}
+\end{theorem}
 \begin{proof}
     Since \(\smcsigmac + \frobc\) is a coproduct in \(\cprop\), this can be
     shown by proving that \(\cspdchyp\) satisfies the universal property of the
@@ -492,7 +493,18 @@ cospans of hypergraphs.
     this is not an issue.
 \end{proof}
 
-\todo[inline]{Sketch out the intuition behind the big cospan}
+At first glance, the composite cospan described above might look confusing.
+As mentioned, the central cospan \(\cospan{\tilde{m}}{\tilde{E}}{\tilde{n}}\)
+serves to `stack up' the edges in some order, all detached from each other.
+To make the entire cospan isomorphic to the original, the connections of the
+sources and targets must be the same: the job of the two outer cospans is to
+`join them up' appropriately by connecting targets on the right to sources on
+the left by going `over the top' of the edges via the identity cospan
+\(\cospan{N}{N}{N}\).
+
+Because the isomorphism of coloured PROPs in
+\cref{thm:isomorphism-smcfrob-cospans} extended to an isomorphism of coloured
+FROPs, we get the following.
 
 \begin{corollary}[\cite{bonchi2022string}, Cor. 4.2]
     There is an isomorphism of \(C\)-coloured PROPs
