@@ -333,19 +333,27 @@ hypergraphs.
     If we let the set of colours \(C := \{\bullet\}\), then the action of
     \(\frobtohypsigmac\) on the Frobenius generators is as follows:
     \begin{gather*}
-        \frobtohyp[\iltikzfig{strings/structure/monoid/merge}[colour=white]]{C,\generators}
+        \frobtohyp[
+            \iltikzfig{strings/structure/monoid/merge}[colour=white]
+        ]{C,\generators}
         =
         \iltikzfig{graphs/frobenius/monoid}
         \quad
-        \frobtohyp[\iltikzfig{strings/structure/monoid/init}[colour=white]]{C,\generators}
+        \frobtohyp[
+            \iltikzfig{strings/structure/monoid/init}[colour=white]
+        ]{C,\generators}
         =
         \iltikzfig{graphs/frobenius/unit}
         \\
-        \frobtohyp[\iltikzfig{strings/structure/comonoid/copy}[colour=white]]{C,\generators}
+        \frobtohyp[
+            \iltikzfig{strings/structure/comonoid/copy}[colour=white]
+        ]{C,\generators}
         =
         \iltikzfig{graphs/frobenius/comonoid}
         \quad
-        \frobtohyp[\iltikzfig{strings/structure/comonoid/discard}[colour=white]]{C,\generators}
+        \frobtohyp[
+            \iltikzfig{strings/structure/comonoid/discard}[colour=white]
+        ]{C,\generators}
         =
         \iltikzfig{graphs/frobenius/counit}
     \end{gather*}
@@ -360,9 +368,24 @@ start of this section.
     \(\cspdchyp\) is a hypergraph category.
 \end{corollary}
 
+There is another useful observation to make which follows from the isomorphism
+in \cref{thm:frobc-iso-hatfinset-slice-c}.
+
+\begin{corollary}
+    \label{cor:discrete-hypergraph-frob}
+    Given a discrete hypergraph \(X \in \hypsigmac\), any cospan
+    \(\cospan{\overline{m}}{X}{\overline{n}}\) in \(\cspdchyp\) is in the
+    image of \(\frobtohypsigmac\).
+\end{corollary}
+
 \subsection{From terms to graphs}
 
 Our goal is to map from terms in \(\hypcsigmac\) into cospans in \(\cspdchyp\).
+As we know that \(\hypcsigmac\) can be viewed as the coproduct
+\(\smcsigmac + \frobc\), it suffices to define this map separately from each
+category.
+The results of the previous section gives us the map \(\frobc \to \cspdchyp\);
+all that remains is the map from \(\smcsigmac\).
 
 \begin{definition}[\cite{bonchi2022string}, Sec. 4.1]\label{def:hyp-morphisms}
     Let \(\morph{\termtohypsigmac}{\smcsigmac}{\cspdchyp}\) be a coloured PROP
@@ -378,9 +401,8 @@ Our goal is to map from terms in \(\hypcsigmac\) into cospans in \(\cspdchyp\).
     \todo[inline]{Coloured version of generator map somehow?}
 \end{definition}
 
-This means we can map from both generators of symmetric monoidal terms and the
-Frobenius structure to cospans of hypergraphs.
-Therefore to map from Frobenius terms, we simply put them together.
+To map from terms in a hypergraph category to cospans of hypergraphs, we simply
+put the two maps together.
 
 \begin{definition}
     Let \(
@@ -388,6 +410,10 @@ Therefore to map from Frobenius terms, we simply put them together.
     \) be the copairing of \(\termtohypsigmac\) and
     \(\frobtohypsigmac\).
 \end{definition}
+
+Already we have all we need to state one of the key results of
+\cite{bonchi2022string}: the correspondence between hypergraph terms and
+cospans of hypergraphs.
 
 \begin{proposition}[\cite{bonchi2022string}, Theorem 4.4]
     There is an isomorphism of \(C\)-coloured PROPs
@@ -404,8 +430,71 @@ Therefore to map from Frobenius terms, we simply put them together.
         \includestandalone{figures/graphs/isomorphism/coproduct-iso}
     \end{center}
 
-    To define
+    All the PROP morphisms involved are identity-on-objects, so all that is
+    required to show the existence of \(u\) is to show that any morphism in
+    \(\cspdchyp\) can be expressed as a composition of components either in the
+    image of \(\termtohypsigmac\) or \(\frobtohypsigmac\).
 
-    \todo[inline]{Sketch out proof to some level of detail}
+    Consider a cospan \(\cospan{m}[f]{G}[g]{n}\) in \(\cspdchyp\); let \(N\) be
+    the set of nodes, let \(E\) be the set of hyperedges, and let
+    \(\morph{\chi}{E}{\generators}\) be the induced labelling function.
+    Pick an order \(e_0, e_1, e_{j-1}\) on the edges; then define \(
+        \cospan{\tilde{m}}[s]{\tilde{E}}[t]{\tilde{n}}
+    \) as the cospan \(
+        \bigtensor_{0 \leq i < j}
+        \termtohypsigmac[\chi(e_i)]
+    \).
+    This cospan `stacks up' the edges in \(G\) without connecting them together;
+    the legs of the cospan are the concatenated sources and targets of these
+    edges in the order specified.
+    It is then easy to define functions \(\morph{f^\prime}{m}{N}\),
+    \(\morph{g^\prime}{n}{N}\), \(\morph{h}{\tilde{m}}{N}\) and
+    \(\morph{k}{\tilde{n}}{N}\) that send nodes to the corresponding node in the
+    entire set of nodes in the graph.
 
+    With this data, the original cospan \(\cospan{m}[f]{G}[g]{n}\) can be
+    viewed as the following composition of cospans: \[
+        (
+            \cospan{m}[f^\prime]{N}[(\id,h)]{N \tensor \tilde{n}}
+        ) \seq (
+            \cospan{
+                N \tensor \tilde{n}
+            }[
+                \id \tensor s
+            ]{
+                N \tensor \tilde{E}
+            }[
+                \id \tensor t
+            ]{
+                N \tensor \tilde{m}
+            }
+        ) \seq (
+            \cospan{N \tensor \tilde{m}}[(\id, k)]{N}[g^\prime]{n}
+        ).
+    \]
+    This is all well-defined because \(\tensor\) is the coproduct in
+    \(\hypsigmac\).
+    By computing the composition by pushout, it can be shown that the composite
+    above is isomorphic to the original cospan \(\cospan{m}[f]{G}[g]{n}\).
+
+    Now it must be verified that each cospan in the composite is in the image
+    of either \(\termtohypsigmac\) or \(\frobtohypsigmac\).
+    As the two outer cospans are discrete, they are in the image of
+    \(\frobtohypsigmac\) by \cref{cor:discrete-hypergraph-frob}.
+    The centre cospan is constructed from the identity and the coproduct of
+    cospans in the image of \(\termtohypsigmac\), so the entire cospan is in the
+    image of \(\termtohypsigmac\).
+
+    The morphism \(u\) can therefore be defined based on the actions of
+    \(\termtohypsigmac\) and \(\frobtohypsigmac\).
+    This morphism is unique because although a different order on the edges
+    could be initially assigned, all the categories are symmetric monoidal so
+    this is not an issue.
 \end{proof}
+
+\todo[inline]{Sketch out the intuition behind the big cospan}
+
+\begin{corollary}[\cite{bonchi2022string}, Cor. 4.2]
+    There is an isomorphism of \(C\)-coloured PROPs
+    \(\hypsigmac \cong \cspdchyp\).
+\end{corollary}
