@@ -57,8 +57,8 @@ a coproduct of copies of \(\frob\).
 
 \begin{definition}[\cite{bonchi2022string}]
     \label{def:frobc}
-    For a countable set of colours \(C\), let \(\frobc{C} \in \cprop\) be
-    defined as \(\frobc{C} := \sum_{c \in C}\frob\).
+    For a countable set of colours \(C\), let \(\frobc \in \cprop\) be
+    defined as \(\frobc := \sum_{c \in C}\frob\).
 \end{definition}
 
 Frobenius structures have turned out to be very useful in studying compositional
@@ -94,10 +94,10 @@ that two examples of hypergraph categories are the PROPs defined in
 \cref{def:frob} and \cref{def:frobc}.
 
 \begin{lemma}
-    \(\frob\) and \(\frobc{C}\) are hypergraph categories.
+    \(\frob\) and \(\frobc\) are hypergraph categories.
 \end{lemma}
 \begin{proof}
-    The generators in \(\frob\) and \(\frobc{C}\) provide the Frobenius
+    The generators in \(\frob\) and \(\frobc\) provide the Frobenius
     structure for the object \(1\) in the former and the base colours
     \(c \in C\) in the latter.
     The Frobenius structure for the other objects constructed through
@@ -112,17 +112,17 @@ generators.
 \begin{definition}
     For a set of colours \(C\) and generators \(\generators\), let
     \(\hypc{C,\generators}\) be the coloured PROP freely generated over the
-    generators in \(\generators\) and those in \(\frobc{C}\).
+    generators in \(\generators\) and those in \(\frobc\).
 \end{definition}
 
 There is a simple observation to be made about \(\hypcsigmac\).
 
 \begin{lemma}
-    \(\hypcsigmac \cong \smcsigmac + \frobc{C}\)
+    \(\hypcsigmac \cong \smcsigmac + \frobc\)
 \end{lemma}
 \begin{proof}
     Every term in \(\hypcsigmac\) can be expressed as a combination of
-    generators either in \(\smcsigmac\) or \(\frobc{C}\).
+    generators either in \(\smcsigmac\) or \(\frobc\).
 \end{proof}
 
 Viewing \(\hypcsigmac\) as a coproduct in \(\cprop\) will prove to be beneficial
@@ -183,7 +183,7 @@ a cospan of finite sets \(\cospan{[m]}[i]{[x]}[j]{[n]}\), where the functions
 
 The cospan representation shows how all connected Frobenius structures can be
 `squished' into a single blob.
-For \(\frobc{C}\) we replace \(\finsetprop\) with the coloured version
+For \(\frobc\) we replace \(\finsetprop\) with the coloured version
 \(\finsetpropwithnat \slice C\) seen in the previous section.
 A coloured version of \cref{prop:frob-finset} was shown for a \emph{finite} set
 of colours in \cite{bonchi2022string}; we recall its proof before extending this
@@ -192,13 +192,13 @@ to the \emph{countable} setting we work in.
 \begin{theorem}[\cite{bonchi2022string}, Theorem 2.24]
     \label{thm:frobc-iso-finset-slice-c}
     For a finite set of colours \(C \in \finsetprop\), there is an isomorphism
-    of coloured PROPs \(\frobc{C} \cong \csp{\finsetprop \slice C}\).
+    of coloured PROPs \(\frobc \cong \csp{\finsetprop \slice C}\).
 \end{theorem}
 \begin{proof}
-    By definition of \(\frobc{C}\),
+    By definition of \(\frobc\),
     \cref{def:frobc,prop:frob-finset,lem:slice-iso-terminal}
     we have that \[
-        \frobc{C}
+        \frobc
         :=
         \sum_{c \in C}\frob
         \cong
@@ -268,13 +268,13 @@ The strategy for this proof is much the same as that used in
 \begin{theorem}
     \label{thm:frobc-iso-hatfinset-slice-c}
     For a countable set of colours \(C\), there is an isomorphism of coloured
-    PROPs \(\frobc{C} \cong \csp{\finsetpropwithnat \slice C}\).
+    PROPs \(\frobc \cong \csp{\finsetpropwithnat \slice C}\).
 \end{theorem}
 \begin{proof}
     The proof is almost the same as \cref{thm:frobc-iso-finset-slice-c} but with
     the addition of \cref{lem:finsetprop-finite}.
     We have that \[
-        \frobc{C}
+        \frobc
         :=
         \sum_{c \in C}\frob
         \cong
@@ -296,6 +296,10 @@ The strategy for this proof is much the same as that used in
     \), which follows by the same reasoning as in the prequel.
 \end{proof}
 
+We have now ascertained the relationship between \(\frobc\) and
+\(\csp{\finsetpropwithnat \slice C}\).
+The missing link is the relationship between the latter and \(\cspdchyp\);
+this arises as a special case of the following theorem.
 
 \begin{theorem}[\cite{bonchi2022string}, Thm. 3.8]
     \label{thm:cospan-homomorphism}
@@ -309,19 +313,51 @@ The strategy for this proof is much the same as that used in
     If \(F\) is full and faithful, then \(\tilde{F}\) is faithful.
 \end{theorem}
 
-
 \begin{corollary}[\cite{bonchi2022string}, Cor. 3.9]
     \label{cor:finset-to-hyp}
     There is a faithful PROP homomorphism
     \(\morph{\tilde{\pickinterfacesc{C}}}{\csp{\finsetpropwithnat}}{\cspdchyp}\)
 \end{corollary}
 
+Using these results we can derive a map from Frobenius terms to cospans of
+hypergraphs.
+
 \begin{definition}
-    Let \(\morph{\frobtohypsigmac}{\frobc{C}}{\cspdchyp}\) be the PROP morphism
+    Let \(\morph{\frobtohypsigmac}{\frobc}{\cspdchyp}\) be the PROP morphism
     defined by using \cref{thm:frobc-iso-hatfinset-slice-c} followed by
     \cref{cor:finset-to-hyp}.
 \end{definition}
 
+\begin{example}
+    If we let the set of colours \(C := \{\bullet\}\), then the action of
+    \(\frobtohypsigmac\) on the Frobenius generators is as follows:
+    \begin{gather*}
+        \frobtohyp[\iltikzfig{strings/structure/monoid/merge}[colour=white]]{C,\generators}
+        =
+        \iltikzfig{graphs/frobenius/monoid}
+        \quad
+        \frobtohyp[\iltikzfig{strings/structure/monoid/init}[colour=white]]{C,\generators}
+        =
+        \iltikzfig{graphs/frobenius/unit}
+        \\
+        \frobtohyp[\iltikzfig{strings/structure/comonoid/copy}[colour=white]]{C,\generators}
+        =
+        \iltikzfig{graphs/frobenius/comonoid}
+        \quad
+        \frobtohyp[\iltikzfig{strings/structure/comonoid/discard}[colour=white]]{C,\generators}
+        =
+        \iltikzfig{graphs/frobenius/counit}
+    \end{gather*}
+\end{example}
+
+As there is a faithful embedding of \(\frobc\) into \(\cspdchyp\) and both
+categories share the same objects, we also get the result we alluded to at the
+start of this section.
+
+\begin{corollary}
+    \label{cor:csphypsigmac-hypergraph}
+    \(\cspdchyp\) is a hypergraph category.
+\end{corollary}
 
 \subsection{From terms to graphs}
 
@@ -347,20 +383,28 @@ Therefore to map from Frobenius terms, we simply put them together.
 
 \begin{definition}
     Let \(
-        \morph{\termandfrobtohypsigmac}{\smcsigmac + \frobs}{\cspdchyp}
+        \morph{\termandfrobtohypsigmac}{\smcsigmac + \frobc}{\cspdchyp}
     \) be the copairing of \(\termtohypsigmac\) and
     \(\frobtohypsigmac\).
 \end{definition}
 
-\begin{proposition}[\cite{bonchi2022string}, ]
-
-\end{proposition}
-
-\begin{proposition}[\cite{bonchi2022string}]\label{prop:tohyp-faithful}
-    \(\termtohypsigmac\) and \(\frobtohypsigmac\) are faithful
+\begin{proposition}[\cite{bonchi2022string}, Theorem 4.4]
+    There is an isomorphism of \(C\)-coloured PROPs
+    \(\smcsigmac + \frobc \cong \cspdchyp\).
 \end{proposition}
 \begin{proof}
+    Since \(\smcsigmac + \frobc\) is a coproduct in \(\cprop\), this can be
+    shown by proving that \(\cspdchyp\) satisfies the universal property of the
+    coproduct: given a coloured PROP \(\mathbb{A}\) and PROP morphisms
+    \(\smcsigmac \to \mathbb{A}\) and \(\frobc \to \mathbb{A}\), there exists
+    a unique morphism \(\morph{u}{\cspdchyp}{\mathbb{A}}\) as below:
+
+    \begin{center}
+        \includestandalone{figures/graphs/isomorphism/coproduct-iso}
+    \end{center}
+
+    To define
+
+    \todo[inline]{Sketch out proof to some level of detail}
 
 \end{proof}
-
-\todo[inline]{Adapt from FSCD paper section 2}
