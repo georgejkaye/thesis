@@ -1,58 +1,76 @@
 \section{Traced terms}
 
 We now turn our attention to \emph{traced} terms.
-Recall that every compact closed category has a \emph{canonical trace} by
-\cref{thm:canonical-trace}
-and that every hypergraph category is self-dual
-compact closed.
+First, we establish the link between terms in a hypergraph category and a
+those in a symmetric traced monoidal category.
 
-
-Using this, we can reuse the PROP morphisms from the previous section for our
-scenario.
-Since we have a map from \(\smcsigma + \frob\) to cospans of hypergraphs, we
-need to interpret every term in \(\stmcsigma\) in terms of components from
-either \(\smcsigma\) or \(\frob\).
-
-% TODO this might be already done in the circuits section
-\begin{lemma}\label{lem:smc-core}
-    Let \(\iltikzfig{strings/category/f}[box=f,colour=white,dom=m,cod=n]\) be a
-    term in \(\stmc{\Sigma}\).
-    Then there exists at least one \(
-        \iltikzfig{strings/category/f-2-2}[box=g,colour=white,dom1=x,dom2=m,cod1=x,cod2=n]
-        \in \smc{\Sigma}
-    \) such that \(
-        \trace{x}{\iltikzfig{strings/category/f-2-2}[box=g, colour=white]}
-        =
-        \iltikzfig{strings/category/f}[box=f,colour=white]
-    \).
+\begin{lemma}[\cite{rosebrugh2005generic}, Prop. 2.8]
+    Every hypergraph category is self-dual compact closed.
 \end{lemma}
 \begin{proof}
-    Any trace can be made a `global trace' by tightening and superposing.
-\end{proof}
-
-\begin{corollary}[\cite{bonchi2022string}, Cor. 4.3]
-    \label{cor:tohyp-faithful}
-    \(\morph{\termtohypsigmac}{\smcsigmac}{\cspdchyp}\) is faithful.
-\end{corollary}
-\begin{proof}
-    \todo[inline]{Sketch out proof}
-\end{proof}
-
-\begin{proposition}
-    There exists a faithful PROP morphism \(
-        \morph{\tracedtosymandfrobsigmas}{\stmc{\Sigma}}{\smc{\Sigma} + \frobc}
+    The cup on a given object is defined as \(
+        \iltikzfig{strings/compact-closed/cup-self-dual}[colour=white,obj=A]
+        :=
+        \iltikzfig{strings/structure/frobenius/cup}[obj=A]
+    \) and the cap as \(
+        \iltikzfig{strings/compact-closed/cap-self-dual}[colour=white,obj=A]
+        :=
+        \iltikzfig{strings/structure/frobenius/cap}[obj=A]
     \).
-\end{proposition}
-\begin{proof}
-    \cref{lem:smc-core} is used to isolate a term in \(\smc{\Sigma}\).
-    The corresponding term in \(\smc{\Sigma} + \frob\) is then the canonical
-    trace of this term.
-    There may be many such terms in \(\smc{\Sigma}\), but the canonical trace
-    being a trace means that any possible outcomes post-trace are all equal.
-    The equations of \(\frob\) do not merge any morphisms
-    since the only use of the generators of \(\frob\) is in the canonical trace,
-    to which the Frobenius equations do not apply.
+    The snake equations follow by applying the Frobenius equation and unitality:
+    \begin{gather*}
+        \iltikzfig{strings/structure/frobenius/snake-1-0}
+        =
+        \iltikzfig{strings/structure/frobenius/snake-1-1}
+        =
+        \iltikzfig{strings/structure/frobenius/snake-1-2}
+        \qquad
+        \iltikzfig{strings/structure/frobenius/snake-2-0}
+        =
+        \iltikzfig{strings/structure/frobenius/snake-2-1}
+        =
+        \iltikzfig{strings/structure/frobenius/snake-2-2}
+        \qedhere
+    \end{gather*}
 \end{proof}
+
+Recall that there are more terms in a freely generated compact closed category
+than there are in a freely generated traced catgory, as in the former outputs
+are not always required to connect to inputs.
+Since cospans of hypergraphs in \(\cspdchyp\) are in correspondence with terms
+in \(\hypcsigmac\), this means that there will be cospans in the former that do
+not have a corresponding traced term.
+However, this does not mean we need to discard all the work of the previous
+section.
+Instead, we can reuse the components and adapt them for our traced setting.
+
+Since we have a map from \(\smcsigmac + \frobc\) to cospans of hypergraphs, we
+need to interpret every term in \(\stmcsigmac\) in terms of components from
+either \(\smcsigmac\) or \(\frobc\).
+
+\begin{lemma}
+    \(\stmcsigmac\) is a subcategory of \(\hypcsigmac\).
+\end{lemma}
+\begin{proof}
+    Since \(\hypsigmac\) is compact closed, it has a (canonical) trace.
+    For \(\stmcsigmac\) to be a subcategory of \(\hypcsigmac\), every morphism
+    of the former must also be a morphism on the latter.
+    Since the two categories are freely generated (with the trace constructed
+    through the Frobenius generators in the latter), all that remains is to
+    check that every morphism in \(\stmcsigmac\) is a unique morphism in
+    \(\hypcsigmac\), i.e.\ the equations of \(\frobc\) do not merge any together.
+    This is trivial since the equations do not apply to the construction of the
+    canonical trace.
+\end{proof}
+
+\begin{definition}
+    Let \(\morph{\tracedtosymandfrobsigmas}{\stmcsigmac}{\hypcsigmac}\) be the
+    induced inclusion functor.
+\end{definition}
+
+\begin{corollary}
+    \(\tracedtosymandfrobsigmas\) is faithful.
+\end{corollary}
 
 This means that a term in \(\stmcsigma\) is translated into a cospan of
 hypergraphs by applying
