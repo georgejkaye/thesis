@@ -105,9 +105,8 @@ that two examples of hypergraph categories are the PROPs defined in
     given in the coherence equations in \cref{fig:hypergraph-coherence}.
 \end{proof}
 
-When we say `Frobenius terms', what we really mean to say is that we are
-working with terms in a hypergraph category freely generated over some
-generators.
+It is now possible to formally define what we mean when we say `Frobenius
+terms'.
 
 \begin{definition}
     For a set of colours \(C\) and generators \(\generators\), let
@@ -115,7 +114,7 @@ generators.
     generators in \(\generators\) and those in \(\frobc\).
 \end{definition}
 
-There is a simple observation to be made about \(\hypcsigmac\).
+To conclude this section we make a simple observation regarding \(\hypcsigmac\).
 
 \begin{lemma}
     \(\hypcsigmac \cong \smcsigmac + \frobc\)
@@ -134,8 +133,8 @@ the upcoming sections.
 Perhaps confusingly, the category of \emph{hypergraphs} \(\hypsigmac\) is
 \emph{not} a hypergraph category, but the category of \emph{cospans} of
 hypergraphs is!
-To show this, we exploit a correspondence between \(\frob\) and PROPs of
-\emph{finite sets}.
+This can be shown by exploiting a correspondence between \(\frob\) and the PROPs
+of finite sets we encountered earlier.
 
 \begin{proposition}[\cite{lack2004composing}, Ex. 5.4]
     \label{prop:frob-finset}
@@ -154,7 +153,7 @@ Terms in \(\frob\) are formed of all the ways of combining \(
     \iltikzfig{strings/symmetric/symmetry}[colour=white]
 \) in sequence and parallel, so a string diagram for a term \(\morph{f}{m}{n}\)
 is depicted as \(x\) connected components drawing paths from \(m\) inputs to
-\(n\) outputs, as illustrated with the example below.
+\(n\) outputs, such as in the example below.
 
 \begin{center}
     \iltikzfig{strings/structure/frobenius/example}
@@ -181,13 +180,33 @@ a cospan of finite sets \(\cospan{[m]}[i]{[x]}[j]{[n]}\), where the functions
     \end{center}
 \end{example}
 
-The cospan representation shows how all connected Frobenius structures can be
+The cospan representation shows how all connected Frobenius components can be
 `squished' into a single blob.
-For \(\frobc\) we replace \(\finsetprop\) with the coloured version
+
+This result shows how the correspondence works for the monochromatic case; what
+about for terms coloured by elements of some countable set?
+Here, we replace \(\finsetprop\) with the coloured version
 \(\finsetpropwithnat \slice C\) seen in the previous section.
 A coloured version of \cref{prop:frob-finset} was shown for a \emph{finite} set
 of colours in \cite{bonchi2022string}; we recall its proof before extending this
 to the \emph{countable} setting we work in.
+
+\begin{lemma}
+    \label{lem:slice-iso-terminal}
+    In a category \(\mcc\) with a terminal object \(1\),
+    \(\mcc \cong \mcc \slice 1\).
+\end{lemma}
+\begin{proof}
+    Since \(1\) is terminal, there is a unique morphism \(A \to 1\) for each
+    object \(A\) in \(\mcc\), so there is an object \((A, A \to 1)\) in
+    \(\mcc \slice 1\) for each object in \(\mcc\).
+    There is a morphism \((A, \morph{!_A}{A}{1}) \to (B, \morph{!_B}{B}{1})\) in
+    \(\mcc \slice 1\) for every morphism \(\morph{f}{A}{B}\) in \(\mcc\) such
+    that \(f \seq !_B = !_A\); since both \(f \seq !_B\) and \(!_A\) are
+    morphisms \(A \to 1\) this condition holds for any morphism \(f\) in
+    \(\mcc\).
+    Therefore \(\mcc \cong \mcc \slice 1\).
+\end{proof}
 
 \begin{theorem}[\cite{bonchi2022string}, Theorem 2.24]
     \label{thm:frobc-iso-finset-slice-c}
@@ -233,25 +252,7 @@ to the \emph{countable} setting we work in.
 
 We need to show a version of this for the case where \(C\) may be
 \emph{countably infinite}.
-
-\begin{lemma}
-    \label{lem:slice-iso-terminal}
-    In a category \(\mcc\) with a terminal object \(1\),
-    \(\mcc \cong \mcc \slice 1\).
-\end{lemma}
-\begin{proof}
-    Since \(1\) is terminal, there is a unique morphism \(A \to 1\) for each
-    object \(A\) in \(\mcc\), so there is an object \((A, A \to 1)\) in
-    \(\mcc \slice 1\) for each object in \(\mcc\).
-    There is a morphism \((A, \morph{!_A}{A}{1}) \to (B, \morph{!_B}{B}{1})\) in
-    \(\mcc \slice 1\) for every morphism \(\morph{f}{A}{B}\) in \(\mcc\) such
-    that \(f \seq !_B = !_A\); since both \(f \seq !_B\) and \(!_A\) are
-    morphisms \(A \to 1\) this condition holds for any morphism \(f\) in
-    \(\mcc\).
-    Therefore \(\mcc \cong \mcc \slice 1\).
-\end{proof}
-
-The strategy for this proof is much the same as that used in
+The strategy is much the same as that used in
 \cref{thm:frobc-iso-finset-slice-c}, but relies on one small observation.
 
 \begin{lemma}
@@ -319,7 +320,7 @@ this arises as a special case of the following theorem.
     \(\morph{\tilde{\pickinterfacesc{C}}}{\csp{\finsetpropwithnat}}{\cspdchyp}\)
 \end{corollary}
 
-Using these results we can derive a map from Frobenius terms to cospans of
+With these results we can derive a map from Frobenius terms to cospans of
 hypergraphs.
 
 \begin{definition}
