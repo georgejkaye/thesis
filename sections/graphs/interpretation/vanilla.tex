@@ -27,24 +27,26 @@ The former is tackled by a condition on the connectivity of vertices.
 \end{definition}
 
 \begin{definition}[Monogamy (\cite{bonchi2022stringa}, Def. 13)]
-    A cospan \(\cospan{\listvar{m}}[f]{F}[g]{\listvar{n}}\) in \(\cspdchyp\) is
-    \emph{monogamous} if \(f\) and \(g\) are mono and, for all nodes
-    \(v \in \vertices{F}\), the degree of \(v\) is
+    For a cospan \(\cospan{\listvar{m}}[f]{F}[g]{\listvar{n}}\) in
+    \(\cspdchyp\), let \(\mathsf{in}(F)\) be the image of \(f\) and let
+    \(\mathsf{out}(F)\) be the image of \(g\).
+    \(\cospan{\listvar{m}}[f]{F}[g]{\listvar{n}}\) is \emph{monogamous} if
+    \(f\) and \(g\) are mono and, for all nodes \(v\), the degree of \(v\) is
     \begin{center}
         \begin{tabular}{rlcrl}
             \((0,0)\)
             &
-            if \(v \in f \wedge v, v \in g_\star\)
+            if \(v \in \mathsf{in}(F) \wedge v \in \mathsf{out}(F)\)
             &
             \quad
             &
             \((0,1)\)
             &
-            if \(v \in f_\star\)
+            if \(v \in \mathsf{in}(F)\)
             \\
             \((1,0)\)
             &
-            if \(v \in g_\star\)
+            if \(v \in \mathsf{out}(F)\)
             &
             \quad
             &
