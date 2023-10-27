@@ -136,24 +136,146 @@ nodes.
 
 This shows that monogamous acyclic cospans of hypergraphs form a category.
 
-\begin{definition}
+\begin{definition}[\cite{bonchi2022stringa}]
     Let \(\macspdchyp\) be the sub-PROP of \(\cspdchyp\) containing only the
     monogamous acyclic cospans of hypergraphs.
 \end{definition}
 
-\todo[inline]{Do we talk about coproducts as pushouts earlier?}
+Now it is necessary to show that \(\smcsigmac\) is isomorphic to
+\(\macspdchyp\).
+To do thi
+
+
+\begin{definition}[Convex subgraph (\cite{bonchi2022stringa}, Def. 23)]
+    A subgraph \(G \subseteq F\) is convex if for any nodes \(v, v^\prime\) in
+    \(G\) and any path \(p\) from \(v\) to \(v^\prime\), every edge \(e\) in
+    \(p\) is also in \(G\).
+\end{definition}
+
+\begin{lemma}[Decomposition (\cite{bonchi2022stringa}, Lem. 24)]
+    \label{lem:decomposition}
+    For a monogamous acyclic cospan \(\cospan{\listvar{m}}{F}{\listvar{n}}\) and
+    and convex subgraph \(L\) of \(G\), there exist
+    \(\listvar{k} \in \freemon{C}\) and a unique cospan
+    \(\cospan{\listvar{i}}{L}{\listvar{j}}\) such that \(G\) can be factored as
+    the following composite of monogamous acyclic cospans:
+    \[
+        (\cospan{\listvar{m}}{C_1}{\listvar{k} + \listvar{i}})
+        \seq
+        (\cospan{
+            \listvar{k} + \listvar{i}
+        }{
+            \listvar{k} + L
+        }{
+            \listvar{k} + \listvar{i}
+        })
+        \seq
+        (\cospan{\listvar{k} + \listvar{j}}{C_2}{\listvar{n}})
+    \]
+\end{lemma}
+
+Essentially, we can always `pull out' a convex subgraph of a monogamous acyclic
+cospan in such a way that the remaining cospans are still monogamous acyclic.
+This will come in useful when characterising the image of \(\termtohypsigmac\).
+
+\begin{theorem}[\cite{bonchi2022stringa}, Thm. 25]
+    A cospan \(\cospan{\listvar{m}}{F}{\listvar{n}}\) is in the image of
+    \(\termtohypsigmac\) if and only if \(\cospan{\listvar{m}}{F}{\listvar{n}}\)
+    is monogamous acyclic.
+\end{theorem}
+\begin{proof}
+    The only if direction is by induction on the structure of terms in
+    \(\smcsigmac\): the interpretation of generators is monogamous acyclic and
+    the inductive cases are by \cref{lem:monogamous-acyclic-preserved}.
+
+    The if direction is by induction on the number of edges in \(F\).
+    If there are none, then \(\listvar{m} \to F\) and \(\listvar{n}\) are
+    bijections by monogamy and acyclicity so the term is in the image of
+    identities or symmetries in \(\smcsigmac\).
+    For the inductive step, pick a single edge \(e\).
+    This is a convex subgraph of \(F\), so
+    \(\cospan{\listvar{m}}{F}{\listvar{n}}\) can be factored as in
+    \cref{lem:decomposition}.
+    The edge \(e\) has a label \(\chi(e) \in \generators\), so the subgraph
+    \(\cospan{\listvar{i}}{e}{\listvar{j}}\) is the result of
+    \(\termtohypsigmac[\chi(e)]\).
+    Since the remaining cospans are monogamous acyclic by
+    \cref{lem:decomposition}, they are in the image of \(\termtohypsigmac\) by
+    inductive hypothesis, so the original cospan
+    \(\cospan{\listvar{m}}{F}{\listvar{n}}\) is also in the image of
+    \(\termtohypsigmac\).
+\end{proof}
+
+This shows that \(\termtohypsigmac\) is full; to conclude the isomorphism we
+need to show that it is also faithful.
+We know that the copairing \(\termtohypsigmac + \frobtohypsigmac\) is faithful
+by \cref{thm:termtohyp-image}, so we just need to show the same is true for its
+components.
+
+\todo[inline]{Do we talk about the category of categories?}
+
+\begin{definition}[\cite{macdonald2009amalgamations}, Defs. 3.1, 3.2]
+    A functor \(\morph{F}{\mcc}{\mcd}\) has the \emph{3-for-2 property} if,
+    for each triple of morphisms \(f,g,h \in \mcd\) such that \(h = g \circ f\),
+    if any two of \(f\), \(g\) and \(h\) are in the image of \(F\), then the
+    third is also in the image of \(F\).
+\end{definition}
+
+\begin{theorem}[\cite{macdonald2009amalgamations}, Thm. 3.3]
+    Let \(\morph{F_A}{\mcc}{\mca}\) and \(\morph{F_B}{\mcc}{\mcb}\) be faithful
+    functors such that the following diagram is a pushout.
+    \begin{center}
+        \includestandalone{figures/category/amalgamation}
+    \end{center}
+    Then, if \(F_A\) and \(F_B\) both satisfy the 3-for-2 property, then the
+    fucntors \(G_A\) and \(G_B\) are also faithful.
+\end{theorem}
+
+To apply this result, we need to show that \(\hypcsigmac\) is a pushout.
+Recall that in a category with an initial object, every coproduct can be
+equivalently expressed as a pushout by \cref{lem:coproduct-is-pushout}.
 
 \begin{definition}
-    \todo[inline]{3-for-2 condition}
+    Let \(\permspropwithnat\) be the sub-PROP of \(\finsetpropwithnat\)
+    containing only the bijective functions.
+\end{definition}
+
+A morphism \(\listvar{m} \to \listvar{m}\) in \(\permspropwithnat\) is a
+permutation of \(C\)-coloured wires.
+
+\begin{definition}
+    Let \(\cpropc\) be the full subcategory of \(\cprop\) containing only the
+    \(C\)-coloured PROPs.
 \end{definition}
 
 \begin{lemma}
-    \todo[inline]{Faithful if 3-for-2 condition}
+    \label{cpropc-initial}
+    \(\hat{\permsprop} \slice C\) is the initial object in \(\cpropc\).
 \end{lemma}
+\begin{proof}
+    All the morphisms in \(\hat{\permsprop} \slice C\) are just (coloured)
+    identities and symmetries; the unique coloured PROP morphism to any other
+    \(C\)-coloured PROP maps these to the corresponding constructs.
+\end{proof}
 
-\begin{corollary}
-    \tood[inline]{Map from S sigma is faithful}
-\end{corollary}
+These pieces can be put together to show the desired result.
+
+\begin{proposition}
+    \(\morph{\termtohypsigmac}{\smcsigmac}{\cspdchyp}\) is faithful.
+\end{proposition}
+\begin{proof}
+    From \cref{thm:isomorphism-smcfrob-cospans}, we know that
+    \(\cspdchyp \cong \smcsigmac + \frobc\).
+    Both \(\smcsigmac\) and \(\frobc\) are objects of \(\cpropc\), which has
+    \(\permspropwithnat \slice C\) as its initial object by
+    \cref{lem:cpropc-initial}.
+    As coproducts are pushouts from the initial object
+    (\cref{lem:coproducts-pushout}), we can construct the following diagram in
+    \(\cpropc\):
+    \begin{center}
+        \includestandalone{figures/category/coproduct-pushout-graphs}
+    \end{center}
+\end{proof}
 
 \begin{corollary}[\cite{bonchi2022stringa}, Cor. 26]
     There is an isomorphism of PROPs \(\smcsigmac \cong \macspdchyp\).
