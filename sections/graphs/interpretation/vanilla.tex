@@ -1,0 +1,160 @@
+\section{Symmetric monoidal terms}
+
+The results of the previous section show that cospans of hypergraphs are an
+excellent fit for reasoning about terms in a freely generated hypergraph
+category.
+However, there are times we might not have so much structure in our terms;
+indeed for our case of digital circuits we only operate in a setting with a
+trace.
+This means that not every cospan of hypergraphs will correspond to a valid term.
+Fortunately, Bonchi et al also characterised the cospans of hypergraphs that
+correspond to \emph{symmetric monoidal} terms without any additional structure.
+We will use some of this machinery when it comes to tackling the traced case.
+
+\subsection{Monogamy}
+
+There are two features that distinguish vanilla symmetric monoidal terms from
+Frobenius terms; wires cannot arbitrarily fork or join, and cycles may not be
+created.
+The former is tackled by a condition on the connectivity of vertices.
+
+\begin{definition}[Degree (\cite{bonchi2022stringa}, Def. 12)]
+    For a hypergraph \(F \in \hyp\), the \emph{degree} of a vertex
+    \(v \in \vertices{F}\) is a tuple \((i,o)\) where \(i\) is the number of
+    pairs \((e,i)\) where \(e\) is a hyperedge with \(v\) as its \(i\)th target,
+    and \(o\) is similarly the number of pairs \((e,j)\) where \(e\) is a
+    hyperedge with \(v\) as its \(j\)th target.
+\end{definition}
+
+\begin{definition}[Monogamy (\cite{bonchi2022stringa}, Def. 13)]
+    A cospan \(\cospan{\listvar{m}}[f]{F}[g]{\listvar{n}}\) in \(\cspdchyp\) is
+    \emph{monogamous} if \(f\) and \(g\) are mono and, for all nodes
+    \(v \in \vertices{F}\), the degree of \(v\) is
+    \begin{center}
+        \begin{tabular}{rlcrl}
+            \((0,0)\)
+            &
+            if \(v \in f \wedge v, v \in g_\star\)
+            &
+            \quad
+            &
+            \((0,1)\)
+            &
+            if \(v \in f_\star\)
+            \\
+            \((1,0)\)
+            &
+            if \(v \in g_\star\)
+            &
+            \quad
+            &
+            \((1,1)\)
+            &
+            otherwise
+        \end{tabular}
+    \end{center}
+\end{definition}
+
+\begin{lemma}[\cite{bonchi2022stringa}, Lems. 15-17]
+    \label{lem:monogamicity-preserved}
+    The following statements hold:
+    \begin{enumerate}
+        \item identities and symmetries are monogamous;
+        \item monogamicity is preserved by composition; and
+        \item monogamicity is preserved by tesnor.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    For (1), the cospans involved are discrete and all vertices are in both
+    interfacs.
+    For (2), assume we compose two monogamous acyclic cospans \(
+        \cospan{\listvar{m}}[f]{F}[g]{\listvar{n}}
+    \) and \(
+        \cospan{\listvar{n}}[h]{G}[k]{\listvar{p}}
+    \).
+
+    The interfaces remain mono as pushouts along monos are monos in
+    \(\hypsigmac\). The only vertices that are altered are those in the image of
+    \(g\) and \(h\), which are merged pointwise; since vertices in the image of
+    \(g\) have out-degree \(0\) and those in the image of \(h\) have in-degree
+    \(0\), the merged vertices will have at most degree \((1, 1)\).
+
+    For (3), the degrees of nodes are unaffected as tensor is by coproduct and
+    only vertices in the original interfaces will be in the new interfaces.
+\end{proof}
+
+\subsection{Acyclicity}
+
+Preventing cycles is a much more natural condition on hypergraphs.
+
+\begin{definition}[Predecessor (\cite{bonchi2022stringa}, Def. 18)]
+    A hyperedge \(e\) is a \emph{predecessor} of another hyperedge \(e^\prime\)
+    if there exists a node \(v\) in the sources of \(e\) and the targets of
+    \(e^\prime\).
+\end{definition}
+
+\begin{definition}[Path (\cite{bonchi2022stringa}, Def. 19)]
+    A \emph{path} between two hyperedges \(e\) and \(e^\prime\) is a sequence of
+    hyperedges \(e_0, \dots, e_{n-1}\) such that \(e = e_0\),
+    \(e^\prime = e_{n-1}\), and for each \(i < n-1\), \(e_i\) is a predecessor
+    of \(e_{i+1}\).
+    A subgraph \(H\) is the \emph{start} or \emph{end} of a path if it contains
+    a node in the sources of \(e\) or the targets of \(e^\prime\) respectively.
+\end{definition}
+
+Since nodes are single-element subgraphs, one can also talk about paths from
+nodes.
+
+\begin{definition}[Acyclicity (\cite{bonchi2022stringa}, Def. 20)]
+    A hypergraph \(F\) is acyclic if there is no path from a node to itself.
+    A cospan \(\morph{\listvar{m}}{F}{\listvar{n}}\) is acyclic if \(F\) is.
+\end{definition}
+
+\begin{lemma}[\cite{bonchi2022stringa}, Lems. 15-17, Prop. 21]
+    \label{lem:monogamous-acyclic-preserved}
+    The following statements hold:
+    \begin{itemize}
+        \item identities and symmetries are monogamous acyclic;
+        \item monogamous acyclicity is preserved by composition; and
+        \item monogamous acyclicity is preserved by tensor.
+    \end{itemize}
+\end{lemma}
+\begin{proof}
+    (1) and (3) follow by \cref{lem:monogamicity-preserved}, as cycles clearly
+    cannot be created by the coproduct.
+
+    For (2), once again assume we compose two monogamous acyclic cospans \(
+        \cospan{\listvar{m}}[f]{F}[g]{\listvar{n}}
+    \) and \(
+        \cospan{\listvar{n}}[h]{G}[k]{\listvar{p}}
+    \).
+    A cycle cannot be created by composition because there cannot be a path in
+    \(F\) that starts in the image of \(g\) or a path in \(G\) that ends in the
+    image of \(h\), because these vertices have out-degree and in-degree \(0\)
+    respectively.
+\end{proof}
+
+This shows that monogamous acyclic cospans of hypergraphs form a category.
+
+\begin{definition}
+    Let \(\macspdchyp\) be the sub-PROP of \(\cspdchyp\) containing only the
+    monogamous acyclic cospans of hypergraphs.
+\end{definition}
+
+\todo[inline]{Do we talk about coproducts as pushouts earlier?}
+
+\begin{definition}
+    \todo[inline]{3-for-2 condition}
+\end{definition}
+
+\begin{lemma}
+    \todo[inline]{Faithful if 3-for-2 condition}
+\end{lemma}
+
+\begin{corollary}
+    \tood[inline]{Map from S sigma is faithful}
+\end{corollary}
+
+\begin{corollary}[\cite{bonchi2022stringa}, Cor. 26]
+    There is an isomorphism of PROPs \(\smcsigmac \cong \macspdchyp\).
+\end{corollary}
