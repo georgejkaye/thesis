@@ -13,22 +13,14 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: recursive
-      - name: Store working directory
-        id: cwd
-        run: echo "cwd=$(pwd)" >> $GITHUB_OUTPUT
       - name: Enable nomencl
         run: cat .latexmkrc >> $HOME/.latexmkrc
-      - uses: actions/setup-python@v4
+      - name: Package the thesis
+        uses: georgejkaye/latex-packager@v1.0
         with:
-          python-version: 3.11
-      - name: Package the thesis file
-        uses: xu-cheng/texlive-action/full@v1
-        with:
-          run: python3 ./scripts/src/package.py . main ${{ github.event.repository.name }}
-      - name: Zip up the thesis package
-        uses: montudor/action-zip@v1
-        with:
-          args: zip -qq -r ${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}
+          input-dir: .
+          main: main
+          project-name: thesis
       - name: Set release name
         id: name
         run: echo "name=$(date +'%Y-%m-%d-%H%M')" >> $GITHUB_OUTPUT
@@ -55,7 +47,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ github.event.repository.name }}.zip
+          asset_path: thesis.zip
           asset_name: ${{ github.event.repository.name }}-${{ steps.name.outputs.name }}.zip
           asset_content_type: zip
       - name: Delete older releases
