@@ -1,19 +1,55 @@
 \chapter{Syntax}
 
-It is time to use monoidal theories for our desired use case: that of
-\emph{digital circuits}.
+Category theory is famous for being overly abstract, obfuscated
+behind reams of incomprehensible terminology.
+But one does not need to study category theory for the sake of abstract
+nonsense.
+Rather, we view category theory as a tool for exploiting connections
+between fields which may at first seem completely disparate; category theory is
+the \emph{common language} that brings them together.
+
+This is not a new idea; this concept has been explored in many areas since
+before the turn of the millennium.
+Our \emph{soup du jour} is that of \emph{sequential digital circuits}
+constructed from primitive components such as logic gates or transistors.
+These circuits are \emph{sequential} as they have a notion of \emph{state}:
+outputs can be impacted by inputs in previous cycles rather than solely those in
+the current cycle.
+
+\begin{remark}
+    Digital (electric) circuits are not to be confused with \emph{electronic}
+    circuits of switches and resistors, which are quite different!
+    Essentially, the difference boils down to the difference between traced
+    categories and compact closed categories discussed in the previous section.
+    Digital circuits have a clear notion of \emph{causality}; one provides
+    inputs and produces outputs.
+    Conversely, electronic circuits are \emph{relational} in nature; they do not
+    produce outputs per se but simply respect the various equalities found in
+    introductory textbooks.
+    Fortunately for those so inclined, electronic circuits were given the
+    categorical treatment by Boisseau and Sobocinski in
+    \cite{boisseau2022string}.
+\end{remark}
 
 \section{Circuit signatures}
 
+Before we can start doing anything exciting with digital circuits, we need to
+define a \emph{syntactic} category in which we can construct digital circuits.
+While we could go ahead and define a category of circuits with some fixed gate
+set, at some point someone would come along and complain that their favourite
+logic gate has been forgotten.
+Instead, we set a \emph{circuit signature} to define the components in a
+particular category of circuits.
+
 \begin{definition}[Circuit signature, value, gate symbol]
     A \emph{circuit signature} \(\circuitsignature\) is a tuple \((
-        \circuitsignaturevalues,
+        \values,
         \disconnected,
         \circuitsignaturegates,
         \circuitsignaturearity,
         \circuitsignaturecoarity
-    )\) where \(\circuitsignaturevalues\) is a finite set of \emph{values}, \(
-        \disconnected \in \circuitsignaturevalues
+    )\) where \(\values\) is a finite set of \emph{values}, \(
+        \disconnected \in \values
     \) is a \emph{disconnected} value, \(\circuitsignaturegates\) is a (usually
     finite) set of \emph{gate symbols}, \(
         \morph{\circuitsignaturearity}{\circuitsignaturegates}{\natplus^\star}
@@ -22,19 +58,19 @@ It is time to use monoidal theories for our desired use case: that of
     \) is a \emph{coarity} function.
 \end{definition}
 
-A particularly important signature is that of gate-level circuits, the most
-common level of abstraction for digital circuits.
+A particularly important signature, and one which we will turn to for the
+majority of examples in this thesis, is that of gate-level circuits.
 
 \begin{example}[Gate-level circuits]\label{ex:sig}
     The signature for \emph{gate-level circuits} is \(
         \belnapsignature = (
-            \belnapvalues,
-            \belnapnone,
+            \belnap,
+            \bot,
             \belnapgates,
             \belnaparity,
             \belnapcoarity
     )\), where \(
-        \belnapvalues := \{\belnapnone, \belnapfalse, \belnaptrue, \belnapboth\}
+        \belnapvalues := \{\bot, \belnapfalse, \belnaptrue, \top\}
     \), respectively representing \emph{no} signal, a \emph{false} signal, a
         \emph{true} signal and \emph{both} signals at once, \(
         \belnapgates := \{\andgate,\orgate,\notgate\}
@@ -48,7 +84,26 @@ common level of abstraction for digital circuits.
     \)
 \end{example}
 
+\begin{remark}
+    Using four values may come as a surprise to those expecting the usual
+    `true' and 'false' logical values.
+    This logical system is an old idea going back to
+    Belnap~\cite{belnap1977useful} who remarked that this is `how a computer
+    should think'.
+    Rather than just thinking about how much \emph{truth content} a value
+    carries, the four value system adds a notion of \emph{information content}:
+    the \(\bot\) value is no information at all (a disconnected wire), whereas
+    the \(\top\) value is both true and false information at once
+    (a short circuit).
+    This notion of information content will also come in very important when
+    defining the semantics of circuits in the upcoming sections.
+\end{remark}
+
 \section{Combinational circuits}
+
+Before diving straight into sequential circuits, we will define a category of
+\emph{combinational circuits}.
+These are circuits with no state; they compute \emph{functions} of their inputs.
 
 \begin{definition}[Combinational circuit generators]
     Given a circuit signature \(
@@ -67,16 +122,16 @@ common level of abstraction for digital circuits.
     \(\iltikzfig{strings/structure/comonoid/copy}[colour=comb]\),
     \(\iltikzfig{strings/structure/monoid/merge}[colour=comb]\), and
     \(\iltikzfig{strings/structure/comonoid/discard}[colour=comb]\).
-    We write \(\ccircsigma\) for the freely generated PROP
+    We write \(\ccircsigma\) for the freely generated bundled PROP
     \(\smc{\generators[\ccirc{}]}\).
 \end{definition}
 
-Rectangular light blue generators are \emph{gates} for each gate symbol in the
-signature \(\Sigma\).
+Each primitive symbol \(p \in \circuitsignaturegates\) has a corresponding
+generator in \(\ccircsigma\).
 The remaining generators are \emph{structural} generators for manipulating
 wires: these are present regardless of the signature.
 In order, they are for \emph{introducing} wires, \emph{forking}
-wires, \emph{joining} wires and \emph{stubbing} wires.
+wires, \emph{joining} wires and \emph{eliminating} wires.
 
 \begin{example}
     The gate generators of \(\ccirc{\belnapsignature}\) are \(
@@ -92,16 +147,17 @@ When drawing circuits, the coloured backgrounds of generators will often be
 omitted in the interests of clarity.
 Since the category is freely generated, morphisms are defined by
 juxtaposing the generators in a given signature sequentially or in parallel with
-each other, the symmetry \iltikzfig{strings/symmetric/symmetry}[colour=comb] and the
-identity \iltikzfig{strings/category/identity}[colour=comb].
+each other, the identity \iltikzfig{strings/category/identity}[colour=comb], and
+the symmetry \iltikzfig{strings/symmetric/symmetry}[colour=comb].
 Arbitrary combinational circuit morphisms defined in this way are drawn as light
-boxes \iltikzfig{circuits/components/circuits/f}[][f][comb][m][n].
+boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
 
 \begin{notation}\label{not:arbitrary-width-structure}
-    It is a simple exercise to define the structural generators, the identity
-    and symmetry on arbitrary bit inputs and outputs using the axioms of
-    symmetric monoidal categories.
-    In diagrams, these are drawn as their single-bit
+    The structural generators are only defined on single bits, but it is a
+    simple exercise to define them on arbitrary bit inputs and outputs using the
+    bundlers and axioms of symmetric monoidal categories.
+    \todo[inline]{Show the constructions}
+    To avoid cluttering diagrams, these are drawn as their single-bit
     counterparts:
     \[
         \iltikzfig{strings/structure/monoid/init}[colour=comb,obj=n]
@@ -111,10 +167,6 @@ boxes \iltikzfig{circuits/components/circuits/f}[][f][comb][m][n].
         \iltikzfig{strings/structure/monoid/merge}[colour=comb,obj=n]
         \quad
         \iltikzfig{strings/structure/comonoid/discard}[colour=comb,obj=n]
-        \quad
-        \iltikzfig{strings/category/identity}[colour=comb,obj=n]
-        \quad
-        \iltikzfig{strings/symmetric/symmetry}[colour=comb,obj1=m,obj2=n]
     \]
 \end{notation}
 
@@ -122,33 +174,11 @@ boxes \iltikzfig{circuits/components/circuits/f}[][f][comb][m][n].
 
 Combinational circuits compute functions of their inputs, but have no internal
 state.
-Real-world circuits often involve \emph{delay} and \emph{feedback}: these are
-known as \emph{sequential circuits}.
-To model feedback, extra structure must be added to the category of
-combinational circuits in the form of a \emph{trace}.
+This is all very well for doing simple calculations, but we have ascended far
+beyond primitive adding machines; we actually need to remember things!
+As we have mentioned earlier, circuits with state are called
+\emph{sequential circuits}.
 
-\begin{definition}[Symmetric traced monoidal category]
-    \cite{joyal1996traced}
-    A \emph{symmetric traced monoidal category}, often abbreviated as STMC, is a
-    symmetric monoidal category \(\mcc\) equipped with a family of functions
-    \(
-        \morph{
-            \trace{X}[A][B]{-}
-        }{
-            \mcc(X \tensor A, X \tensor B)
-        }{
-            \mcc(X, Y)
-        }
-    \) satisfying the axioms of STMCs:
-\end{definition}
-
-In string diagrams, the trace is represented by joining some of the
-inputs of a circuit to its outputs.
-
-\begin{center}
-    \(
-        \trace{x}[m][n]{\iltikzfig{strings/traced/trace-lhs}[box=f,colour=white,dom=A,cod=B,trace=X]}
-        \stackrel{\text{def}}{=}
-        \iltikzfig{strings/traced/trace-rhs}[box=f,colour=white,dom=A,cod=B,trace=X]
-    \)
-\end{center}
+Circuits gain state through a combination of \emph{delay} and \emph{feedback}.
+The latter means we need to shift from a vanilla symmetric monoidal category to
+a symmetric \emph{traced} monoidal category.
