@@ -170,6 +170,10 @@ boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
     \]
 \end{notation}
 
+\begin{example}[Half adder]
+    \todo[inline]{Do the half adder example}
+\end{example}
+
 \section{Sequential circuits}
 
 Combinational circuits compute functions of their inputs, but have no internal
@@ -182,3 +186,125 @@ As we have mentioned earlier, circuits with state are called
 Circuits gain state through a combination of \emph{delay} and \emph{feedback}.
 The latter means we need to shift from a vanilla symmetric monoidal category to
 a symmetric \emph{traced} monoidal category.
+
+\begin{definition}[Sequential circuits]
+    For a circuit signature \(\circuitsignature\) with value set \(\values\),
+    let \(\scircsigma\) be the STMC freely generated over the generators of
+    \(\ccircsigma\) along with new generators \(
+        \iltikzfig{circuits/components/values/vs}[val=v]
+    \) for each \(v \in \values \setminus \bullet\), and \(
+        \iltikzfig{circuits/components/waveforms/delay}
+    \).
+\end{definition}
+
+The two new types of generator are \emph{instantaneous values} and
+\emph{delays}.
+
+\begin{remark}
+    We will now provide some intuition behind these sequential components, but
+    don't worry, this is not yet a formal semantics!
+\end{remark}
+
+The first set of generators are \emph{instantaneous values} for each value in
+\(\values \setminus \bullet\).
+Value generators are intended to be interpreted as producing their value in the
+first cycle of execution, followed by producing the disconnected \(\bullet\)
+after that.
+This is why there is no \(\bullet\) value generator; instead it is a
+\emph{combinational} generator \(
+    \iltikzfig{strings/structure/monoid/init}[colour=comb]
+\) intended to always produce the \(\bullet\) value.
+
+\begin{notation}
+    Although \(
+        \iltikzfig{strings/structure/monoid/init}[colour=comb]
+    \) is itself not a sequential value, when we refer to an arbitrary `value'
+    \(
+        \iltikzfig{circuits/components/values/vs}[val=v]
+    \), \(v\) can be any value in \(\values\) including \(\bullet\).
+
+    For a word of values \(\listvar{v} \in \valuetuple{n}\) (again possibly
+    including \(\bullet\)), we may draw multiple value generators collapsed into
+    one as \(
+        \iltikzfig{circuits/components/values/vs}[val=\listvar{v},width=n]
+    \).
+    \todo[inline]{Draw the constructions}
+\end{notation}
+
+\begin{example}
+    The `values' of \(\scirc{\belnapsignature}\) are \(
+        \iltikzfig{strings/structure/monoid/init}[colour=comb]
+    \), \(
+        \iltikzfig{circuits/components/values/vs}[val=\belnapfalse]
+    \), \(
+        \iltikzfig{circuits/components/values/vs}[val=\belnaptrue]
+    \), \(
+        \iltikzfig{circuits/components/values/vs}[val=\top]
+    \); the first is a combinational generator and the latter three are
+    sequential.
+\end{example}
+
+The delay component is the opposite of a value; in the first cycle of execution
+it is intended to produce the \(\bullet\) value, but in future cycles it outputs
+the input it received in the previous cycle.
+
+\begin{remark}
+    While the mathematical interpretation of a delay is straightforward, the
+    physical aspect of a digital circuit it models is less clear.
+    An obvious interpretation could be that the delay models as D flipflop in
+    a clocked circuit, so the delay is one clock cycle.
+    A more subtle interpretation is the `minimum obervable duration'; in this
+    case the delay models inertial delay on wires up to some fixed precision.
+\end{remark}
+
+\begin{notation}
+    Like values, we can derive delay components for thicker wires, drawn like
+    \(
+        \iltikzfig{circuits/components/waveforms/delay}[width=n]
+    \).
+    \todo[inline]{Draw the construction}
+\end{notation}
+
+To distinguish them from combinational circuits, arbitrary sequential circuit
+morphisms are drawn as green boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
+
+We now have all the components for the excited reader to go off and build
+all the circuits they could possibly want.
+For those who need some inspiration, we provide a simple example.
+
+\begin{example}[SR latch]\label{ex:sr-latch}
+    A \(\norgate\) is the combination of an \(\orgate\) gate followed by a
+    \(\notgate\); it inverts the outputs of an \(\orgate\).
+    Syntactically it is constructed as \(
+        \iltikzfig{circuits/components/gates/nor}
+        :=
+        \iltikzfig{circuits/components/gates/nor-construct}
+    \).
+
+    \(\norgate\) gates are integral to a construction that one might come across
+    early on in an electronics textbook: the \emph{SR NOR latch}.
+    An SR NOR latch is one of the simplest registers; an example is illustrated
+    in \cref{fig:latch}.
+
+    SR NOR latches are used to hold state.
+    They have two inputs: Reset (\(\mathsf{R}\)) and Set (\(\mathsf{S}\)), and
+    two outputs \(\mathsf{Q}\) and \(\bar{\mathsf{Q}}\) which are always
+    negations of each other.
+    When Set receives a high signal, the \(\mathsf{Q}\) output is forced high,
+    and will remain as such even if the Set input stops being pulsed high.
+    It is only until the Reset input is pulse high that the \(\mathsf{Q}\)
+    output will return to low.
+    (It is illegal for both Set and Reset to be pulsed high simultaneously; this
+    issue is fixed in more complicated latches).
+
+    SR latches work because of delays in how gates and wires transmit signals;
+    one of the feedback lops between the two \(\norgate\) gates will `win'.
+    We can model this in \(\scircsigma\) by using a different number of delay
+    generators between the top and the bottom of the latch.
+    We have opted for just the one on the bottom half in our construction in
+    \cref{fig:latch}
+    because otherwise the upcoming examples become excessively complicated, but
+    any number would do, so long as the top and bottom differ!
+\end{example}
+
+\input{floats/sr-latch}
