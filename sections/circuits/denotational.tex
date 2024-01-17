@@ -64,14 +64,110 @@ constructed by combining the denotations of its components.
 
 With a simple example under our belt, we turn to our true goal: defining a
 denotational semantics for digital circuits.
-To make things easier for ourselves, we will examine combinational and
-sequential circuits individually.
+
+\subsection{Interpreting circuit components}
+
+Before diving straight into what the denotation of a particular circuit \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
+\) might be, we will first decide how to interpret the individual
+\emph{components} of a given circuit signature.
+This is crucial because a denotational semantics is defined
+\emph{compositionally}; eventually we will need to refer to the interpretations
+of particular components.
+
+First we consider the interpretation of the \emph{values} that flow through the
+wires in our circuits.
+Recall that in a circuit signature these are specified by a set \(\values\).
+In the denotational semantics, we need a bit more structure than this; values
+will need a notion of \emph{order}.
+
+\begin{definition}[Partially ordered set]
+    A \emph{partially ordered set}, or \emph{poset} for short, is a set \(A\)
+    equipped with a reflexive, antisymmetric, and transitive relation \(\leq\),
+    i.e.\
+    \begin{itemize}
+        \item for all \(a \in A\), \(a \leq a\);
+        \item for all \(a, b \in A\), if \(a \leq b\) and \(b \leq a\) then
+                \(a = b\); and
+        \item for all \(a, b, c \in A\), if \(a \leq b\) and \(b \leq c\) then
+                \(a \leq c\).
+    \end{itemize}
+\end{definition}
+
+To be more specific, values must be ordered by how much \emph{information} they
+contain.
+At the bottom of the order will be a value representing a complete \emph{lack}
+of information; this corresponds to the disconnected wire generator \(
+    \iltikzfig{strings/structure/monoid/init}[colour=comb]
+\).
+At the other end of the order will be a value representing \emph{every possible}
+piece of information; a `short circuit'.
+
+Mathematically-inclined readers (or partial order enjoyers) may have noticed
+that what we have just described is more than just a vanilla partial order, but
+in fact carries the structure of a \emph{lattice}.
+
+\begin{definition}
+    Given a poset \((A, \leq)\) and elements \(a, b\in A\), an
+    \emph{upper bound} is an element \(c\) such that \(a \leq c\) and
+    \(b \leq c\).
+    An element \(d \in A\) is called the \emph{least upper bound} (or `join'),
+    denoted \(a \vee b\), if it is an upper bound of \(a\) and \(b\), and for
+    all other upper bounds \(c\) of \(a\) and \(b\), \(d \leq c\).
+
+    Similarly, a \emph{lower bound} of \(a\) and \(b\) is an element \(c\) such
+    that \(c \leq a\) and \(c \leq b\), and an element \(d \in A\) is called the
+    \emph{greatest lower bound} (or `meet'), denoted \(a \wedge b\), if \(d\) is
+    a lower bound of \(a\) and \(b\) and for all otehr lower bounds \(c\) of
+    \(a\) and \(b\), \(c \leq d\).
+\end{definition}
+
+In general, the join and meet of a pair of elements in a poset need not exist.
+We are interested in the structures in which they \emph{always} exist.
 
 \begin{definition}[Lattice]
-    A \emph{lattice} is a poset equipped with binary operations
-    \(\ljoin\) (`join') and \(\lmeet\) (`meet') which distribute over each
-    other.
+    A \emph{lattice} is a poset \((A, \leq)\) in which each pair of elements
+    \(a,b \in A\) has a least upper bound and a greatest lower bound.
 \end{definition}
+
+By repeatedly taking the join of elements in a \emph{finite} lattice, one
+obtains its \emph{supremum} \(\top\), the greatest element.
+Conversely, by repeatedly taking the meet, one obtains its \emph{infimum}
+\(\bot\), the least element.
+
+\begin{example}
+    Let \(A = \{0,1,2\}\), and let \((\mcp A, \subseteq)\) be the poset defined
+    as the powerset of \(A\) ordered by subset inclusion.
+    This poset can be illustrated by the following \emph{Hasse diagram}, in
+    which a line going up from \(a\) to \(b\) indicates that \(a \leq b\).
+
+    \begin{center}
+        \begin{tikzcd}
+            & \{0,1,2\} & \\
+            \{0,1\} \arrow[dash]{ur} &
+            \{0,2\} \arrow[dash]{u} &
+            \{1,2\} \arrow[dash]{ul} \\
+            \{0\} \arrow[dash]{u} \arrow[dash]{ur} &
+            \{1\} \arrow[dash]{ul} \arrow[dash]{ur} &
+            \{2\} \arrow[dash]{ul} \arrow[dash]{u} \\
+            & \{\} \arrow[dash]{ul} \arrow[dash]{u} \arrow[dash]{ur} &
+        \end{tikzcd}
+    \end{center}
+
+    The diagram clearly illustrates the lattice structure on this poset: the
+    join is union and the meet is intersection.
+    Subsequently the supremum \(\top\) is the set \(A\) and the
+    infimum \(\bot\) is the empty set \(\{\}\).
+\end{example}
+
+Values in a circuit signature will be interpreted as elements of a finite
+lattice; now the concepts of no information and all information are formalised
+as the \(\bot\) and \(\top\) elements respectively.
+
+Next the primitives in the signature must be interpreted.
+Clearly they should be interpreted as functions, but no just any functions:
+these functions must respect the order on the value lattice.
+One should not be able to lose information by performing a computation!
 
 \begin{definition}
     Let \((A, \leq_A)\) and \((B, \leq_B)\) be partial orders.
@@ -79,35 +175,237 @@ sequential circuits individually.
     \(x \leq_A y\) if and only if \(f(x) \leq_B f(y)\).
 \end{definition}
 
+One more conditions on functions is that when all the inputs to a primitive are
+\(\bot\), then it should produce \(\bot\).
+We cannot produce information from nothing!
+
+\begin{definition}
+    Let \(A,B\) be finite lattices.
+    A function \(\morph{f}{A}{B}\) is \(\bot\)-preserving if \(f(\bot) = \bot\).
+\end{definition}
+
+Assigning interpretations to the combinational components of a circuit sets the
+stage for the entire denotational semantics.
+
+\begin{notation}
+    Given a set \(A\) and a word \(\listvar{v} \in \natplus^\star\) of
+    length \(n\), we write \(
+        A^{\listvar{v}}
+        :=
+        A^{\listvar{v}(0)}
+        \times
+        A^{\listvar{v}(1)}
+        \times
+        \dots
+        \times
+        A^{\listvar{v}(n-1)}
+    \).
+\end{notation}
+
 \begin{definition}[Interpretation]
     For a signature \(
         \signature = (
             \values, \bullet, \circuitsignaturegates, \circuitsignaturearity,
             \circuitsignaturecoarity
-    )\), an \emph{interpretation} of \(\signature\) is a tuple \(
-        \interpretation = (\ljoin, \lmeet, \gateinterpretation)
-    \) where \((\values, \ljoin, \lmeet)\) is a lattice with \(\bullet\) as the
+    )\), an \emph{interpretation} of
+    \(\signature\) is a tuple \((\sqsubseteq, \gateinterpretation)\) where
+    \((\values, \sqsubseteq)\) is a lattice with \(\bullet\) as the
     infimum, and \(\gateinterpretation\) maps each
     \(p \in \circuitsignaturegates\) to a \(\bot\)-preserving monotone function
     \(
         \valuetuple{\circuitsignaturearity(p)}
         \to
-        \valuetuple{\circuitsignaturearity(p)}
+        \valuetuple{\circuitsignaturecoarity(p)}
     \).
 \end{definition}
 
-\subsection{Combinational circuits}
+\begin{example}
+    Recall the Belnap signature \(
+        \belnapsignature = (
+            \belnapvalues, \bot, \belnapgates, \belnaparity, \belnapcoarity
+        )
+    \) from \cref{ex:belnap-signature}.
+    We assign a partial order \(\leq_\mathsf{B}\) to values in
+    \(\belnapvalues\) as follows:
 
-Recall that, in the real world, combinational circuits are effectively
-\emph{functions}; they always produce the same outputs given the same inputs.
-It therefore makes sense that the denotational semantics of combinational
-circuits to be functions.
+    \begin{center}
+        \begin{tikzcd}
+            & \top & \\
+            \belnapfalse \arrow[dash]{ur} & & \belnaptrue \arrow[dash]{ul} \\
+            & \bot \arrow[dash]{ul} \arrow[dash]{ur} &
+        \end{tikzcd}
+    \end{center}
 
-However, not \emph{all} functions can be modelled by combinational circuits;
-there
+    The gate interpretation \(\belnapgateinterpretation\) has action \(
+        \andgate \mapsto \land, \orgate \mapsto \lor, \notgate \mapsto \neg
+    \) where \(\land\), \(\lor\) and \(\neg\) are defined by the following
+    truth tables~\cite{belnap1977useful}:
+
+    \begin{center}
+        \begin{tabular}{|c|cccc|}
+            \hline
+            \(\land\) & \(\bot\) & \(\belnapfalse\) & \(\belnaptrue\) & \(\top\) \\
+            \hline
+            \(\bot\)  & \(\bot\) & \(\belnapfalse\) & \(\bot\) & \(\belnapfalse\) \\
+            \(\belnapfalse\) & \(\belnapfalse\) & \(\belnapfalse\) & \(\belnapfalse\) & \(\belnapfalse\) \\
+            \(\belnaptrue\) & \(\bot\) & \(\belnapfalse\) & \(\belnaptrue\) & \(\top\) \\
+            \(\top\) & \(\belnapfalse\) & \(\belnapfalse\) & \(\top\) & \(\top\) \\
+            \hline
+        \end{tabular}
+        \quad
+        \begin{tabular}{|c|cccc|}
+            \hline
+            \(\lor\) & \(\bot\) & \(\belnapfalse\) & \(\belnaptrue\) & \(\top\) \\
+            \hline
+            \(\bot\)  & \(\bot\) & \(\bot\) & \(\belnaptrue\) & \(\belnaptrue\) \\
+            \(\belnapfalse\) & \(\bot\) & \(\belnapfalse\) & \(\belnaptrue\) & \(\top\) \\
+            \(\belnaptrue\) & \(\belnaptrue\) & \(\belnaptrue\) & \(\belnaptrue\) & \(\belnaptrue\) \\
+            \(\top\) & \(\belnaptrue\) & \(\top\) & \(\belnaptrue\) & \(\top\) \\
+            \hline
+        \end{tabular}
+        \quad
+        \begin{tabular}{|c|c|}
+            \hline
+            \(\neg\) & \\
+            \hline
+            \(\bot\) & \(\bot\) \\
+            \(\belnaptrue\) & \(\belnapfalse\) \\
+            \(\belnapfalse\) & \(\belnaptrue\) \\
+            \(\top\) & \(\top\) \\
+            \hline
+        \end{tabular}
+    \end{center}
+
+    The Belnap interpretation is then \(
+        (\leq_\mathsf{B}, \belnapgateinterpretation)
+    \).
+\end{example}
+\subsection{Denotational semantics of combinational circuits}
+
+The semantic domain for \emph{combinational} circuits is straightforward: each
+circuit maps to a monotone function.
+
+\begin{definition}
+    Let \(\funci\) be the \(\natplus\)-coloured PROP in which the morphisms
+    \(\listvar{m} \to \listvar{n}\) are the monotone \(\bot\)-preserving
+    functions \(\valuetuple{\listvar{m}} \to \valuetuple{\listvar{n}}\).
+\end{definition}
+
+\begin{definition}
+    Let \(\morph{\circuittofunci}{\ccircsigma}{\funci}\) be the coloured PROP
+    morphism with action defined as%
+    \vspace{-\abovedisplayskip}
+    % \vspace{-\parskip}
+    \begin{center}
+        \begin{minipage}{0.32\textwidth}
+            \centering
+            \begin{align*}
+                \circuittofunci[
+                    \iltikzfig{strings/structure/comonoid/copy}
+                ]
+                &:=
+                (v) \mapsto (v, v)
+                \\
+                \circuittofunci[
+                    \iltikzfig{strings/structure/monoid/merge}
+                ]
+                &:=
+                (v, w) \mapsto v \sqcup w
+            \end{align*}
+        \end{minipage}
+        \quad
+        \begin{minipage}{0.25\textwidth}
+            \centering
+            \begin{align*}
+                \circuittofunci[
+                    \iltikzfig{strings/structure/comonoid/discard}
+                ]
+                &:=
+                (v) \mapsto ()
+                \\
+                \circuittofunci[
+                    \iltikzfig{strings/structure/monoid/init}
+                ]
+                &:=
+                () \mapsto \bot
+            \end{align*}
+        \end{minipage}
+        \quad
+        \begin{minipage}{0.25\textwidth}
+            \centering
+            \vspace{1.5em}
+            \(\circuittofunci[
+                \iltikzfig{circuits/components/gates/gate}[gate=p,dom=\listvar{m},cod=\listvar{n}]
+            ]
+            :=
+            \gateinterpretation[p]
+            \)
+        \end{minipage}
+    \end{center}
+\end{definition}
+
+\begin{remark}
+    One might wonder why the fork and the join have different semantics, as they
+    would be physically realised by the same wiring.
+    This is because digital circuits have a notion of \emph{causality}: outputs
+    can only connect to inputs.
+    This is why the semantics of combinational circuits is \emph{functions} and
+    not \emph{relations}.
+
+    In real life one could force together two digital devices, but this might
+    lead to undefined behaviour in the digital realm.
+    This is reflected in the semantics by the use of the join; for example, in
+    the Belnap interpretation if one tries to join together \(\belnaptrue\) and
+    \(\belnapfalse\) then the overspecified \(\top\) value is produced.
+\end{remark}
+
+\subsection{Denotational semantics of sequential circuits}
+
+As one might expect, sequential circuits are slightly trickier to deal with.
+In a combinational circuit, the output only depends on the inputs at the current
+cycle, but for sequential circuits inputs can affect outputs many cycles after
+they occur.
+
+We therefore have to reason with \emph{streams} (infinite sequences) of inputs
+rather than individual values.
+
+\begin{notation}
+    Given a set \(A\), we denote the set of streams (infinite sequences) of
+    \(A\) by \(\stream{A}\).
+    As a stream can equivalently be viewed as a function \(\nat \to A\), we
+    write \(\sigma(i) \in A\) for the \(i\)-th element of stream
+    \(\sigma \in \stream{A}\).
+    Individual streams are written as \(
+        \sigma \in \stream{A}
+        :=
+        \sigma(0) \streamcons \sigma(1) \streamcons
+        \sigma(2) \streamcons \cdots
+    \).
+\end{notation}
+
+\begin{definition}[Operations on streams]
+    Given a stream \(\sigma \in \stream{A}\), its \emph{initial value}
+    \(\streaminit(\sigma) \in A\) is defined as \(\sigma \mapsto \sigma(0)\)
+    and its \emph{stream derivative} \(\streamderv(\sigma) \in \stream{A}\) is
+    defined as \(\sigma \mapsto (i \mapsto \sigma(i+1))\).
+\end{definition}
+
+\begin{notation}
+    For a stream \(\sigma\) with initial value \(a\) and stream derivative
+    \(\tau\) we write it as \(\sigma := a \streamcons \tau\).
+\end{notation}
+
+Streams will serve as our inputs and outputs.
+The denotations of sequential circuits themselves will therefore be
+\emph{stream functions}, which consume and produce streams.
+However, just like with functions we cannot just claim that all streams are the
+denotations of sequential circuits!
+
+\begin{definition}[Causal stream function~\cite{rutten2006algebraic}]
+    A stream function \(\morph{f}{\stream{A}}{\stream{B}}\) is \emph{causal} if
+    for all \(i \in \nat\) and all \(\sigma,\tau \in \stream{M}\),
+    \(f(\sigma(i)) = f(\tau(i))\) whenever \(\sigma(j) = \tau(j)\) for all
+    \(j \leq i\).
+\end{definition}
 
 
-
-
-
-\subsection{Sequential circuits}
