@@ -53,12 +53,17 @@ Strachey~\cite{scott1970outline,scott1971mathematical}.
     \) and \(
         \llbracket{mul \, e_1 \, e_2}\rrbracket
         = \llbracket{e_1}\rrbracket \cdot \llbracket{e_2}\rrbracket
-    \) respecitvely.
+    \) respectively.
 \end{example}
 
 The above example illustrates quite nicely how a denotational semantics should
 be \emph{compositional}; the denotations of a composite term should be
 constructed by combining the denotations of its components.
+
+\begin{remark}
+    The content of this section is a refinement and expansion
+    of~\cite[Section 3]{ghica2023compositional}.
+\end{remark}
 
 \section{Denotational semantics of digital circuits}
 
@@ -118,7 +123,7 @@ in fact carries the structure of a \emph{lattice}.
     Similarly, a \emph{lower bound} of \(a\) and \(b\) is an element \(c\) such
     that \(c \leq a\) and \(c \leq b\), and an element \(d \in A\) is called the
     \emph{greatest lower bound} (or `meet'), denoted \(a \wedge b\), if \(d\) is
-    a lower bound of \(a\) and \(b\) and for all otehr lower bounds \(c\) of
+    a lower bound of \(a\) and \(b\) and for all other lower bounds \(c\) of
     \(a\) and \(b\), \(c \leq d\).
 \end{definition}
 
@@ -135,7 +140,7 @@ obtains its \emph{supremum} \(\top\), the greatest element.
 Conversely, by repeatedly taking the meet, one obtains its \emph{infimum}
 \(\bot\), the least element.
 
-\begin{example}
+\begin{example}\label{ex:powerset-lattice}
     Let \(A = \{0,1,2\}\), and let \((\mcp A, \subseteq)\) be the poset defined
     as the powerset of \(A\) ordered by subset inclusion.
     This poset can be illustrated by the following \emph{Hasse diagram}, in
@@ -180,8 +185,10 @@ One more conditions on functions is that when all the inputs to a primitive are
 We cannot produce information from nothing!
 
 \begin{definition}
-    Let \(A,B\) be finite lattices.
-    A function \(\morph{f}{A}{B}\) is \(\bot\)-preserving if \(f(\bot) = \bot\).
+    Let \(A,B\) be finite lattices, where \(\bot_A\) is the infimum of \(A\) and
+    \(\bot_B\) is the infimum of \(B\).
+    A function \(\morph{f}{A}{B}\) is \(\bot\)-preserving if
+    \(f(\bot_A) = \bot_B\).
 \end{definition}
 
 Assigning interpretations to the combinational components of a circuit sets the
@@ -201,6 +208,30 @@ stage for the entire denotational semantics.
         A^{\listvar{v}(n-1)}
     \).
 \end{notation}
+
+\begin{remark}
+    If \(A\) is a lattice, then for any \(n \in \nat\), \(A^n\) is also a
+    lattice by comparing elements pointwise.
+    The \(\bot\) is then the word containing \(n\) copies of the \(\bot\)
+    element in \(A\), and the same for the \(\top\) element.
+
+    Recall the set \(A := \{0,1,2\}\) from
+    \cref{ex:powerset-lattice} and the lattice structure on its powerset
+    \(\mathcal{P}A\).
+    This induces an ordering on \((\mathcal{P}A)^2\):
+    \(\{0,1\}\{1\} \leq \{0,1,2\}\{1,2\}\) because \(\{0,1\} \leq \{0,1,2\}\)
+    and \(\{1\} \leq \{1,2\}\), and conversely
+    \(\{0,1\}\{1\} \not\leq \{0\}\{1,2\}\) because \(\{0,1\} \not\leq \{0\}\).
+    The join and meet are computed by taking the join and meet of each
+    component: \(
+        \{0,1\}\{1\} \vee \{0,1,2\}\{1,2\} = \{0,1,2\}\{1,2\}
+    \) and \(
+        \{0,1\}\{1\} \vee \{0\}\{1,2\} = \{0,1\}\{1,2\}
+    \).
+
+    For a word \(\listvar{n} \in \natplus^\star\), a lattice
+    structure on \(A^{\listvar{n}}\) is induced in the same way.
+\end{remark}
 
 \begin{definition}[Interpretation]
     For a signature \(
@@ -383,7 +414,7 @@ rather than individual values.
     \).
 \end{notation}
 
-\begin{definition}[Operations on streams]
+\begin{definition}[Operations on streams]\label{def:stream-operations}
     Given a stream \(\sigma \in \stream{A}\), its \emph{initial value}
     \(\streaminit(\sigma) \in A\) is defined as \(\sigma \mapsto \sigma(0)\)
     and its \emph{stream derivative} \(\streamderv(\sigma) \in \stream{A}\) is
@@ -403,9 +434,145 @@ denotations of sequential circuits!
 
 \begin{definition}[Causal stream function~\cite{rutten2006algebraic}]
     A stream function \(\morph{f}{\stream{A}}{\stream{B}}\) is \emph{causal} if
-    for all \(i \in \nat\) and all \(\sigma,\tau \in \stream{M}\),
-    \(f(\sigma(i)) = f(\tau(i))\) whenever \(\sigma(j) = \tau(j)\) for all
-    \(j \leq i\).
+    for all \(i \in \nat\), \(j \leq i\), and \(\sigma,\tau \in \stream{M}\),
+    \(\sigma(j) = \tau(j)\) implies that \(f(\sigma)(i) = f(\tau)(i)\).
 \end{definition}
 
+Casuality is a form of continuity; a causal stream function is a stream function
+in which the \(i\)-th element of its output stream only depends on elements
+\(0\) through \(i\) inclusive of the input stream; it cannot look into the
+future!
 
+A neat consequence of causality is that it enables us to lift the stream
+operations of initial value and stream derivative to stream \emph{functions}.
+
+\begin{definition}[Initial output~\cite{rutten2006algebraic}]
+    For a causal stream function \(\morph{f}{\stream{A}}{\stream{B}}\) and
+    \(a \in A\), the \emph{initial output of \(f\) on input \(a\)} is
+    \(\initialoutput{f}{a} := \streaminit(f(a \streamcons \sigma))\) for an
+    arbitrary \(\sigma \in \stream{A}\).
+\end{definition}
+
+Since \(f\) is causal, the stream \(\sigma\) in the definition of initial
+output truly is arbitrary; the \(\streaminit\) function only depends on the
+first element of the stream.
+
+\begin{definition}[Functional stream derivative~\cite{rutten2006algebraic}]
+    For a causal stream function \(\morph{f}{\stream{A}}{\stream{B}}\) and
+    \(a \in A\), the
+    \emph{functional stream derivative of \(f\) on input \(a\)} is the
+    stream function \(
+        \streamderivative{f}{a}
+        :=
+        \sigma \mapsto \streamderv(f(a \streamcons \sigma))
+    \).
+\end{definition}
+
+The functional stream derivative \(\streamderivative{f}{a}\) is a new stream
+function which acts as \(f\) would `had it seen \(a\) first'.
+
+\begin{remark}
+    One intuitive way to view stream functions is to think of them as the states
+    of some Mealy machine; the initial output is the output given some input,
+    and the functional stream derivative is the transition to a new state.
+    As with most things in mathematics, this is no coincidence; there is a
+    homomorphism from any Mealy machine to a stream function.
+    But we're getting ahead of ourselves; more on that later.
+\end{remark}
+
+The functional stream derivative, and indeed the above remark, leads us to the
+next property of denotations of sequential circuits.
+Although they may have infinitely many inputs and outputs, circuits themselves
+are built from a finite number of components.
+This means they cannot specify infinite \emph{behaviour}.
+
+\begin{notation}
+    Given a finite word \(\listvar{a} \in \freemon{A}\), we abuse notation
+    somewhat and write \(\streamderivative{f}{\listvar{a}}\) for the repeated
+    application of the functional stream derivative for the elements of
+    \(\listvar{a}\), i.e.\ \(
+        \streamderivative{f}{\varepsilon} := f
+    \) and \(
+        \streamderivative{f}{a \streamcons \listvar{b}} :=
+        \streamderivative{(\streamderivative{f}{a})}{\listvar{b}}
+    \).
+\end{notation}
+
+\begin{definition}
+    Given a stream function \(\morph{f}{\stream{A}}{\stream{B}}\), we say it is
+    \emph{finitely specified} if the set \(\{
+        \streamderivative{f}{\listvar{a}} \,|\, \listvar{a} \in \freemon{A}
+    \}\) is finite.
+\end{definition}
+
+The final condition arises since the components of circuits are monotone.
+To equip streams with a similar notion, we must set an order on them.
+
+\begin{notation}
+    For a poset \(A\) and streams \(\sigma,\tau \in \stream{A}\), we say that
+    \(\sigma \leq_{\stream{A}} \tau\) if \(\sigma(i) \leq_A \tau(i)\) for all
+    \(i \in \nat\).
+\end{notation}
+
+Monotonicity of stream functions is then defined just like monotonity for normal
+functions.
+
+This completes the trio of properties we need to express the semantics of
+sequential circuits as stream functions.
+To this aim, we will now asssemble them into a \(\natplus\)-coloured PROP.
+
+\begin{lemma}\label{lem:causality-preserved}
+    Causality is preserved by composition and tensor product.
+\end{lemma}
+\begin{proof}
+    If the \(i\)-th element of two stream functions \(f\) and \(g\) only depends
+    on the first \(i+1\) elements of the input, then so will their composition.
+\end{proof}
+
+\begin{lemma}\label{lem:finitely-specified-preserved}
+    Being finitely specified is preserved by composition and tensor product.
+\end{lemma}
+\begin{proof}
+    For finitely many stream derivatives, both the composition and product of
+    two stream functions \(f\) and \(g\), the largest the set of stream
+    derivatives could be is the product of stream derivatives of \(f\) and
+    \(g\), so this will also be finite.
+\end{proof}
+
+\begin{lemma}\label{lem:monotonicity-preserved}
+    Monotonicity is preserved by composition and tensor product.
+\end{lemma}
+\begin{proof}
+    The composition and product of any monotone function is monotone.
+\end{proof}
+
+Since , then tables
+
+\begin{notation}
+    Given stream functions \(\sigma \in A^m\) and \(\tau \in A^n\), we write
+    \(\sigma\tau \in A^{m+n}\) for their pointwise concatenation, i.e\
+    \((\sigma\tau)(i) = \sigma(i)\tau(i)\).
+\end{notation}
+
+\begin{proposition}
+    There is a bundled \(\natplus\)-coloured PROP \(\streami\) where morphisms
+    \(\listvar{m} \to \listvar{n}\) are the causal, finitely specified and
+    monotone stream functions \(
+        \valuetuplestream{\listvar{m}} \to \valuetuplestream{\listvar{n}}
+    \).
+\end{proposition}
+\begin{proof}
+    Identity is the identity function, the symmetry swaps streams, composition
+    is function composition, tensor is product, and the bundlers and splitters
+    are the components of the isomorphism \(
+        (\stream{\values})^{\listvar{m}}
+        \cong
+        (\valuetuplestream{\listvar{m}})
+    \).
+
+    As these constructs satisfy the categorical axioms, and as composition and
+    tensor preserve causality (\cref{lem:causality-preserved}),
+    finite specification (\cref{lem:finitely-specified-preserved}),
+    and monotonicity (\cref{lem:monotonicity-preserved}), this data defines a
+    bundled \(\natplus\)-coloured PROP.
+\end{proof}
