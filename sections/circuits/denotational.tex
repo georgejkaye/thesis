@@ -606,6 +606,10 @@ A trace on \(\streami\) can now be defined in terms of a least fixed point.
     is a trace on \(\streami\).
 \end{proposition}
 \begin{proof}
+    To show this, we must first show that
+    \(\sigma \mapsto \proj{1}\left(f(\mu_f(\sigma)\sigma)\right)\) is in
+    \(\streami\): it is causal, finitely specified, and monotone.
+
     Since \(f\) is a morphism of \(\streami\), it has finitely many stream
     derivatives.
     For each stream derivative \(\streamderivative{f}{\listvar{w}}\), we define
@@ -625,10 +629,12 @@ A trace on \(\streami\) can now be defined in terms of a least fixed point.
     Note that each of these functions are causal and monotone, because they are
     constructed from pieces that are causal and monotone.
 
+    In particular, \(\mu_f(\sigma)\) is the least fixed point of
+    \(\widehat{f_\epsilon}\left((-)\sigma\right)\).
     Using the Kleene fixed point theorem, the least fixed point of
     \(\widehat{f}((-)\sigma)\) can be obtained by composing
     \(\widehat{f}((-)\sigma)\) repeatedly with itself.
-    In particular, \(
+    This means that \(
         \mu_f(\sigma)
         =
         \bigsqcup_{k \in \nat} \widehat{f^k}(\bot^\omega,\sigma)
@@ -638,58 +644,85 @@ A trace on \(\streami\) can now be defined in terms of a least fixed point.
         =
         \widehat{f}\left(\left(\widehat{f^{k}}(\sigma, \tau)\right)\sigma\right)
     \).
-    That the mapping \(\sigma \mapsto \mu_f(\sigma)\) is causal and monotone is
+    That the mapping \(\mu_f\) is causal and monotone is
     straightforward: each of the functions in the join is causal and monotone,
     and join preserves these properties.
     It remains to show this mapping has finitely many stream derivatives.
 
-    The set \(\{\widehat{f_w} \,|\, w \in (\valuetuple{\listvar{xm}})^\star\}\)
-    is a finite subset of the poset
-    \(\valuetuplestream{x+m} \to \valuetuplestream{x}\) ordered under
-    \(\stateorder\).
+    When equipped with \(\stateorder\), the set of functions
+    \(\valuetuplestream{\listvar{xm}} \to \valuetuplestream{\listvar{x}}\)
+    is a poset, of which
+    \(\{\widehat{f_w} \,|\, w \in (\valuetuple{\listvar{xm}})^\star\}\)
+    is a finite subset.
     Restricting the ordering \(\stateorder\) to this set yields a finite poset.
     Since this poset is finite, the set of strictly increasing sequences in this
     poset is also finite.
-    We exhibit a surjection from the set of strictly increasing sequences in
-    this poset to stream derivatives of \(\mu_f\).
+    We will now demonstrate a relationship between these sequences and stream
+    derivatives of \(\mu_f\).
 
     Suppose \(
-        S = \widehat{f_{w_0}} \prec \widehat{f_{w_1}} \prec \cdots \prec
-            \widehat{f_{w_{\ell-1}}}
+        S = \widehat{f_{\,\listvar{w_0}}} \prec \widehat{f_{\,\listvar{w_1}}} \prec
+            \cdots \prec \widehat{f_{\,\listvar{w_{\ell-1}}}}
     \) is a strictly increasing sequence of length \(\ell\) in the set of stream
     functions \(
         \{\widehat{f_w} \,|\, w \in (\valuetuple{\listvar{xm}})^\star\}
     \).
     We define a function \(
         \morph{g_S}{
-            \valuetuplestream{\listvar{x}}
+            \valuetuplestream{\listvar{m}}
         }{
             \valuetuplestream{\listvar{x}}
         }
     \) as \(
-        (\sigma) \mapsto \bigsqcup_{k \in \nat} g_k(\bot^\omega\sigma)
+        (\sigma) \mapsto \bigsqcup_{k \in \nat} g_k(\sigma)
     \) where \[
-        g_k(\tau\sigma) =
+        g_k(\sigma) =
         \begin{cases}
-            \tau & \text{ if } k = 0 \\
-            \widehat{f_{w_k}}(\left(g_{k-1}(\tau\sigma)\right)\sigma) & \text{ if } 1 \leq k \leq \ell \\
-            \widehat{f_{w_\ell}}(\left(g_{k-1}(\tau\sigma)\right)\sigma) & \text{ if } \ell < k
+            \bot^\omega & \text{ if } k = 0 \\
+            \widehat{f_{\,\listvar{w_k}}}(\left(g_{k-1}(\sigma)\right)\sigma) & \text{ if } 1 \leq k \leq \ell \\
+            \widehat{f_{\,\listvar{w_{\ell-1}}}}(\left(g_{k-1}(\sigma)\right)\sigma) & \text{ if } \ell < k
         \end{cases}.
     \]
-    Note \(\mu_f\) is \(g_S\) where \(S\) is the one-item sequence
-    \(\widehat{f}\).
-    We show the set of functions \(
-        \{g_S \,|\, S \text{ a strictly increasing sequence}\}
-    \) is closed under stream derivative, and so \(\mu_f\) has finitely many
-    stream derivatives.
+    Let the set \(G \coloneqq \{
+        g_S \,|\, S \text{ is a strictly increasing sequence}
+    \}\).
+    When \(S\) is set to the one-item sequence \(\widehat{f}\), \(g_S\) is
+    \(\mu_f\), so \(\mu_f \in G\).
+    As \(G\) is finite, this means that if \(G\) is closed under stream
+    derivative, \(\mu_f\) has finitely many stream derivatives.
+    Any element of \(G\) is either \(\bot^\omega\) or has the form \(
+        \sigma
+        \mapsto
+        \widehat{\streamderivative{f}{\,\listvar{w}}}(g_k(\sigma)\sigma)
+    \) for some \(\sigma \in \valuetuplestream{\listvar{m}}\) and
+    \(k > 0\).
+    As \(\bot^\omega\) is its own stream derivative, we need to show that
+    applying stream derivative to the latter produces another element of \(G\).
     \begin{align*}
-        \streamderivative{(\widehat{\streamderivative{f}{\listvar{w}}})}{ab}(\tau\sigma)
-            &= \streamderv(\widehat{f_w}(a::\sigma, b::\tau))\\
-            &= \streamderv(\proj{0}(\partial_w f((b::\tau) \concat (a::\sigma)))) \\
-            &= \proj{0}(\streamderv(\partial_w f((b\concat a)::(\tau\concat\sigma)))) \\
-            &= \proj{0}(\partial_{b\concat a}\partial_w f(\tau\concat\sigma))\\
-            &= \proj{0}(\partial_{(b\concat a)w} f(\tau\concat\sigma))
+        \streamderivative{\sigma \mapsto \left(\widehat{\streamderivative{f}{\, \listvar{w_k}}}(\left(g_{k-1}(\tau\sigma)\right)\sigma)\right)}{\listvar{ab}}
+            &= \sigma \mapsto \streamderv\left(\widehat{\streamderivative{f}{\, \listvar{w_k}}}(\listvar{ab} \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right) \\
+            &= \sigma \mapsto \streamderv\left(\proj{0}\left(\streamderivative{f}{\, \listvar{w_k}}(\listvar{ab} \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\right) \\
+            &= \sigma \mapsto \proj{0}\left(\streamderv\left(\streamderivative{f}{\, \listvar{w_k}}(\listvar{ab} \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\right) \\
+            &= \sigma \mapsto \proj{0}\left(\streamderv\left(\streamderivative{f}{\, \listvar{w_k}}(\listvar{ab} \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\right)
+            % &= \streamderv\left(\proj{0}\left(f_{\, \listvar{w_k}}(ab \streamcons \left(g_{k-1}(\tau\sigma)\right)\sigma)\right)\right) \\
+            % &= \proj{0}\left(\streamderv\left(f_{\, \listvar{w_k}}(ab \streamcons \left(g_{k-1}(\tau\sigma)\right)\sigma)\right)\right) \\
+            % &= \proj{0}\left(\streamderivative{\left(f_{\, \listvar{w_k}}(\left(g_{k-1}(\tau\sigma)\right)\sigma)\right)}{ab}\right) \\
+            % &= \proj{0}\left(\streamderivative{\left(f_{\, \listvar{w_k}}(\left(g_{k-1}(\tau\sigma)\right)\sigma)\right)}{ab}\right)
+        % \streamderivative{(\widehat{\streamderivative{f}{\listvar{w}}})}{ab}(\tau\sigma)
+        %     &= \streamderv\left(\widehat{\streamderivative{f}{\listvar{w}}}((ab \streamcons \tau\sigma))\right) \\
+        %     &= \streamderv\left(\proj{0}\left(\streamderivative{f}{\listvar{w}}(ab \streamcons \tau\sigma)\right)\right) \\
+        %     &= \proj{0}\left(\streamderv\left(\streamderivative{f}{\listvar{w}}(ab \streamcons \tau\sigma)\right)\right) \\
+        %     &= \proj{0}\left(\streamderivative{\streamderivative{f}{\listvar{w}}(\tau\sigma)}{ab}\right) \\
+        %     &= \proj{0}\left(\streamderivative{f}{ab \streamcons \listvar{w}}(\tau\sigma)\right) \\
+        %     &= \widehat{\streamderivative{f}{ab \streamcons \listvar{w}}}(\tau\sigma)
     \end{align*}
+    % There are finitely many functions \(
+    %     \widehat{\streamderivative{f}{ab \streamcons \listvar{w}}}(\tau\sigma)
+    % \), so the set of
+
+    As \(\proj{0}\left(\streamderivative{f}{ab \streamcons \listvar{w}}\right)\)
+    is a stream derivative of \(f\) and \(f\) has
     This means that \(\sigma \mapsto \proj{1}(f(\mu_f(\sigma)\sigma))\) lands
     in \(\streami\), so it is a valid trace.
 \end{proof}
+\footnotetext{The original proof idea comes from David Sprunger.}
