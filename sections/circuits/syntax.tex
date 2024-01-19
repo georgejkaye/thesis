@@ -75,17 +75,17 @@ majority of examples in this thesis, is that of gate-level circuits.
             \belnaparity,
             \belnapcoarity
     )\), where \(
-        \belnapvalues := \{\bot, \belnapfalse, \belnaptrue, \top\}
+        \belnapvalues \coloneqq \{\bot, \belnapfalse, \belnaptrue, \top\}
     \), respectively representing \emph{no} signal, a \emph{false} signal, a
         \emph{true} signal and \emph{both} signals at once, \(
-        \belnapgates := \{\andgate,\orgate,\notgate\}
+        \belnapgates \coloneqq \{\andgate,\orgate,\notgate\}
     \), \(
-        \belnaparity :=
+        \belnaparity \coloneqq
             \andgate \mapsto [1,1],
             \orgate \mapsto [1,1],
             \notgate \mapsto [1]
     \) and \(
-        \belnapcoarity := - \mapsto [1],
+        \belnapcoarity \coloneqq - \mapsto [1],
     \)
 \end{example}
 
@@ -282,7 +282,7 @@ For those who need some inspiration, we provide a simple example.
     \(\notgate\); it inverts the outputs of an \(\orgate\).
     Syntactically it is constructed as \(
         \iltikzfig{circuits/components/gates/nor}
-        :=
+        \coloneqq
         \iltikzfig{circuits/components/gates/nor-construct}
     \).
 

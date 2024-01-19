@@ -23,9 +23,9 @@ in which all of the equations are identified in this way.
     Given a category \(\mathbf{C}\) and a set of equations \(\mce\) between
     morphisms in \(\mathbf{C}\) with the same source and target, the
     \emph{quotient category} \(\mathbf{C} / \mce\) is the category in which
-    \(\ob{(\mathbf{C} / \mce)} := \ob{\mathbf{C}}\) and \(
+    \(\ob{(\mathbf{C} / \mce)} \coloneqq \ob{\mathbf{C}}\) and \(
             \mor{(\mathbf{C} / \mce)}{X}{Y}
-            :=
+            \coloneqq
             \mor{\mathbf{C}}{X}{Y} / \mce
     \): i.e.\ morphisms are the \emph{equivalence classes} of morphisms
     modulo \(\mce\).
@@ -33,7 +33,7 @@ in which all of the equations are identified in this way.
 
 \begin{definition}
     Given a monoidal theory \((\generators, \equations)\), let
-    \(\smc{\generators, \equations} := \smc{\generators} / \equations\).
+    \(\smc{\generators, \equations} \coloneqq \smc{\generators} / \equations\).
 \end{definition}
 
 Note that when \(\equations\) is empty,
@@ -49,7 +49,7 @@ One such structure is that of \emph{commutative monoids}.
     \emph{commutative monoids} is \(
         (\generators[\cmon], \equations[\cmon])
     \), where \(
-        \generators[\cmon] := \{
+        \generators[\cmon] \coloneqq \{
             \iltikzfig{strings/structure/monoid/merge}[colour=white],
             \iltikzfig{strings/structure/monoid/init}[colour=white]
         \}
@@ -74,7 +74,7 @@ One such structure is that of \emph{commutative monoids}.
         \quad
         \text{(commutativity)}
     \end{gather*}
-    We write \(\cmon := \smc{\generators[\cmon], \equations[\cmon]}\).
+    We write \(\cmon \coloneqq \smc{\generators[\cmon], \equations[\cmon]}\).
 \end{definition}
 
 The equations describe the properties of the multiplication: it is unital with

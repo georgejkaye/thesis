@@ -8,7 +8,7 @@ must be specified.
     Given a set \(X\), the set of lists of elements of \(X\) is denoted
     \(\freemon{X}\).
     Lists are written \([x_0, x_1, x_2, \cdots, x_{n-1}]\); the brackets around
-    single element lists may be dropped when clear from context \(x := [x]\);
+    single element lists may be dropped when clear from context \(x \coloneqq [x]\);
     and variables representing arbitrary lists are generally written with an
     overline \(
         \listvar{x}, \listvar{y}, \listvar{z}... \in \freemon{X}
@@ -119,30 +119,30 @@ subterms in sequence or parallel.
 
 \begin{notation}[Composite identities]\cref{not:composite-identities}
     Identities for lists of wires are defined inductively as \begin{gather*}
-        \id[\varepsilon] := \id[0]
+        \id[\varepsilon] \coloneqq \id[0]
         \quad
         \id[n^\prime \streamcons \overline{n}]
-        :=
+        \coloneqq
         \id[n^\prime] \tensor \id[\overline{n}]
     \end{gather*}
 \end{notation}
 \begin{notation}[Composite symmetries]\cref{not:composite-symmetries}
     Symmetries for lists of wires are defined inductively as \begin{gather*}
         \swap{\varepsilon}{\listvar{n}}
-        :=
+        \coloneqq
         \id[\listvar{n}]
         \quad
         \swap{\varepsilon}{\listvar{n}}
-        := \id[\listvar{n}]
+        \coloneqq \id[\listvar{n}]
         \\
         \swap{m}{n^\prime \streamcons \listvar{n}}
-        :=
+        \coloneqq
         \swap{m}{n^\prime} \tensor \id[\listvar{n}]
         \seq
         \id[y^\prime] \tensor \swap{m}{\listvar{n}}
         \quad
         \swap{m^\prime \streamcons \listvar{m}}{\listvar{n}}
-        :=
+        \coloneqq
         \id[m^\prime] \tensor \swap{\listvar{m}}{\listvar{n}}
         \seq
         \swap{[m^\prime]}{\listvar{n}} \tensor \id[\listvar{m}]

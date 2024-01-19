@@ -80,7 +80,7 @@ Using commutative diagrams suggests another notation for composition.
 
 \begin{notation}
     \emph{Diagrammatic order} composition is written as
-    \(f \seq g := g \circ f\).
+    \(f \seq g \coloneqq g \circ f\).
 \end{notation}
 
 \subsection{Examples of categories}
@@ -134,10 +134,10 @@ now be provided.
 \begin{example}[Product category]
     Given two categories \(\mcc\) and \(\mcd\), their \emph{product category}
     \(\mcc \times \mcd\) is the category with objects are defined as \(
-        \ob{(\mcc \times \mcd)} := \ob{\mcc} \times \ob{\mcd}
+        \ob{(\mcc \times \mcd)} \coloneqq \ob{\mcc} \times \ob{\mcd}
     \) and the morphisms as \[
         \mor{(\mcc \times \mcd)}{(A, A^\prime)}{(B, B^\prime)}
-        :=
+        \coloneqq
         \{
             (f, f^\prime)
             \,|\,

@@ -58,13 +58,13 @@ To do this, we must first translate the notion of signature to hypergraphs.
     in \cref{def:generators}, the \emph{hypergraph signature}
     \(\hypsignature{(\Sigma, S)} \in \hyp\) is defined as follows:
     \begin{gather*}
-        \vertices{\hypsignature{\Sigma}} := \{ v_n \,|\, s \in \mcs\}
+        \vertices{\hypsignature{\Sigma}} \coloneqq \{ v_n \,|\, s \in \mcs\}
         \quad
-        \edges{\hypsignature{\Sigma}}{k}{l} := \{ e_g \,|\, g \in \signature\}
+        \edges{\hypsignature{\Sigma}}{k}{l} \coloneqq \{ e_g \,|\, g \in \signature\}
         \\
-        \sources{i}(e_g) := v_{\dom[e_g](i)}
+        \sources{i}(e_g) \coloneqq v_{\dom[e_g](i)}
         \quad
-        \targets{j}(e_g) := v_{\cod[e_g](j)}
+        \targets{j}(e_g) \coloneqq v_{\cod[e_g](j)}
     \end{gather*}
 \end{definition}
 

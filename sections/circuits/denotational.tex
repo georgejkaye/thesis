@@ -36,10 +36,10 @@ Strachey~\cite{scott1970outline,scott1971mathematical}.
     Consider a language of mathematical expressions defined as
     follows:
     \[
-        n \in N ::= \overline{0} \,|\, \overline{1} \,|\, \overline{2} \,|\,
+        n \in N :\coloneqq \overline{0} \,|\, \overline{1} \,|\, \overline{2} \,|\,
         \cdots
         \qquad
-        e \in E ::= add \, e \, e \,|\, mul \, e \, e \,|\,  n
+        e \in E :\coloneqq add \, e \, e \,|\, mul \, e \, e \,|\,  n
     \]
     To define a denotational semantics for terms \(E\) in this language, we need
     to pick a \emph{semantic domain} for the denotations of terms to belong to.
@@ -198,7 +198,7 @@ stage for the entire denotational semantics.
     Given a set \(A\) and a word \(\listvar{v} \in \natplus^\star\) of
     length \(n\), we write \(
         A^{\listvar{v}}
-        :=
+        \coloneqq
         A^{\listvar{v}(0)}
         \times
         A^{\listvar{v}(1)}
@@ -215,7 +215,7 @@ stage for the entire denotational semantics.
     The \(\bot\) is then the word containing \(n\) copies of the \(\bot\)
     element in \(A\), and the same for the \(\top\) element.
 
-    Recall the set \(A := \{0,1,2\}\) from
+    Recall the set \(A \coloneqq \{0,1,2\}\) from
     \cref{ex:powerset-lattice} and the lattice structure on its powerset
     \(\mathcal{P}A\).
     This induces an ordering on \((\mathcal{P}A)^2\):
@@ -334,13 +334,13 @@ circuit maps to a monotone function.
                 \circuittofunci[
                     \iltikzfig{strings/structure/comonoid/copy}
                 ]
-                &:=
+                &\coloneqq
                 (v) \mapsto (v, v)
                 \\
                 \circuittofunci[
                     \iltikzfig{strings/structure/monoid/merge}
                 ]
-                &:=
+                &\coloneqq
                 (v, w) \mapsto v \sqcup w
             \end{align*}
         \end{minipage}
@@ -351,13 +351,13 @@ circuit maps to a monotone function.
                 \circuittofunci[
                     \iltikzfig{strings/structure/comonoid/discard}
                 ]
-                &:=
+                &\coloneqq
                 (v) \mapsto ()
                 \\
                 \circuittofunci[
                     \iltikzfig{strings/structure/monoid/init}
                 ]
-                &:=
+                &\coloneqq
                 () \mapsto \bot
             \end{align*}
         \end{minipage}
@@ -368,7 +368,7 @@ circuit maps to a monotone function.
             \(\circuittofunci[
                 \iltikzfig{circuits/components/gates/gate}[gate=p,dom=\listvar{m},cod=\listvar{n}]
             ]
-            :=
+            \coloneqq
             \gateinterpretation[p]
             \)
         \end{minipage}
@@ -408,7 +408,7 @@ rather than individual values.
     \(\sigma \in \stream{A}\).
     Individual streams are written as \(
         \sigma \in \stream{A}
-        :=
+        \coloneqq
         \sigma(0) \streamcons \sigma(1) \streamcons
         \sigma(2) \streamcons \cdots
     \).
@@ -423,7 +423,7 @@ rather than individual values.
 
 \begin{notation}
     For a stream \(\sigma\) with initial value \(a\) and stream derivative
-    \(\tau\) we write it as \(\sigma := a \streamcons \tau\).
+    \(\tau\) we write it as \(\sigma \coloneqq a \streamcons \tau\).
 \end{notation}
 
 Streams will serve as our inputs and outputs.
@@ -449,7 +449,7 @@ operations of initial value and stream derivative to stream \emph{functions}.
 \begin{definition}[Initial output~\cite{rutten2006algebraic}]
     For a causal stream function \(\morph{f}{\stream{A}}{\stream{B}}\) and
     \(a \in A\), the \emph{initial output of \(f\) on input \(a\)} is
-    \(\initialoutput{f}{a} := \streaminit(f(a \streamcons \sigma))\) for an
+    \(\initialoutput{f}{a} \coloneqq \streaminit(f(a \streamcons \sigma))\) for an
     arbitrary \(\sigma \in \stream{A}\).
 \end{definition}
 
@@ -463,7 +463,7 @@ first element of the stream.
     \emph{functional stream derivative of \(f\) on input \(a\)} is the
     stream function \(
         \streamderivative{f}{a}
-        :=
+        \coloneqq
         \sigma \mapsto \streamderv(f(a \streamcons \sigma))
     \).
 \end{definition}
@@ -491,9 +491,9 @@ This means they cannot specify infinite \emph{behaviour}.
     somewhat and write \(\streamderivative{f}{\listvar{a}}\) for the repeated
     application of the functional stream derivative for the elements of
     \(\listvar{a}\), i.e.\ \(
-        \streamderivative{f}{\varepsilon} := f
+        \streamderivative{f}{\varepsilon} \coloneqq f
     \) and \(
-        \streamderivative{f}{a \streamcons \listvar{b}} :=
+        \streamderivative{f}{a \streamcons \listvar{b}} \coloneqq
         \streamderivative{(\streamderivative{f}{a})}{\listvar{b}}
     \).
 \end{notation}
