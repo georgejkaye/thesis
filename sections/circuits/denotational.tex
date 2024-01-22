@@ -610,10 +610,11 @@ A trace on \(\streami\) can now be defined in terms of a least fixed point.
     \(\sigma \mapsto \proj{1}\left(f(\mu_f(\sigma)\sigma)\right)\) is in
     \(\streami\): it is causal, finitely specified, and monotone.
 
-    Since \(f\) is a morphism of \(\streami\), it has finitely many stream
-    derivatives.
-    For each stream derivative \(\streamderivative{f}{\listvar{w}}\), we define
-    the function \(
+    Since \(
+        \morph{f}{\valuetuplestream{\listvar{xm}}}{\valuetuplestream{\listvar{xm}}}
+    \) is a morphism of \(\streami\), it has finitely many stream derivatives.
+    For each stream derivative \(\streamderivative{f}{\,\listvar{w}}\), let the
+    function \(
         \morph{
             \widehat{\streamderivative{f}{\listvar{w}}}
         }{
@@ -630,7 +631,7 @@ A trace on \(\streami\) can now be defined in terms of a least fixed point.
     constructed from pieces that are causal and monotone.
 
     In particular, \(\mu_f(\sigma)\) is the least fixed point of
-    \(\widehat{f_\epsilon}\left((-)\sigma\right)\).
+    \(\widehat{f_\varepsilon}\left((-)\sigma\right)\).
     Using the Kleene fixed point theorem, the least fixed point of
     \(\widehat{f}((-)\sigma)\) can be obtained by composing
     \(\widehat{f}((-)\sigma)\) repeatedly with itself.
@@ -699,30 +700,24 @@ A trace on \(\streami\) can now be defined in terms of a least fixed point.
     As \(\bot^\omega\) is its own stream derivative, we need to show that
     applying stream derivative to the latter produces another element of \(G\).
     \begin{align*}
-        \streamderivative{\sigma \mapsto \left(\widehat{\streamderivative{f}{\, \listvar{w_k}}}(\left(g_{k-1}(\tau\sigma)\right)\sigma)\right)}{\listvar{ab}}
-            &= \sigma \mapsto \streamderv\left(\widehat{\streamderivative{f}{\, \listvar{w_k}}}(\listvar{ab} \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right) \\
-            &= \sigma \mapsto \streamderv\left(\proj{0}\left(\streamderivative{f}{\, \listvar{w_k}}(\listvar{ab} \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\right) \\
-            &= \sigma \mapsto \proj{0}\left(\streamderv\left(\streamderivative{f}{\, \listvar{w_k}}(\listvar{ab} \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\right) \\
-            &= \sigma \mapsto \proj{0}\left(\streamderv\left(\streamderivative{f}{\, \listvar{w_k}}(\listvar{ab} \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\right)
-            % &= \streamderv\left(\proj{0}\left(f_{\, \listvar{w_k}}(ab \streamcons \left(g_{k-1}(\tau\sigma)\right)\sigma)\right)\right) \\
-            % &= \proj{0}\left(\streamderv\left(f_{\, \listvar{w_k}}(ab \streamcons \left(g_{k-1}(\tau\sigma)\right)\sigma)\right)\right) \\
-            % &= \proj{0}\left(\streamderivative{\left(f_{\, \listvar{w_k}}(\left(g_{k-1}(\tau\sigma)\right)\sigma)\right)}{ab}\right) \\
-            % &= \proj{0}\left(\streamderivative{\left(f_{\, \listvar{w_k}}(\left(g_{k-1}(\tau\sigma)\right)\sigma)\right)}{ab}\right)
-        % \streamderivative{(\widehat{\streamderivative{f}{\listvar{w}}})}{ab}(\tau\sigma)
-        %     &= \streamderv\left(\widehat{\streamderivative{f}{\listvar{w}}}((ab \streamcons \tau\sigma))\right) \\
-        %     &= \streamderv\left(\proj{0}\left(\streamderivative{f}{\listvar{w}}(ab \streamcons \tau\sigma)\right)\right) \\
-        %     &= \proj{0}\left(\streamderv\left(\streamderivative{f}{\listvar{w}}(ab \streamcons \tau\sigma)\right)\right) \\
-        %     &= \proj{0}\left(\streamderivative{\streamderivative{f}{\listvar{w}}(\tau\sigma)}{ab}\right) \\
-        %     &= \proj{0}\left(\streamderivative{f}{ab \streamcons \listvar{w}}(\tau\sigma)\right) \\
-        %     &= \widehat{\streamderivative{f}{ab \streamcons \listvar{w}}}(\tau\sigma)
-    \end{align*}
-    % There are finitely many functions \(
-    %     \widehat{\streamderivative{f}{ab \streamcons \listvar{w}}}(\tau\sigma)
-    % \), so the set of
-
+        \streamderivative{\sigma \mapsto \left(\widehat{\streamderivative{f}{\, \listvar{w}}}(\left(g_{k-1}(\sigma)\right)\sigma)\right)}{ab}
+            &= \sigma \mapsto \streamderv\left(\widehat{\streamderivative{f}{\, \listvar{w}}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right) \\
+            &= \sigma \mapsto \streamderv\left(\proj{0}\left(\streamderivative{f}{\, \listvar{w}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\right) \\
+            &= \sigma \mapsto \proj{0}\left(\streamderv\left(\streamderivative{f}{\, \listvar{w}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\right) \\
+            &= \sigma \mapsto \proj{0}\left(\streamderivative{\left(\streamderivative{f}{\, \listvar{w}}(\left(g_{k-1}(\sigma)\right)\sigma)\right)}{ab}\right) \\
+            &= \sigma \mapsto \proj{0}\left(\streamderivative{f}{\, ab \streamcons \listvar{w}}(\left(g_{k-1}(\sigma)\right)\sigma)\right) \\
+            &= \sigma \mapsto \widehat{\streamderivative{f}{\, ab \streamcons \listvar{w}}}(\left(g_{k-1}(\sigma)\right)\sigma)
+        \end{align*}
     As \(\proj{0}\left(\streamderivative{f}{ab \streamcons \listvar{w}}\right)\)
-    is a stream derivative of \(f\) and \(f\) has
-    This means that \(\sigma \mapsto \proj{1}(f(\mu_f(\sigma)\sigma))\) lands
-    in \(\streami\), so it is a valid trace.
+    is in \(G\), this means that \(G\) is closed under stream derivative.
+    Subsequently, \(\mu_f\) has finitely many stream derivatives.
+
+    This means that all the components of
+    \(\sigma \mapsto \proj{1}(f(\mu_f(\sigma)\sigma))\) are causal, monotone and
+    finitely specified, and as these properties are preserved by composition,
+    the composite must also have them, so
+    \(\sigma \mapsto \proj{1}(f(\mu_f(\sigma)\sigma))\) is in \(\streami\).
+    To show that this is a trace, it remains to check the axioms of STMCs,
+    which all hold fairly trivially.
 \end{proof}
 \footnotetext{The original proof idea comes from David Sprunger.}
