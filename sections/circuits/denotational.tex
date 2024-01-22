@@ -70,6 +70,17 @@ constructed by combining the denotations of its components.
 With a simple example under our belt, we turn to our true goal: defining a
 denotational semantics for digital circuits.
 
+\begin{remark}
+    In \cite{mendler2012constructive}, the semantics of digital circuits with
+    delays cycles are presented using \emph{timed ternary simulation}, an
+    algorithm to compute how a sequence of circuit outputs stabilises over time
+    given the inputs and value of the current state.
+    This differs from our approach as we assign each circuit a concrete stream
+    function describing its behaviour, rather than having to solve a system of
+    equations in terms of the nodes inside a circuit in order to determine its
+    behaviour.
+\end{remark}
+
 \subsection{Interpreting circuit components}
 
 Before diving straight into what the denotation of a particular circuit \(
@@ -589,7 +600,8 @@ For this, we will need a notion of ordering on stream functions themselves.
     for all \(\sigma \in \stream{A}\).
 \end{definition}
 
-A trace on \(\streami\) can now be defined in terms of a least fixed point.
+A trace on \(\streami\) can now be defined in terms of a least fixed
+point\footnote{The original proof idea for the following is by David Sprunger.}.
 
 \begin{notation}
     For a morphism \(
@@ -601,7 +613,7 @@ A trace on \(\streami\) can now be defined in terms of a least fixed point.
     \).
 \end{notation}
 
-\begin{proposition}[\protect\footnotemark]
+\begin{proposition}
     The function \(\sigma \mapsto \proj{1}\left(f(\mu_f(\sigma)\sigma)\right)\)
     is a trace on \(\streami\).
 \end{proposition}
@@ -720,4 +732,89 @@ A trace on \(\streami\) can now be defined in terms of a least fixed point.
     To show that this is a trace, it remains to check the axioms of STMCs,
     which can all be shown to hold fairly easily.
 \end{proof}
-\footnotetext{The original proof idea comes from David Sprunger.}
+
+\begin{remark}
+    Using the least fixpoint as a trace operator is a common idea in the
+    denotational semantics of programming languages, where it is often used to
+    model \emph{recursion}.
+\end{remark}
+
+We now have two traced PROPs: a \emph{syntactic} category of sequential circuit
+terms \(\scircsigma\) and a \emph{semantic} category of causal, finitely
+specified, monotone stream functions \(\streami\).
+To assign semantics in the latter to terms in the former, we use a traced PROP
+morphism.
+First we establish candidates for the semantics of the sequential generators.
+
+\begin{definition}\label{def:state-stream-functions}
+    For each \(v \in \values\), let \(
+        \morph{\valstream{v}}{\valuetuplestream{0}}{\valuestream}
+    \) be defined as \(
+        \mealyoutput{(\valstream{v})}{()} := v
+    \) and \(
+        \mealytransition{(\valstream{v})}{()} := \valstream{\bot}
+    \).
+    Let \(
+        \morph{\shiftstream{v}}{\valuestream}{\valuestream}
+    \) be defined as \(
+        \mealyoutput{(\shiftstream{v})}{\sigma}
+        :=
+        v
+    \) and \(
+        \mealytransition{(\shiftstream{v})}{a \streamcons \sigma}
+        :=
+        \shiftstream{a}
+    \).
+\end{definition}
+
+\begin{lemma}
+    The stream functions in \cref{def:state-stream-functions} are causal,
+    monotone and finitely specified.
+\end{lemma}
+\iftoggle{proofs}{
+    \begin{proof}
+        \input{sections/semantics/proofs/example-streams}
+    \end{proof}
+}{}
+
+With those out of the way, we can move onto the complete translation.
+
+\begin{definition}\label{def:circuit-to-stream}
+    Let \(
+        \morph{\circuittostream{\interpretation}}{\scircsigma}{\streami}
+    \) be the traced PROP morphism defined as \begin{gather*}
+        \circuittostream[
+            \iltikzfig{strings/category/f}[box=F,colour=comb]
+        ]{\interpretation}(\sigma)(k)
+        :=
+        \circuittofunc[
+            \iltikzfig{strings/category/f}[box=F,colour=comb]
+        ]{\interpretation}(\sigma(k))
+        \\
+        \circuittostream[
+            \iltikzfig{circuits/components/values/vs}[val=v]
+        ]{\interpretation}
+        :=
+        \valstream{v}
+        \quad
+        \circuittostream[
+            \iltikzfig{circuits/components/waveforms/delay}
+        ]{\interpretation}
+        :=
+        \shiftstream{\bot}
+    \end{gather*}
+
+    Given a sequential circuit \(
+        \iltikzfig{strings/category/f}[box=F,colour=seq]
+    \), we say that the stream function \(
+        \circuittostream[\iltikzfig{strings/category/f}[box=F,colour=seq]]{\interpretation}
+    \) is its \emph{behaviour under} \(\interpretation\).
+\end{definition}
+
+If we were less invested in this, we could stop here.
+Each circuit in \(\scircsigma\) now has a denotation in \(\scircsigma\): what
+more could we want?
+But we are not content with this, for we are mathematicians.
+We need to show that this is a \emph{complete} denotational semantics: every
+stream function in \(\streami\) must also correspond to at least one
+circuit in \(\scircsigma\).
