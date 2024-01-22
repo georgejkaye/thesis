@@ -1,0 +1,146 @@
+\section{Monotone Mealy machines}
+
+It is not immediately obvious how to translate back from stream functions in
+\(\streami\) to circuits in \(\scircsigma\).
+Even though these stream functions have finitely many stream derivatives, how
+does one encapsulate this behaviour into a circuit made from finitely many
+components while taking into account inputs and state?
+Fortunately, we have a secret weapon; the old chestnut that is the
+\emph{Mealy machine}~\cite{mealy1955method}.
+Working tirelessly in industry as a way of specifying the behaviour of a
+circuit without restricting to particular circuitry, Mealy machines also have
+a very useful \emph{coalgebraic} viewpoint which we will wield in order to
+build a bridge from circuits into stream functions: there is a unique
+homomorphism from a Mealy machine to a causal, finitely specified stream
+function.
+
+We will do this by assembling a special class of Mealy machines which we dub
+\emph{monotone Mealy machines} into another traced PROP.
+By constructing PROP morphisms between these two categories that preserve
+behaviour of stream functions, we establish that we can work with either
+circuit representation.
+
+\begin{definition}[Mealy machine~\cite{mealy1955method}]\label{def:mealy}
+    Let \(A\) and \(B\) be finite sets.
+    A (finite) \((A,B)\)-\emph{Mealy machine} is a tuple \((S, f)\) where
+    \(S\) is a finite set called the \emph{state space},
+    \(\morph{f}{S}{(S \times B)^A}\) is the \emph{Mealy function}.
+\end{definition}
+
+An \((M,N\)-Mealy machine is parameterised over a set \(A\) of \emph{inputs} and
+a set \(B\) of \emph{outputs}.
+Each Mealy machine then has a set \(S\) of \emph{states}; the Mealy function
+takes in a currrent state and input \((s, a)\) and produces a pair
+\(\langle{s^\prime, b}\rangle\)of a transition and output.
+
+\begin{notation}
+    We will use the shorthand \(
+    \mealyfunctiontransition{f} := (s, a) \mapsto \proj{0}(f(s)(a))
+\) and \(
+    \mealyfunctionoutput{f} := (s, a) \mapsto \proj{1}(f(s)(a))
+\) for the transition and output component of the Mealy function respectively.
+\end{notation}
+
+\begin{example}
+    \todo[inline]{Example!}
+\end{example}
+
+\subsection{The coalgebraic perspective}
+
+The definition of Mealy machine above is timeless and forms the basis for most
+of modern electronics.
+Of course, the natural question for the categorist to ask is
+\emph{can we make it more categorical?}
+And as is often the case, we can, using the notion of a \emph{coalgebra}.
+
+\begin{definition}[Coalgebra]
+    Let \(\mcc\) and \(\mcd\) be categories, and let \(\morph{F}{\mcc}{\mcc}\)
+    be an endofunctor.
+    A \emph{coalgebra} for \(F\), or \(F\)-coalgebra, is an object
+    \(A \in \mcc\) along with a morphism \(\morph{\alpha}{A}{FA} \in \mcc\),
+    usually written \((A,\alpha)\).
+\end{definition}
+
+The light bulb should already have lit up: a Mealy machine is a pair of a set
+and a function, so this is clearly a coalgebra in \(\set\).
+
+\begin{definition}
+    An \emph{\((A,B)\)-Mealy coalgebra} is a coalgebra of the functor
+    \(\morph{Y}{\set}{\set}\) defined as \(S \mapsto (S \times B)^A\).
+\end{definition}
+
+\begin{example}
+    In \cite{bonsangue2008coalgebraic}, the notation \(
+        f(s)(a) = \langle{\streaminit{s}{a},\streamderivative{s}{a}}\rangle
+    \) is used to describe the Mealy function, which coincides with the notation
+    used for stream functions; this is not a coincidence!
+
+    Given sets \(A\) and \(B\), let \(\Gamma\) be the set of causal stream
+    functions \(\stream{A} \to \stream{B}\), and let
+    \(\morph{\nu}{\Gamma}{\Gamma \times B}^A\) be the function defined as \(
+        (f, a) \mapsto \langle{\streaminit{s}{a},\streamderivative{s}{a}}\rangle
+    \).
+    Then \((\Gamma,\nu)\) is a \((A,B)\)-Mealy coalgebra.
+\end{example}
+
+The above example is incredibly important, as it lays the groundwork we will
+use extensively to establish connections between circuits, stream functions and
+Mealy machines.
+If we inspect it a little closer, we find that stream functions are even more
+special than just being `a' \((A,B)\)-Mealy coalgebra.
+
+\begin{definition}[Mealy homomorphism]
+    A \emph{Mealy homomorphism} between two \((A,B)\)-Mealy coalgebra \((S,f)\)
+    and \((T,g)\) is a function \(\morph{h}{S}{T}\) preserving transitions and
+    outputs, i.e.\ for a Mealy function \(f\), a Mealy homomorphism \(h\)
+    satisfies \(
+        h\left(\mealyfunctiontransition{f}(s, a)\right)
+        =
+        \mealyfunctiontransition{f}(h(s), a)
+    \) and \(
+        h\left(\mealyfunctionoutput{f}(s, a)\right)
+        =
+        \mealyfunctionoutput{f}(s, a)
+    \).
+\end{definition}
+
+The \emph{final} \((M,N)\)-Mealy coalgebra is a \((M,N)\)-Mealy coalgebra to
+which every other \((M,N)\)-Mealy coalgebra has a unique homomorphism to.
+
+\begin{remark}
+    The coalgebra crowd tend to prefer the use of the word \emph{final} over
+    \emph{terminal}; one could quite reasonably call the final coalgebra a
+    terminal coalgebra and everything would be alright, but you might get a few
+    funny looks.
+\end{remark}
+
+\begin{notation}\label{not:transitions}
+    For a Mealy coalgebra \(
+        (S, f)
+    \), state \(s \in S\) and index \(i \in \nat\), let the
+    \emph{\(i\)-th transition on \(\sigma\)}, written
+    \(\transitions{f}{i}{s}{\sigma}\), be defined as
+    \(\transitions{f}{0}{s}{\sigma} := s\) and
+    \(\transitions{f}{k+1}{s}{\sigma} :=
+        \mealyfunctiontransition{f}(\transitions{f}{k}{s}{\sigma}, \sigma(k))
+    \).
+\end{notation}
+
+\begin{proposition}[\cite{rutten2006algebraic}, Prop. 2.2]
+    \label{prop:final-coalgebra}
+    For every Mealy coalgebra \((S,f)\), there exists a
+    unique homomorphism \(\morph{{!}}{(S,f)}{(\Gamma,\nu)}\).
+\end{proposition}
+\begin{proof}
+    A homomorphism \(\morph{g}{(S, f)}{(\Gamma, \nu)}\) is a function
+    \(S \to \Gamma\), so for a state \(s \in S\), \(g(s)\) will be a stream
+    function \(\stream{M} \to \stream{N}\).
+    For stream \(\sigma \in \stream{M}\) and \(i \in \nat\), the unique stream
+    function is defined as
+    \(
+        h(s)(\sigma)(i)
+        :=
+        \mealyfunctionoutput{f}(f^i_1(s, \sigma), \sigma(i))
+    \).
+\end{proof}
+
