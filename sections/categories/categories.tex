@@ -1,0 +1,314 @@
+\section{Categories}
+
+So far, terms are purely syntax, and terms are only equal if they are
+constructed in precisely the same way.
+Even without considering the interaction of generators with each other, there
+are numerous `structural equations' which need to hold to be useful for
+modelling processes.
+
+\begin{example}
+    Consider the term \(f \seq \id[n]\), which can be read as `run \(f\) and
+    then do nothing'.
+    Since we are only concerned with the \emph{input-output} behaviour of
+    processes, this should be the same as just \(f\).
+    However, as it stands \(f \seq \id[n]\) and \(f\) are not equal.
+\end{example}
+
+One could just add all the `right' equations manually, but what are the `right'
+equations?
+It turns out that an elegant mathematical formalism exists in the form of
+\emph{symmetric monoidal categories}.
+
+We begin by defining the structure underlying much of the work to come; that of
+a \emph{category}.
+
+\begin{definition}[Categories]
+    \label{def:category}
+    A \emph{category} \(\mcc\) consists of a class of \emph{objects}
+    \(\ob{\mcc}\); a class of \emph{morphisms} \(\mor{\mcc}{A}{B}\)
+    for every pair of objects \(A, B \in \ob{\mcc}\); and a \emph{composition}
+    operation \(
+        \morph{
+            {-} \circ {=}
+        }{
+            \mor{\mcc}{B}{C} \times \mor{\mcc}{A}{B}
+        }{
+            \mor{\mcc}{A}{C}
+        }
+    \) such that
+    \begin{itemize}
+        \item composition is \emph{unital}: for every \(
+                    A \in \ob{\mcc}
+                \) there exists an \emph{identity morphism} \(
+                    \id[A] \in \mor{\mcc}{A}{A}
+                \) satisfying \(
+                    f \circ \id[A] = f = \id[B] \circ f
+                \) for any \(
+                    f \in \mor{\mcc}{A}{B}
+                \); and
+        \item composition is \emph{associative}: for any morphisms \(
+                    f \in \mor{\mcc}{A}{B}
+                \), \(
+                    g \in \mor{\mcc}{B}{C}
+                \) and \(h \in \mor{\mcc}{C}{D}\), \(
+                    (h \circ g) \circ f = h \circ (g \circ f).
+                \)
+    \end{itemize}
+\end{definition}
+
+A morphism \(f \in \mor{\mcc}{A}{B}\) is also called an \emph{arrow}, and will
+often be written \(\morph{f}{A}{B}\) accordingly.
+The subscripts on the object and morphism classes are also often omitted.
+
+\subsection{Commutative diagrams}
+
+Equations in category theory can be expressed using \emph{commutative diagrams}.
+For example, the unitality and associativity of composition can be illustrated
+as follows:
+
+\begin{center}
+    \includestandalone{figures/category/coherences/unitality}
+    \quad
+    \includestandalone{figures/category/coherences/associativity}
+\end{center}
+
+We say that the above two diagrams \emph{commute} precisely because \(
+    \id[B] \circ f = f = f \circ \id[A]
+\) and \((h \circ g) \circ f = h \circ (g \circ f)\): no matter which path one
+takes, the results are equal.
+Using commutative diagrams suggests another notation for composition.
+
+\begin{notation}
+    \emph{Diagrammatic order} composition is written as
+    \(f \seq g \coloneqq g \circ f\).
+\end{notation}
+
+\subsection{Examples of categories}
+
+Categories generalise a plethora of mathematical structures: some examples will
+now be provided.
+
+\begin{example}[Preorder]
+    A \emph{preorder} is a binary relation \(\leq\) on a set \(X\) which is
+    reflexive and transitive.
+    Any preorder generates a category \(\mcc_\leq\): the objects are the
+    elements of \(X\) and \(\mcc_\leq(x, y)\) contains exactly one morphism if
+    \(x \leq y\) and none otherwise.
+\end{example}
+
+\begin{example}[Sets]
+    The category \(\set\) has sets as objects and functions as morphisms.
+    Composition is then just function composition.
+    Compare this with the category \(\rel\), which has sets as objects and
+    \emph{relations} as morphisms.
+    There is also a category \(\finset\) containing only the \emph{finite} sets
+    and functions between them.
+\end{example}
+
+\begin{example}[Posets]
+    A \emph{partial order} on a set \(X\) is a reflexive, antisymmetric and
+    transitive relation \(\leq \subseteq X \times X\).
+    A set equipped with a partial order is called a
+    \emph{partially ordered set}, or \emph{poset} for short.
+    A function \(\morph{f}{X}{Y}\) between posets is called \emph{monotone} if
+    \(x \leq y\) implies that \(f(x) \leq f(y)\).
+
+    Much like how sets form a category, posets form the category \(\pos\), where
+    \(\ob{\pos}\) are sets and \(\mor{\pos}{X}{Y}\) are the monotone functions
+    \(X \to Y\).
+\end{example}
+
+\begin{example}[Monoids]
+    A \emph{monoid} is a tuple \((X, *, \bullet)\) where \(X\) is a set called
+    the \emph{carrier}, \(\morph{*}{X \times X}{X}\) is a binary operation
+    called the \emph{multiplication}, and \(\bullet \in X\) is an element called
+    the \emph{unit}, such that \(x * \bullet = x = \bullet * x\) for any
+    \(x \in X\).
+    A \emph{monoid homomorphism} between two monoids \((X, *, e_X)\) and
+    \((Y, +, e_Y)\) is a map \(\morph{h}{X}{Y}\) such that
+    \(h(x * y) = h(x) + h(y)\) and \(h(e_X) = e_Y\).
+    There is a category \(\mon\) with the objects as monoids and morphisms as
+    their homomorphisms.
+\end{example}
+
+\begin{example}[Product category]
+    Given two categories \(\mcc\) and \(\mcd\), their \emph{product category}
+    \(\mcc \times \mcd\) is the category with objects are defined as \(
+        \ob{(\mcc \times \mcd)} \coloneqq \ob{\mcc} \times \ob{\mcd}
+    \) and the morphisms as \[
+        \mor{(\mcc \times \mcd)}{(A, A^\prime)}{(B, B^\prime)}
+        \coloneqq
+        \{
+            (f, f^\prime)
+            \,|\,
+            f \in \mor{\mcc}{A}{B},
+            f^\prime \in \mor{\mcd}{A^\prime}{B^\prime}
+        \}
+    \]
+\end{example}
+
+\begin{example}[Category of categories]
+
+\end{example}
+
+\subsection{Properties of objects and morphisms}
+
+There are several properties that objects and morphisms can hold which will come
+in useful in this thesis.
+
+\begin{definition}[Initial object]
+    An object \(C\) in a category \(\mcc\) is \emph{initial} if, for any other
+    object \(X \in \mcc\) there exists a unique morphism \(C \to X\).
+\end{definition}
+
+\begin{example}
+    In \(\set\), the initial object is the empty set \(\emptyset\), as there is
+    a unique function from \(\emptyset\) to any set \(X\).
+\end{example}
+
+In category theory there is often the notion of a \emph{dual} construction, in
+which all the arrows are flipped.
+
+\begin{definition}[Terminal object]
+    An object \(C\) in a category \(\mcc\) is \emph{terminal} if, for any other
+    object \(X \in \mcd\) there exists a unique morphism \(X \to C\).
+\end{definition}
+
+\begin{example}
+    In \(\set\), the terminal object is the singleton set \(\{\star\}\):
+    from any set \(X\) there is a unique function \(X \to \{\star\}\); namely
+    the function with action \(x \mapsto \star\).
+\end{example}
+
+Morphisms are usually the interesting part of any category; sometimes we are
+only concerned with certain subclasses of morphisms.
+
+\begin{definition}[Monomorphism]
+    A morphism \(\morph{f}{A}{B} \in \mcc\) is called a \emph{monomorphism} (or
+    simply \emph{mono} for short) if for any two morphisms
+    \(\morph{g_1,g_2}{C}{A}\), if \(f \circ g_1 = f \circ g_2\), then
+    \(g_1 = g_2\).
+\end{definition}
+
+One can think of monomorphisms are \emph{left-cancellative} morphisms.
+There is also a categorical generalisation of \emph{invertible} morphisms.
+
+\begin{definition}[Isomorphism]
+    A morphism \(\morph{f}{A}{B} \in \mcc\) is called an \emph{isomorphism} (or
+    simply \emph{iso} for short) if there also exists a morphism \(
+        \morph{\inverse{f}}{B}{A} \in \mcc
+    \) such that \(
+        \inverse{f} \circ f = \id[A]
+    \) and \(
+        f \circ \inverse{f} = \id[B]
+    \).
+\end{definition}
+
+\begin{example}
+    In \(\set\), the monomorphisms are the injective functions and the
+    isomorphisms are the surjective functions.
+\end{example}
+
+\subsection{Universal constructions}
+
+Category theory is useful because it generalises many structures found in
+mathematics, allowing us to apply core results in a plethora of settings.
+The core idea is that of a \emph{universal property}: a unique morphism that
+shows that a certain candidate construction is indeed the `best'.
+If something satisfies a universal property, then we know that we can safely
+apply the relevant results without worrying about the precise construction.
+
+We will now detail some common universal properties that will occur in this
+thesis.
+
+\begin{definition}[Product]
+    Given a category \(\mcc\) and objects \(A,B \in \mcc\), their \emph{product}
+    is an object \(A \times B\) equipped with a pair of morphisms
+    \(\morph{p_0}{A \times B}{A}\) and \(\morph{p_1}{A \times B}{B}\) called
+    \emph{projections} such that for every other object \(Z\) with pair of
+    morphisms \(\morph{f}{Z}{A}\) and \(\morph{g}{Z}{B}\), there exists a unique
+    morphism \(\morph{u}{Z}{A \times B}\) such that the following diagram
+    commutes:
+    \begin{center}
+        \includestandalone{figures/category/diagrams/product}
+    \end{center}
+    A category \(\mcc\) is said to \emph{have products} if the product exists
+    for all pairs of objects \(A,B \in \mcc\).
+\end{definition}
+
+\begin{example}
+    \(\set\) has products: the Cartesian product.
+\end{example}
+
+As usual, there is the dual notion to consider.
+
+\begin{definition}[Coproduct]
+    Given a category \(\mcc\) and objects \(A,B \in \mcc\), their \emph{coproduct}
+    is an object \(A + B\) equipped with a pair of morphisms
+    \(\morph{i_0}{A}{A + B}\) and \(\morph{i_1}{B}{A + B}\) called
+    \emph{injections} such that for every other object \(Z\) with pair of
+    morphisms \(\morph{f}{A}{B}\) and \(\morph{g}{B}{Z}\), there exists a unique
+    morphism \(\morph{u}{A + B}{Z}\) such that the following diagram
+    commutes:
+    \begin{center}
+        \includestandalone{figures/category/diagrams/coproduct}
+    \end{center}
+    A category \(\mcc\) is said to \emph{have coproducts} if the coproduct
+    exists for all pairs of objects \(A,B \in \mcc\).
+\end{definition}
+
+\begin{example}
+    \(\set\) has coproducts: the disjoint union.
+\end{example}
+
+Finally, we will look at a useful construction concerning \emph{pairs} of
+morphisms with a common domain.
+
+\begin{definition}[Pushout]
+    Given morphisms \(\morph{f}{A}{B}\) and \(\morph{g}{A}{C}\), a
+    \emph{pushout} is an object \(D\) and a pair of morphisms
+    \(\morph{h}{B}{D}\) and \(\morph{k}{h}{k}\) such that for any other pair of
+    morphisms \(\morph{h^\prime}{B}{Z}\) and \(\morph{k^\prime}{C}{Z}\) there
+    exists a unique morphism \(\morph{u}{D}{Z}\), i.e.\ the following diagram
+    commutes:
+    \begin{center}
+        \includestandalone{figures/category/diagrams/pushout}
+    \end{center}
+    A category \(\mcc\) is said to \emph{have pushouts} if a pushout exists for
+    any pair of morphisms.
+\end{definition}
+
+A pushout square is normally indicated with a \raisebox{-0.25em}{\(\ulcorner\)}
+symbol as shown above.
+
+\begin{example}
+    \(\set\) has pushouts: given morphisms \(\morph{f}{X}{Y}\) and
+    \(\morph{g}{X}{Z}\), the pushout is the union of \(Y\) and \(Z\) identifying
+    elements with a common preimage in \(X\).
+    Concretely, let \({\sim} \subseteq Y \cup Z\) be a relation defined as
+    \(\{(y, z) \,|\, \exists x \in X.\, y = f(x) \wedge z = g(x)\}\).
+    Then the pushout set \(U\) is defined as \(X \cup Y / \sim\) and the
+    morphisms \(\morph{h}{Y}{U}\) and \(\morph{k}{Z}{U}\) to the appropriate
+    elements.
+\end{example}
+
+Using universal properties means we do not need to restrict ourselves to a
+concrete category when using or proving results; we can instead say, for
+example, that the result holds in all categories with products.
+It is also often the case that if a category satisfies some universal
+properties, then others follow for free!
+We demonstrate this with a well-known result.
+
+\begin{lemma}
+    \label{lem:coproducts-pushout}
+    If a category \(\mcc\) has pushouts and an initial object, then \(\mcc\)
+    also has coproducts.
+\end{lemma}
+\begin{proof}
+    Given objects \(A,B \in \mcc\), the coproduct \(A + B\) is constructed as
+    follows:
+    \begin{center}
+        \includestandalone{figures/category/diagrams/coproduct-pushout}%
+    \end{center}
+    This is a coproduct due to the universal property of pushouts.
+\end{proof}

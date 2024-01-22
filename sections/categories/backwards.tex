@@ -1,0 +1,179 @@
+\section{Reversing the wires}
+
+In string diagrams for symmetric monoidal categories, there is a strict notion
+of causality: it is not possible to create a cycle from the output of a box to
+its input, and outputs may only be joined to outputs.
+This enforces an implicit \emph{left-to-right} directionality across the page.
+
+However, this may not always be desirable: one may wish to model a feedback
+loop, or perhaps enforce some condition by unifying two outputs.
+To do this sort of thing, we must examine symmetric monoidal categories with
+some extra structure.
+
+\subsection{Symmetric traced monoidal categories}
+
+First we consider removing the acyclicity condition.
+
+\begin{definition}[Symmetric traced monoidal category \cite{joyal1996traced}]\label{def:stmc}
+    A \emph{symmetric traced monoidal category} (STMC) is a symmetric monoidal
+    category \(\mathbf{C}\) equipped with a family of functions \(
+        \morph{
+            \trace{X}[A][B]{-}
+        }{
+            \mathbf{C}(X \tensor A, X \tensor B)
+        }{
+            \mathbf{C}(A, B)
+        }
+    \) for any three objects \(A\), \(B\) and \(X\) subject to the following
+    equations:
+    \begin{itemize}
+        \item \textbf{Tightening (naturality in \(A,B\))}\\\null\qquad
+                    \(\trace{X}[A][D]{
+                            \id[X] \tensor f \seq g \seq \id[X] \seq h
+                        }
+                        =
+                        f \seq \trace{X}[B][C]{g} \seq h
+                    \)
+        \item \textbf{Sliding (naturality in \(X\))}\\\null\qquad
+                    \(
+                        \trace{X}[A][B]{f \seq g \tensor \id[B]}
+                        =
+                        \trace{Y}[A][B]{g \tensor \id[A] \seq f}
+                    \)
+        \item \textbf{Yanking}\\\null\qquad
+                    \(
+                        \trace{X}[X][X]{\swap{X}{X}} = \id[X]
+                    \)
+        \item \textbf{Vanishing}\\\null\qquad
+                    \(
+                        \trace{X}[A][B]{\trace{X}[Y \tensor A][Y \tensor B]{f}}
+                        =
+                        \trace{X \tensor Y}[A][B]{f}
+                    \)
+        \item \textbf{Superposing}\\\null\qquad
+                    \(
+                        \trace{X}[A \tensor C][B \tensor F]{f \tensor g}
+                        = \trace{X}[A][B]{f} \tensor g
+                    \)
+    \end{itemize}
+\end{definition}
+
+What this means is that in a STMC, if we have a morphism
+\(\morph{f}{X \tensor A}{X \tensor B}\) we also have a morphism \(
+    \morph{\trace{X}[A][B]{f}}{A}{B}
+\).
+
+Traced categories were given the string diagrammatic treatment in
+\cite{joyal1996traced}, in which the trace is depicted as a loop.
+\begin{gather*}
+    \trace{X}[A][B]{
+        \iltikzfig{strings/category/f-2-2}[colour=white,box=f,dom1=X,dom2=A,cod1=X,cod2=B]
+    }
+    =
+    \iltikzfig{strings/traced/trace-rhs}[colour=white,box=f,dom=A,cod=B,trace=X]
+\end{gather*}
+The equations of STMCs then have pleasant graphical interpretations, shown in
+\cref{fig:stmc-equations}.
+Note that as with the equations of SMCs, these equations amount to deforming the
+diagram without altering connections between boxes, so do not need to be
+applied explicitly when performing equational reasoning.
+
+Usually we will omit the subscripts from \(\trace{X}[A][B]{f}\) and write it
+simply as \(\trace{X}{f}\).
+
+\input{floats/stmc-equations}
+
+\begin{example}
+    The classic example of a symmetric traced monoidal category is the category
+    \(\finvectk[k]\) in which the objects are finite dimensional vector spaces
+    over a field \(k\) and the morphisms are linear maps.
+    The monoidal product is the usual tensor product of vector spaces and the
+    trace by an operation known as the `partial trace'.
+\end{example}
+
+Traces are often used to model \emph{fixpoints}.
+
+
+\subsection{Compact closed categories}
+
+In a traced category, while wires can flow backwards across the page, regular
+left-to-right flow must still be in effect at a wire's \emph{endpoints}.
+This means that outputs will always be connected to inputs.
+We will now consider another setting in which this is not the case.
+
+\begin{definition}[Compact closed category]
+    A \emph{compact closed category} (CCC) is a symmetric monoidal category in
+    which every object \(X\) has a \emph{dual} \(\dual{X}\) equipped with
+    morphisms called the \emph{unit} \(
+        \morph{\ccunit[A]}{I}{\dual{A} \tensor A}
+    \) and the \emph{counit} \(
+        \morph{\cccounit[A]}{A \tensor \dual{A}}{I}
+    \) satisfying the following \emph{snake equations}:
+    \begin{center}
+        \includestandalone{figures/category/coherences/snake-1}
+        \quad
+        \includestandalone{figures/category/coherences/snake-2}
+    \end{center}
+\end{definition}
+
+In string diagrams, the dual is drawn as a wire flowing from right-to-left
+instead of left-to-right; when labelling wires with objects we will drop the
+notation for duals and recover the information solely from directionality of the
+wires.
+The unit and counit `bend' wires: the unit is drawn as \(
+    \iltikzfig{strings/compact-closed/cup-self-dual}[obj=A,colour=white]
+\) and the counit as \(
+    \iltikzfig{strings/compact-closed/cap-self-dual}[obj=A,colour=white]
+\).
+As a result of this units and counits are often referred to as \emph{cups} and
+\emph{caps} respectively.
+The snake equations are depicted as in \cref{fig:ccc-equations}, which
+sheds some light on their name!
+
+\input{floats/ccc-equations}
+
+There are some cases where the actual directionality of wires is irrelevant;
+we only care about the ability to bend wires.
+
+\begin{definition}[Self-dual compact closed category]
+    A compact closed category is \emph{self-dual} if for every object \(A\),
+    \(\dual{A} \coloneqq A\).
+\end{definition}
+
+In a self-dual compact closed category, we do not need to label wires with
+arrows.
+
+\subsection{Traced vs compact closed}
+
+The graphical notation is particularly suggestive of links between the
+trace, the cup and the cap.
+This is no coincidence, as there is a well-known result that allows one to
+construct a trace in a compact closed setting.
+
+\begin{proposition}[Canonical trace (\cite{joyal1996traced}, Prop. 3.1)]
+    \label{prop:canonical-trace}
+    Any compact closed category has a trace called the \emph{canonical trace},
+    defined as \[
+        \trace{X}{f}
+        \coloneqq
+        \ccunit[X] \tensor \id[A]
+        \seq
+        \id[\dual{X}] \tensor f
+        \seq
+        (\swap{\dual{X}}{X} \seq \cccounit[X]) \tensor \id[B]
+    \]
+    \[
+        \iltikzfig{strings/compact-closed/canonical-trace}[colour=white,box=f,dom=A,cod=B,trace=X]
+    \]
+\end{proposition}
+
+In this thesis we are primarily concerned with traced categories, but a plethora
+of related work is based in the compact closed realm.
+The canonical trace allows us to adapt existing results for our setting as well.
+
+\begin{remark}
+    It is also possible to consider the other direction: using the
+    \emph{Int-construction}~\cite{joyal1996traced}, given any STMC
+    \(\mcc\) one can construct a compact closed category \(\mathsf{Int}(\mcc)\).
+    However, this will not be of relevance to us.
+\end{remark}
