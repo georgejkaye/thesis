@@ -750,19 +750,19 @@ First we establish candidates for the semantics of the sequential generators.
     For each \(v \in \values\), let \(
         \morph{\valstream{v}}{\valuetuplestream{0}}{\valuestream}
     \) be defined as \(
-        \mealyoutput{(\valstream{v})}{()} := v
+        \mealyoutput{(\valstream{v})}{()} \coloneqq v
     \) and \(
-        \mealytransition{(\valstream{v})}{()} := \valstream{\bot}
+        \mealytransition{(\valstream{v})}{()} \coloneqq \valstream{\bot}
     \).
     Let \(
         \morph{\shiftstream{v}}{\valuestream}{\valuestream}
     \) be defined as \(
         \mealyoutput{(\shiftstream{v})}{\sigma}
-        :=
+        \coloneqq
         v
     \) and \(
         \mealytransition{(\shiftstream{v})}{a \streamcons \sigma}
-        :=
+        \coloneqq
         \shiftstream{a}
     \).
 \end{definition}
@@ -771,47 +771,61 @@ First we establish candidates for the semantics of the sequential generators.
     The stream functions in \cref{def:state-stream-functions} are causal,
     monotone and finitely specified.
 \end{lemma}
-\iftoggle{proofs}{
-    \begin{proof}
-        \input{sections/semantics/proofs/example-streams}
-    \end{proof}
-}{}
+\begin{proof}
+    For the first four functions, the \(k\)th element of the output stream is
+    computed by a monotone operation on \(k\)th element of the input stream, so
+    the stream function is monotone and causal.
+    Since the \(k\)th input element cannot affect a later output element, there
+    is one stream derivative: the original function.
+    The function \(\valstream{v}\) has no inputs so it is trivially causal and
+    monotone.
+    It has one stream derivative: the stream function that constantly outputs
+    \(\bot\).
+    The function \(\shiftstream{\bot}\) is causal as the \(i+1\)th output
+    element depends on only the \(i\)th element.
+    There are \(|\values|\) stream derivatives, as there is a different one for
+    each possible input value.
+    Each of these stream derivatives is monotone, as the initial output is fixed
+    regardless of input, and, on input \(a\), the stream derivative is the
+    stream function that initially outputs \(a\).
+\end{proof}
 
 With those out of the way, we can move onto the complete translation.
 
 \begin{definition}\label{def:circuit-to-stream}
     Let \(
         \morph{\circuittostream{\interpretation}}{\scircsigma}{\streami}
-    \) be the traced PROP morphism defined as \begin{gather*}
+    \) be the traced PROP morphism defined as \(
         \circuittostream[
             \iltikzfig{strings/category/f}[box=F,colour=comb]
         ]{\interpretation}(\sigma)(k)
-        :=
+        \coloneqq
         \circuittofunc[
             \iltikzfig{strings/category/f}[box=F,colour=comb]
         ]{\interpretation}(\sigma(k))
-        \\
+    \), \(
         \circuittostream[
             \iltikzfig{circuits/components/values/vs}[val=v]
         ]{\interpretation}
-        :=
+        \coloneqq
         \valstream{v}
-        \quad
+    \) and \(
         \circuittostream[
             \iltikzfig{circuits/components/waveforms/delay}
         ]{\interpretation}
-        :=
+        \coloneqq
         \shiftstream{\bot}
-    \end{gather*}
-
-    Given a sequential circuit \(
-        \iltikzfig{strings/category/f}[box=F,colour=seq]
-    \), we say that the stream function \(
-        \circuittostream[\iltikzfig{strings/category/f}[box=F,colour=seq]]{\interpretation}
-    \) is its \emph{behaviour under} \(\interpretation\).
+    \).
 \end{definition}
 
-If we were less invested in this, we could stop here.
+Given a sequential circuit \(
+    \iltikzfig{strings/category/f}[box=F,colour=seq]
+\), we say that the stream function \(
+    \circuittostream[\iltikzfig{strings/category/f}[box=F,colour=seq]]{\interpretation}
+\) is its \emph{behaviour under} \(\interpretation\), or simply its
+\emph{behaviour} if the interpretation is arbitrary.
+
+If we were less invested in our denotational quest, we could stop here.
 Each circuit in \(\scircsigma\) now has a denotation in \(\scircsigma\): what
 more could we want?
 But we are not content with this, for we are mathematicians.
