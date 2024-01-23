@@ -31,13 +31,13 @@ An \((M,N\)-Mealy machine is parameterised over a set \(A\) of \emph{inputs} and
 a set \(B\) of \emph{outputs}.
 Each Mealy machine then has a set \(S\) of \emph{states}; the Mealy function
 takes in a currrent state and input \((s, a)\) and produces a pair
-\(\langle{s^\prime, b}\rangle\)of a transition and output.
+\(\langle{s^\prime, b}\rangle\) of a transition and output.
 
 \begin{notation}
     We will use the shorthand \(
-    \mealyfunctiontransition{f} := (s, a) \mapsto \proj{0}(f(s)(a))
+    \mealyfunctiontransition{f} \coloneqq (s, a) \mapsto \proj{0}(f(s)(a))
 \) and \(
-    \mealyfunctionoutput{f} := (s, a) \mapsto \proj{1}(f(s)(a))
+    \mealyfunctionoutput{f} \coloneqq (s, a) \mapsto \proj{1}(f(s)(a))
 \) for the transition and output component of the Mealy function respectively.
 \end{notation}
 
@@ -136,14 +136,13 @@ which every other \((M,N)\)-Mealy coalgebra has a unique homomorphism to.
         \mealyarrow{\sigma(3)}{b_3}
         \cdots
     \]
-    The unique stream function \(!(s)\) is defined for input \(\sigma\) and
+    The stream function \(!(s)\) is defined for input \(\sigma\) and
     index \(i \in \nat\) as \(!(s)(\sigma)(i) \coloneqq b_i\).
 \end{proof}
 
 For a Mealy coalgebra \((S, f)\) and a start state \(s_0\),
 \(!(s)(\sigma)\) maps to the stream of outputs that \((S, f)\) would produce
-by repeatedly applying \(f\) to each element of \(\sigma\), starting from
-\(s_0\).
+by applying \(f\) to each element of \(\sigma\), starting from \(s_0\).
 
 When viewed through this perspective, stream functions are nothing more than the
 states in another Mealy machine.
@@ -200,8 +199,7 @@ First an ordering on stream \emph{functions} is required.
     we say that \(s \stateorder s^\prime\) if \(!(s) \stateorder !(s^\prime)\).
 \end{definition}
 
-With an ordering on the states of a Mealy machine, monotonicity follows rather
-easily.
+With an ordering on the states of a Mealy machine, monotonicity quickly follows.
 
 \begin{definition}[Monotone Mealy machine]
     Let \(A\) and \(B\) be posets; an \((A,B)\)-Mealy machine is called a
@@ -210,7 +208,17 @@ easily.
 \end{definition}
 
 This establishes the properties of Mealy machines required to model circuits.
-all that remains is their composition, which is standard.
+To map to Mealy machines from circuits we need to assemble them into another
+PROP, in which the morphisms \(\listvar{m} \to \listvar{n}\) are
+\((\valuetuple{m},\valuetuple{n})\)-Mealy machines.
+There is one nuance to consider: circuits in \(\scircsigma\) have a `hardcoded'
+initial state in the form of the value generators, whereas the Mealy machines
+as presented do not have a designated start state per se.
+This means that as well as a Mealy machine, each morphism will need to be
+equipped with such a start state.
+
+All that remains to define is the composition of Mealy machines, which is
+standard.
 
 \begin{definition}[Cascade product~\cite{ginzburg2014algebraic}]
     Given an \((A,B)\)-Mealy machine \((S,f)\) with start state \(s_0\) and
@@ -222,12 +230,252 @@ all that remains is their composition, which is standard.
         ),
             \mealyfunctionoutput{g}(t, \mealyfunctionoutput{f}(s, a))
         )).
-    \]
+    \] with start state \((s_0, t_0)\).
 \end{definition}
 
 The cascade product of two Mealy machines effectively executes the first on the
-inputs, then executes the second on the outputs of the first.
+inputs, then executes the second on the outputs of the first; the inputs are
+`cascaded' through the two Mealy machines.
 
 \begin{example}
     \todo[inline]{Example!}
 \end{example}
+
+Tensor product is far more straightforward: it is the direct product of states
+and functions.
+
+\begin{definition}
+    Let \(\mealyi\) be the PROP in which each morphism
+    \(\listvar{m} \to \listvar{n}\) is a pair of a monotone
+    \(\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}}\)-Mealy machine
+    \((S, f)\) along with a start state \(s_0 \in S\).
+    Composition is by cascade product and tensor on morphisms is by
+    direct product.
+    The identity and the symmetry are the single-state machines that output the
+    input and swap the inputs respectively.
+\end{definition}
+
+Once again, we must show that this category has a trace.
+This can be computed in much the same way as it was for stream functions.
+
+\begin{definition}
+    Let \((S, f)\) be a monotone \(
+        (\valuetuple{\listvar{xm}}, \valuetuple{\listvar{xn}})
+    \)-Mealy machine.
+    For a state \(s \in S\) and input \(\listvar{a} \in \listvar{m}\), let
+    \(\mu_{s,\listvar{a}}\) be the least fixpoint of \(
+        \listvar{r} \mapsto \proj{0}\left(f\left(s, \listvar{ra}\right)\right)
+    \).
+    The \emph{least fixed point} of \((S, f)\) with start state \(s_0\) is a \(
+        (\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}})
+    \)-Mealy machine \(
+        (S, (s, \listvar{a}) \mapsto f((\mu_{s,\listvar{a}})\listvar{a}))
+    \) with start state \(s_0\).
+\end{definition}
+
+\begin{proposition}
+    The least fixed point is a trace on \(\mealyi\).
+\end{proposition}
+\begin{proof}
+    Let \((S, f)\) be a monotone
+    \((\valuetuple{\listvar{xm}}, \valuetuple{\listvar{xn}})\)-Mealy machine.
+    Since \(\morph{f}{S \times \listvar{xm}}{S \times \listvar{xn}}\) is
+    monotone with regards to the orders on \(S\) and
+    \(\valuetuple{\listvar{xm}}\) and \(S \times \listvar{xn}\) is finite, it
+    has a least fixed point.
+    The function \(
+        f^\prime \coloneqq (s, \listvar{a})
+        \mapsto
+        \proj{1}\left(f((\mu_{s,\listvar{a}})\listvar{a})\right)
+    \) is a composition of monotone functions, so it is itself monotone.
+    This means \((S, f^\prime)\) is a monotone \(
+        (\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}})
+    \)-Mealy machine.
+    This construction is a trace for the same reason as the trace of
+    \(\streami\) is.
+\end{proof}
+
+\begin{example}\label{ex:trace-mealy}
+    Consider the monotone \((\valuetuple{3},\valuetuple{3})\)-Mealy machine with
+    state set \(\belnapvalues\), initial state \(\bot\), and Mealy function \[
+        g \coloneqq (s, (v, u, w))
+        \mapsto \left\langle
+                \neg(u \land v),
+                (\neg(s \land w), \neg(u \land v), \neg(s \land w))
+        \right\rangle
+    ).\]
+    To take the trace of this machine, we must first compute the least fixed
+    point of \(v \mapsto \neg(s \land w)\), which is clearly just
+    \(\neg(s \land w)\).
+    Therefore the Mealy function of the traced
+    \((\valuetuple{2}, \valuetuple{2})\) machine is \(
+        (s, (u, w)) \mapsto g(s, (\neg(s \land w), u, w))
+    \).
+\end{example}
+
+With monotone Mealy machines in a PROP, we can now represent the unique
+homomorphism from a Mealy machine to a set of state functions as a PROP
+morphism.
+
+\begin{proposition}
+    There is a traced PROP morphism
+    \(\morph{\mealytostreami}{\mealyi}{\streami}\) sending a monotone Mealy
+    machine \(\left((S, f), s_0\right)\) to \(!(s_0)\), where \(!\) is the
+    unique homomorphism \((S,f) \to (\Gamma,\nu)\).
+\end{proposition}
+
+We can now interpret both circuits in \(\scircsigma\) and monotone Mealy
+machines in \(\mealyi\) as stream functions in \(\streami\).
+In essence, given one of these structures, we can determine its \emph{behaviour}
+as a stream function.
+What is missing, of course, is the links between them.
+
+\section{Between circuits and Mealy machines}
+
+The main result of this section is to establish the links between circuits
+and Mealy machines, and use this as a tool to help us assert the completeness of
+the denotational semantics.
+To do this, we must define PROP morphisms between \(\scircsigma\) and
+\(\mealyi\).
+
+Going from \(\scircsigma\) to \(\mealyi\) is straightforward since the former
+is freely generated.
+
+\begin{definition}
+    Let \(\morph{\circuittomealyi}{\scircsigma}{\mealyi}\) be the traced PROP
+    morphism defined on the generators as:
+    \begin{align*}
+        \circuittomealy[
+            \iltikzfig{strings/category/f}[box=F,colour=comb]
+        ]{\interpretation}
+        &\coloneqq \left(\left(\{()\}, \overline{v} \mapsto \left((), {
+            \circuittofunc[
+                \iltikzfig{strings/category/f}[box=F,colour=comb]
+            ]{\interpretation}(\overline{v})
+        }\right)\right), ()\right)
+        \\[0.1em]
+        \circuittomealy[
+            \iltikzfig{circuits/components/values/vs}[val=v]
+        ]{\interpretation}
+        &\coloneqq
+        \left(
+            \left(
+            \{s_v, s_\bot\},
+            \{
+                s_v \mapsto \left(s_\bot,v\right),
+                s_\bot \mapsto \left(s_\bot,\bot\right)
+            \}\right),
+            s_v
+        \right)
+        \\[0.1em]
+        \circuittomealy[
+            \iltikzfig{circuits/components/waveforms/delay}
+        ]{\interpretation}
+        &\coloneqq
+        \left(
+            \left(
+            \{ s_v \,|\, v \in \values\},
+            (s_v, a) \mapsto \left({v,s_a}\right)\right),
+            s_\bot
+        \right)
+    \end{align*}
+    \todo[inline]{Fiddle with spacing}
+\end{definition}
+
+\todo[inline]{Draw diagrams for values and delays maybe?}
+
+\begin{example}\label{ex:mealy-translation}
+    Applying \(\circuittomealy{\belnapinterpretation}\) to the SR NOR latch from
+    \cref{ex:latch} produces the monotone Mealy machine in
+    \cref{ex:trace-mealy}.
+\end{example}
+
+To check that this is the `correct' translation, it must
+\emph{preserve behaviour}: that is to say, if for a sequential circuit \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
+\), \(
+    \circuittostreami[
+        \iltikzfig{strings/category/f}[box=f,colour=seq]
+    ]
+\) is a stream function \(f\), then \(
+    \mealytostreami[
+        \circuittomealyi[
+            \iltikzfig{strings/category/f}[box=f,colour=seq]
+        ]
+    ]
+\) must be the same stream function \(f\).
+
+\begin{theorem}\label{thm:mealy-preserves-behaviour}
+    \(
+        \circuittostream{\interpretation}
+        =
+        \mealytostream \circ \circuittomealy{\interpretation}
+    \).
+\end{theorem}
+\begin{proof}
+    Since morphisms of \(\mealyi\) and \(\streami\) are both Mealy
+    coalgebras, we just need to check that the transitions and outputs of the
+    image of \(\circuittomealyi\) and \(\circuittostreami\) agree.
+\end{proof}
+
+So one direction is done; now for the other, which as is often the case is
+a bit harder.
+For regular Mealy machines, there is a standard procedure in circuit
+design~\cite{kohavi2009switching} in which each state of a Mealy machine is
+\emph{encoded} as a power of values, and combinational logic used to transform
+inputs into appropriate outputs.
+
+\begin{example}
+    \todo[inline]{Simple boolean examples}
+\end{example}
+
+When considering \emph{monotone} Mealy machines and trying to map into
+\(\scircsigma\), this procedure must respect monotonicity as the combinational
+logic is constructed using monotone components.
+This means that an arbitrary encoding cannot be used; we will now show how to
+select a suitable encoding.
+
+\begin{definition}
+    Let \(S\) be a set equipped with a partial order \(\stateorder\) and a total
+    order \(\leq\) such that \(s_0 \leq s_1 \leq \dots s_{k-1}\).
+    The \emph{\(\leq\)-encoding} for this assignment is a function
+    \(\morph{\gamma_\leq}{S}{\valuetuple{k}}\) defined as
+    \(\gamma_\leq(s)(i) \coloneqq \top\) if \(s_i \stateorder s\) and
+    \(\gamma_\leq(s)(i) \coloneqq \bot\) otherwise.
+\end{definition}
+
+\begin{example}
+    Recall the monotone Mealy machine from \cref{ex:mealy-translation}, which
+    has state set \(
+        \belnapvalues \coloneqq \{\bot,\belnapfalse,\belnaptrue,\top\}
+    \).
+    We choose the total order on \(\belnapvalues\) as
+    \(\bot \leq \belnapfalse \leq \belnaptrue \leq \top\); subsequently, the
+    \(\leq\)-encoding is defined as \(
+        \bot \mapsto \top\bot\bot\bot, \belnapfalse \mapsto \top\top\bot\bot,
+        \belnaptrue \mapsto \top\bot\top\bot, \top \mapsto \top\top\top\top
+    \).
+\end{example}
+
+It is essential that a \(\leq\)-encoding respects the original ordering of the
+states.
+
+\begin{lemma}
+    For an ordered state space \((S,\stateorder)\) and a \(\leq\)-encoding
+    \(\gamma_\leq\), \(s \stateorder s^\prime\) if and only if
+    \(\gamma_\leq(s) \sqcup \gamma(s^\prime)\).
+\end{lemma}
+\begin{proof}
+    First the \(\onlyifdir\) direction.
+    Let \(s_i \stateorder s_j\); we need to show that for every \(l < k\),
+    \(s_i(l) \sqsubseteq s_j(l)\).
+    The only way this can be violated is if \(s_i(l) = \top\) and
+    \(s_j(l) = \bot\).
+    But since \(s_i \stateorder s_j\), if \(s_l \stateorder s_i\) then
+    \(s_l \stateorder s_j\) also holds.
+
+    Now the \(\ifdir\) direction.
+    Assume that \(\gamma(s_i) \sqsubseteq \gamma(s_j)\); we need to show that
+    \(s_i \stateorder s_j\).
+    \todo[inline]{Look at this proof again}
+\end{proof}
