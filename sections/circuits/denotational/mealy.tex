@@ -90,8 +90,9 @@ If we inspect it a little closer, we find that stream functions are even more
 special than just being `a' \((A,B)\)-Mealy coalgebra.
 
 \begin{definition}[Mealy homomorphism]
-    A \emph{Mealy homomorphism} between two \((A,B)\)-Mealy coalgebra \((S,f)\)
-    and \((T,g)\) is a function \(\morph{h}{S}{T}\) preserving transitions and
+    For sets \(A\) and \(B\), an \emph{\(A,B\)-Mealy homomorphism} between two
+    \((A,B)\)-Mealy coalgebra \((S,f)\) and \((T,g)\) is a function
+    \(\morph{h}{S}{T}\) preserving transitions and
     outputs, i.e.\ for a Mealy function \(f\), a Mealy homomorphism \(h\)
     satisfies \(
         h\left(\mealyfunctiontransition{f}(s, a)\right)
@@ -114,33 +115,119 @@ which every other \((M,N)\)-Mealy coalgebra has a unique homomorphism to.
     funny looks.
 \end{remark}
 
-\begin{notation}\label{not:transitions}
-    For a Mealy coalgebra \(
-        (S, f)
-    \), state \(s \in S\) and index \(i \in \nat\), let the
-    \emph{\(i\)-th transition on \(\sigma\)}, written
-    \(\transitions{f}{i}{s}{\sigma}\), be defined as
-    \(\transitions{f}{0}{s}{\sigma} := s\) and
-    \(\transitions{f}{k+1}{s}{\sigma} :=
-        \mealyfunctiontransition{f}(\transitions{f}{k}{s}{\sigma}, \sigma(k))
-    \).
-\end{notation}
-
 \begin{proposition}[\cite{rutten2006algebraic}, Prop. 2.2]
     \label{prop:final-coalgebra}
-    For every Mealy coalgebra \((S,f)\), there exists a
-    unique homomorphism \(\morph{{!}}{(S,f)}{(\Gamma,\nu)}\).
+    For every \((A,B)\)-Mealy coalgebra \((S,f)\), there exists a
+    unique \((A,B)\)-Mealy homomorphism \(\morph{{!}}{(S,f)}{(\Gamma,\nu)}\).
 \end{proposition}
 \begin{proof}
-    A homomorphism \(\morph{g}{(S, f)}{(\Gamma, \nu)}\) is a function
-    \(S \to \Gamma\), so for a state \(s \in S\), \(g(s)\) will be a stream
-    function \(\stream{M} \to \stream{N}\).
-    For stream \(\sigma \in \stream{M}\) and \(i \in \nat\), the unique stream
-    function is defined as
-    \(
-        h(s)(\sigma)(i)
-        :=
-        \mealyfunctionoutput{f}(f^i_0(s, \sigma), \sigma(i))
-    \).
+    An \((A,B)\)-Mealy homomorphism \(\morph{g}{(S, f)}{(\Gamma, \nu)}\) is a
+    function \(S \to \Gamma\), so for a state \(s_0 \in S\), \(g(s)\) will be a
+    stream function \(\stream{A} \to \stream{B}\).
+    Let \(\sigma \in \stream{A}\) be an input stream; there is a (unique) series
+    of transitions \[
+        s_0
+        \mealyarrow{\sigma(0)}{b_0}
+        s_1
+        \mealyarrow{\sigma(1)}{b_1}
+        s_2
+        \mealyarrow{\sigma(2)}{b_2}
+        s_3
+        \mealyarrow{\sigma(3)}{b_3}
+        \cdots
+    \]
+    The unique stream function \(!(s)\) is defined for input \(\sigma\) and
+    index \(i \in \nat\) as \(!(s)(\sigma)(i) \coloneqq b_i\).
 \end{proof}
 
+For a Mealy coalgebra \((S, f)\) and a start state \(s_0\),
+\(!(s)(\sigma)\) maps to the stream of outputs that \((S, f)\) would produce
+by repeatedly applying \(f\) to each element of \(\sigma\), starting from
+\(s_0\).
+
+When viewed through this perspective, stream functions are nothing more than the
+states in another Mealy machine.
+However, this is not just any Mealy machine, it is the \emph{minimal} Mealy
+machine with the same behaviour as \((S, f)\).
+
+\subsection{Circuits as Mealy machines}
+
+The fact that causal stream functions are the final Mealy coalgebra is the
+ingredient that will help us build a bridge between circuits in \(\scircsigma\)
+and stream functions in \(\streami\).
+The crucial step is to now assemble Mealy machines into another traced PROP
+and define PROP morphisms between all three categories in play.
+
+However, not all Mealy machines defined thus far correspond to circuits in
+\(\scircsigma\).
+As with stream functions, we must refine our notion of Mealy machine in
+order to find those that do.
+There is an easy check for this: a Mealy machine \((S, f)\) with start state
+\(s_0\) specifies the behaviour of a circuit in \(\scircsigma\) if the
+stream function \(!(s_0)\) is in \(\streami\).
+
+As established, all stream functions in the image of \(!\) are causal, and since
+we only work with \emph{finite} Mealy machines we can also conclude the
+following:
+
+\begin{lemma}
+    Given a Mealy machine \((S, f)\) and start state \(s_0 \in S\), \(!(s_0)\)
+    is finitely specified.
+\end{lemma}
+\begin{proof}
+    \(S\) is finite, and \(\mealytostream\) must preserve transitions.
+\end{proof}
+
+Monotonicity is a little less straightforward.
+One could set the input, output and state sets to all be posets, and use the
+usual definition of monotonicity that way.
+However, this overcomplicates things: since each Mealy coalgebra has a
+corresponding stream function, we can appeal to this rather than having to
+manually order the state set.
+
+First an ordering on stream \emph{functions} is required.
+
+\begin{definition}
+    Let \(A\) and \(B\) be posets.
+    For stream functions \(\morph{f,g}{\stream{A}}{\stream{B}}\), we say that
+    \(f \stateorder g\) if, for all \(\sigma \in \stream{A}\),
+    \(f(\sigma) \leq_{\stream{B}}\).
+\end{definition}
+
+\begin{definition}[State order]
+    Let \(A\) and \(B\) posets.
+    For an \((A,B)\)-Mealy machine \((S, f)\) and states \(s,s^\prime \in S\)
+    we say that \(s \stateorder s^\prime\) if \(!(s) \stateorder !(s^\prime)\).
+\end{definition}
+
+With an ordering on the states of a Mealy machine, monotonicity follows rather
+easily.
+
+\begin{definition}[Monotone Mealy machine]
+    Let \(A\) and \(B\) be posets; an \((A,B)\)-Mealy machine is called a
+    \emph{monotone} Mealy machine if \(f\) is monotone with respect to the
+    appropriate orders.
+\end{definition}
+
+This establishes the properties of Mealy machines required to model circuits.
+all that remains is their composition, which is standard.
+
+\begin{definition}[Cascade product~\cite{ginzburg2014algebraic}]
+    Given an \((A,B)\)-Mealy machine \((S,f)\) with start state \(s_0\) and
+    an \((B,C)\)-Mealy machine \((T,g)\) with state state \((t_0)\), their
+    \emph{cascade product} is an \((A,C)\)-Mealy machine defined as \[
+        (S \times T, ((s, t), a) \mapsto ((
+            \mealyfunctiontransition{f}(s,a),
+            \mealyfunctiontransition{g}(t, \mealyfunctionoutput{f}(s, a))
+        ),
+            \mealyfunctionoutput{g}(t, \mealyfunctionoutput{f}(s, a))
+        )).
+    \]
+\end{definition}
+
+The cascade product of two Mealy machines effectively executes the first on the
+inputs, then executes the second on the outputs of the first.
+
+\begin{example}
+    \todo[inline]{Example!}
+\end{example}
