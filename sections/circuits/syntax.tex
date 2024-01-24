@@ -270,6 +270,18 @@ the input it received in the previous cycle.
     \todo[inline]{Draw the construction}
 \end{notation}
 
+Often one may also want to think about delays with some explicit `initial
+value', like a sort of register.
+This is so common that we introduce special notation for it.
+
+\begin{notation}\label{not:register}
+    For a word \(\listvar{v} \in \valuetuple{m}\), let \(
+        \iltikzfig{circuits/components/waveforms/register}
+        \coloneqq
+        \iltikzfig{circuits/components/waveforms/register-shorthand}
+    \).
+\end{notation}
+
 To distinguish them from combinational circuits, arbitrary sequential circuit
 morphisms are drawn as green boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
 
