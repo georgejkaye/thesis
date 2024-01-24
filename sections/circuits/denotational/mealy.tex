@@ -1,7 +1,9 @@
 \section{Monotone Mealy machines}
 
-It is not immediately obvious how to translate back from stream functions in
-\(\streami\) to circuits in \(\scircsigma\).
+While it would not be too difficult to define a map from circuits in
+\(\scircsigma\) to stream functions in \(\streami\), it is not immediately
+obvious how to translate back from stream functions in \(\streami\) to circuits
+in \(\scircsigma\).
 Even though these stream functions have finitely many stream derivatives, how
 does one encapsulate this behaviour into a circuit made from finitely many
 components while taking into account inputs and state?
@@ -16,9 +18,9 @@ function.
 
 We will do this by assembling a special class of Mealy machines which we dub
 \emph{monotone Mealy machines} into another traced PROP.
-By constructing PROP morphisms between these two categories that preserve
-behaviour of stream functions, we establish that we can work with either
-circuit representation.
+As well as helping us on our way to our end goal of a sound and complete
+denotational semantics, having a PROP of Mealy machines from which we can
+translate into sequential circuit morphisms is nice to have in its own right.
 
 \begin{definition}[Mealy machine~\cite{mealy1955method}]\label{def:mealy}
     Let \(A\) and \(B\) be finite sets.
@@ -327,9 +329,5 @@ morphism.
     \todo[inline]{Do proof}
 \end{proof}
 
-
-We can now interpret both circuits in \(\scircsigma\) and monotone Mealy
-machines in \(\mealyi\) as stream functions in \(\streami\).
-In essence, given one of these structures, we can determine its \emph{behaviour}
-as a stream function.
-What is missing, of course, is the links between them.
+We can now determine the \emph{behaviour} of a Mealy machine in terms of a
+stream function.

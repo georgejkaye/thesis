@@ -675,93 +675,100 @@ point\footnote{The original proof idea for the following is by David Sprunger.}.
 We now have two traced PROPs: a \emph{syntactic} category of sequential circuit
 terms \(\scircsigma\) and a \emph{semantic} category of causal, finitely
 specified, monotone stream functions \(\streami\).
-To assign semantics in the latter to terms in the former, we use a traced PROP
-morphism.
-First we establish candidates for the semantics of the sequential generators.
 
-\begin{definition}\label{def:state-stream-functions}
-    For each \(v \in \values\), let \(
-        \morph{\valstream{v}}{\valuetuplestream{0}}{\valuestream}
-    \) be defined as \(
-        \mealyoutput{(\valstream{v})}{()} \coloneqq v
-    \) and \(
-        \mealytransition{(\valstream{v})}{()} \coloneqq \valstream{\bot}
-    \).
-    Let \(
-        \morph{\shiftstream{v}}{\valuestream}{\valuestream}
-    \) be defined as \(
-        \mealyoutput{(\shiftstream{v})}{\sigma}
-        \coloneqq
-        v
-    \) and \(
-        \mealytransition{(\shiftstream{v})}{a \streamcons \sigma}
-        \coloneqq
-        \shiftstream{a}
-    \).
-\end{definition}
+We could now go ahead and define a map from circuits to stream functions;
+indeed, this is what is done in~\cite{ghica2023compositional}.
+Instead, motivated by our quest for a sound and complete denotational semantics,
+we will examine another structure with close links to both circuits and stream
+functions; that of \emph{Mealy machines}.
 
-\begin{lemma}
-    The stream functions in \cref{def:state-stream-functions} are causal,
-    monotone and finitely specified.
-\end{lemma}
-\begin{proof}
-    For the first four functions, the \(k\)th element of the output stream is
-    computed by a monotone operation on \(k\)th element of the input stream, so
-    the stream function is monotone and causal.
-    Since the \(k\)th input element cannot affect a later output element, there
-    is one stream derivative: the original function.
-    The function \(\valstream{v}\) has no inputs so it is trivially causal and
-    monotone.
-    It has one stream derivative: the stream function that constantly outputs
-    \(\bot\).
-    The function \(\shiftstream{\bot}\) is causal as the \(i+1\)th output
-    element depends on only the \(i\)th element.
-    There are \(|\values|\) stream derivatives, as there is a different one for
-    each possible input value.
-    Each of these stream derivatives is monotone, as the initial output is fixed
-    regardless of input, and, on input \(a\), the stream derivative is the
-    stream function that initially outputs \(a\).
-\end{proof}
+% To assign semantics in the latter to terms in the former, we use a traced PROP
+% morphism.
+% First we establish candidates for the semantics of the sequential generators.
 
-With those out of the way, we can move onto the complete translation.
+% \begin{definition}\label{def:state-stream-functions}
+%     For each \(v \in \values\), let \(
+%         \morph{\valstream{v}}{\valuetuplestream{0}}{\valuestream}
+%     \) be defined as \(
+%         \mealyoutput{(\valstream{v})}{()} \coloneqq v
+%     \) and \(
+%         \mealytransition{(\valstream{v})}{()} \coloneqq \valstream{\bot}
+%     \).
+%     Let \(
+%         \morph{\shiftstream{v}}{\valuestream}{\valuestream}
+%     \) be defined as \(
+%         \mealyoutput{(\shiftstream{v})}{\sigma}
+%         \coloneqq
+%         v
+%     \) and \(
+%         \mealytransition{(\shiftstream{v})}{a \streamcons \sigma}
+%         \coloneqq
+%         \shiftstream{a}
+%     \).
+% \end{definition}
 
-\begin{definition}\label{def:circuit-to-stream}
-    Let \(
-        \morph{\circuittostream{\interpretation}}{\scircsigma}{\streami}
-    \) be the traced PROP morphism defined as \(
-        \circuittostream[
-            \iltikzfig{strings/category/f}[box=F,colour=comb]
-        ]{\interpretation}(\sigma)(k)
-        \coloneqq
-        \circuittofunc[
-            \iltikzfig{strings/category/f}[box=F,colour=comb]
-        ]{\interpretation}(\sigma(k))
-    \), \(
-        \circuittostream[
-            \iltikzfig{circuits/components/values/vs}[val=v]
-        ]{\interpretation}
-        \coloneqq
-        \valstream{v}
-    \) and \(
-        \circuittostream[
-            \iltikzfig{circuits/components/waveforms/delay}
-        ]{\interpretation}
-        \coloneqq
-        \shiftstream{\bot}
-    \).
-\end{definition}
+% \begin{lemma}
+%     The stream functions in \cref{def:state-stream-functions} are causal,
+%     monotone and finitely specified.
+% \end{lemma}
+% \begin{proof}
+%     For the first four functions, the \(k\)th element of the output stream is
+%     computed by a monotone operation on \(k\)th element of the input stream, so
+%     the stream function is monotone and causal.
+%     Since the \(k\)th input element cannot affect a later output element, there
+%     is one stream derivative: the original function.
+%     The function \(\valstream{v}\) has no inputs so it is trivially causal and
+%     monotone.
+%     It has one stream derivative: the stream function that constantly outputs
+%     \(\bot\).
+%     The function \(\shiftstream{\bot}\) is causal as the \(i+1\)th output
+%     element depends on only the \(i\)th element.
+%     There are \(|\values|\) stream derivatives, as there is a different one for
+%     each possible input value.
+%     Each of these stream derivatives is monotone, as the initial output is fixed
+%     regardless of input, and, on input \(a\), the stream derivative is the
+%     stream function that initially outputs \(a\).
+% \end{proof}
 
-Given a sequential circuit \(
-    \iltikzfig{strings/category/f}[box=F,colour=seq]
-\), we say that the stream function \(
-    \circuittostream[\iltikzfig{strings/category/f}[box=F,colour=seq]]{\interpretation}
-\) is its \emph{behaviour under} \(\interpretation\), or simply its
-\emph{behaviour} if the interpretation is arbitrary.
+% With those out of the way, we can move onto the complete translation.
 
-If we were less invested in our denotational quest, we could stop here.
-Each circuit in \(\scircsigma\) now has a denotation in \(\scircsigma\): what
-more could we want?
-But we are not content with this, for we are mathematicians.
-We need to show that this is a \emph{complete} denotational semantics: every
-stream function in \(\streami\) must also correspond to at least one
-circuit in \(\scircsigma\).
+% \begin{definition}\label{def:circuit-to-stream}
+%     Let \(
+%         \morph{\circuittostream{\interpretation}}{\scircsigma}{\streami}
+%     \) be the traced PROP morphism defined as \(
+%         \circuittostream[
+%             \iltikzfig{strings/category/f}[box=F,colour=comb]
+%         ]{\interpretation}(\sigma)(k)
+%         \coloneqq
+%         \circuittofunc[
+%             \iltikzfig{strings/category/f}[box=F,colour=comb]
+%         ]{\interpretation}(\sigma(k))
+%     \), \(
+%         \circuittostream[
+%             \iltikzfig{circuits/components/values/vs}[val=v]
+%         ]{\interpretation}
+%         \coloneqq
+%         \valstream{v}
+%     \) and \(
+%         \circuittostream[
+%             \iltikzfig{circuits/components/waveforms/delay}
+%         ]{\interpretation}
+%         \coloneqq
+%         \shiftstream{\bot}
+%     \).
+% \end{definition}
+
+% Given a sequential circuit \(
+%     \iltikzfig{strings/category/f}[box=F,colour=seq]
+% \), we say that the stream function \(
+%     \circuittostream[\iltikzfig{strings/category/f}[box=F,colour=seq]]{\interpretation}
+% \) is its \emph{behaviour under} \(\interpretation\), or simply its
+% \emph{behaviour} if the interpretation is arbitrary.
+
+% If we were less invested in our denotational quest, we could stop here.
+% Each circuit in \(\scircsigma\) now has a denotation in \(\scircsigma\): what
+% more could we want?
+% But we are not content with this, for we are mathematicians.
+% We need to show that this is a \emph{complete} denotational semantics: every
+% stream function in \(\streami\) must also correspond to at least one
+% circuit in \(\scircsigma\).

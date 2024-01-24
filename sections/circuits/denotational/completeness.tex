@@ -1,0 +1,104 @@
+\section{Completeness of the denotational semantics}
+
+\todo[inline]{Map from streams to Mealy machines}
+
+We conclude by showing that each function in \(\streami\) has at least one
+circuit in \(\scircsigma\) with the same behaviour under \(\interpretation\).
+
+\begin{corollary}\label{thm:circuit-stream-correspondence}
+    \(
+        \circuittostreami
+        \circ
+        \mealytocircuiti
+        \circ
+        \streamtomealyi
+        =
+        \id[\streami]
+    \).
+\end{corollary}
+\begin{proof}
+    First we show the former:
+    \begin{align*}
+        \circuittostream{\interpretation} \circ
+        \psi \circ
+        \phi
+        &=
+        \circuittostream{\interpretation} \circ
+        \mealytocircuiti \circ
+        \streamtomealyi \circ
+        \mealytostream \circ
+        \circuittomealy{\interpretation}
+        \\
+        &=
+        \mealytostream \circ
+        \streamtomealyi \circ
+        \mealytostream \circ
+        \circuittomealy{\interpretation}
+        & \text{\cref{thm:mealy-to-circuit}}
+        \\
+        &=
+        \mealytostream \circ
+        \circuittomealy{\interpretation}
+        & \text{\cref{cor:minimal-mealy}}
+        \\
+        &=
+        \circuittostream{\interpretation}
+        & \text{\cref{thm:mealy-to-circuit}}
+    \end{align*}
+
+    Now the latter:
+    \begin{align*}
+        \phi \circ \psi
+        &=
+        \mealytostream \circ
+        \circuittomealy{\interpretation} \circ
+        \mealytocircuiti \circ
+        \streamtomealyi
+        \\
+        &=
+        \circuittostream{\interpretation} \circ
+        \mealytocircuiti \circ
+        \streamtomealyi
+        & \text{\cref{thm:mealy-preserves-behaviour}}
+        \\
+        &=
+        \mealytostream \circ
+        \streamtomealyi
+        & \text{\cref{thm:mealy-to-circuit}}
+        \\
+        &=
+        \id[\streami]
+        & \text{\cref{cor:minimal-mealy}}
+    \end{align*}
+\end{proof}
+
+There is no isomorphism between \(\scircsigma\) and \(\streami\)
+as many circuits may have the same semantics but different syntax.
+
+\begin{definition}[Denotational equivalence]
+    We say that two sequential circuits are \emph{denotationally equivalent}
+    under \(\interpretation\), written \(
+        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+        \approx_{\interpretation}
+        \iltikzfig{strings/category/f}[box=G,colour=seq,dom=m,cod=n]
+    \) if \(
+        \circuittostream[
+            \iltikzfig{strings/category/f}[box=F,colour=seq]
+        ]{\interpretation}
+        =
+        \circuittostream[
+            \iltikzfig{strings/category/f}[box=G,colour=seq]
+        ]{\interpretation}
+    \).
+    Let \(\scircsigmai\) be the result of quotienting \(\scircsigma\) by \(
+        \approx_{\interpretation}
+    \).
+\end{definition}
+
+\begin{corollary}
+    \(\scircsigmai \cong \streami\).
+\end{corollary}
+
+This confirms that \(\streami\), a PROP of monotone causal stream functions
+with finitely many stream derivatives, is a suitable semantic domain for
+sequential circuits.
