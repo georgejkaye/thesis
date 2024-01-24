@@ -71,14 +71,14 @@ and a function, so this is clearly a coalgebra in \(\set\).
 
 \begin{example}
     In \cite{bonsangue2008coalgebraic}, the notation \(
-        f(s)(a) = \langle{\streaminit{s}{a},\streamderivative{s}{a}}\rangle
+        f(s)(a) = \langle{\initialoutput{s}{a},\streamderivative{s}{a}}\rangle
     \) is used to describe the Mealy function, which coincides with the notation
     used for stream functions; this is not a coincidence!
 
     Given sets \(A\) and \(B\), let \(\Gamma\) be the set of causal stream
     functions \(\stream{A} \to \stream{B}\), and let
     \(\morph{\nu}{\Gamma}{\Gamma \times B}^A\) be the function defined as \(
-        (f, a) \mapsto \langle{\streaminit{s}{a},\streamderivative{s}{a}}\rangle
+        (f, a) \mapsto \langle{\initialoutput{s}{a},\streamderivative{s}{a}}\rangle
     \).
     Then \((\Gamma,\nu)\) is a \((A,B)\)-Mealy coalgebra.
 \end{example}
@@ -463,7 +463,7 @@ states.
 \begin{lemma}
     For an ordered state space \((S,\stateorder)\) and a \(\leq\)-encoding
     \(\gamma_\leq\), \(s \stateorder s^\prime\) if and only if
-    \(\gamma_\leq(s) \sqcup \gamma(s^\prime)\).
+    \(\gamma_\leq(s) \sqsubseteq \gamma_\leq(s^\prime)\).
 \end{lemma}
 \begin{proof}
     First the \(\onlyifdir\) direction.
@@ -475,7 +475,56 @@ states.
     \(s_l \stateorder s_j\) also holds.
 
     Now the \(\ifdir\) direction.
-    Assume that \(\gamma(s_i) \sqsubseteq \gamma(s_j)\); we need to show that
-    \(s_i \stateorder s_j\).
-    \todo[inline]{Look at this proof again}
+    Assume that \(\gamma_\leq(s_i) \sqsubseteq \gamma_\leq(s_j)\); we need to
+    show that \(s_i \stateorder s_j\); i.e.\ that \(\gamma_\leq(s_j)(i) = \top\)
+    If \(\gamma_\leq(s_i) \sqsubseteq \gamma_\leq(s_j)\), then for each
+    \(l < k\) then \(\gamma_\leq(s_i)(l) \sqsubseteq \gamma_\leq(s_j)(l)\);
+    in particular \(\gamma_\leq(s_i)(i) \sqsubseteq \gamma_\leq(s_j)(i)\)
+    By definition of \(\gamma_\leq\), \(\gamma_\leq(s_i)(i) = \top\), so if
+    \(\gamma_\leq(s_i) \sqsubseteq \gamma_\leq(s_j)\) then
+    \(\gamma_\leq(s_j)(i)\) is also \(\top\).
 \end{proof}
+
+Using this encoding, we will construct a combinational circuit morphism that,
+when interpreted as a function, implements the output and transition function
+of the Mealy machine.
+There is no reason for such a morphism to exist for an arbitrary interpretation:
+why should we expect some hurriedly slapped together collection of gates to be
+able to model every function?
+The useful interpretations are those that \emph{can} model every function.
+
+\begin{definition}[Functional completeness]
+    An interpretation \(\interpretation\) of a signature \(\signature\) is
+    \emph{functionally complete} if there exists a map \(
+        \morph{\mealytofunc}{\funci}{\scircsigma}
+    \) which sends functions \(
+        \morph{f}{\valuetuple{\listvar{m}}}{\valuetuple{\listvar{n}}}
+    \), to circuits of the form \(
+        \iltikzfig{circuits/synthesis/normalised-function}
+    \) for some word \(\listvar{v} \in \freemon{\values}\) such that
+    \(\circuittostreami[\mealytofunc[f]](\sigma)(i) = f(\sigma(i))\).
+\end{definition}
+
+For a particular interpretation there may well be many such maps from functions
+to circuits, but for convenience we will assume there is a fixed procedure
+\(\mealytofunc\) amd refer to a circuit \(\mealytofunc[f]\) as the
+\emph{normalised circuit for \(f\)}.\
+
+\begin{remark}
+    Even though \(\mealytofunc\) concerns combinational functions, it maps into
+    the category of \emph{sequential} circuits \(\scircsigma\)!
+    This is because sometimes instantaneous values must be used to create the
+    normalised circuit.
+    Despite this, the semantics of the circuit are still combinational since the
+    loop enforces that the state is \emph{constant}: it will always produce the
+    word \(\listvar{v}\).
+    This means the circuit has combinational behaviour despite using sequential
+    components; often this is the only way to ensure every function can be
+    modelled.
+\end{remark}
+
+\begin{example}
+    The Belnap interpretation from \cref{ex:belnap-interpretation} is
+    functionally complete; for interests of space we postpone the proof for
+    \cref{sec:belnap}.
+\end{example}
