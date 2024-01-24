@@ -329,5 +329,39 @@ morphism.
     \todo[inline]{Do proof}
 \end{proof}
 
-We can now determine the \emph{behaviour} of a Mealy machine in terms of a
-stream function.
+\subsection{Streams to Mealy machines}
+
+As a causal stream function \(\morph{f}{\stream{A}}{\stream{B}}\) is just a
+\((A,B)\)-Mealy machine, when such a function has finitely many stream
+derivatives it is easy to retrieve a finite Mealy machine by repeatedly
+taking stream derivatives to compute the state set.
+
+\begin{example}
+    \todo[inline]{Stream function back to Mealy machine}
+\end{example}
+
+In fact, for a function \(f\) this procedure produces a \emph{minimal} Mealy
+machine.
+
+\begin{corollary}[Corollary 2.3, \cite{rutten2006algebraic}]\label{cor:minimal-mealy}
+    For a causal, finitely specified, stream function \(
+        \morph{f}{\stream{M}}{\stream{N}}
+    \), let \(S\) be the least set of
+    causal stream functions including \(f\) and closed under stream derivatives:
+    i.e.\ for all \(h \in S\) and \(a \in M\), \(h_a \in S\).
+    Then the Mealy machine \(
+        \streamtomealy[f]{\interpretation} = (S, g, f)
+    \), where \(
+        g(h)(a) = \langle \mealyoutput{h}{a}, \mealytransition{h}{a}\rangle
+    \), has the smallest state space of Mealy machines with the property \(
+        \mealytostreami[\streamtomealyi[f]] = f
+    \).
+\end{corollary}
+\begin{proof}
+    Since \(S\) is generated from the function \(f\) and is the \emph{smallest}
+    possible set, there are no unreachable states in \(S\).
+    Since the output and transition of states in
+    \(\streamtomealyi[f]\) is just initial output and stream derivative, this
+    means these two states can only have the same `behaviour' if they are
+    derived from the same original stream function.
+\end{proof}

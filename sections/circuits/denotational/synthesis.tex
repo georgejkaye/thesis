@@ -1,13 +1,13 @@
 \section{Between circuits and Mealy machines}
 
-The main result of this section is to establish the links between circuits
-and Mealy machines, and use this as a tool to help us assert the completeness of
-the denotational semantics.
-To do this, we must define PROP morphisms between \(\scircsigma\) and
-\(\mealyi\).
+We have now established the close links between \(\streami\) and \(\mealyi\).
+The main result of this section is to introduce \(\scircsigma\) to the mix.
 
-Going from \(\scircsigma\) to \(\mealyi\) is straightforward since the former
-is freely generated.
+\subsection{Circuits to monotone Mealy machines}
+
+Circuits have a very natural interpretation as Mealy machines: going from
+\(\scircsigma\) to \(\mealyi\) is straightforward since the former is freely
+generated.
 
 \begin{definition}
     Let \(\morph{\circuittomealyi}{\scircsigma}{\mealyi}\) be the traced PROP
@@ -58,34 +58,24 @@ is freely generated.
     \cref{ex:trace-mealy}.
 \end{example}
 
-To check that this is the `correct' translation, it must
-\emph{preserve behaviour}: that is to say, if for a sequential circuit \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
-\), \(
-    \circuittostreami[
-        \iltikzfig{strings/category/f}[box=f,colour=seq]
-    ]
-\) is a stream function \(f\), then \(
-    \mealytostreami[
-        \circuittomealyi[
-            \iltikzfig{strings/category/f}[box=f,colour=seq]
-        ]
-    ]
-\) must be the same stream function \(f\).
+Mealy machines are a reasonable semantics for sequential circuits, but the
+image of \(\circuittomealyi\) does not always lead to minimal Mealy machines,
+and there are many Mealy machines that may correspond to the same behaviour.
+The `purest' semantics of a sequential circuit is a stream function in
+\(\streami\).
 
-\begin{theorem}\label{thm:mealy-preserves-behaviour}
-    \(
-        \circuittostream{\interpretation}
-        =
-        \mealytostream \circ \circuittomealy{\interpretation}
-    \).
-\end{theorem}
-\begin{proof}
-    Since morphisms of \(\mealyi\) and \(\streami\) are both Mealy
-    coalgebras, we just need to check that the transitions and outputs of the
-    image of \(\circuittomealyi\) and \(\circuittostreami\) agree.
-    \todo[inline]{Well do they? Do the proof}
-\end{proof}
+\begin{definition}
+    Let \(\morph{\circuittostreami}{\scircsigma}{\streami}\) be defined as
+    \(\mealytostreami \circ \circuittostreami\).
+\end{definition}
+
+We have now finally established the \emph{denotation} of a sequential circuit \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+\): it is the stream function \(
+    \morph{\circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]}{\valuetuplestream{\listvar{m}}}{\valuetuplestream{\listvar{n}}}
+\).
+
+\subsection{Monotone Mealy machines to circuits}
 
 So one direction is done; now for the other, which as is often the case is
 a bit harder.
@@ -384,7 +374,7 @@ altering their behaviour in terms of their stream functions.
 This already is quite nice to have; if we only know the specification of a
 circuit in terms of a (monotone) Mealy machine, we can use the PROP morphism
 \(\mealytocircuiti\) to generate a circuit rather than attempting to blindly
-construct one from primitive logical components.
+construct one from primitive logical
 
 Our work is not done yet though: these results on Mealy machines only set the
 stage for the final result of this chapter: the completeness of
