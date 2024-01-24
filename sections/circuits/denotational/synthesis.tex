@@ -281,3 +281,111 @@ might be mapped to different circuit morphisms depending on the time of day!
     Then the \emph{chosen state order} \(\leq_S\) is a total order on \(S\)
     defined as \(s \leq_S s^\prime\) if \(t_{s,\leq} \leq t_{s^\prime,\leq}\).
 \end{definition}
+
+The PROP morphism from monotone Mealy machines to circuits can then be
+parameterised by some ordering on the set of values \(\values\), ensuring that
+there is a canonical term in \(\scircsigma\) for each monotone Mealy machine.
+
+\begin{definition}\label{def:mealy-to-circuit}
+    For a functionally complete interpretation \(\interpretation\) and total
+    order \(\leq\) on \(\values\), let \(
+        \morph{
+            \mealytocircuiti
+        }{
+            \mealyi
+        }{
+            \scircsigma
+        }
+    \) be the traced PROP morphism with action defined for a monotone Mealy
+    machine \((S,f,s)\) as producing \(
+        \iltikzfig{circuits/synthesis/mealy-term}
+    \).
+\end{definition}
+
+Before proceeding to the result that this PROP morphism is behaviour-preserving,
+we must show a lemma linking the behaviour circuits in the image of
+\(\mealytocircuiti\) to initial outputs and stream derivatives.
+
+\begin{proposition}
+    \label{prop:mealy-form-image}
+    Given a combinational circuit \(
+        \iltikzfig{strings/category/f-2-2}[box=\hat{F},dom1=x,dom2=m,cod1=x,cod2=n,colour=comb]
+    \), let \(f\) be the map with action \(
+        (\listvar{s}) \mapsto
+            \circuittostreami[
+                \iltikzfig{circuits/productivity/mealy-form}[core=\hat{F},state=\listvar{s},dom=m,cod=n,delay=x]
+            ]
+    \) and let \(
+        \hat{f}
+        :=
+        \circuittofunci[
+            \iltikzfig{strings/category/f-2-2}[box=\hat{F},colour=comb]
+        ]
+    \).
+    Then, \(
+        \mealyoutput{f(\listvar{s})}{\listvar{a}}
+        =
+        \proj{1}(\hat{f}(\listvar{s}, \listvar{a}))
+    \) and \(
+        \mealytransition{f(\listvar{s})}{\listvar{a}}
+        =
+        f(\proj{0}(\hat{f}(\listvar{s}, \listvar{a})))
+    \).
+\end{proposition}
+\begin{proof}
+    None of the traced inputs affect the outputs at the
+    current cycle, so the initial output is trivial.
+    The least fixpoint is reached immediately as \(
+        \mu_a := \proj{0}(\hat{f}(\listvar{s}, \listvar{a}))
+    \) and the traced input is captured by the delay, so the derivative
+    will indeed be \(f(\mu_a)\).
+\end{proof}
+
+Now we can show the behaviour-preserving result.
+
+\begin{theorem}\label{thm:mealy-to-circuit}
+    \(
+        \mealytostream = \circuittostreami \circ \mealytocircuiti
+    \).
+\end{theorem}
+\begin{proof}
+    For fixed state set \(S\) and Mealy function \(g\), let
+    \(h := (s) \mapsto \mealytostreami[(S, g, s)]\) and \(
+        h^\prime := (s) \mapsto \circuittostreami[\mealytocircuiti[(S, g, s)]]
+    \).
+    We will show that for a state \(s \in S\), there is a bisimulation
+    between \(h(s)\) and \(h^\prime(s)\).
+
+    We can transform \(h^\prime(s)\) into a circuit of the form in
+    \cref{prop:mealy-form-image} by concatenating the values created by
+    \(\mealytofunc\) to the encoded state using axioms of STMCs.
+    Then, by finality of \(\mealytostreami\), \cref{def:mealy-to-circuit} and
+    \cref{prop:mealy-form-image}, these stream functions both have initial output \(
+        \proj{1}(g(s, \listvar{a}))
+    \).
+    The former has \(
+        \streamderivative{h(s)}{\listvar{a}} = h(\proj{0}(g(s, \listvar{a})))
+    \) and the latter has \(
+        \streamderivative{h^\prime(s)}{\listvar{a}} =
+            \gamma(\proj{0}(g(s, \listvar{a})) =
+            h^\prime(\proj{0}(g(s, \listvar{a})))
+    \).
+    As \(h(s)\) and \(h^\prime(s)\) are defined on all states,
+    \(\mealytostreami[(S, g, s)]\) and
+    \(\circuittostreami[\mealytocircuiti[(S, g, s)]]\) are equal for any Mealy
+    machine \((S, g, s)\).
+\end{proof}
+
+
+This brings our foray into Mealy machines to a close: we can translate back and
+forth between circuits and \emph{monotone} Mealy machines without fear of
+altering their behaviour in terms of their stream functions.
+
+This already is quite nice to have; if we only know the specification of a
+circuit in terms of a (monotone) Mealy machine, we can use the PROP morphism
+\(\mealytocircuiti\) to generate a circuit rather than attempting to blindly
+construct one from components in \(\Sigma\).
+
+Our work is not done yet though: these results on Mealy machines only set the
+stage for the final result of this chapter: the completeness of
+the denotational semantics.
