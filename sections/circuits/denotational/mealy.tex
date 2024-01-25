@@ -151,7 +151,7 @@ states in another Mealy machine.
 However, this is not just any Mealy machine, it is the \emph{minimal} Mealy
 machine with the same behaviour as \((S, f)\).
 
-\subsection{Circuits as Mealy machines}
+\subsection{Monotone Mealy machines}
 
 The fact that causal stream functions are the final Mealy coalgebra is the
 ingredient that will help us build a bridge between circuits in \(\scircsigma\)
@@ -172,7 +172,7 @@ we only work with \emph{finite} Mealy machines we can also conclude the
 following:
 
 \begin{lemma}
-    Given a Mealy machine \((S, f)\) and start state \(s_0 \in S\), \(!(s_0)\)
+    For a Mealy machine \((S, f)\) and start state \(s_0 \in S\), \(!(s_0)\)
     is finitely specified.
 \end{lemma}
 \begin{proof}
@@ -192,7 +192,7 @@ First an ordering on stream \emph{functions} is required.
     Let \(A\) and \(B\) be posets.
     For stream functions \(\morph{f,g}{\stream{A}}{\stream{B}}\), we say that
     \(f \stateorder g\) if, for all \(\sigma \in \stream{A}\),
-    \(f(\sigma) \leq_{\stream{B}}\).
+    \(f(\sigma) \leq_{\stream{B}} g(\sigma)\).
 \end{definition}
 
 \begin{definition}[State order]
@@ -219,20 +219,26 @@ as presented do not have a designated start state per se.
 This means that as well as a Mealy machine, each morphism will need to be
 equipped with such a start state.
 
+\begin{definition}[Initialised Mealy machine]
+    An \emph{initialised} Mealy machine is a tuple \((S, f, s_0)\), where
+    \((S, f)\) is a Mealy machine, and \(s_0 \in S\) is an \emph{initial state}.
+\end{definition}
+
 All that remains to define is the composition of Mealy machines, which is
 standard.
 
-\begin{definition}[Cascade product~\cite{ginzburg2014algebraic}]
-    Given an \((A,B)\)-Mealy machine \((S,f)\) with start state \(s_0\) and
-    an \((B,C)\)-Mealy machine \((T,g)\) with state state \((t_0)\), their
-    \emph{cascade product} is an \((A,C)\)-Mealy machine defined as \[
-        (S \times T, ((s, t), a) \mapsto ((
-            \mealyfunctiontransition{f}(s,a),
-            \mealyfunctiontransition{g}(t, \mealyfunctionoutput{f}(s, a))
-        ),
-            \mealyfunctionoutput{g}(t, \mealyfunctionoutput{f}(s, a))
-        )).
-    \] with start state \((s_0, t_0)\).
+\begin{definition}[Cascade product of Mealy machines~\cite{ginzburg2014algebraic}]
+    Given an initialised \((A,B)\)-Mealy machine \((S,f,s_0)\) and an
+    initialised \((B,C)\)-Mealy machine \((T,g,t_0)\), their
+    \emph{cascade product} is an initialised \((A,C)\)-Mealy machine defined as
+    \[
+        \left(S \times T, ((s, t), a) \mapsto \left(
+                \mealyfunctiontransition{f}(s,a),
+                \mealyfunctiontransition{g}(t, \mealyfunctionoutput{f}(s, a))
+            \right),
+            \mealyfunctionoutput{g}(t, \mealyfunctionoutput{f}(s, a)),
+            (s_0, t_0)\right).
+    \]
 \end{definition}
 
 The cascade product of two Mealy machines effectively executes the first on the
@@ -243,14 +249,31 @@ inputs, then executes the second on the outputs of the first; the inputs are
     \todo[inline]{Example!}
 \end{example}
 
-Tensor product is far more straightforward: it is the direct product of states
-and functions.
+Tensor product is far more straightforward.
+
+\begin{definition}[Direct product of Mealy machines]
+    Given an initialised \((A,B)\)-Mealy machine \((S,f,s_0)\) and an
+    initialised \((C,D)\)-Mealy machine \((T,g,t_0)\), their
+    \emph{direct product} is an initialised \((A \times C,B \times D)\)-Mealy
+    machine defined as \[
+        (S \times T, \left((s, t), (a, c)\right) \mapsto \left\langle
+            \left(
+                \mealyfunctiontransition{f}\left(s, a\right),
+                \mealyfunctiontransition{f}\left(s, a\right)
+            \right),
+            \left(
+                \mealyfunctionoutput{f}\left(s, a\right),
+                \mealyfunctionoutput{f}\left(s, a\right)
+            \right)\right\rangle,
+            (s_0, t_0)
+        ).
+    \]
+\end{definition}
 
 \begin{definition}
-    Let \(\mealyi\) be the PROP in which each morphism
-    \(\listvar{m} \to \listvar{n}\) is a pair of a monotone
-    \(\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}}\)-Mealy machine
-    \((S, f)\) along with a start state \(s_0 \in S\).
+    Let \(\mealyi\) be the PROP in which the morphisms
+    \(\listvar{m} \to \listvar{n}\) are the initialised monotone
+    \((\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}})\)-Mealy machines.
     Composition is by cascade product and tensor on morphisms is by
     direct product.
     The identity and the symmetry are the single-state machines that output the

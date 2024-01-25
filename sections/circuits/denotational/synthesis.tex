@@ -5,33 +5,64 @@ The main result of this section is to introduce \(\scircsigma\) to the mix.
 
 \subsection{Circuits to monotone Mealy machines}
 
-Circuits have a very natural interpretation as Mealy machines: going from
-\(\scircsigma\) to \(\mealyi\) is straightforward since the former is freely
-generated.
+Circuits have a very natural interpretation as Mealy machines, so the action
+of a PROP morphism from \(\scircsigma\) to \(\mealyi\) is fairly intuitive.
+We are further buoyed by the fact that since the former is freely generated, the
+PROP morphism need only be defined on generators!
 
 \begin{definition}
     Let \(\morph{\circuittomealyi}{\scircsigma}{\mealyi}\) be the traced PROP
     morphism defined on the generators as:
-    \begin{align*}
+    \begin{gather*}
         \circuittomealy[
-            \iltikzfig{strings/category/f}[box=F,colour=comb]
+            \iltikzfig{circuits/components/gates/gate}[colour=comb]
         ]{\interpretation}
-        &\coloneqq \left(\left(\{()\}, \overline{v} \mapsto \left((), {
-            \circuittofunc[
-                \iltikzfig{strings/category/f}[box=F,colour=comb]
-            ]{\interpretation}(\overline{v})
-        }\right)\right), ()\right)
+        \coloneqq \left(
+            \{()\},
+            \listvar{v} \mapsto
+                \left\langle(), \gateinterpretation[g](\listvar{v})\right\rangle,
+            ()
+        \right)
+        \qquad
+        \circuittomealy[
+            \iltikzfig{strings/structure/comonoid/copy}[colour=comb]
+        ]{\interpretation}
+        \coloneqq \left(
+            \{()\},
+            \listvar{v} \mapsto \left\langle(), \listvar{vv}\right\rangle,
+            ()
+        \right)
+        \\[0.1em]
+        \circuittomealy[
+            \iltikzfig{strings/structure/monoid/merge}[colour=comb]
+        ]{\interpretation}
+        \coloneqq \left(
+            \{()\},
+            \listvar{vw} \mapsto
+                \left\langle(), \listvar{v} \ljoin \listvar{w}\right\rangle,
+            ()
+        \right)
+        \qquad
+        \circuittomealy[
+            \iltikzfig{strings/structure/comonoid/discard}[colour=comb]
+        ]{\interpretation}
+        \coloneqq \left(
+            \{()\},
+            \listvar{v} \mapsto
+                \left\langle(), ()\right\rangle,
+                ()
+        \right)
         \\[0.1em]
         \circuittomealy[
             \iltikzfig{circuits/components/values/vs}[val=v]
         ]{\interpretation}
-        &\coloneqq
+        \coloneqq
         \left(
             \left(
             \{s_v, s_\bot\},
             \{
-                s_v \mapsto \left(s_\bot,v\right),
-                s_\bot \mapsto \left(s_\bot,\bot\right)
+                s_v \mapsto \left\langle{s_\bot,v}\right\rangle,
+                s_\bot \mapsto \left\langle{s_\bot,\bot}\right\rangle
             \}\right),
             s_v
         \right)
@@ -39,14 +70,14 @@ generated.
         \circuittomealy[
             \iltikzfig{circuits/components/waveforms/delay}
         ]{\interpretation}
-        &\coloneqq
+        \coloneqq
         \left(
             \left(
             \{ s_v \,|\, v \in \values\},
             (s_v, a) \mapsto \left({v,s_a}\right)\right),
             s_\bot
         \right)
-    \end{align*}
+    \end{gather*}
     \todo[inline]{Fiddle with spacing}
 \end{definition}
 
@@ -61,8 +92,8 @@ generated.
 Mealy machines are a reasonable semantics for sequential circuits, but the
 image of \(\circuittomealyi\) does not always lead to minimal Mealy machines,
 and there are many Mealy machines that may correspond to the same behaviour.
-The `purest' semantics of a sequential circuit is a stream function in
-\(\streami\).
+The `purest' semantics of a sequential circuit, and the one that we will as use
+as the \emph{de facto} denotation, is a stream function in \(\streami\).
 
 \begin{definition}
     Let \(\morph{\circuittostreami}{\scircsigma}{\streami}\) be defined as
@@ -74,11 +105,23 @@ We have now finally established the \emph{denotation} of a sequential circuit \(
 \): it is the stream function \(
     \morph{\circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]}{\valuetuplestream{\listvar{m}}}{\valuetuplestream{\listvar{n}}}
 \).
+The existence of the PROP morphism \(\circuittostreami\) confirms that causal,
+finitely specified and monotone stream functions are a \emph{sound} denotational
+semantics for sequential circuits, as every circuit in \(\scircsigma\)
+maps to one.
 
 \subsection{Monotone Mealy machines to circuits}
 
-So one direction is done; now for the other, which as is often the case is
-a bit harder.
+It is usually the case that soundness is easy while completeness is a bit more
+fiddly, and who are we to interfere with tradition?
+For completeness, we now need a way to retrieve a circuit morphism from a stream
+function \(f\).
+Moreover, to prevent us from cheating and picking an arbitrary circuit, the
+denotation of the circuit must also be \(f\).
+
+We already know by \cref{def:stream-to-mealy} that given a stream function
+\(f\) we can retrieve a monotone Mealy machine \(\streamtomealyi[f]\).
+All that remains is to translate this into a circuit morphism.
 For regular Mealy machines, there is a standard procedure in circuit
 design~\cite{kohavi2009switching} in which each state of a Mealy machine is
 \emph{encoded} as a power of values, and combinational logic used to transform
@@ -226,11 +269,11 @@ in \(\scircsigma\), we set about encoding the Mealy function.
             \valuetuple{k} \times \valuetuple{n}
         }
     \) defined as the monotone completion of the function \(
-        (\gamma_\leq(s), \overline{x})
+        (\gamma_\leq(s), \listvar{x})
         \mapsto
             (
-                \gamma_\leq(\mealyfunctiontransition{f}(s, \overline{x})),
-                \mealyfunctionoutput{f}(s, \overline{x})
+                \gamma_\leq(\mealyfunctiontransition{f}(s, \listvar{x})),
+                \mealyfunctionoutput{f}(s, \listvar{x})
             )
     \).
 \end{definition}
@@ -298,6 +341,7 @@ we must show a lemma linking the behaviour circuits in the image of
 
 \begin{proposition}
     \label{prop:mealy-form-image}
+    \todo[inline]{Update for Mealy machine trip}
     Given a combinational circuit \(
         \iltikzfig{strings/category/f-2-2}[box=\hat{F},dom1=x,dom2=m,cod1=x,cod2=n,colour=comb]
     \), let \(f\) be the map with action \(
@@ -339,6 +383,7 @@ Now we can show the behaviour-preserving result.
     \).
 \end{theorem}
 \begin{proof}
+    \todo[inline]{Update for Mealy machine trip}
     For fixed state set \(S\) and Mealy function \(g\), let
     \(h := (s) \mapsto \mealytostreami[(S, g, s)]\) and \(
         h^\prime := (s) \mapsto \circuittostreami[\mealytocircuiti[(S, g, s)]]
@@ -376,6 +421,5 @@ circuit in terms of a (monotone) Mealy machine, we can use the PROP morphism
 \(\mealytocircuiti\) to generate a circuit rather than attempting to blindly
 construct one from primitive logical
 
-Our work is not done yet though: these results on Mealy machines only set the
-stage for the final result of this chapter: the completeness of
+The stage is now set for the final result of this chapter: the completeness of
 the denotational semantics.
