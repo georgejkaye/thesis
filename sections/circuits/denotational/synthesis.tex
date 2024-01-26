@@ -290,7 +290,7 @@ It is monotone by definition, but we need to make sure it is also
     A Mealy encoding is monotone as it is a monotone completion.
     There cannot be a state encoded as \(\bot^k\), since at least one bit must
     be \(\top\); this means the monotone completion will send the input
-    \(\bot^k \concat \bot^m\) to \(\bot^k \concat \bot^n\): it is
+    \(\bot^k\bot^m\) to \(\bot^k\bot^n\): it is
     \(\bot\)-preserving.
 \end{proof}
 
@@ -331,7 +331,7 @@ there is a canonical term in \(\scircsigma\) for each monotone Mealy machine.
         }
     \) be the traced PROP morphism with action defined for a monotone Mealy
     machine \((S,f,s)\) as producing \(
-        \iltikzfig{circuits/synthesis/mealy-term}
+        \iltikzfig{circuits/synthesis/mealy-term-spaced}
     \).
 \end{definition}
 
@@ -341,7 +341,6 @@ we must show a lemma linking the behaviour circuits in the image of
 
 \begin{proposition}
     \label{prop:mealy-form-image}
-    \todo[inline]{Update for Mealy machine trip}
     Given a combinational circuit \(
         \iltikzfig{strings/category/f-2-2}[box=\hat{F},dom1=x,dom2=m,cod1=x,cod2=n,colour=comb]
     \), let \(f\) be the map with action \(

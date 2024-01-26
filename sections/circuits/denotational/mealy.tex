@@ -304,10 +304,15 @@ This can be computed in much the same way as it was for stream functions.
 \begin{proof}
     Let \((S, f)\) be a monotone
     \((\valuetuple{\listvar{xm}}, \valuetuple{\listvar{xn}})\)-Mealy machine.
-    Since \(\morph{f}{S \times \listvar{xm}}{S \times \listvar{xn}}\) is
-    monotone with regards to the orders on \(S\) and
-    \(\valuetuple{\listvar{xm}}\) and \(S \times \listvar{xn}\) is finite, it
-    has a least fixed point.
+    The Mealy function \(
+        \morph{f}{
+            S \times \valuetuple{\listvar{xm}}
+        }{
+            S \times \valuetuple{\listvar{xn}}
+        }
+    \) is monotone with regards to the orders on \(S\) and
+    \(\valuetuple{\listvar{xm}}\) and \(S \times \listvar{xn}\) is finite, so
+    \(f\) has a fixed point.
     The function \(
         f^\prime \coloneqq (s, \listvar{a})
         \mapsto
@@ -372,7 +377,7 @@ machine.
     \), let \(S\) be the least set of
     causal stream functions including \(f\) and closed under stream derivatives:
     i.e.\ for all \(h \in S\) and \(a \in M\), \(h_a \in S\).
-    Then the Mealy machine \(
+    Then the initialised Mealy machine \(
         \streamtomealy[f]{\interpretation} = (S, g, f)
     \), where \(
         g(h)(a) = \langle \mealyoutput{h}{a}, \mealytransition{h}{a}\rangle
@@ -388,3 +393,99 @@ machine.
     means these two states can only have the same `behaviour' if they are
     derived from the same original stream function.
 \end{proof}
+
+We will encode this data into a PROP morphism from \(\streami\) to \(\mealyi\);
+in order to this we must quickly verify the produced Mealy machine is monotone.
+
+\begin{lemma}\label{lem:head-tail-monotone}
+    The functions \(\sigma \mapsto \streaminit(\sigma)\) and
+    \(\sigma \mapsto \streamderv(\sigma)\) are monotone.
+\end{lemma}
+\begin{proof}
+    Let \(\sigma \coloneqq a \streamcons \sigma^\prime\) and
+    \(\tau \coloneqq b \streamcons \tau^\prime\) be streams in \(\stream{A}\)
+    such that \(\sigma \leq_{\stream{A}} \tau\); subsequently \(a \leq b\) and
+    \(\sigma^\prime \leq_{\stream{A}} \tau^\prime\).
+    So \(
+        \streaminit(\sigma) \coloneqq
+        \streaminit(a \streamcons \sigma^\prime) =
+        a \leq_{A}
+        b =
+        \streaminit(b \streamcons \tau^\prime) \coloneqq
+        \streaminit(\tau)
+    \) and \(
+        \streamderv(\sigma) \coloneqq
+        \streamderv(a \streamcons \sigma^\prime) =
+        \sigma^\prime \leq_{\stream{A}}
+        \tau^\prime =
+        \streamderv(b \streamcons \tau^\prime) =
+        \streamderv(\tau)
+    \).
+\end{proof}
+
+\begin{lemma}\label{lem:initial-derivative-monotone}
+    For posets \(A\) and \(B\) and a monotone causal stream function
+    \(\morph{f}{\stream{A}}{\stream{B}}\), the functions
+    \(a \mapsto \initialoutput{f}{a}\) and \(a \mapsto \streamderivative{f}{a}\)
+    are monotone.
+\end{lemma}
+\begin{proof}
+    Let \(a, b \in A\) such that \(a \leq_A b\); then by monotonicity
+    \(f(a \streamcons \sigma) \leq_{\stream{B}} f(b \streamcons \sigma)\) for
+    all \(\sigma \in \stream{A}\).
+    By \cref{lem:head-tail-monotone}, \(\streaminit \circ f\) and
+    \(\streamderv \circ f\) are monotone.
+    First we show that the initial output is monotone: \(
+        \initialoutput{f}{a} \coloneqq
+            \streaminit(f(a \streamcons \sigma)) \leq_{A}
+            \streaminit(f(b \streamcons \sigma)) =
+            \initialoutput{f}{b}
+    \).
+    For stream derivative, \(
+        \streamderivative{f}{a}(\sigma) \coloneqq
+            \streamderv(f(a \streamcons \sigma)) \leq_{\stream{B}}
+            \streamderv(f(b \streamcons \sigma)) \coloneqq
+            \streamderivative{f}{a}(\sigma)
+    \).
+\end{proof}
+
+\begin{lemma}\label{lem:stream-to-mealy-is-monotone}
+    Given a stream function \(f \in \streami\), \(\streamtomealyi[f]\) is
+    a monotone Mealy machine.
+\end{lemma}
+\begin{proof}
+    Each state in the derived Mealy machine is a monotone stream function and
+    the Mealy function is the pairing of the initial output and stream
+    derivative; by \cref{lem:initial-derivative-monotone} these are monotone so
+    the Mealy function must also be monotone.
+\end{proof}
+
+\begin{corollary}
+    The procedure \(\streamtomealyi\) is a PROP morphism
+    \(\streami \to \mealyi\).
+\end{corollary}
+
+This means we can map between monotone Mealy machines and causal, finitely
+specified and monotone stream functions in either direction.
+Mealy machines are perhaps more intuitive to work with, but stream functions
+are the `purest' specification of the behaviour in that they have the smallest
+possible state set.
+Ideally we would be able to work in whichever setting is most beneficial at a
+given time, so we need to show that the translations are
+\emph{behaviour-preserving}.
+
+\begin{proposition}
+    \(\mealytostreami \circ \streamtomealyi = \id[\streami]\).
+\end{proposition}
+\begin{proof}
+    Stream functions are equal if they have the same initial output and
+    stream derivative.
+    \(\streamtomealyi\) preserves outputs and derivatives by definition, and
+    \(\mealytostreami\) preserves transitions and outputs because it is a Mealy
+    homomorphism.
+\end{proof}
+
+The reverse does not hold as many Mealy machines may map to the same stream
+function, but the result of
+\(\mealytostreami \circ \streamtomealyi \circ \mealytostreami\) is of course
+equal to \(\mealytostreami\).
