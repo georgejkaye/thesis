@@ -1,7 +1,8 @@
 \section{Between circuits and Mealy machines}
 
 We have now established the close links between \(\streami\) and \(\mealyi\).
-The main result of this section is to introduce \(\scircsigma\) to the mix.
+These results are nice to have but hardly ground-breaking; the main contribution
+of this chapter is to introduce \(\scircsigma\) to the mix.
 
 \subsection{Circuits to monotone Mealy machines}
 
@@ -114,12 +115,12 @@ maps to one.
 
 It is usually the case that soundness is easy while completeness is a bit more
 fiddly, and who are we to interfere with tradition?
-For completeness, we now need a way to retrieve a circuit morphism from a stream
+We now need a way to retrieve a circuit morphism from a stream
 function \(f\).
 Moreover, to prevent us from cheating and picking an arbitrary circuit, the
 denotation of the circuit must also be \(f\).
 
-We already know by \cref{def:stream-to-mealy} that given a stream function
+We already know by \cref{cor:minimal-mealy} that given a stream function
 \(f\) we can retrieve a monotone Mealy machine \(\streamtomealyi[f]\).
 All that remains is to translate this into a circuit morphism.
 For regular Mealy machines, there is a standard procedure in circuit
@@ -341,6 +342,7 @@ we must show a lemma linking the behaviour circuits in the image of
 
 \begin{proposition}
     \label{prop:mealy-form-image}
+    \todo[inline]{Reframe proof in terms of mealy machines}
     Given a combinational circuit \(
         \iltikzfig{strings/category/f-2-2}[box=\hat{F},dom1=x,dom2=m,cod1=x,cod2=n,colour=comb]
     \), let \(f\) be the map with action \(
