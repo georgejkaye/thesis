@@ -1,0 +1,49 @@
+\chapter{Operational semantics}
+
+With the sound and complete denotational semantics, the behaviour of circuits is
+determined by observing their behaviour as stream functions.
+This already gives us a perspective on digital circuits closer to that of
+programming languages.
+To compare the behaviour of two circuits in \(\scircsigma\), we examine their
+corresponding stream functions.
+
+Unfortunately, denotational semantics is not the be-all and end-all of circuit
+semantics.
+Crucially, it obscures the \emph{structure} of a circuit by compressing all the
+behaviour into one function: we don't know \emph{why} the circuit is behaving
+the way it does, just that something in the mire has caused it to do so!
+When it comes to circuit design, the structure of the circuit is of course
+important, as that is what is going to be printed onto silicon.
+Space is at a premium, so knowing how each part of a circuit contributes to the
+output behaviour is of critical importance.
+
+We now turn our attention to the next course in our menu of semantics,
+\emph{operational semantics}.
+This is quite a different beast to denotational semantics: rather than assigning
+a mathematical structure to each circuit, semantics are derived from how
+something is \emph{executed}.
+Effectively, one can think of an operational semantics as stepping through a
+program using a debugger, with rules applied to the current context in order to
+derive the next state.
+
+Operational semantics is another classic concept in computer science; `steps' of
+execution were used to define the semantics of ALGOL
+68~\cite{wijngarden1976revised}.
+The name itself, as with many topics of the time, is attributed to Dana
+Scott~\cite{scott1970outline}, who acknowledged that even with the abstraction
+of denotational semantics, `the operational aspects cannot be completely
+ignored'.
+
+\begin{example}\label{ex:expressions-operational}
+    Recall the language of expressions from \cref{ex:expressions-denotational}.
+    We can define an observational semantics on this language with the following
+    set of rules:
+    \begin{gather*}
+        \inferrule{ }{\overline{n} \Rightarrow \overline{n}}
+        \quad
+        \\
+        \inferrule{e_0 \Rightarrow \overline{n_0} \\ e_1 \Rightarrow \overline{n_1}}{ add \, e_0 \, e_1 \Rightarrow \overline{n_0 + n_1}}
+        \quad
+        \inferrule{e_0 \Rightarrow \overline{n_0} \\ e_1 \Rightarrow \overline{n_1}}{ mul \, e_0 \, e_1 \Rightarrow \overline{n_0 \cdot n_1}}
+    \end{gather*}
+\end{example}
