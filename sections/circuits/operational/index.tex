@@ -39,11 +39,141 @@ ignored'.
     We can define an observational semantics on this language with the following
     set of rules:
     \begin{gather*}
-        \inferrule{ }{\overline{n} \Rightarrow \overline{n}}
+        \inferrule{ }{\overline{n} \Rightarrow \overline{n}} \,\, (\text{Value})
         \quad
-        \\
-        \inferrule{e_0 \Rightarrow \overline{n_0} \\ e_1 \Rightarrow \overline{n_1}}{ add \, e_0 \, e_1 \Rightarrow \overline{n_0 + n_1}}
+        \inferrule{
+            e_0 \Rightarrow \overline{n_0} \\
+            e_1 \Rightarrow \overline{n_1}
+        }{
+            add \, e_0 \, e_1 \Rightarrow \overline{n_0 + n_1}
+        } \,\, (\text{Add})
         \quad
-        \inferrule{e_0 \Rightarrow \overline{n_0} \\ e_1 \Rightarrow \overline{n_1}}{ mul \, e_0 \, e_1 \Rightarrow \overline{n_0 \cdot n_1}}
+        \inferrule{
+            e_0 \Rightarrow \overline{n_0} \\
+            e_1 \Rightarrow \overline{n_1}
+        }{
+            mul \, e_0 \, e_1 \Rightarrow \overline{n_0 \cdot n_1}
+        } \,\, (\text{Mul})
     \end{gather*}
+    We can use these rules to \emph{reduce} expressions to values.
+    Two expressions have the same semantics if they reduce to the same expression.
+    Formally this can be written as a proof tree:
+    \begin{gather*}
+        \inferrule*{
+            \inferrule*{
+                \inferrule{ }{\overline{4} \Rightarrow \overline{4}} \\
+                \inferrule{ }{\overline{2} \Rightarrow \overline{2}}
+            }{
+                mul \, \overline{4} \, \overline{2} \Rightarrow \overline{8}
+            }
+            \\
+            \inferrule*{
+                \inferrule{ }{\overline{2} \Rightarrow \overline{3}} \\
+                \inferrule{ }{\overline{3} \Rightarrow \overline{3}}
+            }{
+                add \, \overline{2} \, \overline{3} \Rightarrow \overline{5}
+            }
+        }{
+            add \, (mul \, \overline{4} \, \overline{2}) \, (add \, \overline{2} \, \overline{3}) \Rightarrow \overline{13}
+        }
+    \end{gather*}
+\end{example}
+
+The operational semantics described thus far is commonly known as
+\emph{structural operational semantics}~\cite{plotkin1981structural}
+semantics; it shows how the behaviour of the whole is represented by the
+behaviour of its parts.
+However, deriving a proof tree as above can be clunky: to find the meaning of a
+large term one has to `drill down' into the contexts until a value is reached
+before propagating these values back up the tree.
+
+A more intuitive way to view this style of operational semantics is using
+a \emph{reduction semantics}.
+First applied by Plotkin~\cite{plotkin1975callbyname} before being properly
+coined and generalised in the subsequent
+decade~\cite{felleisen1987reduction,felleisen1987calculi}, a reduction semantics
+specifes a set of rules which can be successively applied to individual
+components of some larger context. These reduction rules can be derived from
+the rules in the main operational semantics by replacing subexpressions in
+derivations by the primitives in the language.
+These rules can then be applied to the `smallest' terms in the expression
+(those higher up in the proof tree), reducing these to primitives themselves,
+such that reductions may be applied to their parent expressions and so on.
+
+\begin{example}\label{ex:expressions-reduction}
+    Returning to \cref{ex:expressions-operational}, the two rules of the
+    corresponding reductions semantics are \(
+        add \, \overline{n_0} \, \overline{n_1}
+        \,\reduction[(\text{Add})]\,
+        \overline{n_0 + n_1}
+    \) and \(
+        mul \, \overline{n_0} \, \overline{n_1}
+        \,\reduction[(\text{Add})]\,
+        \overline{n_0 \cdot n_1}
+    \).
+    Note that as the numbers \(\overline{n}\) are the `primitives' of the
+    language (their meaning is theirselves), there is no corresponding reduction
+    for the \((\text{Value})\) rule.
+    Using these re
+    \begin{gather*}
+        add \, (mul \, \overline{4} \, \overline{2}) \, (add \, \overline{2} \, \overline{3})
+        \,\reduction[(\text{Mul})]\,
+        add \, \overline{8} \, (add \, \overline{2} \, \overline{3})
+        \,\reduction[(\text{Add})]\,
+        add \, \overline{8} \, \overline{5}
+        \,\reduction[(\text{Add})]\,
+        \overline{13}
+    \end{gather*}
+\end{example}
+
+Several readers will have immediately leapt onto the fact that this reduction
+sequence is not necessarily canonical!
+Indeed, while there is one canonical proof tree for a given term there may be
+potentially many reduction sequences, but in an ideal reduction system this
+should not be an issue.
+
+\begin{definition}
+    A reduction system is \emph{confluent} if, for any term \(e\), if there
+    exists distinct reductions \(e \reduction e_1\) and \(e \reduction e_2\),
+    then there exists term \(e_3\) along with reduction sequences
+    \(e_1 \reductions e_3\) and \(e_2 \reductions e_3\).
+\end{definition}
+
+While it is important that different reduction sequences should always converge,
+it is equally important that we aren't stuck performing reductions forever!
+
+\begin{definition}
+    A reduction system is \emph{terminating} if, for every term \(e\), there is
+    no infinite reduction sequence starting from \(e\).
+\end{definition}
+
+If a reduction system is terminating, then repeatedly applying reductions will
+eventually lead to a term with no opportunity to apply any more.
+
+\begin{definition}
+    A term is in \emph{normal form} if no reductions apply to it.
+\end{definition}
+
+If a terminating reduction system is also confluent, every term must have a
+\emph{unique} such normal form.
+In the setting of an operational semantics, this normal form is the behaviour
+of the term.
+
+\begin{example}
+    The reduction rules in \cref{ex:expressions-reduction} are clearly
+    terminating since they both reduce the number of operations in a term.
+    The rules are also confluent: we could have chosen a different order of
+    reductions but the result is the same.
+    \begin{gather*}
+        add \, (mul \, \overline{4} \, \overline{2}) \, (add \, \overline{2} \, \overline{3})
+        \,\reduction[(\text{Mul})]\,
+        add \, \overline{8} \, (add \, \overline{2} \, \overline{3})
+        \,\reduction[(\text{Add})]\,
+        add \, \overline{8} \, \overline{5}
+        \,\reduction[(\text{Add})]\,
+        \overline{13}
+    \end{gather*}
+    This means that \(\overline{13}\) is the normal form of
+    \(add \, (mul \, \overline{4} \, \overline{2}) \, (add \, \overline{2} \, \overline{3})\)
+    and subsequently its semantics.
 \end{example}
