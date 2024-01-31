@@ -177,3 +177,16 @@ of the term.
     \(add \, (mul \, \overline{4} \, \overline{2}) \, (add \, \overline{2} \, \overline{3})\)
     and subsequently its semantics.
 \end{example}
+
+When defining an operational semantics for digital circuits we prefer to use
+the reduction semantics style of presentation, as one of our motivations is for
+a computer to evaluate circuits step-by-step.
+
+As we will come to see, it is not feasible to create a small-step reduction
+semantics for digital circuits while remaining terminating and confluent.
+However, what we \emph{can} do is specify some larger transformations to apply
+to a circuit followed by some more traditional exhaustive reductions.
+
+\input{sections/circuits/operational/feedback}
+\input{sections/circuits/operational/productivity}
+\input{sections/circuits/operational/observational}
