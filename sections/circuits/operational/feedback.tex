@@ -12,11 +12,11 @@ it follows immediately from axioms of STMCs.
 
 \begin{lemma}[Global trace-delay form]\label{lem:trace-delay}
     For a sequential circuit \(
-        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+        \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \) there exists a combinational circuit \(
         \iltikzfig{circuits/productivity/pre-mealy-core}
     \) and \(\overline{v} \in \valuetuple{z}\) such that \(
-        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+        \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
         =
         \iltikzfig{circuits/productivity/trace-delay}[core=F,state=\listvar{v},dom=m,cod=n,delay=y,trace=x,valwidth=z]
     \) by axioms of STMCs.
@@ -40,7 +40,7 @@ Our first global translation will remedy this.
 \end{definition}
 
 \begin{lemma}\label{lem:mealy-rule}
-    The reduction \(
+    The rule \(
         \iltikzfig{circuits/productivity/trace-delay}[core=f,state=\listvar{v},dom=m,cod=n,delay=y,trace=x,valwidth=z]
         \reduction[(\mealyeqn)]
         \iltikzfig{circuits/productivity/mealy-rule}[core=f,trace=x,delays=y,values=z]
@@ -49,6 +49,13 @@ Our first global translation will remedy this.
 \begin{proof}
     It is a simple exercise to check the corresponding stream functions.
 \end{proof}
+
+This means that by assembling a circuit into global trace-delay form and
+applying the \((\mealyeqn)\) rule, we can establish a word \(\listvar{s}\)
+representing the initial state of a circuit.
+This word is by no means unique: it depends on how the circuit is put into
+global trace-delay form.
+What matters most is that we \emph{can} do it!
 
 \begin{corollary}
     For any sequential circuit \(
@@ -78,7 +85,7 @@ instance of \emph{non-delay-guarded feedback}.
     A particularly famous circuit~\cite{malik1994analysis} which is `useful'
     despite the presence of non-delay-guarded feedback is shown in
     \cref{fig:cyclic-combinational}, where \(
-        \iltikzfig{strings/category/f}[box=F,colour=comb]
+        \iltikzfig{strings/category/f}[box=f,colour=comb]
     \) and \(
         \iltikzfig{strings/category/f}[box=G,colour=comb]
     \) are arbitrary combinational circuits.
@@ -88,9 +95,10 @@ instance of \emph{non-delay-guarded feedback}.
         \coloneqq
         \iltikzfig{circuits/components/gates/mux-construction}
     \).
-    The multiplexer is a useful component because when the control is
-    \(\belnapfalse\) the output is the first data input and when it is
-    \(\belnaptrue\) the output is the second data input.
+    The multiplexer is a particularly common circuit component as it is used as
+    a rudimentary if statement: when the control is \(\belnapfalse\) the output
+    is the first data input and when it is \(\belnaptrue\) the output is the
+    second data input.
 
     The circuit in \cref{fig:cyclic-combinational} has no state and its trace is
     global so it is already in pre-Mealy form, and has
@@ -99,28 +107,107 @@ instance of \emph{non-delay-guarded feedback}.
     or \(1\):
     \begin{gather*}
         \circuittostream[
-            \iltikzfig{strings/category/f-2-1}[box=F,colour=seq]
+            \iltikzfig{strings/category/f-2-1}[box=f,colour=seq]
         ]{\interpretation_\star}(\sigma)(i)
         =
         \circuittofunc[
                 \iltikzfig{circuits/examples/cyclic-combinational/reduced-false}
         ]{\interpretation_\star}
-        (\proj{2}(\sigma(i)))
-        \text{ if } \proj{0}(\sigma(i)) = 0
+        (\proj{1}(\sigma(i)))
+        \text{ if } \proj{0}(\sigma(i)) = \belnapfalse
         \\
         \circuittostream[
-            \iltikzfig{strings/category/f-2-1}[box=F,colour=seq]
+            \iltikzfig{strings/category/f-2-1}[box=f,colour=seq]
         ]{\interpretation_\star}(\sigma)(i)
         =
         \circuittofunc[
                 \iltikzfig{circuits/examples/cyclic-combinational/reduced-true}
         ]{\interpretation_\star}
-        (\proj{2}(\sigma(i)))
-        \text{ if } \proj{0}(\sigma(i)) = 1
+        (\proj{1}(\sigma(i)))
+        \text{ if } \proj{0}(\sigma(i)) = \belnaptrue
     \end{gather*}
+    The feedback is just used as a clever way to share circuit components: the
+    multiplexers and control signal simply determine which order the two
+    subcircuits are applied in.
 \end{example}
 
 \input{sections/circuits/operational/floats/cyclic-combinational}
 
+A combinational circuit surrounded by non-delay-guarded feedback still
+implements a function, as there are no delay components.
 Nevertheless, non-delay-guarded feedback does still block our path to future
 transformations, so it must be eliminated.
+Using a methodology also employed by~\cite{riedel2012cyclic}, we turn to the
+Kleene fixed-point theorem.
+
+\begin{lemma}\label{lem:monotone-fixpoint}
+    For a monotone function \(\morph{f}{\values^{n+m}}{\valuetuple{n}}\) and
+    \(i \in \nat\), let \(\morph{f^i}{\valuetuple{m}}{\valuetuple{n}}\) be
+    defined as \(f^0(x)  = f(\bot^n,x)\) and \(f^{k+1}(x) = f(f^k(x), x)\).
+    Let \(c\) be the length of the longest chain in the lattice
+    \(\valuetuple{n}\).
+    Then, for \(j > c\), \(f^c(x) = f^{j}(x)\).
+\end{lemma}
+\begin{proof}
+    Since \(f\) is monotone, it has a least fixed point by the Kleene
+    fixed-point theorem.
+    This will either be some value \(v\) or, since \(\values\) is finite, the
+    \(\top\) element.
+    The most iterations of \(f\) it would take to obtain this fixpoint is \(c\),
+    i.e.\ the function produces a value one step up the lattice each time.
+\end{proof}
+
+\begin{definition}[Iteration]\label{def:iteration}
+    For a combinational circuit \(
+        \iltikzfig{strings/category/f-2-2}[box=f,colour=comb,dom1=x,dom2=m,cod1=x,cod2=n],
+    \)
+    its \emph{\(n\)th iteration} \(
+        \iltikzfig{strings/category/f-1-2}[box=f^n,colour=comb,dom=m,cod1=x,cod2=n]
+    \) is defined inductively over \(n\) as \(
+        \iltikzfig{circuits/instant-feedback/f0-box}[dom=m,trace=x,cod=n]
+        \coloneqq
+        \iltikzfig{circuits/instant-feedback/f0-definition}[dom=m,trace=x,cod=n]
+    \) and \(
+        \iltikzfig{circuits/instant-feedback/fkp1-box}[dom=m,trace=x,cod=n]
+        \coloneqq
+        \iltikzfig{circuits/instant-feedback/fkp1-definition}[dom=m,trace=x,cod=n]
+    \).
+\end{definition}
+
+The trace in \(\streami\) is by the least fixed point, computed by repeatedly
+applying \(f\) to itself starting from \(\bot\).
+The above lemma gives a fixed upper bound for the number of times we need to
+apply \(f\) to reach this fixed point, based on the size of the lattice.
+We can port this over to the syntactic setting.
+
+\begin{definition}[Unrolling]\label{def:unrolling}
+    For an interpretation with values \(\values\), the \emph{unrolling}
+    of a combinational circuit \(
+        \iltikzfig{strings/category/f-2-2}[box=f,colour=comb,dom1=x,dom2=m,cod1=x,cod2=n]
+    \), written \(
+        \iltikzfig{strings/category/f-1-2}[box=f^\dagger,colour=comb,dom=m,cod1=x,cod2=n]
+    \), is defined as \(
+        \iltikzfig{circuits/instant-feedback/fc-box}[dom=m,trace=x,cod=n]
+    \) where \(c\) is the length of the longest chain in \(\valuetuple{x}\).
+\end{definition}
+
+Using these constructs we can replace a combinational circuit wrapped in
+non-delay-guarded feedback with a behaviourally equivalent circuit with no
+feedback at all!
+
+\begin{proposition}\label{prop:instant-feedback}
+    The instant feedback rule \(
+        \iltikzfig{circuits/instant-feedback/equation-lhs}
+        \reduction[(\instantfeedbackeqn)]
+        \iltikzfig{circuits/instant-feedback/equation-rhs}
+    \) is sound.
+\end{proposition}
+\begin{proof}
+    By \cref{lem:monotone-fixpoint}, applying the circuit \(c\)
+    times reaches a fixpoint.
+    The circuit is combinational so each element of the output
+    \(\circuittostreami[
+        \iltikzfig{strings/category/f}[box=f,colour=comb]
+    ](\sigma)(i)\) is a function: \cref{lem:monotone-fixpoint} can be applied to
+    each element.
+\end{proof}
