@@ -336,6 +336,32 @@ there is a canonical term in \(\scircsigma\) for each monotone Mealy machine.
     \).
 \end{definition}
 
+\begin{lemma}
+    For a combinational circuit \(
+        \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
+        \in \ccircsigma
+    \) and \(i \in \nat\), \(
+        \circuittostreami[
+            \iltikzfig{strings/category/f}[box=f,colour=comb]
+        ](\sigma)(i)
+        =
+        \circuittofunci[
+            \iltikzfig{strings/category/f}[box=f,colour=comb]
+        ](\sigma(i))
+    \).
+\end{lemma}
+\begin{proof}
+    Combinational circuits map to monotone Mealy machines, so subsequently
+    their stream functions are their own stream derivative, i.e.\ given an
+    input stream \(\sigma\), the \(i\)-th element of \(
+        \circuittostreami[
+            \iltikzfig{strings/category/f}[box=f,colour=comb]
+        ](\sigma)
+    \) is a function that only depends on the \(i\)-th element of \(\sigma\).
+    Since \(\circuittofunci\) and \(\circuittomealyi\) assign the same functions
+    as semantics of combinational circuits, the statement holds.
+\end{proof}
+
 Before proceeding to the result that this PROP morphism is behaviour-preserving,
 we must show a lemma linking the behaviour circuits in the image of
 \(\mealytocircuiti\) to initial outputs and stream derivatives.
