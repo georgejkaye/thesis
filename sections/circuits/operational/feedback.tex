@@ -1,1 +1,126 @@
 \section{Feedback}
+
+One of the major issues that comes with trying to reduce circuits in
+\(\scircsigma\) is the presence of feedback.
+Without proper attention, one could end up infinitely unfolding and we never
+produce any output values!
+The first portion of our operational semantics will revolve around defining some
+\emph{global transformations} to make a circuit suitable for reductions.
+
+The first observation we make does not even need anything new to be defined as
+it follows immediately from axioms of STMCs.
+
+\begin{lemma}[Global trace-delay form]\label{lem:trace-delay}
+    For a sequential circuit \(
+        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+    \) there exists a combinational circuit \(
+        \iltikzfig{circuits/productivity/pre-mealy-core}
+    \) and \(\overline{v} \in \valuetuple{z}\) such that \(
+        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+        =
+        \iltikzfig{circuits/productivity/trace-delay}[core=F,state=\listvar{v},dom=m,cod=n,delay=y,trace=x,valwidth=z]
+    \) by axioms of STMCs.
+\end{lemma}
+\begin{proof}
+    By applying the axioms of traced categories; any trace can be `pulled'
+    to the outside of a term by superposing and tightening.
+    For the delays, a trace can be introduced using yanking and then the
+    same procedure as above followed.
+\end{proof}
+
+This form is evocative of what we saw when mapping from Mealy machines to
+circuits in the previous section, but rather than the state being determined by
+one word, the instantaneous values and the delays are kept separate.
+Our first global translation will remedy this.
+
+\begin{definition}[Pre-Mealy form]\label{def:pre-mealy}
+    A sequential circuit is in \emph{pre-Mealy form} if it is in the form \(
+        \iltikzfig{circuits/productivity/pre-mealy-form}[core=\hat{f},state=\listvar{s},dom=m,cod=n,trace=x,delay=y]
+    \).
+\end{definition}
+
+\begin{lemma}\label{lem:mealy-rule}
+    The reduction \(
+        \iltikzfig{circuits/productivity/trace-delay}[core=f,state=\listvar{v},dom=m,cod=n,delay=y,trace=x,valwidth=z]
+        \reduction[(\mealyeqn)]
+        \iltikzfig{circuits/productivity/mealy-rule}[core=f,trace=x,delays=y,values=z]
+    \) is sound.
+\end{lemma}
+\begin{proof}
+    It is a simple exercise to check the corresponding stream functions.
+\end{proof}
+
+\begin{corollary}
+    For any sequential circuit \(
+        \iltikzfig{strings/category/f}[box=f, colour=seq, dom=m, cod=n]
+    \), there exists at least one valid application of the Mealy rule.
+\end{corollary}
+
+The result of applying the \((\mealyeqn)\) reduction still differs from the
+image of \(\mealytocircuiti\) as it may have a trace with no delay on it: an
+instance of \emph{non-delay-guarded feedback}.
+
+\begin{remark}
+    The mere mention of non-delay-guarded feedback may trigger alarm bells in
+    the minds of those well-acquainted with circuit design!
+    It is often common in industry to enforce that circuits have no
+    non-delay-guarded feedback; one might ask if we should also enforce this
+    tenet in order to stick to `well-behaved' circuits.
+    However, not only would this violate the categorical setting of a STMC (the
+    `yanking' equation would no longer hold), careful use of non-delay-guarded
+    feedback can still result in useful circuits as a clever way of sharing
+    resources~\cite{malik1994analysis,riedel2004cyclic,mendler2012constructive}.
+    The minimal circuit to implement a function often \emph{must} be
+    constructed using cycles~\cite{rivest1977necessity,riedel2003synthesis}!
+\end{remark}
+
+\begin{example}\label{ex:cyclic-combinational}
+    A particularly famous circuit~\cite{malik1994analysis} which is `useful'
+    despite the presence of non-delay-guarded feedback is shown in
+    \cref{fig:cyclic-combinational}, where \(
+        \iltikzfig{strings/category/f}[box=F,colour=comb]
+    \) and \(
+        \iltikzfig{strings/category/f}[box=G,colour=comb]
+    \) are arbitrary combinational circuits.
+    The trapezoidal gate is a \emph{multiplexer}, which has a vertical
+    \emph{control} input and horiztonal \emph{data} inputs; it is defined as \(
+        \iltikzfig{circuits/components/gates/mux}
+        \coloneqq
+        \iltikzfig{circuits/components/gates/mux-construction}
+    \).
+    The multiplexer is a useful component because when the control is
+    \(\belnapfalse\) the output is the first data input and when it is
+    \(\belnaptrue\) the output is the second data input.
+
+    The circuit in \cref{fig:cyclic-combinational} has no state and its trace is
+    global so it is already in pre-Mealy form, and has
+    non-delay-guarded feedback.
+    Despite this, it produces useful output when the control signal is \(0\)
+    or \(1\):
+    \begin{gather*}
+        \circuittostream[
+            \iltikzfig{strings/category/f-2-1}[box=F,colour=seq]
+        ]{\interpretation_\star}(\sigma)(i)
+        =
+        \circuittofunc[
+                \iltikzfig{circuits/examples/cyclic-combinational/reduced-false}
+        ]{\interpretation_\star}
+        (\proj{2}(\sigma(i)))
+        \text{ if } \proj{0}(\sigma(i)) = 0
+        \\
+        \circuittostream[
+            \iltikzfig{strings/category/f-2-1}[box=F,colour=seq]
+        ]{\interpretation_\star}(\sigma)(i)
+        =
+        \circuittofunc[
+                \iltikzfig{circuits/examples/cyclic-combinational/reduced-true}
+        ]{\interpretation_\star}
+        (\proj{2}(\sigma(i)))
+        \text{ if } \proj{0}(\sigma(i)) = 1
+    \end{gather*}
+\end{example}
+
+\input{sections/circuits/operational/floats/cyclic-combinational}
+
+Nevertheless, non-delay-guarded feedback does still block our path to future
+transformations, so it must be eliminated.
