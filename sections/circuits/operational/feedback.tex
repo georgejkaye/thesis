@@ -233,3 +233,62 @@ feedback at all!
 \end{example}
 
 \input{sections/circuits/operational/floats/cyclic-combinational-unrolled}
+
+\begin{example}
+    \cref{fig:sr-latch-unrolled} applies \(\instantfeedbackeqn\) to the
+    SR latch circuit in pre-Mealy form from
+    \cref{fig:sr-latch-global-trace-delay}.
+\end{example}
+
+\input{sections/circuits/operational/floats/sr-latch-unrolled}
+
+If applied locally for every feedback loop, the \(\instantfeedbackeqn\)
+equation would cause an exponential blowup.
+However, if a circuit is in global trace-delay form, the equation need only be
+applied once to the global loop; although the value of \(c\) increases as the
+number of feedback wires increases, it only does so linearly in the height of
+the lattice.
+
+With a method to eliminate non-delay-guarded feedback, we can establish the
+class of circuits which will act as the keystone of both the operational
+semantics in this section and the algebraic semantics of the next.
+
+\begin{definition}[Mealy form]\label{def:delay-guarded}
+    A sequential circuit
+    \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+    is in \emph{Mealy form} if it is in the form \(
+        \iltikzfig{circuits/productivity/mealy-form}[core=\hat{F},state=\listvar{s},dom=m,cod=n,delay=y]
+    \).
+\end{definition}
+
+\begin{theorem}\label{thm:all-mealy-form}
+    For a sequential circuit
+    \(\iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]\), there exist
+    at least one combinational circuit \(
+        \iltikzfig{strings/category/f-2-2}[box=\hat{F},colour=comb,dom1=x,dom2=m,cod1=x,cod2=n]
+    \) and values \(s \in \valuetuple{x}\) such that \(
+        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+        \reductions
+        \iltikzfig{circuits/productivity/mealy-form}[core=F,state=\listvar{s},dom=m,cod=n]
+    \) by applying \(\mealyeqn\) followed by \(\instantfeedbackeqn\).
+\end{theorem}
+\begin{proof}
+    Any circuit can be assembled into global trace-delay form by
+    \cref{lem:trace-delay} and furthermore transformed into pre-Mealy form by
+    using \((\mealyeqn)\).
+    Since the core of a circuit in pre-Mealy form is combinational and has a
+    non-delay-guarded trace, \((\instantfeedbackeqn)\) can be applied to it to
+    produce a circuit with only delay-guarded feedback: a circuit in Mealy form.
+\end{proof}
+
+Non-delay-guarded feedback can be exhaustively unrolled because the circuit
+essentially models a function despite the presence of the trace: this means that
+we can transform the circuit without having to `look into the future'.
+This is not the case for delay-guarded feedback as the internal state of the
+circuit may depend on future inputs.
+Indeed, a circuit with delay-guarded feedback may never `settle' on one
+internal configuration but rather oscillate between multiple states.
+This is simply a facet of sequential circuits and there is nothing we can do
+about that.
+What we \emph{can} do is show how to \emph{process} inputs at a given tick of
+the clock.
