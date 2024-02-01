@@ -336,7 +336,7 @@ there is a canonical term in \(\scircsigma\) for each monotone Mealy machine.
     \).
 \end{definition}
 
-\begin{lemma}
+\begin{lemma}\label{lem:combinational-streams}
     For a combinational circuit \(
         \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
         \in \ccircsigma
@@ -437,7 +437,6 @@ Now we can show the behaviour-preserving result.
     \(\circuittostreami[\mealytocircuiti[(S, g, s)]]\) are equal for any Mealy
     machine \((S, g, s)\).
 \end{proof}
-
 
 This brings our foray into Mealy machines to a close: we can translate back and
 forth between circuits and \emph{monotone} Mealy machines without fear of

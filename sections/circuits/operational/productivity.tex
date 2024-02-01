@@ -1,1 +1,170 @@
 \section{Productivity}
+
+For an open circuit it is not possible to reduce an entire circuit down to some
+output values, as there will still be open wires awaiting the next inputs.
+Nevertheless, if we precompose a circuit with some inputs we can provide some
+rules for propagating these inputs across the circuit.
+
+Formally, for sequential circuit \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+\) and values \(
+    \listvar{v} \in \valuetuplestream{\listvar{m}}
+\), this corresponds to finding reductions such that \(
+    \iltikzfig{circuits/productivity/productive-goal-lhs}[box=f,input=\listvar{v},dom=\listvar{m},cod=\listvar{n}]
+    \reductions
+    \iltikzfig{circuits/productivity/productive-goal-rhs}[box=g,output=\listvar{w},dom=\listvar{m},cod=\listvar{n}]
+\).
+We first consider the combinational case, with our final global transformation.
+
+\begin{lemma}[Streaming]\label{lem:streaming}
+    The \emph{streaming rule} \(
+        \iltikzfig{circuits/axioms/generalised-streaming-lhs}[box=f]
+        \reduction[(\streamingeqn)]
+        \iltikzfig{circuits/axioms/generalised-streaming-rhs}[box=f]
+    \) is sound.
+\end{lemma}
+\begin{proof}
+    Once again this can be shown by considering the stream semantics.
+    First note that by unfolding the notation, \(
+        \iltikzfig{circuits/axioms/generalised-streaming-lhs}[box=f]
+        \coloneqq
+        \iltikzfig{circuits/axioms/generalised-streaming-lhs-verbose}[box=f]
+    \).
+    The streaming rule is then effectively `pushing' the combinational circuit
+    \(\iltikzfig{strings/category/f}[box=f,colour=comb]\) across the join.
+
+    The join is \emph{not} a natural transformation so this does not hold in
+    general, but because one argument is an instantaneous value and the other
+    is a delay, at least one of the inputs to the join will be \(\bot\) for a
+    given circuit.
+    As the interpretations of combinational circuits must be
+    \(\bot\)-preserving, the circuit can safely be pushed across the join and
+    delay.
+\end{proof}
+
+The streaming rule shows that when a combinational circuit is applied to an
+input with an instantaneous and a delayed component, the circuit can be copied
+so that one copy handles what is happening `now' and the other handles what is
+happening `later'.
+
+As there is a delay on the bottom argument of the join, the output of a streamed
+circuit at the current tick is now contained entirely in the top argument of the
+join.
+The final rules we present will reduce this copy to values, as desired.
+
+\begin{lemma}[Value rules]
+    The following \emph{value rules} are sound:
+    \begin{gather*}
+        \iltikzfig{circuits/axioms/fork-lhs}[val=v]
+        \reduction[(\forkeqn)]
+        \iltikzfig{circuits/axioms/fork-rhs}[val=v]
+        \quad
+        \iltikzfig{circuits/axioms/join-lhs}[val1=v,val2=w]
+        \reduction[(\joineqn)]
+        \iltikzfig{circuits/axioms/join-rhs}[val1=v,val2=w]
+        \quad
+        \iltikzfig{circuits/axioms/stub-lhs}[val=v]
+        \reduction[(\stubeqn)]
+        \iltikzfig{strings/monoidal/empty}
+        \quad
+        \iltikzfig{circuits/axioms/gate-lhs}[gate=p,input=\listvar{v}]
+        \reduction[(\gateeqn)]
+        \iltikzfig{circuits/axioms/gate-rhs}[gate=p,input=\listvar{v}]
+        \\
+        \iltikzfig{circuits/axioms/unbundle-lhs}
+        \reduction[(\unbundleeqn)]
+        \iltikzfig{circuits/axioms/unbundle-rhs}
+        \quad
+        \iltikzfig{circuits/axioms/bundle-lhs}
+        \reduction[(\bundleeqn)]
+        \iltikzfig{circuits/axioms/bundle-rhs}
+    \end{gather*}
+\end{lemma}
+\begin{proof}
+    These follow immediately from \cref{lem:combinational-streams} and the
+    interpretation of combinational circuits as function.
+\end{proof}
+
+Reducing the `now' core is the only time in which exhaustive application is
+required, as more is involved than than just copying circuit components.
+
+\begin{lemma}\label{lem:reduce-core-confluent}
+    Applying the value rules is confluent.
+\end{lemma}
+\begin{proof}
+    There are no overlaps between the rules.
+\end{proof}
+
+\begin{lemma}\label{lem:reduce-core-terminating}
+    For a combinational circuit \(
+        \iltikzfig{strings/category/f}[box=f,colour=comb,dom=\listvar{m},cod=\listvar{n}]
+    \) and \(\listvar{v} \in \valuetuple{\listvar{m}}\), there exists a word
+    \(\listvar{w} \in \valuetuple{\listvar{n}}\) such that applying the value
+    rules exhaustively to \(
+        \iltikzfig{circuits/components/circuits/f-applied}[box=F,colour=comb]
+    \) terminates at \(
+        \iltikzfig{circuits/components/values/vs}[val=\listvar{w}]
+    \).
+\end{lemma}
+
+These rules are all we need to propagate input values across a circuit.
+
+\begin{corollary}\label{cor:mealy-form-productivity}
+    For circuit \(
+        \iltikzfig{circuits/productivity/mealy-form-applied}[core=F,dom=m,cod=n,delay=x]
+    \) there exist \(
+        \listvar{t} \in \valuetuple{x}
+    \) and \(
+        \listvar{w} \in \valuetuple{n}
+    \) such that \(
+        \iltikzfig{circuits/productivity/mealy-form-applied}[core=F,dom=m,cod=n,delay=x]
+        \reductions
+        \iltikzfig{circuits/productivity/mealy-form-produced}[core=F,dom=m,cod=n,delay=x]
+    \) by applying \(\streamingeqn\) once followed by the value rules
+    exhaustively.
+\end{corollary}
+
+\begin{example}\label{ex:productivity}
+    \cref{fig:sr-latch-streamed} shows how the `now' copy of the transformed SR
+    latch circuit from \cref{fig:sr-latch-unrolled} for inputs
+    \(\belnaptrue\belnapfalse\) (a `reset' pulse) is reduced by the
+    combinational rules.
+    The next state is \(\belnaptrue\), the first output is \(\belnapfalse\) and
+    the second is \(\bot\).
+    The first output (false) is what we would expect given a reset pulse, but
+    the second may raise an eyebrow.
+    This arises due to the delay; recall that this models inertial delay in the
+    wires rather than an actual memory element.
+    Subsequently, it will take another cycle to produce the expected output
+    \(\belnapfalse\belnaptrue\).
+\end{example}
+
+\input{sections/circuits/operational/floats/sr-latch-streamed}
+
+By now putting together all the components in this section and the previous,
+we have a productive strategy for processing inputs to \emph{any} sequential
+circuit.
+
+\begin{corollary}[Productivity]\label{cor:productivity}
+    For sequential circuit \(
+        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+    \) and inputs \(\listvar{v} \in \valuetuple{m}\), there exists
+    \(\listvar{w} \in \valuetuple{n}\) such that \(
+        \iltikzfig{circuits/productivity/productive-goal-lhs}[box=F,input=\listvar{v},dom=m,cod=n]
+        \reductions
+        \iltikzfig{circuits/productivity/productive-goal-rhs}[box=G,output=\listvar{w},dom=m,cod=n]
+    \) by applying \(\mealyeqn\), \(\instantfeedbackeqn\) and \(\streamingeqn\)
+    once successively followed by the value rules exhaustively.
+\end{corollary}
+
+\begin{remark}
+    As we saw in \cref{cor:mealy-form-productivity}, applying
+    \((\streamingeqn)\) followed by the value rules to a circuit in Mealy form
+    produces another circuit in Mealy form.
+    This means that for one circuit and a whole stream of inputs,
+    \((\mealyeqn)\) and \((\instantfeedbackeqn)\) need only be applied
+    \emph{once} to get a circuit into Mealy form at the beginning before
+    processing values.
+    As we shall see late on this is very handy for implementing these reductions
+    mechanically, as very few large circuit transformations are required.
+\end{remark}
