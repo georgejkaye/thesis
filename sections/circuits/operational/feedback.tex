@@ -28,6 +28,13 @@ it follows immediately from axioms of STMCs.
     same procedure as above followed.
 \end{proof}
 
+\begin{example}
+    The SR NOR latch circuit from \cref{ex:sr-latch} is assembled into global
+    trace-delay form in \cref{fig:sr-latch-global-trace-delay-form}.
+\end{example}
+
+\input{sections/circuits/operational/floats/sr-latch-global-trace-delay}
+
 This form is evocative of what we saw when mapping from Mealy machines to
 circuits in the previous section, but rather than the state being determined by
 one word, the instantaneous values and the delays are kept separate.
@@ -50,7 +57,7 @@ Our first global translation will remedy this.
     It is a simple exercise to check the corresponding stream functions.
 \end{proof}
 
-This means that by assembling a circuit into global trace-delay form and
+By assembling a circuit into global trace-delay form and
 applying the \((\mealyeqn)\) rule, we can establish a word \(\listvar{s}\)
 representing the initial state of a circuit.
 This word is by no means unique: it depends on how the circuit is put into
@@ -62,6 +69,12 @@ What matters most is that we \emph{can} do it!
         \iltikzfig{strings/category/f}[box=f, colour=seq, dom=m, cod=n]
     \), there exists at least one valid application of the Mealy rule.
 \end{corollary}
+
+\begin{example}
+    The \((\mealyeqn)\) rule is applied to the global trace-delay form
+    SR NOR latch in \cref{fig:sr-latch-global-trace-delay}.
+    Here the initial state word is just \(\bot\).
+\end{example}
 
 The result of applying the \((\mealyeqn)\) reduction still differs from the
 image of \(\mealytocircuiti\) as it may have a trace with no delay on it: an
@@ -82,15 +95,16 @@ instance of \emph{non-delay-guarded feedback}.
 \end{remark}
 
 \begin{example}\label{ex:cyclic-combinational}
-    A particularly famous circuit~\cite{malik1994analysis} which is `useful'
+    A particularly famous circuit~\cite{malik1994analysis} which is useful
     despite the presence of non-delay-guarded feedback is shown in
     \cref{fig:cyclic-combinational}, where \(
         \iltikzfig{strings/category/f}[box=f,colour=comb]
     \) and \(
         \iltikzfig{strings/category/f}[box=G,colour=comb]
     \) are arbitrary combinational circuits.
-    The trapezoidal gate is a \emph{multiplexer}, which has a vertical
-    \emph{control} input and horiztonal \emph{data} inputs; it is defined as \(
+    The trapezoidal gate is a \emph{multiplexer}; it has a vertical
+    \emph{control} input and two horizontal \emph{data} inputs.
+    The multiplexer is defined as \(
         \iltikzfig{circuits/components/gates/mux}
         \coloneqq
         \iltikzfig{circuits/components/gates/mux-construction}
@@ -208,6 +222,14 @@ feedback at all!
     The circuit is combinational so each element of the output
     \(\circuittostreami[
         \iltikzfig{strings/category/f}[box=f,colour=comb]
-    ](\sigma)(i)\) is a function: \cref{lem:monotone-fixpoint} can be applied to
-    each element.
+    ](\sigma)(i)\) is a function; this means that \cref{lem:monotone-fixpoint}
+    can be applied to each element.
 \end{proof}
+
+\begin{example}
+    The \((\instantfeedbackeqn)\) rule is applied to the cyclic combinational
+    circuit from \cref{fig:cyclic-combinational} in
+    \cref{fig:cyclic-combinational-unrolled}.
+\end{example}
+
+\input{sections/circuits/operational/floats/cyclic-combinational-unrolled}
