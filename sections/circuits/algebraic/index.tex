@@ -1,0 +1,21 @@
+\chapter{Algebraic semantics}
+
+Testing that the behaviour of two circuits is equivalent by testing that every
+input produces the same output for each circuit is a perfectly reasonable
+strategy.
+But this is somewhat of a `nuclear strategy'; rather than using what we know
+about the structure of a circuit's subcomponents, we just blast away
+exhaustively trying all the inputs to find a contradiction.
+
+A more elegant method of reasoning is by utilising \emph{equations} between
+subcircuits.
+A proof of equivalence between two circuits is then presented using algebraic
+reasoning: applying equations to translate one circuit into the other.
+This is often \emph{far more efficient} than having to test every input!
+
+This is the focus of our final perspective on semantics for sequential
+circuits, \emph{algebraic semantics}.
+
+\input{sections/circuits/algebraic/mealy}
+\input{sections/circuits/algebraic/normalisation}
+\input{sections/circuits/algebraic/encoding}

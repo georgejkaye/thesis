@@ -75,7 +75,7 @@ This can be used to define our notion of observational equivalence for digital
 circuits.
 
 \begin{definition}[Observational equivalence of circuits]
-    We sat that two sequential circuits \(
+    We say that two sequential circuits \(
         \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
     \) and \(
         \iltikzfig{strings/category/f}[box=G,colour=seq,dom=m,cod=n]
@@ -173,3 +173,24 @@ equivalence for sequential circuits.
 \begin{corollary}
     There is an isomorphism \(\scircsigmai \cong \scircsigmaobs\).
 \end{corollary}
+
+The results of the previous section give us an upper bound on the length of
+waveforms required to establish observational semantics; this means that we have
+a terminating strategy for comparing the behaviour of digital circuits.
+Unfortunately, this is still an \emph{exponential} upper bound, so it is
+infeasible to check for the equivalence of circuits with more than a few delay
+components.
+
+Nevertheless, the operational semantics gives us a straightforward way to
+\emph{evaluate} circuits while respecting their internal structure, which can
+unlock more insight as to \emph{why} circuits are behaving the way they
+are.
+
+Moreover, while it may be infeasible to check \emph{every single possible input}
+to a circuit, it may be far easier to check equivalence for a subset of known
+inputs.
+Often, it is the case that one knows a particular input is fixed for long
+periods of time: perhaps it is some sort of control signal.
+By precomposing the appropriate input with an infinite waveform to represent
+this fixed input, \todo{Maybe this can be
+elaborated on}, the behaviour of the circuit can be evaluated and inspected.
