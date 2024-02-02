@@ -47,6 +47,12 @@ input with an instantaneous and a delayed component, the circuit can be copied
 so that one copy handles what is happening `now' and the other handles what is
 happening `later'.
 
+\begin{example}
+    \cref{fig:sr-latch-streamed} shows how the SR NOR latch in Mealy form from
+    \cref{fig:sr-latch-unrolled} is transformed by the \((\streamingeqn)\) rule.
+
+\end{example}
+
 As there is a delay on the bottom argument of the join, the output of a streamed
 circuit at the current tick is now contained entirely in the top argument of the
 join.

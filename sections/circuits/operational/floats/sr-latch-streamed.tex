@@ -1,19 +1,10 @@
 \begin{figure*}
     \centering
-    \todo[inline]{Go the whole hog and draw both copies of the circuit, go on}
-    \scalebox{0.85}{\iltikzfig{circuits/examples/sr-latch/circuit-streamed}}
-    \,
-    \(\reductions\)
-    \\[0.5em]
-    \scalebox{0.85}{\iltikzfig{circuits/examples/sr-latch/circuit-reduced}}
-    \,
-    \(\reductions\)
-    \,
-    \scalebox{0.85}{\iltikzfig{circuits/examples/sr-latch/circuit-values}}
+    \scalebox{0.6}{\iltikzfig{circuits/examples/sr-latch/circuit-streamed-full}}
     \caption{
-        Applying combinational reductions to the `now' copy of the circuit
-        in \cref{fig:sr-latch-unrolled} with inputs
-        \(\belnaptrue\belnapfalse\)
+        Applying \(\streamingeqn\) with inputs \(\belnaptrue\belnapfalse\) to
+        the circuit from \cref{fig:sr-latch-unrolled}, before using the value
+        rules to reduce to its output values.
     }
     \label{fig:sr-latch-streamed}
 \end{figure*}

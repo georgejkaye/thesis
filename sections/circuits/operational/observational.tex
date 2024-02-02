@@ -1,1 +1,175 @@
 \section{Observational equivalence}
+
+In the denotational semantics, we defined the relation of
+\emph{denotational equivalence}, in which circuits are related if their
+denotations as streams are equal.
+For operational semantics we have another notion of relation on circuits: that
+of \emph{observational equivalence}.
+This is due to Morris~\cite{morris1969lambdacalculus}, who named it
+`extensional equivalence': essentially, two processes are observationally if they
+cannot be distinguished by their input-output behaviour.
+To apply this to circuits we first define some notation for sequences of inputs
+to a circuit.
+
+\begin{notation}[Waveform]\label{def:waveform}
+    The empty waveform is defined as \(
+        \iltikzfig{circuits/components/waveforms/sigma0}
+        \coloneqq
+        \iltikzfig{strings/category/identity}[colour=comb,obj=n]
+    \).
+    Given values \(\overline{v} \in \valuetuple{n}\) and sequence \(
+        \overline{\underline{w}} \in (\valuetuple{n})^\star
+    \), the waveform for sequence \(
+        \overline{v} \streamcons \overline{\underline{w}}
+    \) is drawn as \(
+        \iltikzfig{circuits/components/waveforms/sigmatp1-spaced}
+        \coloneqq
+        \iltikzfig{circuits/components/waveforms/sigmatp1-construction-spaced}
+    \).
+\end{notation}
+
+Testing for observational equivalence is traditionally performed by checking
+that a program behaves the same in all \emph{contexts}.
+In the setting of digital circuits, this means that for all possible streams of
+inputs, the circuit produces the same inputs.
+Of course, there are infinitely many streams of inputs, despite the set of
+values being finite.
+Fortunately, since circuits are constructed from a finite number of
+\emph{components}, we need not check them all.
+
+\begin{lemma}\label{lem:number-of-states}
+    Let \(
+        \iltikzfig{strings/category/f}[box=F,colour=seq]
+    \) be a sequential circuit with \(c\) delay components.
+    Then applying \cref{cor:productivity} successively to a Mealy form of this
+    circuit will produce at most \(|\values|^c\) unique states.
+\end{lemma}
+\begin{proof}
+    The only varying elements of the state word are contributed by
+    the \(c\) delay components, as the values transition to \(\bot\).
+\end{proof}
+
+\begin{corollary}\label{cor:repeated-state}
+    Given a circuit in Mealy form \(
+        \iltikzfig{circuits/productivity/mealy-form}[dom=m,cod=n,delay=x]
+    \) and input sequence \(\listlistvar{v} \in \valuetupleseq{m}\) of length
+    \(|\values|^c + 1\), there exists a state \(
+        \listvar{r} \in \valuetuple{x}
+    \), an input sequence \(
+        \listlistvar{u} \in \valuetupleseq{m}
+    \) and output sequences \(
+        \listlistvar{w},\listlistvar{z} \in \valuetupleseq{n}
+    \) such that applying \cref{cor:productivity} yields the
+    following reduction pattern: \begin{gather*}
+        \iltikzfig{circuits/productivity/mealy-form-waveform}
+        \reductions
+        \iltikzfig{circuits/productivity/mealy-form-waveform-partial}[state=\listvar{r},output=\listlistvar{w},input=\listlistvar{u}]
+        \reductions
+        \iltikzfig{circuits/productivity/mealy-form-waveform-output-2}[state=\listvar{r},output1=\listlistvar{z},output2=\listlistvar{w}]
+    \end{gather*}
+\end{corollary}
+
+This means that every possible behaviour of a circuit can be evaluated using
+a finite number of streams.
+This can be used to define our notion of observational equivalence for digital
+circuits.
+
+\begin{definition}[Observational equivalence of circuits]
+    We sat that two sequential circuits \(
+        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+    \) and \(
+        \iltikzfig{strings/category/f}[box=G,colour=seq,dom=m,cod=n]
+    \) with no more than \(c\) delays are said to be
+    \emph{observationally equivalent under} \(\interpretation\), written \(
+        \iltikzfig{strings/category/f}[box=F,colour=seq]
+        \sim_{\interpretation}
+        \iltikzfig{strings/category/f}[box=G,colour=seq]
+    \) if applying productivity produces the same output
+    waveforms for all input waveforms \(
+        \listlistvar{v} \in \valuetupleseq{m}\) of length
+        \(|\values^c| + 1\).
+\end{definition}
+
+To verify that this is the `best' such relation, we turn to a
+definition of observational equivalence in terms of universal
+properties~\cite{gordon1998operational}.
+Gordon states that a relation is an \emph{adequate} observational semantics if
+it only relates circuits that have the same denotational semantics;
+observational equivalence is then defined as the largest adequate congruence.
+
+\begin{theorem}\label{thm:operational-denotational}
+    Given two sequential circuits \(
+        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+    \) and \(
+        \iltikzfig{strings/category/f}[box=G,colour=seq,dom=m,cod=n]
+    \), \(
+        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+        \sim_\interpretation
+        \iltikzfig{strings/category/f}[box=G,colour=seq,dom=m,cod=n]
+    \) if and only if \(
+        \circuittostreami[
+            \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+        ]
+        =
+        \circuittostreami[
+            \iltikzfig{strings/category/f}[box=G,colour=seq,dom=m,cod=n]
+        ]
+    \).
+\end{theorem}
+\begin{proof}
+    The \(\onlyifdir\) direction follows by \cref{cor:repeated-state}, as every
+    possible internal configuration of the circuit will be tested.
+    For \(\ifdir\), if \(
+        \circuittostreami[
+            \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+        ]
+        =
+        \circuittostreami[
+            \iltikzfig{strings/category/f}[box=G,colour=seq,dom=m,cod=n]
+        ]
+    \), then this means \(
+        \circuittostreami[
+            \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+        ](\listlistvar{v} \streamcons \sigma)
+        =
+        \circuittostreami[
+            \iltikzfig{strings/category/f}[box=G,colour=seq,dom=m,cod=n]
+        ](\listlistvar{v} \streamcons \sigma)
+    \) for any \(\sigma,\tau \in \valuetuplestream{m}\).
+    By definition of \(\circuittostreami\), we then have that \(
+        \circuittostreami[
+        \iltikzfig{circuits/components/circuits/f-applied-waveform}[box=F,colour=seq,dom=m,cod=n,input=\listlistvar{v}]
+        ](\sigma)
+        =
+        \circuittostreami[
+            \iltikzfig{circuits/components/circuits/f-applied-waveform}[box=G,colour=seq,dom=m,cod=n,input=\listlistvar{v}]
+        ](\sigma)
+    \).
+    Since this holds for \emph{all} sequences \(\listlistvar{v}\), it must hold
+    for those of length \(|\values|^c + 1\), so the condition for observational
+    equivalence is met.
+\end{proof}
+
+\begin{corollary}
+    \(\sim_\interpretation\) is the largest adequate congruence on
+    \(\scircsigma\).
+\end{corollary}
+\begin{proof}
+    For \(\sim_\interpretation\) to be a congruence it must be preserved by
+    composition, tensor and trace, and for it to be the largest there must be
+    no denotationally equal circuit it does not relate.
+    These, along with adequacy, all follow by
+    \cref{thm:operational-denotational}.
+\end{proof}
+
+This makes \(\sim_\interpretation\) a suitable notion of observational
+equivalence for sequential circuits.
+
+\begin{definition}
+    Let \(\scircsigmaobs\) be defined as
+    \(\scircsigma / \sim_{\interpretation}\).
+\end{definition}
+
+\begin{corollary}
+    There is an isomorphism \(\scircsigmai \cong \scircsigmaobs\).
+\end{corollary}
