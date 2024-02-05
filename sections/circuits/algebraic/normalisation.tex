@@ -1,0 +1,38 @@
+\section{Normalising circuits}
+
+We can now translate any circuit into a denotationally-equal Mealy form using
+equations in \(\mealyeqn\); what now?
+As mentioned in the previous section, there is no guarantee that the
+combinational cores of Mealy forms have the same semantics, even if the state
+word is the same.
+Even so, one might think that through some combination of sliding components
+around the trace and across the delay, one might stumble across a way of
+translating one circuit into another.
+Unfortunately, these is simply \emph{not sufficient} for
+translating between circuits with the same semantics.
+
+\begin{example}
+    Consider the following circuit in \(\scirc{\belnapsignature}\): \[
+        \iltikzfig{circuits/examples/state-change/circuit}
+        \quad
+        \iltikzfig{circuits/examples/state-change/circuit-simpler}
+    \]
+    The registers will \emph{always} contain
+    \(\belnapfalse\) and \(\belnaptrue\) and both circuits will
+    produce a constant \(\belnapfalse\) output, so a complete equational theory
+    should be able to translate between them.
+    To this end, we assemble these into Mealy forms with the same initial states:
+    \[
+        \iltikzfig{circuits/examples/state-change/circuit-mealy}
+        \quad
+        \iltikzfig{circuits/examples/state-change/circuit-simpler-mealy}
+    \]
+    The combinational cores do \emph{not} have the same semantics!
+    They only act the same because they receive certain inputs
+    from \(\valuetuple{3}\).
+\end{example}
+
+We must take \emph{context} into account when defining
+equations; unfortunately equations that only deal with the interactions between
+individual generators are not enough.
+

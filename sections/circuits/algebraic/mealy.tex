@@ -12,8 +12,20 @@ equations, rather than resorting to equations parameterised over all circuits.
 \input{sections/circuits/algebraic/floats/mealy-equations}
 
 \begin{definition}
-Let \(\mealyequations\) be the set of equations in \cref{fig:mealy-equations}.
+    The set \(\mealyequations\) of \emph{Mealy equations} in
+    \cref{fig:mealy-equations} are sound.
 \end{definition}
+\begin{proof}
+    The first two rules hold as the join is a monoid in the stream semantics.
+    The \((\bottomdelayeqn)\) holds because the semantics of the delay
+    component are to output a \(\bot\) value first and then the (delayed)
+    inputs: as the semantics of the \(
+        \iltikzfig{strings/structure/monoid/init}[colour=comb]
+    \) component are to \emph{always} produce \(\bot\), then it does not make a
+    difference how delayed it is.
+    The final equation is just the instant feedback rule from the previous
+    chapter, which is sound by \cref{prop:instant-feedback}.
+\end{proof}
 
 \begin{proposition}
     Given a sequential circuit \(
@@ -42,3 +54,9 @@ Let \(\mealyequations\) be the set of equations in \cref{fig:mealy-equations}.
     Subsequently a circuit in Mealy form can be obtained by applying the
     \((\instantfeedbackeqn)\).
 \end{proof}
+
+\(\scircsigma / \mealyequations\) is a category in which all circuits are equal
+to at least one circuit in Mealy form.
+In general, there will be many Mealy forms depending on the ordering one picks
+for the delays and values; while each Mealy form circuit will have the same
+semantics, there is no reason that their combinational cores must as well.
