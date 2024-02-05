@@ -58,16 +58,16 @@ circuits, \emph{algebraic semantics}.
         mul\,(mul\,e\, add(\overline{1}\,\overline{3}))\,\overline{2}
         \\
         &=
-        mul\,(add\,e\,\overline{4})\,\overline{2}
+        mul\,(mul \,e\,\overline{4})\,\overline{2}
         \\
         &=
-        mul\,\overline{2}\,(add\,e\,\overline{4})
+        mul\,e\,(mul \,\overline{4}\,\overline{2})
         \\
         &=
-        add\,(mul\,\overline{2}\,e)\,(mul\,\overline{2}\,\overline{4})
+        mul\,e\,\overline{8}
         \\
         &=
-        add\,(mul\,\overline{2}\,e)\,\overline{8}
+        mul\,\overline{8}\,e
     \end{align*}
     Despite not specifying the structure of \(e\), we have
     shown how the expression is equal to a slightly simpler one.
