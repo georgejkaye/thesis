@@ -7,14 +7,94 @@ But this is somewhat of a `nuclear strategy'; rather than using what we know
 about the structure of a circuit's subcomponents, we just blast away
 exhaustively trying all the inputs to find a contradiction.
 
-A more elegant method of reasoning is by utilising \emph{equations} between
-subcircuits.
+A more elegant method of reasoning is by defining a set \emph{equations} between
+subcircuits and \emph{quotienting} \(\scircsigma\) by these equations.
 A proof of equivalence between two circuits is then presented using algebraic
 reasoning: applying equations to translate one circuit into the other.
 This is often \emph{far more efficient} than having to test every input!
-
 This is the focus of our final perspective on semantics for sequential
 circuits, \emph{algebraic semantics}.
+
+\begin{example}\label{ex:expressions-algebraic}
+    For the last time we return to the language of arithmetical expressions from
+    \cref{ex:expressions-denotational}.
+    An algebraic semantics for this language can be defined using a set of
+    equations: the familiar equations of associativity, commutativity,
+    unitality, annihiliation and distributivity, along with equations for
+    actually performing arithmetic.
+    \begin{gather*}
+        add\,(add\,e_1\,e_2)\,e_3 = add\,e_1\,(add\,e_2\,e_3)
+        \qquad
+        mul\,(mul\,e_1\,e_2)\,e_3 = mul\,e_1\,(mul\,e_2\,e_3)
+        \\
+        add\,e_1\,e_2 = add\,e_2\,e_1
+        \qquad
+        mul\,e_1\,e_2 = mul\,e_2\,e_1
+        \\
+        add\,e_1\,\overline{0} = e_1
+        \qquad
+        mul\,e_1\,\overline{1} = e_1
+        \qquad
+        mul\,e_1\,\overline{0} = \overline{0}
+        \\
+        mul\,e_1\,(add\,e_2\,e_3) = add\,(mul\,e_1\,e_2)\,(mul\,e_1\,e_3)
+        \\
+        add\,\overline{n_1}\,\overline{n_2} = add\,\overline{n_1+n_2}
+        \qquad
+        add\,\overline{n_1}\,\overline{n_2} = \overline{n_1 \cdot n_2}
+    \end{gather*}
+    If everything is specified concretely as values then one could easily just
+    use the last two equations to compare two expressions by reducing
+    two expressions to values as in the operational semantics.
+    The power of the algebraic semantics comes from the fact we can reason
+    abstractly with expressions containing \emph{blackboxes}.
+    Take the following example, containing some arbitrary component \(e\).
+    \begin{align*}
+        mul\,(add\,e\,(mul\,e\,\overline{3}))\,\overline{2}
+        &=
+        mul\,(add\,(mul\,e\,1)\,(mul\,e\,\overline{3}))\,\overline{2}
+        \\
+        &=
+        mul\,(mul\,e\, add(\overline{1}\,\overline{3}))\,\overline{2}
+        \\
+        &=
+        mul\,(add\,e\,\overline{4})\,\overline{2}
+        \\
+        &=
+        mul\,\overline{2}\,(add\,e\,\overline{4})
+        \\
+        &=
+        add\,(mul\,\overline{2}\,e)\,(mul\,\overline{2}\,\overline{4})
+        \\
+        &=
+        add\,(mul\,\overline{2}\,e)\,\overline{8}
+    \end{align*}
+    Despite not specifying the structure of \(e\), we have
+    shown how the expression is equal to a slightly simpler one.
+    This process creates new general equations which can be used as `shortcuts'
+    in future reasoning, potentially saving many steps.
+\end{example}
+
+As with the operational semantics, we are especially interested in defining a
+\emph{sound and complete} algebraic semantics for sequential digital circuits
+with respect to the denotational semantics.
+That is to say, for each equation \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
+    =
+    \iltikzfig{strings/category/f}[box=g,colour=seq]
+\) then \(
+    \circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
+    =
+    \circuittostreami[\iltikzfig{strings/category/f}[box=g,colour=seq]]
+\), and there must be enough equations such that if \(
+    \circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
+    =
+    \circuittostreami[\iltikzfig{strings/category/f}[box=g,colour=seq]]
+\) then there exists a series of equations identifying \(
+    \circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
+\) and \(
+    \circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
+\).
 
 \input{sections/circuits/algebraic/mealy}
 \input{sections/circuits/algebraic/normalisation}
