@@ -36,3 +36,64 @@ We must take \emph{context} into account when defining
 equations; unfortunately equations that only deal with the interactions between
 individual generators are not enough.
 
+Instead, our strategy is to translate circuits in Mealy form into some sort of
+`normal form', from which it is clearer which circuits have the same behaviour.
+
+\todo[inline]{I don't like the previous paragraph}
+
+The first step is to consider what exactly this normal form should look like.
+Mealy form itself is already a sort of normal form, but there is no restriction
+on how the combinational core is defined.
+For functionally complete interpretations, one possibility for a normal form
+for combinational circuits immediately presents itself in the form of the map
+\(\mealytofunc\) from \(\funci\) to \(\scircsigma\), which defines a canonical
+circuit for any (combinational) function.
+
+\begin{remark}
+    Recall that even though \(\mealytofunc\) maps into \(\scircsigma\), every
+    circuit in its image has combinational behaviour; the image of
+    \(\mealytofunc\) is constrained in such a way that the instantaneous values
+    can be used as constants.
+\end{remark}
+
+\begin{definition}[Normalising equations]
+    For a functionally complete interpretation \(\interpretation\), a set of
+    equations \(\normalisingequations\) is \emph{normalising} if any
+    compositional circuit \(
+        \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=1]
+    \) is equal to a circuit in the image of \(\mealytofunc\) by equations in
+    \(\normalisingequations\).
+\end{definition}
+
+The aim of the normalising equations for an interpretation translate a
+combinational core into a form from which it is easy to read off a truth table.
+Note that we only require the normalising equations to translate circuits with a
+\emph{single} output; this means we will need a way to express each output of
+a combinational core as an independent circuit.
+This is also important as we need to distinguish which outputs of the core
+contribute to the next state, and which to the outputs of the entire circuit.
+
+\begin{definition}[Normalised Mealy form]
+    A sequential circuit is in \emph{normalised Mealy form} if it is in the form
+    \(
+        \iltikzfig{circuits/axioms/encoding}[transition={f_0},output={f_1},dom=m,cod=n,delay=x]
+    \) where \(
+        \iltikzfig{strings/category/f-2-1}[box=f_0,colour=seq]
+    \) and \(
+        \iltikzfig{strings/category/f-2-1}[box=f_1,colour=seq]
+    \) are normalised circuits.
+    Given such a circuit, we write \(
+        \morph{\tilde{f}_{0}}{\valuetuple{x+m}}{{\valuetuple{x}}}
+    \) and \(
+        \morph{\tilde{f}_{1}}{\valuetuple{x+m}}{{\valuetuple{n}}}
+    \) for the functions that satisfy \(
+        \mealytofunc[\tilde{f}_{0}] = \iltikzfig{strings/category/f-2-1}[box=f_0,colour=seq]
+    \) and \(
+        \mealytofunc[\tilde{f}_{1}] = \iltikzfig{strings/category/f-2-1}[box=f_1,colour=seq]
+    \).
+\end{definition}
+
+
+\section{Case study: The Belnap interpretation}
+
+\todo[inline]{The normalising equations for the Belnap interpretation}
