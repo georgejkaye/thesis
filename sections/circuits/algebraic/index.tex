@@ -96,6 +96,37 @@ That is to say, for each equation \(
     \circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
 \).
 
+\begin{remark}
+    An `equational theory' for sequential circuits was one of the first things
+    presented in the original circuits
+    paper~\cite{ghica2016categorical,ghica2017diagrammatic}.
+    In that paper, equations that `seemed right' were used to quotient the
+    syntax, with the ultimate aim of showing that the resulting category was
+    \emph{Cartesian}.
+    This was done quite informally, and was made more confusing as
+    the categories of circuits were subsequently quotiented by some notion of
+    `extensional equivalence', an attempt to rectify the fact that the
+    equations only dealt with closed circuits.
+    Soundness and completeness of the equational theory was not considered
+    because there was no other semantics to compare it against!
+
+    In essence, the previous work was almost `the wrong way round': equations
+    were defined and semantics drawn from them.
+    In the more recent version of the work~\cite{ghica2024fully}[Sec. 5], which
+    forms the basis for this chapter, the equations are derived from the
+    denotational semantics.
+    Not only does this give us a formal way of verifying that these equations
+    are sound, it sets the backdrop against which we can test if the algebraic
+    semantics are sufficient: are any two denotationally equal circuits
+    identified by equations?
+
+    Fans of the original work should fear not, because what came before has not
+    been entirely discarded.
+    Most of the original equations have found a home as rules of the operational
+    semantics in the previous chapter, and the fact that categories of circuits
+    should be Cartesian will crop up later on; stay tuned!
+\end{remark}
+
 \input{sections/circuits/algebraic/mealy}
 \input{sections/circuits/algebraic/normalisation}
 \input{sections/circuits/algebraic/encoding}
