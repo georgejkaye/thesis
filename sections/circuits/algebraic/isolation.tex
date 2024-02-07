@@ -63,37 +63,14 @@ We could quotient \(\scircsigma\) by the equations in
 
 \input{sections/circuits/algebraic/floats/local-cartesian-equations}
 
-\begin{lemma}\label{lem:switch-branches-assoc}
-    \(
-        \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-2}
-        =
-        \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-3}
-    \) holds in \(\scircsigma / \mcc\)
-\end{lemma}
-\begin{proof}
-    \(
-        \iltikzfig{circuits/productivity/switch-branches-assoc/step-0}
-        \eqaxioms[(\comonoidassoceqn)]
-        \iltikzfig{circuits/productivity/switch-branches-assoc/step-1}
-        \eqaxioms[(\comonoidassoceqn)]
-        \iltikzfig{circuits/productivity/switch-branches-assoc/step-2}
-        \eqaxioms[(\comonoidcommeqn)]
-        \iltikzfig{circuits/productivity/switch-branches-assoc/step-3}
-        \eqaxioms[(\comonoidassoceqn)]
-        \iltikzfig{circuits/productivity/switch-branches-assoc/step-4}
-        \eqaxioms[(\comonoidassoceqn)]
-        \iltikzfig{circuits/productivity/switch-branches-assoc/step-5}
-    \)
-\end{proof}
-
 \begin{lemma}\label{lem:join-fork-inverse}
     For any sequential circuit \(
         \iltikzfig{strings/category/f-1-2}[box=F,colour=seq,dom=m,cod1=n,cod2=p]
-    \), \[
-        \iltikzfig{circuits/axioms/join-fork-inverses-lhs}
+    \), \(
+        \iltikzfig{circuits/axioms/join-fork-inverses-lhs}[box=f,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
         =
-        \iltikzfig{circuits/axioms/join-fork-inverses-rhs}
-    \] holds in \(\scircsigma / \mcc\).
+        \iltikzfig{circuits/axioms/join-fork-inverses-rhs}[box=f,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
+    \) holds in \(\scircsigma / \mcc\).
 \end{lemma}
 \begin{proof}
     This is by induction over the structure of the circuit \(
@@ -117,12 +94,11 @@ We could quotient \(\scircsigma\) by the equations in
     \) we first check if only one of the outputs are joined:
     \begin{gather*}
         \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-0}
-        \eqaxioms[\text{\cref{lem:switch-branches-assoc}}]
+        \eqaxioms[(\comonoidassoceqnletter), (\comonoidcommeqnletter)]
         \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-1}
         \eqaxioms[(\forkjoineqn)]
-        \\
         \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-2}
-        \eqaxioms[\text{\cref{lem:switch-branches-assoc}}]
+        \eqaxioms[(\comonoidassoceqnletter), (\comonoidcommeqnletter)]
         \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-3}
     \end{gather*}
     And now if both outputs are joined:
@@ -131,9 +107,8 @@ We could quotient \(\scircsigma\) by the equations in
         \eqaxioms[(\joinforkeqn)]
         \iltikzfig{circuits/productivity/join-fork-inverse/fork-double-step-1}
         \eqaxioms[(\forkjoineqn)]
-        \\
         \iltikzfig{circuits/productivity/join-fork-inverse/fork-double-step-2}
-        \eqaxioms[\text{\cref{lem:switch-branches-assoc}}]
+        \eqaxioms[(\comonoidassoceqnletter), (\comonoidcommeqnletter)]
         \iltikzfig{circuits/productivity/join-fork-inverse/fork-double-step-3}
     \end{gather*}
     For \(
@@ -150,8 +125,7 @@ We could quotient \(\scircsigma\) by the equations in
     \]
     For \(
         \iltikzfig{circuits/components/waveforms/delay}
-    \):
-    \[
+    \): \[
         \iltikzfig{circuits/productivity/join-fork-inverse/delay-step-0}
         \eqaxioms[(\delayforkeqn)]
         \iltikzfig{circuits/productivity/join-fork-inverse/delay-step-1}
@@ -164,10 +138,38 @@ We could quotient \(\scircsigma\) by the equations in
         \iltikzfig{strings/structure/monoid/init}[colour=comb]
     \), \(
         \iltikzfig{strings/category/identity}[colour=comb]
-    \) and \(
+    \), \(
         \iltikzfig{strings/symmetric/symmetry}[colour=comb]
-    \) are trivial, as are the inductive cases for composition and tensor.
-    For the inductive case for the trace, axioms of STMCs are applied in
-    reverse to create two `global traces', and then the inductive hypothesis is
-    applied to reach the final result.
+    \) and \(
+        \iltikzfig{circuits/components/values/vs}
+    \) are trivial.
+
+    For composition, we need to show that \(
+        \iltikzfig{circuits/axioms/join-fork-inverses-composition-lhs}[box1=f,box2=g,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
+        =
+        \iltikzfig{circuits/axioms/join-fork-inverses-composition-rhs}[box1=f,box2=g,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
+    \).
+    By inductive hypothesis, \(
+        \iltikzfig{circuits/axioms/join-fork-inverses-lhs-simple}[box=f]
+        =
+        \iltikzfig{circuits/axioms/join-fork-inverses-rhs-simple}[box=f]
+    \) so we have that \[
+        \iltikzfig{circuits/axioms/join-fork-inverses-composition-lhs}[box1=f,box2=g]
+        =
+        \iltikzfig{circuits/productivity/join-fork-inverse/composition-step-1}[box1=f,box2=g]
+        =
+        \iltikzfig{circuits/productivity/join-fork-inverse/composition-step-2}[box1=f,box2=g]
+        =
+        \iltikzfig{circuits/axioms/join-fork-inverses-composition-rhs}[box1=f,box2=g].
+    \]
+
+    For tensor, we just need to apply the inductive hypothesis twice as the
+    there are two circuits which do not interact.
+
+    For trace we need to show that \(
+        \iltikzfig{circuits/productivity/join-fork-inverse/trace-lhs}[box=f]
+        =
+        \iltikzfig{circuits/productivity/join-fork-inverse/trace-rhs}[box=f]
+    \).
+
 \end{proof}
