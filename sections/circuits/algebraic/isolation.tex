@@ -1,0 +1,173 @@
+\section{Isolation equations}
+
+So far, we have equations that can translate a combinational circuit into a
+canonical representative; this means we can just normalise a circuit and then
+use some sort of lookup table to retrieve the corresponding function.
+
+The next step is to determine how to translate a circuit with an arbitrary
+set of state words into the `one-hot' encoding of circuits in the image of
+\(\mealytocircuiti\), in the state words have the same width as the number of
+states in the circuit.
+This means we will need some way of computing the number of states in the
+circuit.
+To do this, we add some equations for \emph{isolating} the transition and output
+components of the combinational core.
+
+\begin{definition}[Normalised Mealy form]
+    A sequential circuit is in \emph{normalised Mealy form} if it is in the form
+    \(
+        \iltikzfig{circuits/axioms/encoding}[transition={f_0},output={f_1},dom=m,cod=n,delay=x]
+    \) where \(
+        \iltikzfig{strings/category/f-2-1}[box=f_0,colour=seq]
+    \) and \(
+        \iltikzfig{strings/category/f-2-1}[box=f_1,colour=seq]
+    \) are normalised circuits.
+    Given such a circuit, we write \(
+        \morph{\tilde{f}_{0}}{\valuetuple{x+m}}{{\valuetuple{x}}}
+    \) and \(
+        \morph{\tilde{f}_{1}}{\valuetuple{x+m}}{{\valuetuple{n}}}
+    \) for the functions that satisfy \(
+        \mealytofunc[\tilde{f}_{0}] = \iltikzfig{strings/category/f-2-1}[box=f_0,colour=seq]
+    \) and \(
+        \mealytofunc[\tilde{f}_{1}] = \iltikzfig{strings/category/f-2-1}[box=f_1,colour=seq]
+    \).
+\end{definition}
+
+While it may be obvious which components of the circuit contribute to the
+transition and which to the output, it is more likely that the components will
+be tightly intertwined, with lots of sharing going on.
+This means that to obtain a version of the circuit with the two parts separated
+we may need to \emph{copy} components.
+For those in the know, this can mean only one thing.
+
+\begin{definition}[Cartesian category~\cite{fox1976coalgebras}]
+    A category is \emph{Cartesian} if its tensor product is given by the Cartesian
+    product, or, equivalently, if it satisfies the equations in
+    \cref{fig:cartesian-axioms}.
+\end{definition}
+
+\input{sections/circuits/algebraic/floats/cartesian-equations}
+
+We could quotient \(\scircsigma\) by the equations in
+\cref{fig:cartesian-axioms}, but we prefer to use a finite number of equations.
+
+\begin{definition}
+    Let \(\cartesianequations\) be defined as the set of equations in
+    \cref{fig:local-cartesian-equations}.
+\end{definition}
+
+\begin{remark}
+    Note that \((\forkjoineqn)\) and \((\joinforkeqn)\) induce equations on the
+    `composite' forks and joins from \cref{not:arbitrary-width-structure}.
+\end{remark}
+
+\input{sections/circuits/algebraic/floats/local-cartesian-equations}
+
+\begin{lemma}\label{lem:switch-branches-assoc}
+    \(
+        \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-2}
+        =
+        \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-3}
+    \) holds in \(\scircsigma / \mcc\)
+\end{lemma}
+\begin{proof}
+    \(
+        \iltikzfig{circuits/productivity/switch-branches-assoc/step-0}
+        \eqaxioms[(\comonoidassoceqn)]
+        \iltikzfig{circuits/productivity/switch-branches-assoc/step-1}
+        \eqaxioms[(\comonoidassoceqn)]
+        \iltikzfig{circuits/productivity/switch-branches-assoc/step-2}
+        \eqaxioms[(\comonoidcommeqn)]
+        \iltikzfig{circuits/productivity/switch-branches-assoc/step-3}
+        \eqaxioms[(\comonoidassoceqn)]
+        \iltikzfig{circuits/productivity/switch-branches-assoc/step-4}
+        \eqaxioms[(\comonoidassoceqn)]
+        \iltikzfig{circuits/productivity/switch-branches-assoc/step-5}
+    \)
+\end{proof}
+
+\begin{lemma}\label{lem:join-fork-inverse}
+    For any sequential circuit \(
+        \iltikzfig{strings/category/f-1-2}[box=F,colour=seq,dom=m,cod1=n,cod2=p]
+    \), \[
+        \iltikzfig{circuits/axioms/join-fork-inverses-lhs}
+        =
+        \iltikzfig{circuits/axioms/join-fork-inverses-rhs}
+    \] holds in \(\scircsigma / \mcc\).
+\end{lemma}
+\begin{proof}
+    This is by induction over the structure of the circuit \(
+        \iltikzfig{strings/category/f-1-2}[box=F,colour=seq]
+    \).
+    First we must check the base cases.
+    For \(
+        \iltikzfig{circuits/components/gates/gate}[gate=g,colour=comb]
+    \):
+    \begin{gather*}
+        \iltikzfig{circuits/productivity/join-fork-inverse/gate-partial-step-0}
+        \eqaxioms[(\gateforkeqn)]
+        \iltikzfig{circuits/productivity/join-fork-inverse/gate-partial-step-1}
+        \eqaxioms[(\forkjoineqn)]
+        \iltikzfig{circuits/productivity/join-fork-inverse/gate-partial-step-2}
+        \eqaxioms[(\gateforkeqn)]
+        \iltikzfig{circuits/productivity/join-fork-inverse/gate-partial-step-3}
+    \end{gather*}
+    For \(
+        \iltikzfig{strings/structure/comonoid/copy}[colour=comb]
+    \) we first check if only one of the outputs are joined:
+    \begin{gather*}
+        \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-0}
+        \eqaxioms[\text{\cref{lem:switch-branches-assoc}}]
+        \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-1}
+        \eqaxioms[(\forkjoineqn)]
+        \\
+        \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-2}
+        \eqaxioms[\text{\cref{lem:switch-branches-assoc}}]
+        \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-3}
+    \end{gather*}
+    And now if both outputs are joined:
+    \begin{gather*}
+        \iltikzfig{circuits/productivity/join-fork-inverse/fork-double-step-0}
+        \eqaxioms[(\joinforkeqn)]
+        \iltikzfig{circuits/productivity/join-fork-inverse/fork-double-step-1}
+        \eqaxioms[(\forkjoineqn)]
+        \\
+        \iltikzfig{circuits/productivity/join-fork-inverse/fork-double-step-2}
+        \eqaxioms[\text{\cref{lem:switch-branches-assoc}}]
+        \iltikzfig{circuits/productivity/join-fork-inverse/fork-double-step-3}
+    \end{gather*}
+    For \(
+        \iltikzfig{strings/structure/monoid/merge}[colour=comb]
+    \):
+    \[
+        \iltikzfig{circuits/productivity/join-fork-inverse/join-step-0}
+        \eqaxioms[(\joinforkeqn)]
+        \iltikzfig{circuits/productivity/join-fork-inverse/join-step-1}
+        \eqaxioms[(\forkjoineqn)]
+        \iltikzfig{circuits/productivity/join-fork-inverse/join-step-2}
+        \eqaxioms[(\joinforkeqn)]
+        \iltikzfig{circuits/productivity/join-fork-inverse/join-step-3}
+    \]
+    For \(
+        \iltikzfig{circuits/components/waveforms/delay}
+    \):
+    \[
+        \iltikzfig{circuits/productivity/join-fork-inverse/delay-step-0}
+        \eqaxioms[(\delayforkeqn)]
+        \iltikzfig{circuits/productivity/join-fork-inverse/delay-step-1}
+        \eqaxioms[(\forkjoineqn)]
+        \iltikzfig{circuits/productivity/join-fork-inverse/delay-step-2}
+        \eqaxioms[(\delayforkeqn)]
+        \iltikzfig{circuits/productivity/join-fork-inverse/delay-step-3}
+    \]
+    The proofs for \(
+        \iltikzfig{strings/structure/monoid/init}[colour=comb]
+    \), \(
+        \iltikzfig{strings/category/identity}[colour=comb]
+    \) and \(
+        \iltikzfig{strings/symmetric/symmetry}[colour=comb]
+    \) are trivial, as are the inductive cases for composition and tensor.
+    For the inductive case for the trace, axioms of STMCs are applied in
+    reverse to create two `global traces', and then the inductive hypothesis is
+    applied to reach the final result.
+\end{proof}

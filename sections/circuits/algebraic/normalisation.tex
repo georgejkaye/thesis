@@ -29,7 +29,7 @@ translating between circuits with the same semantics.
     \]
     The combinational cores do \emph{not} have the same semantics!
     They only act the same because they receive certain inputs
-    from \(\valuetuple{3}\).
+    from \(\belnapvalues^{3}\).
 \end{example}
 
 We must take \emph{context} into account when defining
@@ -39,25 +39,28 @@ individual generators are not enough.
 Instead, our strategy is to translate circuits in Mealy form into some sort of
 `normal form', from which it is clearer which circuits have the same behaviour.
 We take inspiration from a form we have seen already: the image of
-\(\mealytocircuiti\).
-Not only is this image characterised by circuits in Mealy form, but their state
-word have the special property that their length is the equal to the number of
-states the (underlying Mealy machine of the) circuit can assume, and only
-contain \(\bot\) and \(\top\).
+\(\mealytocircuiti\), the map from Mealy machines to circuit morphisms.
+Recall that circuits in the image of \(\mealytocircuiti\) are in the form \(
+    \iltikzfig{circuits/synthesis/mealy-term-spaced}[trace=\listvar{x},dom=\listvar{m},cod=\listvar{n}]
+\), where \(\gamma_\leq\) is an \emph{encoding} of the state set with respect
+to some total order \(\leq\).
+This encoding maps states to words containing only \(\bot\) and \(\top\) where
+the width of each word is equal to the number of states in the original Mealy
+machine.
+
 From the completeness procedure for the denotational semantics, we know that any
 circuit is guaranteed to be denotationally equivalent to a circuit in this form;
 if we have equations to translate any circuits with the same behaviour to this
 circuit, then we have a complete algebraic semantics.
 
-When working with syntactic circuits rather than stream functions, there may be
-many circuits that correspond to the same behaviour.
-To reduce the confusion when talking about a circuit, we will first introduce
-equations for translating a combinational circuit into a `canonical' version
-from which it is straightforward to read off its behaviour.
-For functionally complete interpretations, such a candidate presents itself
-immediately in the form of the map \(\mealytofunc\) from \(\funci\) to
-\(\scircsigma\), which maps any (combinational) function to a particular
-circuit.
+The map from Mealy machines to circuits also enforces the structure of the
+Mealy core: it must be in the image of the map \(\mealytofunc\) from \(\funci\)
+to \(\scircsigma\).
+For a given interpretation this map essentially specifies the `canonical'
+version of any combinational circuit.
+So as not to work with arbitrary cores, it is preferable to first translate
+combinational circuits into this canonical circuit; this allows us to restrict
+the class of circuits any future equations must apply to.
 
 \begin{definition}[Normalised circuit]
     A sequential circuit \(
@@ -85,71 +88,9 @@ Instead, these must be specified on a interpretation-by-interpretation basis.
     \(\normalisingequations\).
 \end{definition}
 
-\begin{example}
-    We will discuss the normalising equations required for the Belnap
-    interpretation in \cref{sec:algebraic-case-study}.
-\end{example}
-
 The aim of the normalising equations for an interpretation translate a
 combinational core into a form from which it is easy to read off a truth table.
-Note that we only require the normalising equations to translate circuits with a
-\emph{single} output; this means we will need a way to express each output of
-a combinational core as an independent circuit.
-This is also important as we need to distinguish which outputs of the core
-contribute to the next state, and which to the outputs of the entire circuit.
 
-\begin{definition}[Normalised Mealy form]
-    A sequential circuit is in \emph{normalised Mealy form} if it is in the form
-    \(
-        \iltikzfig{circuits/axioms/encoding}[transition={f_0},output={f_1},dom=m,cod=n,delay=x]
-    \) where \(
-        \iltikzfig{strings/category/f-2-1}[box=f_0,colour=seq]
-    \) and \(
-        \iltikzfig{strings/category/f-2-1}[box=f_1,colour=seq]
-    \) are normalised circuits with isolated outputs.
-    Given such a circuit, we write \(
-        \morph{\tilde{f}_{0}}{\valuetuple{x+m}}{{\valuetuple{x}}}
-    \) and \(
-        \morph{\tilde{f}_{1}}{\valuetuple{x+m}}{{\valuetuple{n}}}
-    \) for the functions that satisfy \(
-        \mealytofunc[\tilde{f}_{0}] = \iltikzfig{strings/category/f-2-1}[box=f_0,colour=seq]
-    \) and \(
-        \mealytofunc[\tilde{f}_{1}] = \iltikzfig{strings/category/f-2-1}[box=f_1,colour=seq]
-    \).
-\end{definition}
-
-A set of normalising equations will not necessarily translate a circuit into
-normalised Mealy form, as the transition and
-
-
-
-The combinational core of a circuit in Mealy form computes the next state
-transition and the output given the current state and input.
-However, to compute all the states of a circuit we will need to explicitly know
-which components
-The first thing to do is to \emph{isolate} the two, so it is clear
-
-\begin{definition}[Isolated outputs]
-    A sequential circuit \(
-        \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
-    \) has \emph{isolated outputs} if \(\listvar{n}\) has length \(1\) or the
-    circuit is of the form \(
-        \iltikzfig{circuits/algebraic/isolated-outputs}
-    \) where \(k\) has length \(1\) and \(
-        \iltikzfig{strings/category/f}[box=f_1,colour=seq,dom=\listvar{m},cod=\listvar{p}]
-    \) has isolated outputs.
-\end{definition}
-
-\begin{example}
-    \todo[inline]{Do SR latch example}
-\end{example}
-
-
-
-Mealy form itself is already a sort of normal form, but there is no restriction
-on how the combinational core is defined.
-
-
-\section{Case study: The Belnap interpretation}
+\subsection{Case study: The Belnap interpretation}\label{sec:algebraic-case-study}
 
 \todo[inline]{The normalising equations for the Belnap interpretation}
