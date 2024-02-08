@@ -63,6 +63,11 @@ We could quotient \(\scircsigma\) by the equations in
 
 \input{sections/circuits/algebraic/floats/local-cartesian-equations}
 
+These equations are enough to bestow the Cartesian properties upon
+\(\scircsigma\).
+Before we can show this, we must show a lemma that establishes the settings
+in which the fork is the inverse of the join.
+
 \begin{lemma}\label{lem:join-fork-inverse}
     For any sequential circuit \(
         \iltikzfig{strings/category/f-1-2}[box=F,colour=seq,dom=m,cod1=n,cod2=p]
@@ -180,4 +185,47 @@ We could quotient \(\scircsigma\) by the equations in
         =
         \iltikzfig{circuits/algebraic/join-fork-inverse/trace-rhs}[box=f].
     \]
+\end{proof}
+
+Now we move onto the main result.
+This proof is essentially the same as~\cite[Thm. 6]{ghica2016categorical}, but
+here we are clear about exactly what equations and results are being applied,
+since \(\scircsigma\) has not been quotiented by `extensional equivalence'.
+
+\begin{proposition}\label{prop:scirc-cartesian}
+    \(\scircsigma / \cartesianequations + \instantfeedbackeqn\) is Cartesian.
+\end{proposition}
+\begin{proof}
+    As the comonoid equations are contained within \(\cartesianequations\) and
+    the coherence equations hold by definition of the arbitrary width forks in
+    \cref{not:arbitary-width-notation}, we just need to show that the two
+    equations in \cref{fig:cartesian-axioms} hold; in both cases this is by
+    induction.
+    The naturality of the copy for the generators immediate by the relevant
+    equations in \cref{fig:local-cartesian-equations}; for composition and
+    tensor the inductive hypothesis is applied to each subcircuit.
+    For trace it is more involved:
+    \begin{gather*}
+        \iltikzfig{circuits/algebraic/cartesian/trace-step-0}
+        \eqaxioms[\stmcequations]
+        \iltikzfig{circuits/algebraic/cartesian/trace-step-1}
+        \eqaxioms[(\forkjoineqn)]
+        \iltikzfig{circuits/algebraic/cartesian/trace-step-2}
+        \eqaxioms[\stmcequations]
+        \iltikzfig{circuits/algebraic/cartesian/trace-step-3}
+        \eqaxioms[\text{IH}]
+        \\
+        \iltikzfig{circuits/algebraic/cartesian/trace-step-4}
+        \eqaxioms[\stmcequations]
+        \iltikzfig{circuits/algebraic/cartesian/trace-step-5}
+        \eqaxioms[\text{\cref{lem:join-fork-inverse}}]
+        \iltikzfig{circuits/algebraic/cartesian/trace-step-6}
+        \eqaxioms[\stmcequations]
+        \iltikzfig{circuits/algebraic/cartesian/trace-step-7}
+    \end{gather*}
+
+    The naturality of the stub for the generators, composition and tensor is again
+    immediate by equations in \cref{fig:local-cartesian-equations}.
+    For the trace the circuit can be brought into global trace-delay form, followed
+    by using \((\instantfeedbackeqn)\) and \((\delaydiscardeqn)\).
 \end{proof}
