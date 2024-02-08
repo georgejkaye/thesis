@@ -229,3 +229,48 @@ since \(\scircsigma\) has not been quotiented by `extensional equivalence'.
     For the trace the circuit can be brought into global trace-delay form, followed
     by using \((\instantfeedbackeqn)\) and \((\delaydiscardeqn)\).
 \end{proof}
+
+The reason we are so interested in Cartesian categories in that they allow us
+to \emph{isolate} outputs; given a circuit in Mealy form we are able to
+translate its combinational core into two completely separate circuits for the
+transition and the output.
+
+\begin{lemma}\label{lem:isolate-outputs}
+    In a Cartesian category, \(
+        \iltikzfig{strings/category/f-1-2}[box=F,colour=white,dom=m,cod1=x,cod2=n]
+        =
+        \iltikzfig{circuits/truth-tables/isolate}[box=F,colour=white,cod1=x,cod2=n]
+    \).
+\end{lemma}
+\begin{proof}
+    \(
+        \iltikzfig{strings/category/f-1-2}[box=F,colour=white,dom=m,cod2=n]
+        \eqaxioms[(\monoidunitleqn,\monoidunitreqn)]
+        \iltikzfig{circuits/truth-tables/isolate-step-1}[box=F,colour=white,dom=m,cod=n]
+        \eqaxioms[(\cartnatcopyeqn)]
+        \iltikzfig{circuits/truth-tables/isolate}[box=F,colour=white,dom=m,cod2=n]
+    \)
+\end{proof}
+
+This means that any circuit can be brought to normalised Mealy form, and we are
+one step closer to obtaining a circuit in the image of \(\mealytocircuiti\).
+
+\begin{lemma}\label{lem:normalised-mealy}
+    For a functionally complete interpretation \(\interpretation\), any
+    sequential circuit \(
+        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+    \) is equal to a circuit in normalised Mealy form in \(
+        \scircsigma / (
+            \mealyequations +
+            \instantfeedbackeqn +
+            \cartesianequations +
+            \normalisingequations
+        )
+    \),
+\end{lemma}
+\begin{proof}
+    Any circuit can be brought to Mealy form using
+    \(\mealyequations + \instantfeedbackeqn\) by \cref{prop:mealy-equations};
+    normalised Mealy form follows using
+    \(\cartesianequations + \normalisingequations\).
+\end{proof}
