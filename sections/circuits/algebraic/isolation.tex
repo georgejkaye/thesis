@@ -67,9 +67,9 @@ We could quotient \(\scircsigma\) by the equations in
     For any sequential circuit \(
         \iltikzfig{strings/category/f-1-2}[box=F,colour=seq,dom=m,cod1=n,cod2=p]
     \), \(
-        \iltikzfig{circuits/axioms/join-fork-inverses-lhs}[box=f,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
+        \iltikzfig{circuits/algebraic/join-fork-inverse/lhs}[box=f,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
         =
-        \iltikzfig{circuits/axioms/join-fork-inverses-rhs}[box=f,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
+        \iltikzfig{circuits/algebraic/join-fork-inverse/rhs}[box=f,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
     \) holds in \(\scircsigma / \mcc\).
 \end{lemma}
 \begin{proof}
@@ -81,58 +81,58 @@ We could quotient \(\scircsigma\) by the equations in
         \iltikzfig{circuits/components/gates/gate}[gate=g,colour=comb]
     \):
     \begin{gather*}
-        \iltikzfig{circuits/productivity/join-fork-inverse/gate-partial-step-0}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/gate-partial-step-0}
         \eqaxioms[(\gateforkeqn)]
-        \iltikzfig{circuits/productivity/join-fork-inverse/gate-partial-step-1}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/gate-partial-step-1}
         \eqaxioms[(\forkjoineqn)]
-        \iltikzfig{circuits/productivity/join-fork-inverse/gate-partial-step-2}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/gate-partial-step-2}
         \eqaxioms[(\gateforkeqn)]
-        \iltikzfig{circuits/productivity/join-fork-inverse/gate-partial-step-3}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/gate-partial-step-3}
     \end{gather*}
     For \(
         \iltikzfig{strings/structure/comonoid/copy}[colour=comb]
     \) we first check if only one of the outputs are joined:
     \begin{gather*}
-        \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-0}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/fork-single-step-0}
         \eqaxioms[(\comonoidassoceqnletter), (\comonoidcommeqnletter)]
-        \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-1}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/fork-single-step-1}
         \eqaxioms[(\forkjoineqn)]
-        \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-2}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/fork-single-step-2}
         \eqaxioms[(\comonoidassoceqnletter), (\comonoidcommeqnletter)]
-        \iltikzfig{circuits/productivity/join-fork-inverse/fork-single-step-3}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/fork-single-step-3}
     \end{gather*}
     And now if both outputs are joined:
     \begin{gather*}
-        \iltikzfig{circuits/productivity/join-fork-inverse/fork-double-step-0}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/fork-double-step-0}
         \eqaxioms[(\joinforkeqn)]
-        \iltikzfig{circuits/productivity/join-fork-inverse/fork-double-step-1}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/fork-double-step-1}
         \eqaxioms[(\forkjoineqn)]
-        \iltikzfig{circuits/productivity/join-fork-inverse/fork-double-step-2}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/fork-double-step-2}
         \eqaxioms[(\comonoidassoceqnletter), (\comonoidcommeqnletter)]
-        \iltikzfig{circuits/productivity/join-fork-inverse/fork-double-step-3}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/fork-double-step-3}
     \end{gather*}
     For \(
         \iltikzfig{strings/structure/monoid/merge}[colour=comb]
     \):
     \[
-        \iltikzfig{circuits/productivity/join-fork-inverse/join-step-0}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/join-step-0}
         \eqaxioms[(\joinforkeqn)]
-        \iltikzfig{circuits/productivity/join-fork-inverse/join-step-1}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/join-step-1}
         \eqaxioms[(\forkjoineqn)]
-        \iltikzfig{circuits/productivity/join-fork-inverse/join-step-2}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/join-step-2}
         \eqaxioms[(\joinforkeqn)]
-        \iltikzfig{circuits/productivity/join-fork-inverse/join-step-3}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/join-step-3}
     \]
     For \(
         \iltikzfig{circuits/components/waveforms/delay}
     \): \[
-        \iltikzfig{circuits/productivity/join-fork-inverse/delay-step-0}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/delay-step-0}
         \eqaxioms[(\delayforkeqn)]
-        \iltikzfig{circuits/productivity/join-fork-inverse/delay-step-1}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/delay-step-1}
         \eqaxioms[(\forkjoineqn)]
-        \iltikzfig{circuits/productivity/join-fork-inverse/delay-step-2}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/delay-step-2}
         \eqaxioms[(\delayforkeqn)]
-        \iltikzfig{circuits/productivity/join-fork-inverse/delay-step-3}
+        \iltikzfig{circuits/algebraic/join-fork-inverse/delay-step-3}
     \]
     The proofs for \(
         \iltikzfig{strings/structure/monoid/init}[colour=comb]
@@ -145,31 +145,39 @@ We could quotient \(\scircsigma\) by the equations in
     \) are trivial.
 
     For composition, we need to show that \(
-        \iltikzfig{circuits/axioms/join-fork-inverses-composition-lhs}[box1=f,box2=g,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
+        \iltikzfig{circuits/algebraic/join-fork-inverse/composition-lhs}
         =
-        \iltikzfig{circuits/axioms/join-fork-inverses-composition-rhs}[box1=f,box2=g,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
+        \iltikzfig{circuits/algebraic/join-fork-inverse/composition-rhs}
     \).
     By inductive hypothesis, \(
-        \iltikzfig{circuits/axioms/join-fork-inverses-lhs-simple}[box=f]
+        \iltikzfig{circuits/algebraic/join-fork-inverse/simple-lhs}[box=f]
         =
-        \iltikzfig{circuits/axioms/join-fork-inverses-rhs-simple}[box=f]
+        \iltikzfig{circuits/algebraic/join-fork-inverse/simple-rhs}[box=f]
     \) so we have that \[
-        \iltikzfig{circuits/axioms/join-fork-inverses-composition-lhs}[box1=f,box2=g]
+        \iltikzfig{circuits/algebraic/join-fork-inverse/composition-lhs}[box1=f,box2=g]
         =
-        \iltikzfig{circuits/productivity/join-fork-inverse/composition-step-1}[box1=f,box2=g]
+        \iltikzfig{circuits/algebraic/join-fork-inverse/composition-step-1}[box1=f,box2=g]
         =
-        \iltikzfig{circuits/productivity/join-fork-inverse/composition-step-2}[box1=f,box2=g]
+        \iltikzfig{circuits/algebraic/join-fork-inverse/composition-step-2}[box1=f,box2=g]
         =
-        \iltikzfig{circuits/axioms/join-fork-inverses-composition-rhs}[box1=f,box2=g].
+        \iltikzfig{circuits/algebraic/join-fork-inverse/composition-rhs}[box1=f,box2=g].
     \]
 
     For tensor, we just need to apply the inductive hypothesis twice as the
     there are two circuits which do not interact.
 
     For trace we need to show that \(
-        \iltikzfig{circuits/productivity/join-fork-inverse/trace-lhs}[box=f]
+        \iltikzfig{circuits/algebraic/join-fork-inverse/trace-lhs}[box=f]
         =
-        \iltikzfig{circuits/productivity/join-fork-inverse/trace-rhs}[box=f]
+        \iltikzfig{circuits/algebraic/join-fork-inverse/trace-rhs}[box=f]
     \).
-
+    By using axioms of STMCs and inductive hypothesis we have that \[
+        \iltikzfig{circuits/algebraic/join-fork-inverse/trace-lhs}[box=f]
+        =
+        \iltikzfig{circuits/algebraic/join-fork-inverse/trace-step-1}[box=f]
+        =
+        \iltikzfig{circuits/algebraic/join-fork-inverse/trace-step-2}[box=f]
+        =
+        \iltikzfig{circuits/algebraic/join-fork-inverse/trace-rhs}[box=f].
+    \]
 \end{proof}
