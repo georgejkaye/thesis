@@ -34,9 +34,30 @@ behaviour of \(\tilde{f}\) is.
 The size of the set of circuit states determines the width of the encoded state.
 
 \begin{definition}[Translations]
-    Let \(S \subseteq \valuetuple{\listvar{x}}\) be a set of states equipped
-    with a total order \(\leq\) in which there are \(y\) many states, and let
-    \(\morph{\gamma_\leq}{S}{\valuetuple{y}}\) be the induced \(\leq\)-encoding.
-    \todo[inline]{Complete translation definition}
+    For a set of states \(S\), let \(\morph{\gamma_\leq}{S}{\valuetuple{y}}\) be
+    a \(\leq\)-encoding.
+    For a circuit \(
+        \iltikzfig{strings/category/f-2-1}[box=f, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
+        \coloneqq
+        \mealytofunc[\hat{f}]
+    \), its \emph{\(\gamma_\leq\)-transition} is a circuit \(
+        \iltikzfig{strings/category/f-2-1}[box=f^\leq_0, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
+    \) defined as \(
+        \mealytofunc[
+            \left(\gamma_\leq(\listvar{s}),\listvar{v}\right)
+            \mapsto \gamma_\leq(f(\listvar{s}, \listvar{v}))
+        ]
+    \), and for a circuit \(
+        \iltikzfig{strings/category/f-2-1}[box=g, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
+        \coloneqq
+        \mealytofunc[\hat{g}]
+    \), its \emph{\(\gamma_\leq\)-output} is a circuit \(
+        \iltikzfig{strings/category/f-2-1}[box=g^\leq_1, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
+    \) defined as \(
+        \mealytofunc[
+            \left(\gamma_\leq(\listvar{s}),\listvar{v}\right)
+            \mapsto \gamma_\leq(())
+        ].
+    \)
 \end{definition}
 
