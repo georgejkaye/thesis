@@ -237,25 +237,25 @@ transition and the output.
 
 \begin{lemma}\label{lem:isolate-outputs}
     In a Cartesian category, \(
-        \iltikzfig{strings/category/f-1-2}[box=F,colour=white,dom=m,cod1=x,cod2=n]
+        \iltikzfig{strings/category/f-1-2}[box=f,colour=white,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
         =
-        \iltikzfig{circuits/truth-tables/isolate}[box=F,colour=white,cod1=x,cod2=n]
+        \iltikzfig{circuits/algebraic/isolate-cartesian/isolate}[box=f,colour=white,cod1=\listvar{n},cod2=\listvar{p}]
     \).
 \end{lemma}
 \begin{proof}
     \(
-        \iltikzfig{strings/category/f-1-2}[box=F,colour=white,dom=m,cod2=n]
+        \iltikzfig{strings/category/f-1-2}[box=F,colour=white,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
         \eqaxioms[(\monoidunitleqn,\monoidunitreqn)]
-        \iltikzfig{circuits/truth-tables/isolate-step-1}[box=F,colour=white,dom=m,cod=n]
+        \iltikzfig{circuits/algebraic/isolate-cartesian/isolate-step-1}[box=f,colour=white,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
         \eqaxioms[(\cartnatcopyeqn)]
-        \iltikzfig{circuits/truth-tables/isolate}[box=F,colour=white,dom=m,cod2=n]
+        \iltikzfig{circuits/algebraic/isolate-cartesian/isolate}[box=f,colour=white,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
     \)
 \end{proof}
 
 This means that any circuit can be brought to normalised Mealy form, and we are
 one step closer to obtaining a circuit in the image of \(\mealytocircuiti\).
 
-\begin{lemma}\label{lem:normalised-mealy}
+\begin{corollary}\label{lem:normalised-mealy}
     For a functionally complete interpretation \(\interpretation\), any
     sequential circuit \(
         \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
@@ -267,7 +267,7 @@ one step closer to obtaining a circuit in the image of \(\mealytocircuiti\).
             \normalisingequations
         )
     \),
-\end{lemma}
+\end{corollary}
 \begin{proof}
     Any circuit can be brought to Mealy form using
     \(\mealyequations + \instantfeedbackeqn\) by \cref{prop:mealy-equations};
