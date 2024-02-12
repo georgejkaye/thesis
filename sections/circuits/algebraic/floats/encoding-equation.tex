@@ -1,0 +1,31 @@
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \(
+            \equationdisplay{
+                \iltikzfig{circuits/algebraic/encoding}[state=\listvar{s},transition=f,output=g,delay=x]
+            }{
+                \iltikzfig{circuits/algebraic/encoding-longstate}[state=\gamma_{\leq}(\listvar{s}),transition={\transitiontranslation{f}},output={\outputtranslation{g}},delay=y]
+            }{
+                \encodingequation
+            }
+        \)
+    \end{minipage}
+    \begin{minipage}{0.1\textwidth}
+        \centering
+        \vspace{0.5em}
+        \begin{tabular}{c}
+            \(
+                \iltikzfig{strings/category/f}[box=f,colour=seq],
+                \iltikzfig{strings/category/f}[box=g,colour=seq]
+            \)
+            \\[0.25em]
+            normalised
+        \end{tabular}
+    \end{minipage}
+    \caption{
+        The encoding equation
+    }
+    \label{fig:encoding-equation}
+\end{figure}
