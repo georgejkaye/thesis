@@ -1,3 +1,112 @@
 \chapter{Introduction}
 
-\todo[inline]{Write introduction}
+\todo[inline]{Write opening spiel, circuits}
+
+\todo[inline]{Segue into compositionality and category theory}
+
+
+\section{Category theory and compositionality}
+
+
+
+Category theory is an especially natural concept to apply to computer science
+because it is a setting in which \emph{composition} is king.
+Rather than dealing with complicated and unwieldy terms, we can split them
+up into simpler \emph{components}, which can themselves be split up into simpler
+components and so on until we reach some sort of atomic components at the leaves
+of the tree.
+This means that if one defines the behaviour of these atomic components and
+how they interact with composition, it is possible to quickly establish the
+behaviour of some larger time by piecing things together, and moreover we can
+reason \emph{inductively} over the structure of composite terms.
+Composition is not even restricted to the mathematical realm; it is generally
+considered good practice to write programs in terms of small, easily reusable
+pieces that can be pieced together by composing functions, which is why
+functional programming paradigms are starting to creep into even the most
+imperative of languages.
+
+While compositionality is the core tenet of all category theory, it is in
+\emph{symmetric monoidal categories}~\cite{maclane1963natural} where the power
+really starts to shine.
+In these categories, the usual \emph{sequential} composition is joined by
+another operation called the \emph{tensor}, which can be interpreted as a notion
+of \emph{parallel} composition.
+This opens a whole new dimension to play with, and allows for a plethora of
+interesting structures to be modelled.
+Our setting of digital circuits introduces another way of creating new things
+from simpler components: we can create a \emph{feedback loop} by attaching some
+outputs to inputs.
+This too can be viewed in a categorical perspective in the form of a
+\emph{symmetric traced monoidal category}~\cite{joyal1996traced}.
+
+But what exactly does it mean for a theory to be \emph{fully} compositional?
+It is a term often thrown around without much thought to its precise meaning,
+not least by the author while attempting to bat off questions about their work's
+novelty from anonymous reviewers, conference attendees, and esteemed
+mathematicians on social media.
+But for now, we will define what we mean once and for all: we take full
+compositionality to mean that we can compose terms without fear that we will
+somehow create a degenerate term and leave our well-behaved setting.
+We should not have to perform any sort of semantic check or `peek inside' a term
+to find out if composition is permitted; we should be able to treat everything
+as a black box and reason solely with interfaces.
+
+One might argue that composition is already widespread in sequential circuit
+design, and indeed it is: circuits are constructed by connecting lots of very
+common primitive components together to make something more complex.
+But this is done informally, as the behaviour of a circuit is usually tested
+by \emph{simulating} it and seeing what happens.
+We can simulate the subcomponents, but what does this mean for their composite?
+While this may seem like
+\emph{simulating} it and seeing what happens.
+But even these simulations may run into issues; when composing circuits together
+there is always the threat of the dreaded \emph{non-delay-guarded feedback}
+rearing its head and leading to unpredictable behaviour.
+It is only with a rigorous mathematical model that we can compose \emph{any}
+circuit together safely.
+
+\section{Thesis outline}
+
+This thesis is split into two parts, \emph{Semantics of Digital Circuits}, and
+\emph{Graph Rewriting for Digital Circuits}.
+These sections respectively correspond to two papers:
+\emph{%
+    A Fully Compositional Theory of Sequential Digital Circuits:
+    Denotational, Operational and Algebraic Semantics%
+}~\cite{ghica2024fully}, and \emph{%
+    Rewriting Modulo Traced Monoidal Structure%
+}~\cite{ghica2023rewriting}, which was published in
+\emph{Formal Structures for Computation and Deduction (FSCD) 2023}.
+
+In the first part, we define the categorical syntax of sequential digital
+circuits and follow this up with three sound and complete semantic frameworks
+for sequential digital circuits: denotational, operational, and algebraic.
+Each of these frameworks has their own benefits and intended uses; together they
+make a part of a comprehensive examination of semantics of digital circuits.
+The framework is sufficiently general to encompass circuits constructed from
+all manner of components ranging from the level of transistors to the level of
+logic gates and beyond to higher abstraction, but to provide some intuition we
+include an extended case study into circuits constructed from
+\emph{Belnap logic gates}~\cite{belnap1977useful}, an extension of traditional
+Boolean logic containing the usual \(\andgate\), \(\orgate\) and \(\notgate\)
+gates.
+The switch from a two-valued to a four-valued logic is crucial to how full
+composition for sequential digital circuits has been obtained.
+
+While this work marks the first time the semantics of sequential digital
+circuits have been given a rigorous mathematical treatment, it is not really
+feasible to apply the techniques to anything more than toy circuits by hand;
+trying to apply the techniques to actual, practical, circuits would quickly lead
+to someone having a very bad time\footnote{
+    Incidentally this is a state the author was in for a non-trivial amount of
+    time while working towards and writing up this thesis, but luckily they are
+    not particularly vengeful about it.
+}.
+In the second part of the thesis, we extend previous work on
+\emph{string diagram rewriting}~\cite{bonchi2022string,bonchi2022stringa,bonchi2022stringb}
+so we can apply it to sequential digital circuits; to be precise, we adapt it
+for settings with a \emph{traced comonoid} structure.
+Using graph rewriting, we can express the operational and algebraic semantics
+in a language that is easy for computers can understand and reason with, opening
+up the possibility for automatic reasoning about complex, actually useful,
+digital sequential circuits.
