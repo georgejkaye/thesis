@@ -9,7 +9,7 @@ to `pick' the appropriate nodes.
 
 \begin{definition}[Cospan]
     A \emph{cospan} in a category \(\mcc\) is a pair of morphisms \(X \to A\)
-    and \(X \to B\) in \(\mcc\), written \(\cospan{X}{A}{Y}\).
+    and \(X \to B\), written \(\cospan{X}{A}{Y}\).
     A \emph{cospan morphism} \(
         (\cospan{X}[f]{A}[g]{Y}) \to (\cospan{X}[h]{B}[k]{Y})
     \) is a morphism \(\morph{\alpha}{A}{B}\) in \(\mcc\)
@@ -18,15 +18,17 @@ to `pick' the appropriate nodes.
     \begin{center}
         \includestandalone{figures/category/diagrams/cospan-morphism}
     \end{center}
-%
+    %
     Two cospans \(\cospan{X}{A}{Y}\) and \(\cospan{X}{B}{Y}\) are
     \emph{isomorphic} if there exists a morphism of cospans as above where
     \(\alpha\) is an isomorphism.
 \end{definition}
 
-As with all the constructions so far, cospans must be assembled into a category
-to be useful for our purpose.
-This means a notion of \emph{composition} of cospans is required.
+For our intended purpose, the `legs' of cospans will be the interfaces and the
+`apex' will be the hypergraph we are providing interfaces for.
+This means we require a categorical setting in which the objects are
+\emph{cospans} of hypergraphs, so a notion of \emph{composition} of cospans
+must be provided.
 
 \begin{definition}[Composition of cospans]
     \label{def:cospan-composition}
@@ -45,20 +47,34 @@ This means a notion of \emph{composition} of cospans is required.
     \(X \in \mcc\).
     Composition is by pushout as detailed in \cref{def:cospan-composition} and
     the identity is \(X \xrightarrow{\id[X]} X \xleftarrow{\id[X]} X\).
-
-    This category is symmetric monoidal with tensor given by the coproduct in
-    \(\mathbf{C}\), unit the initial object \(0 \in \mathbf{C}\), and symmetry
-    by \(\cospan{A+B}{A+B}{B+A}\).
 \end{definition}
 
-Interfaces are assigned to a hypergraph \(F\) by having it occupy the `apex' of
-a cospan and having the `legs' on either side pick inputs and outputs
-respectively.
+\begin{lemma}
+    For a category \(\mcc\) with pushouts and an initial object,
+    \(\csp{\mcc}\) is symmetric monoidal with the tensor given by the
+    coproduct in \(\mcc\), the monoidal unit given by the initial object
+    \(0 \in \mathbf{C}\), and the symmetry defined as the cospan
+    \(\cospan{A+B}{A+B}{B+A}\).
+\end{lemma}
+\begin{proof}
+    It is a simple exercise to check that the equations of SMCs hold.
+\end{proof}
+
+
+
+As mentioned above, the legs of the cospan will act as the interfaces of the
+hypergraph.
+But not any old hypergraph can act as an interface to a hypergraph; what would
+it mean to have an edge as an input?
+We must restrict
 
 \begin{definition}[Discrete hypergraph]
     A \emph{discrete hypergraph} is a hypergraph in which each edge set is
     empty.
 \end{definition}
+
+Discrete hypergraphs will act as the legs of cospans; the categorical
+infrastructure required to enforce this will be described in the next section.
 
 \subsection{Ordering the interfaces}
 
@@ -68,10 +84,9 @@ of the vertices in these interfaces?
 Without this data \(\csp{\hypsigmac}\) is not even a PROP.
 
 A cospan \(\cospan{M}{F}{N}\) is a morphism
-\(M \to N \in \csp{\hypsigmac}\).
-Therefore, to restrict this category to a coloured PROP, we need to ensure that
-the legs of each cospan of hypergraphs can be viewed as a word in
-\(\freemon{C}\) for some countable set of colours \(C\).
+\(M \to N \in \csp{\hypsigmac}\); we need to ensure that the legs of each
+cospan of hypergraphs can be viewed as a word in \(\freemon{C}\) for some
+countable set of colours \(C\).
 This is formally performed by another functor.
 
 \begin{theorem}[\cite{bonchi2022string}, Thm. 3.6]
@@ -86,15 +101,17 @@ This is formally performed by another functor.
 
 \(F\) is the functor that imbues the objects in the legs of the cospan with the
 structure of words in some coloured PROP \(\mathbb{X}\).
-In our case, this PROP will be the PROP of coloured finite sets.
+In our case, this PROP will be the PROP of coloured countable sets; we will
+start building this from the well-known PROP of finite sets.
 
 \begin{definition}
     Let \(\finsetprop\) be the PROP with morphisms \(m \to n\) the functions
     between finite sets \([m] \to [n]\).
 \end{definition}
 
-\(\finsetprop\) is a (monochromatic) PROP; as with hypergraphs colours can be
-assigned using a slice category.
+\(\finsetprop\) is a (monochromatic) PROP; for finite sets of colours \(\mcc\),
+objects \([m] \in \finsetprop\) are coloured using morphisms \([m] \to \mcc\),
+suggesting another slice construction.
 Since we are working with potentially countably infinite sets of colours, the
 definition of \(\finsetprop\) must first be tweaked.
 
@@ -104,8 +121,9 @@ definition of \(\finsetprop\) must first be tweaked.
     set \([m]\).
 \end{definition}
 
-Then the PROP of finite sets \emph{coloured} over some countable set \(C\) is
-the slice \(\finsetpropwithnat \slice C\).
+Adding in morphisms \([m] \to \nat\) allows for colourings with countably
+infinite sets of colours; the PROP of finite sets \emph{coloured} over some
+countable set \(C\) is the slice \(\finsetpropwithnat \slice C\).
 Objects of this category are pairs \(([m], \morph{w}{[m]}{C})\); this pair can
 be viewed as a word in \(\freemon{C}\) of length \(m\), with the \(i\)th letter
 as \(w(i)\).
@@ -120,6 +138,7 @@ as \(w(i)\).
 
 All that remains is to verify that \(\finsetpropwithnat \slice C\) is indeed a
 coloured PROP.
+To assist in this endeavour, we recall a property of slice categories.
 
 \begin{lemma}
     \label{lem:slice-coproducts}
@@ -132,13 +151,15 @@ coloured PROP.
     \(\mcc \slice X\) is \(A + B \to X\); the universal morphism is \([f, g]\).
 \end{proof}
 
+Following the strategy of \cite[Prop. 2.23]{bonchi2022string}, we can now show
+that \(\finsetpropwithnat \slice C\) is a coloured PROP.
+
 \begin{proposition}
     \label{prop:hatfinsetprop-slice-is-coloured-prop}
     For a countable set \(C\), \(\finsetpropwithnat \slice C\) is a
     coloured PROP.
 \end{proposition}
 \begin{proof}
-    This follows the same strategy as \cite[Prop. 2.23]{bonchi2022string}.
     As established, the objects of \(\finsetpropwithnat \slice C\) can be viewed
     as words in \(\freemon{C}\).
     As slice categories preserve coproducts by \cref{lem:slice-coproducts},

@@ -86,8 +86,9 @@ To do this, we must first translate the notion of signature to hypergraphs.
 
 \begin{definition}[Hypergraph signature~\cite{bonchi2016rewriting}]
     For a set of generators \(\signature\) and colours \(\mcc\) as defined
-    in \cref{def:generators}, the \emph{hypergraph signature}
-    \(\hypsignature{(\mcc,\Sigma)} \in \hyp\) is defined as follows:
+    in \cref{def:generators}, the corresponding \emph{hypergraph signature}
+    \(\hypsignature{(\mcc,\Sigma)}\) in an object of \(\hyp\) defined as
+    follows:
     \begin{gather*}
         \vertices{\hypsignature{(\mcc,\Sigma)}} \coloneqq \{ v_c \,|\, c \in \mcc\}
         \quad
@@ -124,7 +125,8 @@ To do this, we must first translate the notion of signature to hypergraphs.
         \quad
         \targets{1}(e_\psi) := v_{\redbullet}
     \end{gather*}
-    and is drawn as follows:
+    and is drawn as follows, where we notate the vertices and edges with the
+    appropriate colour and label to aid in clarity.
     \[
         \iltikzfig{graphs/signature-example-coloured}
     \]
