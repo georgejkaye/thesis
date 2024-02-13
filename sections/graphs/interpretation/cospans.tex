@@ -2,18 +2,17 @@
 
 String diagrams also have \emph{input} and \emph{output} interfaces.
 (Labelled) hypergraphs may have suggestively dangling nodes in the pictures,
-but and are not ordered, and moreover we may wish to set a non-dangling node
-as an interface.
+but this is not actually encoded in the definition, and moreover we may wish to
+set a non-dangling node as an input or output.
 To set the interfaces of a hypergraph, hypergraph homomorphisms are used
 to `pick' the appropriate nodes.
 
 \begin{definition}[Cospan]
     A \emph{cospan} in a category \(\mcc\) is a pair of morphisms \(X \to A\)
-    and \(X \to B\) in \(\mcc\), usually written \(\cospan{X}{A}{Y}\).
-
+    and \(X \to B\) in \(\mcc\), written \(\cospan{X}{A}{Y}\).
     A \emph{cospan morphism} \(
         (\cospan{X}[f]{A}[g]{Y}) \to (\cospan{X}[h]{B}[k]{Y})
-    \) is a morphism \(\morph{\alpha}{A}{B}\) in \(\mathbf{C}\)
+    \) is a morphism \(\morph{\alpha}{A}{B}\) in \(\mcc\)
     such that the following diagram commutes:
     %
     \begin{center}
@@ -24,7 +23,6 @@ to `pick' the appropriate nodes.
     \emph{isomorphic} if there exists a morphism of cospans as above where
     \(\alpha\) is an isomorphism.
 \end{definition}
-
 
 As with all the constructions so far, cospans must be assembled into a category
 to be useful for our purpose.

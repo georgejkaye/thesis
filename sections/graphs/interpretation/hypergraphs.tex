@@ -23,6 +23,47 @@ to a concrete set.
 Subsequently, for a hypergraph \(F \in \hyp\) we write \(\vertices{F}\) for its
 set of nodes and \(\edges{F}{k}{l}\) for the set of edges with \(k\) sources and
 \(l\) targets.
+
+\begin{example}\label{ex:hypergraph}
+    We define the hypergraph \(F\) as follows:
+    \begin{gather*}
+        \vertices{F} := \{v_0,v_1,v_2,v_3,v_4,v_5\}
+        \quad
+        \edges{F}{2}{1} := \{e_0,e_2\}
+        \quad
+        \edges{F}{1}{2} := \{e_1\}
+        \\
+        \sources{0}(e_0) := v_0
+        \quad
+        \sources{1}(e_0) := v_2
+        \quad
+        \sources{0}(e_1) := v_3
+        \quad
+        \sources{0}(e_2) := v_3
+        \quad
+        \sources{1}(e_2) := v_2
+        \\
+        \targets{0}(e_0) := v_3
+        \quad
+        \targets{0}(e_1) := v_5
+        \quad
+        \targets{1}(e_1) := v_4
+        \quad
+        \targets{0}(e_2) := v_4
+    \end{gather*}
+    Much like with regular graphs, it is much more intuitive to draw out hypergraphs
+    rather than look at their combinatorial representation.
+    We draw nodes as black dots, and hyperedges as `bubbles' with ordered tentacles
+    on the left and right that connect to source and target nodes respectively.
+
+    The hypergraph \(F\) from \cref{ex:hypergraph} is drawn as follows:
+    \[
+        \iltikzfig{graphs/blank-example}
+    \]
+    Note that the vertices themselves do not have any notion of ordering or
+    directionality.
+\end{example}
+
 Since it is a functor category, the morphisms in \(\hyp\) are natural
 transformations: structure-preserving maps between hypergraphs.
 
@@ -35,32 +76,22 @@ transformations: structure-preserving maps between hypergraphs.
     \input{floats/hypergraph-homs}
 \end{definition}
 
-Much like with regular graphs, it is much more intuitive to draw out hypergraphs
-rather than look at their combinatorial representation.
-We draw nodes as black dots, and hyperedges as `bubbles' with ordered tentacles
-on the left and right that connect to source and target nodes respectively.
-
-\begin{example}
-    \todo[inline]{Do hypergraph example}
-\end{example}
-
 \subsection{Labelled hypergraphs}
 
-From the example drawn above, it should be clear to see how hypergraphs are a
-suitable representation of string diagrams: generators correspond to hyperedges
-and wires to the nodes between them.
+The graphical notation is particularly evocative of string diagrams: generators
+correspond to hyperedges and wires to the nodes between them.
 However, the hyperedges are currently not \emph{labelled} with generator
 symbols.
 To do this, we must first translate the notion of signature to hypergraphs.
 
 \begin{definition}[Hypergraph signature~\cite{bonchi2016rewriting}]
-    For a set of generators \(\signature\) and sorts \(\mcs\) as defined
+    For a set of generators \(\signature\) and colours \(\mcc\) as defined
     in \cref{def:generators}, the \emph{hypergraph signature}
-    \(\hypsignature{(\Sigma, S)} \in \hyp\) is defined as follows:
+    \(\hypsignature{(\mcc,\Sigma)} \in \hyp\) is defined as follows:
     \begin{gather*}
-        \vertices{\hypsignature{\Sigma}} \coloneqq \{ v_n \,|\, s \in \mcs\}
+        \vertices{\hypsignature{(\mcc,\Sigma)}} \coloneqq \{ v_c \,|\, c \in \mcc\}
         \quad
-        \edges{\hypsignature{\Sigma}}{k}{l} \coloneqq \{ e_g \,|\, g \in \signature\}
+        \edges{\hypsignature{(\mcc,\Sigma)}}{k}{l} \coloneqq \{ e_g \,|\, g \in \signature\}
         \\
         \sources{i}(e_g) \coloneqq v_{\dom[e_g](i)}
         \quad
@@ -68,30 +99,79 @@ To do this, we must first translate the notion of signature to hypergraphs.
     \end{gather*}
 \end{definition}
 
-\begin{example}
-    \todo[inline]{Do hypergraph signature example}
+
+\begin{example}\label{ex:labelled-hypergraph}
+    Let \(\mcc \coloneqq \{\bullet,\redbullet\}\) be a set of colours and
+    \(\Sigma = \{\morph{\phi}{\redbullet\bullet}{\redbullet}, \morph{\psi}{\redbullet}{\bullet\bullet}\}\) be a monoidal
+    signature.
+    The corresponding monoidal signature \(\hypsignature{(\mcc,\Sigma)}\) is
+    \begin{gather*}
+        \vertices{\hypsignature{(\mcc,\Sigma)}} := \{v_{\bullet},v_{\redbullet}\}
+        \quad
+        \edges{\hypsignature{(\mcc,\Sigma)}}{2}{1} := \{e_\phi\}
+        \quad
+        \edges{\hypsignature{(\mcc,\Sigma)}}{1}{2} := \{e_\psi\}
+        \\
+        \sources{0}(e_\phi) := v_{\redbullet}
+        \quad
+        \sources{1}(e_\phi) := v_{\bullet}
+        \quad
+        \sources{0}(e_\psi) := v_{\redbullet}
+        \quad
+        \targets{0}(e_\phi) := v_{\redbullet}
+        \quad
+        \targets{0}(e_\psi) := v_{\bullet}
+        \quad
+        \targets{1}(e_\psi) := v_{\redbullet}
+    \end{gather*}
+    and is drawn as follows:
+    \[
+        \iltikzfig{graphs/signature-example-coloured}
+    \]
 \end{example}
 
-The vertices and edges of a hypergraph \(F\) can then be assigned sorts from
-\(\mcs\) and symbols from \(\Sigma\) using a homomorphism
-\(F \to \hypsignature{\Sigma,\mcs}\).
+The vertices and edges of a hypergraph \(F\) can then be assigned colours from
+\(\mcc\) and symbols from \(\Sigma\) using a homomorphism
+\(F \to \hypsignature{\Sigma,\mcc}\).
 To do this to \emph{all} the hypergraphs in \(\hyp\) and create a category of
 \emph{labelled} hypergraphs, we make use of some more categorical machinery.
 
 \begin{definition}[Slice category~\cite{lawvere1963functorial}]
-    For a category \(\mathbf{C}\) and an object \(C \in \mathbf{C}\), the
-    \emph{slice category} \(\mathbf{C} \slice C\) has objects the morphisms of
-    \(\mathbf{C}\) with target \(C\) and morphisms
+    For a category \(\mcc\) and an object \(C \in \mcc\), the
+    \emph{slice category} \(\mcc \slice C\) has objects the morphisms of
+    \(\mcc\) with target \(C\) and morphisms
     \((\morph{f}{X}{C}) \to (\morph{g}{X^\prime}{C})\) the morphisms
-    \(\morph{g}{X}{X^\prime} \in \mathbf{C}\) such that \(f^\prime\circ g = f\).
+    \(\morph{g}{X}{X^\prime} \in \mcc\) such that \(f^\prime\circ g = f\).
 \end{definition}
+
+Each object in a slice category \(\mcc \slice C\) is a morphism with \(C\) as
+its target.
+when we set \(C\) to some hypergraph signature, this is a perfect setting for
+labelled hypergraphs.
 
 \begin{definition}[Labelled hypergraphs~\cite{bonchi2016rewriting}]
     Let \(\hypsigmac\) be the category of hypergraphs labelled over a set of
-    generators \(\Sigma\) and sorts \(\mcs\), defined as the slice category
-    \(\hyp \slice \hypsignature{(\Sigma, \mcs)}\).
+    generators \(\Sigma\) and colours \(\mcc\), defined as the slice category
+    \(\hyp \slice \hypsignature{(\Sigma, \mcc)}\).
 \end{definition}
 
 \begin{example}
-    \todo[inline]{Do labelled hypergraph example}
+    Recall the hypergraph \(F\) from \autoref{ex:hypergraph}; one labelling
+    \(\morph{\Gamma}{F}{\hypsignature{\Sigma}}\) could be defined as
+    \begin{gather*}
+        \Gamma(-) := v_0
+        \quad
+        \Gamma(e_0) := e_\phi
+        \quad
+        \Gamma(e_1) := e_\psi
+        \quad
+        \Gamma(e_2) := e_\phi
+    \end{gather*}
+    We simply call the morphism \(\Gamma\) a \emph{labelled hypergraph} and
+    draw it as a regular hypergraph but with labelled edges.
+    \[
+        \iltikzfig{graphs/blank-example-labelled-coloured}
+    \]
+    Note that if there are multiple generators with the same arity and coarity
+    in a signature, there may well be multiple valid labellings of a hypergraph.
 \end{example}
