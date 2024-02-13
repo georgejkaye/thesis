@@ -1,39 +1,79 @@
 \begin{figure}[t]
     \centering
 
-    \begin{alignat*}{3}
-        \iltikzfig{strings/structure/monoid/unitality-l-lhs}
-        &=
-        \iltikzfig{strings/structure/monoid/unitality-l-rhs}
+    \begin{gather*}
+        \equationdisplay{
+            \iltikzfig{strings/structure/monoid/unitality-l-lhs}
+        }{
+            \iltikzfig{strings/structure/monoid/unitality-l-rhs}
+        }{
+            \monoiduniteqnletter
+        }
         \qquad
-        \iltikzfig{strings/structure/monoid/associativity-lhs}
-        &=
-        \iltikzfig{strings/structure/monoid/associativity-rhs}
+        \equationdisplay{
+            \iltikzfig{strings/structure/monoid/associativity-lhs}
+        }{
+            \iltikzfig{strings/structure/monoid/associativity-rhs}
+        }{
+            \monoidassoceqnletter
+        }
         \qquad
-        \iltikzfig{strings/structure/monoid/commutativity-lhs}
-        &=
-        \iltikzfig{strings/structure/monoid/commutativity-rhs}
-        \qquad
-        \iltikzfig{strings/structure/frobenius/frobenius-l}
-        =
-        \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
+        \equationdisplay{
+            \iltikzfig{strings/structure/monoid/associativity-lhs}
+        }{
+            \iltikzfig{strings/structure/monoid/associativity-rhs}
+        }{
+            \monoidcommeqnletter
+        }
         \\
-        \iltikzfig{strings/structure/comonoid/unitality-l-lhs}
-        &=
-        \iltikzfig{strings/structure/comonoid/unitality-l-rhs}
+        \equationdisplay{
+            \iltikzfig{strings/structure/comonoid/unitality-l-lhs}
+        }{
+            \iltikzfig{strings/structure/comonoid/unitality-l-rhs}
+        }{
+            \comonoiduniteqnletter
+        }
         \qquad
-        \iltikzfig{strings/structure/comonoid/associativity-lhs}
-        &=
-        \iltikzfig{strings/structure/comonoid/associativity-rhs}
+        \equationdisplay{
+            \iltikzfig{strings/structure/comonoid/associativity-lhs}
+        }{
+            \iltikzfig{strings/structure/comonoid/associativity-rhs}
+        }{
+            \comonoidassoceqnletter
+        }
         \qquad
-        \iltikzfig{strings/structure/comonoid/commutativity-lhs}
-        &=
-        \iltikzfig{strings/structure/comonoid/commutativity-rhs}
+        \equationdisplay{
+            \iltikzfig{strings/structure/comonoid/associativity-lhs}
+        }{
+            \iltikzfig{strings/structure/comonoid/associativity-rhs}
+        }{
+            \comonoidcommeqnletter
+        }
+        \\
+        \equationdisplay{
+            \iltikzfig{strings/structure/frobenius/frobenius-l}
+        }{
+            \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
+        }{
+            \frobleqn
+        }
         \qquad
-        \iltikzfig{strings/structure/frobenius/copy-merge-lhs}
-        =
-        \iltikzfig{strings/structure/frobenius/copy-merge-rhs}
-    \end{alignat*}
+        \equationdisplay{
+            \iltikzfig{strings/structure/frobenius/frobenius-r}
+        }{
+            \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
+        }{
+            \frobreqn
+        }
+        \qquad
+        \equationdisplay{
+            \iltikzfig{strings/structure/frobenius/copy-merge-lhs}
+        }{
+            \iltikzfig{strings/structure/frobenius/copy-merge-rhs}
+        }{
+            \frobspeceqn
+        }
+    \end{gather*}
     \caption{
         Equations \(\equations[\frob]\) of a
         \emph{special commutative Frobenius algebra}.
