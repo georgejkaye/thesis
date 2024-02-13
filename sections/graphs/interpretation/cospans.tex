@@ -98,6 +98,20 @@ This is formally performed by another functor.
     \(\listvar{m} \to \listvar{n}\) are isomorphism classes of \(\mathbf{C}\)
     cospans \(\cospan{F\listvar{m}}{C}{F\listvar{n}}\).
 \end{theorem}
+\begin{proof}
+    Composition is given by pushout.
+    Note that \(F(\listvar{mp}) \cong F\listvar{m} + F(\listvar{p})\) and
+    \(F(\listvar{nq}) \cong F(\listvar{n}) + F(\listvar{q})\) because \(F\)
+    preserves coproducts; subsequently for cospans
+    \(\cospan{F\listvar{m}}{C}{F\listvar{n}}\) and
+    \(\cospan{F\listvar{p}}{C}{F\listvar{q}}\), their
+    coproduct is given by \(
+        \cospan{F\listvar{m} + F\listvar{p}}{C + D}{F\listvar{p} + F\listvar{q}}
+    \).
+    Symmetries in \(\mathbb{X}\) are determined by the universal property of
+    the coproduct; they are inherited by \(\csp[F]{\mathbf{C}}\) because \(F\)
+    preserves coproducts.
+\end{proof}
 
 \(F\) is the functor that imbues the objects in the legs of the cospan with the
 structure of words in some coloured PROP \(\mathbb{X}\).
@@ -182,3 +196,39 @@ Subsequently we obtain a coloured PROP \(
     \csp[\pickinterfacesc{C}]{\hypsigmac}
 \), which will serve as the domain in which we interpret string diagrams
 combinatorially.
+
+\begin{example}
+    Recall the labelled hypergraph \(F\) from \cref{ex:labelled-hypergraph}.
+    We assign interfaces to it as the cospan \(\cospan{3}[f]{F}[g]{3}\), where
+    \begin{gather*}
+        f(D0) = v_0 \quad f(D1) = v_1 \\
+        g(D0) = v_4 \quad g(D1) = v_1 \quad g(D2) = v_4
+    \end{gather*}
+    Interfaces are drawn on the left and right of a main graph, with numbers
+    illustrating the action of the cospan maps.
+    \[
+        \iltikzfig{graphs/example-interfaces-coloured}
+    \]
+    For clarity, we number the outputs after the inputs, but this does not
+    reflect the mapping performed by \(D\).
+
+    Composition in \(\cspdhyp\) is by pushout; effectively the vertices in the
+    output of the first cospan are `glued together' with the inputs of the
+    second.
+    \[
+        \iltikzfig{graphs/example-interfaces-coloured}
+        \seq
+        \iltikzfig{graphs/example-2-interfaces-coloured}
+        =
+        \iltikzfig{graphs/example-composition-coloured}
+    \]
+    Tensor in \(\cspdhyp\) is by direct product; putting cospans on top of each
+    other.
+    \[
+        \iltikzfig{graphs/example-interfaces-coloured}
+        \tensor
+        \iltikzfig{graphs/example-2-interfaces-coloured}
+        =
+        \iltikzfig{graphs/example-tensor-coloured}
+    \]
+\end{example}

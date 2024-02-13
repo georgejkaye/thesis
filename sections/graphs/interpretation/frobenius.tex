@@ -7,7 +7,7 @@ We will first recount the constructions used by Bonchi et al in
 how we can use their ingredients for a \emph{traced} setting either with or
 without a comonoid structure.
 
-\subsection{Hypergraph categories}
+\subsection{Frobenius structure}
 
 Monoids and comonoids are structures that crop up all over mathematics.
 However, things become really interesting when multiple such structures
@@ -59,6 +59,8 @@ a coproduct of copies of \(\frob\).
     For a countable set of colours \(C\), let \(\frobc \in \cprop\) be
     defined as \(\frobc \coloneqq \sum_{c \in C}\frob\).
 \end{definition}
+
+\subsection{Hypergraph categories}
 
 Frobenius structures have turned out to be very useful in studying compositional
 processes such as quantum processes~\cite{coecke2008interacting} and signal flow
@@ -197,13 +199,13 @@ to the \emph{countable} setting we work in.
 \end{lemma}
 \begin{proof}
     Since \(1\) is terminal, there is a unique morphism \(A \to 1\) for each
-    object \(A\) in \(\mcc\), so there is an object \((A, A \to 1)\) in
-    \(\mcc \slice 1\) for each object in \(\mcc\).
-    There is a morphism \((A, \morph{!_A}{A}{1}) \to (B, \morph{!_B}{B}{1})\) in
-    \(\mcc \slice 1\) for every morphism \(\morph{f}{A}{B}\) in \(\mcc\) such
+    object \(A\) in \(\mcc\), so there is an object \((A, \morph{!_A}{A}{1})\)
+    in \(\mcc \slice 1\) for each object \(A \in \mcc\).
+    In \(\mcc \slice 1\) there is a morphism
+    \((A, \morph{!_A}{A}{1}) \to (B, \morph{!_B}{B}{1})\) in
+    for every morphism \(\morph{f}{A}{B} \in \mcc\) such
     that \(f \seq !_B = !_A\); since both \(f \seq !_B\) and \(!_A\) are
-    morphisms \(A \to 1\) this condition holds for any morphism \(f\) in
-    \(\mcc\).
+    morphisms \(A \to 1\) they must be the same unique morphism.
     Therefore \(\mcc \cong \mcc \slice 1\).
 \end{proof}
 
@@ -251,8 +253,7 @@ to the \emph{countable} setting we work in.
 
 We need to show a version of this for the case where \(C\) may be
 \emph{countably infinite}.
-The strategy is much the same as that used in
-\cref{thm:frobc-iso-finset-slice-c}, but relies on one small observation.
+The strategy is much the same as, but relies on one small observation.
 
 \begin{lemma}
     \label{lem:finsetprop-finite}
@@ -264,6 +265,9 @@ The strategy is much the same as that used in
     \([m] \to C\) for finite \(C\), which are precisely the morphisms of
     \(\finsetprop \slice C\).
 \end{proof}
+
+As \(1\) is a finite cardinal, this slips in nicely to the proof above to extend
+it to \emph{countable} sums.
 
 \begin{theorem}
     \label{thm:frobc-iso-hatfinset-slice-c}
@@ -312,6 +316,32 @@ this arises as a special case of the following theorem.
     \(\cospan{F\listvar{m}}[Ff]{FX}[Fg]{F\listvar{n}}\).
     If \(F\) is full and faithful, then \(\tilde{F}\) is faithful.
 \end{theorem}
+\begin{proof}
+    Since \(F\) preserves finite colimits, it preserves composition (pushout)
+    and monoidal product (coproduct); symmetries are clearly preserved.
+    To show that \(\tilde{F}\) is faithful when \(F\) is full and faithful,
+    suppose that \(
+        \tilde{F}(\cospan{m}[f]{X}[g]{n})
+        =
+        \tilde{F}(\cospan{m}[f^\prime]{X}[g^\prime]{n})
+    \).
+    This gives us the following commutative diagram in \(\mathbf{C}\):
+    \begin{center}
+        \begin{tikzcd}
+            & FX \arrow{dd}{\phi} & \\
+            Fm \arrow{ur}{Ff} \arrow{dr}{Ff^\prime} & &
+            Fn \arrow{ul}{Fg} \arrow{dl}{Fg^\prime} \\
+            & FY &
+        \end{tikzcd}
+    \end{center}
+    where \(\phi\) is an isomorphism as objects in \(\csp[F]{\mathbf{C}}\) are
+    isomorphism classes of cospans.
+    As \(F\) is full, there exists \(\morph{\psi}{X}{Y}\) such that
+    \(F\psi = \phi\).
+    As \(F\) is faithful, \(\psi\) is an isomorphism; this means
+    \(\cospan{m}[f]{X}[g]{n}\) and \(\cospan{m}[f^\prime]{X}[g^\prime]{n}\) are
+    equal in \(\csp{\mathbb{X}}\), so \(\tilde{F}\) is faithful.
+\end{proof}
 
 \begin{corollary}[\cite{bonchi2022string}, Cor. 3.9]
     \label{cor:finset-to-hyp}
@@ -388,7 +418,6 @@ all that remains is the map from \(\smcsigmac\).
 
 \begin{definition}[\cite{bonchi2022string}, Sec. 4.1]\label{def:hyp-morphisms}
     Let \(\morph{\termtohypsigmac}{\smcsigmac}{\cspdchyp}\) be a coloured PROP
-    morphism with its action on generators defined as
     \begin{gather*}
         \termtohypsigmac[\iltikzfig{%
                 strings/category/generator%
