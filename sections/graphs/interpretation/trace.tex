@@ -10,6 +10,10 @@ the previous section.
 
 First we will establish the morphism \(\stmcsigmac \to \cspdchyp\) we will use
 to map traced terms to cospans of hypergraphs.
+We could do this manually fairly easily, but this would mean we would have to
+redo all the proofs in the previous section from scratch.
+Instead we will reuse the previous results, by exploiting the correspondence
+between traced and compact closed categories.
 
 \begin{lemma}[\cite{rosebrugh2005generic}, Prop. 2.8]
     Every hypergraph category is self-dual compact closed.
@@ -66,8 +70,10 @@ to map traced terms to cospans of hypergraphs.
     \(\tracedtosymandfrobsigmac\) is faithful.
 \end{corollary}
 
-To translate a term in \(\stmcsigmac\) into a cospan of hypergraphs, one simply
-applies \(\tracedtosymandfrobsigmac\) followed by \(\termandfrobtohypsigmac\).
+To translate a term in \(\stmcsigmac\) into a cospan of hypergraphs, one uses
+the inclusion functor \(\tracedtosymandfrobsigmac\) to elevate to the
+Frobenius realm, before applying \(\termandfrobtohypsigmac\) from the previous
+section to obtain a cospan of hypergraphs.
 
 \begin{corollary}
     \(\termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac\) is faithful.
@@ -158,25 +164,21 @@ either interface.
 As with the monogamous acyclic cospans, a sub-PROP of \(\cspdchyp\) containing
 the partial monogamous cospans must be constructed.
 
-\begin{lemma}
+\begin{lemma}\label{lem:identities-symmetries-partial-monogamous}
     Identities and symmetries are partial monogamous.
 \end{lemma}
 \begin{proof}
-    Identities and symmetries are monogamous by (1) in
-    \cref{lem:monogamous-acyclic-preserved} so they must also be partial
+    Identities and symmetries are monogamous by
+    \cref{lem:identities-symmetries-monogamous} so they must also be partial
     monogamous.
 \end{proof}
 
-\begin{lemma}
-    Given partial monogamous cospans \(\cospan{\listvar{m}}{F}{\listvar{n}}\)
-    and \(\cospan{\listvar{n}}{G}{\listvar{p}}\), \(
-        (\cospan{\listvar{m}}{F}{\listvar{n}})
-        \seq
-        (\cospan{\listvar{n}}{G}{\listvar{p}})
-    \) is partial monogamous.
+\begin{lemma}\label{lem:partial-monogamicity-preserved-composition}
+    Partial monogamy is preserved by composition.
 \end{lemma}
 \begin{proof}
-    By (2), composition preserves monogamicity.
+    By \cref{lem:monogamicity-preserved-composition}, composition preserves
+    monogamicity.
     The only difference between partial monogamous cospans and monogamous ones
     is that the former may have cycles and nodes of degree \((0,0)\) not in the
     interfaces.
@@ -184,18 +186,13 @@ the partial monogamous cospans must be constructed.
     composition, so partial monogamy must also be preserved.
 \end{proof}
 
-\begin{lemma}
-    Given partial monogamous cospans \(\cospan{\listvar{m}}{F}{\listvar{n}}\)
-    and \(\cospan{\listvar{p}}{G}{\listvar{q}}\), \(
-        (\cospan{\listvar{m}}{F}{\listvar{n}})
-        \tensor
-        (\cospan{\listvar{n}}{G}{\listvar{p}})
-    \) is partial monogamous.
+\begin{lemma}\label{lem:partial-monogamicity-preserved-tensor}
+    Partial monogamy is preserved by tensor.
 \end{lemma}
 \begin{proof}
     As with composition, tensor preserves monogamicity by
-    \cite[Lem. 17]{bonchi2022stringa}, and as it does not affect the degree of
-    nodes then it preserves partial monogamy as well.
+    \cref{lem:monogamicity-preserved-tensor}, and as tensor does not affect the
+    degree of nodes then it preserves partial monogamy as well.
 \end{proof}
 
 As partial monogamicity is preserved by both forms of composition, the
@@ -206,44 +203,45 @@ partial monogamous cospans themselves form a PROP.
     partial monogamous cospans of hypergraphs.
 \end{definition}
 
-Of course, we are not done yet, as we are concerned with \emph{traced} terms:
-we must show that \(\pmcspdchyp\) is also traced.
+While for the symmetric monoidal case we could stop here, we have no such luck
+now: we must show that \(\pmcspdchyp\) is also traced.
+Although \(\cspdhyp\) already has a trace in the form of the canonical trace, we
+must make sure that this does not degenerate for cospans of partial monogamous
+hypergraphs.
 
-\begin{theorem}
-    \label{thm:partial-monogamous-ops}
-    \(\pmcspdchyp\) has a trace.
+\begin{theorem}\label{thm:partial-monogamous-trace}
+    The canonical trace is a trace on \(\pmcspdhyp\).
 \end{theorem}
 \begin{proof}
-    As \(\cspdchyp\) has a trace, we use that as the candidate for our trace in
-    \(\pmcspdchyp\).
     Consider a partial monogamous cospan \(
-        \cospan{\listvar{x} + \listvar{m}}[f + h]{F}[g + k]{\listvar{x} + \listvar{n}}
+        \cospan{x + m}[f + h]{F}[g + k]{x + n}
     \); we must show that its trace \(
-        \cospan{\listvar{m}}[h]{F^\prime}[k]{\listvar{n}}
+        \cospan{m}[h]{F^\prime}[k]{n}
     \) is also partial monogamous.
     Only the vertices in the image of \(f\) and \(g\) are affected by the trace:
-    for each element \(a \in \listvar{x}\), \(f(a)\) and \(g(a)\) will be merged
+    for each element \(a \in x\), \(f(a)\) and \(g(a)\) will be merged
     together in the traced graph, summing their degrees.
     If these vertices are in the image of \(h\) or \(k\) then this will be
     preserved in the traced cospan.
-
     We now consider the various cases:
     \begin{itemize}
         \item if \(f(a) = g(a)\), then this vertex must have degree \((0, 0)\);
                 the traced vertex will still have degree \((0, 0)\) and will no
-                longer be in the interface, so will still be partial monogamous;
-        \item if \(f(a)\) is also in the image of \(k\) and \(g(i)\) is also in
-                the image of \(h\), then both \(f(a)\) and \(g(a)\) have degree
-                \((0, 0)\); the traced vertex will still have degree
-                \((0, 0)\) and be in both interfaces of the traced cospan, so
-                will still be partial monogamous;
-        \item if \(f(a)\) is also in the image of \(k\), then \(f(i)\) will have
-                degree \((0, 0)\) and \(g(a)\) will have degree \((1,0)\), so
-                the traced vertex will have degree \((1, 0)\) and be in the
-                image of \(k\); and
-        \item if \(g(i)\) is in the image of \(h\), then the above argument
-                applies in reverse. \qedhere
+                longer be in the interface;
+        \item if \(f(a)\) is also in the image of \(n \to F\) and \(g(i)\) is
+                also in the image of \(m \to F\), then both \(f(a)\) and
+                \(g(a)\) have degree \((0, 0)\); the traced vertex will still
+                have degree \((0, 0)\) and be in both interfaces of the traced
+                cospan;
+        \item if \(f(a)\) is also in the image of \(n \to F\), then \(f(i)\)
+                has \((0, 0)\) and \(g(a)\) will have degree
+                \((1,0)\), so the traced vertex will have degree \((1, 0)\) and
+                be in the image of \(n \to F^\prime\); and
+        \item if \(g(i)\) is in the image of \(m \to F\), then the above
+                argument applies in reverse.
     \end{itemize}
+    In all these cases, partial monogamy is preserved, so the canonical trace is
+    still suitable for working with cospans of partial monogamous hypergraphs.
 \end{proof}
 
 Crucially, while we leave \(\pmcspdhyp\) in order to construct the trace using
@@ -253,29 +251,6 @@ the cup and cap, the resulting cospan \emph{is} in \(\pmcspdhyp\).
 
 Now that we have a traced sub-PROP of cospans of hypergraphs, it is time to show
 that this particular sub-PROP is the one that corresponds to traced terms.
-We first note a consequence of the initiality of
-\(\permspropwithnat \slice C\) in \(\cpropc\) noted in the previous section.
-
-\begin{lemma}
-    Given a term \(
-        \morph{f}{\listvar{x} + \listvar{m}}{\listvar{x} + \listvar{n}}
-    \), if \(
-        \termtohypsigmac[f]
-        =
-        \cospan{\listvar{x} + \listvar{m}}{F}{\listvar{x} + \listvar{n}}
-    \) then \(
-        \termandfrobtohypsigmac[
-            \tracedtosymandfrobsigmac[\trace{\listvar{x}}{f}]
-        ]
-        =
-        \trace{\listvar{x}}{
-            \cospan{\listvar{x} + \listvar{m}}{F}{\listvar{x} + \listvar{n}}
-        }
-    \)
-\end{lemma}
-\begin{proof}
-    \todo[inline]{I think this is obvious but best to check}
-\end{proof}
 
 \begin{theorem}\label{thm:termtohyp-image}
     A cospan \(\cospan{m}{F}{n}\) is in the image of \(
@@ -283,25 +258,33 @@ We first note a consequence of the initiality of
     and only if it is partial monogamous.
 \end{theorem}
 \begin{proof}
-    Since the generators \(\stmcsigmac\) are mapped to monogamous cospans
+    Since the generators of \(\stmcsigma\) are mapped to monogamous cospans
     by \(\termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac\) and partial
-    monogamy is preserved by composition and trace
-    (\cref{thm:partial-monogamous-ops}), every cospan in the image of
-    \(\termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac\) is partial
+    monogamy is preserved by composition
+    (\cref{lem:partial-monogamicity-preserved-composition}),
+    tensor (\cref{lem:partial-monogamicity-preserved-tensor}),
+    and trace
+    (\cref{thm:partial-monogamous-trace}),
+    every cospan in the image of
+    \(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\) is partial
     monogamous.
 
     Now we show that any partial monogamous cospan \(
-        \cospan{m}[f]{F}[g]{n}
+        \cospan{\listvar{m}}[f]{F}[g]{\listvar{n}}
     \) must be in the image of \(
-        \termtohypsigmac \circ \tracedtosymandfrobsigmac
-    \) by constructing an isomorphic cospan from a trace of cospans
+        \termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac
+    \) by constructing an isomorphic cospan from a trace of cospans, in which
+    each component under the trace is in the image of \(\termtohypsigmac\);
+    subsequently this means that the entire cospan must be in the image of
+    \(\termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac\).
     The components of the new cospan are as follows:
     \begin{itemize}
         \item let \(L\) be the discrete hypergraph containing vertices with
                 degree
                 \((0,0)\) that are not in the image of \(f\) or \(g\);
-        \item let \(E\) be the hypergraph containing hyperedges of \(F\) and
-                their source and target vertices, but disconnected;
+        \item let \(E\) be the hypergraph containing hyperedges of \(F\)
+                disconnected from each other along with their source and target
+                vertices;
         \item let \(V\) be the discrete hypergraph containing all the
                 vertices of \(F\); and
         \item let \(S\) and \(T\) be the discrete hypergraphs containing
@@ -309,32 +292,30 @@ We first note a consequence of the initiality of
                 respectively, with the ordering determined by some order
                 \(e_1,e_2,\cdots,e_n\) on the edges in \(F\).
     \end{itemize}
-
-    These parts can be composed and a trace applied to obtain the follow
-    cospan:
+    These parts can be composed to form the following composite:
     \begin{gather*}
-        \trace{L + T}{
-            \cospan{L + T + m}[\id + \id + f]{L + V}[\id + \id + g]{S + n}
-            \,\seq\,
-            \cospan{L + S + n}[\id]{L + E + n}[\id]{L + T + n}
-        }
-        \label{gat:cospan}
+        \cospan{L + T + m}[\id + \id + f]{L + V}[\id + \id + g]{L + S + n}
+        \,\seq\,
+        \cospan{L + S + n}[\id]{L + E + n}[\id]{L + T + n}
     \end{gather*}
-
-    This can be checked to be isomorphic to the original cospan
+    Finally we take the trace of \(L + T\) over this composite to obtain a
+    cospan which can be checked to be isomorphic to the original cospan
     \(\cospan{m}[f]{F}[g]{n}\) by applying the pushouts.
     The components of the composite under the trace are all monogamous acyclic
-    so must be in the image of \(\termtohypsigmac\); this means there is a term
-    \(f\). clearly then the traced
-    version is in the image of
-    \(\termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac\)
+    so must be in the image of \(\termtohypsigmac\) by
+    \cref{thm:monogamous-acyclic-full}; this means there is a term
+    \(f \in \smcsigmac\) such that \(\termtohypsigmac[f]\) is isomorphic to the
+    original composite.
+    Clearly the trace of \(f\) is in \(\stmcsigmac\), and so the trace of the
+    composite is in the image of
+    \(\termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac\).
 \end{proof}
 
 This shows that \(
-    \termandfrobtohypsigma \circ \tracedtosymandfrob{\Sigma}
-\) is a \emph{full} mapping from \(\stmcsigma\) to \(\pmcspdhyp\).
+    \termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac{\Sigma}
+\) is a \emph{full} mapping from \(\stmcsigmac\) to \(\pmcspdchyp\).
 As it is both full and faithful, we can then conclude the final result.
 
 \begin{corollary}\label{cor:stmc-graph-iso}
-    \(\stmc{\Sigma} \cong \pmcspfihyp\).
+    \(\stmc{\Sigma} \cong \pmcspdhyp\).
 \end{corollary}
