@@ -57,19 +57,19 @@ The former is tackled by a condition on the connectivity of vertices.
     \end{center}
 \end{definition}
 
-\begin{lemma}[\cite{bonchi2022stringa}, Lems. 15-17]
-    \label{lem:monogamicity-preserved}
-    The following statements hold:
-    \begin{enumerate}
-        \item identities and symmetries are monogamous;
-        \item monogamicity is preserved by composition; and
-        \item monogamicity is preserved by tensor.
-    \end{enumerate}
+\begin{lemma}[\cite{bonchi2022stringa}, Lem. 15]\label{lem:identities-symmetries-monogamous}
+    Identities and symmetries are monogamous.
 \end{lemma}
 \begin{proof}
-    For (1), the cospans involved are discrete and all vertices are in both
-    interfaces.
-    For (2), assume we compose two monogamous acyclic cospans \(
+    The cospans involved are discrete and all vertices are in both
+    interfaces, so the cospans are monogamous.
+\end{proof}
+
+\begin{lemma}[\cite{bonchi2022stringa}, Lem. 16]\label{lem:monogamicity-preserved-composition}
+    Monogamicity is preserved by composition.
+\end{lemma}
+\begin{proof}
+    Assume we compose two monogamous acyclic cospans \(
         \cospan{\listvar{m}}[f]{F}[g]{\listvar{n}}
     \) and \(
         \cospan{\listvar{n}}[h]{G}[k]{\listvar{p}}
@@ -79,14 +79,17 @@ The former is tackled by a condition on the connectivity of vertices.
     \(g\) and \(h\), which are merged pointwise; since vertices in the image of
     \(g\) have out-degree \(0\) and those in the image of \(h\) have in-degree
     \(0\), the merged vertices will have at most degree \((1, 1)\).
-
-    For (3), the degrees of nodes are unaffected as tensor is by coproduct and
-    only vertices in the original interfaces will be in the new interfaces.
 \end{proof}
+
+\begin{lemma}[\cite{bonchi2022stringa}, Lem. 17]\label{lem:monogamicity-preserved-tensor}
+    The degrees of nodes are unaffected as tensor is by coproduct and
+    only vertices in the original interfaces will be in the new interfaces.
+\end{lemma}
 
 \subsection{Acyclicity}
 
-Preventing cycles is a much more natural condition on hypergraphs.
+Identifying hypergraphs without cycles is a much more common task, but it still
+requires a few additional definitions.
 
 \begin{definition}[Predecessor (\cite{bonchi2022stringa}, Def. 18)]
     A hyperedge \(e\) is a \emph{predecessor} of another hyperedge \(e^\prime\)
@@ -111,20 +114,34 @@ nodes.
     A cospan \(\morph{\listvar{m}}{F}{\listvar{n}}\) is acyclic if \(F\) is.
 \end{definition}
 
-\begin{lemma}[\cite{bonchi2022stringa}, Lems. 15-17, Prop. 21]
-    \label{lem:monogamous-acyclic-preserved}
-    The following statements hold:
-    \begin{itemize}
-        \item identities and symmetries are monogamous acyclic;
-        \item monogamous acyclicity is preserved by composition; and
-        \item monogamous acyclicity is preserved by tensor.
-    \end{itemize}
+Once again, for acyclicity to be a suitable condition on a category of cospans,
+it needs to be preserved by the various categorical operations.
+
+\begin{lemma}[\cite{bonchi2022stringa}, Prop. 21]\label{lem:identities-symmetries-monogamous-acyclic}
+    Identities and symmetries are acyclic.
 \end{lemma}
 \begin{proof}
-    (1) and (3) follow by \cref{lem:monogamicity-preserved}, as cycles clearly
-    cannot be created by the coproduct.
+    This follows by \cref{lem:identities-symmetries-monogamous} as discrete
+    hypergraphs cannot contain cycles.
+\end{proof}
 
-    For (2), once again assume we compose two monogamous acyclic cospans \(
+\begin{lemma}[\cite{bonchi2022stringa}, Prop. 21]\label{lem:monogamous-acyclicity-preserved-tensor}
+    Acyclicity is preserved by tensor.
+\end{lemma}
+\begin{proof}
+    Cycles cannot be created by the coproduct as the original graphs are not
+    altered.
+\end{proof}
+
+When we turn to composition, we run into a problem; composition of arbitrary
+cospans may not preserve acyclicity!
+It is only when acyclicity is combined with monogamy that we are safe.
+
+\begin{lemma}[\cite{bonchi2022stringa}, Prop. 21]\label{lem:monogamous-acyclicity-preserved-composition}
+    Monogamous acyclicity is preserved by composition.
+\end{lemma}
+\begin{proof}
+    Once again assume we compose two monogamous acyclic cospans \(
         \cospan{\listvar{m}}[f]{F}[g]{\listvar{n}}
     \) and \(
         \cospan{\listvar{n}}[h]{G}[k]{\listvar{p}}
@@ -135,6 +152,7 @@ nodes.
     respectively.
 \end{proof}
 
+
 This shows that monogamous acyclic cospans of hypergraphs form a category.
 
 \begin{definition}[\cite{bonchi2022stringa}]
@@ -142,10 +160,10 @@ This shows that monogamous acyclic cospans of hypergraphs form a category.
     monogamous acyclic cospans of hypergraphs.
 \end{definition}
 
-Now it is necessary to show that \(\smcsigmac\) is isomorphic to
-\(\macspdchyp\).
-To do thi
-
+Bonchi et al then proceeded to show that \(\smcsigmac\) is isomorphic to
+\(\macspdchyp\); to do this they needed a few more ingredients.
+The first is a lemma showing that a special class of subgraphs can always be
+`extracted' from a parent graph.
 
 \begin{definition}[Convex subgraph (\cite{bonchi2022stringa}, Def. 23)]
     A subgraph \(G \subseteq F\) is convex if for any nodes \(v, v^\prime\) in
@@ -177,7 +195,7 @@ To do thi
 
 Essentially, we can always `pull out' a convex subgraph of a monogamous acyclic
 cospan in such a way that the remaining cospans are still monogamous acyclic.
-This will come in useful when characterising the image of \(\termtohypsigmac\).
+This is an important part of characterising the image of \(\termtohypsigmac\).
 
 \begin{theorem}[\cite{bonchi2022stringa}, Thm. 25]
     A cospan \(\cospan{\listvar{m}}{F}{\listvar{n}}\) is in the image of
@@ -187,7 +205,8 @@ This will come in useful when characterising the image of \(\termtohypsigmac\).
 \begin{proof}
     The only if direction is by induction on the structure of terms in
     \(\smcsigmac\): the interpretation of generators is monogamous acyclic and
-    the inductive cases are by \cref{lem:monogamous-acyclic-preserved}.
+    the inductive cases are by
+    \cref{lem:identities-symmetries-monogamous,lem:identities-symmetries-monogamous-acyclic,lem:monogamous-acyclicity-preserved-composition,lem:monogamicity-preserved-tensor,lem:monogamous-acyclicity-preserved-tensor}.
 
     The if direction is by induction on the number of edges in \(F\).
     If there are none, then \(\listvar{m} \to F\) and \(\listvar{n}\) are
@@ -213,8 +232,6 @@ We know that the copairing \(\termtohypsigmac + \frobtohypsigmac\) is faithful
 by \cref{thm:termtohyp-image}, so we just need to show the same is true for its
 components.
 
-\todo[inline]{Do we talk about the category of categories?}
-
 \begin{definition}[\cite{macdonald2009amalgamations}, Defs. 3.1, 3.2]
     A functor \(\morph{F}{\mcc}{\mcd}\) satisfies the \emph{3-for-2 property}
     if, for each triple of morphisms \(f,g,h \in \mcd\) such that
@@ -235,7 +252,7 @@ components.
 
 To apply this result, we need to show that \(\hypcsigmac\) is a pushout.
 Recall that in a category with an initial object, every coproduct can be
-equivalently expressed as a pushout by \cref{lem:coproduct-is-pushout}.
+expressed as a pushout by \cref{lem:coproduct-is-pushout}.
 
 \begin{definition}
     Let \(\permspropwithnat\) be the sub-PROP of \(\finsetpropwithnat\)
@@ -260,7 +277,8 @@ permutation of \(C\)-coloured wires.
     \(C\)-coloured PROP maps these to the corresponding constructs.
 \end{proof}
 
-These pieces can be put together to show the desired result.
+Subsequently, \(\smcsigmac + \frobc\) can be expressed as a pushout and the
+`3-for-2' condition applied to show the faithfulness of \(\termtohypsigmac\).
 
 \begin{proposition}
     \(\morph{\termtohypsigmac}{\smcsigmac}{\cspdchyp}\) is faithful.
@@ -284,6 +302,9 @@ These pieces can be put together to show the desired result.
     \(\permspropwithnat\) is an isomorphism, so \(\termtohypsigmac\) must also
     be faithful.
 \end{proof}
+
+Since \(\termandfrobtohypsigmac\) is full and faithful, we have reached our
+final destination.
 
 \begin{corollary}[\cite{bonchi2022stringa}, Cor. 26]
     There is an isomorphism of PROPs \(\smcsigmac \cong \macspdchyp\).

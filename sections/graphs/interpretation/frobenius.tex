@@ -37,6 +37,30 @@ precisely to the cospans of hypergraphs defined in the previous section.
 The equations of special Frobenius algebras are those of commutative monoids and
 commutative comonoids along with the `Frobenius' and the 'special' equation.
 
+\begin{example}
+    The following are all terms in \(\frob\):
+    \[
+        \iltikzfig{strings/structure/frobenius/example-1}
+        \quad
+        \iltikzfig{strings/structure/frobenius/example-2}
+        \quad
+        \iltikzfig{strings/structure/frobenius/example-3}
+    \]
+    Using the equations of \(\equations[\frob]\), it can be shown that the
+    latter two terms are equal:
+    \begin{gather*}
+        \iltikzfig{strings/structure/frobenius/example-2}
+        \eqaxioms[\monoidunitleqn]
+        \iltikzfig{strings/structure/frobenius/example-equational/step-1}
+        \eqaxioms[\frobleqn]
+        \iltikzfig{strings/structure/frobenius/example-equational/step-2}
+        \eqaxioms[\monoidassoceqn]
+        \iltikzfig{strings/structure/frobenius/example-equational/step-3}
+        \eqaxioms[\frobreqn]
+        \iltikzfig{strings/structure/frobenius/example-3}
+    \end{gather*}
+\end{example}
+
 \(\frob\) is a monochromatic PROP.
 To define a \emph{coloured} version of \(\frob\) we simply use a different copy
 of \(\frob\) to represent each colour, using a fact about \(\propcat\) and
@@ -110,8 +134,8 @@ It is now possible to formally define what we mean when we say `Frobenius
 terms'.
 
 \begin{definition}
-    For a set of colours \(C\) and generators \(\generators\), let
-    \(\hypc{C,\generators}\) be the coloured PROP freely generated over the
+    For a set of colours \(C\) and set of generators over \(C\) \(\generators\),
+    let \(\hypsigmac\) be the coloured PROP freely generated over the
     generators in \(\generators\) and those in \(\frobc\).
 \end{definition}
 
@@ -142,8 +166,7 @@ of finite sets we encountered earlier.
     There is an isomorphism of PROPs \(\frob \cong \csp{\finsetprop}\).
 \end{proposition}
 
-We omit the formal proof and sketch the correspondence between the two
-categories.
+We omit the formal proof and sketch the correspondence.
 Terms in \(\frob\) are formed of all the ways of combining \(
     \iltikzfig{strings/structure/monoid/merge}[colour=white],
     \iltikzfig{strings/structure/monoid/init}[colour=white],
@@ -266,7 +289,7 @@ The strategy is much the same as, but relies on one small observation.
     \(\finsetprop \slice C\).
 \end{proof}
 
-As \(1\) is a finite cardinal, this slips in nicely to the proof above to extend
+As \(1\) is a finite cardinal, this slips in to the proof above to extend
 it to \emph{countable} sums.
 
 \begin{theorem}
@@ -418,6 +441,7 @@ all that remains is the map from \(\smcsigmac\).
 
 \begin{definition}[\cite{bonchi2022string}, Sec. 4.1]\label{def:hyp-morphisms}
     Let \(\morph{\termtohypsigmac}{\smcsigmac}{\cspdchyp}\) be a coloured PROP
+    morphism with the action on generators defined as
     \begin{gather*}
         \termtohypsigmac[\iltikzfig{%
                 strings/category/generator%
@@ -426,7 +450,7 @@ all that remains is the map from \(\smcsigmac\).
         \coloneqq
         \cospan{\listvar{m}}{\iltikzfig{graphs/terms/generator}}{\listvar{n}}
     \end{gather*}
-    \todo[inline]{Coloured version of generator map somehow?}
+    where the source and target nodes are coloured appropriately.
 \end{definition}
 
 To map from terms in a hypergraph category to cospans of hypergraphs, we simply
@@ -454,11 +478,11 @@ cospans of hypergraphs.
     coproduct: given a coloured PROP \(\mathbb{A}\) and PROP morphisms
     \(\smcsigmac \to \mathbb{A}\) and \(\frobc \to \mathbb{A}\), there exists
     a unique morphism \(\morph{u}{\cspdchyp}{\mathbb{A}}\) as below:
-
+    %
     \begin{center}
         \includestandalone{figures/graphs/isomorphism/coproduct-iso}
     \end{center}
-
+    %
     All the PROP morphisms involved are identity-on-objects, so all that is
     required to show the existence of \(u\) is to show that any morphism in
     \(\cspdchyp\) can be expressed as a composition of components either in the
@@ -474,12 +498,12 @@ cospans of hypergraphs.
         \termtohypsigmac[\chi(e_i)]
     \).
     This cospan `stacks up' the edges in \(G\) without connecting them together;
-    the legs of the cospan are the concatenated sources and targets of these
-    edges in the order specified.
-    It is then easy to define functions \(\morph{f^\prime}{m}{N}\),
+    the legs of the cospan are the sources and targets of these
+    edges concatenated in the order specified.
+    It is easy to define functions \(\morph{f^\prime}{m}{N}\),
     \(\morph{g^\prime}{n}{N}\), \(\morph{h}{\tilde{m}}{N}\) and
     \(\morph{k}{\tilde{n}}{N}\) that send nodes to the corresponding node in the
-    entire set of nodes in the graph.
+    set of all nodes in the graph.
 
     With this data, the original cospan \(\cospan{m}[f]{G}[g]{n}\) can be
     viewed as the following composition of cospans: \[
@@ -508,17 +532,16 @@ cospans of hypergraphs.
 
     Now it must be verified that each cospan in the composite is in the image
     of either \(\termtohypsigmac\) or \(\frobtohypsigmac\).
-    As the two outer cospans are discrete, they are in the image of
+    The outer cospans are discrete so they are in the image of
     \(\frobtohypsigmac\) by \cref{cor:discrete-hypergraph-frob}.
-    The centre cospan is constructed from the identity and the coproduct of
-    cospans in the image of \(\termtohypsigmac\), so the entire cospan is in the
+    The centre cospan is constructed from the identity and cospans in the image
+    of \(\termtohypsigmac\), so the entire cospan is in the
     image of \(\termtohypsigmac\).
 
     The morphism \(u\) can therefore be defined based on the actions of
     \(\termtohypsigmac\) and \(\frobtohypsigmac\).
-    This morphism is unique because although a different order on the edges
-    could be initially assigned, all the categories are symmetric monoidal so
-    this is not an issue.
+    This morphism is unique: although different orders can be assigned on the
+    edges, all the categories are symmetric monoidal so this is not an issue.
 \end{proof}
 
 At first glance, the composite cospan described above might look confusing.
@@ -530,11 +553,7 @@ sources and targets must be the same: the job of the two outer cospans is to
 the left by going `over the top' of the edges via the identity cospan
 \(\cospan{N}{N}{N}\).
 
-Because the isomorphism of coloured PROPs in
-\cref{thm:isomorphism-smcfrob-cospans} extended to an isomorphism of coloured
-FROPs, we get the following.
-
-\todo[inline]{Talk about FROPs in PROP section}
+By the same reasoning, this result can be extended to the coloured setting.
 
 \begin{corollary}[\cite{bonchi2022string}, Cor. 4.2]
     There is an isomorphism of \(C\)-coloured PROPs
