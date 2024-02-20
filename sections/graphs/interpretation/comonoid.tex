@@ -7,11 +7,66 @@
     \label{fig:graph-roadmap}
 \end{figure}
 
-We are interested in another element of structure in addition to the trace: the
-ability to \emph{fork} and \emph{eliminate} wires.
-This is known as a \emph{(commutative) comonoid structure}: categories equipped
-with such a structure are also known as \emph{gs-monoidal}
-(\emph{garbage-sharing}) categories~\cite{fritz2023free}.
+By characterising the cospans of hypergraphs that correspond to \emph{traced}
+terms, we already have a setting in which we can model sequential circuit
+morphisms combinatorially.
+But why stop there?
+When modelling \emph{Frobenius} terms, we were modelling them modulo the
+Frobenius \emph{equations}; the comonoid and monoid structures merge
+together so we do not need to consider the equations of associativity,
+commutativity or unitality.
+
+In the realm of sequential circuits we also have monoid and comonoid structures,
+but instead of forming a Frobenius structure they only form a \emph{bialgebra}.
+The equations of a bialgebra are different to those of a Frobenius algebra in
+how the monoid and comonoid interact.
+Compare the two Frobenius equations with the bialgebra equation shown below:
+\[
+    \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
+    =
+    \iltikzfig{strings/structure/frobenius/frobenius-l}
+    \quad
+    \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
+    =
+    \iltikzfig{strings/structure/frobenius/frobenius-r}
+    \qquad\qquad\qquad\qquad
+    \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
+    =
+    \iltikzfig{strings/structure/bialgebra/merge-copy-rhs}
+\]
+It is possible to derive the equation on the right from the ones on the left,
+but the reverse is not the case: one cannot derive the two Frobenius equations
+just with the bialgebra equation.
+A Frobenius structure implies a bialgebra structure, but a bialgebra structure
+does \emph{not} imply a Frobenius structure.
+
+As the category \(\cspdchyp\) contains a Frobenius structure by nature of being
+a hypergraph category, this means that it is unsuitable for modelling settings
+with just a bialgebra setting, as too many terms would map to the same
+cospan of hypergraphs.
+
+\todo[inline]{Show cospans of frobenius equations}
+
+But we should not let that get us down too much!
+Since the issue only arises with the interactions between the monoid and the
+comonoid, we can use cospans of hypergraphs to reason modulo the equations of
+just one of the two structures.
+This means that not all of the equations of a bialgebra will be absorbed into
+the combinatorial structure, but this is better than too many taking effect!
+
+\begin{remark}
+    Alas, we cannot claim to have pioneered the idea of studying terms with just
+    a monoid or comonoid structure, and there has been some work
+    into the cospans of hypergraphs which correspond to such
+    terms~\cite{fritz2023free,milosavljevic2023string}.
+    What we bring to the table is studying how such terms interact with the
+    \emph{trace}; does removing acyclicity lead to any degeneracies?
+\end{remark}
+
+In the case of sequential circuits, it makes sense to focus on the comonoid
+structure, as forking wires is far more of a natural concept than joining them.
+To characterise categories of terms with a comonoid structure, we must first
+define the monoidal theory of commutative comonoids.
 
 \begin{definition}
     Let \((\generators[\ccomon], \equations[\ccomon])\) be the symmetric
@@ -29,10 +84,13 @@ with such a structure are also known as \emph{gs-monoidal}
 \input{sections/graphs/interpretation/floats/comonoid-equations}
 
 From now on, we write `comonoid' to mean `commutative comonoid'.
-There has already been work using hypergraphs for PROPs with a (co)monoid
-structure~\cite{fritz2023free,milosavljevic2023string} but these consider
-\emph{acyclic} hypergraphs: we must ensure that removing the acyclicity
-condition does not lead to any degeneracies.
+
+When identifying the cospans of hypergraphs that correspond to terms with traced
+comonoid structure, the notion of monogamy will once again need to be modified.
+Partial monogamy is now too strong, as we now actually want wires to fork!
+However, weakening to no monogamy at all is too much, as we only want wires to
+fork but not join.
+Effectively, we want vertices to be `monogamous on one side'.
 
 \begin{definition}[Partial left-monogamy]
     For a cospan \(\cospan{m}[f]{H}[g]{n}\), we say it is
@@ -43,7 +101,7 @@ condition does not lead to any degeneracies.
 
 Partial left-monogamy is a weakening of partial monogamy that allows vertices
 to have multiple `out' connections, which represent the use of the comonoid
-structure to fork wires.
+structure to fork wires; vertices must still only have one `in' connection.
 
 \begin{figure}
     \centering
@@ -73,7 +131,12 @@ structure to fork wires.
     \((0, m)\) allow for the interpretation of terms such as \(
         \trace{}{\iltikzfig{strings/structure/comonoid/copy}[colour=white]}
     \).
+    \todo[inline]{Draw the cospan}
 \end{remark}
+
+As we are used at this point, we must ensure that partial left-monogamy is
+preserved by the categorical operations, so partial left-monogamous cospans
+form a PROP.
 
 \begin{lemma}\label{lem:partial-monogamous-id-sym}
     Identities and symmetries are partial left-monogamous.
