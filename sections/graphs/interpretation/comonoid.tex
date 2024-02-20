@@ -1,3 +1,208 @@
-\chapter{Hypergraphs for traced comonoid terms}
+\section{Hypergraphs for traced comonoid terms}
 
-\todo[inline]{Adapt from FSCD paper section 3-4}
+\begin{figure}
+    \centering
+    \includestandalone{figures/graphs/roadmap}
+    \caption{Interactions between categories of terms and hypergraphs}
+    \label{fig:graph-roadmap}
+\end{figure}
+
+We are interested in another element of structure in addition to the trace: the
+ability to \emph{fork} and \emph{eliminate} wires.
+This is known as a \emph{(commutative) comonoid structure}: categories equipped
+with such a structure are also known as \emph{gs-monoidal}
+(\emph{garbage-sharing}) categories~\cite{fritz2023free}.
+
+\begin{definition}
+    Let \((\generators[\ccomon], \equations[\ccomon])\) be the symmetric
+    monoidal theory of \emph{commutative comonoids}, with \(
+        \Sigma_\ccomon \coloneqq \{
+            \iltikzfig{strings/structure/comonoid/copy}[colour=white],
+            \iltikzfig{strings/structure/comonoid/discard}[colour=white]
+        \}
+    \) and \(\mce_\ccomon\) defined as in \cref{fig:comonoid-equations}.
+    We write \(
+        \ccomon \coloneqq \smc{\generators[\ccomon], \equations[\ccomon]}
+    \).
+\end{definition}
+
+\input{sections/graphs/interpretation/floats/comonoid-equations}
+
+From now on, we write `comonoid' to mean `commutative comonoid'.
+There has already been work using hypergraphs for PROPs with a (co)monoid
+structure~\cite{fritz2023free,milosavljevic2023string} but these consider
+\emph{acyclic} hypergraphs: we must ensure that removing the acyclicity
+condition does not lead to any degeneracies.
+
+\begin{definition}[Partial left-monogamy]
+    For a cospan \(\cospan{m}[f]{H}[g]{n}\), we say it is
+    \emph{partial left-monogamous} if \(f\) is mono and, for all nodes
+    \(v \in H_\star\), the degree of \(v\) is \((0,m)\) if \(v \in f_\star\) and
+    \((0,m)\) or \((1,m)\) otherwise, for some \(m \in \nat\).
+\end{definition}
+
+Partial left-monogamy is a weakening of partial monogamy that allows vertices
+to have multiple `out' connections, which represent the use of the comonoid
+structure to fork wires.
+
+\begin{figure}
+    \centering
+    \[
+        \underbrace{
+            \iltikzfig{graphs/monogamy/yes-comonoid-0}
+            \iltikzfig{graphs/monogamy/yes-comonoid-1}
+        }_{\text{partial left-monogamous}}
+        \qquad
+        \underbrace{
+            \iltikzfig{graphs/monogamy/no-comonoid-0}
+            \iltikzfig{graphs/monogamy/no-comonoid-1}
+        }_{\text{not partial left-monogamous}}
+    \]
+    \caption{Examples of cospans that are and are not partial left-monogamous}
+    \label{fig:partial-left-monogamous-examples}
+\end{figure}
+
+\begin{example}
+    Examples of cospans that are and are not partial left-monogamous are shown
+    in \cref{fig:partial-left-monogamous-examples}.
+\end{example}
+
+\begin{remark}
+    As with the vertices not in the interfaces with degree \((0, 0)\) in the
+    vanilla traced case, the vertices not in the interface with degree
+    \((0, m)\) allow for the interpretation of terms such as \(
+        \trace{}{\iltikzfig{strings/structure/comonoid/copy}[colour=white]}
+    \).
+\end{remark}
+
+\begin{lemma}\label{lem:partial-monogamous-id-sym}
+    Identities and symmetries are partial left-monogamous.
+\end{lemma}
+\begin{proof}
+    Again by \cref{lem:identities-symmetries-monogamous}, identities and
+    symmetries are monogamous so they are also partial left-monogamous.
+\end{proof}
+
+\begin{lemma}
+    Given partial left-monogamous cospans
+    \(\cospan{m}{F}{n}\) and
+    \(\cospan{n}{G}{p}\), the composition \(
+        (\cospan{m}{F}{n})
+        \seq
+        (\cospan{n}{G}{p})
+    \) is partial left-monogamous.
+\end{lemma}
+\begin{proof}
+    We only need to check the in-degree of vertices, as the out-degree can be
+    arbitrary.
+    Only the vertices in the image of \(n \to G\) have their in-degree modified;
+    they will gain the in-tentacles of the corresponding vertices in the image
+    of \(n \to F\).
+    Initially the vertices in \(n \to G\) must have in-degree \(0\) by partial
+    monogamy.
+    They can only gain at most one in-tentacle from vertices in \(n \to F\)
+    as each of these vertices has in-degree \(0\) or \(1\) and \(n \to G\) is
+    mono.
+    So the composite graph is partial left-monogamous.
+\end{proof}
+
+\begin{lemma}
+    Given partial left-monogamous cospans \(\cospan{m}{F}{n}\)
+    and \(\cospan{p}{G}{q}\), the tensor \(
+        (\cospan{m}{F}{n})
+        \tensor
+        (\cospan{n}{G}{p})
+    \) is partial left-monogamous.
+\end{lemma}
+\begin{proof}
+    The elements of the original graphs are unaffected so
+    the degrees are unchanged.
+\end{proof}
+
+\begin{definition}
+    Let \(\plmcspdchyp\) be the sub-PROP of \(\cspdchyp\) containing only the
+    partial left-monogamous cospans of hypergraphs.
+\end{definition}
+
+\begin{proposition}
+    The canonical trace is a trace on \(\plmcspdchyp\).
+\end{proposition}
+\begin{proof}
+    We must show that for any set of vertices in the image
+    of \(x + n \to K\) merged by the canonical trace, at most one of them can
+    have in-degree \(1\).
+    But this must be the case because any image in the image of
+    \(x + m \to K\) must have in-degree \(0\), and \(x + m \to K\) is
+    moreover mono so it cannot merge vertices in the image of
+    \(x + n \to K\).
+\end{proof}
+
+This category can be equipped with a comonoid structure.
+
+\begin{definition}
+    Let \(
+        \morph{
+            \comonoidtofrob
+        }{
+            \ccomon
+        }{
+            \frob
+        }
+    \) be the obvious embedding of \(\ccomon\) into \(\frob\), and let \(
+        \morph{
+            \tracedandcomonoidtofrob{\Sigma}
+        }{
+            \stmc{\Sigma} + \comon
+        }{
+            \smc{\Sigma} + \frob
+        }
+    \) be the copairing of \(\tracedtosymandfrob{\Sigma}\) and
+    \(\comonoidtofrob\).
+\end{definition}
+
+As before, these PROP morphisms are summarised in \cref{fig:roadmap}.
+To show that partial left-monogamy is the correct notion to characterise terms
+in a traced comonoid setting, it is necessary to ensure that the image of these
+PROP morphisms lands in \(\plmcspdhyp\).
+
+\begin{lemma}
+    The image of \(\frobtohyp{\Sigma} \circ \comonoidtofrob\) is in
+    \(\plmcspdhyp\).
+\end{lemma}
+\begin{proof}
+    By definition.
+\end{proof}
+
+\begin{corollary}
+    The image of \(
+        \termandfrobtohypsigma \circ \tracedandcomonoidtofrob{\Sigma}
+    \) is in \(\plmcspdhyp\).
+\end{corollary}
+
+To show the correspondence between \(\stmcsigma + \ccomon\) and
+\(\plmcspdhyp\), we use a similar strategy to \cref{thm:termtohyp-image}.
+
+\begin{lemma}\label{lem:discrete-mono}
+    Given a discrete hypergraph \(X \in \hypsigma\), any cospan
+    \(\cospan{m}[f]{X}{n}\) with \(f\) mono is in the image of
+    \(\frobtohypsigma \circ \comonoidtofrob\).
+\end{lemma}
+
+\begin{theorem}\label{thm:comonoid-fully-complete}
+    \(\stmcsigma + \ccomon \cong \plmcspdhyp\).
+\end{theorem}
+\begin{proof}
+    Since \(\termandfrobtohypsigma\) and \(\comonoidtohypsigma\) are faithful,
+    it suffices to show that a cospan \(\cospan{m}{F}{n}\) in
+    \(\plmcspdhyp\) can be decomposed into a traced cospan in which every
+    component under the trace is in the image of either
+    \(\termandfrobtohypsigmac\) or \(\frobtohypsigmac \circ \comonoidtofrobc\).
+    This is achieved by taking the construction of \cref{thm:termtohyp-image}
+    and allowing the first component to be partial left-monogamous; by
+    \cref{lem:discrete-mono} this is in the image of
+    \(\frobtohypsigma \circ \comonoidtofrob\).
+    The remaining components remain in the image of \(\termtohypsigma\).
+    Subsequently, the entire traced cospan must be in the image of \(
+        \termandfrobtohypsigma \circ [\tracedtosymandfrob, \comonoidtofrob].
+    \).
+\end{proof}
