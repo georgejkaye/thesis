@@ -34,17 +34,20 @@ Performing rewriting in this way is common in computer science and accordingly
 there is a wealth of knowledge on both
 term~\cite{knuth1970simple,gadduchi1996algebraic} and graph~\cite{}
 
-Rewriting for string diagrams has its roots in Burroni's work on
-polygraphs~\cite{burroni}
-
-This approach even briefly entered our world of digital circuits in Lafont's
-work on Boolean circuits~\cite{lafont2003algebraic}, which used a rudimentary
-form of graphical syntactic rewriting.
+Traditional term rewriting is inherently one-dimensional, which can be somewhat
+restrictive as it enforces that each generator must have a coarity of \(1\).
+On the other hand, string diagrams are an example of \emph{higher dimensional}
+rewriting, which its roots in Burroni's work on
+polygraphs~\cite{burroni1993higherdimensional}.
+This higher-dimensional approach even briefly entered our world of digital
+circuits in Lafont's work on Boolean circuits~\cite{lafont2003algebraic}, which
+used a rudimentary form of graphical syntactic rewriting.
 However, in this approach even the axioms of SMCs needed to be applied
 explicitly, greatly hampering the tractability of the system.
 
-It is only more recently that \emph{graph rewriting} for string diagrams has
-been studied, first with the aforementioned \emph{string graphs} of Dixon and
+It is only more recently that rewriting string diagrams modulo the axioms of
+SMCs using \emph{graph rewriting} has been studied, starting with the
+aforementioned \emph{string graphs} of Dixon and
 Kissinger~\cite{dixon2010open,kissinger2012pictures,dixon2013opengraphs}.
 This only considered rewriting in the presence of a trace rather than
 considering any additional structure, but nevertheless was successfully
@@ -59,6 +62,10 @@ properties.
 Moreover, rewriting modulo Frobenius structure (or even just monoid or comonoid
 structure) can reveal rewrites `hidden' behind the absorbed equations that might
 not be seen with the naked eye.
+
+In this chapter, we will explore how to extend this work to the traced and
+traced comonoid case, allowing us to perform graph rewriting on the cospans
+defined in the previous chapter.
 
 \begin{remark}
     The content of this section is a revised and expanded version
