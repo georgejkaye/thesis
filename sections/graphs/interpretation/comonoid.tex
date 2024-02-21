@@ -12,9 +12,9 @@ terms, we already have a setting in which we can model sequential circuit
 morphisms combinatorially.
 But why stop there?
 When modelling \emph{Frobenius} terms, we were modelling them modulo the
-Frobenius \emph{equations}; the comonoid and monoid structures merge
-together so we do not need to consider the equations of associativity,
-commutativity or unitality.
+Frobenius \emph{equations}; when interpreted as cospans of hypergraphs the
+comonoid and monoid structures merge together into single vertices so we do not
+need to consider the equations of associativity, commutativity or unitality.
 
 In the realm of sequential circuits we also have monoid and comonoid structures,
 but instead of forming a Frobenius structure they only form a \emph{bialgebra}.
@@ -55,10 +55,9 @@ This means that not all of the equations of a bialgebra will be absorbed into
 the combinatorial structure, but this is better than too many taking effect!
 
 \begin{remark}
-    Alas, we cannot claim to have pioneered the idea of studying terms with just
-    a monoid or comonoid structure, and there has been some work
-    into the cospans of hypergraphs which correspond to such
-    terms~\cite{fritz2023free,milosavljevic2023string}.
+    Alas, we cannot claim to have pioneered the idea of interpreting terms with
+    just a monoid or comonoid structure as cospans of
+    hypergraphs~\cite{fritz2023free,milosavljevic2023string}.
     What we bring to the table is studying how such terms interact with the
     \emph{trace}; does removing acyclicity lead to any degeneracies?
 \end{remark}
@@ -71,11 +70,11 @@ define the monoidal theory of commutative comonoids.
 \begin{definition}
     Let \((\generators[\ccomon], \equations[\ccomon])\) be the symmetric
     monoidal theory of \emph{commutative comonoids}, with \(
-        \Sigma_\ccomon \coloneqq \{
+        \Sigma_{\ccomon} \coloneqq \{
             \iltikzfig{strings/structure/comonoid/copy}[colour=white],
             \iltikzfig{strings/structure/comonoid/discard}[colour=white]
         \}
-    \) and \(\mce_\ccomon\) defined as in \cref{fig:comonoid-equations}.
+    \) and \(\mce_{\ccomon}\) defined as in \cref{fig:comonoid-equations}.
     We write \(
         \ccomon \coloneqq \smc{\generators[\ccomon], \equations[\ccomon]}
     \).
@@ -84,12 +83,20 @@ define the monoidal theory of commutative comonoids.
 \input{sections/graphs/interpretation/floats/comonoid-equations}
 
 From now on, we write `comonoid' to mean `commutative comonoid'.
+As with \(\frob\), it is straightforward to define a multicoloured version of
+\(\ccomon\) as a coproduct in \(\cprop\).
+
+\begin{definition}
+    For a countable set of colours \(C\), let
+    \(\ccomonc \coloneqq \Sigma_{c \in C} \ccomon\).
+\end{definition}
 
 When identifying the cospans of hypergraphs that correspond to terms with traced
 comonoid structure, the notion of monogamy will once again need to be modified.
-Partial monogamy is now too strong, as we now actually want wires to fork!
-However, weakening to no monogamy at all is too much, as we only want wires to
-fork but not join.
+Partial monogamy is now too strong, as with a comonoid structure we actually
+want wires to fork!
+Weakening to no monogamy at all is too much, as we do not want wires to join as
+well as fork.
 Effectively, we want vertices to be `monogamous on one side'.
 
 \begin{definition}[Partial left-monogamy]
@@ -134,8 +141,8 @@ structure to fork wires; vertices must still only have one `in' connection.
     \todo[inline]{Draw the cospan}
 \end{remark}
 
-As we are used at this point, we must ensure that partial left-monogamy is
-preserved by the categorical operations, so partial left-monogamous cospans
+As we are used to doing at this point, we must ensure that partial left-monogamy
+is preserved by the categorical operations, so partial left-monogamous cospans
 form a PROP.
 
 \begin{lemma}\label{lem:partial-monogamous-id-sym}
@@ -182,10 +189,16 @@ form a PROP.
     the degrees are unchanged.
 \end{proof}
 
+This means we can assemble the partial left-monogamous cospans of hypergraphs
+into another sub-PROP of \(\cspdchyp\).
+
 \begin{definition}
     Let \(\plmcspdchyp\) be the sub-PROP of \(\cspdchyp\) containing only the
     partial left-monogamous cospans of hypergraphs.
 \end{definition}
+
+As this PROP is not restricted to acyclic cospans like those used for just
+terms with a (co)monoid structure, it has the additional structure of a trace.
 
 \begin{proposition}
     The canonical trace is a trace on \(\plmcspdchyp\).
@@ -200,47 +213,51 @@ form a PROP.
     \(x + n \to K\).
 \end{proof}
 
-This category can be equipped with a comonoid structure.
+We now have the setting in which we will model terms with a comonoid structure.
+To actually define the mapping from \(\stmcsigmac + \ccomonc\) we will reuse
+some ingredients from the previous sections.
 
 \begin{definition}
     Let \(
         \morph{
             \comonoidtofrob
         }{
-            \ccomon
+            \ccomonc
         }{
-            \frob
+            \frobc
         }
-    \) be the obvious embedding of \(\ccomon\) into \(\frob\), and let \(
+    \) be the obvious embedding of \(\ccomonc\) into \(\frobc\), and let \(
         \morph{
-            \tracedandcomonoidtofrob{\Sigma}
+            \tracedandcomonoidtofrobsigmac
         }{
-            \stmc{\Sigma} + \comon
+            \stmcsigmac + \ccomonc
         }{
-            \smc{\Sigma} + \frob
+            \smcsigmac + \frobc
         }
-    \) be the copairing of \(\tracedtosymandfrob{\Sigma}\) and
-    \(\comonoidtofrob\).
+    \) be the copairing of \(\tracedtosymandfrobsigmac\) and
+    \(\comonoidtofrobc\).
 \end{definition}
 
-As before, these PROP morphisms are summarised in \cref{fig:roadmap}.
+\begin{corollary}
+    \(\comonoidtofrobc\) and \(\tracedtosymandfrobsigmac\) are faithful.
+\end{corollary}
+
+After translating from \(\stmcsigmac + \ccomonc\) to \(\smcsigmac + \frob\),
+we can then use the previously defined PROP morphism \(\termandfrobtohypsigmac\)
+to obtain a cospan of hypergraphs; as before, these PROP morphisms are
+summarised in \cref{fig:roadmap}.
 To show that partial left-monogamy is the correct notion to characterise terms
 in a traced comonoid setting, it is necessary to ensure that the image of these
-PROP morphisms lands in \(\plmcspdhyp\).
+PROP morphisms actually lands in \(\plmcspdhyp\).
+First we verify that this
 
 \begin{lemma}
-    The image of \(\frobtohyp{\Sigma} \circ \comonoidtofrob\) is in
+    The image of \(\frobtohypsigmac \circ \comonoidtofrobc\) is in
     \(\plmcspdhyp\).
 \end{lemma}
 \begin{proof}
-    By definition.
+    This is straightforward by inspecting the cases.
 \end{proof}
-
-\begin{corollary}
-    The image of \(
-        \termandfrobtohypsigma \circ \tracedandcomonoidtofrob{\Sigma}
-    \) is in \(\plmcspdhyp\).
-\end{corollary}
 
 To show the correspondence between \(\stmcsigma + \ccomon\) and
 \(\plmcspdhyp\), we use a similar strategy to \cref{thm:termtohyp-image}.
@@ -248,15 +265,16 @@ To show the correspondence between \(\stmcsigma + \ccomon\) and
 \begin{lemma}\label{lem:discrete-mono}
     Given a discrete hypergraph \(X \in \hypsigma\), any cospan
     \(\cospan{m}[f]{X}{n}\) with \(f\) mono is in the image of
-    \(\frobtohypsigma \circ \comonoidtofrob\).
+    \(\frobtohypsigmac \circ \comonoidtofrobc\).
 \end{lemma}
 
 \begin{theorem}\label{thm:comonoid-fully-complete}
-    \(\stmcsigma + \ccomon \cong \plmcspdhyp\).
+    A cospan of hypergraphs is in the image of
+    \(\stmcsigma + \ccomon \cong \plmcspdhyp\) if and only if it is partial
+    left-monogamous.
 \end{theorem}
 \begin{proof}
-    Since \(\termandfrobtohypsigma\) and \(\comonoidtohypsigma\) are faithful,
-    it suffices to show that a cospan \(\cospan{m}{F}{n}\) in
+    It suffices to show that a cospan \(\cospan{m}{F}{n}\) in
     \(\plmcspdhyp\) can be decomposed into a traced cospan in which every
     component under the trace is in the image of either
     \(\termandfrobtohypsigmac\) or \(\frobtohypsigmac \circ \comonoidtofrobc\).
@@ -266,6 +284,18 @@ To show the correspondence between \(\stmcsigma + \ccomon\) and
     \(\frobtohypsigma \circ \comonoidtofrob\).
     The remaining components remain in the image of \(\termtohypsigma\).
     Subsequently, the entire traced cospan must be in the image of \(
-        \termandfrobtohypsigma \circ [\tracedtosymandfrob, \comonoidtofrob].
+        \termandfrobtohypsigma \circ \tracedandcomonoidtofrobsigmac
     \).
 \end{proof}
+
+As \(\termandfrobtohypsigmac\) and \(\tracedandcomonoidtofrobsigmac\) are
+faithful, we immediately find the following.
+
+\begin{corollary}
+    There is an isomorphism of coloured PROPs
+    \(\stmcsigmac + \ccomonc \cong \plmcspdchyp\).
+\end{corollary}
+
+This means the PROP \(\plmcspdchyp\) of partial left-monogamous cospans of
+hypergraphs is suitable for modelling terms in \(\stmcsigmac + \ccomonc\):
+traced terms with a comonoid structure.
