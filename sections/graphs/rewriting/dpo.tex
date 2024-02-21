@@ -1,0 +1,37 @@
+\section{Double pushout rewriting}
+
+As a backdrop, let us first consider how equations in a monoidal theory are
+applied to terms without any sort of special graph interpretation.
+
+\begin{definition}[Term rewriting]\label{def:term-rewriting}
+    A \emph{rewriting system} \(\mcr\) for a traced PROP \(\stmcsigmac\)
+    consists of a set of \emph{rewrite rules} \(
+        \rrule{
+            \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
+        }{
+            \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
+        }
+    \).
+    Given terms \(
+        \iltikzfig{strings/category/f}[box=g,colour=white,dom=m,cod=n]
+    \) and \(
+        \iltikzfig{strings/category/f}[box=h,colour=white,dom=m,cod=n]
+    \) in \(\stmc{\generators}\) we write \(
+        \iltikzfig{strings/category/f}[box=g,colour=white]
+        \rewrite[\mcr]
+        \iltikzfig{strings/category/f}[box=h,colour=white]
+    \) if there exists rewrite rule \((
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j],
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
+    )\) in \(\mcr\) and \(
+        \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=j,dom2=m,cod1=i,cod2=n]
+    \) in \(\stmc{\Sigma}\) such that \(
+        \iltikzfig{strings/category/f}[box=g,colour=white]
+        =
+        \iltikzfig{strings/rewriting/rewrite-l}
+    \) and \(
+        \iltikzfig{strings/category/f}[box=h,colour=white]
+        =
+        \iltikzfig{strings/rewriting/rewrite-r}
+    \) by axioms of STMCs.
+\end{definition}

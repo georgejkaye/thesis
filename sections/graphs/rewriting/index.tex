@@ -1,16 +1,16 @@
 \chapter{Graph rewriting}
 
-\todo[inline]{Adapt from FSCD paper section 5}
+The results of the previous chapter have given us a combinatorial setting in
+which string diagrams equal by topological deformations or by the equations of
+commutative comonoids are translated into isomorphic cospans of hypergraphs.
+This form is beneficial because it is far more suitable for feeding to a
+computer.
 
-\begin{definition}[Monomorphism]
-    A morphism \(\morph{f}{A}{B}\) is a called a \emph{monomorphism} (or simply
-    \emph{mono} for short) if for all morphisms \(\morph{g,h}{C}{A}\), \(
-        f \circ g = f \circ h \Rightarrow g = h
-    \).
-\end{definition}
+While the equations of commutative comonoids are already absorbed into the
+notation, we want to reason about the equations of some arbitrary
+\emph{monoidal theory}.
+In our case, this is the monoidal theory of sequential digital circuits.
 
-Hypergraph categories always compact closed noted in \cite{carboni1987cartesian}.
-
-\begin{example}
-    A morphism in \(\set\) is mono if and only if it is an injection.
-\end{example}
+\input{sections/graphs/rewriting/dpo}
+\input{sections/graphs/rewriting/trace}
+\input{sections/graphs/rewriting/comonoid}
