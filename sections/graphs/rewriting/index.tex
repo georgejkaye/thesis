@@ -3,13 +3,37 @@
 The results of the previous chapter have given us a combinatorial setting in
 which string diagrams equal by topological deformations or by the equations of
 commutative comonoids are translated into isomorphic cospans of hypergraphs.
-This form is beneficial because it is far more suitable for feeding to a
-computer.
+This already gives us a straightforward way to interpret these structures
+computationally.
 
-While the equations of commutative comonoids are already absorbed into the
-notation, we want to reason about the equations of some arbitrary
-\emph{monoidal theory}.
-In our case, this is the monoidal theory of sequential digital circuits.
+However, it is very rare that we will only be working modulo the equations of
+traced comonoids; we will often also have the equations of a
+\emph{monoidal theory} to worry about.
+Since an equation \(
+    \iltikzfig{strings/category/f}[box=f,colour=white]
+    =
+    \iltikzfig{strings/category/f}[box=g,colour=white]
+\) may actually change the components of the term, there is no reason for the
+interpretations \(
+    \termandfrobtohypsigmac[
+        \tracedandcomonoidtofrobsigmac[
+            \iltikzfig{strings/category/f}[box=f,colour=white]
+        ]
+    ]
+\) and \(
+    \termandfrobtohypsigmac[
+        \tracedandcomonoidtofrobsigmac[
+            \iltikzfig{strings/category/f}[box=g,colour=white]
+        ]
+    ]
+\) to be isomorphic.
+Instead, to reason about cospans of hypergraphs modulo the equations of some
+monoidal theory we must \emph{rewrite} the components of the graph.
+
+\begin{remark}
+    The content of this section is a revised and expanded version
+    of~\cite{ghica2023rewriting}[Sec. 5].
+\end{remark}
 
 \input{sections/graphs/rewriting/dpo}
 \input{sections/graphs/rewriting/trace}
