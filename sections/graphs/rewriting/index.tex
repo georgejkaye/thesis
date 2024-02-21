@@ -30,9 +30,39 @@ interpretations \(
 Instead, to reason about cospans of hypergraphs modulo the equations of some
 monoidal theory we must \emph{rewrite} the components of the graph.
 
+Performing rewriting in this way is common in computer science and accordingly
+there is a wealth of knowledge on both
+term~\cite{knuth1970simple,gadduchi1996algebraic} and graph~\cite{}
+
+Rewriting for string diagrams has its roots in Burroni's work on
+polygraphs~\cite{burroni}
+
+This approach even briefly entered our world of digital circuits in Lafont's
+work on Boolean circuits~\cite{lafont2003algebraic}, which used a rudimentary
+form of graphical syntactic rewriting.
+However, in this approach even the axioms of SMCs needed to be applied
+explicitly, greatly hampering the tractability of the system.
+
+It is only more recently that \emph{graph rewriting} for string diagrams has
+been studied, first with the aforementioned \emph{string graphs} of Dixon and
+Kissinger~\cite{dixon2010open,kissinger2012pictures,dixon2013opengraphs}.
+This only considered rewriting in the presence of a trace rather than
+considering any additional structure, but nevertheless was successfully
+implemented in a proof assistant called
+Quantomatic~\cite{kissinger2015quantomatic}.
+Instead, our work continues to closely follow that of Bonchi et
+al~\cite{bonchi2022string,bonchi2022stringa}, which has several advantages
+over string graphs.
+Unlike the category of string graphs, the category of hypergraphs is
+\emph{adhesive}~\cite{lack2004adhesive} which affords it some nice rewriting
+properties.
+Moreover, rewriting modulo Frobenius structure (or even just monoid or comonoid
+structure) can reveal rewrites `hidden' behind the absorbed equations that might
+not be seen with the naked eye.
+
 \begin{remark}
     The content of this section is a revised and expanded version
-    of~\cite{ghica2023rewriting}[Sec. 5].
+    of~\cite[Sec. 5]{ghica2023rewriting}.
 \end{remark}
 
 \input{sections/graphs/rewriting/dpo}
