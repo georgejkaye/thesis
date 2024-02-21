@@ -3,28 +3,29 @@
 As a backdrop, let us first consider how equations in a monoidal theory are
 applied to terms without any sort of special graph interpretation.
 
-\begin{definition}[Term rewriting]\label{def:term-rewriting}
-    A \emph{rewriting system} \(\mcr\) for a traced PROP \(\stmcsigmac\)
+\begin{definition}[Rewriting system]\label{def:term-rewriting}
+    A \emph{rewriting system} \(\mcr\) for a traced PROP \(\mathbb{A}\)
     consists of a set of \emph{rewrite rules} \(
         \rrule{
-            \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
+            \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
         }{
-            \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
+            \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
         }
     \).
     Given terms \(
-        \iltikzfig{strings/category/f}[box=g,colour=white,dom=m,cod=n]
+        \iltikzfig{strings/category/f}[box=g,colour=white,dom=\listvar{m},cod=\listvar{n}]
     \) and \(
-        \iltikzfig{strings/category/f}[box=h,colour=white,dom=m,cod=n]
+        \iltikzfig{strings/category/f}[box=h,colour=white,dom=\listvar{m},cod=\listvar{n}]
     \) in \(\stmc{\generators}\) we write \(
         \iltikzfig{strings/category/f}[box=g,colour=white]
         \rewrite[\mcr]
         \iltikzfig{strings/category/f}[box=h,colour=white]
-    \) if there exists rewrite rule \((
-        \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j],
-        \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
-    )\) in \(\mcr\) and \(
-        \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=j,dom2=m,cod1=i,cod2=n]
+    \) if there exists rewrite rule \(\rrule{
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    }{
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    }\) in \(\mcr\) and \(
+        \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=\listvar{j},dom2=\listvar{m},cod1=\listvar{i},cod2=\listvar{n}]
     \) in \(\stmc{\Sigma}\) such that \(
         \iltikzfig{strings/category/f}[box=g,colour=white]
         =
@@ -35,3 +36,54 @@ applied to terms without any sort of special graph interpretation.
         \iltikzfig{strings/rewriting/rewrite-r}
     \) by axioms of STMCs.
 \end{definition}
+
+The difference between a rewriting system and an equational theory is that in
+the former the rules are \emph{directed} whereas equations are not.
+Of course, it is straightforward to derive a rewriting system from an equational
+theory by adding the reductions for `both ways' of each equation.
+
+\begin{definition}[\cite{bonchi2022stringa}, Sec. 2.4]
+    Given a coloured monoidal theory \((C,\generators,\equations)\), let
+    \(\mcr_{\equations}\) be the rewriting theory defined as \(\{
+        \rrule{
+            \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        }{
+            \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        }
+        \,|\,
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        =
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        \in
+        \mce
+    \} \cup \{
+        \rrule{
+            \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        }{
+            \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        }
+        \,|\,
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        =
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        \in
+        \mce
+    \}\).
+\end{definition}
+
+
+\begin{proposition}[\cite{bonchi2022stringa}, Prop. 2.18]
+    Given two terms \(
+        \iltikzfig{strings/category/f}[box=g,colour=white],
+        \iltikzfig{strings/category/f}[box=h,colour=white]
+        \in \stmc{C,\generators,\equations}
+    \), \(
+        \iltikzfig{strings/category/f}[box=g,colour=white]
+        =
+        \iltikzfig{strings/category/f}[box=h,colour=white]
+    \) if and only if \(
+        \iltikzfig{strings/category/f}[box=g,colour=white]
+        \rewrites[\mcr_{\equations}]
+        \iltikzfig{strings/category/f}[box=h,colour=white]
+    \).
+\end{proposition}
