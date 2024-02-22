@@ -1,0 +1,231 @@
+\section{Pushout complements}
+
+With any luck, the reader should now have a good grasp on how DPO rewriting
+works; find a matching, compute the pushout complement, and perform one more
+pushout to complete the rewrite.
+While the final step is a deterministic procedure, finding the pushout
+complement is a little more hazy.
+Since the pushout complement uniquely defines the final rewrite, one might be
+cautious about how we choose it.
+By the no-dangling and no-identification conditions we know the morphisms that
+guarantee the existence of \emph{at least one} pushout complement, but when will
+there be \emph{exactly one}, and hence exactly one rewrite?
+And what does it mean if there are more than this?
+
+Fortunately, the category of hypergraphs \(\hypsigmac\) belongs to a class of
+aaaaa categories in which the answers to these questions are known.
+These categories, known as \emph{adhesive} categories, can be thought of as
+categories in which graph rewriting is `well-defined'.
+
+\begin{definition}[van Kampen square~(\cite{lack2005adhesive}, Def. 2.1)]
+    Let there be a commutative cube as drawn below.
+    \begin{center}
+        \begin{tikzcd}
+            G \arrow{rrr} \arrow{ddd} &
+            &
+            &
+            H \arrow{ddd} \\
+            &
+            E \arrow{ul} \arrow{r} \arrow{d} &
+            F \arrow{ur} \arrow{d} &
+            \\
+            &
+            A \arrow{dl} \arrow{r} &
+            B \arrow{dr} &
+            \\
+            C \arrow{rrr} &
+            &
+            &
+            D
+        \end{tikzcd}
+    \end{center}
+    The bottom face of the cube (\(ABCD\)) is called a
+    \emph{van Kampen (VK) square} if it is a pushout and, when the back and
+    left faces (\(EFAB\) and \(GECA\)) are pullbacks, the front and right faces
+    (\(GHCD\) and \(FHBD\)) are pullbacks if and only if the top face (\(GHEF\))
+    is a pushout.
+\end{definition}
+
+\begin{definition}
+    Given a span \(\spann{A}[f]{B}[g]{C}\) with a pushout \(\cospan{B}{D}{C}\),
+    the pushout is called a \emph{pushout along a monomorphism} if \(f\) or
+    \(g\) is a monomorphism.
+\end{definition}
+
+\begin{definition}[Adhesive category~(\cite{lack2005adhesive}, Def. 3.1)]
+    A category \(\mcc\) is \emph{adhesive} if
+    \begin{itemize}
+        \item \(\mcc\) has pushouts along monomorphisms;
+        \item \(\mcc\) has pullbacks; and
+        \item pushouts along monomorphisms are VK squares.
+    \end{itemize}
+\end{definition}
+
+The definition of van Kampen square and subsequently adhesive categories may
+look a bit confusing to the uninitiated.
+At a high level, an adhesive category is one in which one in which objects can
+be `split apart' and `glued together' by using pushouts and pullbacks.
+
+\begin{example}
+    A natural example of an adhesive category is \(\set\), which has pushouts
+    and pullbacks.
+    To get some idea how the van Kampen condition also holds, consider the
+    following commutative cube in \(\set\), adapted from
+    \cite[Sec. 4.3]{kissinger2012pictures}.
+    \begin{center}
+        \begin{tikzcd}
+            A^\prime
+            \arrow{rrr}
+            \arrow{ddd}{f_A}
+            &
+            &
+            &
+            X
+            \arrow{ddd}{f}
+            \\
+            &
+            A^\prime \cap B^\prime
+            \arrow{r}
+            \arrow{d}
+            \arrow{ul}
+            &
+            B^\prime
+            \arrow{ur}
+            \arrow{d}{f_B}
+            &
+            \\
+            &
+            A \cap B
+            \arrow{r}
+            \arrow{dl}
+            &
+            B
+            \arrow{dr}
+            &
+            \\
+            A
+            \arrow{rrr}
+            &
+            &
+            &
+            A \cup B
+        \end{tikzcd}
+    \end{center}
+    The bottom face is clearly a pushout, and since \(A \cup B \to A\) and
+    \(A \cup B \to B\) are monomorphisms, this is a pushout along a
+    monomorphism.
+    Furthermore, the left and back faces are pullbacks because \(f_A\) and
+    \(f_B\) agree on the intersection of \(A^\prime\) and \(B^\prime\).
+
+    Now we must show that the front and right faces are pullbacks if and only if
+    the top face is a pushout.
+    For the front and right faces to be pullbacks, \(f\) must restrict to
+    \(f_A\) and \(f_B\) along \(A\) and \(B\).
+    This can only be the case if and only if \(X = A^\prime \cap B^\prime\), in
+    which case the top square must be a pushout.
+\end{example}
+
+Regardless of intuition, proving the necessary van Kampen condition might be
+tricky.
+Fortunately, adhesivity is preserved by several categorical constructions, so
+by using \(\set\) as a base, it is straightforward to show that more complicated
+categories are also adhesive.
+
+\begin{proposition}[\cite{lack2005adhesive}, Prop. 3.5]
+    For an adhesive category \(\mcc\) and object \(C\) of \(\mcc\),
+    \(\mcc \slice C\) is adhesive.
+    For another category \(\mcx\), \([\mcx, \mcc]\) is also adhesive.
+\end{proposition}
+
+\begin{corollary}
+    \(\hypsigmac\) is adhesive.
+\end{corollary}
+\begin{proof}
+    \(\hypsigmac\) is defined as the slice of a functor category over \(\set\),
+    so it is also adhesive.
+\end{proof}
+
+The notion of splitting and gluing is very useful when it comes to graph
+rewriting, as it corresponds to how we extract and insert various subgraphs
+during the rewriting process.
+In particular, for certain DPO rules in an adhesive category a pushout
+complement is \emph{uniquely} defined for a given matching.
+
+\begin{definition}[Left-linear rules]
+    A DPO rule \(\spann{L}[f]{\listvar{ij}}{R}\) is \emph{left-linear} if \(f\)
+    is mono.
+\end{definition}
+
+\begin{theorem}[\cite{lack2005adhesive}, Lem. 4.5]
+    In an adhesive category, if a pushout complement exists for morphisms
+    \(I \xrightarrow{m} L \to G\) and \(m\) is a monomorphism, then it is unique
+    up to isomorphism.
+\end{theorem}
+\begin{proof}
+    The proof relies on several non-trivial lemmas that hold in adhesive
+    categories in addition to some other results about pushouts.
+    We refer the interested reader to
+    \cite[Lems. 4.3.6 - 4.3.9]{kissinger2012pictures} for the grisly details.
+\end{proof}
+
+This means that, for a large class of rewrite rules, if we find a matching we
+can be sure that rewriting is defined uniquely.
+
+\begin{example}
+    \todo[inline]{Do rewriting example}
+\end{example}
+
+However, there may be useful rewrite rules which are \emph{not} left-linear.
+
+\begin{example}
+    \todo[inline]{Do classic non left-linear example}
+\end{example}
+
+One might think this is undesirable, as surely for a rule and matching we would
+want a unique rewrite?
+However, we must not forget that hypergraphs model terms
+\emph{modulo Frobenius structure}.
+The multiple rewrites are not coming from nowhere, but arise because there are
+`hidden' rewriting opportunities thanks to the Frobenius algebras!
+
+\begin{example}
+    \todo[inline]{Show how the above contexts correspond to term rewrite}
+\end{example}
+
+Even if every rewrite is `correct' in some way,
+Fortunately, for hypergraphs this problem has already been
+tackled~\cite{heumuller2011construction}; the pushout complements can be
+enumerated as quotients of an `exploded' context.
+
+\begin{definition}[`Exploded' context~\cite{heumuller2011construction}, Const. 1]
+    Let \(\listvar{ij} \to L \xrightarrow{f}\) be a pair of morphisms in
+    \(\hypsigmac\).
+    Then the `exploded context' for these morphisms is a graph
+    \(\listvar{ij} + \tilde{G}\) where \(\tilde{G}\) is constructed as follows:
+    \begin{enumerate}
+        \item for each vertex \(v \in G\) not in the image of \(f\), add one
+              vertex to \(\tilde{G}\);
+        \item for each hyperedge \(e \in G\) not in the image of \(f\), add one
+              hyperedge to \(\tilde{G}\);
+        \item for each hyperedge \(e \in \tilde{G}\), let the \(i\)-th source
+              \(\tilde{s_i}(e)\) be defined as \(s_i(h)\) if
+              \(s_i(h) \in \tilde{G}\) or a new, fresh vertex otherwise;
+        \item as above for the targets.
+    \end{enumerate}
+\end{definition}
+
+Pushout complements can then be computed as quotients of this `exploded'
+context.
+
+\begin{proposition}[\cite{heumuller2011construction} (Props. 3-4), \cite{bonchi2022string}]
+    For morphisms \(\listvar{ij} \to L \to G\) in \(\hypsigmac\), let
+    \(\listvar{ij} + \tilde{G}\) be its `exploded' context, and define a map
+    \(\morph{q}{\listvar{ij} + \tilde{G}}{G}\) sending elements in \(\tilde{G}\)
+    that came from \(G\) to themselves, and sending vertices from
+    \(\listvar{ij}\) to their image under \(\listvar{ij} \to L \to G\).
+
+    Then a pushout complement \(\listvar{ij} \to C \to G\) is valid if and only
+    \(C\) is obtained as a quotient on the exploded context
+    that only identifies vertices in the image of \(q^{-1}(v)\) for each vertex
+    \(v \in G\).
+\end{proposition}
