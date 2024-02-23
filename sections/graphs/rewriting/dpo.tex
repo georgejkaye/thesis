@@ -103,7 +103,7 @@ structures.
 The core element of a DPO rewriting system is a \emph{DPO rule}, which specifies
 a possible rewrite as a span of hypergraphs.
 
-\begin{definition}[DPO rule]
+\begin{definition}[DPO rule]\label{def:dpo-rule}
     Given interfaced hypergraphs \(
     \cospan{\listvar{i}}[a_1]{L}[a_2]{\listvar{j}}
     \) and \(
@@ -130,7 +130,7 @@ there is an overlap of rules such that \(G \grewrite H\) and
 \(G \grewrite H^\prime\), then there exists another graph \(K\) such that
 \(H \grewrites K\) and \(H^\prime \grewrites K\).
 
-\begin{definition}[DPOI rewriting]
+\begin{definition}[DPOI rewriting]\label{def:dpo-rewriting}
     Let \(\mcr\) be a set of DPO rules.
     Then, for morphisms \(G \leftarrow \listvar{mn}\) and
     \(H \leftarrow \listvar{mn}\) in
@@ -162,7 +162,7 @@ This means that to perform graph rewriting on graphs in \(\hypsigmac\),
 interfaces of terms in \(\smcsigmac + \frobc\) must be `folded' into one using
 the compact closed structure.
 
-\begin{definition}[\cite{bonchi2022stringa}]
+\begin{definition}[\cite{bonchi2022stringa}]\label{def:fold-interfaces}
     Let \(\morph{\foldinterfaces}{\smcsigmac + \frobc}{\smcsigmac + \frobc}\)
     be defined as having action \(
     \iltikzfig{strings/category/f}[box=f,colour=white,dom=\listvar{m},cod=\listvar{n}]
