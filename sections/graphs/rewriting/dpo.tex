@@ -235,7 +235,7 @@ formally defined with what is known as a \emph{pushout complement}, a sort of
 `reverse pushout'.
 
 \begin{definition}[Pushout complement]\label{def:pushout-complement}
-    Let \(\listvar{ij} \to L \to G \rightarrow \listvar{mn}\) be morphisms in
+    Let \(\listvar{ij} \to L \to G \leftarrow \listvar{mn}\) be morphisms in
     \(\hypsigmac\); their \emph{pushout complement} is an object \(C\)
     with morphisms \(\listvar{ij} \to C \to G\) such that \(\cospan{L}{G}{C}\) is a
     pushout and the diagram below commutes.
@@ -262,35 +262,11 @@ formally defined with what is known as a \emph{pushout complement}, a sort of
 \end{definition}
 
 Is a pushout complement always guaranteed to exist for any morphism \(L \to G\)?
-The answer is no, but fortunately the existence conditions are fairly standard.
+The answer is no; this will be discussed at length in the next section.
 
-\begin{definition}[No-dangling-hyperedges condition~\cite{bonchi2022string}, Def.\ 3.16]
-    Given morphisms \(\listvar{ij} \xrightarrow{a} L \xrightarrow{f} G\) in
-    \(\hypsigma\), they satisfy the \emph{no-dangling} condition if, for every
-    hyperedge not in
-    the image of \(f\), each of its source and target vertices is either not in
-    the image of \(f\) or are in the image of \(f \circ a\).
-\end{definition}
-
-\begin{definition}[No-identification condition~\cite{bonchi2022string}, Def.\ 3.16]
-    Given morphisms \(\listvar{ij} \xrightarrow{a} L \xrightarrow{f} G\) in
-    \(\hypsigma\), they satisfy the \emph{no-identification} condition if any
-    two distinct elements merged by \(f\) are also in the image of \(f \circ a\).
-\end{definition}
-
-\begin{proposition}[\cite{bonchi2022string}, Prop. 3.17]
-    \label{prop:pushout-complement}
-    The morphisms \(\listvar{ij} \to L \to G\) have at least one pushout complement if
-    and only if they satisfy the no-dangling and no-identification conditions.
-\end{proposition}
-
-\begin{definition}
-    A morphism \(\listvar{ij} \to L \to G\) is called a \emph{matching} if it
-    has at least one pushout complement.
-\end{definition}
-
-A pushout complement specifies the rewriting context, leaving us a hole in which
-the other side of the rewrite rule can be glued in.
+If a pushout complement does exist, it specifies the rewriting context.
+This leaves us a hole in which the other side of the rewrite rule can be glued
+in.
 
 \begin{center}
     \begin{tikzcd}[row sep = small, column sep = small]

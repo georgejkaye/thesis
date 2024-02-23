@@ -7,15 +7,58 @@ While the final step is a deterministic procedure, finding the pushout
 complement is a little more hazy.
 Since the pushout complement uniquely defines the final rewrite, one might be
 cautious about how we choose it.
-By the no-dangling and no-identification conditions we know the morphisms that
-guarantee the existence of \emph{at least one} pushout complement, but when will
-there be \emph{exactly one}, and hence exactly one rewrite?
-And what does it mean if there are more than this?
 
-Fortunately, the category of hypergraphs \(\hypsigmac\) belongs to a class of
-aaaaa categories in which the answers to these questions are known.
-These categories, known as \emph{adhesive} categories, can be thought of as
-categories in which graph rewriting is `well-defined'.
+First of all, a pushout complement may not even exist for arbitrary morphisms
+\(\listvar{ij} \to L \to G\).
+
+\begin{definition}
+    A morphism \(\listvar{ij} \to L \to G\) is called a \emph{matching} if it
+    has at least one pushout complement.
+\end{definition}
+
+If there is no pushout complement, there is no possible rewrite, so it is fairly
+essential to know when one exists!
+Fortunately, these conditions are well-known.
+
+\begin{definition}[No-dangling-hyperedges condition~\cite{corradini1997algebraic}, Prop. 3.3.4]
+    Given morphisms \(\listvar{ij} \xrightarrow{a} L \xrightarrow{f} G\) in
+    \(\hypsigma\), they satisfy the \emph{no-dangling} condition if, for every
+    hyperedge not in
+    the image of \(f\), each of its source and target vertices is either not in
+    the image of \(f\) or are in the image of \(f \circ a\).
+\end{definition}
+
+\begin{example}
+    \todo[inline]{No-dangling example}
+\end{example}
+
+\begin{definition}[No-identification condition~\cite{corradini1997algebraic}, Prop. 3.3.4]
+    Given morphisms \(\listvar{ij} \xrightarrow{a} L \xrightarrow{f} G\) in
+    \(\hypsigma\), they satisfy the \emph{no-identification} condition if any
+    two distinct elements merged by \(f\) are also in the image of \(f \circ a\).
+\end{definition}
+
+\begin{example}
+    \todo[inline]{No-identification example}
+\end{example}
+
+With these two conditions, we can establish when pushout complements exist at
+all and subsequently when there is an opportunity for a rewrite.
+
+\begin{proposition}[\cite{corradini1997algebraic}, Prop. 3.3.4]
+    \label{prop:pushout-complement}
+    The morphisms \(\listvar{ij} \to L \to G\) have at least one pushout
+    complement if and only if they satisfy the no-dangling and no-identification
+    conditions.
+\end{proposition}
+
+It is all very well knowing if there is at least one pushout complement, but
+what about when there is \emph{exactly one} pushout complement?
+This means t
+
+To answer this question, we must examine a class of categories to which
+\(\hypsigmac\) belongs to, known as \emph{adhesive} categories.
+One can think of these as categories in which graph rewriting `plays nicely'.
 
 \begin{definition}[van Kampen square~(\cite{lack2005adhesive}, Def. 2.1)]
     Let there be a commutative cube as drawn below.
@@ -62,7 +105,8 @@ categories in which graph rewriting is `well-defined'.
 \end{definition}
 
 The definition of van Kampen square and subsequently adhesive categories may
-look a bit confusing to the uninitiated.
+look a bit confusing to the uninitiated; indeed, there are arrows flying about
+all over the place!
 At a high level, an adhesive category is one in which one in which objects can
 be `split apart' and `glued together' by using pushouts and pullbacks.
 
@@ -223,8 +267,7 @@ context.
     \(\morph{q}{\listvar{ij} + \tilde{G}}{G}\) sending elements in \(\tilde{G}\)
     that came from \(G\) to themselves, and sending vertices from
     \(\listvar{ij}\) to their image under \(\listvar{ij} \to L \to G\).
-
-    Then a pushout complement \(\listvar{ij} \to C \to G\) is valid if and only
+    A pushout complement \(\listvar{ij} \to C \to G\) is valid if and only
     \(C\) is obtained as a quotient on the exploded context
     that only identifies vertices in the image of \(q^{-1}(v)\) for each vertex
     \(v \in G\).
