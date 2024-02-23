@@ -6,34 +6,34 @@ applied to terms without any sort of special graph interpretation.
 \begin{definition}[Rewriting system]\label{def:term-rewriting}
     A \emph{rewriting system} \(\mcr\) for a traced PROP \(\mathbb{A}\)
     consists of a set of \emph{rewrite rules} \(
-        \rrule{
-            \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
-        }{
-            \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
-        }
+    \rrule{
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    }{
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    }
     \).
     Given terms \(
-        \iltikzfig{strings/category/f}[box=g,colour=white,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=g,colour=white,dom=\listvar{m},cod=\listvar{n}]
     \) and \(
-        \iltikzfig{strings/category/f}[box=h,colour=white,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=h,colour=white,dom=\listvar{m},cod=\listvar{n}]
     \) in \(\stmc{\generators}\) we write \(
-        \iltikzfig{strings/category/f}[box=g,colour=white]
-        \rewrite[\mcr]
-        \iltikzfig{strings/category/f}[box=h,colour=white]
+    \iltikzfig{strings/category/f}[box=g,colour=white]
+    \rewrite[\mcr]
+    \iltikzfig{strings/category/f}[box=h,colour=white]
     \) if there exists rewrite rule \(\rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
     }\) in \(\mcr\) and \(
-        \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=\listvar{j},dom2=\listvar{m},cod1=\listvar{i},cod2=\listvar{n}]
+    \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=\listvar{j},dom2=\listvar{m},cod1=\listvar{i},cod2=\listvar{n}]
     \) in \(\stmc{\Sigma}\) such that \(
-        \iltikzfig{strings/category/f}[box=g,colour=white]
-        =
-        \iltikzfig{strings/rewriting/rewrite-l}
+    \iltikzfig{strings/category/f}[box=g,colour=white]
+    =
+    \iltikzfig{strings/rewriting/rewrite-l}
     \) and \(
-        \iltikzfig{strings/category/f}[box=h,colour=white]
-        =
-        \iltikzfig{strings/rewriting/rewrite-r}
+    \iltikzfig{strings/category/f}[box=h,colour=white]
+    =
+    \iltikzfig{strings/rewriting/rewrite-r}
     \) by axioms of STMCs.
 \end{definition}
 
@@ -45,45 +45,45 @@ theory by adding the reductions for `both ways' of each equation.
 \begin{definition}[\cite{bonchi2022stringa}, Sec. 2.4]
     Given a coloured monoidal theory \((C,\generators,\equations)\), let
     \(\mcr_{\equations}\) be the rewriting theory defined as \(\{
-        \rrule{
-            \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
-        }{
-            \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
-        }
-        \,|\,
+    \rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
-        =
+    }{
         \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
-        \in
-        \mce
+    }
+    \,|\,
+    \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    =
+    \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    \in
+    \mce
     \} \cup \{
-        \rrule{
-            \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
-        }{
-            \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
-        }
-        \,|\,
-        \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
-        =
+    \rrule{
         \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
-        \in
-        \mce
+    }{
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    }
+    \,|\,
+    \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    =
+    \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    \in
+    \mce
     \}\).
 \end{definition}
 
 \begin{proposition}[\cite{bonchi2022stringa}, Prop. 2.18]
     Given two terms \(
-        \iltikzfig{strings/category/f}[box=g,colour=white],
-        \iltikzfig{strings/category/f}[box=h,colour=white]
-        \in \stmc{C,\generators,\equations}
+    \iltikzfig{strings/category/f}[box=g,colour=white],
+    \iltikzfig{strings/category/f}[box=h,colour=white]
+    \in \stmc{C,\generators,\equations}
     \), \(
-        \iltikzfig{strings/category/f}[box=g,colour=white]
-        =
-        \iltikzfig{strings/category/f}[box=h,colour=white]
+    \iltikzfig{strings/category/f}[box=g,colour=white]
+    =
+    \iltikzfig{strings/category/f}[box=h,colour=white]
     \) if and only if \(
-        \iltikzfig{strings/category/f}[box=g,colour=white]
-        \rewrites[\mcr_{\equations}]
-        \iltikzfig{strings/category/f}[box=h,colour=white]
+    \iltikzfig{strings/category/f}[box=g,colour=white]
+    \rewrites[\mcr_{\equations}]
+    \iltikzfig{strings/category/f}[box=h,colour=white]
     \).
 \end{proposition}
 
@@ -105,12 +105,12 @@ a possible rewrite as a span of hypergraphs.
 
 \begin{definition}[DPO rule]
     Given interfaced hypergraphs \(
-        \cospan{\listvar{i}}[a_1]{L}[a_2]{\listvar{j}}
+    \cospan{\listvar{i}}[a_1]{L}[a_2]{\listvar{j}}
     \) and \(
-        \cospan{\listvar{i}}[b_1]{R}[b_2]{\listvar{j}}
+    \cospan{\listvar{i}}[b_1]{R}[b_2]{\listvar{j}}
     \) in \(\cspdchyp\), their \emph{DPO rule} is a span in \(\hypsigmac\)
     defined as \(
-        \spann{L}[[a_1,a_2]]{\listvar{ij}}[[b_1,b_2]]{R}
+    \spann{L}[[a_1,a_2]]{\listvar{ij}}[[b_1,b_2]]{R}
     \).
 \end{definition}
 
@@ -136,9 +136,9 @@ there is an overlap of rules such that \(G \grewrite H\) and
     \(H \leftarrow \listvar{mn}\) in
     \(\hypsigmac\), there is a rewrite \(G \trgrewrite[\mcr] H\) if there
     exist a rule \(
-        \spann{L}{\listvar{ij}}{R} \in \mcr
+    \spann{L}{\listvar{ij}}{R} \in \mcr
     \) and cospan \(
-        \cospan{\listvar{ij}}{C}{\listvar{mn}} \in \hypsigma
+    \cospan{\listvar{ij}}{C}{\listvar{mn}} \in \hypsigma
     \) such that the following diagram commutes.
     \begin{center}
         \begin{tikzcd}[row sep = small, column sep = small]
@@ -165,9 +165,9 @@ the compact closed structure.
 \begin{definition}[\cite{bonchi2022stringa}]
     Let \(\morph{\foldinterfaces}{\smcsigmac + \frobc}{\smcsigmac + \frobc}\)
     be defined as having action \(
-        \iltikzfig{strings/category/f}[box=f,colour=white,dom=\listvar{m},cod=\listvar{n}]
-        \mapsto
-        \iltikzfig{strings/rewriting/folding}[box=f,colour=white,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=f,colour=white,dom=\listvar{m},cod=\listvar{n}]
+    \mapsto
+    \iltikzfig{strings/rewriting/folding}[box=f,colour=white,dom=\listvar{m},cod=\listvar{n}]
     \).
 \end{definition}
 
@@ -179,17 +179,17 @@ rewriting is completed.
 
 \begin{proposition}[\cite{bonchi2022string}, Prop. 4.8]
     If \(
-        \termandfrobtohypsigma[\iltikzfig{strings/category/f}[box=f,colour=white,dom=m,cod=n]]
-        =
-        \cospan{\listvar{m}}[i]{F}[o]{\listvar{n}}
+    \termandfrobtohypsigma[\iltikzfig{strings/category/f}[box=f,colour=white,dom=m,cod=n]]
+    =
+    \cospan{\listvar{m}}[i]{F}[o]{\listvar{n}}
     \) then \(
-        \termandfrobtohypsigma[
-            \foldinterfaces[
-                \iltikzfig{strings/category/f}[box=f,colour=white]
-            ]
+    \termandfrobtohypsigma[
+        \foldinterfaces[
+            \iltikzfig{strings/category/f}[box=f,colour=white]
         ]
+    ]
     \) is isomorphic to \(
-        \cospan{0}[]{F}[i+o]{\listvar{mn}}
+    \cospan{0}[]{F}[i+o]{\listvar{mn}}
     \).
 \end{proposition}
 \begin{proof}
@@ -313,8 +313,8 @@ the complete DPO diagram.
         & \listvar{ij} \arrow{l}\arrow{r}\arrow{d}
         & R \arrow{d} \\
         G \arrow["\urcorner"{anchor=center, pos=0.125}, draw=none]{ur}
-        & C \arrow{l}
-        & H \\
+        & C \arrow{l}\arrow{r}
+        & H \arrow["\ulcorner"{anchor=center, pos=0.125}, draw=none]{ul} \\
         & \listvar{mn} \arrow{ul}\arrow{u}\arrow{ur}
     \end{tikzcd}
 \end{center}

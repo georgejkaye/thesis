@@ -128,7 +128,7 @@ be `split apart' and `glued together' by using pushouts and pullbacks.
 Regardless of intuition, proving the necessary van Kampen condition might be
 tricky.
 Fortunately, adhesivity is preserved by several categorical constructions, so
-by using \(\set\) as a base, it is straightforward to show that more complicated
+by using \(\set\) as a base it is straightforward to show that more complicated
 categories are also adhesive.
 
 \begin{proposition}[\cite{lack2005adhesive}, Prop. 3.5]
@@ -229,3 +229,78 @@ context.
     that only identifies vertices in the image of \(q^{-1}(v)\) for each vertex
     \(v \in G\).
 \end{proposition}
+
+So this means that given a DPO rule and an incidence of this rule inside a
+larger graph such that the no-dangling and no-identification conditions are
+satisfied, we can enumerate all the possible pushout complements.
+It can be shown that each of these pushout complements correspond to a valid
+rewrite in a Frobenius setting!
+
+\begin{notation}
+    Given a rewrite rule \(
+    \rrule{
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    }{
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    }
+    \), its interpretaton as a DPO rule is written as \(
+    \termandfrobtohypsigmac[
+        \rrule{
+            \iltikzfig{strings/category/f}[box=l,colour=white]
+        }{
+            \iltikzfig{strings/category/f}[box=r,colour=white]
+        }
+    ]
+    \coloneqq
+    \spann{
+        \termandfrobtohypsigmac[
+            \foldinterfaces[
+                \iltikzfig{strings/category/f}[box=l,colour=white]
+            ]
+        ]
+    }{\listvar{ij}}{
+        \termandfrobtohypsigmac[
+            \foldinterfaces[
+                \iltikzfig{strings/category/f}[box=r,colour=white]
+            ]
+        ]
+    }
+    \)
+\end{notation}
+
+\begin{theorem}[\cite{bonchi2022string}, Prop. 4.10]
+    For a rewrite rule \(\rrule{
+        \iltikzfig{strings/category/f}[box=l,colour=white]
+    }{
+        \iltikzfig{strings/category/f}[box=r,colour=white]
+    }\) in \(
+    \smcsigmac + \frobc
+    \),l \(
+    \iltikzfig{strings/category/f}[box=g,colour=white]
+    \rewrite[\rrule{
+            \iltikzfig{strings/category/f}[box=l,colour=white]
+        }{
+            \iltikzfig{strings/category/f}[box=r,colour=white]
+        }]
+    \iltikzfig{strings/category/f}[box=h,colour=white]
+    \) if and only if \(
+    \termandfrobtohypsigmac[
+        \foldinterfaces[
+            \iltikzfig{strings/category/f}[box=g,colour=white]
+        ]
+    ]
+    \grewrite[
+        \termandfrobtohypsigmac[
+            \rrule{
+                \iltikzfig{strings/category/f}[box=l,colour=white]
+            }{
+                \iltikzfig{strings/category/f}[box=r,colour=white]
+            }
+        ]
+    ]
+    \termandfrobtohypsigmac[
+        \foldinterfaces[
+            \iltikzfig{strings/category/f}[box=g,colour=white]
+        ]
+    ]\).
+\end{theorem}

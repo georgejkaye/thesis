@@ -10,29 +10,25 @@ However, it is very rare that we will only be working modulo the equations of
 traced comonoids; we will often also have the equations of a
 \emph{monoidal theory} to worry about.
 Since an equation \(
-    \iltikzfig{strings/category/f}[box=f,colour=white]
-    =
-    \iltikzfig{strings/category/f}[box=g,colour=white]
+\iltikzfig{strings/category/f}[box=f,colour=white]
+=
+\iltikzfig{strings/category/f}[box=g,colour=white]
 \) may actually change the components of the term, there is no reason for the
 interpretations \(
-    \termandfrobtohypsigmac[
-        \tracedandcomonoidtofrobsigmac[
-            \iltikzfig{strings/category/f}[box=f,colour=white]
-        ]
+\termandfrobtohypsigmac[
+    \tracedandcomonoidtofrobsigmac[
+        \iltikzfig{strings/category/f}[box=f,colour=white]
     ]
+]
 \) and \(
-    \termandfrobtohypsigmac[
-        \tracedandcomonoidtofrobsigmac[
-            \iltikzfig{strings/category/f}[box=g,colour=white]
-        ]
+\termandfrobtohypsigmac[
+    \tracedandcomonoidtofrobsigmac[
+        \iltikzfig{strings/category/f}[box=g,colour=white]
     ]
+]
 \) to be isomorphic.
 Instead, to reason about cospans of hypergraphs modulo the equations of some
-monoidal theory we must \emph{rewrite} the components of the graph.
-
-Performing rewriting in this way is common in computer science and accordingly
-there is a wealth of knowledge on both
-term~\cite{knuth1970simple,gadduchi1996algebraic} and graph~\cite{}
+monoidal theory we must \emph{rewrite} the components of the term.
 
 Traditional term rewriting is inherently one-dimensional, which can be somewhat
 restrictive as it enforces that each generator must have a coarity of \(1\).
