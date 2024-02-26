@@ -246,100 +246,104 @@ The final prerequisite is a decomposition lemma akin to that used
 in~\cite{bonchi2022string}.
 
 \begin{lemma}[Traced decomposition]\label{lem:traced-decomposition}
-    Given partial monogamous cospans \(
-    \cospan{m}[d_1]{G}[d_2]{n}
+    For partial monogamous cospans \(
+    \cospan{\listvar{m}}[d_1]{G}[d_2]{\listvar{n}}
     \) and \(
-    \cospan{i}[a_1]{L}[a_2]{j}
+    \cospan{\listvar{i}}[a_1]{L}[a_2]{\listvar{j}}
     \), and a morphism \(
     L \xrightarrow{f} G
     \) such that \(\listvar{ij} \rightarrow L \rightarrow G\) satisfies the no-dangling
     and no-identification conditions, then there exists a partial monogamous
     cospan \(
-    \cospan{j+m}[[c_2,d_1]]{C}[[c_1,d_2]]{i+n}
+    \cospan{\listvar{jm}}[[c_2,d_1]]{C}[[c_1,d_2]]{\listvar{in}}
     \) such that \(
     \cospan{m}{G}{n}
     \) can be factored as
     \begin{gather*}
-        \trace{i}{
+        \trace{\listvar{i}}{
             \begin{array}{cc}
-                \cospan{i}[a_1]{L}[a_2]{j} \\
-                \tensor                    \\
-                \cospan{m}{m}{m}
+                \cospan{\listvar{i}}[a_1]{L}[a_2]{\listvar{j}} \\
+                \tensor                                        \\
+                \cospan{\listvar{m}}{\listvar{m}}{\listvar{m}}
             \end{array}
             \seq
-            \cospan{j+m}[[c_2,d_1]]{C}[[c_1,d_2]]{i+n}
+            \cospan{\listvar{jm}}[[c_2,d_1]]{C}[[c_1,d_2]]{\listvar{in}}
         }
     \end{gather*}
     where \(
-    \cospan{j+m}[c_2,d_1]{C}[c_1,d_2]{i+n}
+    \cospan{\listvar{jm}}[c_2,d_1]{C}[c_1,d_2]{\listvar{in}}
     \) is a traced boundary complement.
 \end{lemma}
 \begin{proof}
+    First let us assign names to the cospans in the decomposed form.
+    \begin{gather*}
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        \coloneqq
+        \cospan{\listvar{i}}{L}{\listvar{j}}
+        \qquad
+        \iltikzfig{strings/category/f}[box=g,colour=white,dom=\listvar{m},cod=\listvar{n}]
+        \coloneqq
+        \cospan{\listvar{m}}{G}{\listvar{n}}
+        \\
+        \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=\listvar{j},dom2=m,cod1=\listvar{i},cod2=\listvar{n}]
+        \coloneqq
+        \cospan{\listvar{jm}}[[c_2, d_1]]{C}[[c_1, d_2]]{\listvar{in}}
+    \end{gather*}
+    We must show that  \(
+    \iltikzfig{strings/category/f}[box=g,colour=white,dom=\listvar{m},cod=\listvar{n}]
+    =
+    \iltikzfig{strings/rewriting/rewrite-l}[dom=\listvar{m},cod=\listvar{n}]
+    \).
+
     Let \(
-    i + j \xrightarrow{[c_1, c_2]} C \xleftarrow{[d_1, d_2]} \listvar{mn}
+    \listvar{ij} \xrightarrow{[c_1, c_2]} C \xleftarrow{[d_1, d_2]} \listvar{mn}
     \) be defined as a traced boundary complement of \(
     \listvar{ij} \xrightarrow{[a_1,a_2]} L \xrightarrow{f} G
-    \), which exists as the no-dangling and no-identification condition is
+    \), which exists as the no-dangling and no-identification conditions are
     satisfied.
-    We assign names to the various cospans in play, and reason string
-    diagrammatically:
-    \begin{align*}
-        \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j] & := \cospan{i}{L}{j}
-                                                                       &
-        \iltikzfig{strings/category/f-0-2}[box=\hat{l},colour=white,cod1=i,cod2=j]
-                                                                       & :=
-        \cospan{0}{L}{\listvar{ij}}
-        \\
-        \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=j,dom2=m,cod1=i,cod2=n]
-                                                                       & :=
-        \cospan{j+m}[[c_2, d_1]]{C}[[c_1, d_2]]{i+n}
-                                                                       &
-        \iltikzfig{strings/category/f-2-2}[box=\hat{c},colour=white,dom1=i,dom2=j,cod1=m,cod2=n]
-                                                                       & :=
-        \cospan{\listvar{ij}}[[c_1, c_2]]{C}[[d_1, d_2]]{\listvar{mn}}
-        \\
-        \iltikzfig{strings/category/f}[box=g,colour=white,dom=m,cod=n]
-                                                                       & :=
-        \cospan{m}{G}{n}
-                                                                       &
-        \iltikzfig{strings/category/f-0-2}[box=\hat{g},colour=white,cod1=m,cod2=n]
-                                                                       & :=
-        \cospan{0}{G}{\listvar{mn}}
-    \end{align*}
-    Note that the cospans in the left column are partial monogamous by definition
+    Note that these cospans in column are partial monogamous by definition
     of rewrite rules and traced boundary complements.
-    We will show that  \(
-    \iltikzfig{strings/category/f}[box=g,colour=white]
-    \) can be decomposed into a form using the two cospans \(
-    \iltikzfig{strings/category/f}[box=l,colour=white]
-    \) and \(
-    \iltikzfig{strings/category/f-2-2}[box=c,colour=white]
-    \), along with identities.
-
-    By using the compact closed structure of \(\cspdhyp\), we have the following:
+    Note that these cospans are similarly defined to those above; but the legs
+    are different; we name these as
     \begin{gather*}
-        \iltikzfig{strings/category/f}[box=g,colour=white,dom=m,cod=n]
+        \iltikzfig{strings/category/f-0-2}[box=\hat{l},colour=white,cod1=\listvar{i},cod2=\listvar{j}]
+        \coloneqq
+        \cospan{\varepsilon}{L}{\listvar{ij}}
+        \quad
+        \iltikzfig{strings/category/f-0-2}[box=\hat{g},colour=white,cod1=\listvar{m},cod2=\listvar{n}]
+        \coloneqq
+        \cospan{\varepsilon}{G}{\listvar{mn}}
+        \\
+        \iltikzfig{strings/category/f-2-2}[box=\hat{c},colour=white,dom1=\listvar{i},dom2=\listvar{j},cod1=\listvar{m},cod2=\listvar{n}]
+        \coloneqq
+        \cospan{\listvar{ij}}[[c_1, c_2]]{C}[[d_1, d_2]]{\listvar{mn}}
+    \end{gather*}
+    Using the compact closed structure of \(\cspdhyp\), we have the following:
+    \begin{gather*}
+        \iltikzfig{strings/category/f}[box=g,colour=white,dom=\listvar{m},cod=\listvar{n}]
         =
         \iltikzfig{graphs/dpo/g-bent}
-        \qquad
-        \iltikzfig{strings/category/f-2-2}[box=\hat{c},colour=white,dom1=i,dom2=j,cod1=m,cod2=n]
+        \qquad\quad
+        \iltikzfig{strings/category/f-2-2}[box=\hat{c},colour=white,dom1=\listvar{i},dom2=\listvar{j},cod1=\listvar{m},cod2=\listvar{n}]
         =
         \iltikzfig{graphs/dpo/cprime-as-c}
-        \qquad
-        \iltikzfig{strings/category/f-0-2}[box=\hat{l},colour=white,cod1=i,cod2=j]
+        \qquad\quad
+        \iltikzfig{strings/category/f-0-2}[box=\hat{l},colour=white,cod1=\listvar{i},cod2=\listvar{j}]
         =
-        \iltikzfig{strings/compact-closed/f-bent-input}[box=l,colour=white,cod=i,dom=j]
+        \iltikzfig{strings/compact-closed/f-bent-input}[box=l,colour=white,cod=\listvar{i},dom=\listvar{j}]
     \end{gather*}
+
+
     Since \(G\) is the pushout of \(
     L \xleftarrow{[a_1, a_2]} \listvar{ij} \xrightarrow{[c_1, c_2]} C
     \) and pushout is cospan composition, we also have that \(
-    \iltikzfig{strings/category/f-0-2}[box=\hat{g},colour=white,cod1=m,cod2=n]
+    \iltikzfig{strings/category/f-0-2}[box=\hat{g},colour=white,cod1=\listvar{m},cod2=\listvar{n}]
     =
     \iltikzfig{graphs/dpo/lctilde}
     \).
     Putting this all together we can show that
     \begin{gather*}
-        \iltikzfig{strings/category/f}[box=g,colour=white,dom=m,cod=n]
+        \iltikzfig{strings/category/f}[box=g,colour=white,dom=\listvar{m},cod=\listvar{n}]
         =
         \iltikzfig{graphs/dpo/g-bent}
         =
@@ -349,71 +353,57 @@ in~\cite{bonchi2022string}.
         =
         \iltikzfig{graphs/dpo/lc-bent-2}
         =
-        \iltikzfig{strings/rewriting/rewrite-l}[dom=m,cod=n]
+        \iltikzfig{strings/rewriting/rewrite-l}[dom=\listvar{m},cod=\listvar{n}]
     \end{gather*}
     Since the `loop' is constructed in the same manner as the canonical trace on
     \(\cspdhyp\) (and is therefore identical in the graphical notation), this is a
-    term in the form of (\ref{gath:decomposition}).
+    term in the form of \cref{lem:traced-decomposition}.
 \end{proof}
 
-We need to show that, term rewriting with a set of rules \(\mcr\)
+We need to show that term rewriting with a set of rules \(\mcr\)
 coincides with graph rewriting on the hypergraph interpretations of these rules.
-Recall that DPO rules have only one interface so the rules need to be `bent'
-using \(\foldinterfaces\);
-we write \(
-\foldinterfaces[\tracedtosymandfrob[\mcr]{\Sigma}]
-\) for the pointwise map \(
-(
-\iltikzfig{strings/category/f}[box=l,colour=white],
-\iltikzfig{strings/category/f}[box=r,colour=white]
-)
-\mapsto
-(
-\foldinterfaces[
-    \tracedtosymandfrob[
-    \iltikzfig{strings/category/f}[box=l,colour=white]
-]{\Sigma}
-],
-\foldinterfaces[
-    \tracedtosymandfrob[
-    \iltikzfig{strings/category/f}[box=r,colour=white]
-]{\Sigma}
-]
-).
-\)
 
 \begin{theorem}\label{thm:traced-rewriting}
-    Let \(\mcr\) be a rewriting system on \(\stmcsigma\).
-    Then,
-    \begin{gather*}
-        \iltikzfig{strings/category/f}[box=g,colour=white,dom=m,cod=n]
-        \rewrite[\mcr]
-        \iltikzfig{strings/category/f}[box=h,colour=white,dom=m,cod=n]
-        \quad
-        \text{if and only if}
-        \quad
-        \termandfrobtohypsigma[
-            \foldinterfaces[
-                \tracedtosymandfrob[
-                    \iltikzfig{strings/category/f}[box=g,colour=white]
-                ]{\Sigma}
+    For a rewrite rule \(\rrule{
+        \iltikzfig{strings/category/f}[box=l,colour=white]
+    }{
+        \iltikzfig{strings/category/f}[box=r,colour=white]
+    }\) in \(
+    \stmcsigmac
+    \), \(
+    \iltikzfig{strings/category/f}[box=g,colour=white]
+    \rewrite[\rrule{
+            \iltikzfig{strings/category/f}[box=l,colour=white]
+        }{
+            \iltikzfig{strings/category/f}[box=r,colour=white]
+        }]
+    \iltikzfig{strings/category/f}[box=h,colour=white]
+    \) if and only if \(
+    \termandfrobtohypsigmac[
+        \foldinterfaces[
+            \tracedtosymandfrobsigmac[
+                \iltikzfig{strings/category/f}[box=g,colour=white]
             ]
         ]
-        \grewrite[
-            \termandfrobtohypsigma[
-                \foldinterfaces[
-                    \tracedtosymandfrob[\mcr]{\Sigma}
+    ]
+    \grewrite[
+        \termandfrobtohypsigmac[
+            \rrule{
+                \tracedtosymandfrobsigmac[
+                    \iltikzfig{strings/category/f}[box=l,colour=white]
                 ]
-            ]
+            }{
+                \tracedtosymandfrobsigmac[
+                    \iltikzfig{strings/category/f}[box=r,colour=white]
+                ]
+            }
         ]
-        \termandfrobtohypsigma[
-            \foldinterfaces[
-                \tracedtosymandfrob[
-                    \iltikzfig{strings/category/f}[box=h,colour=white]
-                ]{\Sigma}
-            ]
-        ].
-    \end{gather*}
+    ]
+    \termandfrobtohypsigmac[
+        \foldinterfaces[
+            \iltikzfig{strings/category/f}[box=g,colour=white]
+        ]
+    ]\).
 \end{theorem}
 \begin{proof}
     First the \((\Rightarrow)\) direction.
@@ -431,46 +421,80 @@ we write \(
     \iltikzfig{strings/category/f}[box=h,colour=white].
     \)
     Define the following cospans:
-    \begin{alignat}{3}
-        \label{gath:l-cospan}
-        \cospan{0}{L}{\listvar{ij}}
+    \begin{alignat*}{3}
+        \cospan{\varepsilon}{L}{\listvar{ij}}
          & :=
-        \termandfrobtohypsigma[\foldinterfaces[\iltikzfig{strings/category/f}[box=l,colour=white]]]
+        \termandfrobtohypsigmac[
+            \foldinterfaces[
+                \tracedtosymandfrobsigmac[
+                    \iltikzfig{strings/category/f}[box=l,colour=white]
+                ]
+            ]
+        ]
          &    & =
-        \termandfrobtohypsigma[\iltikzfig{strings/rewriting/l-folded}]
+        \termandfrobtohypsigmac[
+            \iltikzfig{strings/rewriting/l-folded}
+        ]
         \\
-        \cospan{0}{R}{\listvar{ij}}
+        \cospan{\varepsilon}{R}{\listvar{ij}}
          & :=
-        \termandfrobtohypsigma[\foldinterfaces[\iltikzfig{strings/category/f}[box=r,colour=white]]]
+        \termandfrobtohypsigmac[
+            \foldinterfaces[
+                \tracedtosymandfrobsigmac[
+                    \iltikzfig{strings/category/f}[box=r,colour=white]
+                ]
+            ]
+        ]
          &    & =
-        \termandfrobtohypsigma[\iltikzfig{strings/rewriting/r-folded}]
+        \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/r-folded}]
         \\
-        \cospan{0}{G}{\listvar{mn}}
+        \cospan{\varepsilon}{G}{\listvar{mn}}
          & :=
-        \termandfrobtohypsigma[\foldinterfaces[\iltikzfig{strings/category/f}[box=f,colour=white]]]
+        \termandfrobtohypsigmac[
+            \foldinterfaces[
+                \tracedtosymandfrobsigmac[
+                    \iltikzfig{strings/category/f}[box=f,colour=white]
+                ]
+            ]
+        ]
          &    & =
-        \termandfrobtohypsigma[\iltikzfig{strings/rewriting/lc-folded}]
+        \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/lc-folded}]
         \\
-        \label{gath:h-cospan}
-        \cospan{0}{H}{\listvar{mn}}
+        \cospan{\varepsilon}{H}{\listvar{mn}}
          & :=
-        \termandfrobtohypsigma[\foldinterfaces[\iltikzfig{strings/category/f}[box=h,colour=white]]]
+        \termandfrobtohypsigmac[
+            \foldinterfaces[
+                \tracedtosymandfrobsigmac[
+                    \iltikzfig{strings/category/f}[box=h,colour=white]
+                ]
+            ]
+        ]
          &    & =
-        \termandfrobtohypsigma[\iltikzfig{strings/rewriting/rc-folded}]
+        \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/rc-folded}]
         \\
         \cospan{\listvar{ij}}{C}{\listvar{mn}}
          & :=
-        \termandfrobtohypsigma[\iltikzfig{strings/rewriting/c-folded}]
+        \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/c-folded}]
          &    &
-    \end{alignat}
-    By functoriality, since \(
-    \foldinterfaces[\iltikzfig{strings/category/f}[box=f,colour=white]]
+    \end{alignat*}
+
+    As \(
+    \iltikzfig{strings/category/f}[box=g,colour=white]
     =
-    \iltikzfig{strings/rewriting/l-folded}
-    \seq
-    \iltikzfig{strings/rewriting/c-folded}
-    \) then \[
-        \cospan{0}{G}{\listvar{mn}} = \cospan{0}{L}{\listvar{ij}} \seq \cospan{\listvar{ij}}{C}{\listvar{mn}}.
+    \iltikzfig{strings/rewriting/rewrite-l}
+    \), we also have that \(
+    \foldinterfaces[
+        \tracedtosymandfrobsigmac[
+            \iltikzfig{strings/category/f}[box=g,colour=white]
+        ]
+    ]
+    =
+    \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/lc-folded}]
+    \) and subsquently by functoriality that \[
+        \cospan{\varepsilon}{G}{\listvar{mn}} =
+        \cospan{\varepsilon}{L}{\listvar{ij}}
+        \seq
+        \cospan{\listvar{ij}}{C}{\listvar{mn}}.
     \]
     Cospan composition is pushout, so \(\cospan{L}{G}{C}\) is a pushout.
     Using the same reasoning, \(\cospan{R}{G}{C}\) is also a pushout: this
@@ -480,8 +504,7 @@ we write \(
 
     Now the \(\ifdir\) direction: assume we have a DPO diagram where
     \(L \leftarrow i + j\), \(i + j \rightarrow R\), \(m + n \to G\) and
-    \(m + n \to H\) are defined as in (\ref{gath:l-cospan}-\ref{gath:h-cospan})
-    above.
+    \(m + n \to H\) are defined as above.
     We must show that \(
     \iltikzfig{strings/category/f}[box=f,colour=white]
     =
@@ -491,31 +514,31 @@ we write \(
     =
     \iltikzfig{strings/rewriting/rewrite-r}
     \).
-    By definition of traced boundary complement \(\cospan{j+m}{C}{i+n}\) is a
+    By definition of traced boundary complement \(\cospan{\listvar{jm}}{C}{\listvar{in}}\) is a
     partial monogamous cospan, so by fullness of
     \(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\), there exists a term \(
-    \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=j,dom2=m,cod1=i,cod2=n]
+    \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=\listvar{j},dom2=m,cod1=\listvar{i},cod2=\listvar{n}]
     \in \stmcsigma
     \) such that \(
-    \termandfrobtohypsigma[
+    \termandfrobtohypsigmac[
         \tracedtosymandfrob[
             \iltikzfig{strings/category/f-2-2}[box=c,colour=white]
         ]{\Sigma}
     ]
     =
-    \cospan{j+m}{C}{i+n}
+    \cospan{\listvar{jm}}{C}{\listvar{in}}
     \).
     By traced decomposition (\autoref{lem:traced-decomposition}), we have that for any
     traced boundary complement \(\cospan{\listvar{ij}}{C}{\listvar{mn}}\) and morphism
-    \(L \to G\), \(\cospan{m}{G}{n}\) can be factored as in
-    (\ref{gath:decomposition}), i.e.\ \[
-        \termandfrobtohypsigma[\iltikzfig{strings/category/f}[box=f,colour=white]]
+    \(L \to G\), \(\cospan{\listvar{m}}{G}{\listvar{n}}\) can be factored as in
+    \cref{lem:traced-decomposition}, i.e.\ \[
+        \termandfrobtohypsigmac[\iltikzfig{strings/category/f}[box=f,colour=white]]
         =
-        \trace{j}{\termandfrobtohypsigma[\iltikzfig{strings/category/f}[box=l,colour=white]]
+        \trace{\listvar{j}}{\termandfrobtohypsigmac[\iltikzfig{strings/category/f}[box=l,colour=white]]
             \tensor
-            \id[n]
+            \id[\listvar{n}]
             \seq
-            \termandfrobtohypsigma[\iltikzfig{strings/category/f-2-2}[box=c,colour=white]]}.
+            \termandfrobtohypsigmac[\iltikzfig{strings/category/f-2-2}[box=c,colour=white]]}.
     \]
     By functoriality, we have \(
     \iltikzfig{strings/category/f}[box=f,colour=white]
