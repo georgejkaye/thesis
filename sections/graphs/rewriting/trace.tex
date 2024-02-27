@@ -275,7 +275,7 @@ We need to show that rewriting a term with a rule \(\rrule{
 }\) coincides with graph rewriting on the hypergraph interpretations of
 this rule.
 
-\begin{theorem}\label{thm:traced-rewriting}
+\begin{theorem}\label{thm:traced-rewrite-correspondence}
     For a rewrite rule \(\rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white]
     }{
@@ -520,3 +520,6 @@ this rule.
     \(\stmcsigmac\), completing the proof.
     The same procedure holds for rewriting from the other direction.
 \end{proof}
+
+This gives us a sound and complete graph rewriting system for terms in
+\(\stmcsigmac\).

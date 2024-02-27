@@ -1,1 +1,132 @@
 \section{Rewriting with commutative comonoid structure}
+
+Hypergraphs were originally chosen as the combinatorial domain for rewriting
+terms in \(\stmcsigmac + \frobc\) because they allow rewriting modulo
+\emph{Frobenius structure}.
+In the traced rewriting system described in the previous section we did not
+fully exploit this, only using the combinatorial structure to absorb instances
+of yanking.
+We will now show how we can take more advantage of the hypergraph language by
+rewriting  modulo \emph{commutative comonoid} structure.
+
+It is not difficult to see how one might extend the results of the previous
+section for this aim; the partial monogamy conditions need to be weakened to
+partial \emph{left-}monogamy conditions.
+
+\begin{definition}[Traced left-boundary complement]
+    \label{def:traced-left-boundary-complement}
+    For partial left-monogamous cospans \(
+    \cospan{i}[a_1]{L}[a_2]{j}
+    \) and \(
+    \cospan{n}[b_1]{G}[b_2]{m} \in \hypsigma
+    \), a pushout complement as in \cref{def:traced-boundary-complement}
+    is called a \emph{traced left-boundary complement} if \(c_2\)
+    is mono and \(
+    \cospan{\listvar{jm}}[[c_2,d_1]]{C}[[c_1,d_2]]{{\listvar{in}}}
+    \) is a partial left-monogamous cospan.
+\end{definition}
+
+\begin{definition}[Traced comonoid DPO]
+    For morphisms \(G \leftarrow m+n\) and \(H \leftarrow m+n\) in
+    \(\hypsigma\), there is a traced comonoid rewrite \(G \trgrewrite[\mcr] H\)
+    if there exists a rule \(
+    \spann{L}{\listvar{ij}}{G} \in \mcr
+    \) and cospan \(
+    \cospan{\listvar{ij}}{C}{\listvar{mn}} \in \hypsigma
+    \) such that diagram in \cref{def:dpo-rewriting} commutes and
+    \(\listvar{ij} \to C \to G\) is a
+    traced left-boundary complement.
+\end{definition}
+
+Just like traced rewriting, there may be multiple traced left-boundary
+complements.
+In fact, since partial left-monogamy is a weaker restriction than partial
+monogamy, there are even more potential rewrites.
+These arise because we are now absorbing the equations of a commutative
+comonoid.
+
+\begin{example}
+    Consider the following rule and its interpretation.
+    \begin{gather*}
+        \rrule{
+            \iltikzfig{graphs/dpo/non-unique-comonoid/rule-lhs}
+        }{
+            \iltikzfig{graphs/dpo/non-unique-comonoid/rule-rhs}
+        }
+        \qquad
+        \raisebox{-2em}{\includestandalone{figures/graphs/dpo/non-unique-comonoid/rule}}
+    \end{gather*}
+    Two valid rewrites are as follows:
+    \begin{center}
+        \includestandalone{figures/graphs/dpo/non-unique-comonoid/rewrite-1}
+        \quad
+        \includestandalone{figures/graphs/dpo/non-unique-comonoid/rewrite-2}
+    \end{center}
+    The first rewrite is the `obvious' one, but the second also holds by
+    cocommutativity:
+    \begin{gather*}
+        \iltikzfig{graphs/dpo/non-unique-comonoid/rewrite-1}
+        =
+        \iltikzfig{graphs/dpo/non-unique-comonoid/rewrite-2a}
+        \qquad
+        \iltikzfig{graphs/dpo/non-unique-comonoid/rewrite-1}
+        =
+        \iltikzfig{graphs/dpo/non-unique-comonoid/rewrite-2b}
+        =
+        \iltikzfig{graphs/dpo/non-unique-comonoid/rewrite-3b}
+    \end{gather*}
+\end{example}
+
+To show the soundness and completeness of traced comonoid rewriting, we follow
+the same procedure as in the traced setting.
+
+\begin{theorem}
+    For a rule \(\rrule{
+        \iltikzfig{strings/category/f}[box=l,colour=white]
+    }{
+        \iltikzfig{strings/category/f}[box=r,colour=white]
+    }\) in \(
+    \stmcsigmac + \ccomonc
+    \), \(
+    \iltikzfig{strings/category/f}[box=g,colour=white]
+    \rewrite[\rrule{
+            \iltikzfig{strings/category/f}[box=l,colour=white]
+        }{
+            \iltikzfig{strings/category/f}[box=r,colour=white]
+        }]
+    \iltikzfig{strings/category/f}[box=h,colour=white]
+    \) if and only if \(
+    \termandfrobtohypsigmac[
+        \foldinterfaces[
+            \tracedandcomonoidtofrobsigmac[
+                \iltikzfig{strings/category/f}[box=g,colour=white]
+            ]
+        ]
+    ]
+    \grewrite[
+        \termandfrobtohypsigmac[
+            \rrule{
+                \tracedandcomonoidtofrobsigmac[
+                    \iltikzfig{strings/category/f}[box=l,colour=white]
+                ]
+            }{
+                \tracedandcomonoidtofrobsigmac[
+                    \iltikzfig{strings/category/f}[box=r,colour=white]
+                ]
+            }
+        ]
+    ]
+    \termandfrobtohypsigmac[
+        \foldinterfaces[
+            \iltikzfig{strings/category/f}[box=g,colour=white]
+        ]
+    ]\).
+\end{theorem}
+\begin{proof}
+    This is as \cref{thm:traced-rewrite-correspondence}, but replacing partial
+    monogamy with partial left-monogamy, and traced boundary complements with
+    traced left-boundary complements.
+\end{proof}
+
+This means that we can also safely perform rewriting modulo traced comonoid
+structure by building on the machinery used for the traced case.
