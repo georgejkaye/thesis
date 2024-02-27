@@ -238,127 +238,13 @@ Luckily for us, this is not necessary in the traced case.
     This shows that convexity is not a required component of traced rewriting.
 \end{example}
 
-\todo[inline]{Refine after here}
-
 We are almost ready to show the soundness and completeness of this DPO rewriting
-system.
-The final prerequisite is a decomposition lemma akin to that used
-in~\cite{bonchi2022string}.
-
-\begin{lemma}[Traced decomposition]\label{lem:traced-decomposition}
-    For partial monogamous cospans \(
-    \cospan{\listvar{m}}[d_1]{G}[d_2]{\listvar{n}}
-    \) and \(
-    \cospan{\listvar{i}}[a_1]{L}[a_2]{\listvar{j}}
-    \), and a morphism \(
-    L \xrightarrow{f} G
-    \) such that \(\listvar{ij} \rightarrow L \rightarrow G\) satisfies the no-dangling
-    and no-identification conditions, then there exists a partial monogamous
-    cospan \(
-    \cospan{\listvar{jm}}[[c_2,d_1]]{C}[[c_1,d_2]]{\listvar{in}}
-    \) such that \(
-    \cospan{m}{G}{n}
-    \) can be factored as
-    \begin{gather*}
-        \trace{\listvar{i}}{
-            \begin{array}{cc}
-                \cospan{\listvar{i}}[a_1]{L}[a_2]{\listvar{j}} \\
-                \tensor                                        \\
-                \cospan{\listvar{m}}{\listvar{m}}{\listvar{m}}
-            \end{array}
-            \seq
-            \cospan{\listvar{jm}}[[c_2,d_1]]{C}[[c_1,d_2]]{\listvar{in}}
-        }
-    \end{gather*}
-    where \(
-    \cospan{\listvar{jm}}[[c_2,d_1]]{C}[[c_1,d_2]]{\listvar{in}}
-    \) is a traced boundary complement.
-\end{lemma}
-\begin{proof}
-    First let us assign names to the cospans in the decomposed form.
-    \begin{gather*}
-        \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
-        \coloneqq
-        \cospan{\listvar{i}}{L}{\listvar{j}}
-        \qquad
-        \iltikzfig{strings/category/f}[box=g,colour=white,dom=\listvar{m},cod=\listvar{n}]
-        \coloneqq
-        \cospan{\listvar{m}}{G}{\listvar{n}}
-        \\
-        \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=\listvar{j},dom2=m,cod1=\listvar{i},cod2=\listvar{n}]
-        \coloneqq
-        \cospan{\listvar{jm}}[[c_2, d_1]]{C}[[c_1, d_2]]{\listvar{in}}
-    \end{gather*}
-    We must show that  \(
-    \iltikzfig{strings/category/f}[box=g,colour=white,dom=\listvar{m},cod=\listvar{n}]
-    =
-    \iltikzfig{strings/rewriting/rewrite-l}[dom=\listvar{m},cod=\listvar{n}]
-    \).
-
-    Let \(
-    \listvar{ij} \xrightarrow{[c_1, c_2]} C \xleftarrow{[d_1, d_2]} \listvar{mn}
-    \) be defined as a traced boundary complement of \(
-    \listvar{ij} \xrightarrow{[a_1,a_2]} L \xrightarrow{f} G
-    \), which exists as the no-dangling and no-identification conditions are
-    satisfied.
-    Note that these cospans in column are partial monogamous by definition
-    of rewrite rules and traced boundary complements.
-    Note that these cospans are similarly defined to those above; but the legs
-    are different; we name these as
-    \begin{gather*}
-        \iltikzfig{strings/category/f-0-2}[box=\hat{l},colour=white,cod1=\listvar{i},cod2=\listvar{j}]
-        \coloneqq
-        \cospan{\varepsilon}{L}{\listvar{ij}}
-        \quad
-        \iltikzfig{strings/category/f-0-2}[box=\hat{g},colour=white,cod1=\listvar{m},cod2=\listvar{n}]
-        \coloneqq
-        \cospan{\varepsilon}{G}{\listvar{mn}}
-        \\
-        \iltikzfig{strings/category/f-2-2}[box=\hat{c},colour=white,dom1=\listvar{i},dom2=\listvar{j},cod1=\listvar{m},cod2=\listvar{n}]
-        \coloneqq
-        \cospan{\listvar{ij}}[[c_1, c_2]]{C}[[d_1, d_2]]{\listvar{mn}}
-    \end{gather*}
-    Using the compact closed structure of \(\cspdhyp\), we have the following:
-    \begin{gather*}
-        \iltikzfig{strings/category/f}[box=g,colour=white,dom=\listvar{m},cod=\listvar{n}]
-        =
-        \iltikzfig{graphs/dpo/g-bent}
-        \qquad\quad
-        \iltikzfig{strings/category/f-2-2}[box=\hat{c},colour=white,dom1=\listvar{i},dom2=\listvar{j},cod1=\listvar{m},cod2=\listvar{n}]
-        =
-        \iltikzfig{graphs/dpo/cprime-as-c}
-        \qquad\quad
-        \iltikzfig{strings/category/f-0-2}[box=\hat{l},colour=white,cod1=\listvar{i},cod2=\listvar{j}]
-        =
-        \iltikzfig{strings/compact-closed/f-bent-input}[box=l,colour=white,cod=\listvar{i},dom=\listvar{j}]
-    \end{gather*}
-
-
-    Since \(G\) is the pushout of \(
-    L \xleftarrow{[a_1, a_2]} \listvar{ij} \xrightarrow{[c_1, c_2]} C
-    \) and pushout is cospan composition, we also have that \(
-    \iltikzfig{strings/category/f-0-2}[box=\hat{g},colour=white,cod1=\listvar{m},cod2=\listvar{n}]
-    =
-    \iltikzfig{graphs/dpo/lctilde}
-    \).
-    Putting this all together we can show that
-    \begin{gather*}
-        \iltikzfig{strings/category/f}[box=g,colour=white,dom=\listvar{m},cod=\listvar{n}]
-        =
-        \iltikzfig{graphs/dpo/g-bent}
-        =
-        \iltikzfig{graphs/dpo/l-c-bent}
-        =
-        \iltikzfig{graphs/dpo/l-c-bent-1}
-        =
-        \iltikzfig{graphs/dpo/lc-bent-2}
-        =
-        \iltikzfig{strings/rewriting/rewrite-l}[dom=\listvar{m},cod=\listvar{n}]
-    \end{gather*}
-    Since the `loop' is constructed in the same manner as the canonical trace on
-    \(\cspdhyp\) (and is therefore identical in the graphical notation), this is a
-    term in the form of \cref{lem:traced-decomposition}.
-\end{proof}
+system; we will do this by showing that even though rewriting takes place in the
+more liberal compact closed setting, the rewritten graph will always correspond
+to a traced term.
+First we prove a lemma to show how using the compact closed structure of
+\(\smcsigmac + \frobc\) to reorganise interfaces corresponds to switching the
+cospan maps in \(\cspdchyp\).
 
 \begin{lemma}\label{lem:switch-interfaces}
     Let \(
@@ -366,7 +252,7 @@ in~\cite{bonchi2022string}.
     \) be a term in \(\smcsigmac + \frobc\).
     Then if \(
     \termandfrobtohypsigmac[
-        \iltikzfig{strings/category/f-2-2}[box=f,colour=white]
+        \iltikzfig{strings/category/f-2-2}[box=c,colour=white]
     ]
     =
     \cospan{\listvar{mn}}[[f_1,f_2]]{F}[[g_1,g_2]]{\listvar{pq}}
@@ -382,8 +268,12 @@ in~\cite{bonchi2022string}.
     By definition of cups and caps in \(\cspdchyp\).
 \end{proof}
 
-We need to show that term rewriting with a set of rules \(\mcr\)
-coincides with graph rewriting on the hypergraph interpretations of these rules.
+We need to show that rewriting a term with a rule \(\rrule{
+    \iltikzfig{strings/category/f}[box=l,colour=white]
+}{
+    \iltikzfig{strings/category/f}[box=r,colour=white]
+}\) coincides with graph rewriting on the hypergraph interpretations of
+this rule.
 
 \begin{theorem}\label{thm:traced-rewriting}
     For a rewrite rule \(\rrule{
