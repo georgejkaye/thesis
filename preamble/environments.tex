@@ -49,43 +49,43 @@
     \newlength{\normalparindent}
     \AtBeginDocument{\setlength{\normalparindent}{\parindent}}
     \tcbset{shadedenv/.style={
-        colback={#1},
-        frame hidden,
-        enhanced,
-        breakable,
-        boxsep=0pt,
-        left=2mm,
-        right=2mm,
-        % LaTeX thinks this is too wide (as becomes clear from the many "Overfull
-        % \hbox" warnings, but optically it looks spot on.
-        add to width=1.1mm,
-        enlarge left by=-0.6mm,
-        before upper={\setlength{\parindent}{\normalparindent}}
-    }}
+                colback={#1},
+                frame hidden,
+                enhanced,
+                breakable,
+                boxsep=0pt,
+                left=2mm,
+                right=2mm,
+                % LaTeX thinks this is too wide (as becomes clear from the many "Overfull
+                % \hbox" warnings, but optically it looks spot on.
+                add to width=1.1mm,
+                enlarge left by=-0.6mm,
+                before upper={\setlength{\parindent}{\normalparindent}}
+            }}
     \newcommand{\setenvcolor}[2]{%
         \tcolorboxenvironment{#1}{shadedenv={#2}}
-        \addtotheorempreheadhook[#1]{
-            \tikzcdset{background color=#2}
-            \renewcommand{\bgcolour}{#2}
-        }
+    \addtotheorempreheadhook[#1]{
+        \tikzcdset{background color=#2}
+        \renewcommand{\bgcolour}{#2}
     }
-    \setenvcolor{theorem}{ShadeOfPurple}
-    \setenvcolor{lemma}{ShadeOfPurple}
-    \setenvcolor{proposition}{ShadeOfPurple}
-    \setenvcolor{corollary}{ShadeOfPurple}
-    \setenvcolor{definition}{ShadeOfYellow}
-    \setenvcolor{notation}{ShadeOfYellow}
-    \setenvcolor{example}{ShadeOfGreen}
-    \setenvcolor{remark}{ShadeOfBrown}
-    \setenvcolor{proof}{ShadeOfGray}
+}
+\setenvcolor{theorem}{ShadeOfPurple}
+\setenvcolor{lemma}{ShadeOfPurple}
+\setenvcolor{proposition}{ShadeOfPurple}
+\setenvcolor{corollary}{ShadeOfPurple}
+\setenvcolor{definition}{ShadeOfYellow}
+\setenvcolor{notation}{ShadeOfYellow}
+\setenvcolor{example}{ShadeOfGreen}
+\setenvcolor{remark}{ShadeOfBrown}
+\setenvcolor{proof}{ShadeOfGray}
 }{
-    % Use closing symbols if we don't have colours
-    \declaretheorem[sibling=equation]{theorem}
-    \declaretheorem[sibling=theorem]{lemma,proposition,corollary}
-    \declaretheorem[sibling=theorem,style=definitionwithbox]{definition}
-    \declaretheorem[sibling=theorem,style=definitionwithbox]{notation}
-    \declaretheorem[sibling=theorem,style=definitionwithbox]{example}
-    \declaretheorem[sibling=theorem,style=remarkwithbox]{remark}
+% Use closing symbols if we don't have colours
+\declaretheorem[sibling=equation]{theorem}
+\declaretheorem[sibling=theorem]{lemma,proposition,corollary}
+\declaretheorem[sibling=theorem,style=definitionwithbox]{definition}
+\declaretheorem[sibling=theorem,style=definitionwithbox]{notation}
+\declaretheorem[sibling=theorem,style=definitionwithbox]{example}
+\declaretheorem[sibling=theorem,style=remarkwithbox]{remark}
 }
 \declaretheorem[sibling=theorem,style=remark,numbered=no]{claim}
 
