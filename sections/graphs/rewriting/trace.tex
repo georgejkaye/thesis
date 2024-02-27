@@ -18,8 +18,8 @@ characterising it as a \emph{boundary complement}.
             L \arrow[swap]{d}{f}
             &
             \listvar{ij}
-            \arrow[swap]{l}{a := [a_1, a_2]}
-            \arrow{d}{c := [c_1, c_2]}
+            \arrow[swap]{l}{a \coloneqq [a_1, a_2]}
+            \arrow{d}{c \coloneqq [c_1, c_2]}
             \\
             G
             \arrow["\urcorner"{anchor=center, pos=0.125}, draw=none]{ur}
@@ -30,7 +30,7 @@ characterising it as a \emph{boundary complement}.
             &
             \listvar{mn}
             \arrow{ul}{[b_1,b_2]}
-            \arrow[swap]{u}{d := [d_1,d_2]}
+            \arrow[swap]{u}{d \coloneqq [d_1,d_2]}
         \end{tikzcd}
     \end{center}
     is called a \emph{boundary complement} if \(c_1\) and \(c_2\) are
@@ -63,8 +63,8 @@ monogamy with partial monogamy.
             L \arrow[swap]{d}{f}
             &
             \listvar{ij}
-            \arrow[swap]{l}{a := [a_1, a_2]}
-            \arrow{d}{c := [c_1, c_2]}
+            \arrow[swap]{l}{a \coloneqq [a_1, a_2]}
+            \arrow{d}{c \coloneqq [c_1, c_2]}
             \\
             G
             \arrow["\urcorner"{anchor=center, pos=0.125}, draw=none]{ur}
@@ -75,7 +75,7 @@ monogamy with partial monogamy.
             &
             \listvar{mn}
             \arrow{ul}{[b_1,b_2]}
-            \arrow[swap]{u}{d := [d_1,d_2]}
+            \arrow[swap]{u}{d \coloneqq [d_1,d_2]}
         \end{tikzcd}
     \end{center}
     is called a \emph{traced boundary complement} if \(c_1\) and \(c_2\) are
@@ -271,7 +271,7 @@ in~\cite{bonchi2022string}.
         }
     \end{gather*}
     where \(
-    \cospan{\listvar{jm}}[c_2,d_1]{C}[c_1,d_2]{\listvar{in}}
+    \cospan{\listvar{jm}}[[c_2,d_1]]{C}[[c_1,d_2]]{\listvar{in}}
     \) is a traced boundary complement.
 \end{lemma}
 \begin{proof}
@@ -427,11 +427,10 @@ coincides with graph rewriting on the hypergraph interpretations of these rules.
     =
     \iltikzfig{strings/category/f}[box=h,colour=white]
     \); we must derive the DPO diagram in \(\hypsigmac\).
-
-    Define the following cospans:
+    First we give names to the following cospans:
     \begin{alignat*}{3}
         \cospan{\varepsilon}{L}{\listvar{ij}}
-         & :=
+         & \coloneqq
         \termandfrobtohypsigmac[
             \foldinterfaces[
                 \tracedtosymandfrobsigmac[
@@ -439,13 +438,13 @@ coincides with graph rewriting on the hypergraph interpretations of these rules.
                 ]
             ]
         ]
-         &    & =
+         &           & =
         \termandfrobtohypsigmac[
             \iltikzfig{strings/rewriting/l-folded}
         ]
         \\
         \cospan{\varepsilon}{R}{\listvar{ij}}
-         & :=
+         & \coloneqq
         \termandfrobtohypsigmac[
             \foldinterfaces[
                 \tracedtosymandfrobsigmac[
@@ -453,23 +452,23 @@ coincides with graph rewriting on the hypergraph interpretations of these rules.
                 ]
             ]
         ]
-         &    & =
+         &           & =
         \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/r-folded}]
         \\
         \cospan{\varepsilon}{G}{\listvar{mn}}
-         & :=
+         & \coloneqq
         \termandfrobtohypsigmac[
             \foldinterfaces[
                 \tracedtosymandfrobsigmac[
-                    \iltikzfig{strings/category/f}[box=f,colour=white]
+                    \iltikzfig{strings/category/f}[box=g,colour=white]
                 ]
             ]
         ]
-         &    & =
-        \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/lc-folded}]
+         &           & =
+        \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/lc-folded-shifted}]
         \\
         \cospan{\varepsilon}{H}{\listvar{mn}}
-         & :=
+         & \coloneqq
         \termandfrobtohypsigmac[
             \foldinterfaces[
                 \tracedtosymandfrobsigmac[
@@ -477,20 +476,24 @@ coincides with graph rewriting on the hypergraph interpretations of these rules.
                 ]
             ]
         ]
-         &    & =
-        \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/rc-folded}]
-        \\
-        \cospan{\listvar{ij}}{C}{\listvar{mn}}
-         & :=
-        \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/c-folded}]
-         &    &
+         &           & =
+        \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/rc-folded-shifted}]
+        % \\
+        % \cospan{\listvar{ij}}{C}{\listvar{mn}}
+        %  & \coloneqq
+        % \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/c-folded}]
+        %  &           &
     \end{alignat*}
 
-    By functoriality, we have that \(
+    Moving into \(\smcsigmac + \frobc\), we have that \(
+    \iltikzfig{strings/rewriting/lc-folded-shifted}
+    =
+    \iltikzfig{strings/rewriting/lc-folded}
+    \); so by functoriality \(
     \termandfrobtohypsigmac[
         \foldinterfaces[
             \tracedtosymandfrobsigmac[
-                \iltikzfig{strings/category/f}[box=f,colour=white]
+                \iltikzfig{strings/category/f}[box=g,colour=white]
             ]
         ]
     ]
@@ -502,49 +505,29 @@ coincides with graph rewriting on the hypergraph interpretations of these rules.
     \cospan{\varepsilon}{G}{\listvar{mn}} =
     \cospan{\varepsilon}{L}{\listvar{ij}}
     \seq
-    \cospan{\listvar{ij}}{C}{\listvar{mn}}.
+    \cospan{\listvar{ij}}{C}{\listvar{mn}}
     \).
     Cospan composition is pushout, so \(\cospan{L}{G}{C}\) is a pushout.
     Using the same reasoning, \(\cospan{R}{G}{C}\) is also a pushout; this
     gives us the DPO diagram.
     All that remains is to check that the aforementioned pushouts are traced
-    boundary complements; this follows by inspecting components.
+    boundary complements; this follows as \(
+    \termandfrobtohypsigmac[
+        \tracedandcomonoidtofrobsigmac[
+            \iltikzfig{strings/category/f-2-2}[box=c,colour-white]
+        ]
+    ]
+    \) is partial monogamous, so by \cref{lem:switch-interfaces} the traced
+    boundary complement condition holds.
 
     Now for the \(\ifdir\) direction: we assume that we have a traced DPO
-    rewrite \(
-    \termandfrobtohypsigmac[
-        \foldinterfaces[
-            \tracedtosymandfrobsigmac[
-                \iltikzfig{strings/category/f}[box=g,colour=white]
-            ]
-        ]
-    ]
-    \grewrite[
-        \termandfrobtohypsigmac[
-            \rrule{
-                \tracedtosymandfrobsigmac[
-                    \iltikzfig{strings/category/f}[box=l,colour=white]
-                ]
-            }{
-                \tracedtosymandfrobsigmac[
-                    \iltikzfig{strings/category/f}[box=r,colour=white]
-                ]
-            }
-        ]
-    ]
-    \termandfrobtohypsigmac[
-        \foldinterfaces[
-            \iltikzfig{strings/category/f}[box=g,colour=white]
-        ]
-    ]
-    \).
-    This means there exists \(
+    rewrite, so there exist cospans \(
     \cospan{\varepsilon}{L}{\listvar{ij}},
     \cospan{\varepsilon}{R}{\listvar{ij}},
     \cospan{\listvar{ij}}{C}{\listvar{mn}}
     \) as defined above such that the DPO diagram commutes and
-    \(\listvar{ij} \to C \to G\) is a traced boundary complement;
-    we must show that \(
+    \(\listvar{ij} \to C \to G\) is a traced boundary complement.
+    We must show that \(
     \iltikzfig{strings/category/f}[box=g,colour=white]
     =
     \iltikzfig{strings/rewriting/rewrite-l}
@@ -554,26 +537,43 @@ coincides with graph rewriting on the hypergraph interpretations of these rules.
     \iltikzfig{strings/rewriting/rewrite-r}
     \).
 
-    As cospan composition is pushout, we have that \(
+    We have that \(
     \cospan{\varepsilon}{G}{\listvar{mn}} =
     \cospan{\varepsilon}{L}{\listvar{ij}} \seq
-    \cospan{\listvar{ij}}[[c_1,c_2]]{C}[d_1,d_2]{\listvar{mn}}
-    \).
-
-    Note that \(\cospan{\listvar{ij}}{C}{\listvar{mn}}\) is \emph{not} in the
-    image of \(
-    \termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac
-    \) as it is not necessarily partial monogamous.
-    For now, let \(
+    \cospan{\listvar{ij}}[[c_1,c_2]]{C}[[d_1,d_2]]{\listvar{mn}}
+    \) as cospan composition is by pushout.
+    Let \(
     \iltikzfig{strings/category/f-2-2}[box=c^\prime, colour=white,dom1=\listvar{i},dom2=\listvar{j},cod1=\listvar{m},cod2=\listvar{n}]
     \) be the term in \(\smcsigmac + \frobc\) such that \(
     \termandfrobtohypsigmac[
         \iltikzfig{strings/category/f-2-2}[box=c^\prime, colour=white]
     ]
     =
-    \cospan{\listvar{ij}}[c_1,c_2]{C}[d_1,d_2]{\listvar{mn}}
+    \cospan{\listvar{ij}}[[c_1,c_2]]{C}[[d_1,d_2]]{\listvar{mn}}
     \), which exists as \(\termandfrobtohypsigmac\) is full.
-    As we have that \(
+
+
+    The cospan \(\cospan{\listvar{jm}}[[c_2,d_1]]{C}[[c_1,d_2]]{\listvar{in}}\)
+    is partial monogamous because \(\listvar{ij} \to C \to G\) is a traced
+    boundary complement.
+    Let \(
+    \iltikzfig{strings/category/f-2-2}[box=c, colour=white,dom1=\listvar{j},dom2=\listvar{m},cod1=\listvar{i},cod2=\listvar{n}]
+    \)  be the term in \(\smcsigmac + \frobc\) such that \(
+    \termandfrobtohypsigmac[
+        \iltikzfig{strings/category/f-2-2}[box=c, colour=white]
+    ]
+    =
+    \cospan{\listvar{jm}}[[c_2,d_1]]{C}[[c_1,d_2]]{\listvar{in}}
+    \).
+    Using \cref{lem:switch-interfaces}, we have that \(
+    \termandfrobtohypsigmac[
+        \iltikzfig{strings/rewriting/c-folded}
+    ]
+    =
+    \cospan{\listvar{ij}}[[c_1,c_2]]{C}[[d_1,d_2]]{\listvar{mn}}
+    \).
+
+    So we have that \(
     \termandfrobtohypsigmac[
         \foldinterfaces[
             \iltikzfig{strings/category/f}[box=g,colour=white]
@@ -589,68 +589,34 @@ coincides with graph rewriting on the hypergraph interpretations of these rules.
     \termandfrobtohypsigmac[
         \iltikzfig{strings/category/f-2-2}[box=c^\prime, colour=white]
     ]
-    \), we also have by fullness that \(
+    \); by fullness we derive that \(
     \iltikzfig{strings/rewriting/g-folded-box}
     =
     \iltikzfig{strings/rewriting/lc}
-    \) in \(\smcsigmac + \frobc\).
-
-    Although \(\cospan{\listvar{ij}}{C}{\listvar{mn}}\) is not partial
-    monogamous, \(\cospan{\listvar{jm}}[c_2,d_1]{C}[c_1,d_2]{\listvar{in}}\)
-    \emph{is} because \(\listvar{ij} \to C \to G\) is a traced boundary
-    complement.
-    Let \(
-    \iltikzfig{strings/category/f-2-2}[box=c, colour=white,dom1=\listvar{j},dom2=\listvar{m},cod1=\listvar{i},cod2=\listvar{n}]
-    \)  be the term in \(\smcsigmac + \frobc\) such that \(
-    \termandfrobtohypsigmac[
-        \iltikzfig{strings/category/f-2-2}[box=c, colour=white]
-    ]
-    =
-    \cospan{\listvar{jm}}[c_2,d_1]{C}[c_1,d_2]{\listvar{in}}
-    \).
-    By \cref{lem:switch-interfaces}, we have that if \(
-    \termandfrobtohypsigmac[
-        \iltikzfig{strings/category/f-2-2}[box=c^\prime, colour=white]
-    ]
-    =
-    \cospan{\listvar{ij}}[c_1,c_2]{C}[d_1,d_2]{\listvar{mn}}
-    \) and \(
-    \termandfrobtohypsigmac[
-        \iltikzfig{strings/category/f-2-2}[box=c^\prime, colour=white]
-    ]
-    =
-    \cospan{\listvar{ij}}[c_1,c_2]{C}[d_1,d_2]{\listvar{mn}}
-    \), then \(
-    \iltikzfig{strings/rewriting/c-folded}
-    =
-    \cospan{\listvar{ij}}[c_1,c_2]{C}[d_1,d_2]{\listvar{mn}}
-    \).
-    Subsequently, \(
-    \iltikzfig{strings/rewriting/g-folded-box}
     =
     \iltikzfig{strings/rewriting/lc-folded}
     =
     \iltikzfig{strings/rewriting/lc-folded-shifted}
     \).
-
-    Returning to the perspective from \(\stmcsigmac\), we have that \(
+    This means that \(
     \foldinterfaces[
         \iltikzfig{strings/category/f}[box=g,colour=white]
     ]
     =
     \iltikzfig{strings/rewriting/lc-folded-shifted}
-    \).
-    Since \(
-    \termandfrobtohypsigmac[
-        \iltikzfig{strings/category/f-2-2}[box=c^\prime, colour=white]
-    ]
-    \) is partial monogamous, \(
-    \iltikzfig{strings/category/f-2-2}[box=c^\prime, colour=white]
-    \) is in \(\stmcsigma\) and we can conclude that \(
+    \) so `unfolding' the interface gives us \(
     \iltikzfig{strings/category/f}[box=g,colour=white]
     =
     \iltikzfig{strings/rewriting/rewrite-l}
-    \), completing the proof.
-
+    \).
+    Since \(
+    \termandfrobtohypsigmac[
+        \iltikzfig{strings/category/f-2-2}[box=c, colour=white]
+    ]
+    \) is partial monogamous, \(
+    \iltikzfig{strings/category/f-2-2}[box=c, colour=white]
+    \) is in \(\stmcsigmac\).
+    As the trace in \(\stmcsigma\) is the canonical trace, the entire term is in
+    \(\stmcsigmac\), completing the proof.
     The same procedure holds for rewriting from the other direction.
 \end{proof}
