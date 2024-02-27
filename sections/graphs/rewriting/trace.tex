@@ -361,10 +361,25 @@ in~\cite{bonchi2022string}.
 \end{proof}
 
 \begin{lemma}\label{lem:switch-interfaces}
-    \todo[inline]{Lemma that we can show swapping interface sides with cups and caps}
+    Let \(
+    \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=\listvar{m},dom2=\listvar{n},cod1=\listvar{p},cod2=\listvar{q}]
+    \) be a term in \(\smcsigmac + \frobc\).
+    Then if \(
+    \termandfrobtohypsigmac[
+        \iltikzfig{strings/category/f-2-2}[box=f,colour=white]
+    ]
+    =
+    \cospan{\listvar{mn}}[[f_1,f_2]]{F}[[g_1,g_2]]{\listvar{pq}}
+    \) then \(
+    \termandfrobtohypsigmac[
+        \iltikzfig{strings/rewriting/c-folded}
+    ]
+    =
+    \cospan{\listvar{pm}}[[g_1,f_1]]{F}[[f_2,g_2]]{\listvar{nq}}
+    \).
 \end{lemma}
 \begin{proof}
-    \todo[inline]{The proof}
+    By definition of cups and caps in \(\cspdchyp\).
 \end{proof}
 
 We need to show that term rewriting with a set of rules \(\mcr\)
@@ -478,11 +493,6 @@ coincides with graph rewriting on the hypergraph interpretations of these rules.
         ]
          &           & =
         \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/rc-folded-shifted}]
-        % \\
-        % \cospan{\listvar{ij}}{C}{\listvar{mn}}
-        %  & \coloneqq
-        % \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/c-folded}]
-        %  &           &
     \end{alignat*}
 
     Moving into \(\smcsigmac + \frobc\), we have that \(
@@ -514,7 +524,7 @@ coincides with graph rewriting on the hypergraph interpretations of these rules.
     boundary complements; this follows as \(
     \termandfrobtohypsigmac[
         \tracedandcomonoidtofrobsigmac[
-            \iltikzfig{strings/category/f-2-2}[box=c,colour-white]
+            \iltikzfig{strings/category/f-2-2}[box=c,colour=white]
         ]
     ]
     \) is partial monogamous, so by \cref{lem:switch-interfaces} the traced
