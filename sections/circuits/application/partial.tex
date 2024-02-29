@@ -23,13 +23,24 @@ However, when performing partial evaluation this might not be case; we may have
 left some as variables to be specified later.
 Fortunately, it is not always necessary to consider all of the inputs to a
 primitive in order to determine its behaviour.
+For example, for an \(\andgate\) gate, if either of its inputs are false then
+the output must also be false, and if either of its inputs are true then the
+output is the other input.
 
-\begin{example}[Shortcuts for \(\andgate\)]
-    A well-known example of a shortcut rule is that when one input to an
-    \(\andgate\) gate is false, then the output is always false regardless of
-    the other input.
-\end{example}
+Exploiting this, we can define some new `shortcut' reductions shown in
+\cref{fig:shortcuts}.
+Two varieties are provided: one for when the inputs are instantaneous values
+(although not necessarily fully reduced), and one for when the input is an
+infinite waveform.
+These rules are all sound for the reasons detailed above.
 
+In a setting where we can fully reduce everything, these rule are redundant, as
+eventually the \((\gateeqn)\) rule would be applied to the \(\andgate\)
+gate and the same result found.
+However, for partial evaluation they are a crucial way of propagating what
+inputs we do have across a circuit.
+
+\input{sections/circuits/application/floats/shortcuts}
 
 \begin{example}[Blocking boxes]\label{ex:blocking-boxes}
     Consider the circuit \(
@@ -50,21 +61,6 @@ primitive in order to determine its behaviour.
     \]
 \end{example}
 
-Although the blackbox is blocking, we do know how the \(\andgate\) gate
-works; in particular we know that if either of its inputs are false then
-the output must also be false.
-Exploiting this, we can define a new `shortcut' reduction
-\(
-\iltikzfig{circuits/examples/blocking/rule-lhs}
-\reduction
-\iltikzfig{circuits/examples/blocking/rule-rhs}
-\), which is clearly sound for the reasons detailed above.
-If we could fully reduce the blackbox, this rule would be redundant, as
-eventually the \((\gateeqn)\) rule would be applied to the \(\andgate\)
-gate and the same result found.
-In this context it is useful though as it means we can completely ignore the
-second argument to the \(\andgate\) gate and eliminate the unknown blackbox.
-
 
 
 As well as removing redundant blackboxes, judicious use of shortcut
@@ -76,25 +72,18 @@ which usually only arise after streaming has been applied.
 With some
 
 \begin{example}[Control switches]
-    Recall that a \emph{multiplexer} is constructed as \(
+    Recall that a \emph{multiplexer} is a circuit component constructed as \(
     \iltikzfig{circuits/components/gates/mux}
     \coloneqq
     \iltikzfig{circuits/components/gates/mux-construction}
     \).
-
-    Among other examples, this could come in useful when considering
-    multiplexers with known
+    The first input is a \emph{control} which specifies which of the two other
+    inputs is output.
+    It is often the case that these control signals will be fixed for long
+    periods of time; perhaps they specify some sort of global circuit
+    configuration.
+    \todo[inline]{Finish this off}
 \end{example}
-
-\begin{remark}
-    These sort of `annihilator' rules in which one input to a primitive forces
-    the output to a certain value are not the only shortcut rule.
-    There are also `identifier' rules in which one input causes the primitive to
-    act as an identity on the remaining inputs; a good example is when one of
-    the inputs to an \(\andgate\) gate is set to true.
-    These rules could also be helpful for partial evaluation purposes.
-\end{remark}
-
 
 \begin{example}[Protocols]
     It may be the case that the inputs to a circuit are known to follow some
