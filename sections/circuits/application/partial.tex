@@ -1,10 +1,11 @@
 \section{Partial evaluation}
 
 Partial evaluation~\cite{jones1996introduction} is a paradigm used in software
-optimisation in which programs are `evaluated as much as possible' before all of
-the inputs are specified.
-For example, it may be the case that an input to a program is fixed; using
-partial evaluation, a program specialised for this input can be defined.
+optimisation in which programs are `evaluated as much as possible' while only
+some of the inputs are specified.
+For example, it may be the case that a particular input to a program is fixed
+for long periods of time; using partial evaluation, a program specialised for
+this input can be defined.
 This program might run significantly faster than the original.
 
 There has been work into partial evaluation for hardware, such as constant
@@ -12,8 +13,88 @@ propagation~\cite{singh1996expressing,singh1999partial} and
 unfolding~\cite{thompson2006bitlevel}.
 However, this has been relatively informal, and can be made rigorous using the
 categorical framework.
-Many of the examples presented in this section will involve some sort of partial
-evaluation.
+
+\subsection{Shortcut rules}
+
+The reductions defined as part of the operational semantics assume that all the
+components in the circuits are fully specified: to apply the \((\gateeqn)\)
+reduction we need to know all the inputs.
+However, when performing partial evaluation this might not be case; we may have
+left some as variables to be specified later.
+Fortunately, it is not always necessary to consider all of the inputs to a
+primitive in order to determine its behaviour.
+
+\begin{example}[Shortcuts for \(\andgate\)]
+    A well-known example of a shortcut rule is that when one input to an
+    \(\andgate\) gate is false, then the output is always false regardless of
+    the other input.
+\end{example}
+
+
+\begin{example}[Blocking boxes]\label{ex:blocking-boxes}
+    Consider the circuit \(
+    \iltikzfig{circuits/examples/blocking/circuit}
+    \), which contains a `blackbox' combinational circuit \(
+    \iltikzfig{strings/category/f}[box=f, colour=comb]
+    \) with unknown behaviour.
+
+    Even though we cannot directly reduce the blackbox, if we set the first
+    input to false and use the shortcut rule above, we can still produce an
+    output value.
+    \[
+        \iltikzfig{circuits/examples/blocking/applied-false}
+        \reduction
+        \iltikzfig{circuits/examples/blocking/streamed-false}
+        \reduction
+        \iltikzfig{circuits/examples/blocking/reduced}
+    \]
+\end{example}
+
+Although the blackbox is blocking, we do know how the \(\andgate\) gate
+works; in particular we know that if either of its inputs are false then
+the output must also be false.
+Exploiting this, we can define a new `shortcut' reduction
+\(
+\iltikzfig{circuits/examples/blocking/rule-lhs}
+\reduction
+\iltikzfig{circuits/examples/blocking/rule-rhs}
+\), which is clearly sound for the reasons detailed above.
+If we could fully reduce the blackbox, this rule would be redundant, as
+eventually the \((\gateeqn)\) rule would be applied to the \(\andgate\)
+gate and the same result found.
+In this context it is useful though as it means we can completely ignore the
+second argument to the \(\andgate\) gate and eliminate the unknown blackbox.
+
+
+
+As well as removing redundant blackboxes, judicious use of shortcut
+reductions could dramatically reduce the number of reductions needed to
+get the outputs of a circuit.
+
+The shortcut rule defined above only
+which usually only arise after streaming has been applied.
+With some
+
+\begin{example}[Control switches]
+    Recall that a \emph{multiplexer} is constructed as \(
+    \iltikzfig{circuits/components/gates/mux}
+    \coloneqq
+    \iltikzfig{circuits/components/gates/mux-construction}
+    \).
+
+    Among other examples, this could come in useful when considering
+    multiplexers with known
+\end{example}
+
+\begin{remark}
+    These sort of `annihilator' rules in which one input to a primitive forces
+    the output to a certain value are not the only shortcut rule.
+    There are also `identifier' rules in which one input causes the primitive to
+    act as an identity on the remaining inputs; a good example is when one of
+    the inputs to an \(\andgate\) gate is set to true.
+    These rules could also be helpful for partial evaluation purposes.
+\end{remark}
+
 
 \begin{example}[Protocols]
     It may be the case that the inputs to a circuit are known to follow some
@@ -22,6 +103,7 @@ evaluation.
     more optimisation potential.
     We write \(=_{\mathsf{A} \in X}\) when we assume the inputs along wire
     \(\mathsf{A}\) will only be members of set \(X \subseteq \valuetuple{m}\).
+
     For example, \(
     \iltikzfig{circuits/examples/protocol/protocol-rule-lhs}
     =_{\mathsf{A}\in\{\mathsf{t},\mathsf{f}\}}
@@ -42,5 +124,5 @@ evaluation.
 \end{example}
 
 Since equations can be freely applied without being concerned with the context,
-partial evaluation could be automated by simply applying as many reductions as
+partial evaluation could be automated by applying as many reductions as
 possible.
