@@ -1,1 +1,46 @@
 \section{Partial evaluation}
+
+Partial evaluation~\cite{jones1996introduction} is a paradigm used in software
+optimisation in which programs are `evaluated as much as possible' before all of
+the inputs are specified.
+For example, it may be the case that an input to a program is fixed; using
+partial evaluation, a program specialised for this input can be defined.
+This program might run significantly faster than the original.
+
+There has been work into partial evaluation for hardware, such as constant
+propagation~\cite{singh1996expressing,singh1999partial} and
+unfolding~\cite{thompson2006bitlevel}.
+However, this has been relatively informal, and can be made rigorous using the
+categorical framework.
+Many of the examples presented in this section will involve some sort of partial
+evaluation.
+
+\begin{example}[Protocols]
+    It may be the case that the inputs to a circuit are known to follow some
+    sort of protocol.
+    By including preconditions in our equational reasoning, we can observe
+    more optimisation potential.
+    We write \(=_{\mathsf{A} \in X}\) when we assume the inputs along wire
+    \(\mathsf{A}\) will only be members of set \(X \subseteq \valuetuple{m}\).
+    For example, \(
+    \iltikzfig{circuits/examples/protocol/protocol-rule-lhs}
+    =_{\mathsf{A}\in\{\mathsf{t},\mathsf{f}\}}
+    \iltikzfig{circuits/examples/protocol/protocol-rule-rhs}
+    \), as at least one true values will be applied to the \(\orgate\).
+    Consider the larger circuit below and assume that the first two
+    inputs can only ever be inverses; it can be shown that this circuit
+    exhibits combinational behaviour.
+    \begin{gather*}
+        \iltikzfig{circuits/examples/protocol/protocol-circuit}
+        \Rightarrow
+        \iltikzfig{circuits/examples/protocol/circuit-with-protocol}
+        =_{\mathsf{A}\in\{\mathsf{t},\mathsf{f}\}}
+        \iltikzfig{circuits/examples/protocol/circuit-with-protocol-1}
+        =
+        \iltikzfig{circuits/examples/protocol/circuit-with-protocol-3}
+    \end{gather*}
+\end{example}
+
+Since equations can be freely applied without being concerned with the context,
+partial evaluation could be automated by simply applying as many reductions as
+possible.

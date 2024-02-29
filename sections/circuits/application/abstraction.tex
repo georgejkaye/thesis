@@ -1,3 +1,42 @@
 \section{Layers of abstraction}
 
-\cite{lobski2022string}
+Circuits can be viewed at multiple levels of abstraction.
+One could drop down to the level of transistors, as illustrated in
+\cite[Sec. 4.1]{ghica2017diagrammatic}.
+Alternatively, one could become more abstract, setting the generators in a
+circuit to be \emph{subcircuits}, such as arithmetic operations.
+
+The levels of abstraction need not remain isolated.
+Using \emph{layered explanations}~\cite{lobski2022string}, multiple signatures
+can be mixed in one diagram, with the subcircuits acting as `windows' into
+different levels of abstraction, and drawn using `functorial boxes'
+\cite{mellies2006functorial}.
+
+\begin{example}[Implementation]
+    Suppose one is working in a high-level signature \(\Sigma_+\) containing a
+    generator \(
+    \iltikzfig{circuits/components/gates/gate}[gate=?,colour=comb]
+    \), representing an \emph{IP core}: a circuit that has a known behaviour but
+    with an unknown implementation.
+    This component can be left as a blackbox and evaluated as
+    demonstrated above.
+
+    The designer then attempts to design their own implementation using the
+    gate-level signature \(\belnapsignature\).
+    To synthesise the final circuit, a map is defined from generators in \(
+    \Sigma_+
+    \) to morphisms in \(\scirc{\belnapsignature}\), which induces a functor
+    \(\scirc{\Sigma_+} \to \scirc{\belnapsignature}\).
+    Different implementations can be defined as different maps, and hence
+    different functors.
+    These circuits can then be tested to see if they act as intended.
+    \begin{gather*}
+        \iltikzfig{circuits/examples/implementation/circuit}
+        \xRightarrow{\text{Imp.\ 1}}
+        \iltikzfig{circuits/examples/implementation/circuit-implemented}
+        \quad
+        \iltikzfig{circuits/examples/implementation/circuit}
+        \xRightarrow{\text{Imp.\ 2}}
+        \iltikzfig{circuits/examples/implementation/circuit-implemented-2}
+    \end{gather*}
+\end{example}

@@ -1,1 +1,50 @@
 \section{Refining circuits}
+
+
+\begin{example}[Retiming]
+    The clock cycle of a circuit is determined by the longest paths between
+    registers. Altering the paths between registers can be achieved using
+    \emph{retiming}~\cite{leiserson1991retiming}: moving registers across gates.
+    This is modelled by the streaming equation (\cref{prop:streaming});
+    forward retiming (streaming left to right) is always possible
+    but for backward retiming (streaming right to left), the value
+    in the register must be in the image of the gates.
+\end{example}
+
+The behaviour of a circuit need not be preserved exactly.
+Indeed, this is not to be expected as optimisations are intended to increase the
+clock cycle of the circuit!
+This means that the same output signals will be produced, but over a shorter
+timespan.
+
+\begin{example}[Pipelining]
+    Another technique is \emph{pipelining}~\cite{parhi1999vlsi}, which inserts
+    more registers to increase throughput.
+    These can be emulated in the compositional framework by apply
+    transformations locally to registers.
+    Ordinarily, such transformations can cause obfuscation since the state space
+    dramatically changes. In the compositional model, the structure of the
+    circuit is left relatively untouched.
+\end{example}
+
+\begin{example}[Scan chains]
+    A common way of testing circuits is by using a
+    \emph{scan chain}~\cite{mourad2000principles}, a way of forcing the
+    inputs to flipflops to test how specific states affect the outputs of the
+    circuit.
+    Adding a flipflop to a scan chain requires some extra inputs: the
+    \(\mathsf{scan}_\mathsf{en}\) wire toggles if the flipflop operates in
+    normal mode or if it takes \(\mathsf{scan}_\mathsf{in}\) as its value.
+    \[
+        \iltikzfig{circuits/examples/scan-chain/flipflop-before-chain}
+        \xRightarrow{\text{scan}}
+        \iltikzfig{circuits/examples/scan-chain/scan-chain}
+    \]
+\end{example}
+
+One could factor in these transformations when designing the circuit, but this
+can obfuscate the design of the actual logic.
+Additionally, applying these transformations where the remaining part of the
+circuit is \emph{not} combinational can be quite complex.
+With the compositional approach the two tasks can be kept isolated by using
+blackboxes, layered explanations, and graphical reasoning.
