@@ -29,14 +29,13 @@ output is the other input.
 
 Exploiting this, we can define some new `shortcut' reductions shown in
 \cref{fig:shortcuts}.
-Two varieties are provided: one for when the inputs are instantaneous values
-(although not necessarily fully reduced), and one for when the input is an
-infinite waveform.
-These rules are all sound for the reasons detailed above.
+These rules are only sound when the other inputs are also (unreduced)
+instantaneous values, as the value will produce \(\bot\) on subsequent cycles,
+violating the soundness of the shortcut.
 
-In a setting where we can fully reduce everything, these rule are redundant, as
-eventually the \((\gateeqn)\) rule would be applied to the \(\andgate\)
-gate and the same result found.
+These rule are redundant in a setting where we can fully reduce everything, as
+eventually the \((\gateeqn)\) rule would be applied to the \(\andgate\) gate and
+the same result found.
 However, for partial evaluation they are a crucial way of propagating what
 inputs we do have across a circuit.
 
@@ -61,15 +60,28 @@ inputs we do have across a circuit.
     \]
 \end{example}
 
-
-
 As well as removing redundant blackboxes, judicious use of shortcut
-reductions could dramatically reduce the number of reductions needed to
-get the outputs of a circuit.
+reductions can dramatically reduce the reductions needed to get the outputs of a
+circuit.
 
-The shortcut rule defined above only
-which usually only arise after streaming has been applied.
-With some
+The shortcut rules defined above are only applied after streaming is applied, so
+they only rewrite the circuit for the current cycle of execution.
+However, when some of the inputs to a circuit are fixed, partial evaluation can
+be used to reduce the size of a circuit to make a circuit specialised for this
+input.
+This can be modelled by precomposing the relevant input with an
+\emph{infinite waveform} \(
+\iltikzfig{circuits/components/waveforms/infinite-register}[val=v]
+\).
+
+To propagate waveforms across circuits we need to derive a version of the
+\((\gateeqn)\) rule for applying waveforms to primitives.
+We also generalise the shortcut rules to work on infinite waveforms; since the
+input triggering the shortcut is fixed, we no longer need to enforce that the
+other inputs are instantaneous and can leave these as dangling inputs.
+These rules are illustrated in \cref{fig:waveform-rules}.
+
+\input{sections/circuits/application/floats/waveform-rules}
 
 \begin{example}[Control switches]
     Recall that a \emph{multiplexer} is a circuit component constructed as \(
@@ -82,7 +94,27 @@ With some
     It is often the case that these control signals will be fixed for long
     periods of time; perhaps they specify some sort of global circuit
     configuration.
-    \todo[inline]{Finish this off}
+
+    Consider the circuit \(
+    \iltikzfig{circuits/examples/control/circuit}
+    \), in which the control signal to the multiplexer determines which of two
+    subcircuits will become the output.
+    We will assume that the control signal is held at false; to use the shortcut
+    rules above we expand the definition of the multiplexer so the circuit is \(
+    \iltikzfig{circuits/examples/control/circuit-expanded}
+    \) and reduce as follows.
+    \begin{gather*}
+        \iltikzfig{circuits/examples/control/circuit-applied}
+        \reduction
+        \iltikzfig{circuits/examples/control/circuit-applied-1}
+        \reduction
+        \iltikzfig{circuits/examples/control/circuit-applied-2}
+        \reduction
+        \\[1em]
+        \iltikzfig{circuits/examples/control/circuit-applied-3}
+        \reduction
+        \iltikzfig{circuits/examples/control/circuit-applied-4}
+    \end{gather*}
 \end{example}
 
 \begin{example}[Protocols]
