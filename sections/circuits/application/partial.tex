@@ -4,8 +4,8 @@ Partial evaluation~\cite{jones1996introduction} is a paradigm used in software
 optimisation in which programs are `evaluated as much as possible' while only
 some of the inputs are specified.
 For example, it may be the case that a particular input to a program is fixed
-for long periods of time; using partial evaluation, a program specialised for
-this input can be defined.
+for long periods of time; using partial evaluation, we can define a program
+specialised for this input.
 This program might run significantly faster than the original.
 
 There has been work into partial evaluation for hardware, such as constant
@@ -13,6 +13,110 @@ propagation~\cite{singh1996expressing,singh1999partial} and
 unfolding~\cite{thompson2006bitlevel}.
 However, this has been relatively informal, and can be made rigorous using the
 categorical framework.
+In this section we will discuss how we could extend the reduction-based
+operational semantics to define automatic procedures for applying partial
+evaluation to circuits.
+
+\subsection{Tidying up}
+
+When building a circuit, it is often desirable to reduce the number of wires
+and components used; this reduces both the physical size of the circuit and its
+power consumption.
+We can use partial evaluation to transform a circuit into a more minimal form.
+
+\begin{definition}[Tidying rules]
+    Let the set of \emph{tidying rules} be defined as the rules in
+    \cref{fig:tidy-rules}.
+\end{definition}
+
+Most of the tidying rules are self-explanatory; the final rule is necessary in
+order to deal with traced circuits with no outputs.
+Since all circuits with no outputs have the same behaviour, we are permitted to
+`cut' the trace and get a circuit we can apply more tidying rules to.
+As non-delay-guarded feedback is already handled by the
+\((\instantfeedbackeqn)\) rule, we only need to consider the delay-guarded case.
+
+\input{sections/circuits/application/floats/tidy-rules}
+
+\begin{proposition}
+    Applying the tidying rules to a circuit in Mealy form is confluent and
+    terminating.
+\end{proposition}
+\begin{proof}
+    The tidying rules always decrease the size of the circuit.
+    The only choice is raised when there is a trace around a combinational
+    circuit, but this does not change the internal structure of the subcircuit,
+    so rule applications are prevented.
+    Moreover, since all this rule does is `cut' a trace, it does not matter if
+    this is performed `all in one go', or each feedback loop is cut one by one.
+\end{proof}
+
+\subsection{Shortcut rules}
+
+It is often the case that we know that some of the inputs to a circuit is fixed.
+This can be modelled by precomposing the relevant input with an
+\emph{infinite waveform} \(
+\iltikzfig{circuits/components/waveforms/infinite-register}[val=v]
+\).
+We can propagate these waveforms across a circuit to see if we can reduce it to
+something simpler \emph{specialised} for these inputs.
+
+To propagate waveforms across circuits we need to derive a version of the
+\((\gateeqn)\) rule for applying waveforms to primitives.
+These rules are illustrated in \cref{fig:waveform-rules}.
+
+\input{sections/circuits/application/floats/waveform-rules}
+
+This is not the only way we can partially evaluate with some inputs.
+In some interpretations, it may be that we learn something about the output of
+a primitive with only some of the inputs specified.
+
+\begin{example}[Belnap shortcuts]
+    In the Belnap interpretation \(\belnapinterpretation\), if one applies a
+    false value to an \(\andgate\) gate then it will output false regardless of
+    the other input.
+    Similarly, if one applies a true value to an \(\orgate\) gate it will output
+    true.
+
+    Conversely, if one applies a true value to an \(\andgate\)
+
+\end{example}
+
+\input{sections/circuits/application/floats/shortcut-waveform-rules}
+
+\begin{example}[Control switches]
+    Recall that a \emph{multiplexer} is a circuit component constructed as \(
+    \iltikzfig{circuits/components/gates/mux}
+    \coloneqq
+    \iltikzfig{circuits/components/gates/mux-construction}
+    \).
+    The first input is a \emph{control} which specifies which of the two other
+    inputs is output.
+    It is often the case that these control signals will be fixed for long
+    periods of time; perhaps they specify some sort of global circuit
+    configuration.
+
+    Consider the circuit \(
+    \iltikzfig{circuits/examples/control/circuit}
+    \), in which the control signal to the multiplexer determines which of two
+    subcircuits will become the output.
+    We will assume that the control signal is held at false; to use the shortcut
+    rules above we expand the definition of the multiplexer so the circuit is \(
+    \iltikzfig{circuits/examples/control/circuit-expanded}
+    \) and reduce as follows.
+    \begin{gather*}
+        \iltikzfig{circuits/examples/control/circuit-applied}
+        \reduction
+        \iltikzfig{circuits/examples/control/circuit-applied-1}
+        \reduction
+        \iltikzfig{circuits/examples/control/circuit-applied-2}
+        \reduction
+        \\[1em]
+        \iltikzfig{circuits/examples/control/circuit-applied-3}
+        \reduction
+        \iltikzfig{circuits/examples/control/circuit-applied-4}
+    \end{gather*}
+\end{example}
 
 \subsection{Shortcut rules}
 
@@ -64,58 +168,6 @@ As well as removing redundant blackboxes, judicious use of shortcut
 reductions can dramatically reduce the reductions needed to get the outputs of a
 circuit.
 
-The shortcut rules defined above are only applied after streaming is applied, so
-they only rewrite the circuit for the current cycle of execution.
-However, when some of the inputs to a circuit are fixed, partial evaluation can
-be used to reduce the size of a circuit to make a circuit specialised for this
-input.
-This can be modelled by precomposing the relevant input with an
-\emph{infinite waveform} \(
-\iltikzfig{circuits/components/waveforms/infinite-register}[val=v]
-\).
-
-To propagate waveforms across circuits we need to derive a version of the
-\((\gateeqn)\) rule for applying waveforms to primitives.
-We also generalise the shortcut rules to work on infinite waveforms; since the
-input triggering the shortcut is fixed, we no longer need to enforce that the
-other inputs are instantaneous and can leave these as dangling inputs.
-These rules are illustrated in \cref{fig:waveform-rules}.
-
-\input{sections/circuits/application/floats/waveform-rules}
-
-\begin{example}[Control switches]
-    Recall that a \emph{multiplexer} is a circuit component constructed as \(
-    \iltikzfig{circuits/components/gates/mux}
-    \coloneqq
-    \iltikzfig{circuits/components/gates/mux-construction}
-    \).
-    The first input is a \emph{control} which specifies which of the two other
-    inputs is output.
-    It is often the case that these control signals will be fixed for long
-    periods of time; perhaps they specify some sort of global circuit
-    configuration.
-
-    Consider the circuit \(
-    \iltikzfig{circuits/examples/control/circuit}
-    \), in which the control signal to the multiplexer determines which of two
-    subcircuits will become the output.
-    We will assume that the control signal is held at false; to use the shortcut
-    rules above we expand the definition of the multiplexer so the circuit is \(
-    \iltikzfig{circuits/examples/control/circuit-expanded}
-    \) and reduce as follows.
-    \begin{gather*}
-        \iltikzfig{circuits/examples/control/circuit-applied}
-        \reduction
-        \iltikzfig{circuits/examples/control/circuit-applied-1}
-        \reduction
-        \iltikzfig{circuits/examples/control/circuit-applied-2}
-        \reduction
-        \\[1em]
-        \iltikzfig{circuits/examples/control/circuit-applied-3}
-        \reduction
-        \iltikzfig{circuits/examples/control/circuit-applied-4}
-    \end{gather*}
-\end{example}
 
 \begin{example}[Protocols]
     It may be the case that the inputs to a circuit are known to follow some
