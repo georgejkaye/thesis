@@ -31,7 +31,7 @@ We can use partial evaluation to transform a circuit into a more minimal form.
 
 Most of the tidying rules are self-explanatory; the final rule is necessary in
 order to deal with traced circuits with no outputs.
-Since all circuits with no outputs have the same behaviour, we are permitted to
+Since all circuits with no outputs have the same behaviour, we are permitted tot
 `cut' the trace and get a circuit we can apply more tidying rules to.
 As non-delay-guarded feedback is already handled by the
 \((\instantfeedbackeqn)\) rule, we only need to consider the delay-guarded case.
@@ -78,9 +78,16 @@ a primitive with only some of the inputs specified.
     Similarly, if one applies a true value to an \(\orgate\) gate it will output
     true.
 
-    Conversely, if one applies a true value to an \(\andgate\)
-
+    Conversely, if one applies a true value to an \(\andgate\) gate or a false
+    value to an \(\orgate\) gate, the output will be the other input.
 \end{example}
+
+These `shortcuts' can also be implemented as rules, as illustrated in
+\cref{fig:shortcut-waveform-rules}.
+Note that here the value that `triggers' the shortcut must be contained within
+an infinite waveform; if we applied the rule with just an instantaneous value,
+this value would produce \(\bot\) on ticks after the first and the rule would
+be unsound.
 
 \input{sections/circuits/application/floats/shortcut-waveform-rules}
 
@@ -118,30 +125,15 @@ a primitive with only some of the inputs specified.
     \end{gather*}
 \end{example}
 
-\subsection{Shortcut rules}
+\subsection{Shortcuts after streaming}
 
-The reductions defined as part of the operational semantics assume that all the
-components in the circuits are fully specified: to apply the \((\gateeqn)\)
-reduction we need to know all the inputs.
-However, when performing partial evaluation this might not be case; we may have
-left some as variables to be specified later.
-Fortunately, it is not always necessary to consider all of the inputs to a
-primitive in order to determine its behaviour.
-For example, for an \(\andgate\) gate, if either of its inputs are false then
-the output must also be false, and if either of its inputs are true then the
-output is the other input.
-
-Exploiting this, we can define some new `shortcut' reductions shown in
-\cref{fig:shortcuts}.
-These rules are only sound when the other inputs are also (unreduced)
-instantaneous values, as the value will produce \(\bot\) on subsequent cycles,
-violating the soundness of the shortcut.
-
-These rule are redundant in a setting where we can fully reduce everything, as
-eventually the \((\gateeqn)\) rule would be applied to the \(\andgate\) gate and
-the same result found.
-However, for partial evaluation they are a crucial way of propagating what
-inputs we do have across a circuit.
+The rules in the previous sections are intended for use on circuit before we
+even apply values to them.
+However, there is still potential for partial evaluation when we consider the
+outputs of a circuit one step at a time.
+To do this, we can apply variants of the shortcut rules \emph{after} performing
+streaming for some inputs.
+These variants are illustrated in \cref{fig:shortcuts}.
 
 \input{sections/circuits/application/floats/shortcuts}
 
