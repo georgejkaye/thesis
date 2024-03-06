@@ -160,14 +160,73 @@ As well as removing redundant blackboxes, judicious use of shortcut
 reductions can dramatically reduce the reductions needed to get the outputs of a
 circuit.
 
+\subsection{Protocols}
+
+Sometimes we may not know the exact inputs to a circuit, but know that they make
+up a fixed subset of all possible inputs, or they follow some sort of protocol.
+We can reason about this by considering all of the \emph{universes}
+
+
+We can implement this in our reduction framework with \emph{uncertain values}
+which we either know nothing about or know can only take some specified values.
+
+\begin{definition}
+    Let \(\scircsigmap\) be the result of extending \(\scircsigma\) with value
+    generators for each word \(\listvar{v?} \in \freemon{\values}\).
+\end{definition}
+
+The additional value generators indicate \emph{uncertainty} over what the value
+may be.
+The intended interpretation of an uncertain value \(
+\iltikzfig{circuits/components/values/vs-longer}[val=\listvar{v?}]
+\) where \(\listvar{v?}\) is a word of length \(k\) is that there are \(k\)
+possible `universes' in play; in each universe this value will be
+\(\listvar{v?}(0)\), \(\listvar{v?}(1)\), and so on up to \(\listvar{v?}(k-1)\).
+If an uncertain value word has length shorter than the number of universes, we
+take the convention that the value in this universe is \(\bot\).
+
+To avoid confusion with our syntax sugar for arbitrary-width values, we will
+always end uncertain value lists with \(?\).
+When writing concrete uncertain values, we delimit the elements of the word with
+vertical bars as in \(\mathsf{f}|\mathsf{t}\) to allude to the fact this value
+is either the first \emph{or} the second element.
+
+\begin{example}
+    If we have uncertain values \(
+    \iltikzfig{circuits/components/values/vs-longer}[val=\belnapfalse|\belnaptrue]
+    \) and \(
+    \iltikzfig{circuits/components/values/vs-longer}[val=\belnaptrue|\belnapfalse]
+    \) in a circuit, there are two universes to consider, one where the
+    values output \(\belnapfalse\belnaptrue\) and one where they output
+    \(\belnaptrue\belnapfalse\).
+
+    If we add in a third uncertain value with three possible values, \(
+    \iltikzfig{circuits/components/values/vs-even-longer}[val=\belnaptrue|\belnapfalse|\top]
+    \), we now have three possible universes: the outputs are now
+    \(\belnapfalse\belnaptrue\belnaptrue\),
+    \(\belnaptrue\belnapfalse\belnapfalse\), and
+    \(\bot\bot\top\) respectively.
+\end{example}
+
+To reason with uncertain values in the reductional framework we need to add
+rules for processing them.
+Once again it is useful to have versions for both waveforms and values, for
+reasoning before and during execution.
+
+\begin{definition}[Uncertain rules]
+    The \emph{uncertain rules} are listed in \cref{fig:uncertain-rules}.
+\end{definition}
+
+\input{sections/circuits/application/floats/uncertain-rules}
+
+
 
 \begin{example}[Protocols]
-    It may be the case that the inputs to a circuit are known to follow some
-    sort of protocol.
-    By including preconditions in our equational reasoning, we can observe
-    more optimisation potential.
-    We write \(=_{\mathsf{A} \in X}\) when we assume the inputs along wire
-    \(\mathsf{A}\) will only be members of set \(X \subseteq \valuetuple{m}\).
+    One sticking point that arises when using the categorical framework is the
+    presence of the \(\bot\) and \(\top\) values, which would not normally
+    be explicitly provided to a circuit.
+    Using uncertain values, we can specify the values that \emph{will} be
+    applied to a circuit and reduce accordingly.
 
     For example, \(
     \iltikzfig{circuits/examples/protocol/protocol-rule-lhs}

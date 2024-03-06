@@ -1,0 +1,54 @@
+\begin{figure}
+    \centering
+    \(
+    \iltikzfig{circuits/examples/uncertain/waveform-primitive-lhs}[val=\listvar{v?}]
+    \reduction
+    \iltikzfig{circuits/examples/uncertain/waveform-primitive-rhs}
+    \)
+    \\[1em]
+    \(
+    \iltikzfig{circuits/examples/uncertain/waveform-fork-lhs}[val=\listvar{v?}]
+    \reduction
+    \iltikzfig{circuits/examples/uncertain/waveform-fork-rhs}[val=\listvar{v?}]
+    \)
+    \,\,
+    \(
+    \iltikzfig{circuits/examples/uncertain/waveform-join-lhs}[val1=\listvar{v?},val2=\listvar{w?}]
+    \reduction
+    \iltikzfig{circuits/examples/uncertain/waveform-join-rhs}[val1=\listvar{v?},val2=\listvar{w?}]
+    \)
+    \\[1em]
+    \(
+    \iltikzfig{circuits/examples/uncertain/instantaneous-primitive-lhs}[val=\listvar{v?}]
+    \reduction
+    \iltikzfig{circuits/examples/uncertain/instantaneous-primitive-rhs}
+    \)
+    \quad
+    \(
+    \iltikzfig{circuits/examples/uncertain/instantaneous-fork-lhs}[val=\listvar{v?}]
+    \reduction
+    \iltikzfig{circuits/examples/uncertain/instantaneous-fork-rhs}[val=\listvar{v?}]
+    \)
+    \quad
+    \(
+    \iltikzfig{circuits/examples/uncertain/instantaneous-join-lhs}[val1=\listvar{v?},val2=\listvar{w?}]
+    \reduction
+    \iltikzfig{circuits/examples/uncertain/instantaneous-join-rhs}[val1=\listvar{v?},val2=\listvar{w?}]
+    \)
+    \\[1em]
+    \(
+    \iltikzfig{circuits/components/values/vs-longer}[val=\listvar{v?}]
+    \reduction
+    \iltikzfig{circuits/components/values/vs}[val=v]
+    \)
+    if \(\forall i,j < |\listvar{v?}|\), \(\listvar{v?}(i) = \listvar{v?}(j)\)
+    \\[1em]
+    \(
+    \iltikzfig{circuits/components/waveforms/infinite-register}[val=\listvar{v?}]
+    \reduction
+    \iltikzfig{circuits/components/waveforms/infinite-register}[val=v]
+    \)
+    if \(\forall i,j < |\listvar{v?}|\), \(\listvar{v?}(i) = \listvar{v?}(j)\)
+    \caption{Rules for uncertain values}
+    \label{fig:uncertain-rules}
+\end{figure}
