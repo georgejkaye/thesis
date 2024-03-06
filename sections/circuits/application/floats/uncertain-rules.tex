@@ -11,7 +11,7 @@
     \reduction
     \iltikzfig{circuits/examples/uncertain/waveform-fork-rhs}[val=\listvar{v?}]
     \)
-    \,\,
+    \quad
     \(
     \iltikzfig{circuits/examples/uncertain/waveform-join-lhs}[val1=\listvar{v?},val2=\listvar{w?}]
     \reduction
@@ -41,13 +41,15 @@
     \reduction
     \iltikzfig{circuits/components/values/vs}[val=v]
     \)
+    \,\,
     if \(\forall i,j < |\listvar{v?}|\), \(\listvar{v?}(i) = \listvar{v?}(j)\)
-    \\[1em]
+    \\[0.5em]
     \(
     \iltikzfig{circuits/components/waveforms/infinite-register}[val=\listvar{v?}]
     \reduction
     \iltikzfig{circuits/components/waveforms/infinite-register}[val=v]
     \)
+    \,\,
     if \(\forall i,j < |\listvar{v?}|\), \(\listvar{v?}(i) = \listvar{v?}(j)\)
     \caption{Rules for uncertain values}
     \label{fig:uncertain-rules}
