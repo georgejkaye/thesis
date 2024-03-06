@@ -3,13 +3,13 @@
     \begin{minipage}{0.45\textwidth}
         \centering
         \(
-            \equationdisplay{
-                \iltikzfig{circuits/algebraic/encoding}[state=\listvar{s},transition=f,output=g,delay=x]
-            }{
-                \iltikzfig{circuits/algebraic/encoding-longstate}[state=\gamma_{\leq}(\listvar{s}),transition={\transitiontranslation{f}},output={\outputtranslation{g}},delay=y]
-            }{
-                \encodingequation
-            }
+        \equationdisplay{
+            \iltikzfig{circuits/productivity/mealy-form}[core=|f|,delay=x]
+        }{
+            \iltikzfig{circuits/algebraic/state-encoding}[core=|f|,delay=x]
+        }{
+            \encodingequation
+        }
         \)
     \end{minipage}
     \begin{minipage}{0.1\textwidth}
@@ -17,8 +17,8 @@
         \vspace{0.5em}
         \begin{tabular}{c}
             \(
-                \iltikzfig{strings/category/f}[box=f,colour=seq],
-                \iltikzfig{strings/category/f}[box=g,colour=seq]
+            \iltikzfig{strings/category/f}[box=f,colour=seq],
+            \iltikzfig{strings/category/f}[box=g,colour=seq]
             \)
             \\[0.25em]
             normalised

@@ -51,22 +51,22 @@ circuits, \emph{algebraic semantics}.
     Take the following example, containing some arbitrary component \(e\).
     \begin{align*}
         mul\,(add\,e\,(mul\,e\,\overline{3}))\,\overline{2}
-        &=
+         & =
         mul\,(add\,(mul\,e\,1)\,(mul\,e\,\overline{3}))\,\overline{2}
         \\
-        &=
+         & =
         mul\,(mul\,e\, add(\overline{1}\,\overline{3}))\,\overline{2}
         \\
-        &=
+         & =
         mul\,(mul \,e\,\overline{4})\,\overline{2}
         \\
-        &=
+         & =
         mul\,e\,(mul \,\overline{4}\,\overline{2})
         \\
-        &=
+         & =
         mul\,e\,\overline{8}
         \\
-        &=
+         & =
         mul\,\overline{8}\,e
     \end{align*}
     Despite not specifying the structure of \(e\), we have
@@ -79,21 +79,21 @@ As with the operational semantics, we are especially interested in defining a
 \emph{sound and complete} algebraic semantics for sequential digital circuits
 with respect to the denotational semantics.
 That is to say, for each equation \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq]
-    =
-    \iltikzfig{strings/category/f}[box=g,colour=seq]
+\iltikzfig{strings/category/f}[box=f,colour=seq]
+=
+\iltikzfig{strings/category/f}[box=g,colour=seq]
 \) then \(
-    \circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
-    =
-    \circuittostreami[\iltikzfig{strings/category/f}[box=g,colour=seq]]
+\circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
+=
+\circuittostreami[\iltikzfig{strings/category/f}[box=g,colour=seq]]
 \), and there must be enough equations such that if \(
-    \circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
-    =
-    \circuittostreami[\iltikzfig{strings/category/f}[box=g,colour=seq]]
+\circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
+=
+\circuittostreami[\iltikzfig{strings/category/f}[box=g,colour=seq]]
 \) then there exists a series of equations identifying \(
-    \circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
+\circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
 \) and \(
-    \circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
+\circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
 \).
 
 \begin{remark}
@@ -136,6 +136,6 @@ we will sometimes have no choice but to define \emph{families} of equations
 parameterised over some arbitrary subcircuit.
 
 \input{sections/circuits/algebraic/mealy}
-\input{sections/circuits/algebraic/normalisation}
-\input{sections/circuits/algebraic/isolation}
+% \input{sections/circuits/algebraic/normalisation}
+% \input{sections/circuits/algebraic/isolation}
 \input{sections/circuits/algebraic/encoding}

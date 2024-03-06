@@ -21,16 +21,97 @@ transition and output of the Mealy core will come in useful.
 
 \begin{definition}[Circuit states]
     Given a circuit \(
-        \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
     \) in normalised Mealy form such that \(
-        \iltikzfig{strings/category/f}[box=f,colour=seq]
-        \coloneqq
-        \iltikzfig{circuits/algebraic/encoding}[transition={f_0},output={f_1},delay=\listvar{x}]
-    \), let the set of \emph{circuit states of \(f\)}, written
-    \(S(f,\listvar{s})\), be the smallest set containing \(\listvar{s}\) an
-    closed under \(
-        \listvar{r} \mapsto \tilde{f}_0(\listvar{r},\listvar{v})
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
+    \coloneqq
+    \iltikzfig{circuits/productivity/mealy-form}[core=|f|,colour=seq,delay=\listvar{x}]
+    \), let the set of \emph{circuit states of \(f\) from \(\listvar{s}\)},
+    written \(S(f,\listvar{s})\), be the smallest set containing \(\listvar{s}\)
+    and closed under \(
+    \listvar{r} \mapsto \proj{x}\left(\tilde{f}_0(\listvar{r},\listvar{v})\right)
     \) for any \(\listvar{v} \in \valuetuple{\listvar{m}}\).
+\end{definition}
+
+The set of circuit states is essential in determining valid equations between
+circuits in normalised Mealy form.
+The first thing to consider when comparing two circuits in normalised Mealy
+form is that the circuits may not have the same states, or even have state words
+of equal width.
+One of our families of equations will be based around \emph{encoding} states
+of a circuit into different representations.
+
+\begin{definition}[Encoder]\label{def:encoder}
+    Let \(S \subseteq \valuetuple{x}\) and \(T \subseteq \valuetuple{y}\) be two
+    sets; an \emph{(S,T)-encoder} is two functions \(
+    \morph{\mathsf{enc}_{S,T}}{S}{T}
+    \) and \(
+    \morph{\mathsf{dec}_{S,T}}{T}{S}
+    \) such that \(dec_{S,T} \circ enc_{S,T}\).
+\end{definition}
+
+\begin{example}
+    Given a set of states \(S \subseteq \valuetuple{x}\), a \(\leq\)-encoding
+    \(\morph{\gamma_\leq}{S}{\valuetuple{k}}\) used when defining the map from
+    Mealy machines to circuits (\cref{def:encoding}) is an example of a
+    \((S,\valuetuple{k})\)-encoder; the decoder
+    \(\mathsf{dec}_{S,\valuetuple{x}}\) is defined as the monotone completion
+    of \(\gamma_\leq^{-1}\).
+\end{example}
+
+Using a decoder and an encoder, we can change the state words that a circuit
+operates with.
+
+\begin{proposition}[Encoding equation]\label{prop:encoding-equation}
+    Let \(\iltikzfig{strings/category/f}[box=f,colour=seq]\) be a circuit in
+    normalised Mealy form such that \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
+    \coloneqq
+    \iltikzfig{circuits/productivity/mealy-form}[core=|\hat{f}|,colour=seq,delay=\listvar{x}]
+    \) and let \(\mathsf{enc},\mathsf{dec}\) be the two functions of a
+    \((S(\hat{f},\listvar{s})),T\)-encoder as defined above.
+    Then the \emph{encoding equation} \((\encodingequation)\) in
+    \cref{fig:encoding-equation} is sound.
+\end{proposition}
+\begin{proof}
+    The interpretations of \(
+    \iltikzfig{strings/category/f-2-1}[box={\transitiontranslation{f}},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
+    \) and \(
+    \iltikzfig{strings/category/f-2-1}[box={\outputtranslation{f}},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{n}]
+    \) are as the behaviours of \(
+    \iltikzfig{strings/category/f-2-1}[box={f},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
+    \) and \(
+    \iltikzfig{strings/category/f-2-1}[box={g},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
+    \) wrapped in appropriate decodings and encodings.
+\end{proof}
+
+\begin{notation}[Restriction]
+    Given a function \(\morph{f}{A}{B}\), and a set
+    \(C \subseteq A\), let \(\morph{f|C}{C}{B}\) be the \emph{restriction} of
+    \(f\) to act on elements of \(C\), i.e.\ for all \(c \in C\),
+    \(f|C(c) = f(c)\).
+\end{notation}
+
+\begin{definition}
+    Let \(
+    \iltikzfig{circuits/productivity/mealy-form}[core=|f|,colour=seq,delay=\listvar{x}]
+    \) be a circuit in normalised Mealy form with state set \(S(f, \listvar{s})\).
+    Then, for a total order \(\leq\) on \(S(f, \listvar{s})\), the
+    \emph{\(\leq\)-encoding circuit} is a
+\end{definition}
+
+\begin{definition}[State change equation]
+
+\end{definition}
+
+
+
+\begin{definition}[Restriction equations]
+    Given two circuits in normalised Mealy form \(
+    \iltikzfig{circuits/productivity/mealy-form}[core=|f|,colour=seq]
+    \) and \(
+    \iltikzfig{circuits/productivity/mealy-form}[core=|g|,colour=seq]
+    \)  a \emph{restriction equation}
 \end{definition}
 
 Since the transition subcircuit of a circuit in normalised Mealy form is itself
@@ -42,27 +123,27 @@ The size of the set of circuit states determines the width of the encoded state.
     For a set of states \(S\), let \(\morph{\gamma_\leq}{S}{\valuetuple{y}}\) be
     a \(\leq\)-encoding.
     For a circuit \(
-        \iltikzfig{strings/category/f-2-1}[box=f, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
-        \coloneqq
-        \mealytofunc[\hat{f}]
+    \iltikzfig{strings/category/f-2-1}[box=f, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
+    \coloneqq
+    \mealytofunc[\hat{f}]
     \), its \emph{\(\gamma_\leq\)-transition} is a circuit \(
-        \iltikzfig{strings/category/f-2-1}[box=\transitiontranslation{f}, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
+    \iltikzfig{strings/category/f-2-1}[box=\transitiontranslation{f}, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
     \) defined as \(
-        \mealytofunc[
-            \left(\gamma_\leq(\listvar{s}),\listvar{v}\right)
-            \mapsto \gamma_\leq(\hat{f}(\listvar{s}, \listvar{v}))
-        ]
+    \mealytofunc[
+        \left(\gamma_\leq(\listvar{s}),\listvar{v}\right)
+        \mapsto \gamma_\leq(\hat{f}(\listvar{s}, \listvar{v}))
+    ]
     \), and for a circuit \(
-        \iltikzfig{strings/category/f-2-1}[box=g, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
-        \coloneqq
-        \mealytofunc[\hat{g}]
+    \iltikzfig{strings/category/f-2-1}[box=g, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
+    \coloneqq
+    \mealytofunc[\hat{g}]
     \), its \emph{\(\gamma_\leq\)-output} is a circuit \(
-        \iltikzfig{strings/category/f-2-1}[box=\outputtranslation{f}, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
+    \iltikzfig{strings/category/f-2-1}[box=\outputtranslation{f}, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
     \) defined as \(
-        \mealytofunc[
-            \left(\gamma_\leq(\listvar{s}),\listvar{v}\right)
-            \mapsto \hat{g}(\listvar{s}, \listvar{v})
-        ].
+    \mealytofunc[
+        \left(\gamma_\leq(\listvar{s}),\listvar{v}\right)
+        \mapsto \hat{g}(\listvar{s}, \listvar{v})
+    ].
     \)
 \end{definition}
 
@@ -73,9 +154,9 @@ its corresponding \(\leq\)-encoded form.
 
 \begin{proposition}[Encoding equation]\label{prop:encoding-equation}
     Given two normalised circuits \(
-        \iltikzfig{strings/category/f-2-1}[box=f,colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
+    \iltikzfig{strings/category/f-2-1}[box=f,colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
     \) and \(
-        \iltikzfig{strings/category/f-2-1}[box=f,colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f-2-1}[box=f,colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{n}]
     \) along with word \(\listvar{s} \in \valuetuple{\listvar{x}}\), let
     \(\leq\) be an ordering on \(S(f,\listvar{s})\).
     Then the \emph{encoding equation} \((\encodingequation)\) in
@@ -83,14 +164,14 @@ its corresponding \(\leq\)-encoded form.
 \end{proposition}
 \begin{proof}
     The interpretations of \(
-            \iltikzfig{strings/category/f-2-1}[box={\transitiontranslation{f}},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
-        \) and \(
-            \iltikzfig{strings/category/f-2-1}[box={\outputtranslation{f}},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{n}]
-        \) are as the behaviours of \(
-            \iltikzfig{strings/category/f-2-1}[box={f},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
-        \) and \(
-            \iltikzfig{strings/category/f-2-1}[box={g},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
-        \) wrapped in appropriate decodings and encodings.
+    \iltikzfig{strings/category/f-2-1}[box={\transitiontranslation{f}},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
+    \) and \(
+    \iltikzfig{strings/category/f-2-1}[box={\outputtranslation{f}},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{n}]
+    \) are as the behaviours of \(
+    \iltikzfig{strings/category/f-2-1}[box={f},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
+    \) and \(
+    \iltikzfig{strings/category/f-2-1}[box={g},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
+    \) wrapped in appropriate decodings and encodings.
 \end{proof}
 
 \input{sections/circuits/algebraic/floats/encoding-equation}
@@ -98,14 +179,14 @@ its corresponding \(\leq\)-encoded form.
 \begin{remark}
     The encoding equation is really a \emph{family} of equations parameterised
     over the circuits \(
-        \iltikzfig{strings/category/f}[box=f,colour=seq]
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
     \) and \(
-        \iltikzfig{strings/category/f}[box=g,colour=seq]
+    \iltikzfig{strings/category/f}[box=g,colour=seq]
     \).
     Since we have the precondition that these circuits are normalised, this is
     not quite every circuit in the universe but there will still be an equation
     for each possible function \(
-        \valuetuple{\listvar{m}} \to \valuetuple{\listvar{n}}
+    \valuetuple{\listvar{m}} \to \valuetuple{\listvar{n}}
     \), of which there are infinitely many.
     any old circuit.
     What is important is that given the two subcircuits and state word of a
@@ -123,28 +204,28 @@ encoding equation can be used to translate between pseudo-normal forms as well.
 \begin{definition}
     For an interpretation \(\interpretation\), let
     \(\mce_{\interpretation}\) be defined as \(
-        \mealyequations +
-        \instantfeedbackeqn +
-        \cartesianequations +
-        \normalisingequations +
-        \encodingequation
+    \mealyequations +
+    \instantfeedbackeqn +
+    \cartesianequations +
+    \normalisingequations +
+    \encodingequation
     \), and let \(\scircsigmae\) be defined as
     \(\scircsigma / \mce_{\interpretation}\).
 \end{definition}
 
 \begin{theorem}
     For a functionally complete interpretation \(\interpretation\), \(
-        \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
-        =
-        \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    =
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
     \) in \(\scircsigmae\) if and only if \(
-        \circuittostreami[
-            \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
-        ]
-        =
-        \circuittostreami[
-            \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
-        ]
+    \circuittostreami[
+        \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    ]
+    =
+    \circuittostreami[
+        \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    ]
     \).
 \end{theorem}
 \begin{proof}
@@ -153,36 +234,36 @@ encoding equation can be used to translate between pseudo-normal forms as well.
     By \cref{lem:normalised-mealy}, the two circuits can be brought to
     normalised Mealy form using
     \(
-        \mealyequations +
-        \instantfeedbackeqn +
-        \cartesianequations +
-        \normalisingequations
+    \mealyequations +
+    \instantfeedbackeqn +
+    \cartesianequations +
+    \normalisingequations
     \).
     By \cref{def:mealy-to-circuit} and
     \cref{thm:circuit-stream-correspondence} there must exist a circuit \(
-        \iltikzfig{strings/category/f}[box=h,colour=seq]
-        \coloneqq
-        \iltikzfig{circuits/algebraic/encoding}[transition={h_0},output={h_1},state={\listvar{s}}]
+    \iltikzfig{strings/category/f}[box=h,colour=seq]
+    \coloneqq
+    \iltikzfig{circuits/algebraic/encoding}[transition={h_0},output={h_1},state={\listvar{s}}]
     \) such that \(
-        \circuittostream[
-            \iltikzfig{strings/category/f}[box=f,colour=seq]
-        ]{\interpretation}
-        =
-        \circuittostream[
-            \iltikzfig{strings/category/f}[box=h,colour=seq]
-        ]{\interpretation}
-        =
-        \circuittostream[
-            \iltikzfig{strings/category/f}[box=g,colour=seq]
-        ]{\interpretation}
+    \circuittostream[
+        \iltikzfig{strings/category/f}[box=f,colour=seq]
+    ]{\interpretation}
+    =
+    \circuittostream[
+        \iltikzfig{strings/category/f}[box=h,colour=seq]
+    ]{\interpretation}
+    =
+    \circuittostream[
+        \iltikzfig{strings/category/f}[box=g,colour=seq]
+    ]{\interpretation}
     \).
     The circuit \(
-        \iltikzfig{strings/category/f}[box=H,colour=seq]
+    \iltikzfig{strings/category/f}[box=H,colour=seq]
     \) is encoded such that the state words are in the image of
     \(\gamma_\leq\).
     This means that applying the encoding equation with \(\leq\) to the
     normalised Mealy forms obtained above will yield the circuit \(
-        \iltikzfig{strings/category/f}[box=h,colour=seq]
+    \iltikzfig{strings/category/f}[box=h,colour=seq]
     \).
 \end{proof}
 
@@ -194,9 +275,9 @@ can establish another isomorphism of PROPs.
 \end{corollary}
 
 This brings our jaunt into algebraic semantics to a close; given a circuit \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+\iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
 \) we know that we can translate it into another circuit \(
-    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+\iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
 \) with the same behaviour by only using equations in \(\mce_\interpretation\).
 
 Of course, the procedure of using the normalisation equations to translate a
