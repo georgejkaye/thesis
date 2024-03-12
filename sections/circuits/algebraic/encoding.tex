@@ -6,30 +6,27 @@ circuits with the same behaviour should have the same Mealy function.
 Even if the state words are the same, they may be jumbled up in different
 orders.
 This is why checking equivalence of Mealy machines is usually performed by
-constructing a \emph{bisimulation}; what we need is a way to `hot-swap' the
-states and cores of circuits in normalised Mealy form with bisimilar ones.
+constructing a \emph{bisimulation} rather than basic equality.
+To bring this notion into the syntactic realm, we must consider the states
 
-Of course, there are also (infinitely) many bisimilar Mealy machines and state
-words and no clear way to map between them, so we need to fix a particular
-class of functions and find a deterministic way to map any circuit to this
-class.
-The obvious choice, to which we have previously alluded, is the `one-hot'
-encoding used to synthesise a circuit morphism from a Mealy machine.
-To do this we must compute the number of states a circuit might assume, so we
-know the width of word we will need to encode to; this is where isolating the
-transition and output of the Mealy core will come in useful.
+\begin{remark}
+    Rather than equations between concrete generators, the equations in this
+    section will be \emph{families} of equations parameterised by normalised
+    combinational cores and initial states.
+    While this does lead to infinite equations, we are working with normalised
+    cores so there will be exactly one equation for each combination of
+    `behaviour' and state.
+\end{remark}
 
-\begin{definition}[Circuit states]
-    Given a circuit \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
-    \) in normalised Mealy form such that \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq]
-    \coloneqq
-    \iltikzfig{circuits/productivity/mealy-form}[core=|f|,colour=seq,delay=\listvar{x}]
-    \), let the set of \emph{circuit states of \(f\) from \(\listvar{s}\)},
-    written \(S(f,\listvar{s})\), be the smallest set containing \(\listvar{s}\)
-    and closed under \(
-    \listvar{r} \mapsto \proj{x}\left(\tilde{f}_0(\listvar{r},\listvar{v})\right)
+\begin{definition}[States]
+    Let \(\morph{f}{\valuetuple{\listvar{xm}}}{\valuetuple{\listvar{xn}}}\) be a
+    monotone function and let \(\listvar{s} \in  \valuetuple{x}\) be an
+    initial state.
+    Then the \emph{states of \(f\) from \(\listvar{s}\)} is the smallest set
+    containing \(\listvar{s}\) and closed under \(
+    \listvar{r}
+    \mapsto
+    \proj{x}\left(\tilde{f}_0(\listvar{r},\listvar{v})\right)
     \) for any \(\listvar{v} \in \valuetuple{\listvar{m}}\).
 \end{definition}
 
