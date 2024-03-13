@@ -1,28 +1,16 @@
 \begin{figure}
     \centering
-    \begin{minipage}{0.45\textwidth}
+    \begin{minipage}{0.55\textwidth}
         \centering
         \(
         \equationdisplay{
-            \iltikzfig{circuits/productivity/mealy-form}[core=|f|,delay=x]
+            \iltikzfig{circuits/productivity/mealy-form}[core=|f|,delay=x, colour=seq]
         }{
             \iltikzfig{circuits/algebraic/state-encoding}[core=|f|,delay=x]
         }{
             \encodingequation
         }
         \)
-    \end{minipage}
-    \begin{minipage}{0.1\textwidth}
-        \centering
-        \vspace{0.5em}
-        \begin{tabular}{c}
-            \(
-            \iltikzfig{strings/category/f}[box=f,colour=seq],
-            \iltikzfig{strings/category/f}[box=g,colour=seq]
-            \)
-            \\[0.25em]
-            normalised
-        \end{tabular}
     \end{minipage}
     \caption{
         The encoding equation

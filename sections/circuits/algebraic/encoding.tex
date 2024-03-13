@@ -22,29 +22,26 @@ To bring this notion into the syntactic realm, we must consider the states
     Let \(\morph{f}{\valuetuple{\listvar{xm}}}{\valuetuple{\listvar{xn}}}\) be a
     monotone function and let \(\listvar{s} \in  \valuetuple{x}\) be an
     initial state.
-    Then the \emph{states of \(f\) from \(\listvar{s}\)} is the smallest set
-    containing \(\listvar{s}\) and closed under \(
+    Then the \emph{states of \(f\) from \(\listvar{s}\)}, denoted
+    \(S_{f,\listvar{s}}\), is the smallest set containing \(\listvar{s}\) and
+    closed under \(
     \listvar{r}
     \mapsto
     \proj{x}\left(\tilde{f}_0(\listvar{r},\listvar{v})\right)
     \) for any \(\listvar{v} \in \valuetuple{\listvar{m}}\).
 \end{definition}
 
-The set of circuit states is essential in determining valid equations between
-circuits in normalised Mealy form.
-The first thing to consider when comparing two circuits in normalised Mealy
-form is that the circuits may not have the same states, or even have state words
-of equal width.
-One of our families of equations will be based around \emph{encoding} states
-of a circuit into different representations.
+A circuit with a state of width \(x\) will not necessarily assume all the states
+in \(\valuetuple{x}\); this means that it is sometimes possible to \emph{encode}
+a circuit's states into a smaller word without losing data.
 
 \begin{definition}[Encoder]\label{def:encoder}
     Let \(S \subseteq \valuetuple{x}\) and \(T \subseteq \valuetuple{y}\) be two
     sets; an \emph{(S,T)-encoder} is two functions \(
-    \morph{\mathsf{enc}_{S,T}}{S}{T}
+    \morph{\mathsf{enc}}{S}{T}
     \) and \(
-    \morph{\mathsf{dec}_{S,T}}{T}{S}
-    \) such that \(dec_{S,T} \circ enc_{S,T}\).
+    \morph{\mathsf{dec}}{T}{S}
+    \) such that \(\mathsf{dec} \circ \mathsf{enc} = \id\).
 \end{definition}
 
 \begin{example}
@@ -60,89 +57,49 @@ Using a decoder and an encoder, we can change the state words that a circuit
 operates with.
 
 \begin{proposition}[Encoding equation]\label{prop:encoding-equation}
-    Let \(\iltikzfig{strings/category/f}[box=f,colour=seq]\) be a circuit in
-    normalised Mealy form such that \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq]
-    \coloneqq
-    \iltikzfig{circuits/productivity/mealy-form}[core=|\hat{f}|,colour=seq,delay=\listvar{x}]
-    \) and let \(\mathsf{enc},\mathsf{dec}\) be the two functions of a
-    \((S(\hat{f},\listvar{s})),T\)-encoder as defined above.
+    For a normalised circuit \(
+    \iltikzfig{strings/category/f-2-2}[box=|f|,colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod1=\listvar{x},cod2=\listvar{y}]
+    \) and initial state \(\listvar{s} \in \valuetuple{\listvar{x}}\), let
+    \(\mathsf{enc},\mathsf{dec}\) be the two functions of a
+    \((S_{f,\listvar{s}}),\valuetuple{y}\)-encoder as defined above.
     Then the \emph{encoding equation} \((\encodingequation)\) in
     \cref{fig:encoding-equation} is sound.
 \end{proposition}
 \begin{proof}
-    The interpretations of \(
-    \iltikzfig{strings/category/f-2-1}[box={\transitiontranslation{f}},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
+    Let \(g\) be the map \(\listvar{r} \mapsto
+    \circuittostreami[\iltikzfig{circuits/algebraic/state-encoding}[core=|f|,delay=x,state=\listvar{r}]]
+    \); by \cref{prop:mealy-form-image}, \(
+    \mealyoutput{g(\listvar{t})}{\listvar{v}}
+    =
+    \proj{1}(f(\mathsf{dec}(\mathsf{enc}(\listvar{t})), \listvar{v}))
     \) and \(
-    \iltikzfig{strings/category/f-2-1}[box={\outputtranslation{f}},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{n}]
-    \) are as the behaviours of \(
-    \iltikzfig{strings/category/f-2-1}[box={f},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
+    \mealytransition{g(\listvar{t})}{\listvar{v}}
+    =
+    g(\proj{0}(f(\mathsf{dec}(\mathsf{enc}(\listvar{t})), \listvar{v})))
+    \).
+    When \(\listvar{t} \in S_{f, \listvar{s}}\), \(
+    \mealyoutput{g(\listvar{t})}{\listvar{v}}
+    =
+    \proj{1}(f(\listvar{t}), \listvar{v})
     \) and \(
-    \iltikzfig{strings/category/f-2-1}[box={g},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
-    \) wrapped in appropriate decodings and encodings.
+    \mealytransition{g(\listvar{t})}{\listvar{v}}
+    =
+    g(\proj{0}(f(\listvar{t})), \listvar{v})
+    \) by definition of encoders.
+    Subsequently, as \(
+    \iltikzfig{circuits/algebraic/state-encoding}[core=|f|,delay=x,state=\listvar{s}]
+    \coloneqq
+    g(\listvar{s})
+    \) and \(\listvar{s} \in S_{f,\listvar{s}}\),
+    then every subsequent stream derivative will also be of the form
+    \(g(\listvar{t})\) where \(\listvar{t} \in S_{f,\listvar{s}}\), so the
+    equation is sound.
 \end{proof}
-
-\begin{notation}[Restriction]
-    Given a function \(\morph{f}{A}{B}\), and a set
-    \(C \subseteq A\), let \(\morph{f|C}{C}{B}\) be the \emph{restriction} of
-    \(f\) to act on elements of \(C\), i.e.\ for all \(c \in C\),
-    \(f|C(c) = f(c)\).
-\end{notation}
-
-\begin{definition}
-    Let \(
-    \iltikzfig{circuits/productivity/mealy-form}[core=|f|,colour=seq,delay=\listvar{x}]
-    \) be a circuit in normalised Mealy form with state set \(S(f, \listvar{s})\).
-    Then, for a total order \(\leq\) on \(S(f, \listvar{s})\), the
-    \emph{\(\leq\)-encoding circuit} is a
-\end{definition}
-
-\begin{definition}[State change equation]
-
-\end{definition}
-
-
-
-\begin{definition}[Restriction equations]
-    Given two circuits in normalised Mealy form \(
-    \iltikzfig{circuits/productivity/mealy-form}[core=|f|,colour=seq]
-    \) and \(
-    \iltikzfig{circuits/productivity/mealy-form}[core=|g|,colour=seq]
-    \)  a \emph{restriction equation}
-\end{definition}
 
 Since the transition subcircuit of a circuit in normalised Mealy form is itself
 a normalised function, we can easily perform a lookup to find out what the
 behaviour of \(\tilde{f}\) is.
 The size of the set of circuit states determines the width of the encoded state.
-
-\begin{definition}[Translations]
-    For a set of states \(S\), let \(\morph{\gamma_\leq}{S}{\valuetuple{y}}\) be
-    a \(\leq\)-encoding.
-    For a circuit \(
-    \iltikzfig{strings/category/f-2-1}[box=f, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
-    \coloneqq
-    \mealytofunc[\hat{f}]
-    \), its \emph{\(\gamma_\leq\)-transition} is a circuit \(
-    \iltikzfig{strings/category/f-2-1}[box=\transitiontranslation{f}, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
-    \) defined as \(
-    \mealytofunc[
-        \left(\gamma_\leq(\listvar{s}),\listvar{v}\right)
-        \mapsto \gamma_\leq(\hat{f}(\listvar{s}, \listvar{v}))
-    ]
-    \), and for a circuit \(
-    \iltikzfig{strings/category/f-2-1}[box=g, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
-    \coloneqq
-    \mealytofunc[\hat{g}]
-    \), its \emph{\(\gamma_\leq\)-output} is a circuit \(
-    \iltikzfig{strings/category/f-2-1}[box=\outputtranslation{f}, colour=seq, dom1=\listvar{x}, dom2=\listvar{m}, cod=\listvar{x}]
-    \) defined as \(
-    \mealytofunc[
-        \left(\gamma_\leq(\listvar{s}),\listvar{v}\right)
-        \mapsto \hat{g}(\listvar{s}, \listvar{v})
-    ].
-    \)
-\end{definition}
 
 These two translations are the the essential components of our final equation,
 the \emph{encoding} equation, which is parameterised by an order \(\leq\) on the
