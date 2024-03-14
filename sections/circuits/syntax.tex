@@ -8,8 +8,6 @@ Rather, we view category theory as a tool for exploiting connections
 between fields which may at first seem completely disparate; category theory is
 the \emph{common language} that brings them together.
 
-This is not a new idea; this concept has been explored in many areas since
-before the turn of the millennium.
 Our \emph{soup du jour} is that of \emph{sequential digital circuits}
 constructed from primitive components such as logic gates or transistors.
 These circuits are \emph{sequential} as they have a notion of \emph{state}:
@@ -48,18 +46,18 @@ particular category of circuits.
 
 \begin{definition}[Circuit signature, value, gate symbol]
     A \emph{circuit signature} \(\circuitsignature\) is a tuple \((
-        \values,
-        \disconnected,
-        \circuitsignaturegates,
-        \circuitsignaturearity,
-        \circuitsignaturecoarity
+    \values,
+    \disconnected,
+    \circuitsignaturegates,
+    \circuitsignaturearity,
+    \circuitsignaturecoarity
     )\) where \(\values\) is a finite set of \emph{values}, \(
-        \disconnected \in \values
+    \disconnected \in \values
     \) is a \emph{disconnected} value, \(\circuitsignaturegates\) is a (usually
     finite) set of \emph{gate symbols}, \(
-        \morph{\circuitsignaturearity}{\circuitsignaturegates}{\natplus^\star}
+    \morph{\circuitsignaturearity}{\circuitsignaturegates}{\natplus^\star}
     \) is an \emph{arity} function and \(
-        \morph{\circuitsignaturecoarity}{\circuitsignaturegates}{\natplus^\star}
+    \morph{\circuitsignaturecoarity}{\circuitsignaturegates}{\natplus^\star}
     \) is a \emph{coarity} function.
 \end{definition}
 
@@ -68,24 +66,24 @@ majority of examples in this thesis, is that of gate-level circuits.
 
 \begin{example}[Gate-level circuits]\label{ex:sig}
     The signature for \emph{gate-level circuits} is \(
-        \belnapsignature = (
-            \belnap,
-            \bot,
-            \belnapgates,
-            \belnaparity,
-            \belnapcoarity
+    \belnapsignature = (
+    \belnap,
+    \bot,
+    \belnapgates,
+    \belnaparity,
+    \belnapcoarity
     )\), where \(
-        \belnapvalues \coloneqq \{\bot, \belnapfalse, \belnaptrue, \top\}
+    \belnapvalues \coloneqq \{\bot, \belnapfalse, \belnaptrue, \top\}
     \), respectively representing \emph{no} signal, a \emph{false} signal, a
-        \emph{true} signal and \emph{both} signals at once, \(
-        \belnapgates \coloneqq \{\andgate,\orgate,\notgate\}
+    \emph{true} signal and \emph{both} signals at once, \(
+    \belnapgates \coloneqq \{\andgate,\orgate,\notgate\}
     \), \(
-        \belnaparity \coloneqq
-            \andgate \mapsto [1,1],
-            \orgate \mapsto [1,1],
-            \notgate \mapsto [1]
+    \belnaparity \coloneqq
+    \andgate \mapsto [1,1],
+    \orgate \mapsto [1,1],
+    \notgate \mapsto [1]
     \) and \(
-        \belnapcoarity \coloneqq - \mapsto [1],
+    \belnapcoarity \coloneqq - \mapsto [1],
     \)
 \end{example}
 
@@ -112,16 +110,16 @@ These are circuits with no state; they compute \emph{functions} of their inputs.
 
 \begin{definition}[Combinational circuit generators]
     Given a circuit signature \(
-        \circuitsignature = (
-            \circuitsignaturevalues,
-            \bullet,
-            \circuitsignaturegates,
-            \circuitsignaturearity,
-            \circuitsignaturecoarity
-        )
+    \circuitsignature = (
+    \circuitsignaturevalues,
+    \bullet,
+    \circuitsignaturegates,
+    \circuitsignaturearity,
+    \circuitsignaturecoarity
+    )
     \), let the set \(\generators[\ccirc{}]\) of
     \emph{combinational circuit generators} be defined as the set containing \(
-        \iltikzfig{circuits/components/gates/gate}[gate=g,colour=comb,dom=\circuitsignaturearity(g),cod=\circuitsignaturecoarity(g)]
+    \iltikzfig{circuits/components/gates/gate}[gate=g,colour=comb,dom=\circuitsignaturearity(g),cod=\circuitsignaturecoarity(g)]
     \) for each \(g \in \circuitsignaturegates\),
     \(\iltikzfig{strings/structure/monoid/init}[colour=comb]\),
     \(\iltikzfig{strings/structure/comonoid/copy}[colour=comb]\),
@@ -140,11 +138,11 @@ wires, \emph{joining} wires and \emph{eliminating} wires.
 
 \begin{example}
     The gate generators of \(\ccirc{\belnapsignature}\) are \(
-        \iltikzfig{circuits/components/gates/and}
+    \iltikzfig{circuits/components/gates/and}
     \), \(
-        \iltikzfig{circuits/components/gates/or}
+    \iltikzfig{circuits/components/gates/or}
     \), and \(
-        \iltikzfig{circuits/components/gates/not}
+    \iltikzfig{circuits/components/gates/not}
     \).
 \end{example}
 
@@ -196,9 +194,9 @@ a symmetric \emph{traced} monoidal category.
     For a circuit signature \(\circuitsignature\) with value set \(\values\),
     let \(\scircsigma\) be the STMC freely generated over the generators of
     \(\ccircsigma\) along with new generators \(
-        \iltikzfig{circuits/components/values/vs}[val=v]
+    \iltikzfig{circuits/components/values/vs}[val=v]
     \) for each \(v \in \values \setminus \bullet\), and \(
-        \iltikzfig{circuits/components/waveforms/delay}
+    \iltikzfig{circuits/components/waveforms/delay}
     \).
 \end{definition}
 
@@ -217,34 +215,34 @@ first cycle of execution, followed by producing the disconnected \(\bullet\)
 after that.
 This is why there is no \(\bullet\) value generator; instead it is a
 \emph{combinational} generator \(
-    \iltikzfig{strings/structure/monoid/init}[colour=comb]
+\iltikzfig{strings/structure/monoid/init}[colour=comb]
 \) intended to always produce the \(\bullet\) value.
 
 \begin{notation}
     Although \(
-        \iltikzfig{strings/structure/monoid/init}[colour=comb]
+    \iltikzfig{strings/structure/monoid/init}[colour=comb]
     \) is itself not a sequential value, when we refer to an arbitrary `value'
     \(
-        \iltikzfig{circuits/components/values/vs}[val=v]
+    \iltikzfig{circuits/components/values/vs}[val=v]
     \), \(v\) can be any value in \(\values\) including \(\bullet\).
 
     For a word of values \(\listvar{v} \in \valuetuple{n}\) (again possibly
     including \(\bullet\)), we may draw multiple value generators collapsed into
     one as \(
-        \iltikzfig{circuits/components/values/vs}[val=\listvar{v},width=n]
+    \iltikzfig{circuits/components/values/vs}[val=\listvar{v},width=n]
     \).
     \todo[inline]{Draw the constructions}
 \end{notation}
 
 \begin{example}
     The `values' of \(\scirc{\belnapsignature}\) are \(
-        \iltikzfig{strings/structure/monoid/init}[colour=comb]
+    \iltikzfig{strings/structure/monoid/init}[colour=comb]
     \), \(
-        \iltikzfig{circuits/components/values/vs}[val=\belnapfalse]
+    \iltikzfig{circuits/components/values/vs}[val=\belnapfalse]
     \), \(
-        \iltikzfig{circuits/components/values/vs}[val=\belnaptrue]
+    \iltikzfig{circuits/components/values/vs}[val=\belnaptrue]
     \), \(
-        \iltikzfig{circuits/components/values/vs}[val=\top]
+    \iltikzfig{circuits/components/values/vs}[val=\top]
     \); the first is a combinational generator and the latter three are
     sequential.
 \end{example}
@@ -265,7 +263,7 @@ the input it received in the previous cycle.
 \begin{notation}
     Like values, we can derive delay components for thicker wires, drawn like
     \(
-        \iltikzfig{circuits/components/waveforms/delay}[width=n]
+    \iltikzfig{circuits/components/waveforms/delay}[width=n]
     \).
     \todo[inline]{Draw the construction}
 \end{notation}
@@ -276,9 +274,9 @@ This is so common that we introduce special notation for it.
 
 \begin{notation}\label{not:register}
     For a word \(\listvar{v} \in \valuetuple{m}\), let \(
-        \iltikzfig{circuits/components/waveforms/register}
-        \coloneqq
-        \iltikzfig{circuits/components/waveforms/register-shorthand}
+    \iltikzfig{circuits/components/waveforms/register}
+    \coloneqq
+    \iltikzfig{circuits/components/waveforms/register-shorthand}
     \).
 \end{notation}
 
@@ -293,9 +291,9 @@ For those who need some inspiration, we provide a simple example.
     A \(\norgate\) is the combination of an \(\orgate\) gate followed by a
     \(\notgate\); it inverts the outputs of an \(\orgate\).
     Syntactically it is constructed as \(
-        \iltikzfig{circuits/components/gates/nor}
-        \coloneqq
-        \iltikzfig{circuits/components/gates/nor-construct}
+    \iltikzfig{circuits/components/gates/nor}
+    \coloneqq
+    \iltikzfig{circuits/components/gates/nor-construct}
     \).
 
     \(\norgate\) gates are integral to a construction that one might come across

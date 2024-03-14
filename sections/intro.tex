@@ -7,8 +7,6 @@
 
 \section{Category theory and compositionality}
 
-
-
 Category theory is an especially natural concept to apply to computer science
 because it is a setting in which \emph{composition} is king.
 Rather than dealing with complicated and unwieldy terms, we can split them
@@ -57,13 +55,61 @@ common primitive components together to make something more complex.
 But this is done informally, as the behaviour of a circuit is usually tested
 by \emph{simulating} it and seeing what happens.
 We can simulate the subcomponents, but what does this mean for their composite?
-While this may seem like
-\emph{simulating} it and seeing what happens.
-But even these simulations may run into issues; when composing circuits together
-there is always the threat of the dreaded \emph{non-delay-guarded feedback}
-rearing its head and leading to unpredictable behaviour.
-It is only with a rigorous mathematical model that we can compose \emph{any}
-circuit together safely.
+Without a mathematical guarantee of full compositionality, we have no guarantee
+that connecting two well-behaved circuits together will result in another
+well-behaved circuit: for example, there is always the threat of the dreaded
+\emph{non-delay-guarded feedback} rearing its head and leading to unpredictable
+behaviour.
+Some approaches try to nullify this by considering only some `safe' subset of
+circuits which will always be well-behaved~\cite{christensen2021wire}, or by
+introducing some sort of `type system' on wires so that components may only be
+connected if their timings match up~\cite{nigam2023modular}.
+While these are useful perspectives on the problem, this is still shying away
+from truly full compositionality.
+Our goals are simple: we wish to be able to compose \emph{any} two circuits
+together without our reasoning falling apart.
+The result of the composition may not produce anything useful, but we will still
+be able to see that this is the case.
+
+\section{Compositionality and sequential circuits}
+
+Of course, we cannot claim that mathematics had ignored sequential circuits
+until we came along!
+The idea of representing circuits as expressions of primitive components is old;
+back in the 80s Mike Gordon worked on
+\emph{denotational semantics for sequential machines}~\cite{gordon1980denotational}
+and used this idea to present
+\emph{a model of register transfer systems}~\cite{gordon1982model}.
+Gordon subsequently noted that \emph{higher order logic} would make a good fit
+for a hardware description language~\cite{gordon1985why}, and this has become
+a ubiquitous concept in formal verification of hardware~\cite{gupta1992formal}.
+
+It was at the turn of the millennium that the ball really got rolling when it
+came to developing a \emph{categorical} theory of digital circuits.
+In the early noughties, Yves Lafont presented an
+\emph{algebraic theory of boolean circuits}~\cite{lafont2003algebraic}, which
+already bears a great resemblance to the work presented in this thesis; circuits
+are presented as morphisms in a symmetric monoidal category freely generated
+over a set of primitive logic gates.
+
+However, as the name might suggest, Lafont's work only considered circuits that
+implemented \emph{Boolean functions}; these circuits did not have any notion of
+delay or feedback.
+It was not until 2016 that these circuits were given the categorical treatment
+by Dan Ghica and Achim Jung~\cite{ghica2016categorical}, who were later joined
+by Aliaume Lopez when considering how to use this for a graph-rewriting based
+operational semantics~\cite{ghica2017diagrammatic}.
+
+While this thesis would not have come about without this foundational work, it
+was presented relatively informally and in a sometimes confusing manner:
+the categories of circuits were quotiented by some equations that `seemed right'
+without consulting any sort of `baseline' denotational semantics.
+Moreover, these equations were not enough to handle all circuits, so the
+categories were furthermore quotiented by a notion of `extensional equivalence',
+but what this meant exactly was not made formal.
+
+\section{Contributions}
+
 
 \section{Thesis outline}
 
