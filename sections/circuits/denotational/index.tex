@@ -18,9 +18,9 @@ must relate the \emph{same} circuits; the behaviour of a circuit should not be
 different depending on which lens we are viewing it through.
 Formally, each form of semantics must be \emph{sound and complete} with respect
 to each other; two sequential circuits \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
+\iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
 \) and \(
-    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
+\iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
 \) are related by one semantics if and only if they are related by the others.
 
 First of all we will define the \emph{denotational semantics} of digital
@@ -48,11 +48,11 @@ Strachey~\cite{scott1970outline,scott1971mathematical}.
     \(\nat\).
     For each \(\overline{n} \in N\), \(\llbracket{\overline{n}}\rrbracket\) is
     the corresponding natural number, and the operations are interpreted as \(
-        \llbracket{add \, e_1 \, e_2}\rrbracket
-        = \llbracket{e_1}\rrbracket + \llbracket{e_2}\rrbracket
+    \llbracket{add \, e_1 \, e_2}\rrbracket
+    = \llbracket{e_1}\rrbracket + \llbracket{e_2}\rrbracket
     \) and \(
-        \llbracket{mul \, e_1 \, e_2}\rrbracket
-        = \llbracket{e_1}\rrbracket \cdot \llbracket{e_2}\rrbracket
+    \llbracket{mul \, e_1 \, e_2}\rrbracket
+    = \llbracket{e_1}\rrbracket \cdot \llbracket{e_2}\rrbracket
     \) respectively.
 \end{example}
 

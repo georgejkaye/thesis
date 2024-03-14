@@ -61,14 +61,16 @@ operates with.
     \iltikzfig{strings/category/f-2-2}[box=|f|,colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod1=\listvar{x},cod2=\listvar{y}]
     \) and initial state \(\listvar{s} \in \valuetuple{\listvar{x}}\), let
     \(\mathsf{enc},\mathsf{dec}\) be the two functions of a
-    \((S_{f,\listvar{s}}),\valuetuple{y}\)-encoder as defined above.
+    \((S_{f,\listvar{s}},\valuetuple{y})\)-encoder as defined above.
     Then the \emph{encoding equation} \((\encodingequation)\) in
-    \cref{fig:encoding-equation} is sound.
+    \cref{fig:encoding-equation} is sound, where
+    \(\mathsf{enc}_\mathsf{m},\mathsf{dec}_\mathsf{m}\) are monotone completions
+    as defined in \cref{def:monotone-completion}.
 \end{proposition}
 \begin{proof}
     Let \(g\) be the map \(\listvar{r} \mapsto
     \circuittostreami[\iltikzfig{circuits/algebraic/state-encoding}[core=|f|,delay=x,state=\listvar{r}]]
-    \); by \cref{prop:mealy-form-image}, \(
+    \); by \cref{prop:mealy-form-image} we know that \(
     \mealyoutput{g(\listvar{t})}{\listvar{v}}
     =
     \proj{1}(f(\mathsf{dec}(\mathsf{enc}(\listvar{t})), \listvar{v}))
@@ -77,7 +79,7 @@ operates with.
     =
     g(\proj{0}(f(\mathsf{dec}(\mathsf{enc}(\listvar{t})), \listvar{v})))
     \).
-    When \(\listvar{t} \in S_{f, \listvar{s}}\), \(
+    When \(\listvar{t} \in S_{f, \listvar{s}}\) we have that \(
     \mealyoutput{g(\listvar{t})}{\listvar{v}}
     =
     \proj{1}(f(\listvar{t}), \listvar{v})
@@ -86,47 +88,132 @@ operates with.
     =
     g(\proj{0}(f(\listvar{t})), \listvar{v})
     \) by definition of encoders.
-    Subsequently, as \(
+    As \(
     \iltikzfig{circuits/algebraic/state-encoding}[core=|f|,delay=x,state=\listvar{s}]
     \coloneqq
     g(\listvar{s})
     \) and \(\listvar{s} \in S_{f,\listvar{s}}\),
-    then every subsequent stream derivative will also be of the form
+    every subsequent stream derivative will also be of the form
     \(g(\listvar{t})\) where \(\listvar{t} \in S_{f,\listvar{s}}\), so the
     equation is sound.
 \end{proof}
 
-Since the transition subcircuit of a circuit in normalised Mealy form is itself
-a normalised function, we can easily perform a lookup to find out what the
-behaviour of \(\tilde{f}\) is.
-The size of the set of circuit states determines the width of the encoded state.
+After applying the encoding equation, the state has not actually changed; we
+have just inserted a pair of an encoder and a decoder.
+To translate the state we recycle some of the rules from the operational
+semantics.
+As with the Mealy equations, it is desirable to express these transformations in
+terms of smaller components.
 
-These two translations are the the essential components of our final equation,
-the \emph{encoding} equation, which is parameterised by an order \(\leq\) on the
-states which specifies how to map a circuit in normalised Mealy form to
-its corresponding \(\leq\)-encoded form.
+\begin{lemma}
+    For a combinational circuit \(
+    \iltikzfig{strings/category/f}[box=f,colour=comb]
+    \), \(
+    \iltikzfig{circuits/axioms/generalised-streaming-lhs}[box=f]
+    =
+    \iltikzfig{circuits/axioms/generalised-streaming-rhs}[box=f]
+    \) by the equations in \cref{fig:encoding-equation}.
+\end{lemma}
+\begin{proof}
+    This is by induction on the structure of \(
+    \iltikzfig{strings/category/f}[box=f,colour=comb]
+    \).
+    First the base cases.
+    The case for the gate is immediate by \((\streamingeqn)\).
+    For \(\iltikzfig{strings/structure/comonoid/copy}[colour=comb]\) we have
+    that \(
+    \iltikzfig{circuits/productivity/generalised-streaming/fork-step-0}
+    \eqaxioms[(\bialgmoncomeqn)]
+    \iltikzfig{circuits/productivity/generalised-streaming/fork-step-1}
+    \eqaxioms[(\delayforkeqn)]
+    \iltikzfig{circuits/productivity/generalised-streaming/fork-step-2}
+    \).
+    For \(\iltikzfig{strings/structure/monoid/merge}[colour=comb]\):
+    \begin{gather*}
+        \iltikzfig{circuits/productivity/generalised-streaming/join-step-2}
+        \eqaxioms[(\monoidassoceqnletter)]
+        \iltikzfig{circuits/productivity/generalised-streaming/join-step-3}
+        \eqaxioms[(\monoidassoceqnletter)]
+        \iltikzfig{circuits/productivity/generalised-streaming/join-step-4}
+        \eqaxioms[(\monoidcommeqnletter)]
+        \\
+        \iltikzfig{circuits/productivity/generalised-streaming/join-step-5}
+        =
+        \iltikzfig{circuits/productivity/generalised-streaming/join-step-6}
+        \eqaxioms[(\monoidassoceqnletter)]
+        \iltikzfig{circuits/productivity/generalised-streaming/join-step-7}
+        \eqaxioms[(\monoidassoceqnletter)]
+        \iltikzfig{circuits/productivity/generalised-streaming/join-step-8}
+        \eqaxioms[(\monoidassoceqnletter)]
+        \iltikzfig{circuits/productivity/generalised-streaming/join-step-9}
+    \end{gather*}
+    The case for \(\iltikzfig{strings/structure/comonoid/discard}[colour=comb]\) is
+    trivial, and the case for \(\iltikzfig{strings/structure/monoid/init}[colour=comb]\)
+    follows by \((\comonoiduniteqnletter)\) and \((\bottomdelayeqn)\).
+    The cases for \(\iltikzfig{strings/category/identity}[colour=comb]\) and
+    \(\iltikzfig{strings/symmetric/symmetry}[colour=comb]\) follow by axioms of STMCs.
+    Since the underlying circuit is combinational, for the inductive cases we just
+    need to check composition and tensor, which are also trivial.
+\end{proof}
 
-\begin{proposition}[Encoding equation]\label{prop:encoding-equation}
-    Given two normalised circuits \(
-    \iltikzfig{strings/category/f-2-1}[box=f,colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
-    \) and \(
-    \iltikzfig{strings/category/f-2-1}[box=f,colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{n}]
-    \) along with word \(\listvar{s} \in \valuetuple{\listvar{x}}\), let
-    \(\leq\) be an ordering on \(S(f,\listvar{s})\).
-    Then the \emph{encoding equation} \((\encodingequation)\) in
-    \cref{fig:encoding-equation} is sound.
+\begin{lemma}
+    For any value \(v \in \values\), \(
+    \iltikzfig{circuits/algebraic/unroll-waveform/step-0}[value=v]
+    =
+    \iltikzfig{circuits/algebraic/unroll-waveform/step-6}[value=v]
+    \) by equations in \cref{fig:encoding-equation}.
+\end{lemma}
+\begin{proof}
+    \begin{gather*}
+        \iltikzfig{circuits/algebraic/unroll-waveform/step-0}[value=v]
+        \coloneqq
+        \iltikzfig{circuits/algebraic/unroll-waveform/step-1}[value=v]
+        \eqaxioms[(\joinforkeqn)]
+        \iltikzfig{circuits/algebraic/unroll-waveform/step-2}[value=v]
+        \eqaxioms[(\forkeqn)]
+        \iltikzfig{circuits/algebraic/unroll-waveform/step-3}[value=v]
+        \eqaxioms[(\delayforkeqn)]
+        \\
+        \iltikzfig{circuits/algebraic/unroll-waveform/step-4}[value=v]
+        \coloneqq
+        \iltikzfig{circuits/algebraic/unroll-waveform/step-5}[value=v]
+        =
+        \iltikzfig{circuits/algebraic/unroll-waveform/step-6}[value=v]
+    \end{gather*}
+\end{proof}
+
+\begin{proposition}
+    For a normalised circuit \(
+    \iltikzfig{strings/category/f-2-2}[box=|f|,colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod1=\listvar{x},cod2=\listvar{y}]
+    \) and initial state \(\listvar{s} \in \valuetuple{\listvar{x}}\), the
+    equation \(
+    \iltikzfig{circuits/productivity/mealy-form}[core=|f|, colour=seq]
+    =
+    \iltikzfig{circuits/algebraic/state-encoded}[core=|f|,state=\listvar{s}]
+    \) is derivable by the equations in \cref{fig:encoding-equation}.
 \end{proposition}
 \begin{proof}
-    The interpretations of \(
-    \iltikzfig{strings/category/f-2-1}[box={\transitiontranslation{f}},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
-    \) and \(
-    \iltikzfig{strings/category/f-2-1}[box={\outputtranslation{f}},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{n}]
-    \) are as the behaviours of \(
-    \iltikzfig{strings/category/f-2-1}[box={f},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
-    \) and \(
-    \iltikzfig{strings/category/f-2-1}[box={g},colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod=\listvar{x}]
-    \) wrapped in appropriate decodings and encodings.
+    By the \((\encodingequation)\) equation we have that \(
+    \iltikzfig{circuits/productivity/mealy-form}[core=|f|,delay=x, colour=seq]
+    =
+    \iltikzfig{circuits/algebraic/state-encoding}[core=|f|,delay=x,state=\listvar{s}]
+    \); we need to `push' the encoder \(
+    \iltikzfig{circuits/algebraic/encoder}
+    \) through the state.
+    Although the encoder is sequential, by the definition of \(\lvert-\rvert\),
+    it must be of the form \(
+    \iltikzfig{circuits/synthesis/normalised-function}[box=g]
+    \) by definition of functional completeness.
+    \begin{align*}
+        \iltikzfig{circuits/algebraic/encoding-state/step-0}
+        =
+        \iltikzfig{circuits/algebraic/encoding-state/step-1}
+        =
+        \iltikzfig{circuits/algebraic/encoding-state/step-2}
+    \end{align*}
+
 \end{proof}
+
 
 \input{sections/circuits/algebraic/floats/encoding-equation}
 

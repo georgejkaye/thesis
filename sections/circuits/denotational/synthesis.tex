@@ -19,39 +19,39 @@ PROP morphism need only be defined on generators!
             \iltikzfig{circuits/components/gates/gate}[colour=comb]
         ]{\interpretation}
         \coloneqq \left(
-            \{()\},
-            \listvar{v} \mapsto
-                \left\langle(), \gateinterpretation[g](\listvar{v})\right\rangle,
-            ()
+        \{()\},
+        \listvar{v} \mapsto
+        \left\langle(), \gateinterpretation[g](\listvar{v})\right\rangle,
+        ()
         \right)
         \qquad
         \circuittomealy[
             \iltikzfig{strings/structure/comonoid/copy}[colour=comb]
         ]{\interpretation}
         \coloneqq \left(
-            \{()\},
-            \listvar{v} \mapsto \left\langle(), \listvar{vv}\right\rangle,
-            ()
+        \{()\},
+        \listvar{v} \mapsto \left\langle(), \listvar{vv}\right\rangle,
+        ()
         \right)
         \\[0.1em]
         \circuittomealy[
             \iltikzfig{strings/structure/monoid/merge}[colour=comb]
         ]{\interpretation}
         \coloneqq \left(
-            \{()\},
-            \listvar{vw} \mapsto
-                \left\langle(), \listvar{v} \ljoin \listvar{w}\right\rangle,
-            ()
+        \{()\},
+        \listvar{vw} \mapsto
+        \left\langle(), \listvar{v} \ljoin \listvar{w}\right\rangle,
+        ()
         \right)
         \qquad
         \circuittomealy[
             \iltikzfig{strings/structure/comonoid/discard}[colour=comb]
         ]{\interpretation}
         \coloneqq \left(
-            \{()\},
-            \listvar{v} \mapsto
-                \left\langle(), ()\right\rangle,
-                ()
+        \{()\},
+        \listvar{v} \mapsto
+        \left\langle(), ()\right\rangle,
+        ()
         \right)
         \\[0.1em]
         \circuittomealy[
@@ -59,13 +59,13 @@ PROP morphism need only be defined on generators!
         ]{\interpretation}
         \coloneqq
         \left(
-            \left(
+        \left(
             \{s_v, s_\bot\},
             \{
-                s_v \mapsto \left\langle{s_\bot,v}\right\rangle,
-                s_\bot \mapsto \left\langle{s_\bot,\bot}\right\rangle
+            s_v \mapsto \left\langle{s_\bot,v}\right\rangle,
+            s_\bot \mapsto \left\langle{s_\bot,\bot}\right\rangle
             \}\right),
-            s_v
+        s_v
         \right)
         \\[0.1em]
         \circuittomealy[
@@ -73,10 +73,10 @@ PROP morphism need only be defined on generators!
         ]{\interpretation}
         \coloneqq
         \left(
-            \left(
-            \{ s_v \,|\, v \in \values\},
-            (s_v, a) \mapsto \left({v,s_a}\right)\right),
-            s_\bot
+        \left(
+        \{ s_v \,|\, v \in \values\},
+        (s_v, a) \mapsto \left({v,s_a}\right)\right),
+        s_\bot
         \right)
     \end{gather*}
     \todo[inline]{Fiddle with spacing}
@@ -102,9 +102,9 @@ as the \emph{de facto} denotation, is a stream function in \(\streami\).
 \end{definition}
 
 We have now finally established the \emph{denotation} of a sequential circuit \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+\iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
 \): it is the stream function \(
-    \morph{\circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]}{\valuetuplestream{\listvar{m}}}{\valuetuplestream{\listvar{n}}}
+\morph{\circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]}{\valuetuplestream{\listvar{m}}}{\valuetuplestream{\listvar{n}}}
 \).
 The existence of the PROP morphism \(\circuittostreami\) confirms that causal,
 finitely specified and monotone stream functions are a \emph{sound} denotational
@@ -150,13 +150,13 @@ select a suitable encoding.
 \begin{example}
     Recall the monotone Mealy machine from \cref{ex:mealy-translation}, which
     has state set \(
-        \belnapvalues \coloneqq \{\bot,\belnapfalse,\belnaptrue,\top\}
+    \belnapvalues \coloneqq \{\bot,\belnapfalse,\belnaptrue,\top\}
     \).
     We choose the total order on \(\belnapvalues\) as
     \(\bot \leq \belnapfalse \leq \belnaptrue \leq \top\); subsequently, the
     \(\leq\)-encoding is defined as \(
-        \bot \mapsto \top\bot\bot\bot, \belnapfalse \mapsto \top\top\bot\bot,
-        \belnaptrue \mapsto \top\bot\top\bot, \top \mapsto \top\top\top\top
+    \bot \mapsto \top\bot\bot\bot, \belnapfalse \mapsto \top\top\bot\bot,
+    \belnaptrue \mapsto \top\bot\top\bot, \top \mapsto \top\top\top\top
     \).
 \end{example}
 
@@ -196,14 +196,14 @@ why should we expect some hurriedly slapped together collection of gates to be
 able to model every function?
 The useful interpretations are those that \emph{can} model every function.
 
-\begin{definition}[Functional completeness]
+\begin{definition}[Functional completeness]\label{def:functional-completeness}
     An interpretation \(\interpretation\) of a signature \(\signature\) is
     \emph{functionally complete} if there exists a map \(
-        \morph{\mealytofunc}{\funci}{\scircsigma}
+    \morph{\mealytofunc}{\funci}{\scircsigma}
     \) which sends functions \(
-        \morph{f}{\valuetuple{\listvar{m}}}{\valuetuple{\listvar{n}}}
+    \morph{f}{\valuetuple{\listvar{m}}}{\valuetuple{\listvar{n}}}
     \), to circuits of the form \(
-        \iltikzfig{circuits/synthesis/normalised-function}
+    \iltikzfig{circuits/synthesis/normalised-function}
     \) for some word \(\listvar{v} \in \freemon{\values}\) such that
     \(\circuittostreami[\mealytofunc[f]](\sigma)(i) = f(\sigma(i))\).
 \end{definition}
@@ -237,21 +237,21 @@ to circuits, but for convenience we will assume there is a fixed procedure
 With the knowledge that any monotone function has a corresponding circuit
 in \(\scircsigma\), we set about encoding the Mealy function.
 
-\begin{definition}[Monotone completion]
+\begin{definition}[Monotone completion]\label{def:monotone-completion}
     For lattices \(M, N, P\) such that \(M \subseteq N\), and a monotone
     function \(\morph{f}{M}{P}\), let the \emph{monotone completion} of \(f\) be
     the function \(\morph{f_\mathsf{m}}{N}{P}\) recursively defined as \[
         f_\mathsf{m}(v) = \begin{cases}
             f(v)
-            &
+             &
             \text{if}\ v \in M
             \\
             \bot
-            &
+             &
             \text{if}\ v = \bot^m, \bot \not\in M
             \\
             \bigsqcup \{ f_\mathsf{m}(w) \,|\, w \leq_N v \}
-            &
+             &
             \text{otherwise}
         \end{cases}
     \]
@@ -262,20 +262,20 @@ in \(\scircsigma\), we set about encoding the Mealy function.
     monotone encoding \(\gamma_\leq\), a \emph{monotone Mealy encoding} is a
     function
     \(
-        \morph{
-            \gamma_\leq(f)
-        }{
-            \valuetuple{k} \times \valuetuple{m}
-        }{
-            \valuetuple{k} \times \valuetuple{n}
-        }
+    \morph{
+        \gamma_\leq(f)
+    }{
+        \valuetuple{k} \times \valuetuple{m}
+    }{
+        \valuetuple{k} \times \valuetuple{n}
+    }
     \) defined as the monotone completion of the function \(
-        (\gamma_\leq(s), \listvar{x})
-        \mapsto
-            (
-                \gamma_\leq(\mealyfunctiontransition{f}(s, \listvar{x})),
-                \mealyfunctionoutput{f}(s, \listvar{x})
-            )
+    (\gamma_\leq(s), \listvar{x})
+    \mapsto
+    (
+    \gamma_\leq(\mealyfunctiontransition{f}(s, \listvar{x})),
+    \mealyfunctionoutput{f}(s, \listvar{x})
+    )
     \).
 \end{definition}
 
@@ -323,40 +323,40 @@ there is a canonical term in \(\scircsigma\) for each monotone Mealy machine.
 \begin{definition}\label{def:mealy-to-circuit}
     For a functionally complete interpretation \(\interpretation\) and total
     order \(\leq\) on \(\values\), let \(
-        \morph{
-            \mealytocircuiti
-        }{
-            \mealyi
-        }{
-            \scircsigma
-        }
+    \morph{
+        \mealytocircuiti
+    }{
+        \mealyi
+    }{
+        \scircsigma
+    }
     \) be the traced PROP morphism with action defined for a monotone Mealy
     machine \((S,f,s)\) as producing \(
-        \iltikzfig{circuits/synthesis/mealy-term-spaced}
+    \iltikzfig{circuits/synthesis/mealy-term-spaced}
     \).
 \end{definition}
 
 \begin{lemma}\label{lem:combinational-streams}
     For a combinational circuit \(
-        \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
-        \in \ccircsigma
+    \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
+    \in \ccircsigma
     \) and \(i \in \nat\), \(
-        \circuittostreami[
-            \iltikzfig{strings/category/f}[box=f,colour=comb]
-        ](\sigma)(i)
-        =
-        \circuittofunci[
-            \iltikzfig{strings/category/f}[box=f,colour=comb]
-        ](\sigma(i))
+    \circuittostreami[
+        \iltikzfig{strings/category/f}[box=f,colour=comb]
+    ](\sigma)(i)
+    =
+    \circuittofunci[
+        \iltikzfig{strings/category/f}[box=f,colour=comb]
+    ](\sigma(i))
     \).
 \end{lemma}
 \begin{proof}
     Combinational circuits map to monotone Mealy machines, so subsequently
     their stream functions are their own stream derivative, i.e.\ given an
     input stream \(\sigma\), the \(i\)-th element of \(
-        \circuittostreami[
-            \iltikzfig{strings/category/f}[box=f,colour=comb]
-        ](\sigma)
+    \circuittostreami[
+        \iltikzfig{strings/category/f}[box=f,colour=comb]
+    ](\sigma)
     \) is a function that only depends on the \(i\)-th element of \(\sigma\).
     Since \(\circuittofunci\) and \(\circuittomealyi\) assign the same functions
     as semantics of combinational circuits, the statement holds.
@@ -370,34 +370,34 @@ we must show a lemma linking the behaviour circuits in the image of
     \label{prop:mealy-form-image}
     \todo[inline]{Reframe proof in terms of mealy machines}
     Given a combinational circuit \(
-        \iltikzfig{strings/category/f-2-2}[box=\hat{F},dom1=x,dom2=m,cod1=x,cod2=n,colour=comb]
+    \iltikzfig{strings/category/f-2-2}[box=\hat{F},dom1=x,dom2=m,cod1=x,cod2=n,colour=comb]
     \), let \(f\) be the map with action \(
-        (\listvar{s}) \mapsto
-            \circuittostreami[
-                \iltikzfig{circuits/productivity/mealy-form}[core=\hat{F},state=\listvar{s},dom=m,cod=n,delay=x]
-            ]
+    (\listvar{s}) \mapsto
+    \circuittostreami[
+        \iltikzfig{circuits/productivity/mealy-form}[core=\hat{F},state=\listvar{s},dom=m,cod=n,delay=x]
+    ]
     \) and let \(
-        \hat{f}
-        :=
-        \circuittofunci[
-            \iltikzfig{strings/category/f-2-2}[box=\hat{F},colour=comb]
-        ]
+    \hat{f}
+    :=
+    \circuittofunci[
+        \iltikzfig{strings/category/f-2-2}[box=\hat{F},colour=comb]
+    ]
     \).
     Then, \(
-        \mealyoutput{f(\listvar{s})}{\listvar{a}}
-        =
-        \proj{1}(\hat{f}(\listvar{s}, \listvar{a}))
+    \mealyoutput{f(\listvar{s})}{\listvar{a}}
+    =
+    \proj{1}(\hat{f}(\listvar{s}, \listvar{a}))
     \) and \(
-        \mealytransition{f(\listvar{s})}{\listvar{a}}
-        =
-        f(\proj{0}(\hat{f}(\listvar{s}, \listvar{a})))
+    \mealytransition{f(\listvar{s})}{\listvar{a}}
+    =
+    f(\proj{0}(\hat{f}(\listvar{s}, \listvar{a})))
     \).
 \end{proposition}
 \begin{proof}
     None of the traced inputs affect the outputs at the
     current cycle, so the initial output is trivial.
     The least fixpoint is reached immediately as \(
-        \mu_a := \proj{0}(\hat{f}(\listvar{s}, \listvar{a}))
+    \mu_a := \proj{0}(\hat{f}(\listvar{s}, \listvar{a}))
     \) and the traced input is captured by the delay, so the derivative
     will indeed be \(f(\mu_a)\).
 \end{proof}
@@ -406,14 +406,14 @@ Now we can show the behaviour-preserving result.
 
 \begin{theorem}\label{thm:mealy-to-circuit}
     \(
-        \mealytostream = \circuittostreami \circ \mealytocircuiti
+    \mealytostream = \circuittostreami \circ \mealytocircuiti
     \).
 \end{theorem}
 \begin{proof}
     \todo[inline]{Update for Mealy machine trip}
     For fixed state set \(S\) and Mealy function \(g\), let
     \(h := (s) \mapsto \mealytostreami[(S, g, s)]\) and \(
-        h^\prime := (s) \mapsto \circuittostreami[\mealytocircuiti[(S, g, s)]]
+    h^\prime := (s) \mapsto \circuittostreami[\mealytocircuiti[(S, g, s)]]
     \).
     We will show that for a state \(s \in S\), there is a bisimulation
     between \(h(s)\) and \(h^\prime(s)\).
@@ -423,14 +423,14 @@ Now we can show the behaviour-preserving result.
     \(\mealytofunc\) to the encoded state using axioms of STMCs.
     Then, by finality of \(\mealytostreami\), \cref{def:mealy-to-circuit} and
     \cref{prop:mealy-form-image}, these stream functions both have initial output \(
-        \proj{1}(g(s, \listvar{a}))
+    \proj{1}(g(s, \listvar{a}))
     \).
     The former has \(
-        \streamderivative{h(s)}{\listvar{a}} = h(\proj{0}(g(s, \listvar{a})))
+    \streamderivative{h(s)}{\listvar{a}} = h(\proj{0}(g(s, \listvar{a})))
     \) and the latter has \(
-        \streamderivative{h^\prime(s)}{\listvar{a}} =
-            \gamma(\proj{0}(g(s, \listvar{a})) =
-            h^\prime(\proj{0}(g(s, \listvar{a})))
+    \streamderivative{h^\prime(s)}{\listvar{a}} =
+    \gamma(\proj{0}(g(s, \listvar{a})) =
+    h^\prime(\proj{0}(g(s, \listvar{a})))
     \).
     As \(h(s)\) and \(h^\prime(s)\) are defined on all states,
     \(\mealytostreami[(S, g, s)]\) and
