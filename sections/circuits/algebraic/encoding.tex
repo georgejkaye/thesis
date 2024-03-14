@@ -109,7 +109,18 @@ have just inserted a pair of an encoder and a decoder.
 To translate the state we recycle some of the rules from the operational
 semantics.
 As with the Mealy equations, it is desirable to express these transformations in
-terms of smaller components; first we show some lemmas.
+terms of smaller components
+
+\begin{lemma}
+    The remaining equations in \cref{fig:encoding-equation} are sound.
+\end{lemma}
+\begin{proof}
+    It is a straightforward exercise to compare the stream functions for each
+    equation.
+\end{proof}
+
+Before proceeding to show how , we show some intermediate lemmas provable using
+the equations in \cref{fig:encoding-equation}.
 
 \begin{lemma}\label{lem:generalised-streaming}
     For a combinational circuit \(
@@ -213,29 +224,32 @@ with an encoded state.
     Although the encoder is sequential, by the definition of \(\lvert-\rvert\),
     it must be of the form \(
     \iltikzfig{circuits/synthesis/normalised-function}[box=g]
-    \) by definition of functional completeness.
-    \begin{align*}
+    \) by definition of functional completeness; this means we can perform a
+    variant of streaming.
+    \begin{gather*}
         \iltikzfig{circuits/algebraic/encoding-state/step-0a}[box=g]
         \coloneqq
         \iltikzfig{circuits/algebraic/encoding-state/step-0}[box=g]
-        \eqaxioms[\cref{lem:unroll-waveform}]
+        \eqaxioms[\text{\cref{lem:unroll-waveform}}]
         \iltikzfig{circuits/algebraic/encoding-state/step-1}[box=g]
-        \eqaxioms[\cref{lem:generalised-streaming}]
+        \eqaxioms[\text{\cref{lem:generalised-streaming}}]
         \\[0.5em]
         \iltikzfig{circuits/algebraic/encoding-state/step-2}[box=g]
-        \eqaxioms[\cref{def:encoder}]
+        \eqaxioms[\text{\cref{def:encoder}}]
         \iltikzfig{circuits/algebraic/encoding-state/step-3}[box=g]
+        \\[0.5em]
         \coloneqq
         \iltikzfig{circuits/algebraic/encoding-state/step-4}[box=g]
         \coloneqq
         \iltikzfig{circuits/algebraic/encoding-state/step-5}[box=g]
-    \end{align*}
-
+    \end{gather*}
+    The proof is completed by sliding the encoder around the trace.
 \end{proof}
 
 \input{sections/circuits/algebraic/floats/encoding-equation}
 
 If we have the right encoders, we can translate the initial state of a circuit
-into a different word.
-Since the encoders, decoders, and core are essentially combinational, these can
-be normalised once again to obtain a new normalised core.
+into a different word, and end up with a new circuit in a `Mealy form' with a
+sequential core.
+However, since the encoders, decoders, and core are essentially combinational,
+these can be normalised once again to obtain a new normalised core.
