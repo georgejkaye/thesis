@@ -100,12 +100,21 @@ the class of circuits any future equations must apply to.
     \) is \emph{normalised} if it is in the image of \(\mealytofunc\).
 \end{definition}
 
-\begin{remark}
-    Recall that even though \(\mealytofunc\) maps into \(\scircsigma\), every
-    circuit in its image has combinational behaviour; the image of
-    \(\mealytofunc\) is constrained in such a way that the instantaneous values
-    can be used as constants.
-\end{remark}
+Recall that even though \(\mealytofunc\) maps into \(\scircsigma\), every
+circuit in its image has combinational behaviour.
+This is quite an important distinction to make, so we will give it a proper
+name.
+
+\begin{lemma}[Essentially combinational]
+    A sequential circuit is \emph{essentially combinational} if it is in the
+    form \(
+    \iltikzfig{circuits/synthesis/normalised-function}
+    \).
+\end{lemma}
+
+Essentially combinational circuits are sequential circuits that exhibit
+combinational behaviour: any value components are only used to introduce
+constants which do not alter over time.
 
 As the normalised version of a given circuit is interpretation-dependent, there
 is no standard set of equations for normalising a circuit.
@@ -114,8 +123,8 @@ Instead, these must be specified on a interpretation-by-interpretation basis.
 \begin{definition}[Normalising equations]
     For a functionally complete interpretation \(\interpretation\), a set of
     equations \(\normalisingequations\) is \emph{normalising} if any
-    compositional circuit \(
-    \iltikzfig{strings/category/f}[box=f,colour=comb,dom=\listvar{m},cod=\listvar{n}]
+    essentially combinational circuit \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
     \) is equal to a circuit in the image of \(\mealytofunc\) by equations in
     \(\normalisingequations\).
 \end{definition}
