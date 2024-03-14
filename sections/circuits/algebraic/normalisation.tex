@@ -1,47 +1,79 @@
 \section{Normalising circuits}
 
-We can now translate any circuit into a denotationally-equal Mealy form using
-equations in \(\mealyeqn\); what now?
-As mentioned in the previous section, there is no guarantee that the
-combinational cores of Mealy forms have the same semantics, even if the state
-word is the same.
-Even so, one might think that through some combination of sliding components
-around the trace and across the delay, one might stumble across a way of
-translating one circuit into another.
-Unfortunately, these is simply \emph{not sufficient} for
-translating between circuits with the same semantics.
+How does one start when trying to define a complete set of equations for some
+framework?
+Usually the strategy is to define enough equations to bring any term to some
+sort of (pseudo-)\emph{normal form}; the theory is then complete if terms with
+the same semantics have the same normal form.
 
-\begin{example}
-    Consider the following circuit in \(\scirc{\belnapsignature}\): \[
-        \iltikzfig{circuits/examples/state-change/circuit}
-        \quad
-        \iltikzfig{circuits/examples/state-change/circuit-simpler}
-    \]
-    The registers will \emph{always} contain
-    \(\belnapfalse\) and \(\belnaptrue\) and both circuits will
-    produce a constant \(\belnapfalse\) output, so a complete equational theory
-    should be able to translate between them.
-    To this end, we assemble these into Mealy forms with the same initial states:
-    \[
-        \iltikzfig{circuits/examples/state-change/circuit-mealy}
-        \quad
-        \iltikzfig{circuits/examples/state-change/circuit-simpler-mealy}
-    \]
-    The combinational cores do \emph{not} have the same semantics!
-    They only act the same because they receive certain inputs
-    from \(\belnapvalues^{3}\).
-\end{example}
+We have already seen something that looks a bit like a normal form: the
+\emph{Mealy form} from the previous section.
+This is by no means a true normal form, as there are many different Mealy forms
+that represent the same behaviour.
+Nevertheless, it is a useful starting point so we will need equations to bring
+circuits to Mealy form in our theory.
 
-We must take \emph{context} into account when defining
-equations; unfortunately equations that only deal with the interactions between
-individual generators are not enough.
+We could just naively port across the Mealy rules from the operational semantics
+by changing the squiggly arrow into an equals sign and hoping nobody notices,
+but we are better people than that.
+Instead we will show how Mealy form can be derived using a finite set of
+equations, rather than resorting to equations parameterised over all circuits.
 
-Instead, our strategy is to translate circuits in Mealy form into some sort of
-`normal form', from which it is clearer which circuits have the same behaviour.
-We take inspiration from a form we have seen already: the image of
-\(\mealytocircuiti\), the map from Mealy machines to circuit morphisms.
+\input{sections/circuits/algebraic/floats/mealy-equations}
+
+\begin{definition}
+    The set \(\mealyequations\) of \emph{Mealy equations} in
+    \cref{fig:mealy-equations} are sound.
+\end{definition}
+\begin{proof}
+    The first two rules hold as the join is a monoid in the stream semantics.
+    The \((\bottomdelayeqn)\) holds because the semantics of the delay
+    component are to output a \(\bot\) value first and then the (delayed)
+    inputs: as the semantics of the \(
+    \iltikzfig{strings/structure/monoid/init}[colour=comb]
+    \) component are to \emph{always} produce \(\bot\), then it does not make a
+    difference how delayed it is.
+    The final equation is just the instant feedback rule from the previous
+    chapter, which is sound by \cref{prop:instant-feedback}.
+\end{proof}
+
+\begin{proposition}\label{prop:mealy-equations}
+    Given a sequential circuit \(
+    \iltikzfig{strings/category/f}[box=F,colour=seq]
+    \), there exists a circuit in Mealy form such that \(
+    \iltikzfig{strings/category/f}[box=F,colour=seq]
+    =
+    \iltikzfig{circuits/productivity/mealy-form}
+    \) in \(\scircsigma / \mealyequations\).
+\end{proposition}
+\begin{proof}
+    Any circuit can be assembled into global trace-delay form solely using the
+    axioms of STMCs, which hold by default in \(\scircsigma\).
+    From this, a circuit in pre-Mealy form can be obtained by translating
+    delays into registers using \(
+    \iltikzfig{circuits/axioms/delay-to-register/step-0}
+    \eqaxioms[(\monoidunitleqn)]
+    \iltikzfig{circuits/axioms/delay-to-register/step-1}
+    \) and translating values into registers using \(
+    \iltikzfig{circuits/axioms/value-to-register/step-0}
+    \eqaxioms[(\monoidunitreqn)]
+    \iltikzfig{circuits/axioms/value-to-register/step-1}
+    \eqaxioms[(\bottomdelayeqn)]
+    \iltikzfig{circuits/axioms/value-to-register/step-2}
+    \).
+    Subsequently a circuit in Mealy form can be obtained by applying the
+    \((\instantfeedbackeqn)\) rule.
+\end{proof}
+
+\(\scircsigma / \mealyequations\) is a category in which all circuits are equal
+to at least one circuit in Mealy form.
+In general, there will be many Mealy forms depending on the ordering one picks
+for the delays and values.
+
+One subclass of circuits in Mealy form which is particularly special is the
+image of \(\mealytocircuiti\), the map from Mealy machines to circuit morphisms.
 Recall that circuits in the image of \(\mealytocircuiti\) are in the form \(
-    \iltikzfig{circuits/synthesis/mealy-term-spaced}[trace=\listvar{x},dom=\listvar{m},cod=\listvar{n}]
+\iltikzfig{circuits/synthesis/mealy-term-spaced}[trace=\listvar{x},dom=\listvar{m},cod=\listvar{n}]
 \), where \(\gamma_\leq\) is an \emph{encoding} of the state set with respect
 to some total order \(\leq\).
 This encoding maps states to words containing only \(\bot\) and \(\top\) where
@@ -64,7 +96,7 @@ the class of circuits any future equations must apply to.
 
 \begin{definition}[Normalised circuit]
     A sequential circuit \(
-        \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
     \) is \emph{normalised} if it is in the image of \(\mealytofunc\).
 \end{definition}
 
@@ -83,7 +115,7 @@ Instead, these must be specified on a interpretation-by-interpretation basis.
     For a functionally complete interpretation \(\interpretation\), a set of
     equations \(\normalisingequations\) is \emph{normalising} if any
     compositional circuit \(
-        \iltikzfig{strings/category/f}[box=f,colour=comb,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=f,colour=comb,dom=\listvar{m},cod=\listvar{n}]
     \) is equal to a circuit in the image of \(\mealytofunc\) by equations in
     \(\normalisingequations\).
 \end{definition}
