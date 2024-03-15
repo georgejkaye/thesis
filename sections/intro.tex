@@ -161,11 +161,8 @@ but what this meant exactly was not made formal.
 
 \section{Contributions}
 
-
-
-\section{Thesis outline}
-
-This thesis is split into two parts, \emph{Semantics of Digital Circuits}, and
+This contributions of this thesis are split into two parts,
+\emph{Semantics of Digital Circuits}, and
 \emph{Graph Rewriting for Digital Circuits}.
 These sections respectively correspond to two papers:
 \emph{%
@@ -176,9 +173,14 @@ These sections respectively correspond to two papers:
 }~\cite{ghica2023rewriting}, which was published in
 \emph{Formal Structures for Computation and Deduction (FSCD) 2023}.
 
-In the first part, we define the categorical syntax of sequential digital
-circuits and follow this up with three sound and complete semantic frameworks
-for sequential digital circuits: denotational, operational, and algebraic.
+\subsection{Semantics of Digital Circuits}
+
+In the previous work, semantics of digital circuits was defined in a sometimes
+confusing manner, intermingling equations on circuits with other quotients.
+In the first part of this thesis we set about fixing this: we first define the
+categorical syntax of sequential digital circuits and follow this up with three
+sound and complete semantic frameworks: denotational, operational, and
+algebraic.
 Each of these frameworks has their own benefits and intended uses; together they
 make a part of a comprehensive examination of semantics of digital circuits.
 The framework is sufficiently general to encompass circuits constructed from
@@ -188,16 +190,88 @@ include an extended case study into circuits constructed from
 \emph{Belnap logic gates}~\cite{belnap1977useful}, an extension of traditional
 Boolean logic containing the usual \(\andgate\), \(\orgate\) and \(\notgate\)
 gates.
-The switch from a two-valued to a four-valued logic is crucial to how full
-composition for sequential digital circuits has been obtained.
+The switch from a two-valued to a four-valued logic is crucial to how a fully
+compositional theory for sequential digital circuits has been obtained.
+
+\subsubsection{Denotational semantics}
+
+While the previous circuits work did discuss assigning semantics to circuits
+of circuits in terms of streams, soundness and completeness of this model was
+not considered.
+It was not even deemed important enough to appear in the conference version of
+the paper, only being examined in detail in the arXiv
+preprint~\cite{ghica2017diagrammatica}!
+Here we present a denotational semantics for sequential circuits as
+\emph{stream functions} with certain properties using a traced PROP morphism
+mapping syntax to semantics.
+This denotational semantics is sound and complete in that every syntactic
+circuit can be expressed as one of these stream functions, and every such stream
+function can be mapped to a syntactic circuit which has the original stream
+function as its behaviour.
+
+On the way, we also define a traced PROP of Mealy machines lifted to work on
+lattices as a `bridge' between circuits and stream functions.
+As well as being essential for showing the soundness and completeness of the
+denotational semantics, having this category of Mealy machines is nice to have
+in its own right, as it shows how existing circuit
+methodologies~\cite{kohavi2009switching} are compatible with our rigorous
+mathematic framework.
+
+\subsubsection{Operational semantics}
+
+The previous work on circuits was primarily motivated by creating an operational
+semantics for digital circuits, bringing techniques from software to the realm
+of hardware.
+While such a system was presented in~\cite{ghica2017diagrammatic}, this only
+worked on \emph{closed} circuits with no \emph{non-delay-guarded feedback}.
+One of the main contributions of this section is a novel reduction rule for
+eliminating non-delay-guarded feedback inspired by the Kleene fixpoint theorem,
+which, combined with a generalisation of the previous reduction procedure to
+work on open circuits, means that any circuit applied to some inputs can be
+reduced in order to determine its outputs and next state.
+
+As a result of this, we also present a formal notion of
+\emph{observational equivalence} on sequential circuits, and show that it is the
+correct one using the well-known universal property that it is the largest
+adequate congruence relation~\cite{gordon1998operational}.
+
+\subsubsection{Algebraic semantics}
+
+One of the confusing points of the original work on circuits was the category
+of circuits was quotiented by certain equations that `felt right'.
+However, in the end these circuits were not enough to show the desired results,
+so additional quotients of `extensional equivalence' were used to add in the
+remaining equalities.
+
+In this thesis our equational theory is guided by the stream semantics,
+building up to a sound and complete algebraic semantics for circuits without
+having to add any arbitrary quotients.
+We try to stick to standard equations on algebraic structures and small `local'
+equations detailing the interactions on individual generators, but the nature of
+digital circuits means that some larger circuits including \emph{context} are
+necessary to include.
+The main result is showing the equations suffice to bring any circuit to a
+pseudo-normal form.
+
+\subsection{Graph Rewriting for Digital Circuits}
 
 While this work marks the first time the semantics of sequential digital
 circuits have been given a rigorous mathematical treatment, it is not really
 feasible to apply the techniques to anything more than toy circuits by hand;
 trying to apply the techniques to actual, practical, circuits would quickly lead
 to someone having a very bad time.
-In the second part of the thesis, we extend previous work on
-\emph{string diagram rewriting}~\cite{bonchi2022string,bonchi2022stringa,bonchi2022stringb}
+Instead it is desirable to have a computer deal with all the hard work
+for us and reason \emph{automatically}.
+To do this, we need to represent circuits \emph{combinatorially} as graphs.
+
+Representing the categorical syntax of digital circuits in this way was
+considered in~\cite{ghica2017diagrammatic} using
+Kissinger's \emph{framed point graphs}~\cite{kissinger2012pictures}.
+These had several drawbacks, such as the need to reason modulo
+\emph{wire homeomorphism} and the fact that framed point graphs were not fully
+adhesive.
+In the second part of the thesis, we extend more recent work on
+\emph{hypergraph string diagram rewriting}~\cite{bonchi2022string,bonchi2022stringa,bonchi2022stringb}
 so we can apply it to sequential digital circuits; to be precise, we adapt it
 for settings with a \emph{traced comonoid} structure.
 Using graph rewriting, we can express the operational and algebraic semantics
