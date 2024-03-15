@@ -23,6 +23,18 @@ pieces that can be pieced together by composing functions, which is why
 functional programming paradigms are starting to creep into even the most
 imperative of languages.
 
+But what exactly does it mean for a theory to be \emph{fully} compositional?
+It is a term often thrown around without much thought to its precise meaning,
+not least by the author while attempting to bat off questions about their work's
+novelty from anonymous reviewers, conference attendees, and esteemed
+mathematicians on social media.
+Here, we take full compositionality to mean that we can compose terms without
+fear that we willsomehow create a degenerate term and leave our well-behaved
+setting.
+We should not have to perform any sort of semantic check or `peek inside' a term
+to find out if composition is permitted; we should be able to treat everything
+as a black box and reason solely with interfaces.
+
 While compositionality is the core tenet of all category theory, it is in
 \emph{symmetric monoidal categories}~\cite{maclane1963natural} where the power
 really starts to shine.
@@ -37,17 +49,47 @@ outputs to inputs.
 This too can be viewed in a categorical perspective in the form of a
 \emph{symmetric traced monoidal category}~\cite{joyal1996traced}.
 
-But what exactly does it mean for a theory to be \emph{fully} compositional?
-It is a term often thrown around without much thought to its precise meaning,
-not least by the author while attempting to bat off questions about their work's
-novelty from anonymous reviewers, conference attendees, and esteemed
-mathematicians on social media.
-But for now, we will define what we mean once and for all: we take full
-compositionality to mean that we can compose terms without fear that we will
-somehow create a degenerate term and leave our well-behaved setting.
-We should not have to perform any sort of semantic check or `peek inside' a term
-to find out if composition is permitted; we should be able to treat everything
-as a black box and reason solely with interfaces.
+Perhaps the most well known application of symmetric monoidal categories in
+recent times is for modelling
+\emph{quantum protocols}~\cite{abramsky2004categorical}.
+This line of work resulted in the
+\emph{ZX calculus}~\cite{coecke2008interacting}, in which quantum
+circuits are depicted by connecting so-called `spiders' together to create a
+network.
+The latter is a key example of \emph{string diagrams}~\cite{joyal1991geometry},
+a graphical notation for symmetric monoidal categories.
+Since their inception, string diagrams have been extended with notation for all
+sorts of categorical structure, such as for a trace~\cite{joyal1996traced}; we
+refer the reader to Selinger's survey~\cite{selinger2011survey} for the full
+tour.
+
+While string diagrams do not add any more computational power to
+standard one-dimensional reasoning, they are
+immensely beneficial because the categorical axioms of associativity and
+unitality are `absorbed' by the notation: two terms are equal if and only if
+their string diagrams are isomorphic~\cite{kelly1980coherence,kissinger2014abstract}.
+This makes proofs far less bureaucratic, meaning that the mathematician need
+only focus on the non-trivial steps without having to constantly rearrange the
+bracketing of a term.
+As a useful aside, they also make the work more approachable and easier to
+explain to non-mathematicians.
+With string diagrams, it is possible to give talks about category theory without
+even mentioning categories at all; there have even been books written with this
+philosophy~\cite{coecke2018picturing}!
+
+String diagrams, and more broadly the use of monoidal categories to model
+compositional processes, has seen an explosion in the past thirty years.
+They have been used in the study of cyclic lambda
+calculi~\cite{hasegawa1997recursion}, fixpoint including dynamical
+systems~\cite{baez2015categories,fong2016categorical}, signal flow
+diagrams~\cite{bonchi2014categorical,bonchi2015full,bonchi2017refinement,bonchi2021survey},
+linear algebra~\cite{bonchi2017interacting,zanasi2015interacting,bonchi2019graphical,boisseau2022graphical},
+finite-state automata~\cite{piedeleu2021string,piedeleu2022finite}, first order
+logic~\cite{bonchi2024diagrammatic}, electrical
+circuits~\cite{boisseau2022string} and automatic
+differentiation~\cite{alvarez-picallo2023functorial}.
+
+\section{Compositionality and sequential circuits}
 
 One might argue that composition is already widespread in sequential circuit
 design, and indeed it is: circuits are constructed by connecting lots of very
@@ -60,6 +102,7 @@ that connecting two well-behaved circuits together will result in another
 well-behaved circuit: for example, there is always the threat of the dreaded
 \emph{non-delay-guarded feedback} rearing its head and leading to unpredictable
 behaviour.
+
 Some approaches try to nullify this by considering only some `safe' subset of
 circuits which will always be well-behaved~\cite{christensen2021wire}, or by
 introducing some sort of `type system' on wires so that components may only be
@@ -71,12 +114,20 @@ together without our reasoning falling apart.
 The result of the composition may not produce anything useful, but we will still
 be able to see that this is the case.
 
-\section{Compositionality and sequential circuits}
-
 Of course, we cannot claim that mathematics had ignored sequential circuits
 until we came along!
-The idea of representing circuits as expressions of primitive components is old;
-back in the 80s Mike Gordon worked on
+\emph{Mealy machines}~\cite{mealy1955method}, the \emph{de facto} structure for
+specifying the behaviour of sequential circuits, are ancient and it is well
+known how they should be composed (e.g. \cite{ginzburg2014algebraic}).
+In more recent times Mealy machines have been given a categorical treatment as
+certain kinds of \emph{coalgebra}~\cite{rutten2006algebraic,bonsangue2008coalgebraic}.
+However, Mealy machines abstract away from the \emph{components} of the circuit:
+we are keen to preserve the link between structure and behaviour by constructing
+circuits as morphisms in some symmetric monoidal category.
+
+While not explicitly categorical, the idea of representing circuits as
+mathematical expressions built up from primitive components was studied in the
+80s by Mike Gordon, who worked on
 \emph{denotational semantics for sequential machines}~\cite{gordon1980denotational}
 and used this idea to present
 \emph{a model of register transfer systems}~\cite{gordon1982model}.
@@ -111,6 +162,7 @@ but what this meant exactly was not made formal.
 \section{Contributions}
 
 
+
 \section{Thesis outline}
 
 This thesis is split into two parts, \emph{Semantics of Digital Circuits}, and
@@ -143,11 +195,7 @@ While this work marks the first time the semantics of sequential digital
 circuits have been given a rigorous mathematical treatment, it is not really
 feasible to apply the techniques to anything more than toy circuits by hand;
 trying to apply the techniques to actual, practical, circuits would quickly lead
-to someone having a very bad time\footnote{
-    Incidentally this is a state the author was in for a non-trivial amount of
-    time while working towards and writing up this thesis, but luckily they are
-    not particularly vengeful about it.
-}.
+to someone having a very bad time.
 In the second part of the thesis, we extend previous work on
 \emph{string diagram rewriting}~\cite{bonchi2022string,bonchi2022stringa,bonchi2022stringb}
 so we can apply it to sequential digital circuits; to be precise, we adapt it
