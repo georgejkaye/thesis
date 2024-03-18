@@ -7,6 +7,33 @@ Even if the state words are the same, they may be jumbled up in different
 orders, or the cores may only have the same behaviour when restricted to a
 particular subset of inputs.
 
+The optimistic reader might think that we we might stumble across a way of
+translating one circuit into the other through some combination of using the
+normalisation equations and sliding components around the trace.
+Unfortunately, these is simply \emph{not sufficient} for translating between
+circuits with the same semantics.
+
+\begin{example}
+    Consider the following circuit in \(\scirc{\belnapsignature}\): \[
+        \iltikzfig{circuits/examples/state-change/circuit}
+        \quad
+        \iltikzfig{circuits/examples/state-change/circuit-simpler}
+    \]
+    The registers will \emph{always} contain
+    \(\belnapfalse\) and \(\belnaptrue\) and both circuits will
+    produce a constant \(\belnapfalse\) output, so a complete equational theory
+    should be able to translate between them.
+    To this end, we assemble these into Mealy forms with the same initial states:
+    \[
+        \iltikzfig{circuits/examples/state-change/circuit-mealy}
+        \quad
+        \iltikzfig{circuits/examples/state-change/circuit-simpler-mealy}
+    \]
+    The combinational cores do \emph{not} have the same semantics!
+    They only act the same because they receive certain inputs
+    from \(\belnapvalues^{3}\).
+\end{example}
+
 We must take \emph{context} into account when defining
 equations; unfortunately equations that only deal with the interactions between
 individual generators are not enough.
@@ -40,34 +67,43 @@ circuit may assume.
 A circuit with a state of width \(x\) will not necessarily assume all the states
 in \(\valuetuple{x}\); this means that it is sometimes possible to \emph{encode}
 a circuit's states into a smaller word without losing data.
+To do this we recall the notion of \emph{Mealy homomorphism}
+(\cref{def:mealy-homomorphism}): a mapping between states that preserves
+transitions and outputs.
 
-\begin{definition}[Encoder]\label{def:encoder}
-    Let \(S \subseteq \valuetuple{x}\) and \(T \subseteq \valuetuple{y}\) be two
-    sets; an \emph{(S,T)-encoder} is two functions \(
-    \morph{\mathsf{enc}}{S}{T}
-    \) and \(
-    \morph{\mathsf{dec}}{T}{S}
-    \) such that \(\mathsf{dec} \circ \mathsf{enc} = \id\).
+\begin{notation}[Restriction]
+    For a function \(\morph{f}{A}{B}\) and a set \(C \subseteq A\), let
+    the \emph{restriction of \(f\) to \(C\)} be denoted as \(f|C\).
+\end{notation}
+
+\begin{definition}
+    For a Mealy coalgebra \((S, f)\), two states \(s,t \in S\) are
+    \emph{equivalent} if
+    \(\mealyfunctionoutput{f}{s} = \mealyfunctionoutput{f}{t}\) and
+    \(\mealyfunctiontransition{f}{s} = \mealyfunctiontransition{f}{t}\) are
+    equivalent states.
 \end{definition}
 
-\begin{example}
-    Given a set of states \(S \subseteq \valuetuple{x}\), a \(\leq\)-encoding
-    \(\morph{\gamma_\leq}{S}{\valuetuple{k}}\) used when defining the map from
-    Mealy machines to circuits (\cref{def:encoding}) is an example of a
-    \((S,\valuetuple{k})\)-encoder; the decoder
-    \(\mathsf{dec}_{S,\valuetuple{x}}\) is defined as the monotone completion
-    of \(\gamma_\leq^{-1}\).
-\end{example}
+\begin{definition}[Encoder-decoder pair]\label{def:encoder-decoder}
+    For a Mealy coalgebra \((S, f)\) and another set \(T\), two functions
+    \(\morph{\mathsf{enc}}{S}{T}\) and \(\morph{\mathsf{dec}}{T}{S}\) are an
+    \emph{encoder-decoder pair} if, for all \(s \in S\),
+    \(s\) and \(\mathsf{dec}(\mathsf{enc}(s))\) are equivalent states.
+\end{definition}
 
-Using a decoder and an encoder, we can change the state words that a circuit
-operates with.
+The functions of an encoder-decoder pair can be interpreted syntactically using
+the functional completeness map.
+Of course, these circuits cannot be inserted arbitrarily into a circuit as they
+are not isomorphisms on all inputs, only the states a circuit will assume.
 
 \begin{proposition}[Encoding equation]\label{prop:encoding-equation}
     For a normalised circuit \(
     \iltikzfig{strings/category/f-2-2}[box=|f|,colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod1=\listvar{x},cod2=\listvar{y}]
     \) and initial state \(\listvar{s} \in \valuetuple{\listvar{x}}\), let
-    \(\mathsf{enc},\mathsf{dec}\) be the two functions of a
-    \((S_{f,\listvar{s}},\valuetuple{y})\)-encoder as defined above.
+    \(\morph{\mathsf{enc}}{S_{f,\listvar{s}}}{\valuetuple{y}}\) and
+    \(\morph{\mathsf{enc}}{\valuetuple{y}}{S_{f, \listvar{s}}}\) be an
+    encoder-decoder pair as defined above in \cref{def:encoder-decoder}.
+
     Then the \emph{encoding equation} \((\encodingequation)\) in
     \cref{fig:encoding-equation} is sound, where
     \(\mathsf{enc}_\mathsf{m},\mathsf{dec}_\mathsf{m}\) are monotone completions
@@ -86,12 +122,16 @@ operates with.
     g(\proj{0}(f(\mathsf{dec}(\mathsf{enc}(\listvar{t})), \listvar{v})))
     \).
     When \(\listvar{t} \in S_{f, \listvar{s}}\) we have that \(
+    \mathsf{dec}(\mathsf{enc}(\listvar{s}))\) is an equivalent state to
+    \(\listvar{s}\),
+    so
+    \(
     \mealyoutput{g(\listvar{t})}{\listvar{v}}
     =
     \proj{1}(f(\listvar{t}), \listvar{v})
     \) and \(
     \mealytransition{g(\listvar{t})}{\listvar{v}}
-    =
+    \) is equivalent to \(
     g(\proj{0}(f(\listvar{t})), \listvar{v})
     \) by definition of encoders.
     As \(
@@ -105,18 +145,18 @@ operates with.
 \end{proof}
 
 After applying the encoding equation, the state has not actually changed; we
-have just inserted a pair of an encoder and a decoder.
+have just inserted a pair of an encoder and a decoder circuit.
 To translate the state we recycle some of the rules from the operational
 semantics.
 As with the Mealy equations, it is desirable to express these transformations in
 terms of smaller components
 
 \begin{lemma}
-    The remaining equations in \cref{fig:encoding-equation} are sound.
+    The equations on the bottom three rows of \cref{fig:encoding-equation} are
+    sound.
 \end{lemma}
 \begin{proof}
-    It is a straightforward exercise to compare the stream functions for each
-    equation.
+    It is a straightforward exercise to compare the stream functions.
 \end{proof}
 
 Before proceeding to show how , we show some intermediate lemmas provable using
@@ -253,3 +293,105 @@ into a different word, and end up with a new circuit in a `Mealy form' with a
 sequential core.
 However, since the encoders, decoders, and core are essentially combinational,
 these can be normalised once again to obtain a new normalised core.
+
+\todo[inline]{Restriction equation}
+
+\todo[inline]{Segue to bot top thing}
+
+The circuit on the right hand side of the encoding equation has a state
+containing just \(\bot\) and \(\top\) values.
+This is the `pseudo-normal form' for sequential circuits; depending on the
+state order picked there are likely to be multiple circuits of this form.
+Fortunately, since these circuits are also in normalised Mealy form, the
+encoding equation can be used to translate between pseudo-normal forms as well.
+
+\begin{definition}
+    For an interpretation \(\interpretation\), let
+    \(\mce_{\interpretation}\) be defined as \(
+    \mealyequations +
+    \instantfeedbackeqn +
+    \cartesianequations +
+    \normalisingequations +
+    \encodingequation
+    \), and let \(\scircsigmae\) be defined as
+    \(\scircsigma / \mce_{\interpretation}\).
+\end{definition}
+
+\begin{theorem}
+    For a functionally complete interpretation \(\interpretation\), \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    =
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \) in \(\scircsigmae\) if and only if \(
+    \circuittostreami[
+        \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    ]
+    =
+    \circuittostreami[
+        \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    ]
+    \).
+\end{theorem}
+\begin{proof}
+    All the equations are sound, so we only need to consider the \(\ifdir\)
+    direction.
+    By \cref{lem:normalised-mealy}, the two circuits can be brought to
+    normalised Mealy form using
+    \(
+    \mealyequations +
+    \instantfeedbackeqn +
+    \cartesianequations +
+    \normalisingequations
+    \).
+    By \cref{def:mealy-to-circuit} and
+    \cref{thm:circuit-stream-correspondence} there must exist a circuit \(
+    \iltikzfig{strings/category/f}[box=h,colour=seq]
+    \coloneqq
+    \iltikzfig{circuits/algebraic/encoding}[transition={h_0},output={h_1},state={\listvar{s}}]
+    \) such that \(
+    \circuittostream[
+        \iltikzfig{strings/category/f}[box=f,colour=seq]
+    ]{\interpretation}
+    =
+    \circuittostream[
+        \iltikzfig{strings/category/f}[box=h,colour=seq]
+    ]{\interpretation}
+    =
+    \circuittostream[
+        \iltikzfig{strings/category/f}[box=g,colour=seq]
+    ]{\interpretation}
+    \).
+    The circuit \(
+    \iltikzfig{strings/category/f}[box=H,colour=seq]
+    \) is encoded such that the state words are in the image of
+    \(\gamma_\leq\).
+    This means that applying the encoding equation with \(\leq\) to the
+    normalised Mealy forms obtained above will yield the circuit \(
+    \iltikzfig{strings/category/f}[box=h,colour=seq]
+    \).
+\end{proof}
+
+As always, the soundness and completeness of the algebraic semantics means we
+can establish another isomorphism of PROPs.
+
+\begin{corollary}
+    \(\scircsigmai \cong \scircsigmae\).
+\end{corollary}
+
+This brings our jaunt into algebraic semantics to a close; given a circuit \(
+\iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+\) we know that we can translate it into another circuit \(
+\iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+\) with the same behaviour by only using equations in \(\mce_\interpretation\).
+
+Of course, the procedure of using the normalisation equations to translate a
+circuit into normalised Mealy form before using the encoding equation (possibly
+multiple times depending on how lucky one gets with their orderings) may be
+tedious; one might wonder how this is beneficial to the operational approach in
+the previous chapter.
+But the beauty of the \emph{algebraic} semantics is that we \emph{don't} need to
+do this every time!
+Equations can be proven as lemmas and then used repeatedly in the future as
+`shortcuts', possibly saving many reasoning steps.
+In time, the algebraicist will build up a powerful repertoire of equations and
+wield them to bend circuits to their will.

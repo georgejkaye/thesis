@@ -38,9 +38,9 @@ takes in a currrent state and input \((s, a)\) and produces a pair
 \begin{notation}
     We will use the shorthand \(
     \mealyfunctiontransition{f} \coloneqq (s, a) \mapsto \proj{0}(f(s)(a))
-\) and \(
+    \) and \(
     \mealyfunctionoutput{f} \coloneqq (s, a) \mapsto \proj{1}(f(s)(a))
-\) for the transition and output component of the Mealy function respectively.
+    \) for the transition and output component of the Mealy function respectively.
 \end{notation}
 
 \begin{example}
@@ -73,14 +73,14 @@ and a function, so this is clearly a coalgebra in \(\set\).
 
 \begin{example}
     In \cite{bonsangue2008coalgebraic}, the notation \(
-        f(s)(a) = \langle{\initialoutput{s}{a},\streamderivative{s}{a}}\rangle
+    f(s)(a) = \langle{\initialoutput{s}{a},\streamderivative{s}{a}}\rangle
     \) is used to describe the Mealy function, which coincides with the notation
     used for stream functions; this is not a coincidence!
 
     Given sets \(A\) and \(B\), let \(\Gamma\) be the set of causal stream
     functions \(\stream{A} \to \stream{B}\), and let
     \(\morph{\nu}{\Gamma}{\Gamma \times B}^A\) be the function defined as \(
-        (f, a) \mapsto \langle{\initialoutput{s}{a},\streamderivative{s}{a}}\rangle
+    (f, a) \mapsto \langle{\initialoutput{s}{a},\streamderivative{s}{a}}\rangle
     \).
     Then \((\Gamma,\nu)\) is a \((A,B)\)-Mealy coalgebra.
 \end{example}
@@ -91,20 +91,11 @@ Mealy machines.
 If we inspect it a little closer, we find that stream functions are even more
 special than just being `a' \((A,B)\)-Mealy coalgebra.
 
-\begin{definition}[Mealy homomorphism]
-    For sets \(A\) and \(B\), an \emph{\(A,B\)-Mealy homomorphism} between two
+\begin{definition}[Mealy homomorphism]\label{def:mealy-homomorphism}
+    For sets \(A\) and \(B\), an \emph{Mealy homomorphism} between two
     \((A,B)\)-Mealy coalgebra \((S,f)\) and \((T,g)\) is a function
     \(\morph{h}{S}{T}\) preserving transitions and
-    outputs, i.e.\ for a Mealy function \(f\), a Mealy homomorphism \(h\)
-    satisfies \(
-        h\left(\mealyfunctiontransition{f}(s, a)\right)
-        =
-        \mealyfunctiontransition{f}(h(s), a)
-    \) and \(
-        h\left(\mealyfunctionoutput{f}(s, a)\right)
-        =
-        \mealyfunctionoutput{f}(s, a)
-    \).
+    outputs, i.e. if \(f(s,a) = (r,b)\), then \(g(h(s),a) = (h(r),b)\).
 \end{definition}
 
 The \emph{final} \((M,N)\)-Mealy coalgebra is a \((M,N)\)-Mealy coalgebra to
@@ -233,11 +224,11 @@ standard.
     \emph{cascade product} is an initialised \((A,C)\)-Mealy machine defined as
     \[
         \left(S \times T, ((s, t), a) \mapsto \left(
-                \mealyfunctiontransition{f}(s,a),
-                \mealyfunctiontransition{g}(t, \mealyfunctionoutput{f}(s, a))
-            \right),
-            \mealyfunctionoutput{g}(t, \mealyfunctionoutput{f}(s, a)),
-            (s_0, t_0)\right).
+        \mealyfunctiontransition{f}(s,a),
+        \mealyfunctiontransition{g}(t, \mealyfunctionoutput{f}(s, a))
+        \right),
+        \mealyfunctionoutput{g}(t, \mealyfunctionoutput{f}(s, a)),
+        (s_0, t_0)\right).
     \]
 \end{definition}
 
@@ -257,15 +248,15 @@ Tensor product is far more straightforward.
     \emph{direct product} is an initialised \((A \times C,B \times D)\)-Mealy
     machine defined as \[
         (S \times T, \left((s, t), (a, c)\right) \mapsto \left\langle
-            \left(
-                \mealyfunctiontransition{f}\left(s, a\right),
-                \mealyfunctiontransition{f}\left(s, a\right)
-            \right),
-            \left(
-                \mealyfunctionoutput{f}\left(s, a\right),
-                \mealyfunctionoutput{f}\left(s, a\right)
-            \right)\right\rangle,
-            (s_0, t_0)
+        \left(
+        \mealyfunctiontransition{f}\left(s, a\right),
+        \mealyfunctiontransition{f}\left(s, a\right)
+        \right),
+        \left(
+        \mealyfunctionoutput{f}\left(s, a\right),
+        \mealyfunctionoutput{f}\left(s, a\right)
+        \right)\right\rangle,
+        (s_0, t_0)
         ).
     \]
 \end{definition}
@@ -285,16 +276,16 @@ This can be computed in much the same way as it was for stream functions.
 
 \begin{definition}
     Let \((S, f)\) be a monotone \(
-        (\valuetuple{\listvar{xm}}, \valuetuple{\listvar{xn}})
+    (\valuetuple{\listvar{xm}}, \valuetuple{\listvar{xn}})
     \)-Mealy machine.
     For a state \(s \in S\) and input \(\listvar{a} \in \listvar{m}\), let
     \(\mu_{s,\listvar{a}}\) be the least fixpoint of \(
-        \listvar{r} \mapsto \proj{0}\left(f\left(s, \listvar{ra}\right)\right)
+    \listvar{r} \mapsto \proj{0}\left(f\left(s, \listvar{ra}\right)\right)
     \).
     The \emph{least fixed point} of \((S, f)\) with start state \(s_0\) is a \(
-        (\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}})
+    (\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}})
     \)-Mealy machine \(
-        (S, (s, \listvar{a}) \mapsto f((\mu_{s,\listvar{a}})\listvar{a}))
+    (S, (s, \listvar{a}) \mapsto f((\mu_{s,\listvar{a}})\listvar{a}))
     \) with start state \(s_0\).
 \end{definition}
 
@@ -305,21 +296,21 @@ This can be computed in much the same way as it was for stream functions.
     Let \((S, f)\) be a monotone
     \((\valuetuple{\listvar{xm}}, \valuetuple{\listvar{xn}})\)-Mealy machine.
     The Mealy function \(
-        \morph{f}{
-            S \times \valuetuple{\listvar{xm}}
-        }{
-            S \times \valuetuple{\listvar{xn}}
-        }
+    \morph{f}{
+        S \times \valuetuple{\listvar{xm}}
+    }{
+        S \times \valuetuple{\listvar{xn}}
+    }
     \) is monotone with regards to the orders on \(S\) and
     \(\valuetuple{\listvar{xm}}\) and \(S \times \listvar{xn}\) is finite, so
     \(f\) has a fixed point.
     The function \(
-        f^\prime \coloneqq (s, \listvar{a})
-        \mapsto
-        \proj{1}\left(f((\mu_{s,\listvar{a}})\listvar{a})\right)
+    f^\prime \coloneqq (s, \listvar{a})
+    \mapsto
+    \proj{1}\left(f((\mu_{s,\listvar{a}})\listvar{a})\right)
     \) is a composition of monotone functions, so it is itself monotone.
     This means \((S, f^\prime)\) is a monotone \(
-        (\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}})
+    (\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}})
     \)-Mealy machine.
     This construction is a trace for the same reason as the trace of
     \(\streami\) is.
@@ -330,16 +321,16 @@ This can be computed in much the same way as it was for stream functions.
     state set \(\belnapvalues\), initial state \(\bot\), and Mealy function \[
         g \coloneqq (s, (v, u, w))
         \mapsto \left\langle
-                \neg(u \land v),
-                (\neg(s \land w), \neg(u \land v), \neg(s \land w))
+        \neg(u \land v),
+        (\neg(s \land w), \neg(u \land v), \neg(s \land w))
         \right\rangle
-    ).\]
+        ).\]
     To take the trace of this machine, we must first compute the least fixed
     point of \(v \mapsto \neg(s \land w)\), which is clearly just
     \(\neg(s \land w)\).
     Therefore the Mealy function of the traced
     \((\valuetuple{2}, \valuetuple{2})\) machine is \(
-        (s, (u, w)) \mapsto g(s, (\neg(s \land w), u, w))
+    (s, (u, w)) \mapsto g(s, (\neg(s \land w), u, w))
     \).
 \end{example}
 
@@ -373,16 +364,16 @@ machine.
 
 \begin{corollary}[Corollary 2.3, \cite{rutten2006algebraic}]\label{cor:minimal-mealy}
     For a causal, finitely specified, stream function \(
-        \morph{f}{\stream{M}}{\stream{N}}
+    \morph{f}{\stream{M}}{\stream{N}}
     \), let \(S\) be the least set of
     causal stream functions including \(f\) and closed under stream derivatives:
     i.e.\ for all \(h \in S\) and \(a \in M\), \(h_a \in S\).
     Then the initialised Mealy machine \(
-        \streamtomealy[f]{\interpretation} = (S, g, f)
+    \streamtomealy[f]{\interpretation} = (S, g, f)
     \), where \(
-        g(h)(a) = \langle \mealyoutput{h}{a}, \mealytransition{h}{a}\rangle
+    g(h)(a) = \langle \mealyoutput{h}{a}, \mealytransition{h}{a}\rangle
     \), has the smallest state space of Mealy machines with the property \(
-        \mealytostreami[\streamtomealyi[f]] = f
+    \mealytostreami[\streamtomealyi[f]] = f
     \).
 \end{corollary}
 \begin{proof}
@@ -407,19 +398,19 @@ in order to this we must quickly verify the produced Mealy machine is monotone.
     such that \(\sigma \leq_{\stream{A}} \tau\); subsequently \(a \leq b\) and
     \(\sigma^\prime \leq_{\stream{A}} \tau^\prime\).
     So \(
-        \streaminit(\sigma) \coloneqq
-        \streaminit(a \streamcons \sigma^\prime) =
-        a \leq_{A}
-        b =
-        \streaminit(b \streamcons \tau^\prime) \coloneqq
-        \streaminit(\tau)
+    \streaminit(\sigma) \coloneqq
+    \streaminit(a \streamcons \sigma^\prime) =
+    a \leq_{A}
+    b =
+    \streaminit(b \streamcons \tau^\prime) \coloneqq
+    \streaminit(\tau)
     \) and \(
-        \streamderv(\sigma) \coloneqq
-        \streamderv(a \streamcons \sigma^\prime) =
-        \sigma^\prime \leq_{\stream{A}}
-        \tau^\prime =
-        \streamderv(b \streamcons \tau^\prime) =
-        \streamderv(\tau)
+    \streamderv(\sigma) \coloneqq
+    \streamderv(a \streamcons \sigma^\prime) =
+    \sigma^\prime \leq_{\stream{A}}
+    \tau^\prime =
+    \streamderv(b \streamcons \tau^\prime) =
+    \streamderv(\tau)
     \).
 \end{proof}
 
@@ -436,16 +427,16 @@ in order to this we must quickly verify the produced Mealy machine is monotone.
     By \cref{lem:head-tail-monotone}, \(\streaminit \circ f\) and
     \(\streamderv \circ f\) are monotone.
     First we show that the initial output is monotone: \(
-        \initialoutput{f}{a} \coloneqq
-            \streaminit(f(a \streamcons \sigma)) \leq_{A}
-            \streaminit(f(b \streamcons \sigma)) =
-            \initialoutput{f}{b}
+    \initialoutput{f}{a} \coloneqq
+    \streaminit(f(a \streamcons \sigma)) \leq_{A}
+    \streaminit(f(b \streamcons \sigma)) =
+    \initialoutput{f}{b}
     \).
     For stream derivative, \(
-        \streamderivative{f}{a}(\sigma) \coloneqq
-            \streamderv(f(a \streamcons \sigma)) \leq_{\stream{B}}
-            \streamderv(f(b \streamcons \sigma)) \coloneqq
-            \streamderivative{f}{a}(\sigma)
+    \streamderivative{f}{a}(\sigma) \coloneqq
+    \streamderv(f(a \streamcons \sigma)) \leq_{\stream{B}}
+    \streamderv(f(b \streamcons \sigma)) \coloneqq
+    \streamderivative{f}{a}(\sigma)
     \).
 \end{proof}
 
