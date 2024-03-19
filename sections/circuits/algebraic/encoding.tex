@@ -77,11 +77,11 @@ transitions and outputs.
     the \emph{restriction of \(f\) to \(C\)} be denoted as \(f|C\).
 \end{notation}
 
-\begin{definition}
+\begin{definition}[Equivalent states]\label{def:equivalent-states}
     For a Mealy coalgebra \((S, f)\), two states \(s,t \in S\) are
     \emph{equivalent} if
-    \(\mealyfunctionoutput{f}{s} = \mealyfunctionoutput{f}{t}\) and
-    \(\mealyfunctiontransition{f}{s} = \mealyfunctiontransition{f}{t}\) are
+    \(\mealyfunctionoutput{f}(s) = \mealyfunctionoutput{f}(t)\) and
+    \(\mealyfunctiontransition{f}(s) = \mealyfunctiontransition{f}(t)\) are
     equivalent states.
 \end{definition}
 
@@ -278,8 +278,8 @@ with an encoded state.
         \iltikzfig{circuits/algebraic/encoding-state/step-2}[box=g]
         \eqaxioms[\text{\cref{def:encoder}}]
         \iltikzfig{circuits/algebraic/encoding-state/step-3}[box=g]
-        \\[0.5em]
         \coloneqq
+        \\[0.5em]
         \iltikzfig{circuits/algebraic/encoding-state/step-4}[box=g]
         \coloneqq
         \iltikzfig{circuits/algebraic/encoding-state/step-5}[box=g]
@@ -288,6 +288,94 @@ with an encoded state.
 \end{proof}
 
 \input{sections/circuits/algebraic/floats/encoding-equation}
+
+\begin{definition}[Bisimulation]
+    Given two \((A,B)\)-Mealy coalgebra \((S,f)\) and \((T,g)\) with \(s \in S\)
+    and \(t \in T\), a \emph{bisimulation} between them is the
+    largest relation \(R \subseteq S \times T\) such that for each \(
+    (r,u) \in B
+    \), \(\mealyfunctionoutput{f}(r,a) = \mealyfunctionoutput{g}(u,a)\) and \(
+    R\left(\mealyfunctiontransition{f}(r,a), \mealyfunctiontransition{g}(u,a)\right)
+    \) for all \(a \in A\).
+\end{definition}
+
+\begin{lemma}
+    For a bisimulation \(B\) between two Mealy coalgebra \((S,f)\) and
+    \((T,g)\), if there exist pairs \((s,t_0), (s,t_1) \in B\), then
+    \(t_0\) and \(t_1\) are equivalent states in \((T,g)\).
+    Similarly, if there exist pairs \((s_0,t), (s_1,t) \in B\), then
+    \(s_0\) and \(s_1\) are equivalent states in \((S,f)\).
+\end{lemma}
+\begin{proof}
+    If there is a pair \((s,t)\) in a bisimulation, then \(s\) and \(t\) agree
+    on outputs and transition to bisimilar states.
+    Therefore if we have that \((s,t_0)\) and \((s,t_1)\) are in \(B\), then
+    \(
+    \mealyfunctiontransition{f}(s,a)
+    =
+    \mealyfunctiontransition{g}(t_0,a)
+    =
+    \mealyfunctiontransition{g}(t_1,a)
+    \), and
+\end{proof}
+
+\begin{lemma}
+    For two denotationally equivalent circuits \(
+    \iltikzfig{circuits/productivity/mealy-form}[core=|f|,state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
+    \) and \(
+    \iltikzfig{circuits/productivity/mealy-form}[core=|g|,state=\listvar{t},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{y}]
+    \)
+    Then there is a bisimulation between the monotone Mealy coalgebra
+    \((S_{f,\listvar{s}},f)\) and \((S_{g,\listvar{t}},g)\) containing
+    \(\listvar{s},\listvar{t}\).
+\end{lemma}
+\begin{proof}
+    Since the circuits are denotationally equivalent, they must agree on outputs
+    for any input word \(
+    \wordvar{\listvar{v}} \in \freemon{(\valuetuple{\listvar{m}})}
+    \).
+    This means that there is at least a bisimulation containing the pair
+    \((\listvar{s},\listvar{t})\).
+
+    This means that any pair of states obtained by transitioning from
+    \((\listvar{s},\listvar{t})\) must also be in the bisimulation .
+
+    Moreover, since every state in
+    \((S_{f,\listvar{s}},f)\) and \((S_{g,\listvar{t}},g)\) is accessible, this
+    must be the largest such relation.
+\end{proof}
+
+By considering bisimulations we now show that for denotationally
+equivalent circuits, we can encode the states of one into the states of the
+latter.
+
+\begin{theorem}\label{lem:posssible-encoding}
+    Let \(
+    \iltikzfig{circuits/productivity/mealy-form}[core=|f|,state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
+    \) and \(
+    \iltikzfig{circuits/productivity/mealy-form}[core=|h|,state=\listvar{t},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{y}]
+    \) be denotationally equivalent sequential circuits.
+    Then there exists at least one encoder-decoder pair \(
+    \morph{\mathsf{enc}}{S_{f,\listvar{s}}}{S_{g,\listvar{t}}}
+    \) and \(
+    \morph{\mathsf{dec}}{S_{g,\listvar{t}}}{S_{f,\listvar{s}}}
+    \).
+\end{theorem}
+\begin{proof}
+    Since the two circuits are denotationally equivalent, there is a
+    bisimulation between them.
+    An encoder \(S_{f,\listvar{s}} \to S_{g,\listvar{t}}\) can be constructed
+    for each \(\listvar{r} \in S_{f,\listvar{s}}\) by picking an element
+    \(\listvar{u} \in S_{g,\listvar{t}}\) such that
+    \((\listvar{r}, \listvar{u})\) is an element of \(B\).
+    This is monotone because...
+
+    The decoder can be constructed in the opposite way.
+
+    This is a valid encoder-decoder pair because, by
+    \cref{lem:bisimulation-outputs}, any pair of states in \(B\) has the same
+    outputs,
+\end{proof}
 
 If we have the right encoders, we can translate the initial state of a circuit
 into a different word, and end up with a new circuit in a `Mealy form' with a

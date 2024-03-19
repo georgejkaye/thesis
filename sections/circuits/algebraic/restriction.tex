@@ -13,25 +13,33 @@ only of \(\bot\) and \(\top\) elements, and the width of the state is equal to
 the number of stream derivatives the original stream function had including
 itself.
 
-\begin{lemma}
-    Let \(\morph{g}{\valuetuplestream{\listvar{m}}}{\valuetuplestream{\listvar{n}}}\)
-    be a stream function in \(\streami\) with \(
+Firstly, we show some lemmas about the circuit states of circuits in the image
+of \(\streamtomealyi[\mealytocircuiti]\).
+
+\begin{lemma}\label{lem:minimal-circuit-states}
+    Let \(
+    \morph{f}{\valuetuplestream{\listvar{m}}}{\valuetuplestream{\listvar{n}}}
+    \) be a stream function in \(\streami\), and let \(
+    (T,h,f) = \streamtomealyi[f]
+    \) be its corresponding Mealy machine.
+    Then for circuit \(
+    \iltikzfig{circuits/productivity/mealy-form}[core=|h|,state=\listvar{s},colour=seq]
+    =
     \mealytocircuiti[\streamtomealyi[g]]
-    =
-    \iltikzfig{circuits/productivity/mealy-form}[core=|g|,state=\listvar{t},colour=seq]
-    \), and let \(
-    \iltikzfig{circuits/productivity/mealy-form}[core=|f|,state=\listvar{s},colour=seq]
-    \) be a sequential circuit such that \(
-    \circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
-    =
-    f
-    \).
-    Then there exists an encoder-decoder pair \(
-    \morph{\mathsf{enc}}{S_{f,\listvar{s}}}{S_{g,\listvar{t}}}
-    \) and \(
-    \morph{\mathsf{enc}}{S_{g,\listvar{t}}}{S_{f,\listvar{s}}}
-    \).
+    \), \(S_{h,\listvar{s}} \cong T\).
 \end{lemma}
+\begin{proof}
+    The set \(S_{h,\listvar{s}}\) contains all the states that can produced by
+    by the function \(h\).
+    The Mealy machine \((T,h,f)\) is the minimal Mealy machine with \(f\)
+    as its behaviour, so there are no inaccessible states; this means that each
+    state in \(T\) has a corresponding encoded state in \(S_{h,\listvar{s}}\),
+    so they are isomorphic.
+\end{proof}
+
+\begin{example}
+    \todo[inline]{Do example to }
+\end{example}
 
 
 \todo[inline]{Segue to bot top thing}
