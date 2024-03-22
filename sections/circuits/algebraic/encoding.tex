@@ -72,11 +72,6 @@ To do this we recall the notion of \emph{Mealy homomorphism}
 (\cref{def:mealy-homomorphism}): a mapping between states that preserves
 transitions and outputs.
 
-\begin{notation}[Restriction]
-    For a function \(\morph{f}{A}{B}\) and a set \(C \subseteq A\), let
-    the \emph{restriction of \(f\) to \(C\)} be denoted as \(f|C\).
-\end{notation}
-
 \begin{definition}[Equivalent states]\label{def:equivalent-states}
     For a Mealy coalgebra \((S, f)\), two states \(s,t \in S\) are
     \emph{equivalent} if
@@ -349,7 +344,7 @@ By considering bisimulations we now show that for denotationally
 equivalent circuits, we can encode the states of one into the states of the
 latter.
 
-\begin{theorem}\label{lem:posssible-encoding}
+\begin{theorem}\label{thm:posssible-encodings}
     Let \(
     \iltikzfig{circuits/productivity/mealy-form}[core=|f|,state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
     \) and \(

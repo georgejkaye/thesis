@@ -19,19 +19,19 @@ ordering of the states picked, there may be multiple such circuits.
     Given a circuit \(
     \iltikzfig{strings/category/f}[box=f,colour=seq]
     \), there exists at least one word \(\listvar{s} \in \{\bot,\top\}^x\) and
-    combinational circuit \(
+    normalised circuit \(
     \iltikzfig{strings/category/f}[box=g,colour=comb]
     \) such that \(
     \circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
     =
-    \circuittostreami[\iltikzfig{circuits/productivity/mealy-form}[core=g]]
+    \circuittostreami[\iltikzfig{circuits/productivity/mealy-form}[core=|g|,colour=seq]]
     \).
 \end{corollary}
 
 By \cref{thm:possible-encodings}, we have that there is an encoding that maps
-states between denotationally equivalent circuits.
-If we can encode a circuit's state to one comprised of only \(\bot\) and
-\(\top\) elements, does this mean we have a sound and complete equational
+state sets between denotationally equivalent circuits.
+If we can encode a circuit's state sets to one where the states are all elements
+of \(\{\bot,\top\}^x\), does this mean we have a sound and complete equational
 theory?
 Unfortunately not: all it means is that the circuits agree on the set of
 circuit states.
@@ -52,6 +52,8 @@ circuits that agree on the context, but may differ otherwise.
 \begin{definition}[Restriction equation]
     \todo[inline]{Restriction equation}
 \end{definition}
+
+\input{sections/circuits/algebraic/floats/restriction-equation}
 
 It is now possible to collect all the equations together and define a sound and
 complete algebraic theory of sequential digital circuits.
