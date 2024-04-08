@@ -17,7 +17,7 @@ We could just naively port across the Mealy rules from the operational semantics
 by changing the squiggly arrow into an equals sign and hoping nobody notices,
 but we are better people than that.
 Instead we will show how Mealy form can be derived using a finite set of
-equations, rather than resorting to equations parameterised over all circuits.
+equations, rather than with an equation parameterised over all circuits.
 
 \input{sections/circuits/algebraic/floats/mealy-equations}
 
@@ -33,8 +33,8 @@ equations, rather than resorting to equations parameterised over all circuits.
     \iltikzfig{strings/structure/monoid/init}[colour=comb]
     \) component are to \emph{always} produce \(\bot\), then it does not make a
     difference how delayed it is.
-    The final equation is just the instant feedback rule from the previous
-    chapter, which is sound by \cref{prop:instant-feedback}.
+    The final equation is the instant feedback rule, which is sound by
+    \cref{prop:instant-feedback}.
 \end{proof}
 
 \begin{proposition}\label{prop:mealy-equations}
@@ -69,30 +69,15 @@ equations, rather than resorting to equations parameterised over all circuits.
 to at least one circuit in Mealy form.
 In general, there will be many Mealy forms depending on the ordering one picks
 for the delays and values.
+Our task is to provide equations to map any two denotationally equivalent
+circuits to the \emph{same} Mealy form.
 
-One subclass of circuits in Mealy form which is particularly special is the
-image of \(\mealytocircuiti\), the map from Mealy machines to circuit morphisms.
-Recall that circuits in the image of \(\mealytocircuiti\) are in the form \(
-\iltikzfig{circuits/synthesis/mealy-term-spaced}[trace=\listvar{x},dom=\listvar{m},cod=\listvar{n}]
-\), where \(\gamma_\leq\) is an \emph{encoding} of the state set with respect
-to some total order \(\leq\).
-This encoding maps states to words containing only \(\bot\) and \(\top\) where
-the width of each word is equal to the number of states in the original Mealy
-machine.
-
-From the completeness procedure for the denotational semantics, we know that any
-circuit is guaranteed to be denotationally equivalent to a circuit in this form;
-if we have equations to translate any circuits with the same behaviour to this
-circuit, then we have a complete algebraic semantics.
-
-The map from Mealy machines to circuits also enforces the structure of the
-Mealy core: it must be in the image of the map \(\mealytofunc\) from \(\funci\)
-to \(\scircsigma\).
-For a given interpretation this map essentially specifies the `canonical'
-version of any combinational circuit.
-So as not to work with arbitrary cores, it is preferable to first translate
-combinational circuits into this canonical circuit; this allows us to restrict
-the class of circuits any future equations must apply to.
+Even if the combinational cores of two Mealy forms have the same behaviour, they
+may not have the same structure.
+To reduce the number of cores we have to consider, we will first establish
+equations for translating any combinational circuit into some canonical circuit.
+We already met a method for determining what this canonical circuit is: the
+functional completeness map \(\mealytofunc\) from \(\funci\) to \(\scircsigma\).
 
 \begin{definition}[Normalised circuit]
     A sequential circuit \(
@@ -129,9 +114,6 @@ Instead, these must be specified on a interpretation-by-interpretation basis.
     \(\normalisingequations\).
 \end{definition}
 
-The aim of the normalising equations for an interpretation translate a
-combinational core into a form from which it is easy to read off a truth table.
-
-\subsection{Case study: The Belnap interpretation}\label{sec:algebraic-case-study}
-
-\todo[inline]{The normalising equations for the Belnap interpretation}
+The normalising equations for a given interpretation can be used to translate a
+combinational core into a circuit from which it is easy to read off a truth
+table.
