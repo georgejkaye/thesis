@@ -37,7 +37,15 @@ Unfortunately not: all it means is that the circuits agree on the set of
 circuit states.
 
 \begin{example}
-    \todo[inline]{Do example to establish}
+    Consider the following two circuits in \(\scirc{\belnapsignature}\): \[
+        \iltikzfig{circuits/examples/state-change/circuit-mealy}
+        \quad
+        \iltikzfig{circuits/examples/state-change/circuit-simpler-mealy}
+    \]
+    These circuits both have circuit states \(
+    \{\belnaptrue\belnapfalse,\belnapfalse\belnaptrue\}
+    \), but their combinational cores do \emph{not} have the same semantics!
+    They only act the same because they receive certain inputs.
 \end{example}
 
 The final family of equations required is one for mapping between combinational
@@ -50,7 +58,8 @@ circuits that agree on the context, but may differ otherwise.
 \end{notation}
 
 \begin{definition}[Restriction equation]
-    \todo[inline]{Restriction equation}
+    Let the \emph{restriction equation} be defined as in
+    \cref{fig:restriction-equation}.
 \end{definition}
 
 \input{sections/circuits/algebraic/floats/restriction-equation}

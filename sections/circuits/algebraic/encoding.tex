@@ -7,32 +7,37 @@ Even if the state words are the same, they may be jumbled up in different
 orders, or the cores may only have the same behaviour when restricted to a
 particular subset of inputs.
 
-The optimistic reader might think that we we might stumble across a way of
-translating one circuit into the other through some combination of using the
-normalisation equations and sliding components around the trace.
-Unfortunately, these is simply \emph{not sufficient} for translating between
-circuits with the same semantics.
+\todo[inline]{Expand}
+
+To illustrate why this is the case, we first provide a notion for computing the
+states a syntactic circuit can assume.
+
+\begin{definition}[States]
+    Let \(\morph{f}{\valuetuple{\listvar{xm}}}{\valuetuple{\listvar{xn}}}\) be a
+    monotone function and let \(\listvar{s} \in  \valuetuple{x}\) be an
+    initial state.
+    Then the \emph{states of \(f\) from \(\listvar{s}\)}, denoted
+    \(S_{f,\listvar{s}}\), is the smallest set containing \(\listvar{s}\) and
+    closed under \(
+    \listvar{r}
+    \mapsto
+    \proj{x}\left(\tilde{f}_0(\listvar{r},\listvar{v})\right)
+    \) for any \(\listvar{v} \in \valuetuple{\listvar{m}}\).
+\end{definition}
 
 \begin{example}
-    Consider the following circuit in \(\scirc{\belnapsignature}\): \[
-        \iltikzfig{circuits/examples/state-change/circuit}
-        \quad
-        \iltikzfig{circuits/examples/state-change/circuit-simpler}
-    \]
-    The registers will \emph{always} contain
-    \(\belnapfalse\) and \(\belnaptrue\) and both circuits will
-    produce a constant \(\belnapfalse\) output, so a complete equational theory
-    should be able to translate between them.
-    To this end, we assemble these into Mealy forms with the same initial states:
-    \[
-        \iltikzfig{circuits/examples/state-change/circuit-mealy}
-        \quad
-        \iltikzfig{circuits/examples/state-change/circuit-simpler-mealy}
-    \]
-    The combinational cores do \emph{not} have the same semantics!
-    They only act the same because they receive certain inputs
-    from \(\belnapvalues^{3}\).
+    \todo[inline]{Example?}
 \end{example}
+
+Crucially, two circuits with the same semantics might have a different number of
+states, just like two bisimilar Mealy machines.
+The optimistic reader might think that we we might still be able to translate
+one circuit into the other through some combination of using the
+normalisation equations and sliding components around the trace.
+Unfortunately, these may be insufficient when the circuits have
+a different number of states.
+
+\todo[inline]{Example? not iso on all states}
 
 We must take \emph{context} into account when defining
 equations; unfortunately equations that only deal with the interactions between
@@ -52,54 +57,96 @@ circuit may assume.
     of behaviour and state.
 \end{remark}
 
-\begin{definition}[States]
-    Let \(\morph{f}{\valuetuple{\listvar{xm}}}{\valuetuple{\listvar{xn}}}\) be a
-    monotone function and let \(\listvar{s} \in  \valuetuple{x}\) be an
-    initial state.
-    Then the \emph{states of \(f\) from \(\listvar{s}\)}, denoted
-    \(S_{f,\listvar{s}}\), is the smallest set containing \(\listvar{s}\) and
-    closed under \(
-    \listvar{r}
-    \mapsto
-    \proj{x}\left(\tilde{f}_0(\listvar{r},\listvar{v})\right)
-    \) for any \(\listvar{v} \in \valuetuple{\listvar{m}}\).
-\end{definition}
 
 A circuit with a state of width \(x\) will not necessarily assume all the states
 in \(\valuetuple{x}\); this means that it is sometimes possible to \emph{encode}
 a circuit's states into a smaller word without losing data.
-To do this we recall the notion of \emph{Mealy homomorphism}
-(\cref{def:mealy-homomorphism}): a mapping between states that preserves
-transitions and outputs.
 
-\begin{definition}[Equivalent states]\label{def:equivalent-states}
-    For a Mealy coalgebra \((S, f)\), two states \(s,t \in S\) are
-    \emph{equivalent} if
-    \(\mealyfunctionoutput{f}(s) = \mealyfunctionoutput{f}(t)\) and
-    \(\mealyfunctiontransition{f}(s) = \mealyfunctiontransition{f}(t)\) are
-    equivalent states.
-\end{definition}
+\begin{lemma}
+    Given Mealy homomorphisms \(\morph{h}{(S,f)}{(T,g)}\) and
+    \(\morph{h^\prime}{(T,g)}{(S,f)}\), any state \(s \in S\) and input
+    \(a \in A\), \(
+    \mealyfunctiontransition{f}(s, a)
+    =
+    \mealyfunctiontransition{f}(h^\prime(h(s)), a)
+    \).
+\end{lemma}
+\begin{proof}
+    Immediate as Mealy homomorphisms preserve outputs.
+\end{proof}
 
-\begin{definition}[Encoder-decoder pair]\label{def:encoder-decoder}
-    For a Mealy coalgebra \((S, f)\) and another set \(T\), two functions
-    \(\morph{\mathsf{enc}}{S}{T}\) and \(\morph{\mathsf{dec}}{T}{S}\) are an
-    \emph{encoder-decoder pair} if, for all \(s \in S\),
-    \(s\) and \(\mathsf{dec}(\mathsf{enc}(s))\) are equivalent states.
-\end{definition}
+Pairs of `inverse' Mealy homomorphisms as described above will act as state
+encoders and decoders between circuits.
+To create circuits representing these homomorphisms, we once again use the
+functional completeness map.
 
-The functions of an encoder-decoder pair can be interpreted syntactically using
-the functional completeness map.
-Of course, these circuits cannot be inserted arbitrarily into a circuit as they
-are not isomorphisms on all inputs, only the states a circuit will assume.
+\begin{lemma}
+    For partial orders \(S\) and \(T\) and monotone Mealy coalgebra
+    \((S,f)\) and \((T,g)\), any Mealy homomorphism \(\morph{h}{(S,f)}{(T,g)}\)
+    is monotone.
+\end{lemma}
+\begin{proof}
+    In a monotone Mealy coalgebra, the functions \(f\) and \(g\) are monotone,
+    and for \(h\) to be a Mealy homomorphism, \(
+    \mealyfunctionoutput{f}(s)
+    =
+    \mealyfunctionoutput{g}(h(s))
+    \).
+    Assume states \(s,r \in S\); subsequently we have \(
+    \mealyfunctionoutput{g}(h(s), a)
+    =
+    \mealyfunctionoutput{f}(s, a)
+    \leq
+    \mealyfunctionoutput{f}(r, a)
+    =
+    \mealyfunctionoutput{g}(h(r), a)
+    \).
+    This means that the function \(
+    s \mapsto \mealyfunctionoutput{g}(h(s), a)
+    \) is monotone; as \(\mealyfunctionoutput{g}\) is monotone, \(h\) must
+    also be monotone.
+\end{proof}
+
+For two circuits \(
+\iltikzfig{circuits/productivity/mealy-form}[core=|f|,state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
+\) and \(
+\iltikzfig{circuits/productivity/mealy-form}[core=|g|,state=\listvar{t},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{y}]
+\), the encoders and decoders we will use for circuits will be Mealy homomorphisms
+\(\morph{h}{(S_{f,\listvar{s}},f)}{(S_{g,\listvar{t}},g)}\)
+and
+\(\morph{h}{(S_{g,\listvar{t}},g)}{(S_{f,\listvar{s}},f)}\).
+
+
+\begin{lemma}\label{lem:bisimulation-initial-states}
+    For two denotationally equivalent circuits \(
+    \iltikzfig{circuits/productivity/mealy-form}[core=|f|,state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
+    \) and \(
+    \iltikzfig{circuits/productivity/mealy-form}[core=|g|,state=\listvar{t},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{y}]
+    \), there exists at least one Mealy homomorphism \(
+    \morph{h}{(S_{f,\listvar{s}},f)}{(S_{g,\listvar{t}},g)}
+    \).
+\end{lemma}
+\begin{proof}
+    As the two circuits are denotationally equivalent, at least one valid
+    mapping of states can be obtained by sending states in the former to the
+    state in the latter obtained after inputting the same word.
+    However, there will be more than one valid homomorphism if the second
+    circuit has more states than the first, as there will be multiple states in
+    the second that act like a single state in the first.
+\end{proof}
+
+Note that these are Mealy homomorphisms on the subset of states that a circuit
+can assume, \emph{not} the entire set of words that can fit into the state!
+This means that encoding and decoding circuits cannot be inserted arbitrarily
+but only in the context of a larger circuit in Mealy form.
 
 \begin{proposition}[Encoding equation]\label{prop:encoding-equation}
     For a normalised circuit \(
     \iltikzfig{strings/category/f-2-2}[box=|f|,colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod1=\listvar{x},cod2=\listvar{y}]
     \) and initial state \(\listvar{s} \in \valuetuple{\listvar{x}}\), let
     \(\morph{\mathsf{enc}}{S_{f,\listvar{s}}}{\valuetuple{y}}\) and
-    \(\morph{\mathsf{enc}}{\valuetuple{y}}{S_{f, \listvar{s}}}\) be an
-    encoder-decoder pair as defined above in \cref{def:encoder-decoder}.
-
+    \(\morph{\mathsf{dec}}{\valuetuple{y}}{S_{f, \listvar{s}}}\) be Mealy
+    homomorphisms.
     Then the \emph{encoding equation} \((\encodingequation)\) in
     \cref{fig:encoding-equation} is sound, where
     \(\mathsf{enc}_\mathsf{m},\mathsf{dec}_\mathsf{m}\) are monotone completions
@@ -155,8 +202,8 @@ terms of smaller components
     It is a straightforward exercise to compare the stream functions.
 \end{proof}
 
-Before proceeding to show how , we show some intermediate lemmas provable using
-the equations in \cref{fig:encoding-equation}.
+Using the equations in \cref{fig:encoding-equation}, we can derive some larger
+equations.
 
 \begin{lemma}\label{lem:generalised-streaming}
     For a combinational circuit \(
@@ -235,9 +282,8 @@ the equations in \cref{fig:encoding-equation}.
     \end{gather*}
 \end{proof}
 
-With these facts under our belt, we will now show that the equations in
-\cref{fig:encoding-equation} allow us to translate a circuit into one
-with an encoded state.
+We will now show that the equations in \cref{fig:encoding-equation} allow us to
+translate a circuit into one with an encoded state.
 
 \begin{proposition}
     For a normalised circuit \(
@@ -284,93 +330,25 @@ with an encoded state.
 
 \input{sections/circuits/algebraic/floats/encoding-equation}
 
-\begin{definition}[Bisimulation]
-    Given two \((A,B)\)-Mealy coalgebra \((S,f)\) and \((T,g)\) with \(s \in S\)
-    and \(t \in T\), a \emph{bisimulation} between them is the
-    largest relation \(R \subseteq S \times T\) such that for each \(
-    (r,u) \in B
-    \), \(\mealyfunctionoutput{f}(r,a) = \mealyfunctionoutput{g}(u,a)\) and \(
-    R\left(\mealyfunctiontransition{f}(r,a), \mealyfunctiontransition{g}(u,a)\right)
-    \) for all \(a \in A\).
-\end{definition}
+Before proceeding to our next set of equations, we will show how the encoding
+equations can be used to encode the states of any circuit as those of a
+denotationally equivalent one.
+We are now ready to show that the encoding equations allow us to translate the
+states of a circuit into those of a denotationally equivalent circuit.
 
-\begin{lemma}
-    For a bisimulation \(B\) between two Mealy coalgebra \((S,f)\) and
-    \((T,g)\), if there exist pairs \((s,t_0), (s,t_1) \in B\), then
-    \(t_0\) and \(t_1\) are equivalent states in \((T,g)\).
-    Similarly, if there exist pairs \((s_0,t), (s_1,t) \in B\), then
-    \(s_0\) and \(s_1\) are equivalent states in \((S,f)\).
-\end{lemma}
-\begin{proof}
-    If there is a pair \((s,t)\) in a bisimulation, then \(s\) and \(t\) agree
-    on outputs and transition to bisimilar states.
-    Therefore if we have that \((s,t_0)\) and \((s,t_1)\) are in \(B\), then
-    \(
-    \mealyfunctiontransition{f}(s,a)
-    =
-    \mealyfunctiontransition{g}(t_0,a)
-    =
-    \mealyfunctiontransition{g}(t_1,a)
-    \), and
-\end{proof}
-
-\begin{lemma}
-    For two denotationally equivalent circuits \(
+\begin{corollary}
+    For denotationally equivalent circuits \(
     \iltikzfig{circuits/productivity/mealy-form}[core=|f|,state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
     \) and \(
     \iltikzfig{circuits/productivity/mealy-form}[core=|g|,state=\listvar{t},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{y}]
-    \)
-    Then there is a bisimulation between the monotone Mealy coalgebra
-    \((S_{f,\listvar{s}},f)\) and \((S_{g,\listvar{t}},g)\) containing
-    \(\listvar{s},\listvar{t}\).
-\end{lemma}
-\begin{proof}
-    Since the circuits are denotationally equivalent, they must agree on outputs
-    for any input word \(
-    \wordvar{\listvar{v}} \in \freemon{(\valuetuple{\listvar{m}})}
-    \).
-    This means that there is at least a bisimulation containing the pair
-    \((\listvar{s},\listvar{t})\).
-
-    This means that any pair of states obtained by transitioning from
-    \((\listvar{s},\listvar{t})\) must also be in the bisimulation .
-
-    Moreover, since every state in
-    \((S_{f,\listvar{s}},f)\) and \((S_{g,\listvar{t}},g)\) is accessible, this
-    must be the largest such relation.
-\end{proof}
-
-By considering bisimulations we now show that for denotationally
-equivalent circuits, we can encode the states of one into the states of the
-latter.
-
-\begin{theorem}\label{thm:posssible-encodings}
-    Let \(
+    \), there exists \(
+    \iltikzfig{circuits/productivity/mealy-form}[core=|h|,state=\listvar{t},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
+    \) such that \(
     \iltikzfig{circuits/productivity/mealy-form}[core=|f|,state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
-    \) and \(
-    \iltikzfig{circuits/productivity/mealy-form}[core=|h|,state=\listvar{t},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{y}]
-    \) be denotationally equivalent sequential circuits.
-    Then there exists at least one encoder-decoder pair \(
-    \morph{\mathsf{enc}}{S_{f,\listvar{s}}}{S_{g,\listvar{t}}}
-    \) and \(
-    \morph{\mathsf{dec}}{S_{g,\listvar{t}}}{S_{f,\listvar{s}}}
-    \).
-\end{theorem}
-\begin{proof}
-    Since the two circuits are denotationally equivalent, there is a
-    bisimulation between them.
-    An encoder \(S_{f,\listvar{s}} \to S_{g,\listvar{t}}\) can be constructed
-    for each \(\listvar{r} \in S_{f,\listvar{s}}\) by picking an element
-    \(\listvar{u} \in S_{g,\listvar{t}}\) such that
-    \((\listvar{r}, \listvar{u})\) is an element of \(B\).
-    This is monotone because...
-
-    The decoder can be constructed in the opposite way.
-
-    This is a valid encoder-decoder pair because, by
-    \cref{lem:bisimulation-outputs}, any pair of states in \(B\) has the same
-    outputs,
-\end{proof}
+    =
+    \iltikzfig{circuits/productivity/mealy-form}[core=|h|,state=\listvar{t},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
+    \) by equations in \cref{fig:encoding-equation}.
+\end{corollary}
 
 If we have the right encoders, we can translate the initial state of a circuit
 into a different word, and end up with a new circuit in a `Mealy form' with a
