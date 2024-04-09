@@ -1,0 +1,97 @@
+\section{Completeness of the algebraic semantics}
+
+It is now possible to collect all the equations together and define a sound and
+complete algebraic theory of sequential digital circuits.
+We start by defining a category of syntactic circuits quotiented by all the
+equations we have seen so far.
+
+\begin{definition}
+    For an interpretation \(\interpretation\), let
+    \(\mce_{\interpretation}\) be defined as \(
+    \mealyequations +
+    \instantfeedbackeqn +
+    \normalisingequations +
+    \encodingequations +
+    \restrictionequation
+    \), and let \(\scircsigmae\) be defined as
+    \(\scircsigma / \mce_{\interpretation}\).
+\end{definition}
+
+\begin{theorem}
+    For a functionally complete interpretation \(\interpretation\), \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    =
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \) in \(\scircsigmae\) if and only if \(
+    \circuittostreami[
+        \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    ]
+    =
+    \circuittostreami[
+        \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    ]
+    \).
+\end{theorem}
+\begin{proof}
+    All the equations are sound, so we only need to consider the \(\ifdir\)
+    direction.
+
+    By \cref{lem:normalised-mealy}, the two circuits can be brought to
+    normalised Mealy form using
+    \(
+    \mealyequations +
+    \instantfeedbackeqn +
+    \normalisingequations
+    \).
+    By \cref{def:mealy-to-circuit} and
+    \cref{thm:circuit-stream-correspondence} there must exist a circuit \(
+    \iltikzfig{strings/category/f}[box=h,colour=seq]
+    \coloneqq
+    \iltikzfig{circuits/algebraic/encoding}[transition={h_0},output={h_1},state={\listvar{s}}]
+    \) such that \(
+    \circuittostream[
+        \iltikzfig{strings/category/f}[box=f,colour=seq]
+    ]{\interpretation}
+    =
+    \circuittostream[
+        \iltikzfig{strings/category/f}[box=h,colour=seq]
+    ]{\interpretation}
+    =
+    \circuittostream[
+        \iltikzfig{strings/category/f}[box=g,colour=seq]
+    ]{\interpretation}
+    \).
+    The circuit \(
+    \iltikzfig{strings/category/f}[box=H,colour=seq]
+    \) is encoded such that the state words are in the image of
+    \(\gamma_\leq\).
+    This means that applying the encoding equation with \(\leq\) to the
+    normalised Mealy forms obtained above will yield the circuit \(
+    \iltikzfig{strings/category/f}[box=h,colour=seq]
+    \).
+\end{proof}
+
+As always, the soundness and completeness of the algebraic semantics means we
+can establish another isomorphism of PROPs.
+
+\begin{corollary}
+    \(\scircsigmai \cong \scircsigmae\).
+\end{corollary}
+
+This brings our jaunt into algebraic semantics to a close; given a circuit \(
+\iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+\) we know that we can translate it into another circuit \(
+\iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+\) with the same behaviour by only using equations in \(\mce_\interpretation\).
+
+Of course, the procedure of using the normalisation equations to translate a
+circuit into normalised Mealy form before using the encoding equation (possibly
+multiple times depending on how lucky one gets with their orderings) may be
+tedious; one might wonder how this is beneficial to the operational approach in
+the previous chapter.
+But the beauty of the \emph{algebraic} semantics is that we \emph{don't} need to
+do this every time!
+Equations can be proven as lemmas and then used repeatedly in the future as
+`shortcuts', possibly saving many reasoning steps.
+In time, the algebraicist will build up a powerful repertoire of equations and
+wield them to bend circuits to their will.
