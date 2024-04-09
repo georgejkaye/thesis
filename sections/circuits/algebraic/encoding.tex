@@ -3,14 +3,12 @@
 A circuit in Mealy form is a syntactic representation of a Mealy machine: it
 has a combinational core acting as the Mealy machine. and registers containing
 the initial state of the machine.
-As with Mealy machines, there is no reason why two circuits with the same
-behaviour should have the same Mealy function or initial state.
-This is because two machines with the same behaviour are \emph{bisimilar}
-rather than equal or even isomorphic: which the internal states may differ, the
-machines always agree on outputs.
-
-To determine which equations are valid for a particular circuit in Mealy form,
-we must first determine the states a circuit can assume.
+As we saw in the operational semantics, as a circuit is applied to inputs these
+registers are updated with new values as the circuit transitions to new states.
+When reasoning algebraically, we cannot evaluate these states as we have no
+inputs to compute with.
+However, the states a circuit \emph{might} assume will still be important as
+they dictate whether an equation is valid.
 
 \begin{definition}[States]
     Let \(\morph{f}{\valuetuple{\listvar{xm}}}{\valuetuple{\listvar{xn}}}\) be a
@@ -43,62 +41,14 @@ we must first determine the states a circuit can assume.
     circuit state the output is \(\belnaptrue\).
     This means that the circuit is denotationally equivalent to \(
     \iltikzfig{circuits/components/waveforms/infinite-register}[val=\belnaptrue]
-    \), which only has a single circuit state \(\belnaptrue\).
+    \), but this circuit only has a single state \(\belnaptrue\).
 \end{example}
 
-As illustrated above, two circuits with the same semantics might have a
-different number of states, just like two bisimilar Mealy machines.
-
-\begin{example}\label{ex:circuit-states-revisited}
-    Recall the circuits from \cref{ex:circuit-states}.
-    The circuits \(
-    \iltikzfig{circuits/components/waveforms/infinite-register}[val=\belnaptrue]
-    \) and \(
-    \iltikzfig{circuits/examples/bottrue/circuit}
-    \) have the same semantics, so we want to be able to translate between them.
-
-    We will now workshop some equations that might translate the former into the
-    latter.
-    In the former there is not much to work with, but we could come up with \[
-        \iltikzfig{circuits/examples/bottrue/circuit}
-        =
-        \iltikzfig{circuits/examples/bottrue/translate-1}
-        =
-        \iltikzfig{circuits/examples/bottrue/translate-2}
-        =
-        \iltikzfig{circuits/examples/bottrue/translate-3}
-        =
-        \iltikzfig{circuits/examples/bottrue/translate-4}
-    \] using standard equations and a variation of the `streaming' rule from the
-    operational semantics.
-    The latter circuit has circuit states \(\{\bot\belnaptrue,\belnaptrue\belnaptrue\}\).
-\end{example}
-
-We must take \emph{context} into account when defining
-equations; unfortunately equations that only deal with the interactions between
-individual generators are not enough.
-This is why checking equivalence of Mealy machines is usually performed by
-constructing a \emph{bisimulation} rather than basic equality.
-To bring this notion into the syntactic realm, we must consider the states a
-circuit may assume.
-
-\begin{remark}
-    Rather than equations between concrete generators, some of the `equations'
-    in this and the next section are really equation \emph{schema}, specifying
-    the   parameterised by normalised
-    combinational cores and initial states.
-    While this means there may be infinite equations, we are working with
-    normalised cores so there will be exactly one equation for each combination
-    of behaviour and state.
-\end{remark}
-
-
-A circuit with a state of width \(x\) will not necessarily assume all the states
-in \(\valuetuple{x}\); this means that it is sometimes possible to \emph{encode}
-a circuit's states into a smaller word without losing data.
-Recall that a \emph{Mealy homomorphism} between Mealy coalgebra \((S, f)\) and
-\((T, g)\) is a function \(S \to T\); while two such `inverse' homomorphisms
-\((S,f) \to (T,g)\) and \((T,g) \to (S,f)\) may not be isomorphisms, the round
+We need to \emph{encode} the states of one circuit as another; we have already
+encountered this notion using \emph{Mealy homomorphisms}
+(\cref{def:mealy-homomorphism});
+functions between the state sets that preserve transitions and outputs.
+While two `inverse' homomorphisms may not be isomorphisms, the round
 trip will always map to a state with the same behaviour.
 
 \begin{lemma}
@@ -117,7 +67,8 @@ trip will always map to a state with the same behaviour.
 Pairs of `inverse' Mealy homomorphisms as described above will act as state
 encoders and decoders between circuits.
 To create circuits representing these homomorphisms, we once again use the
-functional completeness map.
+functional completeness map for an interpretation, which assigns a syntactic
+circuit to any monotone (combinational) function.
 
 \begin{lemma}
     For partial orders \(S\) and \(T\) and monotone Mealy coalgebra
@@ -156,7 +107,7 @@ and
 \(\morph{h}{(S_{g,\listvar{t}},g)}{(S_{f,\listvar{s}},f)}\).
 
 
-\begin{lemma}\label{lem:bisimulation-initial-states}
+\begin{proposition}
     For two denotationally equivalent circuits \(
     \iltikzfig{circuits/productivity/mealy-form}[core=|f|,state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
     \) and \(
@@ -164,7 +115,7 @@ and
     \), there exists at least one Mealy homomorphism \(
     \morph{h}{(S_{f,\listvar{s}},f)}{(S_{g,\listvar{t}},g)}
     \).
-\end{lemma}
+\end{proposition}
 \begin{proof}
     As the two circuits are denotationally equivalent, at least one valid
     mapping of states can be obtained by sending states in the former to the
@@ -225,6 +176,14 @@ but only in the context of a larger circuit in Mealy form.
     \(g(\listvar{t})\) where \(\listvar{t} \in S_{f,\listvar{s}}\), so the
     equation is sound.
 \end{proof}
+
+\begin{remark}
+    The encoding equation is an equation \emph{schema}: this is required because
+    the width of a circuit state can be arbitrarily large, and each extra bit
+    adds a whole new set of Mealy homomorphisms to consider.
+\end{remark}
+
+\input{sections/circuits/algebraic/floats/encoding-equation}
 
 After applying the encoding equation, the state has not actually changed; we
 have just inserted a pair of an encoder and a decoder circuit.
@@ -324,7 +283,7 @@ equations.
 We will now show that the equations in \cref{fig:encoding-equation} allow us to
 translate a circuit into one with an encoded state.
 
-\begin{proposition}
+\begin{theorem}
     For a normalised circuit \(
     \iltikzfig{strings/category/f-2-2}[box=|f|,colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod1=\listvar{x},cod2=\listvar{y}]
     \) and initial state \(\listvar{s} \in \valuetuple{\listvar{x}}\), the
@@ -333,7 +292,7 @@ translate a circuit into one with an encoded state.
     =
     \iltikzfig{circuits/algebraic/state-encoded}[core=|f|,state=\listvar{s}]
     \) is derivable by the equations in \cref{fig:encoding-equation}.
-\end{proposition}
+\end{theorem}
 \begin{proof}
     By the \((\encodingequation)\) equation we have that \(
     \iltikzfig{circuits/productivity/mealy-form}[core=|f|,delay=x, colour=seq]
@@ -366,8 +325,6 @@ translate a circuit into one with an encoded state.
     \end{gather*}
     The proof is completed by sliding the encoder around the trace.
 \end{proof}
-
-\input{sections/circuits/algebraic/floats/encoding-equation}
 
 Before proceeding to our next set of equations, we will show how the encoding
 equations can be used to encode the states of any circuit as those of a
