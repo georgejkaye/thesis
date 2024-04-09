@@ -1,16 +1,16 @@
 \section{Encoding equations}
 
-While the core of a circuit in normalised Mealy form is the canonical
-representation of that circuit's Mealy function, there is no reason that
-circuits with the same behaviour should have the same Mealy function.
-Even if the state words are the same, they may be jumbled up in different
-orders, or the cores may only have the same behaviour when restricted to a
-particular subset of inputs.
+A circuit in Mealy form is a syntactic representation of a Mealy machine: it
+has a combinational core acting as the Mealy machine. and registers containing
+the initial state of the machine.
+As with Mealy machines, there is no reason why two circuits with the same
+behaviour should have the same Mealy function or initial state.
+This is because two machines with the same behaviour are \emph{bisimilar}
+rather than equal or even isomorphic: which the internal states may differ, the
+machines always agree on outputs.
 
-\todo[inline]{Expand}
-
-To illustrate why this is the case, we first provide a notion for computing the
-states a syntactic circuit can assume.
+To determine which equations are valid for a particular circuit in Mealy form,
+we must first determine the states a circuit can assume.
 
 \begin{definition}[States]
     Let \(\morph{f}{\valuetuple{\listvar{xm}}}{\valuetuple{\listvar{xn}}}\) be a
@@ -25,19 +25,54 @@ states a syntactic circuit can assume.
     \) for any \(\listvar{v} \in \valuetuple{\listvar{m}}\).
 \end{definition}
 
-\begin{example}
-    \todo[inline]{Example?}
+\begin{example}\label{ex:circuit-states}
+    Consider the circuit \(
+    \iltikzfig{circuits/examples/bottrue/circuit}
+    \).
+    The semantics of the combinational core are clearly
+    \(sr \mapsto (s \lor r)s(s \lor r)\), where the first two characters are the
+    next state and the third is the output.
+    The initial state is \(\bot\belnaptrue\), so the subsequent states are
+    \((\bot \lor \belnaptrue)\bot = \belnaptrue\bot\) and
+    \((\belnaptrue \lor \bot)\belnaptrue = \belnaptrue\belnaptrue\).
+    As \((\belnaptrue \lor \belnaptrue)\belnaptrue = \belnaptrue\belnaptrue\),
+    there are no more circuit states and the complete set is
+    \(\{\bot\belnaptrue,\belnaptrue\bot,\belnaptrue\belnaptrue\}\).
+
+    Note that as the output of the circuit is computed as \(s \lor r\), for each
+    circuit state the output is \(\belnaptrue\).
+    This means that the circuit is denotationally equivalent to \(
+    \iltikzfig{circuits/components/waveforms/infinite-register}[val=\belnaptrue]
+    \), which only has a single circuit state \(\belnaptrue\).
 \end{example}
 
-Crucially, two circuits with the same semantics might have a different number of
-states, just like two bisimilar Mealy machines.
-The optimistic reader might think that we we might still be able to translate
-one circuit into the other through some combination of using the
-normalisation equations and sliding components around the trace.
-Unfortunately, these may be insufficient when the circuits have
-a different number of states.
+As illustrated above, two circuits with the same semantics might have a
+different number of states, just like two bisimilar Mealy machines.
 
-\todo[inline]{Example? not iso on all states}
+\begin{example}\label{ex:circuit-states-revisited}
+    Recall the circuits from \cref{ex:circuit-states}.
+    The circuits \(
+    \iltikzfig{circuits/components/waveforms/infinite-register}[val=\belnaptrue]
+    \) and \(
+    \iltikzfig{circuits/examples/bottrue/circuit}
+    \) have the same semantics, so we want to be able to translate between them.
+
+    We will now workshop some equations that might translate the former into the
+    latter.
+    In the former there is not much to work with, but we could come up with \[
+        \iltikzfig{circuits/examples/bottrue/circuit}
+        =
+        \iltikzfig{circuits/examples/bottrue/translate-1}
+        =
+        \iltikzfig{circuits/examples/bottrue/translate-2}
+        =
+        \iltikzfig{circuits/examples/bottrue/translate-3}
+        =
+        \iltikzfig{circuits/examples/bottrue/translate-4}
+    \] using standard equations and a variation of the `streaming' rule from the
+    operational semantics.
+    The latter circuit has circuit states \(\{\bot\belnaptrue,\belnaptrue\belnaptrue\}\).
+\end{example}
 
 We must take \emph{context} into account when defining
 equations; unfortunately equations that only deal with the interactions between
@@ -61,9 +96,13 @@ circuit may assume.
 A circuit with a state of width \(x\) will not necessarily assume all the states
 in \(\valuetuple{x}\); this means that it is sometimes possible to \emph{encode}
 a circuit's states into a smaller word without losing data.
+Recall that a \emph{Mealy homomorphism} between Mealy coalgebra \((S, f)\) and
+\((T, g)\) is a function \(S \to T\); while two such `inverse' homomorphisms
+\((S,f) \to (T,g)\) and \((T,g) \to (S,f)\) may not be isomorphisms, the round
+trip will always map to a state with the same behaviour.
 
 \begin{lemma}
-    Given Mealy homomorphisms \(\morph{h}{(S,f)}{(T,g)}\) and
+    For Mealy homomorphisms \(\morph{h}{(S,f)}{(T,g)}\) and
     \(\morph{h^\prime}{(T,g)}{(S,f)}\), any state \(s \in S\) and input
     \(a \in A\), \(
     \mealyfunctiontransition{f}(s, a)
