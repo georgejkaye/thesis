@@ -11,10 +11,10 @@ These maps are known as \emph{natural transformations}.
     Given two functors \(\morph{F, G}{\mcc}{\mcd}\), a
     \emph{natural transformation} \(\morph{\eta}{F}{G}\) is a family of
     morphisms \(
-        \eta_A \in \mor{\mcd}{FA}{GA}
+    \eta_A \in \mor{\mcd}{FA}{GA}
     \) for each \(A \in \ob{\mcc}\), called the \emph{components} of \(\eta\),
     such that \(
-        \eta_B \circ Ff = Gf \circ \eta_A
+    \eta_B \circ Ff = Gf \circ \eta_A
     \), i.e.\ the following diagram commutes:
     \begin{center}
         \includestandalone{figures/category/coherences/natural}
@@ -33,8 +33,8 @@ can be `pushed through' morphisms, as shown in \cref{fig:naturality-equations}.
 
 \input{floats/naturality-equations}
 
-Natural transformations are morphisms between functors.
-One
+We established that functors are morphisms between categories; in a similar
+vein natural transformations are morphisms between functors.
 
 \begin{definition}[Functor category]
     Given two categories \(\mcc\) and \(\mcd\), a \emph{functor category}
@@ -60,12 +60,12 @@ in Part II of this thesis.
     from \cref{ex:free-monoid}.
     Functors can be composed just like morphisms, so \(F \circ U\) is a
     functor \(\mon \to \mon\): such a functor has action \(
-        (X, *, e) \mapsto (\freemon{X}, \concat, [])
+    (X, *, e) \mapsto (\freemon{X}, \concat, [])
     \).
     Subsequently, the component of a natural transformation \(
-        F \circ U \to \idf
+    F \circ U \to \idf
     \) at object \((X, *, e)\) is a monoid homomorphism \(
-        (\freemon{X}, \concat, []) \to (X, *, e)
+    (\freemon{X}, \concat, []) \to (X, *, e)
     \), i.e.\ a function \(\freemon{X} \to X\).
 
     One example of such a natural transformation is the \emph{reduce} or
