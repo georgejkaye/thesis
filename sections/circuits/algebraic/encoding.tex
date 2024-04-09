@@ -98,7 +98,7 @@ circuit to any monotone (combinational) function.
 \end{proof}
 
 For two circuits \(
-\iltikzfig{circuits/productivity/mealy-form}[core=|f|,state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
+\iltikzfig{circuits/productivity/mealy-form}[core=\mealytofunc[f],state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
 \) and \(
 \iltikzfig{circuits/productivity/mealy-form}[core=|g|,state=\listvar{t},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{y}]
 \), the encoders and decoders we will use for circuits will be Mealy homomorphisms
@@ -109,7 +109,7 @@ and
 
 \begin{proposition}
     For two denotationally equivalent circuits \(
-    \iltikzfig{circuits/productivity/mealy-form}[core=|f|,state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
+    \iltikzfig{circuits/productivity/mealy-form}[core=\mealytofunc[f],state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
     \) and \(
     \iltikzfig{circuits/productivity/mealy-form}[core=|g|,state=\listvar{t},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{y}]
     \), there exists at least one Mealy homomorphism \(
@@ -132,7 +132,7 @@ but only in the context of a larger circuit in Mealy form.
 
 \begin{proposition}[Encoding equation]\label{prop:encoding-equation}
     For a normalised circuit \(
-    \iltikzfig{strings/category/f-2-2}[box=|f|,colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod1=\listvar{x},cod2=\listvar{y}]
+    \iltikzfig{strings/category/f-2-2}[box=\mealytofunc[f],colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod1=\listvar{x},cod2=\listvar{y}]
     \) and initial state \(\listvar{s} \in \valuetuple{\listvar{x}}\), let
     \(\morph{\mathsf{enc}}{S_{f,\listvar{s}}}{\valuetuple{y}}\) and
     \(\morph{\mathsf{dec}}{\valuetuple{y}}{S_{f, \listvar{s}}}\) be Mealy
@@ -144,7 +144,7 @@ but only in the context of a larger circuit in Mealy form.
 \end{proposition}
 \begin{proof}
     Let \(g\) be the map \(\listvar{r} \mapsto
-    \circuittostreami[\iltikzfig{circuits/algebraic/state-encoding}[core=|f|,delay=x,state=\listvar{r}]]
+    \circuittostreami[\iltikzfig{circuits/algebraic/state-encoding}[core=\mealytofunc[f],delay=x,state=\listvar{r}]]
     \); by \cref{prop:mealy-form-image} we know that \(
     \mealyoutput{g(\listvar{t})}{\listvar{v}}
     =
@@ -168,7 +168,7 @@ but only in the context of a larger circuit in Mealy form.
     g(\proj{0}(f(\listvar{t})), \listvar{v})
     \) by definition of encoders.
     As \(
-    \iltikzfig{circuits/algebraic/state-encoding}[core=|f|,delay=x,state=\listvar{s}]
+    \iltikzfig{circuits/algebraic/state-encoding}[core=\mealytofunc[f],delay=x,state=\listvar{s}]
     \coloneqq
     g(\listvar{s})
     \) and \(\listvar{s} \in S_{f,\listvar{s}}\),
@@ -285,19 +285,19 @@ translate a circuit into one with an encoded state.
 
 \begin{theorem}
     For a normalised circuit \(
-    \iltikzfig{strings/category/f-2-2}[box=|f|,colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod1=\listvar{x},cod2=\listvar{y}]
+    \iltikzfig{strings/category/f-2-2}[box=\mealytofunc[f],colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod1=\listvar{x},cod2=\listvar{y}]
     \) and initial state \(\listvar{s} \in \valuetuple{\listvar{x}}\), the
     equation \(
-    \iltikzfig{circuits/productivity/mealy-form}[core=|f|, colour=seq]
+    \iltikzfig{circuits/productivity/mealy-form}[core=\mealytofunc[f], colour=seq]
     =
-    \iltikzfig{circuits/algebraic/state-encoded}[core=|f|,state=\listvar{s}]
+    \iltikzfig{circuits/algebraic/state-encoded}[core=\mealytofunc[f],state=\listvar{s}]
     \) is derivable by the equations in \cref{fig:encoding-equation}.
 \end{theorem}
 \begin{proof}
     By the \((\encodingequation)\) equation we have that \(
-    \iltikzfig{circuits/productivity/mealy-form}[core=|f|,delay=x, colour=seq]
+    \iltikzfig{circuits/productivity/mealy-form}[core=\mealytofunc[f],delay=x, colour=seq]
     =
-    \iltikzfig{circuits/algebraic/state-encoding}[core=|f|,delay=x,state=\listvar{s}]
+    \iltikzfig{circuits/algebraic/state-encoding}[core=\mealytofunc[f],delay=x,state=\listvar{s}]
     \); we need to `push' the encoder \(
     \iltikzfig{circuits/algebraic/encoder}
     \) through the state.
@@ -334,13 +334,13 @@ states of a circuit into those of a denotationally equivalent circuit.
 
 \begin{corollary}
     For denotationally equivalent circuits \(
-    \iltikzfig{circuits/productivity/mealy-form}[core=|f|,state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
+    \iltikzfig{circuits/productivity/mealy-form}[core=\mealytofunc[f],state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
     \) and \(
     \iltikzfig{circuits/productivity/mealy-form}[core=|g|,state=\listvar{t},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{y}]
     \), there exists \(
     \iltikzfig{circuits/productivity/mealy-form}[core=|h|,state=\listvar{t},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
     \) such that \(
-    \iltikzfig{circuits/productivity/mealy-form}[core=|f|,state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
+    \iltikzfig{circuits/productivity/mealy-form}[core=\mealytofunc[f],state=\listvar{s},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
     =
     \iltikzfig{circuits/productivity/mealy-form}[core=|h|,state=\listvar{t},colour=seq,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
     \) by equations in \cref{fig:encoding-equation}.

@@ -39,11 +39,13 @@ equations, rather than with an equation parameterised over all circuits.
 
 \begin{proposition}\label{prop:mealy-equations}
     Given a sequential circuit \(
-    \iltikzfig{strings/category/f}[box=F,colour=seq]
-    \), there exists a circuit in Mealy form such that \(
-    \iltikzfig{strings/category/f}[box=F,colour=seq]
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \), there exists combinational circuit \(
+    \iltikzfig{strings/category/f-2-2}[box=\hat{f},colour=comb,dom1=\listvar{x},dom2=\listvar{m},cod1=\listvar{x},cod2=\listvar{n}]
+    \) and \(\listvar{s} \in \valuetuple{\listvar{x}}\) such that \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
     =
-    \iltikzfig{circuits/productivity/mealy-form}
+    \iltikzfig{circuits/productivity/mealy-form}[core=\hat{f}]
     \) in \(\scircsigma / \mealyequations\).
 \end{proposition}
 \begin{proof}
@@ -85,6 +87,11 @@ functional completeness map \(\mealytofunc\) from \(\funci\) to \(\scircsigma\).
     \) is \emph{normalised} if it is in the image of \(\mealytofunc\).
 \end{definition}
 
+As a shorthand, we will often abuse notation and write \(
+\mealytofunc[f]
+\coloneqq
+\iltikzfig{strings/category/f}[box=\mealytofunc[f],colour=seq]
+\)
 Recall that even though \(\mealytofunc\) maps into \(\scircsigma\), every
 circuit in its image has combinational behaviour.
 This is quite an important distinction to make, so we will give it a proper
@@ -93,7 +100,7 @@ name.
 \begin{lemma}[Essentially combinational]
     A sequential circuit is \emph{essentially combinational} if it is in the
     form \(
-    \iltikzfig{circuits/synthesis/normalised-function}
+    \iltikzfig{circuits/synthesis/normalised-function}[box=f]
     \).
 \end{lemma}
 
@@ -114,6 +121,34 @@ Instead, these must be specified on a interpretation-by-interpretation basis.
     \(\normalisingequations\).
 \end{definition}
 
+\begin{definition}[Normalisable interpretation]
+    An interpretation \(\interpretation\) is called \emph{normalisable} if there
+    exists a set of normalising equations \(\normalisingequations\).
+\end{definition}
+
 The normalising equations for a given interpretation can be used to translate a
 combinational core into a circuit from which it is easy to read off a truth
 table.
+
+\begin{theorem}\label{thm:normalising}
+    For every sequential circuit \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \) in normalisable interpretation \(\interpretation\), there exists essentially combinational \(
+    \iltikzfig{strings/category/f-2-2-wide}[box=\mealytofunc[g],colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod1=\listvar{x},cod2=\listvar{n}]
+    \) and \(\listvar{s} \in \valuetuple{\listvar{x}}\) such that \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    =
+    \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[g],colour=seq,state=\listvar{s}]
+    \) in \(\scircsigma / \mealyequations + \normalisingequations\).
+\end{theorem}
+\begin{proof}
+    By \cref{prop:mealy-equations}, \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    =
+    \iltikzfig{circuits/productivity/mealy-form}[core=\hat{f}]
+    \) and by the normalising equations \(
+    \iltikzfig{strings/category/f-2-2-wide}[box=\hat{f},colour=comb]
+    =
+    \iltikzfig{strings/category/f-2-2-wide}[box=\mealytofunc[g],colour=seq]
+    \).
+\end{proof}
