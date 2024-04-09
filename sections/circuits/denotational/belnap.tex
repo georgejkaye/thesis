@@ -1,0 +1,423 @@
+\section{Denotational semantics for Belnap logic}
+
+For an interpretation to admit a sound and complete denotational semantics it
+needs to be \emph{functionally complete}.
+In this section we will demonstrate how this holds for the Belnap interpretation
+introduced in \cref{ex:belnap-interpretation}.
+To show this we will make use of the well-known functional completeness for
+Boolean logic.
+
+\begin{definition}
+    Let \(\booleans \coloneqq \{0, 1\}\) be the set of \emph{Boolean} values,
+    and let \(\band,\bor,\bnot\) be the usual operations on Booleans.
+\end{definition}
+
+\begin{lemma}\label{lem:boolean-complete}
+    All functions \(\booleans^{m} \to \booleans\) can be expressed using
+    the set of operations \(\{0, 1, \band,\bor,\bnot\}\).
+\end{lemma}
+\begin{proof}
+    Let \(\morph{f}{\booleans^{m}}{\booleans}\) be a Boolean function: we need
+    to create a Boolean expression using variables \(v_0, v_1, \dots, v_{m-1}\).
+    For each \(\listvar{v} \in \booleans^m\), we construct a conjunction of
+    all \(m\) variables, in which \(v_i\) is negated if \(\listvar{v}(i) = 0\).
+    We can then define a disjunction of the conjunctions for words
+    \(\listvar{v}\) such that \(f(\listvar{v}) = 1\).
+    If there are no such words, then the expression is \(0\).
+    It is simple to check that this expression is equivalent to the original
+    function.
+\end{proof}
+
+We will make use of this result by `simulating' the Boolean operations in the
+Belnap realm.
+
+\begin{lemma}
+    There is an isomorphism \(\values \cong \booleans^2\).
+\end{lemma}
+\begin{proof}
+    There are several mappings one could choose, but for this
+    section we will use \(\phi \coloneqq
+    \bot \mapsto 00, \belnapfalse \mapsto 10,
+    \belnaptrue \mapsto 01, \top \mapsto 11
+    \).
+\end{proof}
+
+The Belnap values \(\belnapfalse\) and \(\top\) are \emph{falsy}; they contain
+false information.
+Similarly, the Belnap values \(\belnaptrue\) and \(\top\) are \emph{truthy}:
+they contain true information.
+The value \(\bot\) is neither falsy nor truthy.
+This is reflected in the mapping shown above; \(\phi(v)(0)\) is \(1\) if and
+only if \(v\) is falsy, and \(\phi(v)(1)\) is \(1\) if and only if \(v\) is
+truthy.
+We write \(\phi_0(v) \coloneqq \phi(v)(0)\) and \(\phi_1(v) \coloneqq \phi(v)(1)\).
+
+This illuminates a new path: rather than trying to divine an expression directly
+from a Belnap function, we can instead define \emph{two} functions; one for how
+falsy the output is, and one for how truthy is.
+
+\begin{definition}
+    Let \(\values_0 \coloneqq \{\bot, \belnapfalse\}\) and let
+    \(\values_1 \coloneqq \{\bot, \belnaptrue\}\).
+\end{definition}
+
+Note that for \(v \in \values_0\), \(\phi(v)(1) = 0\), and for
+\(v^\prime \in \values_1\), \(\phi(v)(0) = 0\).
+
+\begin{lemma}
+    \(\values_0\) and \(\values_1\) are closed under \(\land\) and \(\lor\).
+\end{lemma}
+\begin{proof}
+    This can be verified by inspecting the truth tables:
+    \begin{center}
+        \begin{tabular}{|c|cc|}
+            \hline
+            \(\land\)        & \(\bot\)         & \(\belnapfalse\) \\
+            \hline
+            \(\bot\)         & \(\bot\)         & \(\belnapfalse\) \\
+            \(\belnapfalse\) & \(\belnapfalse\) & \(\belnapfalse\) \\
+            \hline
+        \end{tabular}
+        \quad
+        \begin{tabular}{|c|cc|}
+            \hline
+            \(\lor\)         & \(\bot\) & \(\belnapfalse\) \\
+            \hline
+            \(\bot\)         & \(\bot\) & \(\bot\)         \\
+            \(\belnapfalse\) & \(\bot\) & \(\belnapfalse\) \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \begin{center}
+        \begin{tabular}{|c|cc|}
+            \hline
+            \(\land\)       & \(\bot\) & \(\belnaptrue\) \\
+            \hline
+            \(\bot\)        & \(\bot\) & \(\bot\)        \\
+            \(\belnaptrue\) & \(\bot\) & \(\belnaptrue\) \\
+            \hline
+        \end{tabular}
+        \quad
+        \begin{tabular}{|c|cc|}
+            \hline
+            \(\lor\)        & \(\bot\)        & \(\belnaptrue\) \\
+            \hline
+            \(\bot\)        & \(\bot\)        & \(\belnaptrue\) \\
+            \(\belnaptrue\) & \(\belnaptrue\) & \(\belnaptrue\) \\
+            \hline
+        \end{tabular}
+    \end{center}
+
+    \qedhere
+\end{proof}
+
+These should truth tables should look familiar; indeed, if one squints a little
+we recover the truth tables for \(\bor\) and \(\band\) on the first row, and for
+\(\band\) and \(\bor\) on the second!
+This means that any expression we make using \(\band\) and \(\bor\) in the
+Boolean realm can be `simulated' in the two Belnap subsets.
+Formally, we have the following.
+
+\begin{lemma}\label{lem:belnap-bool-correspondence}
+    The following diagrams commute:
+    \begin{center}
+        \begin{tikzcd}
+            (\values_0)^2
+            \arrow{r}{\land}
+            \arrow[swap]{d}{(\phi_0, \phi_0)}
+            &
+            \values_0
+            \arrow{d}{\phi}
+            \\
+            \booleans^2
+            \arrow[swap]{r}{\bor}
+            &
+            \booleans
+        \end{tikzcd}
+        \quad
+        \begin{tikzcd}
+            (\values_0)^2
+            \arrow{r}{\lor}
+            \arrow[swap]{d}{(\phi_0, \phi_0)}
+            &
+            \values_0
+            \arrow{d}{\phi}
+            \\
+            \booleans^2
+            \arrow[swap]{r}{\band}
+            &
+            \booleans
+        \end{tikzcd}
+
+        \hspace{0.3em}
+        \begin{tikzcd}
+            (\values_1)^2
+            \arrow{r}{\land}
+            \arrow[swap]{d}{(\phi_1, \phi_1)}
+            &
+            \values_1
+            \arrow{d}{\phi_0}
+            \\
+            \booleans^2
+            \arrow[swap]{r}{\band}
+            &
+            \booleans
+        \end{tikzcd}
+        \quad
+        \begin{tikzcd}
+            (\values_1)^2
+            \arrow{r}{\lor}
+            \arrow[swap]{d}{(\phi_1, \phi_1)}
+            &
+            \values_1
+            \arrow{d}{\phi_1}
+            \\
+            \booleans^2
+            \arrow[swap]{r}{\bor}
+            &
+            \booleans
+        \end{tikzcd}
+    \end{center}
+\end{lemma}
+\begin{proof}
+    By testing the four values in each case.
+\end{proof}
+
+The eager reader might now assume we can proceed as with
+\cref{lem:boolean-complete},
+constructing a disjunctive normal form from truth tables, but we replace Boolean
+operations with the appropriate Belnap ones.
+The more cautious reader may have noticed we have not discussed how the
+Boolean \(\neg_\booleans\) can be simulated using Belnap operations.
+This is because it is simply not possible to do this while remaining in the
+two Belnap subsets!
+Fortunately, there is a certain subset of Boolean functions that can be
+constructed \emph{without} using \(\neg_\booleans\).
+
+\begin{definition}
+    Let the total order \(\boolorder\) be defined as \(0 \leq 1\).
+\end{definition}
+
+As with \(\values\), \(\booleans^m\) inherits the order on \(\booleans\)
+pointwise.
+Subsequently, a Boolean function \(\morph{f}{\booleans^m}{\booleans}\) is
+\emph{monotone} if \(f(v) \boolorder f(w)\) whenever
+\(\overline{v} \boolorder \overline{w}\).
+Intuitively, flipping an input bit from \(0\) to \(1\) can never flip an output
+bit from \(1\) to \(0\).
+
+\begin{lemma}
+    \label{lem:boolean-complete-monotone}
+    All monotone functions \(\booleans^m \to \booleans\) can be expressed with
+    the set of operations \(\{\land,\lor,1\}\).
+\end{lemma}
+\begin{proof}
+    This progresses as with \cref{lem:boolean-complete}, but if the element of
+    a word \(\listvar{v}(i) = 0\), it is omitted from the conjunction
+    rather than the variable being negated.
+
+    To show that this expresses the same truth table as the original function,
+    consider an omitted variable \(v_i\); there exists an assignment of the
+    other variables such that if \(v_i = 0\) then \(f(\dots, v_i, \dots) = 1\).
+    By monotonicity, it must be the case that if \(v_i = 1\) then
+    \(f(\dots, v_i, \dots) = 1\), so no information is lost by omitting
+    the negation.
+
+    If \(f(0, 0, \dots, 0) = 1\), then the inner conjunction is empty and must
+    instead be represented by the constant \(1\), (the unit of \(\band\)).
+    This is again valid due to monotonicity, as if \(f\) produces \(1\) for the
+    infimum, then it must produce \(1\) for all inputs.
+\end{proof}
+
+\begin{corollary}\label{cor:func-complete-falsy-truthy}
+    All monotone functions \((\values_0)^m \to \values_0\) can be expressed
+    with the operations \(\{\land,\lor,\belnapfalse\}\), and all monotone
+    functions \((\values_1)^m \to \values_1\) can be expressed with the
+    operations \(\{\land,\lor,\belnaptrue\}\).
+\end{corollary}
+\begin{proof}
+    As there is an order isomorphism
+    \(\values_0 \cong \values_1 \cong \booleans\), any monotone function in
+    the Belnap subsets can be viewed as a monotone Boolean function.
+    This means the strategy of \cref{lem:boolean-complete-monotone} can
+    be applied using \cref{lem:belnap-bool-correspondence} to substitute the
+    appropriate Belnap operation.
+\end{proof}
+
+All the pieces are now in place to express the final functional completeness
+result; we just need to `explode' a Belnap value into its falsy and truthy
+components, and then unify the two at the end.
+
+\begin{definition}
+    \label{def:translation-tables}
+    Let the functions \[
+        \morph{\psi^0_0,\psi^1_0}{\values}{\values_0}
+        \quad
+        \morph{\psi^0_1,\psi^1_1}{\values}{\values_1}
+    \] be defined according to the tables below.
+    \begin{center}
+        \begin{tabular}{c|cccc}
+                             & \(\psi^0_0\)     & \(\psi^1_0\)     & \(\psi^0_1\)    & \(\psi^1_1\)    \\
+            \hline
+            \(\bot\)         & \(\bot\)         & \(\bot\)         & \(\bot\)        & \(\bot\)        \\
+            \(\belnaptrue\)  & \(\bot\)         & \(\belnapfalse\) & \(\bot\)        & \(\belnaptrue\) \\
+            \(\belnapfalse\) & \(\belnapfalse\) & \(\bot\)         & \(\belnaptrue\) & \(\bot\)        \\
+            \(\top\)         & \(\belnapfalse\) & \(\belnapfalse\) & \(\belnaptrue\) & \(\belnaptrue\) \\
+        \end{tabular}
+    \end{center}
+\end{definition}
+
+The functions \(\psi^0_0\) and \(\psi^0_1\) sends a Belnap value \(v\) to
+\(\belnapfalse\) or \(\belnaptrue\) respectively if \(v\) is falsy.
+Similarly, \(\psi^1_0\) and \(\psi^1_1\) sends a Belnap value \(v\) to
+\(\belnapfalse\) or \(\belnaptrue\) if \(v\) is truthy.
+Otherwise, they produce \(\bot\).
+
+\begin{lemma}
+    \label{lem:translation-functions}
+    The functions in \cref{def:translation-tables} can be expressed using the
+    operations \(\{\land,\lor,\neg,\bot\}\).
+\end{lemma}
+\begin{proof}
+    From left to right, the columns in the table above are the functions \(
+    v \mapsto - \land \bot
+    \), \(
+    v \mapsto \neg(- \lor \bot)
+    \), \(
+    v \mapsto \neg(- \land \bot)
+    \) and \(
+    v \mapsto - \lor \bot
+    \).
+\end{proof}
+
+\begin{definition}\label{def:falsy-truthy-functions}
+    For a monotone function \(\morph{f}{\valuetuple{m}}{\values}\), let
+    \(\morph{f_0}{((\values_0)^m)^2}{\values_0}\) be defined as
+    \(
+    f_0(\psi^0_0(\listvar{v}), \psi^1_0(\listvar{v}))
+    \coloneqq
+    \phi_0(f(\listvar{v}))
+    \).
+    Similarly, let \(\morph{f_1}{((\values_1)^m)^2}{\values_1}\) be defined as
+    \(
+    f_1(\psi^0_1(\listvar{v}), \psi^1_1(\listvar{v}))
+    \coloneqq
+    \phi_1(f(\listvar{v}))
+    \).
+\end{definition}
+
+By putting these pieces all together we can express all monotone Belnap
+functions.
+
+\begin{theorem}
+    \label{thm:belnap-complete}
+    All monotone functions \(\valuetuple{m} \to \values\) can be expressed
+    using the operations \(
+    \{\land,\lor,\neg,\ljoin,\bot,\belnaptrue,\belnapfalse\}
+    \).
+\end{theorem}
+\begin{proof}
+    This follows by defining a function with the same behaviour as the original,
+    but made up of components known to be expressible using the operations
+    specified.
+
+    Let \(\morph{f^\prime}{\valuetuple{m}}{\valuetuple{2}}\) be defined as
+    \(
+    f^\prime(\listvar{v})
+    \coloneqq
+    \left(
+    f_0(\psi^0_0(\listvar{v}), \psi^1_0(\listvar{v})),
+    f_1(\psi^0_1(\listvar{v}), \psi^1_1(\listvar{v}))
+    \right).
+    \).
+    By \cref{cor:func-complete-falsy-truthy}, \(f_0\) and \(f_1\) can be defined
+    using \(\{\land,\lor,\belnaptrue,\belnapfalse\}\), and by
+    \cref{lem:translation-functions}, \(\psi^0_0,\psi^1_0,\psi^0_1\) and
+    \(\psi^1_1\) can be defined using \(\{\land,\lor,\bot\}\).
+
+    The output of \(f^\prime(\listvar{v})\) is \(
+    \left(\phi_0(f(\listvar{v})), \phi_1(f(\listvar{v}))\right)
+    \) by definition; the falsiness and the truthiness of \(f(\listvar{v})\).
+    To combine the two outputs into a single output we want to
+    implement the following truth table:
+
+    \begin{center}
+        \begin{tabular}{cc|c}
+            \(\bot\)         & \(\bot\)        & \(\bot\)         \\
+            \(\bot\)         & \(\belnaptrue\) & \(\belnaptrue\)  \\
+            \(\belnapfalse\) & \(\bot\)        & \(\belnapfalse\) \\
+            \(\belnapfalse\) & \(\belnaptrue\) & \(\top\)
+        \end{tabular}
+    \end{center}
+
+    But this is clearly just the truth table for \(\ljoin\), so the entire
+    expression can be defined using the operations \(
+    \{\land,\lor,\neg,\ljoin,\bot,\belnaptrue,\belnapfalse\}
+    \).
+\end{proof}
+
+\begin{example}
+    Consider the following truth table (in fact just the table for \(\neg\)).
+    \begin{center}
+        \begin{tabular}{c|c}
+            \(\bot\)         & \(\bot\)         \\
+            \(\belnaptrue\)  & \(\belnapfalse\) \\
+            \(\belnapfalse\) & \(\belnaptrue\)  \\
+            \(\top\)         & \(\top\)
+        \end{tabular}
+    \end{center}
+    We translate these into the falsy and truthy tables as follows:
+    \begin{center}
+        \begin{tabular}{c|c}
+            \(\bot\bot\)                 & \(\bot\)         \\
+            \(\bot\belnapfalse\)         & \(\belnapfalse\) \\
+            \(\belnapfalse\bot\)         & \(\bot\)         \\
+            \(\belnapfalse\belnapfalse\) & \(\belnapfalse\)
+        \end{tabular}
+        \begin{tabular}{c|c}
+            \(\bot\bot\)               & \(\bot\)        \\
+            \(\bot\belnaptrue\)        & \(\bot\)        \\
+            \(\belnaptrue\bot\)        & \(\belnaptrue\) \\
+            \(\belnaptrue\belnaptrue\) & \(\belnaptrue\)
+        \end{tabular}
+    \end{center}
+    Using \cref{cor:func-complete-falsy-truthy}, the corresponding Belnap
+    expressions are \(
+    (v_0,v_1) \mapsto v_0 \land (v_0 \lor v_1)
+    \) and \(
+    (v_0,v_1) \mapsto v_1 \lor (v_0 \land v_1)
+    \).
+    Adding in the translations from \cref{def:translation-tables} and the join
+    at the end, the overall Belnap expression becomes \(
+    (v_0,v_1) \mapsto
+    (v_0 \land \bot) \land ((v_0 \land \bot) \lor \neg(v_1 \lor \bot))
+    \ljoin
+    (v_1 \lor \bot) \lor (\neg(v_0 \land \bot) \land (v_1 \lor \bot))
+    \).
+\end{example}
+
+Although this result only applies to functions with a single output, it is
+easily generalised to arbitrary-output functions.
+
+\begin{corollary}
+    All monotone functions \(\valuetuple{m+1} \to \valuetuple{n}\) can be
+    expressed using the operations \(\{\land,\lor,\neg,\bot,\ljoin\}\).
+\end{corollary}
+\begin{proof}
+    By repeating the process in \cref{thm:belnap-complete} for each output.
+\end{proof}
+
+Since an expression can be defining using only operations with counterparts in
+the syntactic realm, it is possible to define a map \(
+\morph{\mealytofunc_\belnap}{\func{\interpretation_\belnap}}{\scirc{\Sigma_\belnap}}
+\) such that \(\mealytofunc[f]_\belnap\) is a term of the form \(
+\iltikzfig{circuits/axioms/belnap/translation/exploded-form}[box=F]
+\), in which \(
+\iltikzfig{strings/category/f}[box=f_0,colour=comb]
+\) and \(
+\iltikzfig{strings/category/f}[box=f_1,colour=comb]
+\) are `syntactic' conjunctive and disjunctive normal forms respectively.
+The exact definition of these terms is fiddly but one can easily imagine what
+they might look like.
+
+\todo[inline]{Implementation?}
