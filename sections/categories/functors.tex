@@ -6,13 +6,13 @@ A class of maps that enjoy some useful properties are known as \emph{functors}.
 
 \begin{definition}[Functor]
     Given two categories \(\mcc\) and \(\mcd\), a \emph{functor} \(
-        \morph{F}{\mcc}{\mcd}
+    \morph{F}{\mcc}{\mcd}
     \) maps objects and morphisms in \(\mcc\) to objects and morphisms in
     \(\mcd\) such that
     \begin{itemize}
         \item \(F(\id[A]) = \id[FA]\) for every \(A \in \ob{\mcc})\); and
         \item \(F(g \circ f) = F(g) \circ F(f)\) for every \(\morph{f}{A}{B}\)
-        and \(\morph{g}{B}{C}\).
+              and \(\morph{g}{B}{C}\).
     \end{itemize}
 \end{definition}
 
@@ -39,15 +39,9 @@ The functoriality equations are represented as in
 
 \subsubsection{Examples of functors}
 
-\begin{example}[Identity functor]
-    A trivial endofunctor for any category \(\mcc\) is the
-    \emph{identity functor} \(\morph{\idf}{\mcc}{\mcc}\) which acts as the
-    identity on objects and morphisms.
-\end{example}
-
 \begin{example}[Powerset functor]
     The notion of powerset can be interpreted as an endofunctor \(
-        \morph{\powerset}{\set}{\set}
+    \morph{\powerset}{\set}{\set}
     \), mapping a set \(X\) to its powerset \(\powerset(X)\) and a morphism
     \(\morph{f}{X}{Y}\) to the function \(\powerset(X) \to \powerset(Y)\) which
     applies \(f\) pointwise.
@@ -70,7 +64,7 @@ The functoriality equations are represented as in
     \emph{free monoid} on \(X\).
     This means there is a functor \(\morph{F}{\set}{\mon}\) (the
     \emph{free functor}) that acts on objects as \(
-        X \mapsto (\freemon{X}, \concat, [])
+    X \mapsto (\freemon{X}, \concat, [])
     \) and sends morphisms \(X \to Y\) to the corresponding monoid homomorphism
     \(\freemon{X} \to \freemon{Y}\).
 
@@ -87,7 +81,7 @@ Functors can also have useful properties.
 
 \begin{notation}
     Given a functor \(\morph{F}{\mcc}{\mcd}\), let \(
-        \morph{F_{A,B}}{\mor{\mcc}{A}{B}}{\mor{\mcd}{FA}{FB}}
+    \morph{F_{A,B}}{\mor{\mcc}{A}{B}}{\mor{\mcd}{FA}{FB}}
     \) be the induced map sending classes of morphisms \(A \to B\) in \(\mcc\)
     to the classes of morphisms \(FA \to FB\) in \(\mcd\).
 \end{notation}
@@ -120,4 +114,34 @@ Every morphism \(FA \to FB\) is in the image of a full functor.
     full as not all functions are monoid homomorphisms.
     Note that even though \(U\) is faithful, it is not injective on objects
     because there may be many monoids with the same carrier set.
+\end{example}
+
+\subsection{Functors as morphisms}
+
+Although it is possible to view functors purely as a standalone concept, the
+core tenet of category theory is to view everything in terms of morphisms, and
+functors are no different.
+
+\begin{example}[Identity functor]
+    A trivial endofunctor for any category \(\mcc\) is the
+    \emph{identity functor} \(\morph{\idf}{\mcc}{\mcc}\) which acts as the
+    identity on objects and morphisms.
+\end{example}
+
+\begin{example}[Functor composition]
+    If \(\morph{F}{\mcc}{\mcd}\) and \(\morph{G}{\mcc}{\mcd}\) are functors
+    then their composite \(\morph{G \circ F}{\mcc}{\mcd}\) is also a functor.
+\end{example}
+
+Identity and (associative) composition are all we need to define a category!
+
+\begin{definition}
+    A category \(\mcc\) is \emph{small} if \(\ob{\mcc}\) and
+    \(\mor{\mcc}{A}{B}\) are sets.
+\end{definition}
+
+\begin{example}[Category of categories]
+    \(\cat\) is the category in which \(\ob{\cat}\) are small categories and
+    \(\mor{\cat}{\mcc}{\mcd}\) contains functors \(\mcc \to \mcd\).
+    Identity is the identity functor, and composition is function composition.
 \end{example}

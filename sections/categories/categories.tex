@@ -28,31 +28,31 @@ a \emph{category}.
     \(\ob{\mcc}\); a class of \emph{morphisms} \(\mor{\mcc}{A}{B}\)
     for every pair of objects \(A, B \in \ob{\mcc}\); and a \emph{composition}
     operation \(
-        \morph{
-            {-} \circ {=}
-        }{
-            \mor{\mcc}{B}{C} \times \mor{\mcc}{A}{B}
-        }{
-            \mor{\mcc}{A}{C}
-        }
+    \morph{
+        {-} \circ {=}
+    }{
+        \mor{\mcc}{B}{C} \times \mor{\mcc}{A}{B}
+    }{
+        \mor{\mcc}{A}{C}
+    }
     \) such that
     \begin{itemize}
         \item composition is \emph{unital}: for every \(
-                    A \in \ob{\mcc}
-                \) there exists an \emph{identity morphism} \(
-                    \id[A] \in \mor{\mcc}{A}{A}
-                \) satisfying \(
-                    f \circ \id[A] = f = \id[B] \circ f
-                \) for any \(
-                    f \in \mor{\mcc}{A}{B}
-                \); and
+              A \in \ob{\mcc}
+              \) there exists an \emph{identity morphism} \(
+              \id[A] \in \mor{\mcc}{A}{A}
+              \) satisfying \(
+              f \circ \id[A] = f = \id[B] \circ f
+              \) for any \(
+              f \in \mor{\mcc}{A}{B}
+              \); and
         \item composition is \emph{associative}: for any morphisms \(
-                    f \in \mor{\mcc}{A}{B}
-                \), \(
-                    g \in \mor{\mcc}{B}{C}
-                \) and \(h \in \mor{\mcc}{C}{D}\), \(
-                    (h \circ g) \circ f = h \circ (g \circ f).
-                \)
+              f \in \mor{\mcc}{A}{B}
+              \), \(
+              g \in \mor{\mcc}{B}{C}
+              \) and \(h \in \mor{\mcc}{C}{D}\), \(
+              (h \circ g) \circ f = h \circ (g \circ f).
+              \)
     \end{itemize}
 \end{definition}
 
@@ -73,7 +73,7 @@ as follows:
 \end{center}
 
 We say that the above two diagrams \emph{commute} precisely because \(
-    \id[B] \circ f = f = f \circ \id[A]
+\id[B] \circ f = f = f \circ \id[A]
 \) and \((h \circ g) \circ f = h \circ (g \circ f)\): no matter which path one
 takes, the results are equal.
 Using commutative diagrams suggests another notation for composition.
@@ -134,21 +134,17 @@ now be provided.
 \begin{example}[Product category]
     Given two categories \(\mcc\) and \(\mcd\), their \emph{product category}
     \(\mcc \times \mcd\) is the category with objects are defined as \(
-        \ob{(\mcc \times \mcd)} \coloneqq \ob{\mcc} \times \ob{\mcd}
+    \ob{(\mcc \times \mcd)} \coloneqq \ob{\mcc} \times \ob{\mcd}
     \) and the morphisms as \[
         \mor{(\mcc \times \mcd)}{(A, A^\prime)}{(B, B^\prime)}
         \coloneqq
         \{
-            (f, f^\prime)
-            \,|\,
-            f \in \mor{\mcc}{A}{B},
-            f^\prime \in \mor{\mcd}{A^\prime}{B^\prime}
+        (f, f^\prime)
+        \,|\,
+        f \in \mor{\mcc}{A}{B},
+        f^\prime \in \mor{\mcd}{A^\prime}{B^\prime}
         \}
     \]
-\end{example}
-
-\begin{example}[Category of categories]
-    \todo[inline]{Write example}
 \end{example}
 
 \subsection{Properties of objects and morphisms}
@@ -196,11 +192,11 @@ There is also a categorical generalisation of \emph{invertible} morphisms.
 \begin{definition}[Isomorphism]
     A morphism \(\morph{f}{A}{B} \in \mcc\) is called an \emph{isomorphism} (or
     simply \emph{iso} for short) if there also exists a morphism \(
-        \morph{\inverse{f}}{B}{A} \in \mcc
+    \morph{\inverse{f}}{B}{A} \in \mcc
     \) such that \(
-        \inverse{f} \circ f = \id[A]
+    \inverse{f} \circ f = \id[A]
     \) and \(
-        f \circ \inverse{f} = \id[B]
+    f \circ \inverse{f} = \id[B]
     \).
 \end{definition}
 
