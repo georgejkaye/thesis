@@ -33,7 +33,7 @@ PROP morphism need only be defined on generators!
         \listvar{v} \mapsto \left\langle(), \listvar{vv}\right\rangle,
         ()
         \right)
-        \\[0.1em]
+        \\[1em]
         \circuittomealy[
             \iltikzfig{strings/structure/monoid/merge}[colour=comb]
         ]{\interpretation}
@@ -53,7 +53,7 @@ PROP morphism need only be defined on generators!
         \left\langle(), ()\right\rangle,
         ()
         \right)
-        \\[0.1em]
+        \\[0.5em]
         \circuittomealy[
             \iltikzfig{circuits/components/values/vs}[val=v]
         ]{\interpretation}
@@ -67,7 +67,7 @@ PROP morphism need only be defined on generators!
             \}\right),
         s_v
         \right)
-        \\[0.1em]
+        \\[0.5em]
         \circuittomealy[
             \iltikzfig{circuits/components/waveforms/delay}
         ]{\interpretation}
@@ -75,7 +75,7 @@ PROP morphism need only be defined on generators!
         \left(
         \left(
         \{ s_v \,|\, v \in \values\},
-        (s_v, a) \mapsto \left({v,s_a}\right)\right),
+        (s_v, a) \mapsto \left\langle{v,s_a}\right\rangle\right),
         s_\bot
         \right)
     \end{gather*}
@@ -129,12 +129,44 @@ design~\cite{kohavi2009switching} in which each state of a Mealy machine is
 inputs into appropriate outputs.
 
 \begin{example}
-    \todo[inline]{Simple boolean examples}
+    Consider the following Mealy machine operating on Boolean values.
+    \begin{center}
+        \includestandalone{figures/mealy/boolean-example}
+    \end{center}
+    To convert this machine to a circuit, we assign each state a boolean value:
+    in this case \(s_0 \mapsto \belnapfalse, s_1 \mapsto \belnaptrue\).
+    We can now construct a truth table to show how a state and an input map to
+    a transition and an output:
+    \begin{center}
+        \begin{tabular}{cc|cc}
+            \(\belnapfalse\) & \(\belnapfalse\) & \(\belnaptrue\)  & \(\belnaptrue\)  \\
+            \(\belnapfalse\) & \(\belnaptrue\)  & \(\belnapfalse\) & \(\belnapfalse\) \\
+            \(\belnaptrue\)  & \(\belnapfalse\) & \(\belnaptrue\)  & \(\belnapfalse\) \\
+            \(\belnaptrue\)  & \(\belnaptrue\)  & \(\belnapfalse\) & \(\belnaptrue\)  \\
+        \end{tabular}
+    \end{center}
+    It is possible to describe these truth tables as logical expressions: in
+    this case the expression for the next state is \(
+    (v_0, v_1)
+    \mapsto
+    (\neg v_0 \land \neg v_1) \lor (v_0 \land \neg v_1)
+    \) and the expression for the output is \(
+    (v_0, v_1)
+    \mapsto
+    (\neg v_0 \land \neg v_1) \lor (v_0 \land v_1)
+    \).
+    These expressions can clearly be constructed as combinational circuits using
+    \(\andgate\), \(\orgate\) and \(\notgate\) gates; the entire circuit
+    corresponding to the Mealy machine is constructed by combining the
+    combinational logic with registers to hold the state.
+    \[\dsptikzfig{mealy/synthesis}.\]
 \end{example}
 
-When considering \emph{monotone} Mealy machines and trying to map into
-\(\scircsigma\), this procedure must respect monotonicity as the combinational
-logic is constructed using monotone components.
+We will use a variation of this procedure to map from \(\mealyi\) to
+\(\scircsigma\).
+However, when considering \emph{monotone} Mealy machines, this procedure must
+additionally respect monotonicity as the combinational logic is constructed
+using monotone components.
 This means that an arbitrary encoding cannot be used; we will now show how to
 select a suitable encoding.
 
@@ -223,6 +255,10 @@ to circuits, but for convenience we will assume there is a fixed procedure
     This means the circuit has combinational behaviour despite using sequential
     components; often this is the only way to ensure every function can be
     modelled.
+
+    Note also that this sequential component is by no means mandatory: it could
+    be of width \(0\) and the functional completeness map could only map to
+    truly combinational circuits.
 \end{remark}
 
 \begin{example}
@@ -280,7 +316,7 @@ in \(\scircsigma\), we set about encoding the Mealy function.
 \end{definition}
 
 To be able to obtain the syntactic circuit for a monotone Mealy function encoded
-in this way, it needs to be a morphism in \(\funci\)!
+in this way, it needs to be a morphism in \(\funci\).
 It is monotone by definition, but we need to make sure it is also
 \(\bot\)-preserving.
 
@@ -368,19 +404,18 @@ we must show a lemma linking the behaviour circuits in the image of
 
 \begin{proposition}
     \label{prop:mealy-form-image}
-    \todo[inline]{Reframe proof in terms of mealy machines}
-    Given a combinational circuit \(
-    \iltikzfig{strings/category/f-2-2}[box=\hat{F},dom1=x,dom2=m,cod1=x,cod2=n,colour=comb]
+    For a combinational circuit \(
+    \iltikzfig{strings/category/f-2-2}[box=\hat{f},dom1=x,dom2=m,cod1=x,cod2=n,colour=comb]
     \), let \(f\) be the map with action \(
     (\listvar{s}) \mapsto
     \circuittostreami[
-        \iltikzfig{circuits/productivity/mealy-form}[core=\hat{F},state=\listvar{s},dom=m,cod=n,delay=x]
+        \iltikzfig{circuits/productivity/mealy-form}[core=\hat{f},state=\listvar{s},dom=m,cod=n,delay=x]
     ]
     \) and let \(
     \hat{f}
     :=
     \circuittofunci[
-        \iltikzfig{strings/category/f-2-2}[box=\hat{F},colour=comb]
+        \iltikzfig{strings/category/f-2-2}[box=\hat{f},colour=comb]
     ]
     \).
     Then, \(
@@ -394,6 +429,23 @@ we must show a lemma linking the behaviour circuits in the image of
     \).
 \end{proposition}
 \begin{proof}
+    \(\circuittomealyi[
+        \iltikzfig{circuits/productivity/mealy-form}[core=\hat{f},state=\listvar{s},dom=m,cod=n,delay=x]
+    ]\) is the fixpoint of the Mealy machine \[
+        \left(\valuetuple{x},
+        (\listvar{r}, \listvar{v}) \mapsto \left\langle
+        \listvar(r), \hat{f}(\listvar{s}, \listvar{v})
+        \right\rangle, \listvar{s}\right)
+    \], which immediately stabilises to \[
+        \left(\valuetuple{x},
+        \listvar{v} \mapsto \left\langle
+        \proj{0}\left(\hat{f}(\listvar{s},\listvar{v})\right),
+        \proj{1}\left(\hat{f}(\listvar{s}, \listvar{v})\right)
+        \right\rangle, \listvar{s}\right)
+    \]
+
+
+
     None of the traced inputs affect the outputs at the
     current cycle, so the initial output is trivial.
     The least fixpoint is reached immediately as \(

@@ -341,11 +341,14 @@ morphism.
 \begin{proposition}
     There is a traced PROP morphism
     \(\morph{\mealytostreami}{\mealyi}{\streami}\) sending a monotone Mealy
-    machine \(\left((S, f), s_0\right)\) to \(!(s_0)\), where \(!\) is the
-    unique homomorphism \((S,f) \to (\Gamma,\nu)\).
+    machine \(\morph{\left(S, f, s_0\right)}{m}{n}\) to \(!(s_0)\), where \(!\)
+    is the unique homomorphism \((S,f) \to (\Gamma,\nu)\).
 \end{proposition}
 \begin{proof}
-    \todo[inline]{Do proof}
+    Since every stream function also has a Mealy coalgebra structure and Mealy
+    homomorphisms preserve transitions and outputs,
+    composition of Mealy machines also coincides with composition of stream
+    functions.
 \end{proof}
 
 \subsection{Streams to Mealy machines}
@@ -356,7 +359,43 @@ derivatives it is easy to retrieve a finite Mealy machine by repeatedly
 taking stream derivatives to compute the state set.
 
 \begin{example}
-    \todo[inline]{Stream function back to Mealy machine}
+    Let \(\morph{f}{\belnapvalues}{\belnapvalues}\) be a stream function defined
+    as \(f(\sigma)(0) = \sigma(0)\) and
+    \(f(\sigma)(k+1) = f(\sigma)(k) \land \sigma(k+1)\).
+    We will derive a Mealy machine in \(\mealyi\) from this stream function.
+    The set of states is \(\{
+    f, \streamderivative{f}{\bot}, \streamderivative{f}{\belnapfalse},
+    \streamderivative{f}{\top}
+    \}\): this completely specifies the Mealy machine because
+    \begin{itemize}
+        \item \(\streamderivative{f}{\belnaptrue} = f\);
+        \item \(\streamderivative{(\streamderivative{f}{\bot})}{\bot}
+              =
+              \streamderivative{(\streamderivative{f}{\bot})}{\belnaptrue}
+              =
+              \streamderivative{f}{\bot}
+              \);
+        \item \(\streamderivative{(\streamderivative{f}{\top})}{\top}
+              =
+              \streamderivative{(\streamderivative{f}{\top})}{\belnaptrue}
+              =
+              \streamderivative{f}{\top}
+              \); and
+        \item \(
+              \streamderivative{(\streamderivative{f}{\bot})}{\belnapfalse}
+              =
+              \streamderivative{(\streamderivative{f}{\bot})}{\top}
+              =
+              \streamderivative{(\streamderivative{f}{\top})}{\bot}
+              =
+              \streamderivative{(\streamderivative{f}{\top})}{\belnapfalse}
+              =
+              \streamderivative{f}{\belnapfalse}
+              \).
+    \end{itemize}
+    The Mealy function is defined for each state as the initial value and
+    stream derivative of the original stream function.
+    The initial state of the Mealy machine is \(f\).
 \end{example}
 
 In fact, for a function \(f\) this procedure produces a \emph{minimal} Mealy
