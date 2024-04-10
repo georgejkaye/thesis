@@ -30,9 +30,9 @@
 {\bfseries
   \titlerule%
   \vspace{2ex}%
-\filright}
+  \filright}
 [\vspace{2ex}%
-\titlerule]
+  \titlerule]
 
 % Set up the headers and footers
 \usepackage{fancyhdr}
@@ -55,16 +55,16 @@
 
 % See the excellent biblatex documentation for more information
 \usepackage[
-backend=biber,%
-style=alphabetic,%
-block=ragged,%
-backref=true,%
-useprefix=true,%
-maxnames=8,%
-minnames=7,%
-minalphanames=3,%
-maxalphanames=4,%
-backrefstyle=two]%
+  backend=biber,%
+  style=alphabetic,%
+  block=ragged,%
+  backref=true,%
+  useprefix=true,%
+  maxnames=8,%
+  minnames=7,%
+  minalphanames=3,%
+  maxalphanames=4,%
+  backrefstyle=two]%
 {biblatex}
 \renewcommand{\subtitlepunct}{\addcolon\addspace}
 
@@ -97,8 +97,8 @@ backrefstyle=two]%
 \usepackage{bussproofs}
 % allow for multiple proof trees on one line
 \newenvironment{bprooftree}
-  {\leavevmode\hbox\bgroup}
-  {\DisplayProof\egroup}
+{\leavevmode\hbox\bgroup}
+{\DisplayProof\egroup}
 
 % tocbibind allows us to have the toc in the toc
 \usepackage[notbib,notindex]{tocbibind}
@@ -127,6 +127,8 @@ backrefstyle=two]%
 % Used in hyperref's setup, and must be loaded before tikz-cd.
 \usepackage[dvipsnames, usenames]{xcolor}
 \usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
 \usepackage{tikz-cd}
 \usepackage{figures/tikzit}
 \newcommand{\bgcolour}{white}
@@ -136,17 +138,17 @@ backrefstyle=two]%
 
 \usepackage[
   colorlinks=true  % Remove the boxes
-, linktocpage=true % Make page numbers (not section titles) links in ToC
-, linkcolor=NavyBlue    % Colour for internal links
-, citecolor=Green  % Colour for bibliographical citations
-, urlcolor=BrickRed % Colour for (external) urls
-%
-% Metadata
-%
-, pdftitle={A compositional theory of digital circuits}%
-, pdfauthor={George Kaye}%
-, pdfsubject={PhD thesis}%
-, pdfkeywords={digital circuits, symmetric traced monoidal categories, string diagrams, category theory, graph rewriting}
+  , linktocpage=true % Make page numbers (not section titles) links in ToC
+  , linkcolor=NavyBlue    % Colour for internal links
+  , citecolor=Green  % Colour for bibliographical citations
+  , urlcolor=BrickRed % Colour for (external) urls
+  %
+  % Metadata
+  %
+  , pdftitle={A compositional theory of digital circuits}%
+  , pdfauthor={George Kaye}%
+  , pdfsubject={PhD thesis}%
+  , pdfkeywords={digital circuits, symmetric traced monoidal categories, string diagrams, category theory, graph rewriting}
 ]{hyperref}
 \usepackage{bookmark}
 
