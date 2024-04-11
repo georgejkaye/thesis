@@ -256,15 +256,15 @@ to circuits, but for convenience we will assume there is a fixed procedure
     components; often this is the only way to ensure every function can be
     modelled.
 
-    Note also that this sequential component is by no means mandatory: it could
-    be of width \(0\) and the functional completeness map could only map to
-    truly combinational circuits.
+    Note also that this sequential component is by no means mandatory: the
+    functional completeness map may actually map only to combinational circuits,
+    in which case the width of the sequential component would be \(0\).
 \end{remark}
 
 \begin{example}
     The Belnap interpretation from \cref{ex:belnap-interpretation} is
     functionally complete; for interests of space we postpone the proof for
-    \cref{sec:belnap}.
+    \cref{sec:denotational-belnap}.
     In essence, this is due to a variation of the standard functional
     completeness method for Boolean values, in which a term in disjunctive
     normal form is created by reading lines off a truth table.
@@ -431,27 +431,26 @@ we must show a lemma linking the behaviour circuits in the image of
 \begin{proof}
     \(\circuittomealyi[
         \iltikzfig{circuits/productivity/mealy-form}[core=\hat{f},state=\listvar{s},dom=m,cod=n,delay=x]
-    ]\) is the fixpoint of the Mealy machine \[
-        \left(\valuetuple{x},
-        (\listvar{r}, \listvar{v}) \mapsto \left\langle
-        \listvar(r), \hat{f}(\listvar{s}, \listvar{v})
-        \right\rangle, \listvar{s}\right)
-    \], which immediately stabilises to \[
-        \left(\valuetuple{x},
-        \listvar{v} \mapsto \left\langle
-        \proj{0}\left(\hat{f}(\listvar{s},\listvar{v})\right),
-        \proj{1}\left(\hat{f}(\listvar{s}, \listvar{v})\right)
-        \right\rangle, \listvar{s}\right)
-    \]
-
-
-
-    None of the traced inputs affect the outputs at the
-    current cycle, so the initial output is trivial.
-    The least fixpoint is reached immediately as \(
-    \mu_a := \proj{0}(\hat{f}(\listvar{s}, \listvar{a}))
-    \) and the traced input is captured by the delay, so the derivative
-    will indeed be \(f(\mu_a)\).
+    ]\) is the fixpoint of \(
+    \left(\valuetuple{x},
+    (\listvar{r}, \listvar{a}) \mapsto \left\langle
+    \listvar{r}, \hat{f}(\listvar{s}, \listvar{a})
+    \right\rangle, \listvar{s}\right),
+    \) which can be computed as \(
+    \left(\valuetuple{x},
+    \listvar{v} \mapsto \left\langle
+    \proj{0}\left(\hat{f}(\listvar{s},\listvar{a})\right),
+    \proj{1}\left(\hat{f}(\listvar{s}, \listvar{a})\right)
+    \right\rangle, \listvar{s}\right).
+    \)
+    Since the initial output and the stream derivative of \(
+    \mealytocircuiti[
+        \circuittomealyi[
+            \iltikzfig{circuits/productivity/mealy-form}[core=\hat{f},state=\listvar{s},dom=m,cod=n,delay=x]
+        ]
+    ]
+    \) are the output and transition of the Mealy machine, the original
+    statement holds.
 \end{proof}
 
 Now we can show the behaviour-preserving result.
@@ -462,32 +461,98 @@ Now we can show the behaviour-preserving result.
     \).
 \end{theorem}
 \begin{proof}
-    \todo[inline]{Update for Mealy machine trip}
-    For fixed state set \(S\) and Mealy function \(g\), let
-    \(h := (s) \mapsto \mealytostreami[(S, g, s)]\) and \(
-    h^\prime := (s) \mapsto \circuittostreami[\mealytocircuiti[(S, g, s)]]
+    Let \((S ,f)\) be monotone Mealy machine and let \(s \in S\) be an arbitrary
+    state.
+    By \cref{prop:mealy-to-stream}, the initial output of
+    \(\mealytostreami[(S, f, s)]\) is
+    \(\listvar{a} \mapsto \mealyfunctionoutput{f}\left(s, \listvar{a}\right)\)
+    and the stream derivative of \(\mealytostreami[(S, f, s)]\) is \(
+    \listvar{a}
+    \mapsto
+    \mealytostreami[(\mealyfunctiontransition{f}\left(s, \listvar{a}\right))]
     \).
-    We will show that for a state \(s \in S\), there is a bisimulation
-    between \(h(s)\) and \(h^\prime(s)\).
 
-    We can transform \(h^\prime(s)\) into a circuit of the form in
-    \cref{prop:mealy-form-image} by concatenating the values created by
-    \(\mealytofunc\) to the encoded state using axioms of STMCs.
-    Then, by finality of \(\mealytostreami\), \cref{def:mealy-to-circuit} and
-    \cref{prop:mealy-form-image}, these stream functions both have initial output \(
-    \proj{1}(g(s, \listvar{a}))
+    Now we consider \(\circuittostreami[\mealytocircuiti[(S, f, s)]]\).
+    By \cref{def:mealy-to-circuit} we have that \(
+    \mealytocircuiti[(S, f, s_0)]
+    =
+    \iltikzfig{circuits/synthesis/mealy-term-spaced}
     \).
-    The former has \(
-    \streamderivative{h(s)}{\listvar{a}} = h(\proj{0}(g(s, \listvar{a})))
-    \) and the latter has \(
-    \streamderivative{h^\prime(s)}{\listvar{a}} =
-    \gamma(\proj{0}(g(s, \listvar{a})) =
-    h^\prime(\proj{0}(g(s, \listvar{a})))
+    By \cref{def:functional-completeness}, \(
+    \iltikzfig{circuits/synthesis/encoded-core}
+    \) is of the form \(
+    \iltikzfig{circuits/synthesis/normalised-function}[box=g]
+    \), which means that
+    \(\mealytocircuiti[(S,f,s_0)]\) can be expressed as \(
+    \iltikzfig{circuits/synthesis/mealy-term-comb-core}
     \).
-    As \(h(s)\) and \(h^\prime(s)\) are defined on all states,
-    \(\mealytostreami[(S, g, s)]\) and
-    \(\circuittostreami[\mealytocircuiti[(S, g, s)]]\) are equal for any Mealy
-    machine \((S, g, s)\).
+    Let \(
+    g^\prime
+    =
+    \circuittofunci[\iltikzfig{strings/category/f-3-2}[box=g,colour=comb]]
+    \); note that for all \(\listvar{r} \in \valuetuple{x}\) and
+    \(\listvar{a} \in \valuetuple{m}\),
+    \(g^\prime(\listvar{v}, \listvar{r}, \listvar{a})
+    =
+    \gamma_\leq(f)(\listvar{r},\listvar{a})
+    \).
+
+    We can now use \cref{prop:mealy-form-image} to compute the initial output
+    and stream derivative of \(\circuittostreami[\mealytocircuiti[(S, f, s)]]\).
+    To show that \(\mealytostreami = \circuittostreami \circ \mealytostreami\),
+    we need to show that these `agree' with those of
+    \(\mealytostreami[(S, f, s)]\).
+    For the initial output, this means we just need to show they are equal:
+
+    \begin{align*}
+        \initialoutput{\circuittostreami[\mealytocircuiti[(S, f, s)]]}{\listvar{a}}
+         & =
+        \proj{1}\left(\circuittofunci[g](\listvar{v}, \gamma_\leq(s), \listvar{a})\right)
+        \\
+         & =
+        \proj{1}\left(\circuittofunci[\mealytofunc[\gamma_\leq(f)]](\gamma_\leq(s), \listvar{a})\right)
+        \\
+         & =
+        \proj{1}\left(\gamma_\leq(f)(\gamma_\leq(s), \listvar(a))\right)
+        \\
+         & =
+        \proj{1}\left(
+        \gamma_\leq(
+            \mealyfunctiontransition{f}(s, \listvar{a})),
+        \mealyfunctionoutput{f}(s, \listvar{a})\right)
+        \\
+         & =
+        \mealyfunctionoutput{f}(s, \listvar{a})
+    \end{align*}
+
+    For the stream derivative, we need to show that as states vary over
+    \(s \in S\), the stream derivative of \(
+    \circuittostreami[\mealytocircuiti[(S, f, s)]]
+    \) is the \(\gamma_\leq\)-encoding of \(\mealytostreami[(S, f, s)]\).
+
+    \begin{align*}
+        \streamderivative{\left(\circuittostreami[\mealytocircuiti[(S, f, s)]]\right)}{\listvar{a}}
+         & =
+        \proj{0}\left(
+        \circuittofunci[g](\listvar{v}, \gamma_\leq(s), \listvar{a})
+        \right)
+        \\
+         & =
+        \proj{0}\left(\circuittofunci[\mealytofunc[\gamma_\leq(f)]](\gamma_\leq(s), \listvar{a})\right)
+        \\
+         & =
+        \proj{0}\left(\gamma_\leq(f)(\gamma_\leq(s), \listvar(a))\right)
+        \\
+         & =
+        \proj{0}\left(
+        \gamma_\leq(
+            \mealyfunctiontransition{f}(s, \listvar{a})),
+        \mealyfunctionoutput{f}(s, \listvar{a})\right)
+        \\
+         & =
+        \gamma_\leq(
+        \mealyfunctiontransition{f}(s, \listvar{a}))
+    \end{align*}
 \end{proof}
 
 This brings our foray into Mealy machines to a close: we can translate back and

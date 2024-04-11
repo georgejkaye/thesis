@@ -6,13 +6,13 @@ circuit in \(\scircsigma\) with the same behaviour under \(\interpretation\).
 
 \begin{corollary}\label{thm:circuit-stream-correspondence}
     \(
-        \circuittostreami
-        \circ
-        \mealytocircuiti
-        \circ
-        \streamtomealyi
-        =
-        \id[\streami]
+    \circuittostreami
+    \circ
+    \mealytocircuiti
+    \circ
+    \streamtomealyi
+    =
+    \id[\streami]
     \).
 \end{corollary}
 \begin{proof}
@@ -21,53 +21,53 @@ circuit in \(\scircsigma\) with the same behaviour under \(\interpretation\).
         \circuittostream{\interpretation} \circ
         \psi \circ
         \phi
-        &=
+         & =
         \circuittostream{\interpretation} \circ
         \mealytocircuiti \circ
         \streamtomealyi \circ
         \mealytostream \circ
         \circuittomealy{\interpretation}
         \\
-        &=
+         & =
         \mealytostream \circ
         \streamtomealyi \circ
         \mealytostream \circ
         \circuittomealy{\interpretation}
-        & \text{\cref{thm:mealy-to-circuit}}
+         & \text{\cref{thm:mealy-to-circuit}}
         \\
-        &=
+         & =
         \mealytostream \circ
         \circuittomealy{\interpretation}
-        & \text{\cref{cor:minimal-mealy}}
+         & \text{\cref{cor:minimal-mealy}}
         \\
-        &=
+         & =
         \circuittostream{\interpretation}
-        & \text{\cref{thm:mealy-to-circuit}}
+         & \text{\cref{thm:mealy-to-circuit}}
     \end{align*}
 
     Now the latter:
     \begin{align*}
         \phi \circ \psi
-        &=
+         & =
         \mealytostream \circ
         \circuittomealy{\interpretation} \circ
         \mealytocircuiti \circ
         \streamtomealyi
         \\
-        &=
+         & =
         \circuittostream{\interpretation} \circ
         \mealytocircuiti \circ
         \streamtomealyi
-        & \text{\cref{thm:mealy-preserves-behaviour}}
+         & \text{\cref{thm:mealy-preserves-behaviour}}
         \\
-        &=
+         & =
         \mealytostream \circ
         \streamtomealyi
-        & \text{\cref{thm:mealy-to-circuit}}
+         & \text{\cref{thm:mealy-to-circuit}}
         \\
-        &=
+         & =
         \id[\streami]
-        & \text{\cref{cor:minimal-mealy}}
+         & \text{\cref{cor:minimal-mealy}}
     \end{align*}
 \end{proof}
 
@@ -77,20 +77,20 @@ as many circuits may have the same semantics but different syntax.
 \begin{definition}[Denotational equivalence]
     We say that two sequential circuits are \emph{denotationally equivalent}
     under \(\interpretation\), written \(
-        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
-        \approx_{\interpretation}
-        \iltikzfig{strings/category/f}[box=G,colour=seq,dom=m,cod=n]
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
+    \approx_{\interpretation}
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
     \) if \(
-        \circuittostream[
-            \iltikzfig{strings/category/f}[box=F,colour=seq]
-        ]{\interpretation}
-        =
-        \circuittostream[
-            \iltikzfig{strings/category/f}[box=G,colour=seq]
-        ]{\interpretation}
+    \circuittostream[
+        \iltikzfig{strings/category/f}[box=f,colour=seq]
+    ]{\interpretation}
+    =
+    \circuittostream[
+        \iltikzfig{strings/category/f}[box=g,colour=seq]
+    ]{\interpretation}
     \).
     Let \(\scircsigmai\) be the result of quotienting \(\scircsigma\) by \(
-        \approx_{\interpretation}
+    \approx_{\interpretation}
     \).
 \end{definition}
 
