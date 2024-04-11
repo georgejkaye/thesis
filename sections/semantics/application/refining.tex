@@ -1,5 +1,37 @@
 \section{Refining circuits}
 
+The behaviour of a circuit need not be preserved exactly.
+Indeed, this is not to be expected as optimisations are intended to increase the
+clock cycle of the circuit!
+This means that the same output signals will be produced, but over a shorter
+timespan.
+
+\begin{definition}
+    Given two sequential circuits \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
+    \) and \(
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
+    \) and waveform \(\listvar{\wordvar{v}}\) of length \(k\), let
+    \(\listvar{\wordvar{w}},\listvar{\wordvar{w^\prime}}\) be the waveform
+    obtained by performing the productive reduction strategy on each circuit
+    respectively.
+    \todo[inline]{How to formalise this?}
+\end{definition}
+
+\begin{definition}
+    Given two circuits \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
+    \) and \(
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
+    \) with \(c\) and \(c^\prime\) delay components respectively, we say they
+    are \emph{logically equivalent}, written \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
+    \ll
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
+    \), if for all waveforms of length \(\mathsf{max}(c,c^\prime)\),
+
+
+\end{definition}
 
 \begin{example}[Retiming]
     The clock cycle of a circuit is determined by the longest paths between
@@ -10,12 +42,6 @@
     but for backward retiming (streaming right to left), the value
     in the register must be in the image of the gates.
 \end{example}
-
-The behaviour of a circuit need not be preserved exactly.
-Indeed, this is not to be expected as optimisations are intended to increase the
-clock cycle of the circuit!
-This means that the same output signals will be produced, but over a shorter
-timespan.
 
 \begin{example}[Pipelining]
     Another technique is \emph{pipelining}~\cite{parhi1999vlsi}, which inserts
