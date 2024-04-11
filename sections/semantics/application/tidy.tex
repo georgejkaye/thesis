@@ -1,0 +1,33 @@
+\section{Tidying up}
+
+When building a circuit, it is often desirable to reduce the number of wires
+and components used; this reduces both the physical size of the circuit and its
+power consumption.
+We can use partial evaluation to transform a circuit into a more minimal form.
+
+\begin{definition}[Tidying rules]
+    Let the set of \emph{tidying rules} be defined as the rules in
+    \cref{fig:tidy-rules}.
+\end{definition}
+
+Most of the tidying rules are self-explanatory; the final rule is necessary in
+order to deal with traced circuits with no outputs.
+Since all circuits with no outputs have the same behaviour, we are permitted tot
+`cut' the trace and get a circuit we can apply more tidying rules to.
+As non-delay-guarded feedback is already handled by the
+\((\instantfeedbackeqn)\) rule, we only need to consider the delay-guarded case.
+
+\input{sections/semantics/application/floats/tidy-rules}
+
+\begin{proposition}
+    Applying the tidying rules to a circuit in Mealy form is confluent and
+    terminating.
+\end{proposition}
+\begin{proof}
+    The tidying rules always decrease the size of the circuit.
+    The only choice is raised when there is a trace around a combinational
+    circuit, but this does not change the internal structure of the subcircuit,
+    so rule applications are prevented.
+    Moreover, since all this rule does is `cut' a trace, it does not matter if
+    this is performed `all in one go', or each feedback loop is cut one by one.
+\end{proof}

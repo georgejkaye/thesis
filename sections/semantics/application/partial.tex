@@ -17,40 +17,6 @@ In this section we will discuss how we could extend the reduction-based
 operational semantics to define automatic procedures for applying partial
 evaluation to circuits.
 
-\subsection{Tidying up}
-
-When building a circuit, it is often desirable to reduce the number of wires
-and components used; this reduces both the physical size of the circuit and its
-power consumption.
-We can use partial evaluation to transform a circuit into a more minimal form.
-
-\begin{definition}[Tidying rules]
-    Let the set of \emph{tidying rules} be defined as the rules in
-    \cref{fig:tidy-rules}.
-\end{definition}
-
-Most of the tidying rules are self-explanatory; the final rule is necessary in
-order to deal with traced circuits with no outputs.
-Since all circuits with no outputs have the same behaviour, we are permitted tot
-`cut' the trace and get a circuit we can apply more tidying rules to.
-As non-delay-guarded feedback is already handled by the
-\((\instantfeedbackeqn)\) rule, we only need to consider the delay-guarded case.
-
-\input{sections/semantics/application/floats/tidy-rules}
-
-\begin{proposition}
-    Applying the tidying rules to a circuit in Mealy form is confluent and
-    terminating.
-\end{proposition}
-\begin{proof}
-    The tidying rules always decrease the size of the circuit.
-    The only choice is raised when there is a trace around a combinational
-    circuit, but this does not change the internal structure of the subcircuit,
-    so rule applications are prevented.
-    Moreover, since all this rule does is `cut' a trace, it does not matter if
-    this is performed `all in one go', or each feedback loop is cut one by one.
-\end{proof}
-
 \subsection{Shortcut rules}
 
 It is often the case that we know that some of the inputs to a circuit is fixed.
@@ -122,6 +88,8 @@ be unsound.
         \iltikzfig{circuits/examples/control/circuit-applied-3}
         \reduction
         \iltikzfig{circuits/examples/control/circuit-applied-4}
+        \reduction
+        \iltikzfig{circuits/examples/control/circuit-applied-5}
     \end{gather*}
 \end{example}
 
@@ -180,29 +148,31 @@ may be.
 The intended interpretation of an uncertain value \(
 \iltikzfig{circuits/components/values/vs-longer}[val=\listvar{v?}]
 \) where \(\listvar{v?}\) is a word of length \(k\) is that there are \(k\)
-possible `universes' in play; in each universe this value will be
-\(\listvar{v?}(0)\), \(\listvar{v?}(1)\), and so on up to \(\listvar{v?}(k-1)\).
+possible `universes' in play.
+in each universe the uncertain value is  interpreted as a concrete value; in
+universe \(0\) the value will be \(\listvar{v?}(0)\), in universe \(1\) the
+value will be \(\listvar{v?}(1)\), and so on up to \(\listvar{v?}(k-1)\).
 If an uncertain value word has length shorter than the number of universes, we
-take the convention that the value in this universe is \(\bot\).
+take the convention that the value in this universe is interpreted as \(\bot\).
 
 To avoid confusion with our syntax sugar for arbitrary-width values, we will
 always end uncertain value lists with \(?\).
-When writing concrete uncertain values, we delimit the elements of the word with
-vertical bars as in \(\mathsf{f}|\mathsf{t}\) to allude to the fact this value
-is either the first \emph{or} the second element.
+When writing out specific uncertain words, we delimit the elements with vertical
+bars as in \(\mathsf{f}|\mathsf{t}\) to allude to the fact this value is either
+the first \emph{or} the second element.
 
 \begin{example}
-    If we have uncertain values \(
+    If a circuit contains uncertain values \(
     \iltikzfig{circuits/components/values/vs-longer}[val=\belnapfalse|\belnaptrue]
     \) and \(
     \iltikzfig{circuits/components/values/vs-longer}[val=\belnaptrue|\belnapfalse]
-    \) in a circuit, there are two universes to consider, one where the
+    \) in a circuit, then there are two universes to consider, one where the
     values output \(\belnapfalse\belnaptrue\) and one where they output
     \(\belnaptrue\belnapfalse\).
 
-    If we add in a third uncertain value with three possible values, \(
+    If we add in another uncertain value with three possible values, \(
     \iltikzfig{circuits/components/values/vs-even-longer}[val=\belnaptrue|\belnapfalse|\top]
-    \), we now have three possible universes: the outputs are now
+    \), we now have three possible universes, in which the values output
     \(\belnapfalse\belnaptrue\belnaptrue\),
     \(\belnaptrue\belnapfalse\belnapfalse\), and
     \(\bot\bot\top\) respectively.
@@ -219,34 +189,44 @@ reasoning before and during execution.
 
 \input{sections/semantics/application/floats/uncertain-rules}
 
-
-
 \begin{example}[Protocols]
     One sticking point that arises when using the categorical framework is the
     presence of the \(\bot\) and \(\top\) values, which would not normally
     be explicitly provided to a circuit.
-    Using uncertain values, we can specify the values that \emph{will} be
-    applied to a circuit and reduce accordingly.
+    These values mean that some well-know Boolean identities do not always hold.
+    By using uncertain values, we can specify the values that \emph{will} be
+    applied to a circuit and apply reductions that are not valid in general but
+    are in this context.
 
-    For example, \(
-    \iltikzfig{circuits/examples/protocol/protocol-rule-lhs}
-    =_{\mathsf{A}\in\{\mathsf{t},\mathsf{f}\}}
-    \iltikzfig{circuits/examples/protocol/protocol-rule-rhs}
-    \), as at least one true values will be applied to the \(\orgate\).
-    Consider the larger circuit below and assume that the first two
-    inputs can only ever be inverses; it can be shown that this circuit
-    exhibits combinational behaviour.
+    Consider the circuit \(
+    \iltikzfig{circuits/examples/protocol/protocol-circuit}
+    \); when we restrict the first two inputs to be true/false inverses, we can
+    reduce the circuit to one with combinational behaviour.
     \begin{gather*}
-        \iltikzfig{circuits/examples/protocol/protocol-circuit}
-        \Rightarrow
         \iltikzfig{circuits/examples/protocol/circuit-with-protocol}
-        =_{\mathsf{A}\in\{\mathsf{t},\mathsf{f}\}}
+        \reduction
         \iltikzfig{circuits/examples/protocol/circuit-with-protocol-1}
-        =
+        \reduction
+        \\[0.25em]
+        \iltikzfig{circuits/examples/protocol/circuit-with-protocol-2}
+        \reduction
         \iltikzfig{circuits/examples/protocol/circuit-with-protocol-3}
+        \reduction
+        \\[0.25em]
+        \iltikzfig{circuits/examples/protocol/circuit-with-protocol-4}
+        \reduction
+        \iltikzfig{circuits/examples/protocol/circuit-with-protocol-5}
+        \reduction
+        \iltikzfig{circuits/examples/protocol/circuit-with-protocol-6}
+        \reduction
+        \iltikzfig{circuits/examples/protocol/circuit-with-protocol-7}
+        \reduction
+        \iltikzfig{circuits/examples/protocol/circuit-with-protocol-8}
     \end{gather*}
 \end{example}
 
-Since equations can be freely applied without being concerned with the context,
-partial evaluation could be automated by applying as many reductions as
+Partial evaluation could be automated by setting up the circuit with the
+necessary input waveforms and trying to apply as many of these reductions as
 possible.
+A graph-rewriting framework based on this will be explored in the next part of
+the thesis.
