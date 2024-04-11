@@ -6,29 +6,29 @@ Nevertheless, if we precompose a circuit with some inputs we can provide some
 rules for propagating these inputs across the circuit.
 
 Formally, for sequential circuit \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+\iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
 \) and values \(
-    \listvar{v} \in \valuetuplestream{\listvar{m}}
+\listvar{v} \in \valuetuplestream{\listvar{m}}
 \), this corresponds to finding reductions such that \(
-    \iltikzfig{circuits/productivity/productive-goal-lhs}[box=f,input=\listvar{v},dom=\listvar{m},cod=\listvar{n}]
-    \reductions
-    \iltikzfig{circuits/productivity/productive-goal-rhs}[box=g,output=\listvar{w},dom=\listvar{m},cod=\listvar{n}]
+\iltikzfig{circuits/productivity/productive-goal-lhs}[box=f,input=\listvar{v},dom=\listvar{m},cod=\listvar{n}]
+\reductions
+\iltikzfig{circuits/productivity/productive-goal-rhs}[box=g,output=\listvar{w},dom=\listvar{m},cod=\listvar{n}]
 \).
 We first consider the combinational case, with our final global transformation.
 
 \begin{lemma}[Streaming]\label{lem:streaming}
     The \emph{streaming rule} \(
-        \iltikzfig{circuits/axioms/generalised-streaming-lhs}[box=f]
-        \reduction[(\streamingeqn)]
-        \iltikzfig{circuits/axioms/generalised-streaming-rhs}[box=f]
+    \iltikzfig{circuits/axioms/generalised-streaming-lhs}[box=f]
+    \reduction[(\streamingeqn)]
+    \iltikzfig{circuits/axioms/generalised-streaming-rhs}[box=f]
     \) is sound.
 \end{lemma}
 \begin{proof}
     Once again this can be shown by considering the stream semantics.
     First note that by unfolding the notation, \(
-        \iltikzfig{circuits/axioms/generalised-streaming-lhs}[box=f]
-        \coloneqq
-        \iltikzfig{circuits/axioms/generalised-streaming-lhs-verbose}[box=f]
+    \iltikzfig{circuits/axioms/generalised-streaming-lhs}[box=f]
+    \coloneqq
+    \iltikzfig{circuits/axioms/generalised-streaming-lhs-verbose}[box=f]
     \).
     The streaming rule is then effectively `pushing' the combinational circuit
     \(\iltikzfig{strings/category/f}[box=f,colour=comb]\) across the join.
@@ -103,13 +103,13 @@ required, as more is involved than than just copying circuit components.
 
 \begin{lemma}\label{lem:reduce-core-terminating}
     For a combinational circuit \(
-        \iltikzfig{strings/category/f}[box=f,colour=comb,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=f,colour=comb,dom=\listvar{m},cod=\listvar{n}]
     \) and \(\listvar{v} \in \valuetuple{\listvar{m}}\), there exists a word
     \(\listvar{w} \in \valuetuple{\listvar{n}}\) such that applying the value
     rules exhaustively to \(
-        \iltikzfig{circuits/components/circuits/f-applied}[box=F,colour=comb]
+    \iltikzfig{circuits/components/circuits/f-applied}[box=F,colour=comb]
     \) terminates at \(
-        \iltikzfig{circuits/components/values/vs}[val=\listvar{w}]
+    \iltikzfig{circuits/components/values/vs}[val=\listvar{w}]
     \).
 \end{lemma}
 
@@ -117,15 +117,15 @@ These rules are all we need to propagate input values across a circuit.
 
 \begin{corollary}\label{cor:mealy-form-productivity}
     For circuit \(
-        \iltikzfig{circuits/productivity/mealy-form-applied}[core=F,dom=m,cod=n,delay=x]
+    \iltikzfig{circuits/productivity/mealy-form-applied}[core=F,dom=m,cod=n,delay=x]
     \) there exist \(
-        \listvar{t} \in \valuetuple{x}
+    \listvar{t} \in \valuetuple{x}
     \) and \(
-        \listvar{w} \in \valuetuple{n}
+    \listvar{w} \in \valuetuple{n}
     \) such that \(
-        \iltikzfig{circuits/productivity/mealy-form-applied}[core=F,dom=m,cod=n,delay=x]
-        \reductions
-        \iltikzfig{circuits/productivity/mealy-form-produced}[core=F,dom=m,cod=n,delay=x]
+    \iltikzfig{circuits/productivity/mealy-form-applied}[core=F,dom=m,cod=n,delay=x]
+    \reductions
+    \iltikzfig{circuits/productivity/mealy-form-produced}[core=F,dom=m,cod=n,delay=x]
     \) by applying \(\streamingeqn\) once followed by the value rules
     exhaustively.
 \end{corollary}
@@ -145,7 +145,7 @@ These rules are all we need to propagate input values across a circuit.
     \(\belnapfalse\belnaptrue\).
 \end{example}
 
-\input{sections/circuits/operational/floats/sr-latch-streamed}
+\input{sections/semantics/operational/floats/sr-latch-streamed}
 
 By now putting together all the components in this section and the previous,
 we have a productive strategy for processing inputs to \emph{any} sequential
@@ -153,12 +153,12 @@ circuit.
 
 \begin{corollary}[Productivity]\label{cor:productivity}
     For sequential circuit \(
-        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+    \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
     \) and inputs \(\listvar{v} \in \valuetuple{m}\), there exists
     \(\listvar{w} \in \valuetuple{n}\) such that \(
-        \iltikzfig{circuits/productivity/productive-goal-lhs}[box=F,input=\listvar{v},dom=m,cod=n]
-        \reductions
-        \iltikzfig{circuits/productivity/productive-goal-rhs}[box=G,output=\listvar{w},dom=m,cod=n]
+    \iltikzfig{circuits/productivity/productive-goal-lhs}[box=F,input=\listvar{v},dom=m,cod=n]
+    \reductions
+    \iltikzfig{circuits/productivity/productive-goal-rhs}[box=G,output=\listvar{w},dom=m,cod=n]
     \) by applying \(\mealyeqn\), \(\instantfeedbackeqn\) and \(\streamingeqn\)
     once successively followed by the value rules exhaustively.
 \end{corollary}

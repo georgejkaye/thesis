@@ -16,20 +16,20 @@ components of the combinational core.
 \begin{definition}[Normalised Mealy form]
     A sequential circuit is in \emph{normalised Mealy form} if it is in the form
     \(
-        \iltikzfig{circuits/algebraic/encoding}[transition={f_0},output={f_1},dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
+    \iltikzfig{circuits/algebraic/encoding}[transition={f_0},output={f_1},dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
     \) where \(
-        \iltikzfig{strings/category/f-2-1}[box=f_0,colour=seq]
+    \iltikzfig{strings/category/f-2-1}[box=f_0,colour=seq]
     \) and \(
-        \iltikzfig{strings/category/f-2-1}[box=f_1,colour=seq]
+    \iltikzfig{strings/category/f-2-1}[box=f_1,colour=seq]
     \) are normalised circuits.
     Given such a circuit, we write \(
-        \morph{\tilde{f}_{0}}{\valuetuple{x+m}}{{\valuetuple{x}}}
+    \morph{\tilde{f}_{0}}{\valuetuple{x+m}}{{\valuetuple{x}}}
     \) and \(
-        \morph{\tilde{f}_{1}}{\valuetuple{x+m}}{{\valuetuple{n}}}
+    \morph{\tilde{f}_{1}}{\valuetuple{x+m}}{{\valuetuple{n}}}
     \) for the functions that satisfy \(
-        \mealytofunc[\tilde{f}_{0}] = \iltikzfig{strings/category/f-2-1}[box=f_0,colour=seq]
+    \mealytofunc[\tilde{f}_{0}] = \iltikzfig{strings/category/f-2-1}[box=f_0,colour=seq]
     \) and \(
-        \mealytofunc[\tilde{f}_{1}] = \iltikzfig{strings/category/f-2-1}[box=f_1,colour=seq]
+    \mealytofunc[\tilde{f}_{1}] = \iltikzfig{strings/category/f-2-1}[box=f_1,colour=seq]
     \).
 \end{definition}
 
@@ -46,7 +46,7 @@ For those in the know, this can mean only one thing.
     \cref{fig:cartesian-axioms}.
 \end{definition}
 
-\input{sections/circuits/algebraic/floats/cartesian-equations}
+\input{sections/semantics/algebraic/floats/cartesian-equations}
 
 We could quotient \(\scircsigma\) by the equations in
 \cref{fig:cartesian-axioms}, but we prefer to use a finite number of equations.
@@ -61,7 +61,7 @@ We could quotient \(\scircsigma\) by the equations in
     `composite' forks and joins from \cref{not:arbitrary-width-structure}.
 \end{remark}
 
-\input{sections/circuits/algebraic/floats/local-cartesian-equations}
+\input{sections/semantics/algebraic/floats/local-cartesian-equations}
 
 These equations are enough to bestow the Cartesian properties upon
 \(\scircsigma\).
@@ -70,20 +70,20 @@ in which the fork is the inverse of the join.
 
 \begin{lemma}\label{lem:join-fork-inverse}
     For any sequential circuit \(
-        \iltikzfig{strings/category/f-1-2}[box=F,colour=seq,dom=m,cod1=n,cod2=p]
+    \iltikzfig{strings/category/f-1-2}[box=F,colour=seq,dom=m,cod1=n,cod2=p]
     \), \(
-        \iltikzfig{circuits/algebraic/join-fork-inverse/lhs}[box=f,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
-        =
-        \iltikzfig{circuits/algebraic/join-fork-inverse/rhs}[box=f,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
+    \iltikzfig{circuits/algebraic/join-fork-inverse/lhs}[box=f,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
+    =
+    \iltikzfig{circuits/algebraic/join-fork-inverse/rhs}[box=f,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
     \) holds in \(\scircsigma / \mcc\).
 \end{lemma}
 \begin{proof}
     This is by induction over the structure of the circuit \(
-        \iltikzfig{strings/category/f-1-2}[box=F,colour=seq]
+    \iltikzfig{strings/category/f-1-2}[box=F,colour=seq]
     \).
     First we must check the base cases.
     For \(
-        \iltikzfig{circuits/components/gates/gate}[gate=g,colour=comb]
+    \iltikzfig{circuits/components/gates/gate}[gate=g,colour=comb]
     \):
     \begin{gather*}
         \iltikzfig{circuits/algebraic/join-fork-inverse/gate-partial-step-0}
@@ -95,7 +95,7 @@ in which the fork is the inverse of the join.
         \iltikzfig{circuits/algebraic/join-fork-inverse/gate-partial-step-3}
     \end{gather*}
     For \(
-        \iltikzfig{strings/structure/comonoid/copy}[colour=comb]
+    \iltikzfig{strings/structure/comonoid/copy}[colour=comb]
     \) we first check if only one of the outputs are joined:
     \begin{gather*}
         \iltikzfig{circuits/algebraic/join-fork-inverse/fork-single-step-0}
@@ -117,7 +117,7 @@ in which the fork is the inverse of the join.
         \iltikzfig{circuits/algebraic/join-fork-inverse/fork-double-step-3}
     \end{gather*}
     For \(
-        \iltikzfig{strings/structure/monoid/merge}[colour=comb]
+    \iltikzfig{strings/structure/monoid/merge}[colour=comb]
     \):
     \[
         \iltikzfig{circuits/algebraic/join-fork-inverse/join-step-0}
@@ -129,7 +129,7 @@ in which the fork is the inverse of the join.
         \iltikzfig{circuits/algebraic/join-fork-inverse/join-step-3}
     \]
     For \(
-        \iltikzfig{circuits/components/waveforms/delay}
+    \iltikzfig{circuits/components/waveforms/delay}
     \): \[
         \iltikzfig{circuits/algebraic/join-fork-inverse/delay-step-0}
         \eqaxioms[(\delayforkeqn)]
@@ -140,24 +140,24 @@ in which the fork is the inverse of the join.
         \iltikzfig{circuits/algebraic/join-fork-inverse/delay-step-3}
     \]
     The proofs for \(
-        \iltikzfig{strings/structure/monoid/init}[colour=comb]
+    \iltikzfig{strings/structure/monoid/init}[colour=comb]
     \), \(
-        \iltikzfig{strings/category/identity}[colour=comb]
+    \iltikzfig{strings/category/identity}[colour=comb]
     \), \(
-        \iltikzfig{strings/symmetric/symmetry}[colour=comb]
+    \iltikzfig{strings/symmetric/symmetry}[colour=comb]
     \) and \(
-        \iltikzfig{circuits/components/values/vs}
+    \iltikzfig{circuits/components/values/vs}
     \) are trivial.
 
     For composition, we need to show that \(
-        \iltikzfig{circuits/algebraic/join-fork-inverse/composition-lhs}
-        =
-        \iltikzfig{circuits/algebraic/join-fork-inverse/composition-rhs}
+    \iltikzfig{circuits/algebraic/join-fork-inverse/composition-lhs}
+    =
+    \iltikzfig{circuits/algebraic/join-fork-inverse/composition-rhs}
     \).
     By inductive hypothesis, \(
-        \iltikzfig{circuits/algebraic/join-fork-inverse/simple-lhs}[box=f]
-        =
-        \iltikzfig{circuits/algebraic/join-fork-inverse/simple-rhs}[box=f]
+    \iltikzfig{circuits/algebraic/join-fork-inverse/simple-lhs}[box=f]
+    =
+    \iltikzfig{circuits/algebraic/join-fork-inverse/simple-rhs}[box=f]
     \) so we have that \[
         \iltikzfig{circuits/algebraic/join-fork-inverse/composition-lhs}[box1=f,box2=g]
         =
@@ -172,9 +172,9 @@ in which the fork is the inverse of the join.
     there are two circuits which do not interact.
 
     For trace we need to show that \(
-        \iltikzfig{circuits/algebraic/join-fork-inverse/trace-lhs}[box=f]
-        =
-        \iltikzfig{circuits/algebraic/join-fork-inverse/trace-rhs}[box=f]
+    \iltikzfig{circuits/algebraic/join-fork-inverse/trace-lhs}[box=f]
+    =
+    \iltikzfig{circuits/algebraic/join-fork-inverse/trace-rhs}[box=f]
     \).
     By using axioms of STMCs and inductive hypothesis we have that \[
         \iltikzfig{circuits/algebraic/join-fork-inverse/trace-lhs}[box=f]
@@ -237,18 +237,18 @@ transition and the output.
 
 \begin{lemma}\label{lem:isolate-outputs}
     In a Cartesian category, \(
-        \iltikzfig{strings/category/f-1-2}[box=f,colour=white,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
-        =
-        \iltikzfig{circuits/algebraic/isolate-cartesian/isolate}[box=f,colour=white,cod1=\listvar{n},cod2=\listvar{p}]
+    \iltikzfig{strings/category/f-1-2}[box=f,colour=white,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
+    =
+    \iltikzfig{circuits/algebraic/isolate-cartesian/isolate}[box=f,colour=white,cod1=\listvar{n},cod2=\listvar{p}]
     \).
 \end{lemma}
 \begin{proof}
     \(
-        \iltikzfig{strings/category/f-1-2}[box=F,colour=white,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
-        \eqaxioms[(\monoidunitleqn,\monoidunitreqn)]
-        \iltikzfig{circuits/algebraic/isolate-cartesian/isolate-step-1}[box=f,colour=white,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
-        \eqaxioms[(\cartnatcopyeqn)]
-        \iltikzfig{circuits/algebraic/isolate-cartesian/isolate}[box=f,colour=white,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
+    \iltikzfig{strings/category/f-1-2}[box=F,colour=white,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
+    \eqaxioms[(\monoidunitleqn,\monoidunitreqn)]
+    \iltikzfig{circuits/algebraic/isolate-cartesian/isolate-step-1}[box=f,colour=white,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
+    \eqaxioms[(\cartnatcopyeqn)]
+    \iltikzfig{circuits/algebraic/isolate-cartesian/isolate}[box=f,colour=white,dom=\listvar{m},cod1=\listvar{n},cod2=\listvar{p}]
     \)
 \end{proof}
 
@@ -258,14 +258,14 @@ one step closer to obtaining a circuit in the image of \(\mealytocircuiti\).
 \begin{corollary}\label{lem:normalised-mealy}
     For a functionally complete interpretation \(\interpretation\), any
     sequential circuit \(
-        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+    \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
     \) is equal to a circuit in normalised Mealy form in \(
-        \scircsigma / (
-            \mealyequations +
-            \instantfeedbackeqn +
-            \cartesianequations +
-            \normalisingequations
-        )
+    \scircsigma / (
+    \mealyequations +
+    \instantfeedbackeqn +
+    \cartesianequations +
+    \normalisingequations
+    )
     \),
 \end{corollary}
 \begin{proof}

@@ -103,13 +103,13 @@ such that reductions may be applied to their parent expressions and so on.
 \begin{example}\label{ex:expressions-reduction}
     Returning to \cref{ex:expressions-operational}, the two rules of the
     corresponding reductions semantics are \(
-        add \, \overline{n_0} \, \overline{n_1}
-        \,\reduction[(\text{Add})]\,
-        \overline{n_0 + n_1}
+    add \, \overline{n_0} \, \overline{n_1}
+    \,\reduction[(\text{Add})]\,
+    \overline{n_0 + n_1}
     \) and \(
-        mul \, \overline{n_0} \, \overline{n_1}
-        \,\reduction[(\text{Add})]\,
-        \overline{n_0 \cdot n_1}
+    mul \, \overline{n_0} \, \overline{n_1}
+    \,\reduction[(\text{Add})]\,
+    \overline{n_0 \cdot n_1}
     \).
     Note that as the numbers \(\overline{n}\) are the `primitives' of the
     language (their meaning is theirselves), there is no corresponding reduction
@@ -192,14 +192,14 @@ Our goal for this chapter is to develop a sound and complete notion of
 `executing' them using the operational semantics produces the same values.
 To determine which transformations and reductions are sound, we turn to the
 denotational semantics; a reduction between circuits \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
-    \reduction
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
+\iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
+\reduction
+\iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
 \) is sound with respect to some interpretation \(\interpretation\) if and only
 if \(
-    \circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]]
-    =
-    \circuittostreami[\iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]]
+\circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]]
+=
+\circuittostreami[\iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]]
 \).
 
 \begin{remark}
@@ -207,6 +207,6 @@ if \(
     of~\cite[Sec. 4]{ghica2024fully}.
 \end{remark}
 
-\input{sections/circuits/operational/feedback}
-\input{sections/circuits/operational/productivity}
-\input{sections/circuits/operational/observational}
+\input{sections/semantics/operational/feedback}
+\input{sections/semantics/operational/productivity}
+\input{sections/semantics/operational/observational}

@@ -36,7 +36,7 @@ Since all circuits with no outputs have the same behaviour, we are permitted tot
 As non-delay-guarded feedback is already handled by the
 \((\instantfeedbackeqn)\) rule, we only need to consider the delay-guarded case.
 
-\input{sections/circuits/application/floats/tidy-rules}
+\input{sections/semantics/application/floats/tidy-rules}
 
 \begin{proposition}
     Applying the tidying rules to a circuit in Mealy form is confluent and
@@ -65,7 +65,7 @@ To propagate waveforms across circuits we need to derive a version of the
 \((\gateeqn)\) rule for applying waveforms to primitives.
 These rules are illustrated in \cref{fig:waveform-rules}.
 
-\input{sections/circuits/application/floats/waveform-rules}
+\input{sections/semantics/application/floats/waveform-rules}
 
 This is not the only way we can partially evaluate with some inputs.
 In some interpretations, it may be that we learn something about the output of
@@ -89,7 +89,7 @@ an infinite waveform; if we applied the rule with just an instantaneous value,
 this value would produce \(\bot\) on ticks after the first and the rule would
 be unsound.
 
-\input{sections/circuits/application/floats/shortcut-waveform-rules}
+\input{sections/semantics/application/floats/shortcut-waveform-rules}
 
 \begin{example}[Control switches]
     Recall that a \emph{multiplexer} is a circuit component constructed as \(
@@ -135,7 +135,7 @@ To do this, we can apply variants of the shortcut rules \emph{after} performing
 streaming for some inputs.
 These variants are illustrated in \cref{fig:shortcuts}.
 
-\input{sections/circuits/application/floats/shortcuts}
+\input{sections/semantics/application/floats/shortcuts}
 
 \begin{example}[Blocking boxes]\label{ex:blocking-boxes}
     Consider the circuit \(
@@ -217,7 +217,7 @@ reasoning before and during execution.
     The \emph{uncertain rules} are listed in \cref{fig:uncertain-rules}.
 \end{definition}
 
-\input{sections/circuits/application/floats/uncertain-rules}
+\input{sections/semantics/application/floats/uncertain-rules}
 
 
 
