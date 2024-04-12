@@ -27,36 +27,34 @@ set of nodes and \(\edges{F}{k}{l}\) for the set of edges with \(k\) sources and
 \begin{example}\label{ex:hypergraph}
     We define the hypergraph \(F\) as follows:
     \begin{gather*}
-        \vertices{F} := \{v_0,v_1,v_2,v_3,v_4,v_5\}
+        \vertices{F} \coloneqq \{v_0,v_1,v_2,v_3,v_4,v_5\}
         \quad
-        \edges{F}{2}{1} := \{e_0,e_2\}
+        \edges{F}{2}{1} \coloneqq \{e_0,e_2\}
         \quad
-        \edges{F}{1}{2} := \{e_1\}
+        \edges{F}{1}{2} \coloneqq \{e_1\}
         \\
-        \sources{0}(e_0) := v_0
+        \sources{0}(e_0) \coloneqq v_0
         \quad
-        \sources{1}(e_0) := v_2
+        \sources{1}(e_0) \coloneqq v_2
         \quad
-        \sources{0}(e_1) := v_3
+        \sources{0}(e_1) \coloneqq v_3
         \quad
-        \sources{0}(e_2) := v_3
+        \sources{0}(e_2) \coloneqq v_3
         \quad
-        \sources{1}(e_2) := v_2
+        \sources{1}(e_2) \coloneqq v_2
         \\
-        \targets{0}(e_0) := v_3
+        \targets{0}(e_0) \coloneqq v_3
         \quad
-        \targets{0}(e_1) := v_5
+        \targets{0}(e_1) \coloneqq v_5
         \quad
-        \targets{1}(e_1) := v_4
+        \targets{1}(e_1) \coloneqq v_4
         \quad
-        \targets{0}(e_2) := v_4
+        \targets{0}(e_2) \coloneqq v_4
     \end{gather*}
     Much like with regular graphs, it is much more intuitive to draw out hypergraphs
     rather than look at their combinatorial representation.
     We draw nodes as black dots, and hyperedges as `bubbles' with ordered tentacles
     on the left and right that connect to source and target nodes respectively.
-
-    The hypergraph \(F\) from \cref{ex:hypergraph} is drawn as follows:
     \[
         \iltikzfig{graphs/blank-example}
     \]
@@ -75,6 +73,41 @@ transformations: structure-preserving maps between hypergraphs.
     following diagrams commute:
     \input{floats/hypergraph-homs}
 \end{definition}
+
+\begin{example}
+    Consider the following hypergraph
+    \begin{gather*}
+        \vertices{G} \coloneqq \{v_6,v_7,v_8\}
+        \quad
+        \edges{G}{2}{1} \coloneqq \{e_3\}
+        \\
+        \sources{0}(e_3) \coloneqq v_6
+        \quad
+        \sources{1}(e_3) \coloneqq v_7
+        \quad
+        \targets{0}(e_3) \coloneqq v_8
+        \\
+        \iltikzfig{graphs/blank-smaller}
+    \end{gather*}
+    A hypergraph homomorphism \(\morph{h}{F}{G}\) is a map from the former into
+    the latter preserving sources and targets.
+    One possible homomorphism could be
+    \begin{gather*}
+        \vertices{h}(v_6) \coloneqq v_0
+        \quad
+        \vertices{h}(v_7) \coloneqq v_1
+        \quad
+        \vertices{h}(v_8) \coloneqq v_2
+        \quad
+        \edges{h}{2}{1}(e_3) \coloneqq e_3
+    \end{gather*}
+    The image of the homomorphism is illustrated below:
+    \[
+        \iltikzfig{graphs/blank-hom}
+    \]
+    Injective hypergraph homomorphisms are often known as \emph{embeddings}.
+    There is however no requirement for hypergraphs to be injective.
+\end{example}
 
 \subsection{Labelled hypergraphs}
 
@@ -100,41 +133,38 @@ To do this, we must first translate the notion of signature to hypergraphs.
     \end{gather*}
 \end{definition}
 
-
-\begin{example}\label{ex:labelled-hypergraph}
-    Let \(\mcc \coloneqq \{\bullet,\redbullet\}\) be a set of colours and
-    \(\Sigma = \{\morph{\phi}{\redbullet\bullet}{\redbullet}, \morph{\psi}{\redbullet}{\bullet\bullet}\}\) be a monoidal
+\begin{example}\label{ex:labelled-hypergraph-signature}
+    Let \(\Sigma = \{\morph{\phi}{2}{1}, \morph{\psi}{1}{2}\}\) be a monoidal
     signature.
-    The corresponding monoidal signature \(\hypsignature{(\mcc,\Sigma)}\) is
+    The corresponding hypergraph signature \(\hypsignature{\generators}\) is
     \begin{gather*}
-        \vertices{\hypsignature{(\mcc,\Sigma)}} := \{v_{\bullet},v_{\redbullet}\}
+        \vertices{\hypsignature{\generators}} \coloneqq \{v\}
         \quad
-        \edges{\hypsignature{(\mcc,\Sigma)}}{2}{1} := \{e_\phi\}
+        \edges{\hypsignature{\generators}}{2}{1} \coloneqq \{e_\phi\}
         \quad
-        \edges{\hypsignature{(\mcc,\Sigma)}}{1}{2} := \{e_\psi\}
+        \edges{\hypsignature{\generators}}{1}{2} \coloneqq \{e_\psi\}
         \\
-        \sources{0}(e_\phi) := v_{\redbullet}
+        \sources{0}(e_\phi) \coloneqq v
         \quad
-        \sources{1}(e_\phi) := v_{\bullet}
+        \sources{1}(e_\phi) \coloneqq v
         \quad
-        \sources{0}(e_\psi) := v_{\redbullet}
+        \sources{0}(e_\psi) \coloneqq v
         \quad
-        \targets{0}(e_\phi) := v_{\redbullet}
+        \targets{0}(e_\phi) \coloneqq v
         \quad
-        \targets{0}(e_\psi) := v_{\bullet}
+        \targets{0}(e_\psi) \coloneqq v
         \quad
-        \targets{1}(e_\psi) := v_{\redbullet}
+        \targets{1}(e_\psi) \coloneqq v
     \end{gather*}
     and is drawn as follows, where we notate the vertices and edges with the
     appropriate colour and label to aid in clarity.
     \[
-        \iltikzfig{graphs/signature-example-coloured}
+        \iltikzfig{graphs/signature-example}
     \]
 \end{example}
 
-The vertices and edges of a hypergraph \(F\) can then be assigned colours from
-\(\mcc\) and symbols from \(\Sigma\) using a homomorphism
-\(F \to \hypsignature{\Sigma,\mcc}\).
+The edges of a hypergraph \(F\) are assigned symbols from \(\Sigma\) using a
+homomorphism \(F \to \hypsignature{\generators}\).
 To do this to \emph{all} the hypergraphs in \(\hyp\) and create a category of
 \emph{labelled} hypergraphs, we make use of some more categorical machinery.
 
@@ -152,28 +182,91 @@ when we set \(C\) to some hypergraph signature, this is a perfect setting for
 labelled hypergraphs.
 
 \begin{definition}[Labelled hypergraphs~\cite{bonchi2016rewriting}]
-    Let \(\hypsigmac\) be the category of hypergraphs labelled over a set of
-    generators \(\Sigma\) and colours \(\mcc\), defined as the slice category
-    \(\hyp \slice \hypsignature{(\Sigma, \mcc)}\).
+    Let \(\hypsigma\) be the category of \emph{labelled hypergraphs} over a set
+    of generators \(\Sigma\), defined as the slice category
+    \(\hyp \slice \hypsignature{\Sigma}\).
 \end{definition}
 
 \begin{example}
-    Recall the hypergraph \(F\) from \autoref{ex:hypergraph}; one labelling
+    Recall the hypergraph \(F\) from \cref{ex:hypergraph}; one labelling
     \(\morph{\Gamma}{F}{\hypsignature{\Sigma}}\) could be defined as
     \begin{gather*}
-        \Gamma(-) := v_0
+        \Gamma(-) \coloneqq v_0
         \quad
-        \Gamma(e_0) := e_\phi
+        \Gamma(e_0) \coloneqq e_\phi
         \quad
-        \Gamma(e_1) := e_\psi
+        \Gamma(e_1) \coloneqq e_\psi
         \quad
-        \Gamma(e_2) := e_\phi
+        \Gamma(e_2) \coloneqq e_\phi
     \end{gather*}
     We simply call the morphism \(\Gamma\) a \emph{labelled hypergraph} and
     draw it as a regular hypergraph but with labelled edges.
     \[
-        \iltikzfig{graphs/blank-example-labelled-coloured}
+        \iltikzfig{graphs/blank-example-labelled}
     \]
     Note that if there are multiple generators with the same arity and coarity
     in a signature, there may well be multiple valid labellings of a hypergraph.
+\end{example}
+
+\subsection{Coloured hypergraphs}
+
+We may not always deal with monochromatic PROPs, but additionally have a
+countably infinite set of \emph{colours} \(\mcc\).
+
+\begin{definition}[Coloured hypergraph signature~\cite{bonchi2016rewriting}]
+    For a set of generators \(\signature\) and colours \(\mcc\) as defined
+    in \cref{def:generators}, the corresponding
+    \emph{coloured hypergraph signature}
+    \(\hypsignature{(\mcc,\Sigma)}\) in an object of \(\hyp\) defined as
+    follows:
+    \begin{gather*}
+        \vertices{\hypsignature{(\mcc,\Sigma)}} \coloneqq \{ v_c \,|\, c \in \mcc\}
+        \quad
+        \edges{\hypsignature{(\mcc,\Sigma)}}{k}{l} \coloneqq \{ e_g \,|\, g \in \signature\}
+        \\
+        \sources{i}(e_g) \coloneqq v_{\dom[e_g](i)}
+        \quad
+        \targets{j}(e_g) \coloneqq v_{\cod[e_g](j)}
+    \end{gather*}
+\end{definition}
+
+\begin{example}\label{ex:labelled-hypergraph}
+    Let \(\mcc \coloneqq \{\bullet,\redbullet\}\) be a set of colours and
+    \(\Sigma = \{\morph{\phi}{\redbullet\bullet}{\redbullet}, \morph{\psi}{\redbullet}{\bullet\bullet}\}\) be a monoidal
+    signature.
+    The corresponding coloured hypergraph signature \(\hypsignature{(\mcc,\Sigma)}\) is
+    \begin{gather*}
+        \vertices{\hypsignature{(\mcc,\Sigma)}} \coloneqq \{v_{\bullet},v_{\redbullet}\}
+        \quad
+        \edges{\hypsignature{(\mcc,\Sigma)}}{2}{1} \coloneqq \{e_\phi\}
+        \quad
+        \edges{\hypsignature{(\mcc,\Sigma)}}{1}{2} \coloneqq \{e_\psi\}
+        \\
+        \sources{0}(e_\phi) \coloneqq v_{\redbullet}
+        \quad
+        \sources{1}(e_\phi) \coloneqq v_{\bullet}
+        \quad
+        \sources{0}(e_\psi) \coloneqq v_{\redbullet}
+        \quad
+        \targets{0}(e_\phi) \coloneqq v_{\redbullet}
+        \quad
+        \targets{0}(e_\psi) \coloneqq v_{\bullet}
+        \quad
+        \targets{1}(e_\psi) \coloneqq v_{\redbullet}
+    \end{gather*}
+    and is drawn as follows, where we notate the vertices and edges with the
+    appropriate colour and label to aid in clarity.
+    \[
+        \iltikzfig{graphs/signature-example-coloured}
+    \]
+\end{example}
+
+\begin{definition}[Coloured hypergraphs~\cite{bonchi2016rewriting}]
+    Let \(\hypsigmac\) be the category of \emph{coloured hypergraphs} over a set
+    of colours \(\mcc\) and generators \(\generators\), defined as the slice
+    category \(\hyp \slice \hypsignature{(\mcc,\generators)}\).
+\end{definition}
+
+\begin{example}
+    Returning again to the hypergraph in \cref{ex:hypergraph}, we can see
 \end{example}
