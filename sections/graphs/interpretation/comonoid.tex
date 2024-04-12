@@ -70,13 +70,13 @@ define the monoidal theory of commutative comonoids.
 \begin{definition}
     Let \((\generators[\ccomon], \equations[\ccomon])\) be the symmetric
     monoidal theory of \emph{commutative comonoids}, with \(
-        \Sigma_{\ccomon} \coloneqq \{
-            \iltikzfig{strings/structure/comonoid/copy}[colour=white],
-            \iltikzfig{strings/structure/comonoid/discard}[colour=white]
-        \}
+    \Sigma_{\ccomon} \coloneqq \{
+    \iltikzfig{strings/structure/comonoid/copy}[colour=white],
+    \iltikzfig{strings/structure/comonoid/discard}[colour=white]
+    \}
     \) and \(\mce_{\ccomon}\) defined as in \cref{fig:comonoid-equations}.
     We write \(
-        \ccomon \coloneqq \smc{\generators[\ccomon], \equations[\ccomon]}
+    \ccomon \coloneqq \smc{\generators[\ccomon], \equations[\ccomon]}
     \).
 \end{definition}
 
@@ -136,7 +136,7 @@ structure to fork wires; vertices must still only have one `in' connection.
     As with the vertices not in the interfaces with degree \((0, 0)\) in the
     vanilla traced case, the vertices not in the interface with degree
     \((0, m)\) allow for the interpretation of terms such as \(
-        \trace{}{\iltikzfig{strings/structure/comonoid/copy}[colour=white]}
+    \trace{}{\iltikzfig{strings/structure/comonoid/copy}[colour=white]}
     \).
     \todo[inline]{Draw the cospan}
 \end{remark}
@@ -157,9 +157,9 @@ form a PROP.
     Given partial left-monogamous cospans
     \(\cospan{m}{F}{n}\) and
     \(\cospan{n}{G}{p}\), the composition \(
-        (\cospan{m}{F}{n})
-        \seq
-        (\cospan{n}{G}{p})
+    (\cospan{m}{F}{n})
+    \seq
+    (\cospan{n}{G}{p})
     \) is partial left-monogamous.
 \end{lemma}
 \begin{proof}
@@ -179,9 +179,9 @@ form a PROP.
 \begin{lemma}
     Given partial left-monogamous cospans \(\cospan{m}{F}{n}\)
     and \(\cospan{p}{G}{q}\), the tensor \(
-        (\cospan{m}{F}{n})
-        \tensor
-        (\cospan{n}{G}{p})
+    (\cospan{m}{F}{n})
+    \tensor
+    (\cospan{n}{G}{p})
     \) is partial left-monogamous.
 \end{lemma}
 \begin{proof}
@@ -219,21 +219,21 @@ some ingredients from the previous sections.
 
 \begin{definition}
     Let \(
-        \morph{
-            \comonoidtofrob
-        }{
-            \ccomonc
-        }{
-            \frobc
-        }
+    \morph{
+        \comonoidtofrob
+    }{
+        \ccomonc
+    }{
+        \frobc
+    }
     \) be the obvious embedding of \(\ccomonc\) into \(\frobc\), and let \(
-        \morph{
-            \tracedandcomonoidtofrobsigmac
-        }{
-            \stmcsigmac + \ccomonc
-        }{
-            \smcsigmac + \frobc
-        }
+    \morph{
+        \tracedandcomonoidtofrobsigmac
+    }{
+        \stmcsigmac + \ccomonc
+    }{
+        \smcsigmac + \frobc
+    }
     \) be the copairing of \(\tracedtosymandfrobsigmac\) and
     \(\comonoidtofrobc\).
 \end{definition}
@@ -284,7 +284,7 @@ To show the correspondence between \(\stmcsigma + \ccomon\) and
     \(\frobtohypsigma \circ \comonoidtofrob\).
     The remaining components remain in the image of \(\termtohypsigma\).
     Subsequently, the entire traced cospan must be in the image of \(
-        \termandfrobtohypsigma \circ \tracedandcomonoidtofrobsigmac
+    \termandfrobtohypsigma \circ \tracedandcomonoidtofrobsigmac
     \).
 \end{proof}
 
