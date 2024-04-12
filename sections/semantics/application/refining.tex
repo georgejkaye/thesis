@@ -1,37 +1,7 @@
 \section{Refining circuits}
 
-The behaviour of a circuit need not be preserved exactly.
-Indeed, this is not to be expected as optimisations are intended to increase the
-clock cycle of the circuit!
-This means that the same output signals will be produced, but over a shorter
-timespan.
-
-\begin{definition}
-    Given two sequential circuits \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
-    \) and \(
-    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
-    \) and waveform \(\listvar{\wordvar{v}}\) of length \(k\), let
-    \(\listvar{\wordvar{w}},\listvar{\wordvar{w^\prime}}\) be the waveform
-    obtained by performing the productive reduction strategy on each circuit
-    respectively.
-    \todo[inline]{How to formalise this?}
-\end{definition}
-
-\begin{definition}
-    Given two circuits \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
-    \) and \(
-    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
-    \) with \(c\) and \(c^\prime\) delay components respectively, we say they
-    are \emph{logically equivalent}, written \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq]
-    \ll
-    \iltikzfig{strings/category/f}[box=f,colour=seq]
-    \), if for all waveforms of length \(\mathsf{max}(c,c^\prime)\),
-
-
-\end{definition}
+A key part of circuit design comes in \emph{optimising circuits}: making them
+run as fast as possible and reduce the \emph{clock cycle}.
 
 \begin{example}[Retiming]
     The clock cycle of a circuit is determined by the longest paths between
@@ -43,15 +13,88 @@ timespan.
     in the register must be in the image of the gates.
 \end{example}
 
+When reasoning equationally, the behaviour of the circuits on either side of the
+equation must have exactly the same behaviour.
+However, when reasoning with circuits it is sometimes the case that this is too
+strict an assertion; we are looking for circuits that output the same outputs
+but over a shorter period of time.
+This means we may wish to use transformations that only `morally' preserve the
+behaviour of a circuit.
+
+\begin{definition}
+    For two finite sequences \(
+    \listlistvar{v},\listlistvar{w} \in (\valuetuplestream{m})^k
+    \), we say that \(\listlistvar{w}\) is a \emph{stretching} of
+    \(\listlistvar{v}\), written \(\listlistvar{v} \ll \listlistvar{w}\), if
+    \(\listlistvar{w}\) contains the characters of \(\listlistvar{v}\) but
+    possibly repeated or with additional \(\bot\) characters e.g.\ \(
+    \belnaptrue\belnapfalse
+    \ll
+    \bot\bot\belnaptrue\belnaptrue\bot\belnapfalse
+    \).
+\end{definition}
+
+\begin{definition}
+    Given two sequential circuits \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
+    \) and \(
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
+    \) with \(c\) and \(c^\prime\) delay components respectively, we say that \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
+    \) is \emph{logically equvialent} to \(
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
+    \), written \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
+    \ll
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
+    \), if for all sequences \(\listlistvar{v},\listlistvar{w}\) produced by the
+    productive operational semantics for inputs of length
+    \(\mathsf{max}(c,c^\prime)\),  \(\listlistvar{v} \ll \listlistvar{w}\)
+\end{definition}
+
+Including this notion of equivalence in algebraic reasoning allows us to reason
+with \emph{inequalities} as well as equalities.
+This means that given a circuit, we can use equations as normal, determine that
+one component
+
+\begin{example}
+    Take the circuit \(
+    \iltikzfig{circuits/examples/refinement/circuit}
+    \).
+    For an input stream \(\sigma\), this circuit produces output stream
+    \(
+    \bot \land \sigma(0) \streamcons, \sigma(1)
+    \streamcons \sigma(2) \streamcons \dots
+    \).
+    By using equalities and logical eqivalence we can obtain a much simpler
+    circuit:
+    \[
+        \iltikzfig{circuits/examples/refinement/circuit}
+        =
+        \iltikzfig{circuits/examples/refinement/circuit-1}
+        \ll
+        \iltikzfig{circuits/examples/refinement/circuit-2}
+        =
+        \iltikzfig{circuits/examples/refinement/circuit-3}
+    \]
+\end{example}
+
+While this is a somewhat contrived toy example, it is possible that this
+technique could be applied to actual circuit optimisation procedures.
+
 \begin{example}[Pipelining]
-    Another technique is \emph{pipelining}~\cite{parhi1999vlsi}, which inserts
-    more registers to increase throughput.
-    These can be emulated in the compositional framework by apply
+    \emph{Pipelining}~\cite{parhi1999vlsi} is a technique in which more
+    registers are inserted into a circuit to increase throughput.
+    These can be emulated in the compositional framework by applying
     transformations locally to registers.
     Ordinarily, such transformations can cause obfuscation since the state space
     dramatically changes. In the compositional model, the structure of the
     circuit is left relatively untouched.
 \end{example}
+
+Not all circuit transformations are for the purpose of improving performance.
+Sometimes additional components must be bolted onto a circuit for \emph{testing}
+purposes.
 
 \begin{example}[Scan chains]
     A common way of testing circuits is by using a
