@@ -273,20 +273,19 @@ As all the functions are bijections, there can be morphisms of no other form.
 \end{proof}
 
 Subsequently, \(\smcsigma + \frob\) can be expressed as a pushout and the
-`3-for-2' condition applied to show the faithfulness of \(\termtohypsigmac\).
+`3-for-2' condition applied to show the faithfulness of \(\termtohypsigma\).
 
 \begin{proposition}
-    \(\morph{\termtohypsigma}{\smcsigma}{\cspdchyp}\) is faithful.
+    \(\morph{\termtohypsigma}{\smcsigma}{\cspdhyp}\) is faithful.
 \end{proposition}
 \begin{proof}
     From \cref{thm:isomorphism-smcfrob-cospans}, we know that
-    \(\cspdchyp \cong \smcsigmac + \frobc\).
-    Both \(\smcsigmac\) and \(\frobc\) are objects of \(\cpropc\), which has
-    \(\permspropwithnat \slice C\) as its initial object by
-    \cref{lem:perms-initial}.
+    \(\cspdhyp \cong \smcsigma + \frob\).
+    Both \(\smcsigma\) and \(\frob\) are objects of \(\prop\), which has
+    \(\permsprop\) as its initial object by \cref{lem:perms-initial}.
     As coproducts are pushouts from the initial object
     (\cref{lem:coproducts-pushout}), we can construct the following diagram in
-    \(\cpropc\):
+    \(\prop\):
     \begin{center}
         \includestandalone{figures/graphs/coproduct-pushout-graphs}
     \end{center}
@@ -303,3 +302,5 @@ final destination.
 \begin{corollary}[\cite{bonchi2022stringa}, Cor. 26]
     There is an isomorphism of PROPs \(\smcsigma \cong \macspdhyp\).
 \end{corollary}
+
+\todo[inline]{Coloured things}
