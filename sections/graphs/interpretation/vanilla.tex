@@ -27,31 +27,31 @@ The former is tackled by a condition on the connectivity of vertices.
 \end{definition}
 
 \begin{definition}[Monogamy (\cite{bonchi2022stringa}, Def. 13)]
-    For a cospan \(\cospan{\listvar{m}}[f]{F}[g]{\listvar{n}}\) in
-    \(\cspdchyp\), let \(\mathsf{in}(F)\) be the image of \(f\) and let
-    \(\mathsf{out}(F)\) be the image of \(g\).
-    \(\cospan{\listvar{m}}[f]{F}[g]{\listvar{n}}\) is \emph{monogamous} if
-    \(f\) and \(g\) are mono and, for all nodes \(v\), the degree of \(v\) is
+    For a cospan \(\cospan{m}[f]{F}[g]{n}\) in
+    \(\cspdhyp\), let \(\mathsf{in}(F)\) and \(\mathsf{out}(F)\) be the image of
+    \(f\) and \(g\) respectively.
+    \(\cospan{m}[f]{F}[g]{n}\) is \emph{monogamous} if \(f\) and \(g\) are mono
+    and, for all nodes \(v\), the degree of \(v\) is
     \begin{center}
         \begin{tabular}{rlcrl}
             \((0,0)\)
-            &
+             &
             if \(v \in \mathsf{in}(F) \wedge v \in \mathsf{out}(F)\)
-            &
+             &
             \quad
-            &
+             &
             \((0,1)\)
-            &
+             &
             if \(v \in \mathsf{in}(F)\)
             \\
             \((1,0)\)
-            &
+             &
             if \(v \in \mathsf{out}(F)\)
-            &
+             &
             \quad
-            &
+             &
             \((1,1)\)
-            &
+             &
             otherwise
         \end{tabular}
     \end{center}
@@ -70,9 +70,9 @@ The former is tackled by a condition on the connectivity of vertices.
 \end{lemma}
 \begin{proof}
     Assume we compose two monogamous acyclic cospans \(
-        \cospan{\listvar{m}}[f]{F}[g]{\listvar{n}}
+    \cospan{m}[f]{F}[g]{n}
     \) and \(
-        \cospan{\listvar{n}}[h]{G}[k]{\listvar{p}}
+    \cospan{n}[h]{G}[k]{p}
     \).
     The interfaces remain mono as pushouts along monos are monos in
     \(\hypsigmac\). The only vertices that are altered are those in the image of
@@ -111,7 +111,7 @@ nodes.
 
 \begin{definition}[Acyclicity (\cite{bonchi2022stringa}, Def. 20)]
     A hypergraph \(F\) is acyclic if there is no path from a node to itself.
-    A cospan \(\morph{\listvar{m}}{F}{\listvar{n}}\) is acyclic if \(F\) is.
+    A cospan \(\morph{m}{F}{n}\) is acyclic if \(F\) is.
 \end{definition}
 
 Once again, for acyclicity to be a suitable condition on a category of cospans,
@@ -142,9 +142,9 @@ It is only when acyclicity is combined with monogamy that we are safe.
 \end{lemma}
 \begin{proof}
     Once again assume we compose two monogamous acyclic cospans \(
-        \cospan{\listvar{m}}[f]{F}[g]{\listvar{n}}
+    \cospan{m}[f]{F}[g]{n}
     \) and \(
-        \cospan{\listvar{n}}[h]{G}[k]{\listvar{p}}
+    \cospan{n}[h]{G}[k]{p}
     \).
     A cycle cannot be created by composition because there cannot be a path in
     \(F\) that starts in the image of \(g\) or a path in \(G\) that ends in the
@@ -173,23 +173,23 @@ The first is a lemma showing that a special class of subgraphs can always be
 
 \begin{lemma}[Decomposition (\cite{bonchi2022stringa}, Lem. 24)]
     \label{lem:decomposition}
-    For a monogamous acyclic cospan \(\cospan{\listvar{m}}{F}{\listvar{n}}\) and
+    For a monogamous acyclic cospan \(\cospan{m}{F}{n}\) and
     and convex subgraph \(L\) of \(G\), there exist
     \(\listvar{k} \in \freemon{C}\) and a unique cospan
-    \(\cospan{\listvar{i}}{L}{\listvar{j}}\) such that \(G\) can be factored as
+    \(\cospan{i}{L}{j}\) such that \(G\) can be factored as
     the following composite of monogamous acyclic cospans:
     \[
-        (\cospan{\listvar{m}}{C_1}{\listvar{k} + \listvar{i}})
+        (\cospan{m}{C_1}{k + i})
         \seq
         (\cospan{
-            \listvar{k} + \listvar{i}
+            k + i
         }{
-            \listvar{k} + L
+            k + L
         }{
-            \listvar{k} + \listvar{i}
+            k + i
         })
         \seq
-        (\cospan{\listvar{k} + \listvar{j}}{C_2}{\listvar{n}})
+        (\cospan{k + j}{C_2}{n})
     \]
 \end{lemma}
 
@@ -198,37 +198,37 @@ cospan in such a way that the remaining cospans are still monogamous acyclic.
 This is an important part of characterising the image of \(\termtohypsigmac\).
 
 \begin{theorem}[\cite{bonchi2022stringa}, Thm. 25]\label{thm:monogamous-acyclic-full}
-    A cospan \(\cospan{\listvar{m}}{F}{\listvar{n}}\) is in the image of
-    \(\termtohypsigmac\) if and only if \(\cospan{\listvar{m}}{F}{\listvar{n}}\)
+    A cospan \(\cospan{m}{F}{n}\) is in the image of
+    \(\termtohypsigma\) if and only if \(\cospan{m}{F}{n}\)
     is monogamous acyclic.
 \end{theorem}
 \begin{proof}
     The only if direction is by induction on the structure of terms in
-    \(\smcsigmac\): the interpretation of generators is monogamous acyclic and
+    \(\smcsigma\): the interpretation of generators is monogamous acyclic and
     the inductive cases are by
     \cref{lem:identities-symmetries-monogamous,lem:identities-symmetries-monogamous-acyclic,lem:monogamous-acyclicity-preserved-composition,lem:monogamicity-preserved-tensor,lem:monogamous-acyclicity-preserved-tensor}.
 
     The if direction is by induction on the number of edges in \(F\).
-    If there are none, then \(\listvar{m} \to F\) and \(\listvar{n}\) are
+    If there are none, then \(m \to F\) and \(n \to F\) are
     bijections by monogamy and acyclicity so the term is in the image of
-    identities or symmetries in \(\smcsigmac\).
+    identities or symmetries in \(\smcsigma\).
     For the inductive step, pick a single edge \(e\).
     This is a convex subgraph of \(F\), so
-    \(\cospan{\listvar{m}}{F}{\listvar{n}}\) can be factored as in
+    \(\cospan{m}{F}{n}\) can be factored as in
     \cref{lem:decomposition}.
     The edge \(e\) has a label \(\chi(e) \in \generators\), so the subgraph
-    \(\cospan{\listvar{i}}{e}{\listvar{j}}\) is the result of
-    \(\termtohypsigmac[\chi(e)]\).
+    \(\cospan{i}{e}{j}\) is the result of
+    \(\termtohypsigma[\chi(e)]\).
     Since the remaining cospans are monogamous acyclic by
-    \cref{lem:decomposition}, they are in the image of \(\termtohypsigmac\) by
+    \cref{lem:decomposition}, they are in the image of \(\termtohypsigma\) by
     inductive hypothesis, so the original cospan
-    \(\cospan{\listvar{m}}{F}{\listvar{n}}\) is also in the image of
-    \(\termtohypsigmac\).
+    \(\cospan{m}{F}{n}\) is also in the image of
+    \(\termtohypsigma\).
 \end{proof}
 
-This shows that \(\termtohypsigmac\) is full; to conclude the isomorphism we
+This shows that \(\termtohypsigma\) is full; to conclude the isomorphism we
 need to show that it is also faithful.
-We know that the copairing \(\termtohypsigmac + \frobtohypsigmac\) is faithful
+We know that the copairing \(\termtohypsigma + \frobtohypsigma\) is faithful
 by \cref{thm:termtohyp-image}, so we just need to show the same is true for its
 components.
 
@@ -250,61 +250,56 @@ components.
     functors \(G_A\) and \(G_B\) are also faithful.
 \end{theorem}
 
-To apply this result, we need to show that \(\hypcsigmac\) is a pushout.
+To apply this result, we need to show that \(\hypsigma\) is a pushout.
 Recall that in a category with an initial object, every coproduct can be
 expressed as a pushout by \cref{lem:coproduct-is-pushout}.
 
 \begin{definition}
-    Let \(\permspropwithnat\) be the sub-PROP of \(\finsetpropwithnat\)
+    Let \(\permsprop\) be the sub-PROP of \(\finsetprop\)
     containing only the bijective functions.
 \end{definition}
 
-A morphism \(\listvar{m} \to \listvar{m}\) in \(\permspropwithnat\) is a
-permutation of \(C\)-coloured wires.
+A morphism \(m \to m\) in \(\permsprop\) is a
+permutation of wires.
+As all the functions are bijections, there can be morphisms of no other form.
 
-\begin{definition}
-    Let \(\cpropc\) be the full subcategory of \(\cprop\) containing only the
-    \(C\)-coloured PROPs.
-\end{definition}
-
-\begin{lemma}\label{lem:cpropc-initial}
-    \(\hat{\permsprop} \slice C\) is the initial object in \(\cpropc\).
+\begin{lemma}\label{lem:perms-initial}
+    \(\permsprop\) is the initial object in \(\propcat\).
 \end{lemma}
 \begin{proof}
-    All the morphisms in \(\hat{\permsprop} \slice C\) are just (coloured)
+    All the morphisms in \(\permsprop\) are just
     identities and symmetries; the unique coloured PROP morphism to any other
-    \(C\)-coloured PROP maps these to the corresponding constructs.
+    PROP maps these to the corresponding constructs.
 \end{proof}
 
-Subsequently, \(\smcsigmac + \frobc\) can be expressed as a pushout and the
+Subsequently, \(\smcsigma + \frob\) can be expressed as a pushout and the
 `3-for-2' condition applied to show the faithfulness of \(\termtohypsigmac\).
 
 \begin{proposition}
-    \(\morph{\termtohypsigmac}{\smcsigmac}{\cspdchyp}\) is faithful.
+    \(\morph{\termtohypsigma}{\smcsigma}{\cspdchyp}\) is faithful.
 \end{proposition}
 \begin{proof}
     From \cref{thm:isomorphism-smcfrob-cospans}, we know that
     \(\cspdchyp \cong \smcsigmac + \frobc\).
     Both \(\smcsigmac\) and \(\frobc\) are objects of \(\cpropc\), which has
     \(\permspropwithnat \slice C\) as its initial object by
-    \cref{lem:cpropc-initial}.
+    \cref{lem:perms-initial}.
     As coproducts are pushouts from the initial object
     (\cref{lem:coproducts-pushout}), we can construct the following diagram in
-    \(\cpropc\)
+    \(\cpropc\):
     \begin{center}
         \includestandalone{figures/graphs/coproduct-pushout-graphs}
     \end{center}
     where \(!_1\) and \(!_2\) are the unique morphisms from
-    \(\permspropwithnat\) induced by initiality: these are both faithful.
-    Now we can apply the result of \cref{thm:faithful-pushout}: \(!_1\) and
-    \(!_2\) clearly satisfy the 3-for-2 condition as every morphism in
-    \(\permspropwithnat\) is an isomorphism, so \(\termtohypsigmac\) must also
-    be faithful.
+    \(\permsprop\) induced by initiality: these are both faithful.
+    \(!_1\) and \(!_2\) clearly satisfy the 3-for-2 condition as every morphism
+    in \(\permsprop\) is an isomorphism, so \(\termtohypsigma\) must also
+    be faithful by \cref{thm:faithful-pushout}.
 \end{proof}
 
-Since \(\termandfrobtohypsigmac\) is full and faithful, we have reached our
+Since \(\termandfrobtohypsigma\) is full and faithful, we have reached our
 final destination.
 
 \begin{corollary}[\cite{bonchi2022stringa}, Cor. 26]
-    There is an isomorphism of PROPs \(\smcsigmac \cong \macspdchyp\).
+    There is an isomorphism of PROPs \(\smcsigma \cong \macspdhyp\).
 \end{corollary}
