@@ -22,78 +22,105 @@ The equations of a bialgebra are different to those of a Frobenius algebra in
 how the monoid and comonoid interact.
 Compare the two Frobenius equations with the bialgebra equation shown below:
 \[
-    \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
-    =
-    \iltikzfig{strings/structure/frobenius/frobenius-l}
+    \equationdisplay{
+        \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
+    }{
+        \iltikzfig{strings/structure/frobenius/frobenius-l}
+    }{
+        \frobleqn
+    }
     \qquad
-    \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
-    =
-    \iltikzfig{strings/structure/frobenius/frobenius-r}
-    \qquad\qquad\qquad\qquad
-    \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
-    =
-    \iltikzfig{strings/structure/bialgebra/merge-copy-rhs}
+    \equationdisplay{
+        \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
+    }{
+        \iltikzfig{strings/structure/frobenius/frobenius-r}
+    }{
+        \frobreqn
+    }
+    \qquad\qquad
+    \equationdisplay{
+        \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
+    }{
+        \iltikzfig{strings/structure/frobenius/frobenius-r}
+    }{
+        \bialgcommoneqn
+    }
 \]
-It is possible to derive the equation on the right from the ones on the left,
-but the reverse is not the case: one cannot derive the two Frobenius equations
-just with the bialgebra equation.
-A Frobenius structure implies a bialgebra structure, but a bialgebra structure
-does \emph{not} imply a Frobenius structure.
+When operating in a Frobenius setting, it is possible to derive the bialgebra
+equation \(\bialgcommoneqn\) from the Frobenius equations combined with the
+equations of monoids and comonoids.
 
 \begin{lemma}
-    \(
+    In \(\hypcsigma\), \(
     \iltikzfig{strings/structure/bialgebra/merge-copy-rhs}
     =
     \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
-    \) in \(\hypsigma\).
+    \).
 \end{lemma}
 \begin{proof}
     \begin{gather*}
         \iltikzfig{strings/structure/bialgebra/merge-copy-rhs}
         \eqaxioms
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-1}
-        \eqaxioms
+        \eqaxioms[\comonoidcommeqn]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-2}
-        \eqaxioms
+        \eqaxioms[\frobreqn]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-3}
-        \eqaxioms
+        \eqaxioms[\frobleqn]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-4}
-        \eqaxioms
+        \eqaxioms[\monoidassoceqn]
         \\[0.5em]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-5}
-        \eqaxioms
+        \eqaxioms[\monoidcommeqn]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-6}
-        \eqaxioms
+        \eqaxioms[\frobleqn]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-7}
-        \eqaxioms
+        \eqaxioms[\frobspeceqn]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-8}
     \end{gather*}
 \end{proof}
 
-As the category \(\cspdchyp\) contains a Frobenius structure by nature of being
-a hypergraph category, this means that it is unsuitable for modelling settings
-with just a bialgebra setting, as too many terms would map to the same
-cospan of hypergraphs.
+Indeed, this is clear from the hypergraph interpretation, as all four terms
+involved map to the same (discrete) cospan of hypergraphs.
+%
 \begin{gather*}
     \frobtohypsigma[
         \iltikzfig{strings/structure/frobenius/frobenius-l}
     ]
-    \quad
+    \,
     =
-    \quad
-    \iltikzfig{graphs/example-frobenius-collapse}
-    \quad
-    =
-    \quad
+    \,
     \frobtohypsigma[
         \iltikzfig{strings/structure/frobenius/frobenius-r}
     ]
+    \,
+    =
+    \,
+    \frobtohypsigma[
+        \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
+    ]
+    \,
+    =
+    \,
+    \frobtohypsigma[
+        \iltikzfig{strings/structure/bialgebra/merge-copy-rhs}
+    ]
+    \,
+    =
+    \,
+    \iltikzfig{graphs/example-frobenius-collapse}
 \end{gather*}
 
-But we should not let that get us down too much!
-Since the issue only arises with the interactions between the monoid and the
-comonoid, we can use cospans of hypergraphs to reason modulo the equations of
-just one of the two structures.
+However, the converse does not hold: it is not possible to derive the Frobenius
+equations from the bialgebra equation without having one of the Frobenius
+equations to begin with!
+This poses a problem: we want to use \(\cspdchyp\) as a setting for rewriting
+digital circuits, but as it by default contains a Frobenius structure,
+\emph{too many} equations would hold.
+
+Not all is lost; since the issue only arises with the interactions between the
+monoid and the comonoid, we can use cospans of hypergraphs to reason modulo the
+equations of just one of the two structures.
 This means that not all of the equations of a bialgebra will be absorbed into
 the combinatorial structure, but this is better than too many taking effect!
 
@@ -126,13 +153,6 @@ define the monoidal theory of commutative comonoids.
 \input{sections/graphs/interpretation/floats/comonoid-equations}
 
 From now on, we write `comonoid' to mean `commutative comonoid'.
-As with \(\frob\), it is straightforward to define a multicoloured version of
-\(\ccomon\) as a coproduct in \(\cprop\).
-
-\begin{definition}
-    For a countable set of colours \(C\), let
-    \(\ccomonc \coloneqq \Sigma_{c \in C} \ccomon\).
-\end{definition}
 
 When identifying the cospans of hypergraphs that correspond to terms with traced
 comonoid structure, the notion of monogamy will once again need to be modified.
@@ -181,12 +201,19 @@ structure to fork wires; vertices must still only have one `in' connection.
     \((0, m)\) allow for the interpretation of terms such as \(
     \trace{}{\iltikzfig{strings/structure/comonoid/copy}[colour=white]}
     \).
-    \todo[inline]{Draw the cospan}
+    \[
+        \frobtohypsigma[\trace{}{\iltikzfig{strings/structure/comonoid/copy}}]
+        =
+        \trace{}{\frobtohypsigma[\iltikzfig{strings/structure/comonoid/copy}]}
+        =
+        \trace{}{\iltikzfig{graphs/fork-cospan}}
+        =
+        \iltikzfig{graphs/trace-fork-cospan}
+    \]
 \end{remark}
 
-As we are used to doing at this point, we must ensure that partial left-monogamy
-is preserved by the categorical operations, so partial left-monogamous cospans
-form a PROP.
+We must ensure that partial left-monogamy is preserved by the categorical
+operations, so partial left-monogamous cospans form another PROP.
 
 \begin{lemma}\label{lem:partial-monogamous-id-sym}
     Identities and symmetries are partial left-monogamous.
@@ -233,10 +260,10 @@ form a PROP.
 \end{proof}
 
 This means we can assemble the partial left-monogamous cospans of hypergraphs
-into another sub-PROP of \(\cspdchyp\).
+into the desired sub-PROP.
 
 \begin{definition}
-    Let \(\plmcspdchyp\) be the sub-PROP of \(\cspdchyp\) containing only the
+    Let \(\plmcspdhyp\) be the sub-PROP of \(\cspdhyp\) containing only the
     partial left-monogamous cospans of hypergraphs.
 \end{definition}
 
@@ -244,7 +271,7 @@ As this PROP is not restricted to acyclic cospans like those used for just
 terms with a (co)monoid structure, it has the additional structure of a trace.
 
 \begin{proposition}
-    The canonical trace is a trace on \(\plmcspdchyp\).
+    The canonical trace is a trace on \(\plmcspdhyp\).
 \end{proposition}
 \begin{proof}
     We must show that for any set of vertices in the image
@@ -265,24 +292,24 @@ some ingredients from the previous sections.
     \morph{
         \comonoidtofrob
     }{
-        \ccomonc
+        \ccomon
     }{
-        \frobc
+        \frob
     }
-    \) be the obvious embedding of \(\ccomonc\) into \(\frobc\), and let \(
+    \) be the embedding of \(\ccomon\) into \(\frob\), and let \(
     \morph{
-        \tracedandcomonoidtofrobsigmac
+        \tracedandcomonoidtofrobsigma
     }{
-        \stmcsigmac + \ccomonc
+        \stmcsigma + \ccomon
     }{
-        \smcsigmac + \frobc
+        \smcsigma + \frob
     }
-    \) be the copairing of \(\tracedtosymandfrobsigmac\) and
-    \(\comonoidtofrobc\).
+    \) be the copairing of \(\tracedtosymandfrobsigma\) and
+    \(\comonoidtofrob\).
 \end{definition}
 
 \begin{corollary}
-    \(\comonoidtofrobc\) and \(\tracedtosymandfrobsigmac\) are faithful.
+    \(\comonoidtofrob\) and \(\tracedtosymandfrobsigma\) are faithful.
 \end{corollary}
 
 After translating from \(\stmcsigmac + \ccomonc\) to \(\smcsigmac + \frob\),
@@ -295,7 +322,7 @@ PROP morphisms actually lands in \(\plmcspdhyp\).
 First we verify that this
 
 \begin{lemma}
-    The image of \(\frobtohypsigmac \circ \comonoidtofrobc\) is in
+    The image of \(\frobtohypsigma \circ \comonoidtofrob\) is in
     \(\plmcspdhyp\).
 \end{lemma}
 \begin{proof}
@@ -308,7 +335,7 @@ To show the correspondence between \(\stmcsigma + \ccomon\) and
 \begin{lemma}\label{lem:discrete-mono}
     Given a discrete hypergraph \(X \in \hypsigma\), any cospan
     \(\cospan{m}[f]{X}{n}\) with \(f\) mono is in the image of
-    \(\frobtohypsigmac \circ \comonoidtofrobc\).
+    \(\frobtohypsigma \circ \comonoidtofrob\).
 \end{lemma}
 
 \begin{theorem}\label{thm:comonoid-fully-complete}
@@ -320,25 +347,84 @@ To show the correspondence between \(\stmcsigma + \ccomon\) and
     It suffices to show that a cospan \(\cospan{m}{F}{n}\) in
     \(\plmcspdhyp\) can be decomposed into a traced cospan in which every
     component under the trace is in the image of either
-    \(\termandfrobtohypsigmac\) or \(\frobtohypsigmac \circ \comonoidtofrobc\).
+    \(\termandfrobtohypsigma\) or \(\frobtohypsigma \circ \comonoidtofrob\).
     This is achieved by taking the construction of \cref{thm:termtohyp-image}
     and allowing the first component to be partial left-monogamous; by
     \cref{lem:discrete-mono} this is in the image of
     \(\frobtohypsigma \circ \comonoidtofrob\).
     The remaining components remain in the image of \(\termtohypsigma\).
     Subsequently, the entire traced cospan must be in the image of \(
-    \termandfrobtohypsigma \circ \tracedandcomonoidtofrobsigmac
+    \termandfrobtohypsigma \circ \tracedandcomonoidtofrobsigma
     \).
 \end{proof}
 
-As \(\termandfrobtohypsigmac\) and \(\tracedandcomonoidtofrobsigmac\) are
+As \(\termandfrobtohypsigma\) and \(\tracedandcomonoidtofrobsigma\) are
 faithful, we immediately find the following.
 
 \begin{corollary}
     There is an isomorphism of coloured PROPs
-    \(\stmcsigmac + \ccomonc \cong \plmcspdchyp\).
+    \(\stmcsigma + \ccomon \cong \plmcspdhyp\).
 \end{corollary}
 
-This means the PROP \(\plmcspdchyp\) of partial left-monogamous cospans of
-hypergraphs is suitable for modelling terms in \(\stmcsigmac + \ccomonc\):
+This means the PROP \(\plmcspdhyp\) of partial left-monogamous cospans of
+hypergraphs is suitable for modelling terms in \(\stmcsigma + \ccomon\):
 traced terms with a comonoid structure.
+
+\subsection{Traced coloured comonoids}
+
+As usual, the results of the monochromatic setting generalise in a
+straightforward manner to the multicoloured setting.
+As with \(\frob\), a multicoloured version of \(\ccomon\) is defined as a
+coproduct in \(\cprop\).
+
+\begin{definition}
+    For a countable set of colours \(C\), let
+    \(\ccomonc \coloneqq \Sigma_{c \in C} \ccomon\).
+\end{definition}
+
+Partial left-monogamy follows as before, so we have a traced coloured PROP.
+
+\begin{definition}
+    Let \(\plmcspdchyp\) be the sub-PROP of \(\cspdchyp\) containing only the
+    partial left-monogamous cospans of hypergraphs.
+\end{definition}
+
+\begin{proposition}
+    The canonical trace is a trace on \(\plmcspdhyp\).
+\end{proposition}
+
+\begin{definition}
+    Let \(
+    \morph{
+        \comonoidtofrob
+    }{
+        \ccomon
+    }{
+        \frob
+    }
+    \) be the embedding of \(\ccomon\) into \(\frob\), and let \(
+    \morph{
+        \tracedandcomonoidtofrobsigma
+    }{
+        \stmcsigma + \ccomon
+    }{
+        \smcsigma + \frob
+    }
+    \) be the copairing of \(\tracedtosymandfrobsigma\) and
+    \(\comonoidtofrob\).
+\end{definition}
+
+\begin{corollary}
+    \(\comonoidtofrob\) and \(\tracedtosymandfrobsigma\) are faithful.
+\end{corollary}
+
+\begin{theorem}\label{thm:comonoidc-fully-complete}
+    A cospan of hypergraphs is in the image of
+    \(\stmcsigma + \ccomon \cong \plmcspdhyp\) if and only if it is partial
+    left-monogamous.
+\end{theorem}
+
+\begin{corollary}
+    There is an isomorphism of coloured PROPs
+    \(\stmcsigma + \ccomon \cong \plmcspdhyp\).
+\end{corollary}

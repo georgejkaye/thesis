@@ -150,18 +150,18 @@ It is now possible to formally define what we mean when we say `Frobenius
 terms'.
 
 \begin{definition}
-    For a set of generators over \(\generators\), let \(\hypsigma\) be the PROP
+    For a set of generators over \(\generators\), let \(\hypcsigma\) be the PROP
     freely generated over \(\generators + \generators[\frob]\).
 \end{definition}
 
-While we can view \(\hypsigma\) as just `the category containing all the
+While we can view \(\hypcsigma\) as just `the category containing all the
 Frobenius terms', it can be advantageous to view it as a coproduct.
 
 \begin{lemma}
-    \(\hypsigma \cong \smcsigma + \frob\)
+    \(\hypcsigma \cong \smcsigma + \frob\)
 \end{lemma}
 \begin{proof}
-    Every term in \(\hypsigma\) can be expressed as a combination of
+    Every term in \(\hypcsigma\) can be expressed as a combination of
     generators either in \(\smcsigma\) or \(\frob\).
 \end{proof}
 
@@ -177,7 +177,7 @@ We can also proceed similarly for the multi-coloured case.
 
 \begin{definition}
     For a set of \(\colours\)-coloured generators over \(\generators\), let
-    \(\hypsigmac\) be the \(\colours\)-coloured PROP freely generated over
+    \(\hypcsigmac\) be the \(\colours\)-coloured PROP freely generated over
     \(\generators + \generators[\frobc]\).
 \end{definition}
 
@@ -185,13 +185,13 @@ We can also proceed similarly for the multi-coloured case.
     \(\hypcsigmac \cong \smcsigmac + \frobc\)
 \end{lemma}
 
-Viewing \(\hypsigma\) and \(\hypcsigmac\) as coproducts will prove to be
+Viewing \(\hypcsigma\) and \(\hypcsigmac\) as coproducts will prove to be
 beneficial when establishing a correspondence between terms and graphs in the
 the next section.
 
 \subsection{Hypergraph categories and hypergraphs}
 
-Perhaps confusingly, the category of \emph{hypergraphs} \(\hypsigmac\) is
+Perhaps confusingly, the category of \emph{hypergraphs} \(\hypcsigmac\) is
 \emph{not} a hypergraph category, but the category of \emph{cospans} of
 hypergraphs is!
 This can be shown by exploiting a correspondence between \(\frob\) and the PROPs
@@ -664,7 +664,7 @@ can restate the correspondence for coloured terms and hypergraphs.
 
 \begin{theorem}[\cite{bonchi2022string}, Prop. 4.4]
     There is an isomorphism of \(\mcc\)-coloured PROPs
-    \(\hypsigmac \cong \cspdchyp\).
+    \(\hypcsigmac \cong \cspdchyp\).
 \end{theorem}
 \begin{proof}
     In the same manner as \cref{thm:isomorphism-smcfrob-cospans}, but the
