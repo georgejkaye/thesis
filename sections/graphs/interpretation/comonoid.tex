@@ -25,7 +25,7 @@ Compare the two Frobenius equations with the bialgebra equation shown below:
     \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
     =
     \iltikzfig{strings/structure/frobenius/frobenius-l}
-    \quad
+    \qquad
     \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
     =
     \iltikzfig{strings/structure/frobenius/frobenius-r}
@@ -40,12 +40,55 @@ just with the bialgebra equation.
 A Frobenius structure implies a bialgebra structure, but a bialgebra structure
 does \emph{not} imply a Frobenius structure.
 
+\begin{lemma}
+    \(
+    \iltikzfig{strings/structure/bialgebra/merge-copy-rhs}
+    =
+    \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
+    \) in \(\hypsigma\).
+\end{lemma}
+\begin{proof}
+    \begin{gather*}
+        \iltikzfig{strings/structure/bialgebra/merge-copy-rhs}
+        \eqaxioms
+        \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-1}
+        \eqaxioms
+        \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-2}
+        \eqaxioms
+        \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-3}
+        \eqaxioms
+        \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-4}
+        \eqaxioms
+        \\[0.5em]
+        \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-5}
+        \eqaxioms
+        \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-6}
+        \eqaxioms
+        \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-7}
+        \eqaxioms
+        \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-8}
+    \end{gather*}
+\end{proof}
+
 As the category \(\cspdchyp\) contains a Frobenius structure by nature of being
 a hypergraph category, this means that it is unsuitable for modelling settings
 with just a bialgebra setting, as too many terms would map to the same
 cospan of hypergraphs.
-
-\todo[inline]{Show cospans of frobenius equations}
+\begin{gather*}
+    \frobtohypsigma[
+        \iltikzfig{strings/structure/frobenius/frobenius-l}
+    ]
+    \quad
+    =
+    \quad
+    \iltikzfig{graphs/example-frobenius-collapse}
+    \quad
+    =
+    \quad
+    \frobtohypsigma[
+        \iltikzfig{strings/structure/frobenius/frobenius-r}
+    ]
+\end{gather*}
 
 But we should not let that get us down too much!
 Since the issue only arises with the interactions between the monoid and the
