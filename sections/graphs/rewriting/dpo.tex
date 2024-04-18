@@ -7,26 +7,26 @@ applied to terms without any sort of special graph interpretation.
     A \emph{rewriting system} \(\mcr\) for a traced PROP \(\mathbb{A}\)
     consists of a set of \emph{rewrite rules} \(
     \rrule{
-        \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
     }{
-        \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
     }
     \).
     Given terms \(
-    \iltikzfig{strings/category/f}[box=g,colour=white,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=g,colour=white,dom=m,cod=n]
     \) and \(
-    \iltikzfig{strings/category/f}[box=h,colour=white,dom=\listvar{m},cod=\listvar{n}]
-    \) in \(\stmc{\generators}\) we write \(
+    \iltikzfig{strings/category/f}[box=h,colour=white,dom=m,cod=n]
+    \) in \(\stmcsigma\) we write \(
     \iltikzfig{strings/category/f}[box=g,colour=white]
     \rewrite[\mcr]
     \iltikzfig{strings/category/f}[box=h,colour=white]
     \) if there exists rewrite rule \(\rrule{
-        \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
     }{
-        \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
     }\) in \(\mcr\) and \(
-    \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=\listvar{j},dom2=\listvar{m},cod1=\listvar{i},cod2=\listvar{n}]
-    \) in \(\stmc{\Sigma}\) such that \(
+    \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=j,dom2=m,cod1=i,cod2=n]
+    \) in \(\stmcsigma\) such that \(
     \iltikzfig{strings/category/f}[box=g,colour=white]
     =
     \iltikzfig{strings/rewriting/rewrite-l}
@@ -43,29 +43,29 @@ Of course, it is straightforward to derive a rewriting system from an equational
 theory by adding the reductions for `both ways' of each equation.
 
 \begin{definition}[\cite{bonchi2022stringa}, Sec. 2.4]
-    Given a coloured monoidal theory \((C,\generators,\equations)\), let
+    Given a monoidal theory \((\generators,\equations)\), let
     \(\mcr_{\equations}\) be the rewriting theory defined as \(\{
     \rrule{
-        \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
     }{
-        \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
     }
     \,|\,
-    \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
     =
-    \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
     \in
     \mce
     \} \cup \{
     \rrule{
-        \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
     }{
-        \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
     }
     \,|\,
-    \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
     =
-    \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
     \in
     \mce
     \}\).
@@ -75,7 +75,7 @@ theory by adding the reductions for `both ways' of each equation.
     Given two terms \(
     \iltikzfig{strings/category/f}[box=g,colour=white],
     \iltikzfig{strings/category/f}[box=h,colour=white]
-    \in \stmc{C,\generators,\equations}
+    \in \stmc{\generators,\equations}
     \), \(
     \iltikzfig{strings/category/f}[box=g,colour=white]
     =
@@ -105,17 +105,17 @@ a possible rewrite as a span of hypergraphs.
 
 \begin{definition}[DPO rule]\label{def:dpo-rule}
     Given interfaced hypergraphs \(
-    \cospan{\listvar{i}}[a_1]{L}[a_2]{\listvar{j}}
+    \cospan{i}[a_1]{L}[a_2]{j}
     \) and \(
-    \cospan{\listvar{i}}[b_1]{R}[b_2]{\listvar{j}}
-    \) in \(\cspdchyp\), their \emph{DPO rule} is a span in \(\hypsigmac\)
+    \cospan{i}[b_1]{R}[b_2]{j}
+    \) in \(\cspdhyp\), their \emph{DPO rule} is a span in \(\hypsigma\)
     defined as \(
-    \spann{L}[[a_1,a_2]]{\listvar{ij}}[[b_1,b_2]]{R}
+    \spann{L}[[a_1,a_2]]{i + j}[[b_1,b_2]]{R}
     \).
 \end{definition}
 
-Note that the DPO rule is a span in the category of hypergraphs \(\hypsigmac\),
-\emph{not} the category of interfaced hypergraphs \(\cspdchyp\)!
+Note that the DPO rule is a span in the category of hypergraphs \(\hypsigma\),
+\emph{not} the category of interfaced hypergraphs \(\cspdhyp\)!
 This is because identifying the occurrence of a DPO rule in some larger
 hypergraph will be performed using a \emph{hypergraph homomorphism}.
 
@@ -132,23 +132,23 @@ there is an overlap of rules such that \(G \grewrite H\) and
 
 \begin{definition}[DPOI rewriting]\label{def:dpo-rewriting}
     Let \(\mcr\) be a set of DPO rules.
-    Then, for morphisms \(G \leftarrow \listvar{mn}\) and
-    \(H \leftarrow \listvar{mn}\) in
+    Then, for morphisms \(G \leftarrow m + n\) and
+    \(H \leftarrow m + n\) in
     \(\hypsigmac\), there is a rewrite \(G \trgrewrite[\mcr] H\) if there
     exist a rule \(
-    \spann{L}{\listvar{ij}}{R} \in \mcr
+    \spann{L}{i + j}{R} \in \mcr
     \) and cospan \(
-    \cospan{\listvar{ij}}{C}{\listvar{mn}} \in \hypsigma
+    \cospan{i + j}{C}{m + n} \in \hypsigma
     \) such that the following diagram commutes.
     \begin{center}
         \begin{tikzcd}[row sep = small, column sep = small]
             L \arrow{d}
-            & \listvar{ij} \arrow{l}\arrow{r}\arrow{d}
+            & i + j \arrow{l}\arrow{r}\arrow{d}
             & R \arrow{d} \\
             G \arrow["\urcorner"{anchor=center, pos=0.125}, draw=none]{ur}
             & C \arrow{l}\arrow{r}
             & H \arrow["\ulcorner"{anchor=center, pos=0.125}, draw=none]{ul} \\
-            & \listvar{mn} \arrow{ul}\arrow{u}\arrow{ur}
+            & m + n \arrow{ul}\arrow{u}\arrow{ur}
         \end{tikzcd}
     \end{center}
 \end{definition}
@@ -156,23 +156,23 @@ there is an overlap of rules such that \(G \grewrite H\) and
 The DPO diagram above may look a little intimidating a first glance, so we will
 break it down and describe what happens during a typical graph rewrite.
 The first thing to note is that the graphs all have a \emph{single} interface
-\(G \leftarrow \listvar{mn}\) rather than the cospans
-\(\cospan{\listvar{m}}{G}{\listvar{n}}\) we are used to.
-This means that to perform graph rewriting on graphs in \(\hypsigmac\),
-interfaces of terms in \(\smcsigmac + \frobc\) must be `folded' into one using
+\(G \leftarrow m + n\) rather than the cospans
+\(\cospan{m}{G}{n}\) we are used to.
+This means that to perform graph rewriting on graphs in \(\hypsigma\),
+interfaces of terms in \(\smcsigma + \frob\) must be `folded' into one using
 the compact closed structure.
 
 \begin{definition}[\cite{bonchi2022stringa}]\label{def:fold-interfaces}
-    Let \(\morph{\foldinterfaces}{\smcsigmac + \frobc}{\smcsigmac + \frobc}\)
+    Let \(\morph{\foldinterfaces}{\smcsigma + \frob}{\smcsigma + \frob}\)
     be defined as having action \(
-    \iltikzfig{strings/category/f}[box=f,colour=white,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=f,colour=white,dom=m,cod=n]
     \mapsto
-    \iltikzfig{strings/rewriting/folding}[box=f,colour=white,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/rewriting/folding}[box=f,colour=white,dom=m,cod=n]
     \).
 \end{definition}
 
 The image of \(\foldinterfaces\) is not in the image of
-\(\tracedtosymandfrobsigmac\) or \(\tracedandcomonoidtofrobsigmac\) any more,
+\(\tracedtosymandfrobsigma\) or \(\tracedandcomonoidtofrobsigma\) any more,
 as inputs of generators may now connect to outputs of the term.
 Fortunately this is not an issue, as long as we `unfold' the interfaces once
 rewriting is completed.
@@ -181,7 +181,7 @@ rewriting is completed.
     If \(
     \termandfrobtohypsigma[\iltikzfig{strings/category/f}[box=f,colour=white,dom=m,cod=n]]
     =
-    \cospan{\listvar{m}}[i]{F}[o]{\listvar{n}}
+    \cospan{m}[i]{F}[o]{n}
     \) then \(
     \termandfrobtohypsigma[
         \foldinterfaces[
@@ -189,7 +189,7 @@ rewriting is completed.
         ]
     ]
     \) is isomorphic to \(
-    \cospan{0}[]{F}[i+o]{\listvar{mn}}
+    \cospan{0}[]{F}[i+o]{m + n}
     \).
 \end{proposition}
 \begin{proof}
@@ -197,19 +197,19 @@ rewriting is completed.
 \end{proof}
 
 We are now ready to begin rewriting.
-Say we have a DPO rule \(\spann{L}{\listvar{ij}}{R}\) and a larger cospan of
-hypergraphs \(\cospan{\listvar{m}}{G}{\listvar{n}}\).
+Say we have a DPO rule \(\spann{L}{i + j}{R}\) and a larger cospan of
+hypergraphs \(\cospan{m}{G}{n}\).
 We suggestively assemble them as follows:
 
 \begin{center}
     \begin{tikzcd}[row sep = small, column sep = small]
         L
-        & \listvar{ij} \arrow{l}\arrow{r}
+        & i+j \arrow{l}\arrow{r}
         & R \\
         G
         &
         & \\
-        & \listvar{mn} \arrow{ul}
+        & m+n \arrow{ul}
     \end{tikzcd}
 \end{center}
 
@@ -225,7 +225,7 @@ rewritten.
         G
         &
         & \\
-        & \listvar{mn} \arrow{ul}
+        & m+n \arrow{ul}
     \end{tikzcd}
 \end{center}
 
@@ -235,17 +235,17 @@ formally defined with what is known as a \emph{pushout complement}, a sort of
 `reverse pushout'.
 
 \begin{definition}[Pushout complement]\label{def:pushout-complement}
-    Let \(\listvar{ij} \to L \to G \leftarrow \listvar{mn}\) be morphisms in
+    Let \(i+j \to L \to G \leftarrow m+n\) be morphisms in
     \(\hypsigmac\); their \emph{pushout complement} is an object \(C\)
-    with morphisms \(\listvar{ij} \to C \to G\) such that \(\cospan{L}{G}{C}\) is a
+    with morphisms \(i+j \to C \to G\) such that \(\cospan{L}{G}{C}\) is a
     pushout and the diagram below commutes.
     \begin{center}
         \begin{tikzcd}[column sep=large]
             L \arrow[swap]{d}{f}
             &
-            \listvar{ij}
-            \arrow[swap]{l}{a := [a_1, a_2]}
-            \arrow{d}{c := [c_1, c_2]}
+            ij
+            \arrow[swap]{l}{a \coloneqq [a_1, a_2]}
+            \arrow{d}{c \coloneqq [c_1, c_2]}
             \\
             G
             \arrow["\urcorner"{anchor=center, pos=0.125}, draw=none]{ur}
@@ -254,9 +254,9 @@ formally defined with what is known as a \emph{pushout complement}, a sort of
             \arrow{l}{g}
             \\
             &
-            \listvar{mn}
+            m+n
             \arrow{ul}{[b_1,b_2]}
-            \arrow[swap]{u}{d := [d_1,d_2]}
+            \arrow[swap]{u}{d \coloneqq [d_1,d_2]}
         \end{tikzcd}
     \end{center}
 \end{definition}
@@ -271,12 +271,12 @@ in.
 \begin{center}
     \begin{tikzcd}[row sep = small, column sep = small]
         L \arrow{d}
-        & \listvar{ij} \arrow{l}\arrow{r}\arrow{d}
+        & i+j \arrow{l}\arrow{r}\arrow{d}
         & R \\
         G \arrow["\urcorner"{anchor=center, pos=0.125}, draw=none]{ur}
         & C \arrow{l}
         & \\
-        & \listvar{mn} \arrow{ul}\arrow{u}
+        & m+n \arrow{ul}\arrow{u}
     \end{tikzcd}
 \end{center}
 
@@ -286,12 +286,12 @@ the complete DPO diagram.
 \begin{center}
     \begin{tikzcd}[row sep = small, column sep = small]
         L \arrow{d}
-        & \listvar{ij} \arrow{l}\arrow{r}\arrow{d}
+        & i+j \arrow{l}\arrow{r}\arrow{d}
         & R \arrow{d} \\
         G \arrow["\urcorner"{anchor=center, pos=0.125}, draw=none]{ur}
         & C \arrow{l}\arrow{r}
         & H \arrow["\ulcorner"{anchor=center, pos=0.125}, draw=none]{ul} \\
-        & \listvar{mn} \arrow{ul}\arrow{u}\arrow{ur}
+        & m+n \arrow{ul}\arrow{u}\arrow{ur}
     \end{tikzcd}
 \end{center}
 

@@ -22,7 +22,7 @@ partial \emph{left-}monogamy conditions.
     \), a pushout complement as in \cref{def:traced-boundary-complement}
     is called a \emph{traced left-boundary complement} if \(c_2\)
     is mono and \(
-    \cospan{\listvar{jm}}[[c_2,d_1]]{C}[[c_1,d_2]]{{\listvar{in}}}
+    \cospan{j + m}[[c_2,d_1]]{C}[[c_1,d_2]]{{i + n}}
     \) is a partial left-monogamous cospan.
 \end{definition}
 
@@ -30,11 +30,11 @@ partial \emph{left-}monogamy conditions.
     For morphisms \(G \leftarrow m+n\) and \(H \leftarrow m+n\) in
     \(\hypsigma\), there is a traced comonoid rewrite \(G \trgrewrite[\mcr] H\)
     if there exists a rule \(
-    \spann{L}{\listvar{ij}}{G} \in \mcr
+    \spann{L}{i + j}{G} \in \mcr
     \) and cospan \(
-    \cospan{\listvar{ij}}{C}{\listvar{mn}} \in \hypsigma
+    \cospan{i + j}{C}{m + n} \in \hypsigma
     \) such that diagram in \cref{def:dpo-rewriting} commutes and
-    \(\listvar{ij} \to C \to G\) is a
+    \(i + j \to C \to G\) is a
     traced left-boundary complement.
 \end{definition}
 
@@ -123,7 +123,7 @@ the same procedure as in the traced setting.
     ]\).
 \end{theorem}
 \begin{proof}
-    This is as \cref{thm:traced-rewrite-correspondence}, but replacing partial
+    As \cref{thm:traced-rewrite-correspondence}, but replacing partial
     monogamy with partial left-monogamy, and traced boundary complements with
     traced left-boundary complements.
 \end{proof}

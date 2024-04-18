@@ -9,10 +9,10 @@ Since the pushout complement uniquely defines the final rewrite, one might be
 cautious about how we choose it.
 
 First of all, a pushout complement may not even exist for arbitrary morphisms
-\(\listvar{ij} \to L \to G\).
+\(i+j \to L \to G\).
 
 \begin{definition}
-    A morphism \(\listvar{ij} \to L \to G\) is called a \emph{matching} if it
+    A morphism \(i+j \to L \to G\) is called a \emph{matching} if it
     has at least one pushout complement.
 \end{definition}
 
@@ -21,7 +21,7 @@ essential to know when one exists!
 Fortunately, these conditions are well-known.
 
 \begin{definition}[No-dangling-hyperedges condition~\cite{corradini1997algebraic}, Prop. 3.3.4]
-    Given morphisms \(\listvar{ij} \xrightarrow{a} L \xrightarrow{f} G\) in
+    Given morphisms \(i+j \xrightarrow{a} L \xrightarrow{f} G\) in
     \(\hypsigma\), they satisfy the \emph{no-dangling} condition if, for every
     hyperedge not in
     the image of \(f\), each of its source and target vertices is either not in
@@ -33,7 +33,7 @@ Fortunately, these conditions are well-known.
 \end{example}
 
 \begin{definition}[No-identification condition~\cite{corradini1997algebraic}, Prop. 3.3.4]
-    Given morphisms \(\listvar{ij} \xrightarrow{a} L \xrightarrow{f} G\) in
+    Given morphisms \(i+j \xrightarrow{a} L \xrightarrow{f} G\) in
     \(\hypsigma\), they satisfy the \emph{no-identification} condition if any
     two distinct elements merged by \(f\) are also in the image of \(f \circ a\).
 \end{definition}
@@ -47,14 +47,15 @@ all and subsequently when there is an opportunity for a rewrite.
 
 \begin{proposition}[\cite{corradini1997algebraic}, Prop. 3.3.4]
     \label{prop:pushout-complement}
-    The morphisms \(\listvar{ij} \to L \to G\) have at least one pushout
+    The morphisms \(i+j \to L \to G\) have at least one pushout
     complement if and only if they satisfy the no-dangling and no-identification
     conditions.
 \end{proposition}
 
 It is all very well knowing if there is at least one pushout complement, but
 what about when there is \emph{exactly one} pushout complement?
-This means t
+When this is the case, the rewrite is uniquely specified for a given rule and
+matching.
 
 To answer this question, we must examine a class of categories to which
 \(\hypsigmac\) belongs to, known as \emph{adhesive} categories.
@@ -182,11 +183,11 @@ categories are also adhesive.
 \end{proposition}
 
 \begin{corollary}
-    \(\hypsigmac\) is adhesive.
+    \(\hypsigma\) and \(\hypsigmac\) are adhesive.
 \end{corollary}
 \begin{proof}
-    \(\hypsigmac\) is defined as the slice of a functor category over \(\set\),
-    so it is also adhesive.
+    \(\hypsigma\) and \(\hypsigmac\) are defined as the slice of a functor
+    category over \(\set\), so they are adhesive.
 \end{proof}
 
 The notion of splitting and gluing is very useful when it comes to graph
@@ -196,7 +197,7 @@ In particular, for certain DPO rules in an adhesive category a pushout
 complement is \emph{uniquely} defined for a given matching.
 
 \begin{definition}[Left-linear rules]
-    A DPO rule \(\spann{L}[f]{\listvar{ij}}{R}\) is \emph{left-linear} if \(f\)
+    A DPO rule \(\spann{L}[f]{i+j}{R}\) is \emph{left-linear} if \(f\)
     is mono.
 \end{definition}
 
@@ -236,15 +237,16 @@ The multiple rewrites are not coming from nowhere, but arise because there are
     \todo[inline]{Show how the above contexts correspond to term rewrite}
 \end{example}
 
-Even if every rewrite is `correct' in some way,
+Even if every rewrite is `correct' in some way, there is still the question of
+how to find the `desired' rewrite.
 Fortunately, for hypergraphs this problem has already been
 tackled~\cite{heumuller2011construction}; the pushout complements can be
 enumerated as quotients of an `exploded' context.
 
-\begin{definition}[`Exploded' context~\cite{heumuller2011construction}, Const. 1]
-    Let \(\listvar{ij} \to L \xrightarrow{f}\) be a pair of morphisms in
-    \(\hypsigmac\).
-    Then the `exploded context' for these morphisms is a graph
+\begin{definition}[Exploded context~\cite{heumuller2011construction}, Const. 1]
+    Let \(i+j \to L \xrightarrow{f} G\) be a pair of morphisms in
+    \(\hypsigma\).
+    Then the \emph{exploded context} for these morphisms is a graph
     \(\listvar{ij} + \tilde{G}\) where \(\tilde{G}\) is constructed as follows:
     \begin{enumerate}
         \item for each vertex \(v \in G\) not in the image of \(f\), add one
@@ -254,20 +256,20 @@ enumerated as quotients of an `exploded' context.
         \item for each hyperedge \(e \in \tilde{G}\), let the \(i\)-th source
               \(\tilde{s_i}(e)\) be defined as \(s_i(h)\) if
               \(s_i(h) \in \tilde{G}\) or a new, fresh vertex otherwise;
-        \item as above for the targets.
+        \item repeat the above for the targets.
     \end{enumerate}
 \end{definition}
 
-Pushout complements can then be computed as quotients of this `exploded'
+Pushout complements can then be computed as quotients of this exploded
 context.
 
 \begin{proposition}[\cite{heumuller2011construction} (Props. 3-4), \cite{bonchi2022string}]
-    For morphisms \(\listvar{ij} \to L \to G\) in \(\hypsigmac\), let
-    \(\listvar{ij} + \tilde{G}\) be its `exploded' context, and define a map
-    \(\morph{q}{\listvar{ij} + \tilde{G}}{G}\) sending elements in \(\tilde{G}\)
+    For morphisms \(i+j \to L \to G\) in \(\hypsigma\), let
+    \(i + j + \tilde{G}\) be its `exploded' context, and define a map
+    \(\morph{q}{i + j + \tilde{G}}{G}\) sending elements in \(\tilde{G}\)
     that came from \(G\) to themselves, and sending vertices from
-    \(\listvar{ij}\) to their image under \(\listvar{ij} \to L \to G\).
-    A pushout complement \(\listvar{ij} \to C \to G\) is valid if and only
+    \(i + j\) to their image under \(i + j \to L \to G\).
+    A pushout complement \(i + j \to C \to G\) is valid if and only
     \(C\) is obtained as a quotient on the exploded context
     that only identifies vertices in the image of \(q^{-1}(v)\) for each vertex
     \(v \in G\).
@@ -282,11 +284,11 @@ rewrite in a Frobenius setting!
 \begin{notation}
     Given a rewrite rule \(
     \rrule{
-        \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
     }{
-        \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
     }
-    \), its interpretaton as a DPO rule is written as \(
+    \), its interpretation as a DPO rule is written as \(
     \termandfrobtohypsigmac[
         \rrule{
             \iltikzfig{strings/category/f}[box=l,colour=white]
@@ -317,7 +319,7 @@ rewrite in a Frobenius setting!
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white]
     }\) in \(
-    \smcsigmac + \frobc
+    \smcsigma + \frob
     \), \(
     \iltikzfig{strings/category/f}[box=g,colour=white]
     \rewrite[\rrule{
@@ -327,13 +329,13 @@ rewrite in a Frobenius setting!
         }]
     \iltikzfig{strings/category/f}[box=h,colour=white]
     \) if and only if \(
-    \termandfrobtohypsigmac[
+    \termandfrobtohypsigma[
         \foldinterfaces[
             \iltikzfig{strings/category/f}[box=g,colour=white]
         ]
     ]
     \grewrite[
-        \termandfrobtohypsigmac[
+        \termandfrobtohypsigma[
             \rrule{
                 \iltikzfig{strings/category/f}[box=l,colour=white]
             }{
@@ -341,9 +343,11 @@ rewrite in a Frobenius setting!
             }
         ]
     ]
-    \termandfrobtohypsigmac[
+    \termandfrobtohypsigma[
         \foldinterfaces[
             \iltikzfig{strings/category/f}[box=g,colour=white]
         ]
     ]\).
 \end{theorem}
+
+\todo[inline]{Coloured stuff?}
