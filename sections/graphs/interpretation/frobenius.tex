@@ -337,6 +337,8 @@ start of this section.
     \(\cspdhyp\) is a hypergraph category.
 \end{corollary}
 
+\subsection{From coloured terms to coloured graphs}
+
 This result shows how the correspondence works for the monochromatic case; what
 about for terms coloured by elements of some countable set?
 Here, we replace \(\finsetprop\) with the coloured version
@@ -557,7 +559,7 @@ given cospan into a particular form.
     All the PROP morphisms involved are identity-on-objects, so all that is
     required to show the existence of \(u\) is to show that any morphism in
     \(\cspdchyp\) can be expressed as a composition of components either in the
-    image of \(\termtohypsigmac\) or \(\frobtohypsigmac\).
+    image of \(\termtohypsigma\) or \(\frobtohypsigma\).
 
     Consider a cospan \(\cospan{m}[f]{G}[g]{n}\) in \(\cspdchyp\); let \(N\) be
     the set of nodes, let \(E\) be the set of hyperedges, and let
@@ -566,7 +568,7 @@ given cospan into a particular form.
     \cospan{\tilde{m}}[s]{\tilde{E}}[t]{\tilde{n}}
     \) as the cospan \(
     \bigtensor_{0 \leq i < j}
-    \termtohypsigmac[\chi(e_i)]
+    \termtohypsigma[\chi(e_i)]
     \).
     This cospan `stacks up' the edges in \(G\) without connecting them together;
     the legs of the cospan are the sources and targets of these
@@ -642,8 +644,16 @@ the left by going `over the top' of the edges via the identity cospan
     considered the correspondence between Frobenius terms and finite sets.
 \end{example}
 
+\subsection{The coloured correspondence}
+
 The results for the monochromatic case also follow for the coloured case, so we
 can restate the correspondence for coloured terms and hypergraphs.
+
+\begin{definition}
+    Let \(\morph{\termandfrobtohypsigmac}{\smcsigmac}{\cspdchyp}\) be defined
+    as \(\termandfrobtohypsigma\) but assigning appropriate colours to the
+    danging vertices.
+\end{definition}
 
 \begin{definition}
     Let \(
