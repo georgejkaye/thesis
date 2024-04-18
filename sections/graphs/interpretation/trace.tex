@@ -8,7 +8,7 @@ This means to characterise the cospans of hypergraphs that correspond to traced
 terms we need to weaken the conditions of monogamy and acyclicity described in
 the previous section.
 
-First we will establish the morphism \(\stmcsigmac \to \cspdchyp\) we will use
+First we will establish the morphism \(\stmcsigma \to \cspdhyp\) we will use
 to map traced terms to cospans of hypergraphs.
 We could do this manually fairly easily, but this would mean we would have to
 redo all the proofs in the previous section from scratch.
@@ -20,13 +20,13 @@ between traced and compact closed categories.
 \end{lemma}
 \begin{proof}
     The cup on a given object is defined as \(
-        \iltikzfig{strings/compact-closed/cup-self-dual}[colour=white,obj=A]
-        \coloneqq
-        \iltikzfig{strings/structure/frobenius/cup}[obj=A]
+    \iltikzfig{strings/compact-closed/cup-self-dual}[colour=white,obj=A]
+    \coloneqq
+    \iltikzfig{strings/structure/frobenius/cup}[obj=A]
     \) and the cap as \(
-        \iltikzfig{strings/compact-closed/cap-self-dual}[colour=white,obj=A]
-        \coloneqq
-        \iltikzfig{strings/structure/frobenius/cap}[obj=A]
+    \iltikzfig{strings/compact-closed/cap-self-dual}[colour=white,obj=A]
+    \coloneqq
+    \iltikzfig{strings/structure/frobenius/cap}[obj=A]
     \).
     The snake equations follow by applying the Frobenius equation and unitality:
     \begin{gather*}
@@ -46,28 +46,28 @@ between traced and compact closed categories.
 \end{proof}
 
 \begin{lemma}
-    \label{lem:stmc-subcat-hypc}
-    \(\stmcsigmac\) is a subcategory of \(\hypcsigmac\).
+    \label{lem:stmc-subcat-hyp}
+    \(\stmcsigma\) is a subcategory of \(\hypcsigma\).
 \end{lemma}
 \begin{proof}
-    Since \(\hypsigmac\) is compact closed, it has a (canonical) trace.
-    For \(\stmcsigmac\) to be a subcategory of \(\hypcsigmac\), every morphism
+    Since \(\hypsigma\) is compact closed, it has a (canonical) trace.
+    For \(\stmcsigma\) to be a subcategory of \(\hypcsigma\), every morphism
     of the former must also be a morphism on the latter.
     Since the two categories are freely generated (with the trace constructed
     through the Frobenius generators in the latter), all that remains is to
-    check that every morphism in \(\stmcsigmac\) is a unique morphism in
-    \(\hypcsigmac\), i.e.\ the equations of \(\frobc\) do not merge any together.
+    check that every morphism in \(\stmcsigma\) is a unique morphism in
+    \(\hypcsigma\), i.e.\ the equations of \(\frob\) do not merge any together.
     This is trivial since the equations do not apply to the construction of the
     canonical trace.
 \end{proof}
 
 \begin{definition}
-    Let \(\morph{\tracedtosymandfrobsigmac}{\stmcsigmac}{\hypcsigmac}\) be the
-    inclusion functor induced by \cref{lem:stmc-subcat-hypc}.
+    Let \(\morph{\tracedtosymandfrobsigma}{\stmcsigma}{\hypcsigma}\) be the
+    inclusion functor induced by \cref{lem:stmc-subcat-hyp}.
 \end{definition}
 
 \begin{corollary}
-    \(\tracedtosymandfrobsigmac\) is faithful.
+    \(\tracedtosymandfrobsigma\) is faithful.
 \end{corollary}
 
 To translate a term in \(\stmcsigmac\) into a cospan of hypergraphs, one uses
@@ -76,7 +76,7 @@ Frobenius realm, before applying \(\termandfrobtohypsigmac\) from the previous
 section to obtain a cospan of hypergraphs.
 
 \begin{corollary}
-    \(\termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac\) is faithful.
+    \(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\) is faithful.
 \end{corollary}
 
 \subsection{Partial monogamy}
@@ -103,16 +103,16 @@ any generators while also remaining disconnected from the interfaces.
 This special case is the trace of the identity, which in string diagrams is
 depicted as a closed
 loop \(
-    \trace{1}{\iltikzfig{strings/category/identity}[colour=white]}
-    =
-    \iltikzfig{strings/traced/trace-id}
+\trace{1}{\iltikzfig{strings/category/identity}[colour=white]}
+=
+\iltikzfig{strings/traced/trace-id}
 \).
 
 \begin{remark}
     One might think a closed loop can be discarded, in that \(
-        \iltikzfig{strings/traced/trace-id}
-        =
-        \iltikzfig{strings/monoidal/empty}
+    \iltikzfig{strings/traced/trace-id}
+    =
+    \iltikzfig{strings/monoidal/empty}
     \), but this is \emph{not} always the case.
     For example, it is not true in
     \(\finvectk{k}\)~\cite[Sec. 6.1]{hasegawa1997recursion}.
@@ -122,8 +122,8 @@ These closed loops can be modelled as lone vertices (`bones') disconnected from
 either interface.
 
 \begin{definition}[Partial monogamy]
-    For a cospan \(\cospan{\listvar{m}}[f]{F}[g]{\listvar{n}}\) in
-    \(\cspdchyp\), let \(\mathsf{in}(F)\) be the image of \(f\) and let
+    For a cospan \(\cospan{m}[f]{F}[g]{n}\) in
+    \(\cspdhyp\), let \(\mathsf{in}(F)\) be the image of \(f\) and let
     \(\mathsf{out}(F)\) be the image of \(g\).
     A cospan \(\cospan{m}[f]{F}[g]{n} \in \cspdhyp\) is
     \emph{partial monogamous} if \(f\) and \(g\) are mono and, for all nodes
@@ -131,24 +131,24 @@ either interface.
     \begin{center}
         \begin{tabular}{rlcrl}
             \((0,0)\)
-            &
+             &
             if \(v \in \mathsf{in}(F) \wedge v \in \mathsf{out}(F)\)
-            &
+             &
             \quad
-            &
+             &
             \((0,1)\)
-            &
+             &
             if \(v \in \mathsf{in}(F)\)
             \\
             \((1,0)\)
-            &
+             &
             if \(v \in \mathsf{out}(F)\)
-            &
+             &
             \quad
-            &
+             &
             \((0,0)\)
             or \((1,1)\)
-            &
+             &
             otherwise
         \end{tabular}
     \end{center}
@@ -161,7 +161,7 @@ either interface.
     in \cref{fig:partial-monogamous-examples}.
 \end{example}
 
-As with the monogamous acyclic cospans, a sub-PROP of \(\cspdchyp\) containing
+As with the monogamous acyclic cospans, a sub-PROP of \(\cspdhyp\) containing
 the partial monogamous cospans must be constructed.
 
 \begin{lemma}\label{lem:identities-symmetries-partial-monogamous}
@@ -199,12 +199,12 @@ As partial monogamicity is preserved by both forms of composition, the
 partial monogamous cospans themselves form a PROP.
 
 \begin{definition}
-    Let \(\pmcspdchyp\) be the sub-PROP of \(\cspdchyp\) containing only the
+    Let \(\pmcspdhyp\) be the sub-PROP of \(\cspdhyp\) containing only the
     partial monogamous cospans of hypergraphs.
 \end{definition}
 
 While for the symmetric monoidal case we could stop here, we have no such luck
-now: we must show that \(\pmcspdchyp\) is also traced.
+now: we must show that \(\pmcspdhyp\) is also traced.
 Although \(\cspdhyp\) already has a trace in the form of the canonical trace, we
 must make sure that this does not degenerate for cospans of partial monogamous
 hypergraphs.
@@ -214,9 +214,9 @@ hypergraphs.
 \end{theorem}
 \begin{proof}
     Consider a partial monogamous cospan \(
-        \cospan{x + m}[f + h]{F}[g + k]{x + n}
+    \cospan{x + m}[f + h]{F}[g + k]{x + n}
     \); we must show that its trace \(
-        \cospan{m}[h]{F^\prime}[k]{n}
+    \cospan{m}[h]{F^\prime}[k]{n}
     \) is also partial monogamous.
     Only the vertices in the image of \(f\) and \(g\) are affected by the trace:
     for each element \(a \in x\), \(f(a)\) and \(g(a)\) will be merged
@@ -226,19 +226,19 @@ hypergraphs.
     We now consider the various cases:
     \begin{itemize}
         \item if \(f(a) = g(a)\), then this vertex must have degree \((0, 0)\);
-                the traced vertex will still have degree \((0, 0)\) and will no
-                longer be in the interface;
+              the traced vertex will still have degree \((0, 0)\) and will no
+              longer be in the interface;
         \item if \(f(a)\) is also in the image of \(n \to F\) and \(g(i)\) is
-                also in the image of \(m \to F\), then both \(f(a)\) and
-                \(g(a)\) have degree \((0, 0)\); the traced vertex will still
-                have degree \((0, 0)\) and be in both interfaces of the traced
-                cospan;
+              also in the image of \(m \to F\), then both \(f(a)\) and
+              \(g(a)\) have degree \((0, 0)\); the traced vertex will still
+              have degree \((0, 0)\) and be in both interfaces of the traced
+              cospan;
         \item if \(f(a)\) is also in the image of \(n \to F\), then \(f(i)\)
-                has \((0, 0)\) and \(g(a)\) will have degree
-                \((1,0)\), so the traced vertex will have degree \((1, 0)\) and
-                be in the image of \(n \to F^\prime\); and
+              has \((0, 0)\) and \(g(a)\) will have degree
+              \((1,0)\), so the traced vertex will have degree \((1, 0)\) and
+              be in the image of \(n \to F^\prime\); and
         \item if \(g(i)\) is in the image of \(m \to F\), then the above
-                argument applies in reverse.
+              argument applies in reverse.
     \end{itemize}
     In all these cases, partial monogamy is preserved, so the canonical trace is
     still suitable for working with cospans of partial monogamous hypergraphs.
@@ -254,12 +254,12 @@ that this particular sub-PROP is the one that corresponds to traced terms.
 
 \begin{theorem}\label{thm:termtohyp-image}
     A cospan \(\cospan{m}{F}{n}\) is in the image of \(
-        \termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac\) if
+    \termandfrobtohypsigma \circ \tracedtosymandfrobsigma\) if
     and only if it is partial monogamous.
 \end{theorem}
 \begin{proof}
     Since the generators of \(\stmcsigma\) are mapped to monogamous cospans
-    by \(\termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac\) and partial
+    by \(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\) and partial
     monogamy is preserved by composition
     (\cref{lem:partial-monogamicity-preserved-composition}),
     tensor (\cref{lem:partial-monogamicity-preserved-tensor}),
@@ -270,27 +270,27 @@ that this particular sub-PROP is the one that corresponds to traced terms.
     monogamous.
 
     Now we show that any partial monogamous cospan \(
-        \cospan{\listvar{m}}[f]{F}[g]{\listvar{n}}
+    \cospan{m}[f]{F}[g]{n}
     \) must be in the image of \(
-        \termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac
+    \termandfrobtohypsigma \circ \tracedtosymandfrobsigma
     \) by constructing an isomorphic cospan from a trace of cospans, in which
-    each component under the trace is in the image of \(\termtohypsigmac\);
+    each component under the trace is in the image of \(\termtohypsigma\);
     subsequently this means that the entire cospan must be in the image of
-    \(\termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac\).
+    \(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\).
     The components of the new cospan are as follows:
     \begin{itemize}
         \item let \(L\) be the discrete hypergraph containing vertices with
-                degree
-                \((0,0)\) that are not in the image of \(f\) or \(g\);
+              degree
+              \((0,0)\) that are not in the image of \(f\) or \(g\);
         \item let \(E\) be the hypergraph containing hyperedges of \(F\)
-                disconnected from each other along with their source and target
-                vertices;
+              disconnected from each other along with their source and target
+              vertices;
         \item let \(V\) be the discrete hypergraph containing all the
-                vertices of \(F\); and
+              vertices of \(F\); and
         \item let \(S\) and \(T\) be the discrete hypergraphs containing
-                the source and target vertices of hyperedges in \(F\)
-                respectively, with the ordering determined by some order
-                \(e_1,e_2,\cdots,e_n\) on the edges in \(F\).
+              the source and target vertices of hyperedges in \(F\)
+              respectively, with the ordering determined by some order
+              \(e_1,e_2,\cdots,e_n\) on the edges in \(F\).
     \end{itemize}
     These parts can be composed to form the following composite:
     \begin{gather*}
@@ -302,18 +302,18 @@ that this particular sub-PROP is the one that corresponds to traced terms.
     cospan which can be checked to be isomorphic to the original cospan
     \(\cospan{m}[f]{F}[g]{n}\) by applying the pushouts.
     The components of the composite under the trace are all monogamous acyclic
-    so must be in the image of \(\termtohypsigmac\) by
+    so must be in the image of \(\termtohypsigma\) by
     \cref{thm:monogamous-acyclic-full}; this means there is a term
-    \(f \in \smcsigmac\) such that \(\termtohypsigmac[f]\) is isomorphic to the
+    \(f \in \smcsigma\) such that \(\termtohypsigma[f]\) is isomorphic to the
     original composite.
-    Clearly the trace of \(f\) is in \(\stmcsigmac\), and so the trace of the
+    Clearly the trace of \(f\) is in \(\stmcsigma\), and so the trace of the
     composite is in the image of
-    \(\termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac\).
+    \(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\).
 \end{proof}
 
 This shows that \(
-    \termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac
-\) is a \emph{full} mapping from \(\stmcsigmac\) to \(\pmcspdchyp\).
+\termandfrobtohypsigma \circ \tracedtosymandfrobsigma
+\) is a \emph{full} mapping from \(\stmcsigma\) to \(\pmcspdchyp\).
 As it is both full and faithful, we can then conclude the final result.
 
 \begin{corollary}\label{cor:stmc-graph-iso}
@@ -321,3 +321,42 @@ As it is both full and faithful, we can then conclude the final result.
 \end{corollary}
 
 \todo[inline]{Do some examples}
+
+\subsection{Traced coloured terms}
+
+\begin{lemma}\label{lem:stmc-subcat-hypc}
+    \(\stmcsigmac\) is a subcategory of \(\hypcsigmac\).
+\end{lemma}
+
+\begin{definition}
+    Let \(\morph{\tracedtosymandfrobsigmac}{\stmcsigmac}{\hypcsigmac}\) be the
+    inclusion functor induced by \cref{lem:stmc-subcat-hypc}.
+\end{definition}
+
+\begin{corollary}
+    \(\tracedtosymandfrobsigmac\) is faithful.
+\end{corollary}
+
+The partial monogamy condition works exactly the same for coloured cospans, so
+the partial monogamous cospans of coloured hypergraphs form a traced category.
+
+\begin{definition}
+    Let \(\pmcspdchyp\) be the sub-PROP of \(\cspdchyp\) containing only the
+    partial monogamous cospans of hypergraphs.
+\end{definition}
+
+\begin{theorem}
+    The canonical trace is a trace on \(\pmcspdchyp\).
+\end{theorem}
+
+The fullness proof then proceeds as before.
+
+\begin{theorem}
+    A cospan is in the image of
+    \(\termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac\) if and only if
+    it is partial monogamous.
+\end{theorem}
+
+\begin{corollary}
+    \(\stmcsigmac \cong \pmcspdchyp\).
+\end{corollary}
