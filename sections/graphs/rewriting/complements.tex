@@ -197,7 +197,7 @@ In particular, for certain DPO rules in an adhesive category a pushout
 complement is \emph{uniquely} defined for a given matching.
 
 \begin{definition}[Left-linear rules]
-    A DPO rule \(\spann{L}[f]{i+j}{R}\) is \emph{left-linear} if \(f\)
+    A DPO rule \(\spann{L}[f]{i+j}{R}\) is called \emph{left-linear} if \(f\)
     is mono.
 \end{definition}
 
@@ -243,7 +243,7 @@ Fortunately, for hypergraphs this problem has already been
 tackled~\cite{heumuller2011construction}; the pushout complements can be
 enumerated as quotients of an `exploded' context.
 
-\begin{definition}[Exploded context~\cite{heumuller2011construction}, Const. 1]
+\begin{definition}[Exploded context~(\cite{heumuller2011construction}, Const. 1)]
     Let \(i+j \to L \xrightarrow{f} G\) be a pair of morphisms in
     \(\hypsigma\).
     Then the \emph{exploded context} for these morphisms is a graph
@@ -289,7 +289,7 @@ rewrite in a Frobenius setting!
         \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
     }
     \), its interpretation as a DPO rule is written as \(
-    \termandfrobtohypsigmac[
+    \termandfrobtohypsigma[
         \rrule{
             \iltikzfig{strings/category/f}[box=l,colour=white]
         }{
@@ -298,22 +298,22 @@ rewrite in a Frobenius setting!
     ]
     \coloneqq
     \spann{
-        \termandfrobtohypsigmac[
+        \termandfrobtohypsigma[
             \foldinterfaces[
                 \iltikzfig{strings/category/f}[box=l,colour=white]
             ]
         ]
     }{\listvar{ij}}{
-        \termandfrobtohypsigmac[
+        \termandfrobtohypsigma[
             \foldinterfaces[
                 \iltikzfig{strings/category/f}[box=r,colour=white]
             ]
         ]
     }
-    \)
+    \).
 \end{notation}
 
-\begin{theorem}[\cite{bonchi2022string}, Prop. 4.10]
+\begin{theorem}[\cite{bonchi2022string}, Thm. 4.9]
     For a rewrite rule \(\rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white]
     }{
@@ -350,4 +350,85 @@ rewrite in a Frobenius setting!
     ]\).
 \end{theorem}
 
-\todo[inline]{Coloured stuff?}
+\subsection{Multicoloured rewriting}
+
+The results generalise in the obvious way to the coloured setting.
+
+\begin{notation}
+    Given a rewrite rule \(
+    \rrule{
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    }{
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
+    }
+    \) in \(\smcsigmac + \frobc\), its interpretation as a DPO rule is written
+    as \(
+    \termandfrobtohypsigmac[
+        \rrule{
+            \iltikzfig{strings/category/f}[box=l,colour=white]
+        }{
+            \iltikzfig{strings/category/f}[box=r,colour=white]
+        }
+    ]
+    \coloneqq
+    \spann{
+        \termandfrobtohypsigmac[
+            \foldinterfacesc[
+                \iltikzfig{strings/category/f}[box=l,colour=white]
+            ]
+        ]
+    }{\listvar{ij}}{
+        \termandfrobtohypsigmac[
+            \foldinterfacesc[
+                \iltikzfig{strings/category/f}[box=r,colour=white]
+            ]
+        ]
+    }
+    \).
+\end{notation}
+
+\begin{definition}[\cite{bonchi2022string}]
+    Let \(\morph{\foldinterfacesc}{\smcsigmac + \frobc}{\smcsigmac + \frobc}\)
+    be defined as having action \(
+    \iltikzfig{strings/category/f}[box=f,colour=white,dom=\listvar{m},cod=\listvar{n}]
+    \mapsto
+    \iltikzfig{strings/rewriting/folding}[box=f,colour=white,dom=\listvar{m},cod=\listvar{n}]
+    \).
+\end{definition}
+
+\begin{theorem}[\cite{bonchi2022string}, Prop. 4.10]
+    For a rule \(\rrule{
+        \iltikzfig{strings/category/f}[box=l,colour=white]
+    }{
+        \iltikzfig{strings/category/f}[box=r,colour=white]
+    }\) in \(
+    \smcsigmac + \frobc
+    \), \(
+    \iltikzfig{strings/category/f}[box=g,colour=white]
+    \rewrite[\rrule{
+            \iltikzfig{strings/category/f}[box=l,colour=white]
+        }{
+            \iltikzfig{strings/category/f}[box=r,colour=white]
+        }]
+    \iltikzfig{strings/category/f}[box=h,colour=white]
+    \) if and only if \(
+    \termandfrobtohypsigmac[
+        \foldinterfacesc[
+            \iltikzfig{strings/category/f}[box=g,colour=white]
+        ]
+    ]
+    \grewrite[
+        \termandfrobtohypsigmac[
+            \rrule{
+                \iltikzfig{strings/category/f}[box=l,colour=white]
+            }{
+                \iltikzfig{strings/category/f}[box=r,colour=white]
+            }
+        ]
+    ]
+    \termandfrobtohypsigmac[
+        \foldinterfacesc[
+            \iltikzfig{strings/category/f}[box=g,colour=white]
+        ]
+    ]\).
+\end{theorem}

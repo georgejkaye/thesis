@@ -1,7 +1,7 @@
 \section{Rewriting with commutative comonoid structure}
 
 Hypergraphs were originally chosen as the combinatorial domain for rewriting
-terms in \(\stmcsigmac + \frobc\) because they allow rewriting modulo
+terms in \(\stmcsigma + \frob\) because they allow rewriting modulo
 \emph{Frobenius structure}.
 In the traced rewriting system described in the previous section we did not
 fully exploit this, only using the combinatorial structure to absorb instances
@@ -86,6 +86,57 @@ the same procedure as in the traced setting.
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white]
     }\) in \(
+    \stmcsigma + \ccomon
+    \), \(
+    \iltikzfig{strings/category/f}[box=g,colour=white]
+    \rewrite[\rrule{
+            \iltikzfig{strings/category/f}[box=l,colour=white]
+        }{
+            \iltikzfig{strings/category/f}[box=r,colour=white]
+        }]
+    \iltikzfig{strings/category/f}[box=h,colour=white]
+    \) if and only if \(
+    \termandfrobtohypsigma[
+        \foldinterfaces[
+            \tracedandcomonoidtofrobsigma[
+                \iltikzfig{strings/category/f}[box=g,colour=white]
+            ]
+        ]
+    ]
+    \grewrite[
+        \termandfrobtohypsigma[
+            \rrule{
+                \tracedandcomonoidtofrobsigma[
+                    \iltikzfig{strings/category/f}[box=l,colour=white]
+                ]
+            }{
+                \tracedandcomonoidtofrobsigma[
+                    \iltikzfig{strings/category/f}[box=r,colour=white]
+                ]
+            }
+        ]
+    ]
+    \termandfrobtohypsigma[
+        \foldinterfaces[
+            \iltikzfig{strings/category/f}[box=g,colour=white]
+        ]
+    ]\).
+\end{theorem}
+\begin{proof}
+    As \cref{thm:traced-rewrite-correspondence}, but with partial left-monogamy
+    and traced left-boundary complements.
+\end{proof}
+
+This means that we can also safely perform rewriting modulo traced comonoid
+structure by building on the machinery used for the traced case.
+Predictably, the same also holds for the coloured setting.
+
+\begin{theorem}
+    For a rule \(\rrule{
+        \iltikzfig{strings/category/f}[box=l,colour=white]
+    }{
+        \iltikzfig{strings/category/f}[box=r,colour=white]
+    }\) in \(
     \stmcsigmac + \ccomonc
     \), \(
     \iltikzfig{strings/category/f}[box=g,colour=white]
@@ -97,7 +148,7 @@ the same procedure as in the traced setting.
     \iltikzfig{strings/category/f}[box=h,colour=white]
     \) if and only if \(
     \termandfrobtohypsigmac[
-        \foldinterfaces[
+        \foldinterfacesc[
             \tracedandcomonoidtofrobsigmac[
                 \iltikzfig{strings/category/f}[box=g,colour=white]
             ]
@@ -117,16 +168,8 @@ the same procedure as in the traced setting.
         ]
     ]
     \termandfrobtohypsigmac[
-        \foldinterfaces[
+        \foldinterfacesc[
             \iltikzfig{strings/category/f}[box=g,colour=white]
         ]
     ]\).
 \end{theorem}
-\begin{proof}
-    As \cref{thm:traced-rewrite-correspondence}, but replacing partial
-    monogamy with partial left-monogamy, and traced boundary complements with
-    traced left-boundary complements.
-\end{proof}
-
-This means that we can also safely perform rewriting modulo traced comonoid
-structure by building on the machinery used for the traced case.

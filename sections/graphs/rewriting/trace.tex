@@ -243,13 +243,13 @@ system; we will do this by showing that even though rewriting takes place in the
 more liberal compact closed setting, the rewritten graph will always correspond
 to a traced term.
 First we prove a lemma to show how using the compact closed structure of
-\(\smcsigmac + \frobc\) to reorganise interfaces corresponds to switching the
-cospan maps in \(\cspdchyp\).
+\(\smcsigma + \frob\) to reorganise interfaces corresponds to switching the
+cospan maps in \(\cspdhyp\).
 
 \begin{lemma}\label{lem:switch-interfaces}
     Let \(
     \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=m,dom2=n,cod1=p,cod2=q]
-    \) be a term in \(\smcsigmac + \frobc\).
+    \) be a term in \(\smcsigma + \frob\).
     Then if \(
     \termandfrobtohypsigmac[
         \iltikzfig{strings/category/f-2-2}[box=c,colour=white]
@@ -265,7 +265,7 @@ cospan maps in \(\cspdchyp\).
     \).
 \end{lemma}
 \begin{proof}
-    By definition of cups and caps in \(\cspdchyp\).
+    By definition of cups and caps in \(\cspdhyp\).
 \end{proof}
 
 We need to show that rewriting a term with a rule \(\rrule{
@@ -281,7 +281,7 @@ this rule.
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white]
     }\) in \(
-    \stmcsigmac
+    \stmcsigma
     \), \(
     \iltikzfig{strings/category/f}[box=g,colour=white]
     \rewrite[\rrule{
@@ -291,27 +291,27 @@ this rule.
         }]
     \iltikzfig{strings/category/f}[box=h,colour=white]
     \) if and only if \(
-    \termandfrobtohypsigmac[
+    \termandfrobtohypsigma[
         \foldinterfaces[
-            \tracedtosymandfrobsigmac[
+            \tracedtosymandfrobsigma[
                 \iltikzfig{strings/category/f}[box=g,colour=white]
             ]
         ]
     ]
     \grewrite[
-        \termandfrobtohypsigmac[
+        \termandfrobtohypsigma[
             \rrule{
-                \tracedtosymandfrobsigmac[
+                \tracedtosymandfrobsigma[
                     \iltikzfig{strings/category/f}[box=l,colour=white]
                 ]
             }{
-                \tracedtosymandfrobsigmac[
+                \tracedtosymandfrobsigma[
                     \iltikzfig{strings/category/f}[box=r,colour=white]
                 ]
             }
         ]
     ]
-    \termandfrobtohypsigmac[
+    \termandfrobtohypsigma[
         \foldinterfaces[
             \iltikzfig{strings/category/f}[box=g,colour=white]
         ]
@@ -331,58 +331,58 @@ this rule.
     \iltikzfig{strings/rewriting/rewrite-r}
     =
     \iltikzfig{strings/category/f}[box=h,colour=white]
-    \); we must derive the DPO diagram in \(\hypsigmac\).
+    \); we must derive the DPO diagram in \(\hypsigma\).
     First we give names to the following cospans:
     \begin{alignat*}{3}
         \cospan{\varepsilon}{L}{i + j}
          & \coloneqq
-        \termandfrobtohypsigmac[
+        \termandfrobtohypsigma[
             \foldinterfaces[
-                \tracedtosymandfrobsigmac[
+                \tracedtosymandfrobsigma[
                     \iltikzfig{strings/category/f}[box=l,colour=white]
                 ]
             ]
         ]
          &           & =
-        \termandfrobtohypsigmac[
+        \termandfrobtohypsigma[
             \iltikzfig{strings/rewriting/l-folded}
         ]
         \\
         \cospan{\varepsilon}{R}{i + j}
          & \coloneqq
-        \termandfrobtohypsigmac[
+        \termandfrobtohypsigma[
             \foldinterfaces[
-                \tracedtosymandfrobsigmac[
+                \tracedtosymandfrobsigma[
                     \iltikzfig{strings/category/f}[box=r,colour=white]
                 ]
             ]
         ]
          &           & =
-        \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/r-folded}]
+        \termandfrobtohypsigma[\iltikzfig{strings/rewriting/r-folded}]
         \\
         \cospan{\varepsilon}{G}{m + n}
          & \coloneqq
-        \termandfrobtohypsigmac[
+        \termandfrobtohypsigma[
             \foldinterfaces[
-                \tracedtosymandfrobsigmac[
+                \tracedtosymandfrobsigma[
                     \iltikzfig{strings/category/f}[box=g,colour=white]
                 ]
             ]
         ]
          &           & =
-        \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/lc-folded-shifted}]
+        \termandfrobtohypsigma[\iltikzfig{strings/rewriting/lc-folded-shifted}]
         \\
         \cospan{\varepsilon}{H}{m + n}
          & \coloneqq
-        \termandfrobtohypsigmac[
+        \termandfrobtohypsigma[
             \foldinterfaces[
-                \tracedtosymandfrobsigmac[
+                \tracedtosymandfrobsigma[
                     \iltikzfig{strings/category/f}[box=h,colour=white]
                 ]
             ]
         ]
          &           & =
-        \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/rc-folded-shifted}]
+        \termandfrobtohypsigma[\iltikzfig{strings/rewriting/rc-folded-shifted}]
     \end{alignat*}
 
     Moving into \(\smcsigmac + \frobc\), we have that \(
@@ -390,17 +390,17 @@ this rule.
     =
     \iltikzfig{strings/rewriting/lc-folded}
     \); so by functoriality \(
-    \termandfrobtohypsigmac[
+    \termandfrobtohypsigma[
         \foldinterfaces[
-            \tracedtosymandfrobsigmac[
+            \tracedtosymandfrobsigma[
                 \iltikzfig{strings/category/f}[box=g,colour=white]
             ]
         ]
     ]
     =
-    \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/l-folded}]
+    \termandfrobtohypsigma[\iltikzfig{strings/rewriting/l-folded}]
     \seq
-    \termandfrobtohypsigmac[\iltikzfig{strings/rewriting/c-folded}]
+    \termandfrobtohypsigma[\iltikzfig{strings/rewriting/c-folded}]
     \), i.e.\ \(
     \cospan{\varepsilon}{G}{m + n} =
     \cospan{\varepsilon}{L}{i + j}
@@ -412,8 +412,8 @@ this rule.
     gives us the DPO diagram.
     All that remains is to check that the aforementioned pushouts are traced
     boundary complements; this follows as \(
-    \termandfrobtohypsigmac[
-        \tracedandcomonoidtofrobsigmac[
+    \termandfrobtohypsigma[
+        \tracedandcomonoidtofrobsigma[
             \iltikzfig{strings/category/f-2-2}[box=c,colour=white]
         ]
     ]
@@ -444,13 +444,13 @@ this rule.
     \) as cospan composition is by pushout.
     Let \(
     \iltikzfig{strings/category/f-2-2}[box=c^\prime, colour=white,dom1=i,dom2=j,cod1=m,cod2=n]
-    \) be the term in \(\smcsigmac + \frobc\) such that \(
-    \termandfrobtohypsigmac[
+    \) be the term in \(\smcsigma + \frob\) such that \(
+    \termandfrobtohypsigma[
         \iltikzfig{strings/category/f-2-2}[box=c^\prime, colour=white]
     ]
     =
     \cospan{i + j}[[c_1,c_2]]{C}[[d_1,d_2]]{m + n}
-    \), which exists as \(\termandfrobtohypsigmac\) is full.
+    \), which exists as \(\termandfrobtohypsigma\) is full.
 
 
     The cospan \(\cospan{j + m}[[c_2,d_1]]{C}[[c_1,d_2]]{i + n}\)
@@ -458,15 +458,15 @@ this rule.
     boundary complement.
     Let \(
     \iltikzfig{strings/category/f-2-2}[box=c, colour=white,dom1=j,dom2=m,cod1=i,cod2=n]
-    \)  be the term in \(\smcsigmac + \frobc\) such that \(
-    \termandfrobtohypsigmac[
+    \)  be the term in \(\smcsigma + \frob\) such that \(
+    \termandfrobtohypsigma[
         \iltikzfig{strings/category/f-2-2}[box=c, colour=white]
     ]
     =
     \cospan{j + m}[[c_2,d_1]]{C}[[c_1,d_2]]{i + n}
     \).
     Using \cref{lem:switch-interfaces}, we have that \(
-    \termandfrobtohypsigmac[
+    \termandfrobtohypsigma[
         \iltikzfig{strings/rewriting/c-folded}
     ]
     =
@@ -474,19 +474,19 @@ this rule.
     \).
 
     So we have that \(
-    \termandfrobtohypsigmac[
+    \termandfrobtohypsigma[
         \foldinterfaces[
             \iltikzfig{strings/category/f}[box=g,colour=white]
         ]
     ]
     =
-    \termandfrobtohypsigmac[
+    \termandfrobtohypsigma[
         \foldinterfaces[
             \iltikzfig{strings/category/f}[box=l,colour=white]
         ]
     ]
     \seq
-    \termandfrobtohypsigmac[
+    \termandfrobtohypsigma[
         \iltikzfig{strings/category/f-2-2}[box=c^\prime, colour=white]
     ]
     \); by fullness we derive that \(
@@ -510,16 +510,61 @@ this rule.
     \iltikzfig{strings/rewriting/rewrite-l}
     \).
     Since \(
-    \termandfrobtohypsigmac[
+    \termandfrobtohypsigma[
         \iltikzfig{strings/category/f-2-2}[box=c, colour=white]
     ]
     \) is partial monogamous, \(
     \iltikzfig{strings/category/f-2-2}[box=c, colour=white]
-    \) is in \(\stmcsigmac\).
+    \) is in \(\stmcsigma\).
     As the trace in \(\stmcsigma\) is the canonical trace, the entire term is in
-    \(\stmcsigmac\), completing the proof.
+    \(\stmcsigma\), completing the proof.
     The same procedure holds for rewriting from the other direction.
 \end{proof}
 
 This gives us a sound and complete graph rewriting system for terms in
-\(\stmcsigmac\).
+\(\stmcsigma\).
+As always, colouring in the nodes does not affect the machinery of the proof, so
+this generalises to the coloured setting as well.
+
+\begin{theorem}\label{thm:traced-rewrite-correspondence-coloured}
+    For a rewrite rule \(\rrule{
+        \iltikzfig{strings/category/f}[box=l,colour=white]
+    }{
+        \iltikzfig{strings/category/f}[box=r,colour=white]
+    }\) in \(
+    \stmcsigmac
+    \), \(
+    \iltikzfig{strings/category/f}[box=g,colour=white]
+    \rewrite[\rrule{
+            \iltikzfig{strings/category/f}[box=l,colour=white]
+        }{
+            \iltikzfig{strings/category/f}[box=r,colour=white]
+        }]
+    \iltikzfig{strings/category/f}[box=h,colour=white]
+    \) if and only if \(
+    \termandfrobtohypsigmac[
+        \foldinterfacesc[
+            \tracedtosymandfrobsigmac[
+                \iltikzfig{strings/category/f}[box=g,colour=white]
+            ]
+        ]
+    ]
+    \grewrite[
+        \termandfrobtohypsigmac[
+            \rrule{
+                \tracedtosymandfrobsigmac[
+                    \iltikzfig{strings/category/f}[box=l,colour=white]
+                ]
+            }{
+                \tracedtosymandfrobsigmac[
+                    \iltikzfig{strings/category/f}[box=r,colour=white]
+                ]
+            }
+        ]
+    ]
+    \termandfrobtohypsigmac[
+        \foldinterfacesc[
+            \iltikzfig{strings/category/f}[box=g,colour=white]
+        ]
+    ]\).
+\end{theorem}
