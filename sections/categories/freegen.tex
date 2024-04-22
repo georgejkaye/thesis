@@ -1,16 +1,11 @@
 \section{Freely generated PROPs}
 
-We now have the pieces define the categorical setting for reasoning
-about terms.
-
-The morphisms of a freely generated category are defined as
+We now have the ingredients required to model terms in a categorical setting.
 
 \begin{definition}\label{def:freely-generated-prop}
-    Given a set of generators \(\generators\), let \(\smc{\generators}\) be the
-    divisible \(\natplus\)-sorted PROP where
-    \(\smc{\generators}(\listvar{m}, \listvar{n})\) is the set of
-    \(\Sigma\)-terms of type \(\listvar{m} \to \listvar{n}\) quotiented by
-    the equations of divisible \(\natplus\)-sorted PROPs.
+    Given a set of generators \(\generators\), let \(\smcsigma\) be the
+    PROP where \(\smcsigma(m, n)\) is the set of \(\Sigma\)-terms of type
+    \(m \to n\) quotiented by the equations of PROPs.
 \end{definition}
 
 Such a category is known as a category \emph{freely generated over}
@@ -18,6 +13,16 @@ Such a category is known as a category \emph{freely generated over}
 `generated' by combining elements of \(\Sigma\) in various ways using
 composition and tensor.
 Crucially, many \(\Sigma\)-terms correspond to the \emph{same} morphism in
-\(\smc{\generators}\)
-subject to the
-equations of divisible \(\natplus\)-sorted PROPs.
+\(\smc{\generators}\), as the latter are subject to the equations of PROPs.
+
+When we have a set of colours \(C\) and generators with inputs and outputs which
+are words of \(C\), we can generate a coloured PROP.
+
+\begin{definition}\label{def:freely-generated-coloured-prop}
+    Given a countable set of colours \(C\) generators \(\generators\), let
+    \(\smcsigmac\) be the
+    \(\natplus\)-sorted PROP where
+    \(\smc{\generators}(\listvar{m}, \listvar{n})\) is the set of
+    \(\Sigma\)-terms of type \(\listvar{m} \to \listvar{n}\) quotiented by
+    the equations of \(C\)-coloured PROPs.
+\end{definition}

@@ -4,51 +4,20 @@ Processes are modelled as \emph{terms}.
 Before we can begin, the components that make up processes in a given system
 must be specified.
 
-\begin{notation}[Lists]
-    Given a set \(X\), the set of lists of elements of \(X\) is denoted
-    \(\freemon{X}\).
-    Lists are written \([x_0, x_1, x_2, \cdots, x_{n-1}]\); the brackets around
-    single element lists may be dropped when clear from context \(x \coloneqq [x]\);
-    and variables representing arbitrary lists are generally written with an
-    overline \(
-        \listvar{x}, \listvar{y}, \listvar{z}... \in \freemon{X}
-    \).
-    Given two lists \(\listvar{x}, \listvar{y}\), their concatenation is
-    denoted \(\listvar{xy}\).
-    The list of length \(n\) containing just element \(x\) is written \(x^n\).
-    Given a list \(\listvar{x}\), its \emph{length} is denoted
-    \(\wordlen{\listvar{x}}\); for \(i < \wordlen{\listvar{x}}\) and its
-    \(i\)\emph{th element} is denoted \(\listvar{x}(i)\).
-\end{notation}
-
 \begin{definition}[Generators]
-    Let \(\mcs\) be a set of \emph{sorts} (`types').
-    A set of \emph{generators over} \(\mcs\) is a set \(\generators\)
-    equipped with two functions \(\morph{\dom,\cod}{\generators}{\mcs}\).
+    A set of \emph{generators} \(\generators\) is a set equipped with two
+    functions \(\morph{\dom,\cod}{\generators}{\nat}\).
 \end{definition}
 
 Generators are the primitive building blocks of terms: their domains and
-codomains specify the widths of their input and output wires respectively.
+codomains specify how many input and output wires they have respectively.
 Terms are defined by combining these primitives together.
-
-For our definition of terms, we will
-
-\begin{definition}
-    A set of \emph{decomposable sorts} (`types') is a set \(\mcs\) equipped with
-    a distinguished sort \(B \in \mcs\) called the \emph{base} and a function \(
-        \morph{\splitfn}{\mcc}{\natplus}
-    \) such that \(\splitfn(B) = 1\).
-\end{definition}
-
-In a set of decomposable sorts, every sort represents a multiple of the base
-sort.
 
 \begin{definition}[Term]
     \label{def:terms}
-    Let \(\generators\) be a set of generators. and \((\mcs,B,\splitfn)\) be a
-    set of decomposable sorts.
-    A \((\generators,\mcs)\)-term is written \(\morph{f}{\listvar{m}}{\listvar{n}}\)
-    where \(\listvar{m}, \listvar{n} \in \mcs^\star\).
+    Let \(\generators\) be a set of generators.
+    A \(\generators\)-term is written \(\morph{f}{m}{n}\)
+    where \(m,n \in \nat\).
     The set of \(\generators\)-terms, denoted \(\sigmaterms\), is
     generated as follows:
     \begin{center}
@@ -56,97 +25,82 @@ sort.
             \AxiomC{\(\phi \in \generators\)}
             \UnaryInfC{\(
                 \morph{\phi}{\dom[\phi]}{\cod[\phi]} \in \sigmaterms
-            \)}
-        \end{bprooftree}
-        \begin{bprooftree}
-            \AxiomC{\(n \in \natplus\)}
-            \UnaryInfC{\(\morph{\id[n]}{[n]}{[n]} \in \sigmaterms\)}
+                \)}
         \end{bprooftree}
         \begin{bprooftree}
             \AxiomC{\phantom{\(\phi\)}}
-            \UnaryInfC{\(\morph{\id[0]}{\varepsilon}{\varepsilon} \in \sigmaterms\)}
+            \UnaryInfC{\(\morph{\id[1]}{1}{1} \in \sigmaterms\)}
         \end{bprooftree}
 
         \vspace{1em}
 
         \begin{bprooftree}
             \AxiomC{}
-            \UnaryInfC{\(
-                \morph{\swap{m}{n}}{[m,n]}{[n,m]} \in \sigmaterms
-            \)}
+            \UnaryInfC{\(\morph{\id[0]}{0}{0} \in \sigmaterms\)}
         \end{bprooftree}
         \begin{bprooftree}
             \AxiomC{}
             \UnaryInfC{\(
-                \morph{\bundleexpand{m}}{[m]}{B^{\splitfn(m)}} \in \sigmaterms
-            \)}
-        \end{bprooftree}
-        \begin{bprooftree}
-            \AxiomC{}
-            \UnaryInfC{\(
-                \morph{\bundlecontract{n}}{B^{\splitfn(n)}}{[n]} \in \sigmaterms
-            \)}
+                \morph{\swap{1}{1}}{2}{2} \in \sigmaterms
+                \)}
         \end{bprooftree}
 
         \vspace{1em}
 
         \begin{bprooftree}
-            \AxiomC{\(\morph{f}{\listvar{m}}{\listvar{n}} \in \sigmaterms\)}
-            \AxiomC{\(\morph{g}{\listvar{n}}{\listvar{p}} \in \sigmaterms\)}
-            \BinaryInfC{\(\morph{f \seq g}{\listvar{m}}{\listvar{p}} \in \sigmaterms\)}
+            \AxiomC{\(\morph{f}{m}{n} \in \sigmaterms\)}
+            \AxiomC{\(\morph{g}{n}{p} \in \sigmaterms\)}
+            \BinaryInfC{\(\morph{f \seq g}{m}{p} \in \sigmaterms\)}
         \end{bprooftree}
         \begin{bprooftree}
-            \AxiomC{\(\morph{f}{\listvar{m}}{\listvar{n}} \in \sigmaterms\)}
-            \AxiomC{\(\morph{g}{\listvar{p}}{\listvar{q}} \in \sigmaterms\)}
+            \AxiomC{\(\morph{f}{m}{p} \in \sigmaterms\)}
+            \AxiomC{\(\morph{g}{p}{q} \in \sigmaterms\)}
             \BinaryInfC{\(
-                \morph{f \tensor g}{\listvar{mp}}{\listvar{nq}} \in \sigmaterms
-            \)}
+                \morph{f \tensor g}{m+p}{n+q} \in \sigmaterms
+                \)}
         \end{bprooftree}
     \end{center}
 \end{definition}
 
 \(\Sigma\)-terms are constructed recursively.
 There are four base cases: a generator from \(\generators\) with appropriate
-inputs and outputs;
-an \emph{identity} for empty wires with no generators;
-a \emph{symmetry} for swapping over two wires;
-a \emph{splitter} for transforming a list of `thicker' wires into a list of
-`thin' one-bit wires, and a \emph{combiner} for the reverse operation.
+inputs and outputs; an \emph{identity} for single wires and empty space, and
+a \emph{symmetry} for swapping over two wires.
 The two inductive cases are called \emph{composition} and \emph{tensor}
 respectively.
 Intuitively, these can be thought of generating larger terms by sequencing
 subterms in sequence or parallel.
 
-\begin{notation}[Composite identities]\cref{not:composite-identities}
-    Identities for lists of wires are defined inductively as \begin{gather*}
-        \id[\varepsilon] \coloneqq \id[0]
-        \quad
-        \id[n^\prime \streamcons \overline{n}]
-        \coloneqq
-        \id[n^\prime] \tensor \id[\overline{n}]
-    \end{gather*}
+Although here identities and symmetries only operate on single wires, it is
+a simple exercise to define them for larger numbers of wires.
+
+\begin{notation}[Composite identities]\label{not:composite-identities}
+    Composite identities \(\id[n]\) are defined inductively for \(n \in \nat\)
+    as \(
+    \id[0] \coloneqq \id[0]\) and \(
+    \id[k+1]
+    \coloneqq
+    \id[k] \tensor \id[1]
+    \)
 \end{notation}
-\begin{notation}[Composite symmetries]\cref{not:composite-symmetries}
-    Symmetries for lists of wires are defined inductively as \begin{gather*}
-        \swap{\varepsilon}{\listvar{n}}
-        \coloneqq
-        \id[\listvar{n}]
-        \quad
-        \swap{\varepsilon}{\listvar{n}}
-        \coloneqq \id[\listvar{n}]
-        \\
-        \swap{m}{n^\prime \streamcons \listvar{n}}
-        \coloneqq
-        \swap{m}{n^\prime} \tensor \id[\listvar{n}]
-        \seq
-        \id[y^\prime] \tensor \swap{m}{\listvar{n}}
-        \quad
-        \swap{m^\prime \streamcons \listvar{m}}{\listvar{n}}
-        \coloneqq
-        \id[m^\prime] \tensor \swap{\listvar{m}}{\listvar{n}}
-        \seq
-        \swap{[m^\prime]}{\listvar{n}} \tensor \id[\listvar{m}]
-    \end{gather*}
+\begin{notation}[Composite symmetries]\label{not:composite-symmetries}
+    Composite symmetries \(\swap{m}{n}\) for \(m, n \in \nat\) are defined
+    inductively as \(
+    \swap{0}{n}
+    \coloneqq
+    \id[n]
+    \), \(
+    \swap{m}{0}
+    \coloneqq \id[m]
+    \), and \(
+    \swap{k+1}{l+1}
+    \coloneqq
+    \id[k] \tensor \swap{1}{l} \tensor \id[1]
+    \seq
+    \swap{k}{l} \tensor \swap{1}{1}
+    \seq
+    \id[l] \tensor \swap{k}{1} \tensor \id[1]
+    \).
 \end{notation}
 
 \(\Sigma\)-terms will be abbreviated to `terms' when the signature is clear from
@@ -162,3 +116,45 @@ context.
     In the next section we will detail a \emph{graphical syntax} which should
     make things much clearer.
 \end{remark}
+
+\section{Coloured terms}
+
+Sometimes the generators we work with will not just have featureless input and
+output wires, but these wires will be \emph{annotated} with some sort of
+information, like a type.
+In the realm of terms this is often known as \emph{colouring} the wires.
+
+\begin{remark}
+    Colours can also be referred to as \emph{sorts} in the literature.
+\end{remark}
+
+When working with coloured terms, we need to fix a set of \emph{colours}.
+
+\begin{notation}
+    We say that a set \(C\) is \emph{countable} if it is finite or countably
+    infinite, i.e.\ there is a bijection \(C \cong \nat\).
+\end{notation}
+
+\begin{remark}
+    Usually the set of colours is finite, but we will see later in this thesis
+    how having a colour for every single natural number might be useful.
+\end{remark}
+
+Instead of generators mapping from two natural numbers, generators coloured over
+a set \(C\) map between words of \(C\).
+
+\begin{notation}[Words]
+    Given a set \(A\), the set of words of elements of \(X\) is denoted
+    \(\freemon{A}\).
+    Words are written \(x_0x_1x_2{\cdots}x_{n-1}\); variables representing
+    arbitrary words are generally written with an
+    overline \(
+    \listvar{x}, \listvar{y}, \listvar{z}... \in \freemon{X}
+    \).
+    Given two words \(\listvar{x}, \listvar{y}\), their concatenation is
+    denoted \(\listvar{xy}\).
+    The word of length \(n\) containing just element \(x\) is written \(x^n\).
+    Given a word \(\listvar{x}\), its \emph{length} is denoted
+    \(\wordlen{\listvar{x}}\); for \(i < \wordlen{\listvar{x}}\) and its
+    \(i\)\emph{th element} is denoted \(\listvar{x}(i)\).
+\end{notation}
