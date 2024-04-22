@@ -48,36 +48,40 @@
     % value and passing it to tcbset.
     \newlength{\normalparindent}
     \AtBeginDocument{\setlength{\normalparindent}{\parindent}}
-    \tcbset{shadedenv/.style={
+    \tcbset{shadedenv/.style 2 args={
                 colback={#1},
                 frame hidden,
+                boxrule=0pt,
+                borderline west={1mm}{0pt}{#2},
                 enhanced,
                 breakable,
                 boxsep=0pt,
-                left=2mm,
-                right=2mm,
+                top=3mm,
+                bottom=3mm,
+                left=4mm,
+                right=3mm,
                 % LaTeX thinks this is too wide (as becomes clear from the many "Overfull
                 % \hbox" warnings, but optically it looks spot on.
                 add to width=1.1mm,
                 enlarge left by=-0.6mm,
                 before upper={\setlength{\parindent}{\normalparindent}}
             }}
-    \newcommand{\setenvcolor}[2]{%
-        \tcolorboxenvironment{#1}{shadedenv={#2}}
+    \newcommand{\setenvcolor}[3]{%
+        \tcolorboxenvironment{#1}{shadedenv={#2}{#3}}
     \addtotheorempreheadhook[#1]{
         \tikzcdset{background color=#2}
         \renewcommand{\bgcolour}{#2}
     }
 }
-\setenvcolor{theorem}{ShadeOfPurple}
-\setenvcolor{lemma}{ShadeOfPurple}
-\setenvcolor{proposition}{ShadeOfPurple}
-\setenvcolor{corollary}{ShadeOfPurple}
-\setenvcolor{definition}{ShadeOfYellow}
-\setenvcolor{notation}{ShadeOfYellow}
-\setenvcolor{example}{ShadeOfGreen}
-\setenvcolor{remark}{ShadeOfBrown}
-\setenvcolor{proof}{ShadeOfGray}
+\setenvcolor{theorem}{ShadeOfPurple}{blue}
+\setenvcolor{lemma}{ShadeOfPurple}{blue}
+\setenvcolor{proposition}{ShadeOfPurple}{blue}
+\setenvcolor{corollary}{ShadeOfPurple}{blue}
+\setenvcolor{definition}{ShadeOfYellow}{yellow}
+\setenvcolor{notation}{ShadeOfYellow}{yellow}
+\setenvcolor{example}{ShadeOfGreen}{green}
+\setenvcolor{remark}{ShadeOfBrown}{brown}
+\setenvcolor{proof}{ShadeOfGray}{gray}
 }{
 % Use closing symbols if we don't have colours
 \declaretheorem[sibling=equation]{theorem}
