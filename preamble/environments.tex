@@ -51,6 +51,7 @@
     \tcbset{shadedenv/.style 2 args={
                 colback={#1},
                 frame hidden,
+                sharp corners,
                 boxrule=0pt,
                 borderline west={1mm}{0pt}{#2},
                 enhanced,
@@ -63,7 +64,7 @@
                 % LaTeX thinks this is too wide (as becomes clear from the many "Overfull
                 % \hbox" warnings, but optically it looks spot on.
                 add to width=1.1mm,
-                enlarge left by=-0.6mm,
+                enlarge left by=-0.0mm,
                 before upper={\setlength{\parindent}{\normalparindent}}
             }}
     \newcommand{\setenvcolor}[3]{%
