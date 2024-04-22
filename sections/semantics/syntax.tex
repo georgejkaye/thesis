@@ -55,9 +55,9 @@ particular category of circuits.
     \disconnected \in \values
     \) is a \emph{disconnected} value, \(\circuitsignaturegates\) is a (usually
     finite) set of \emph{gate symbols}, \(
-    \morph{\circuitsignaturearity}{\circuitsignaturegates}{\natplus^\star}
+    \morph{\circuitsignaturearity}{\circuitsignaturegates}{\nat}
     \) is an \emph{arity} function and \(
-    \morph{\circuitsignaturecoarity}{\circuitsignaturegates}{\natplus^\star}
+    \morph{\circuitsignaturecoarity}{\circuitsignaturegates}{\nat}
     \) is a \emph{coarity} function.
 \end{definition}
 
@@ -67,7 +67,7 @@ majority of examples in this thesis, is that of gate-level circuits.
 \begin{example}[Gate-level circuits]\label{ex:sig}
     The signature for \emph{gate-level circuits} is \(
     \belnapsignature = (
-    \belnap,
+    \belnapvalues,
     \bot,
     \belnapgates,
     \belnaparity,
@@ -79,11 +79,11 @@ majority of examples in this thesis, is that of gate-level circuits.
     \belnapgates \coloneqq \{\andgate,\orgate,\notgate\}
     \), \(
     \belnaparity \coloneqq
-    \andgate \mapsto [1,1],
-    \orgate \mapsto [1,1],
-    \notgate \mapsto [1]
+    \andgate \mapsto 2,
+    \orgate \mapsto 2,
+    \notgate \mapsto 1
     \) and \(
-    \belnapcoarity \coloneqq - \mapsto [1],
+    \belnapcoarity \coloneqq - \mapsto 1,
     \)
 \end{example}
 
@@ -125,7 +125,7 @@ These are circuits with no state; they compute \emph{functions} of their inputs.
     \(\iltikzfig{strings/structure/comonoid/copy}[colour=comb]\),
     \(\iltikzfig{strings/structure/monoid/merge}[colour=comb]\), and
     \(\iltikzfig{strings/structure/comonoid/discard}[colour=comb]\).
-    We write \(\ccircsigma\) for the freely generated bundled PROP
+    We write \(\ccircsigma\) for the freely generated PROP
     \(\smc{\generators[\ccirc{}]}\).
 \end{definition}
 
@@ -158,7 +158,7 @@ boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
 \begin{notation}\label{not:arbitrary-width-structure}
     The structural generators are only defined on single bits, but it is a
     simple exercise to define them on arbitrary bit inputs and outputs using the
-    bundlers and axioms of symmetric monoidal categories.
+    axioms of symmetric monoidal categories.
     \todo[inline]{Show the constructions}
     To avoid cluttering diagrams, these are drawn as their single-bit
     counterparts:
@@ -171,6 +171,7 @@ boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
         \quad
         \iltikzfig{strings/structure/comonoid/discard}[colour=comb,obj=n]
     \]
+    \todo[inline]{Zero width}
 \end{notation}
 
 \begin{example}[Half adder]
@@ -323,3 +324,137 @@ For those who need some inspiration, we provide a simple example.
 \end{example}
 
 \input{floats/sr-latch}
+
+\section{Generalised circuit signatures}
+
+In a circuit signature, gates are assigned a number of input and output wires.
+This serves us well when we want to model lower level circuits in which we
+really are dealing with single-bit wires.
+However, when designing circuits it is often advantageous to work at a higher
+level of abstraction where with `thicker' wires carrying words of information.
+For example, the values in the circuits could be used to represent binary
+numbers.
+
+This can still be modelled in \(\scircsigma\) `as is' by using lots of parallel
+wires to connect to the various primitives, but this can get messy with wires
+flying all over the place.
+Instead, we will introduce a generalisation of circuit signatures in which these
+thicker buses of wires are treated as first-class objects.
+
+\begin{definition}[Generalised circuit signature]
+    A \emph{generalised circuit signature} \(\circuitsignature\) is a tuple \((
+    \values,
+    \disconnected,
+    \circuitsignaturegates,
+    \circuitsignaturearity,
+    \circuitsignaturecoarity
+    )\) where \(\values\) is a finite set of values, \(
+    \disconnected \in \values
+    \) is a \emph{disconnected} value, \(\circuitsignaturegates\) is a (usually
+    finite) set of \emph{gate symbols}, \(
+    \morph{\circuitsignaturearity}{\circuitsignaturegates}{\natplus^\star}
+    \) is an \emph{arity} function and \(
+    \morph{\circuitsignaturecoarity}{\circuitsignaturegates}{\natplus^\star}
+    \) is a \emph{coarity} function.
+\end{definition}
+
+
+\begin{example}
+    The generalised circuit signature for \emph{simple arithmetic circuits} is
+    \(
+    \belnapsignature^+ \coloneqq \left(
+    \belnapvalues,
+    \bot,
+    \belnapgates^+,
+    \belnaparity^+,
+    \belnapcoarity^+
+    \right)
+    \), where \begin{gather*}
+        \belnapgates
+        \coloneqq \{
+        \andgate_{k,n},
+        \orgate_{k,n},
+        \notgate_{n},
+        \mathsf{add}_n
+        \,|\,
+        n \in \natplus
+        \}
+        \\
+        \belnaparity^+
+        \coloneqq
+        \andgate_{k,n} \mapsto [n \,|\, i < k],
+        \orgate_{k,n} \mapsto [n \,|\, i < k],
+        \notgate_{n} \mapsto [n],
+        \mathsf{add}_n \mapsto [n,n]
+        \\
+        \belnapcoarity^+
+        \coloneqq
+        \andgate_n \mapsto [n],
+        \orgate_n \mapsto [n],
+        \notgate_n \mapsto [n],
+        \mathsf{add}_n \mapsto [1,1,n]
+    \end{gather*}
+\end{example}
+
+A generalised circuit signature generates \(\natplus\)-coloured PROPs of digital
+circuits.
+
+\begin{definition}
+    Given a generalised circuit signature \(\circuitsignature\), let the set
+    \(\generators[\ccirc{}^+]\) of
+    \emph{generalised combinational circuit generators} be defined as the set
+    containing
+    \begin{gather*}
+        \iltikzfig{circuits/components/gates/gate}[gate=g,colour=comb,dom=\circuitsignaturearity(g),cod=\circuitsignaturecoarity(g)]
+        \quad
+        \text{for each}\ g \in \circuitsignaturegates
+        \qquad
+        \iltikzfig{strings/structure/monoid/init}[colour=comb,obj=n]
+        \quad
+        \iltikzfig{strings/structure/comonoid/copy}[colour=comb,obj=n]
+        \quad
+        \iltikzfig{strings/structure/monoid/merge}[colour=comb, obj=n]
+        \quad
+        \iltikzfig{strings/structure/comonoid/discard}[colour=comb,obj=n]
+        \quad
+        \text{for each}\ n \in \natplus
+        \\
+        \iltikzfig{strings/strictifiers/bundle}[colour=comb,dom=\listvar{m},cod=\listvar{n}]
+        \quad
+        \text{for each}\ \listvar{m},\listvar{n} \in \natplus^\star
+    \end{gather*}
+    We write \(\ccircsigmaplus\) for the freely generated PROP
+    \(\smc{\generators[\ccirc{}^+]}\).
+\end{definition}
+
+The first row of generators in \(\ccircsigmaplus\) is fairly straightforward:
+primitives with appropriately typed wires and wire constructs for each
+colour (width) of wires.
+
+The generators specified on the bottom row are known as \emph{bundlers}: their
+intended meaning is that they can be used to \emph{split} and \emph{combine}
+bundles of wire buses into bundles with different widths.
+These constructs were first proposed by Wilson et al in~\cite{wilson2023string}
+as a notation for \emph{non-strict categories}.
+We take inspiration from their observation that a similar idea could also be
+applied to strict categories.
+
+\begin{example}
+
+    \iltikzfig{circuits/examples/alu}
+\end{example}
+
+\begin{definition}
+    For a generalised circuit signature \(\circuitsignature\), let the set
+    \(\generators[\scirc{}^+]\) of
+    \emph{generalised sequential circuit generators} be the set of
+    generalised combinational circuit generators along with
+    \(
+    \iltikzfig{circuits/components/values/vs}[val=\listvar{v},width=n]
+    \) for each \(n \in \natplus\) and \(\listvar{v} \in \valuetuple{n}\), and
+    \(
+    \iltikzfig{circuits/components/waveforms/delay}[width=n]
+    \) for each \(n \in \natplus\).
+    We write \(\scircsigmaplus\) for the freely generated PROP
+    \(\stmc{\generators[\scirc{}^+]}\).
+\end{definition}
