@@ -110,29 +110,55 @@ context.
     \todo[inline]{Think of a funky example}
 \end{example}
 
-\begin{remark}
-    It is clear that even simple terms described using one-dimensional text
-    strings quickly become indecipherable.
-    In the next section we will detail a \emph{graphical syntax} which should
-    make things much clearer.
-\end{remark}
+\section{String diagrams}
+
+It is clear that even simple terms described using one-dimensional text
+strings quickly become indecipherable.
+Fortunately, terms have an intuitive \emph{graphical} syntax known as
+\emph{string diagrams} that can shed much light on what is actually going on.
+In a string diagram, a generator \(\morph{\phi}{m}{n}\) is drawn as a box with
+\(m\) inputs and \(n\) outputs \(
+\iltikzfig{strings/category/generator-wires-tile}[dom=m,cod=n]
+\), the identity \(\id[1]\) as a wire \(
+\iltikzfig{strings/category/identity-tile}
+\), the empty identity \(\id[0]\) as empty space \(
+\iltikzfig{strings/monoidal/empty-tile}
+\), and the symmetry as two wires swapping over \(
+\iltikzfig{strings/symmetric/symmetry-tile}
+\).
+Composite terms are drawn as boxes \(
+\iltikzfig{strings/category/f-wires-tile}
+\); composition is then depicted as \emph{horizontal juxtaposition} and
+tensor as \emph{vertical juxtaposition}.
+\[
+    \iltikzfig{strings/category/f-wires-tile}[box=f]
+    \seq
+    \iltikzfig{strings/category/f-wires-tile}[box=g]
+    =
+    \iltikzfig{strings/category/composition-tiles}[box1=f,box2=g,dom1=m,dom2=n,cod2=p]
+\]
+
+
 
 \section{Coloured terms}
 
-Sometimes the generators we work with will not just have featureless input and
-output wires, but these wires will be \emph{annotated} with some sort of
-information, like a type.
-In the realm of terms this is often known as \emph{colouring} the wires.
+In \(\Sigma\)-terms, the wires are \emph{monochromatic}; there is no
+distinguishing between them.
+Sometimes it is advantageous to \emph{annotate} wires with some information: in
+the realm of terms this is often known as \emph{colouring} the wires.
 
 \begin{remark}
-    Colours can also be referred to as \emph{sorts} in the literature.
+    Colours are also referred to as \emph{sorts} in the literature, which leads
+    to less pretty diagrams.
 \end{remark}
 
-When working with coloured terms, we need to fix a set of \emph{colours}.
+When working with coloured terms, we need to fix a set of \emph{colours} before
+specifying a set of generators.
 
 \begin{notation}
     We say that a set \(C\) is \emph{countable} if it is finite or countably
-    infinite, i.e.\ there is a bijection \(C \cong \nat\).
+    infinite, i.e.\ there exists set \(X \subseteq \nat\) such that there is a
+    bijection \(C \cong X\).
 \end{notation}
 
 \begin{remark}
@@ -140,8 +166,11 @@ When working with coloured terms, we need to fix a set of \emph{colours}.
     how having a colour for every single natural number might be useful.
 \end{remark}
 
-Instead of generators mapping from two natural numbers, generators coloured over
-a set \(C\) map between words of \(C\).
+In the monochromatic world the interface of a generator can be specified solely
+by two natural numbers \(m\) and \(n\), as there are \(m\) input wires and
+\(n\) output wires.
+When the wires are coloured, more information is needed: the inputs and outputs
+must be specified in terms of their colours and their ordering.
 
 \begin{notation}[Words]
     Given a set \(A\), the set of words of elements of \(X\) is denoted
@@ -155,6 +184,28 @@ a set \(C\) map between words of \(C\).
     denoted \(\listvar{xy}\).
     The word of length \(n\) containing just element \(x\) is written \(x^n\).
     Given a word \(\listvar{x}\), its \emph{length} is denoted
-    \(\wordlen{\listvar{x}}\); for \(i < \wordlen{\listvar{x}}\) and its
-    \(i\)\emph{th element} is denoted \(\listvar{x}(i)\).
+    \(\wordlen{\listvar{x}}\); for \(i < \wordlen{\listvar{x}}\) the
+    \(i\)-\emph{th element of \(\listvar{x}\)} is denoted \(\listvar{x}(i)\).
 \end{notation}
+
+\begin{definition}[Coloured generators]
+    For a countable set \(C\), a set of \emph{\(C\)-coloured generators}
+    \(\Sigma\) is a set equipped with two functions \(\Sigma \to \freemon{C}\).
+\end{definition}
+
+\begin{definition}[Coloured terms]
+    For a countable set \(C\) and a set of \(C\)-coloured generators, a
+    \((C,\Sigma)\)-term is written \(\morph{f}{\listvar{m}}{\listvar{n}}\),
+    where \(\listvar{m},\listvar{n} \in \freemon{C}\).
+    The set of \((C,\Sigma)\)-terms, denoted \((C,\Sigma)_\mathsf{t}\), is
+    generated in the same way as the monochromatic set of terms, but with an
+    identity and symmetry for each colour \(c \in C\), and addition replaced by
+    word concatenation.
+\end{definition}
+
+\begin{remark}
+    When the set of colours is a singleton \(C \coloneqq \{\bullet\}\), a
+    \(C\)-coloured PROP is isomorphic to a monochromatic prop, as every word is
+    of the form \(\bullet\bullet\cdots\bullet\) and as such can be fully
+    specified by its length.
+\end{remark}
