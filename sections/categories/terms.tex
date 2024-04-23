@@ -106,16 +106,28 @@ a simple exercise to define them for larger numbers of wires.
 \(\Sigma\)-terms will be abbreviated to `terms' when the signature is clear from
 context.
 
-\begin{example}
-    \todo[inline]{Think of a funky example}
+\begin{example}\label{ex:terms}
+    Let \(
+    \Sigma_g
+    \coloneqq
+    \{\morph{\andgate}{2}{1}, \morph{\orgate}{2}{1}, \morph{\notgate}{1}{1}\}
+    \) be a set of \emph{logic gate generators}.
+    Examples of terms in \((\Sigma_g)_\mathsf{t}\) include
+    \begin{gather*}
+        (\orgate \seq \id[1]) \tensor ((\id[1] \tensor \notgate) \seq \andgate)
+        \quad
+        ((\id[1] \tensor \id[1]) \seq \orgate) \tensor ((\id[1] \tensor \notgate) \seq \andgate)
+        \\
+        ((\id[1] \tensor \id[1]) \tensor (\id[1] \tensor \notgate)) \seq (\orgate \tensor \andgate)
+    \end{gather*}
 \end{example}
 
 \section{String diagrams}
 
 It is clear that even simple terms described using one-dimensional text
 strings quickly become indecipherable.
-Fortunately, terms have an intuitive \emph{graphical} syntax known as
-\emph{string diagrams} that can shed much light on what is actually going on.
+Fortunately, terms have an graphical syntax known as \emph{string diagrams} that
+can shed much light on what is actually going on.
 In a string diagram, a generator \(\morph{\phi}{m}{n}\) is drawn as a box with
 \(m\) inputs and \(n\) outputs \(
 \iltikzfig{strings/category/generator-wires-tile}[dom=m,cod=n]
@@ -127,18 +139,52 @@ In a string diagram, a generator \(\morph{\phi}{m}{n}\) is drawn as a box with
 \iltikzfig{strings/symmetric/symmetry-tile}
 \).
 Composite terms are drawn as boxes \(
-\iltikzfig{strings/category/f-wires-tile}
+\iltikzfig{strings/category/f-wires-tile}[box=f,dom=m,cod=n]
 \); composition is then depicted as \emph{horizontal juxtaposition} and
 tensor as \emph{vertical juxtaposition}.
 \[
-    \iltikzfig{strings/category/f-wires-tile}[box=f]
+    \iltikzfig{strings/category/f-wires-tile}[box=f,dom=m,cod=n]
     \seq
-    \iltikzfig{strings/category/f-wires-tile}[box=g]
+    \iltikzfig{strings/category/f-wires-tile}[box=g,dom=n,cod=p]
     =
     \iltikzfig{strings/category/composition-tiles}[box1=f,box2=g,dom1=m,dom2=n,cod2=p]
+    \qquad
+    \iltikzfig{strings/category/f-wires-tile}[box=f,dom=m,cod=n]
+    \tensor
+    \iltikzfig{strings/category/f-wires-tile}[box=g,dom=p,cod=q]
+    =
+    \iltikzfig{strings/monoidal/tensor-tiles}[box1=f,box2=g,dom1=m,cod1=n,dom2=p,cod2=q]
 \]
 
+\begin{example}\label{ex:term-diagrams}
+    Recall the set of logic gate generators \(\Sigma\) from \cref{ex:terms}.
+    We will draw each generator using the usual notation, i.e.\
+    \(
+    \andgate \coloneqq \iltikzfig{circuits/components/gates/and-tile}
+    \), \(
+    \orgate \coloneqq \iltikzfig{circuits/components/gates/or-tile}
+    \), and \(
+    \notgate \coloneqq \iltikzfig{circuits/components/gates/not-tile}
+    \).
+    Now the terms in \cref{ex:terms} can be illustrated as:
+    \begin{gather*}
+        \iltikzfig{strings/terms/example-0}
+        \qquad
+        \iltikzfig{strings/terms/example-1}
+        \qquad
+        \iltikzfig{strings/terms/example-2}
+    \end{gather*}
+    While each term has a very different text string, and is tiled differently
+    in each diagram, the connectivity of the thick wires is actually the same!
+\end{example}
 
+The above example illuminates the drawback of reasoning with term strings or
+even the `tile' graphical syntax; there are terms which are `morally' the same
+but because of variations in how they are constructed they are \emph{not} the
+same term syntactically.
+We need some equations to identify terms appropriately; we will soon see how
+these equations can be derived using a mathematical structure known as a
+\emph{category}.
 
 \section{Coloured terms}
 
@@ -148,8 +194,8 @@ Sometimes it is advantageous to \emph{annotate} wires with some information: in
 the realm of terms this is often known as \emph{colouring} the wires.
 
 \begin{remark}
-    Colours are also referred to as \emph{sorts} in the literature, which leads
-    to less pretty diagrams.
+    Colours are also often referred to as \emph{sorts} in the literature, which
+    leads to less pretty diagrams.
 \end{remark}
 
 When working with coloured terms, we need to fix a set of \emph{colours} before
@@ -199,13 +245,43 @@ must be specified in terms of their colours and their ordering.
     where \(\listvar{m},\listvar{n} \in \freemon{C}\).
     The set of \((C,\Sigma)\)-terms, denoted \((C,\Sigma)_\mathsf{t}\), is
     generated in the same way as the monochromatic set of terms, but with an
-    identity and symmetry for each colour \(c \in C\), and addition replaced by
-    word concatenation.
+    identity and symmetry for each colour \(c \in C\), composition between
+    terms whose output and input words agree on colours, and addition replaced
+    by word concatenation.
 \end{definition}
 
 \begin{remark}
-    When the set of colours is a singleton \(C \coloneqq \{\bullet\}\), a
-    \(C\)-coloured PROP is isomorphic to a monochromatic prop, as every word is
-    of the form \(\bullet\bullet\cdots\bullet\) and as such can be fully
-    specified by its length.
+    When the set of colours is a singleton \(C \coloneqq \{\bullet\}\), the
+    \(C\)-coloured terms are just the monochromatic terms.
 \end{remark}
+
+When drawing coloured terms string diagrammatically, the wires that connect the
+generators are coloured with the appropriate colour.
+This makes it easy to see which terms can be composed.
+
+\begin{example}
+    Recall the logic gate generators from \cref{ex:terms}; let us now say that
+    the \(\orgate\) gate is rated for a different voltage, so it is no longer
+    compatible with the other components.
+    We can model this with coloured terms; let
+    \(C_\mathsf{g} \coloneqq \{\bullet,\redbullet\}\) be a set of
+    \emph{voltage colours} and let \(
+    \Sigma_g^+
+    \coloneqq
+    \{\morph{\andgate}{\bullet\bullet}{\bullet}, \morph{\orgate}{\redbullet\redbullet}{\redbullet}, \morph{\notgate}{\bullet}{\bullet}\}
+    \).
+    We draw the `red' \(\orgate\) appropriately as \(
+    \iltikzfig{circuits/components/gates/red-or}
+    \).
+    Now we can recreate the diagrams from \cref{ex:term-diagrams} in the
+    coloured setting.
+    Note how all wires attached to the \(\orgate\) gate must also be red
+    to ensure the colours all match up.
+    \begin{gather*}
+        \iltikzfig{strings/terms/example-0-coloured}
+        \qquad
+        \iltikzfig{strings/terms/example-1-coloured}
+        \qquad
+        \iltikzfig{strings/terms/example-2-coloured}
+    \end{gather*}
+\end{example}
