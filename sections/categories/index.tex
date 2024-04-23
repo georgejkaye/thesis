@@ -1,10 +1,41 @@
 \chapter{A crash course in category theory}
 
-We begin with a meander through the categorical definitions and notation
-required for our framework of sequential circuits.
-While a similar outline can be found in any category theory textbook,
-inspiration was taken in particular from the opening of
-\cite{ghica2023hierarchical}.
+When setting about developing a \emph{mathematical foundation} for something,
+the first step is of course to decide exactly what foundation to pick!
+In this thesis, our foundation is that of \emph{category theory}, in which
+mathematical structures are expressed in terms of \emph{objects} and
+\emph{morphisms} between them.
+
+Category theory has its origins in the early 1940s when Eilenberg and Mac Lane
+were working on problems in algebraic topology.
+The pair discovered that many homomorphisms were `natural' ;
+this led to the notion of \emph{functors} and \emph{natural transformations},
+two key categorical concepts which will be explored in
+\cref{sec:functors} and \cref{sec:natural-transformations} respectively.
+To establish the general framework in which functors and natural transformations
+operate, the notion of a \emph{category} was required; Eilenberg and Mac Lane
+first presented the definition later in 1945~\cite{eilenberg1945general}.
+
+Since then, the use of category theory has become prevalent in computer science
+for all sort of applications.
+We are particularly keen on the use of category theory to model
+\emph{processes}; here, we use a special kind of category known as a
+\emph{symmetric monoidal category}, in which a morphism \(A \to B\) denotes a
+process from \(A\) to \(B\).
+There has recently been an explosion in the use of symmetric monoidal categories
+for modelling of processes, such as for quantum
+protocols~\cite{abramsky2004categorical}, signal flow
+diagrams~\cite{bonchi2014categorical,bonchi2015full}, linear
+algebra~\cite{bonchi2017interacting,zanasi2015interacting,bonchi2019graphical,boisseau2022graphical},
+dynamical systems~\cite{baez2015categories,fong2016categorical}, electrical
+circuits~\cite{boisseau2022string} and automatic
+differentiation~\cite{alvarez-picallo2023functorial}.
+
+Our goal is to apply this methodology to \emph{sequential digital circuits}.
+To begin, we will take a meander through the various categorical definitions and
+notation that underpin the mathematical work of this thesis.
+A similar outline can be found in any category theory textbook, inspiration was
+taken in particular from the opening of \cite{ghica2023hierarchical}.
 
 \input{sections/categories/terms}
 \input{sections/categories/categories}
@@ -17,15 +48,5 @@ inspiration was taken in particular from the opening of
 \input{sections/categories/freegen}
 \input{sections/categories/monoidal-theories}
 \input{sections/categories/backwards}
-\input{sections/categories/structure}
 
 \section{Related work}
-
-There has recently been an explosion in the use of symmetric monoidal categories
-for modelling of processes, such as for quantum
-protocols~\cite{abramsky2004categorical}, signal flow
-diagrams~\cite{bonchi2014categorical,bonchi2015full}, linear
-algebra~\cite{bonchi2017interacting,zanasi2015interacting,bonchi2019graphical,boisseau2022graphical},
-dynamical systems~\cite{baez2015categories,fong2016categorical}, electrical
-circuits~\cite{boisseau2022string} and automatic
-differentiation~\cite{alvarez-picallo2023functorial}.
