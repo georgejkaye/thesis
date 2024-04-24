@@ -7,9 +7,14 @@
 \ifthenelse{\boolean{shade-envs}}{%
     % Colours are as in Andrej Bauer's notes on realizability:
     % https://github.com/andrejbauer/notes-on-realizability
-    \colorlet{ShadeOfPurple}{blue!5!white}
+    \colorlet{ShadeOfBlue}{blue!5!white}
     \colorlet{ShadeOfYellow}{yellow!25!white}
-    \colorlet{ShadeOfGreen} {green!5!white}
+    \colorlet{ShadeOfGreen}{green!5!white}
+    \colorlet{ShadeOfRed}{red!5!white}
+    \definecolor{ShadeOfDarkGreen}{HTML}{0ac416}
+    \definecolor{ShadeOfDarkYellow}{HTML}{e8d100}
+    \definecolor{ShadeOfDarkRed}{HTML}{b00000}
+    \definecolor{ShadeOfDarkBlue}{HTML}{0212a8}
     \colorlet{ShadeOfBrown} {brown!10!white}
     % But we also shade proofs
     \colorlet{ShadeOfGray}  {gray!10!white}
@@ -86,14 +91,14 @@
         \renewcommand{\bgcolour}{#2}
     }
 }
-\setenvcolor{theorem}{ShadeOfPurple}{blue}
-\setenvcolor{lemma}{ShadeOfPurple}{blue}
-\setenvcolor{proposition}{ShadeOfPurple}{blue}
-\setenvcolor{corollary}{ShadeOfPurple}{blue}
-\setenvcolor{definition}{ShadeOfYellow}{yellow}
-\setenvcolor{notation}{ShadeOfYellow}{yellow}
-\setenvcolor{example}{ShadeOfGreen}{green}
-\setenvcolor{remark}{ShadeOfBrown}{brown}
+\setenvcolor{theorem}{ShadeOfBlue}{ShadeOfDarkBlue}
+\setenvcolor{lemma}{ShadeOfBlue}{ShadeOfDarkBlue}
+\setenvcolor{proposition}{ShadeOfBlue}{ShadeOfDarkBlue}
+\setenvcolor{corollary}{ShadeOfBlue}{ShadeOfDarkBlue}
+\setenvcolor{definition}{ShadeOfYellow}{ShadeOfDarkYellow}
+\setenvcolor{notation}{ShadeOfYellow}{ShadeOfDarkYellow}
+\setenvcolor{example}{ShadeOfGreen}{ShadeOfDarkGreen}
+\setenvcolor{remark}{ShadeOfRed}{ShadeOfDarkRed}
 \setenvcolor{proof}{ShadeOfGray}{gray}
 }{
 % Use closing symbols if we don't have colours
