@@ -1,28 +1,40 @@
 \section{Categories}
 
-So far, terms are purely syntax, and terms are only equal if they are
-constructed in precisely the same way.
-Even without considering the interaction of generators with each other, there
-are numerous `structural equations' which need to hold to be useful for
-modelling processes.
+Terms are purely syntax, so two terms are only equal if they are constructed in
+precisely the same way.
+As we have already seen, this is far too strong a relation; there may be
+many terms that, while constructed in different ways, look the same when drawn
+out as a diagram modulo the tiling.
+We need a way to discard the tile boundaries and work just with
+wires and generators.
+
+To identify the terms that describe the same process, we need to impose some
+equations on terms.
+There is an obvious question: what are these equations?
 
 \begin{example}
     Consider the term \(f \seq \id[n]\), which can be read as `run \(f\) and
-    then do nothing'.
-    Since we are only concerned with the \emph{input-output} behaviour of
-    processes, this should be the same as just \(f\).
-    However, as it stands \(f \seq \id[n]\) and \(f\) are not equal.
+    then do nothing' and is drawn as \(
+    \iltikzfig{strings/category/identity-l-lhs-tiles}[dom=m,cod=n]
+    \).
+    Clearly this is the same \(
+    \iltikzfig{strings/category/f-tile}[dom=m,cod=n]
+    \) but with the left wire elongated a bit.
+    So one equation we need is \(
+    \iltikzfig{strings/category/identity-l-lhs-tiles}[dom=m,cod=n]
+    =
+    \iltikzfig{strings/category/f-tile}[dom=m,cod=n]
+    \).
 \end{example}
 
-One could just add all the `right' equations manually, but what are the `right'
-equations?
-It turns out that an elegant mathematical formalism exists in the form of
-\emph{symmetric monoidal categories}.
+We could continue like this, thinking up the `right' equations, but this is a
+very ad-hoc way of working.
+It turns out that all the work has actually already been done before us, in the
+form of \emph{symmetric monoidal categories}.
 
-We begin by defining the structure underlying much of the work to come; that of
-a \emph{category}.
+We start by defining what a \emph{category} is.
 
-\begin{definition}[Categories]
+\begin{definition}[Category]
     \label{def:category}
     A \emph{category} \(\mcc\) consists of a class of \emph{objects}
     \(\ob{\mcc}\); a class of \emph{morphisms} \(\mor{\mcc}{A}{B}\)
@@ -60,6 +72,28 @@ A morphism \(f \in \mor{\mcc}{A}{B}\) is also called an \emph{arrow}, and will
 often be written \(\morph{f}{A}{B}\) accordingly.
 The subscripts on the object and morphism classes are also often omitted.
 
+\begin{remark}
+    The definition of a category uses \emph{classes} rather than sets as one
+    might expect; this is due to size issues and Russell's paradox regarding
+    the impossibility of the `set of all sets'.
+    Later on we will encounter categories where the class of objects really is
+    too big to be encapsulated in a set, such as the category of categories.
+\end{remark}
+
+The definition of composition \(\circ\) is `right to left': \(g \circ f\) means
+`g after f'.
+For our use case of processes and string diagrams it can be more intuitive to
+define composition the other way round.
+
+\begin{notation}
+    \emph{Diagrammatic order} composition is written as
+    \(f \seq g \coloneqq g \circ f\).
+\end{notation}
+
+The expression \(f \seq g\) is read `f then g'.
+The name `diagrammatic order' comes from how it corresponds to how we draw
+composition in string diagrams.
+
 \subsection{Commutative diagrams}
 
 Equations in category theory can be expressed using \emph{commutative diagrams}.
@@ -76,12 +110,6 @@ We say that the above two diagrams \emph{commute} precisely because \(
 \id[B] \circ f = f = f \circ \id[A]
 \) and \((h \circ g) \circ f = h \circ (g \circ f)\): no matter which path one
 takes, the results are equal.
-Using commutative diagrams suggests another notation for composition.
-
-\begin{notation}
-    \emph{Diagrammatic order} composition is written as
-    \(f \seq g \coloneqq g \circ f\).
-\end{notation}
 
 \subsection{Examples of categories}
 
@@ -106,12 +134,13 @@ now be provided.
 \end{example}
 
 \begin{example}[Posets]
-    A \emph{partial order} on a set \(X\) is a reflexive, antisymmetric and
-    transitive relation \(\leq \subseteq X \times X\).
+    A \emph{partial order} on a set \(A\) is a reflexive, antisymmetric and
+    transitive relation \({\leq} \subseteq A \times B\).
     A set equipped with a partial order is called a
     \emph{partially ordered set}, or \emph{poset} for short.
-    A function \(\morph{f}{X}{Y}\) between posets is called \emph{monotone} if
-    \(x \leq y\) implies that \(f(x) \leq f(y)\).
+    For posets \((A,{\leq_A})\) and \((B,{\leq_B})\), a function
+    \(\morph{f}{A}{B}\) is called \emph{monotone} if \(a \leq_A a^\prime\)
+    implies that \(f(a) \leq_B f(a^\prime)\).
 
     Much like how sets form a category, posets form the category \(\pos\), where
     \(\ob{\pos}\) are sets and \(\mor{\pos}{X}{Y}\) are the monotone functions
@@ -119,14 +148,14 @@ now be provided.
 \end{example}
 
 \begin{example}[Monoids]
-    A \emph{monoid} is a tuple \((X, *, \bullet)\) where \(X\) is a set called
-    the \emph{carrier}, \(\morph{*}{X \times X}{X}\) is a binary operation
-    called the \emph{multiplication}, and \(\bullet \in X\) is an element called
-    the \emph{unit}, such that \(x * \bullet = x = \bullet * x\) for any
-    \(x \in X\).
-    A \emph{monoid homomorphism} between two monoids \((X, *, e_X)\) and
-    \((Y, +, e_Y)\) is a map \(\morph{h}{X}{Y}\) such that
-    \(h(x * y) = h(x) + h(y)\) and \(h(e_X) = e_Y\).
+    A \emph{monoid} is a tuple \((A, *, \bullet)\) where \(A\) is a set called
+    the \emph{carrier}, \(\morph{*}{A \times A}{A}\) is a binary operation
+    called the \emph{multiplication}, and \(\bullet \in A\) is an element called
+    the \emph{unit}, such that \(a * \bullet = a = \bullet * a\) for any
+    \(a \in A\).
+    A \emph{monoid homomorphism} between two monoids \((A, *, e_A)\) and
+    \((B, +, e_B)\) is a map \(\morph{h}{A}{B}\) such that
+    \(h(a * a^\prime) = h(a) + h(a^\prime)\) and \(h(e_A) = e_B\).
     There is a category \(\mon\) with the objects as monoids and morphisms as
     their homomorphisms.
 \end{example}
@@ -149,8 +178,10 @@ now be provided.
 
 \subsection{Properties of objects and morphisms}
 
-There are several properties that objects and morphisms can hold which will come
-in useful in this thesis.
+As we have established, the whole point of category theory is to \emph{abstract}
+away from concrete settings.
+This means that rather than proving results about specific objects and
+morphisms, we can prove results about \emph{properties} they may have.
 
 \begin{definition}[Initial object]
     An object \(C\) in a category \(\mcc\) is \emph{initial} if, for any other
@@ -207,15 +238,11 @@ There is also a categorical generalisation of \emph{invertible} morphisms.
 
 \subsection{Universal constructions}
 
-Category theory is useful because it generalises many structures found in
-mathematics, allowing us to apply core results in a plethora of settings.
-The core idea is that of a \emph{universal property}: a unique morphism that
-shows that a certain candidate construction is indeed the `best'.
+One of the core ideas in category theory is that of a \emph{universal property}:
+a unique morphism that shows that a certain candidate construction is indeed the
+`best' way to describe something.
 If something satisfies a universal property, then we know that we can safely
 apply the relevant results without worrying about the precise construction.
-
-We will now detail some common universal properties that will occur in this
-thesis.
 
 \begin{definition}[Product]
     Given a category \(\mcc\) and objects \(A,B \in \mcc\), their \emph{product}

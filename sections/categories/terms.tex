@@ -81,7 +81,7 @@ a simple exercise to define them for larger numbers of wires.
     \id[k+1]
     \coloneqq
     \id[k] \tensor \id[1]
-    \)
+    \).
 \end{notation}
 \begin{notation}[Composite symmetries]\label{not:composite-symmetries}
     Composite symmetries \(\swap{m}{n}\) for \(m, n \in \nat\) are defined
@@ -115,7 +115,7 @@ context.
     Examples of terms in \((\Sigma_g)_\mathsf{t}\) include
     \begin{gather*}
         (\orgate \seq \id[1]) \tensor ((\id[1] \tensor \notgate) \seq \andgate)
-        \quad
+        \\
         ((\id[1] \tensor \id[1]) \seq \orgate) \tensor ((\id[1] \tensor \notgate) \seq \andgate)
         \\
         ((\id[1] \tensor \id[1]) \tensor (\id[1] \tensor \notgate)) \seq (\orgate \tensor \andgate)
@@ -174,8 +174,9 @@ tensor as \emph{vertical juxtaposition}.
         \qquad
         \iltikzfig{strings/terms/example-2}
     \end{gather*}
-    While each term has a very different text string, and is tiled differently
-    in each diagram, the connectivity of the thick wires is actually the same!
+    Note that while each term has a very different text string, and is tiled
+    differently in each diagram, the connectivity of the thick wires is actually
+    the same!
 \end{example}
 
 The above example illuminates the drawback of reasoning with term strings or
@@ -185,6 +186,18 @@ same term syntactically.
 We need some equations to identify terms appropriately; we will soon see how
 these equations can be derived using a mathematical structure known as a
 \emph{category}.
+
+\begin{notation}
+    So far we have drawn multiple wires in parallel either explicitly or
+    by using vertical dots.
+    In the interests of clarity, we will now start to collapse multiple wires
+    into a single wire, annotated with the appropriate number when not clear
+    from context: so \(
+    \iltikzfig{strings/category/f-tile}[box=f,dom=m,cod=n]
+    \coloneqq
+    \iltikzfig{strings/category/f-wires-tile}[box=f,dom=m,cod=n]
+    \).
+\end{notation}
 
 \section{Coloured terms}
 
@@ -219,12 +232,12 @@ When the wires are coloured, more information is needed: the inputs and outputs
 must be specified in terms of their colours and their ordering.
 
 \begin{notation}[Words]
-    Given a set \(A\), the set of words of elements of \(X\) is denoted
+    Given a set \(A\), the set of words of elements of \(A\) is denoted
     \(\freemon{A}\).
     Words are written \(x_0x_1x_2{\cdots}x_{n-1}\); variables representing
     arbitrary words are generally written with an
     overline \(
-    \listvar{x}, \listvar{y}, \listvar{z}... \in \freemon{X}
+    \listvar{x}, \listvar{y}, \listvar{z}... \in \freemon{A}
     \).
     Given two words \(\listvar{x}, \listvar{y}\), their concatenation is
     denoted \(\listvar{xy}\).
@@ -238,6 +251,10 @@ must be specified in terms of their colours and their ordering.
     For a countable set \(C\), a set of \emph{\(C\)-coloured generators}
     \(\Sigma\) is a set equipped with two functions \(\Sigma \to \freemon{C}\).
 \end{definition}
+
+Coloured terms are then generated in the same way as monochromatic terms, but
+with the additional constraint that terms can only be composed if the coloured
+wires in the interfaces match up.
 
 \begin{definition}[Coloured terms]
     For a countable set \(C\) and a set of \(C\)-coloured generators, a

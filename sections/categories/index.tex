@@ -6,15 +6,16 @@ In this thesis, our foundation is that of \emph{category theory}, in which
 mathematical structures are expressed in terms of \emph{objects} and
 \emph{morphisms} between them, which can be composed together.
 
-Category theory has its origins in the early 1940s when Eilenberg and Mac Lane
-were working on problems in algebraic topology.
-The pair discovered that many homomorphisms were
-`natural'~\cite{eilenberg1942natural}; this led to the notion of
-\emph{functors} and \emph{natural transformations}, two key categorical
-concepts
-To establish the general framework in which these structures operate, the notion
-of a \emph{category} was required; Eilenberg and Mac Lane presented the
-formal definition later in 1945~\cite{eilenberg1945general}.
+Category theory has its origins in the early 1940s.
+When Eilenberg and Mac Lane were working on problems in algebraic topology, they
+set about defining what it meant for a homomorphism to be
+`natural'~\cite{eilenberg1942natural}; what we now call a
+\emph{natural transformation}.
+To do this, they needed to establish a notion of \emph{functors}, between which
+natural transformations map.
+Later on, to properly work with functors the notion of a \emph{category} was
+required; the formal definition was first presented in
+1945~\cite{eilenberg1945general}.
 
 It has since turned out that category theory can be used as something of a
 `universal language' in mathematics, as many familiar mathematical structures
@@ -58,8 +59,6 @@ Modelling processes categorically relies on a class of categories known as
 \emph{symmetric monoidal categories}~\cite{maclane1963natural}, in which the
 usual \emph{sequential} composition is joined by another operation called the
 \emph{tensor}, a notion of \emph{parallel} composition.
-This opens a whole new dimension to play with, and allows for a plethora of
-interesting structures to be modelled.
 Our setting of digital circuits introduces another way of creating new things
 from simpler components: we can create a \emph{feedback loop} by attaching some
 outputs to inputs.
@@ -97,5 +96,3 @@ inspiration was taken in particular from the opening of
 \input{sections/categories/freegen}
 \input{sections/categories/monoidal-theories}
 \input{sections/categories/backwards}
-
-\section{Related work}
