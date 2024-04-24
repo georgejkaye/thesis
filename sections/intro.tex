@@ -10,12 +10,12 @@
 Category theory is an especially natural concept to apply to computer science
 because it is a setting in which \emph{composition} is king.
 Rather than dealing with complicated and unwieldy terms, we can split them
-up into simpler \emph{components}, which can themselves be split up into simpler
+up into simpler components, which can themselves be split up into simpler
 components and so on until we reach some sort of atomic components at the leaves
 of the tree.
 This means that if one defines the behaviour of these atomic components and
 how they interact with composition, it is possible to quickly establish the
-behaviour of some larger time by piecing things together, and moreover we can
+behaviour of some larger term by piecing things together, and moreover we can
 reason \emph{inductively} over the structure of composite terms.
 Composition is not even restricted to the mathematical realm; it is generally
 considered good practice to write programs in terms of small, easily reusable
@@ -25,44 +25,24 @@ imperative of languages.
 
 But what exactly does it mean for a theory to be \emph{fully} compositional?
 It is a term often thrown around without much thought to its precise meaning,
-not least by the author while attempting to bat off questions about their work's
-novelty from anonymous reviewers, conference attendees, and esteemed
-mathematicians on social media.
+not least by the author while attempting to bat off questions from anonymous
+reviewers, conference attendees, and esteemed mathematicians on social media.
 Here, we take full compositionality to mean that we can compose terms without
-fear that we willsomehow create a degenerate term and leave our well-behaved
+fear that we will somehow create a degenerate term and leave our well-behaved
 setting.
 We should not have to perform any sort of semantic check or `peek inside' a term
 to find out if composition is permitted; we should be able to treat everything
 as a black box and reason solely with interfaces.
 
-While compositionality is the core tenet of all category theory, it is in
-\emph{symmetric monoidal categories}~\cite{maclane1963natural} where the power
-really starts to shine.
-In these categories, the usual \emph{sequential} composition is joined by
-another operation called the \emph{tensor}, which can be interpreted as a notion
-of \emph{parallel} composition.
-This opens a whole new dimension to play with, and allows for a plethora of
-interesting structures to be modelled.
-Our setting of digital circuits introduces another way of creating new things
-from simpler components: we can create a \emph{feedback loop} by attaching some
-outputs to inputs.
-This too can be viewed in a categorical perspective in the form of a
-\emph{symmetric traced monoidal category}~\cite{joyal1996traced}.
-
-Perhaps the most well known application of symmetric monoidal categories in
-recent times is for modelling
+Perhaps the most successful use of category theory for compositional processes
+in recent times is for modelling
 \emph{quantum protocols}~\cite{abramsky2004categorical}.
 This line of work resulted in the
 \emph{ZX calculus}~\cite{coecke2008interacting}, in which quantum
 circuits are depicted by connecting so-called `spiders' together to create a
 network.
-The latter is a key example of \emph{string diagrams}~\cite{joyal1991geometry},
-a graphical notation for symmetric monoidal categories.
-Since their inception, string diagrams have been extended with notation for all
-sorts of categorical structure, such as for a trace~\cite{joyal1996traced}; we
-refer the reader to Selinger's survey~\cite{selinger2011survey} for the full
-tour.
-
+This is a key example of \emph{string diagrams}~\cite{joyal1991geometry},
+a graphical notation for terms in \emph{symmetric monoidal categories}.
 While string diagrams do not add any more computational power to
 standard one-dimensional reasoning, they are
 immensely beneficial because the categorical axioms of associativity and
@@ -77,18 +57,6 @@ With string diagrams, it is possible to give talks about category theory without
 even mentioning categories at all; there have even been books written with this
 philosophy~\cite{coecke2018picturing}!
 
-String diagrams, and more broadly the use of monoidal categories to model
-compositional processes, has seen an explosion in the past thirty years.
-They have been used in the study of cyclic lambda
-calculi~\cite{hasegawa1997recursion}, fixpoint including dynamical
-systems~\cite{baez2015categories,fong2016categorical}, signal flow
-diagrams~\cite{bonchi2014categorical,bonchi2015full,bonchi2017refinement,bonchi2021survey},
-linear algebra~\cite{bonchi2017interacting,zanasi2015interacting,bonchi2019graphical,boisseau2022graphical},
-finite-state automata~\cite{piedeleu2021string,piedeleu2022finite}, first order
-logic~\cite{bonchi2024diagrammatic}, electrical
-circuits~\cite{boisseau2022string} and automatic
-differentiation~\cite{alvarez-picallo2023functorial}.
-
 \section{Compositionality and sequential circuits}
 
 One might argue that composition is already widespread in sequential circuit
@@ -97,33 +65,31 @@ common primitive components together to make something more complex.
 But this is done informally, as the behaviour of a circuit is usually tested
 by \emph{simulating} it and seeing what happens.
 We can simulate the subcomponents, but what does this mean for their composite?
-Without a mathematical guarantee of full compositionality, we have no guarantee
-that connecting two well-behaved circuits together will result in another
-well-behaved circuit: for example, there is always the threat of the dreaded
-\emph{non-delay-guarded feedback} rearing its head and leading to unpredictable
-behaviour.
+Without a guarantee of full compositionality, we have no reason to
+believe that connecting two well-behaved circuits together will result in
+another well-behaved circuit: for example, there is always the threat of
+creating a dreaded \emph{non-delay-guarded feedback loop}.
 
 Some approaches try to nullify this by considering only some `safe' subset of
 circuits which will always be well-behaved~\cite{christensen2021wire}, or by
 introducing some sort of `type system' on wires so that components may only be
 connected if their timings match up~\cite{nigam2023modular}.
-While these are useful perspectives on the problem, this is still shying away
-from truly full compositionality.
+While these are useful perspectives, they still shy away from true full
+compositionality.
 Our goals are simple: we wish to be able to compose \emph{any} two circuits
 together without our reasoning falling apart.
-The result of the composition may not produce anything useful, but we will still
+The result of the composition may not be a useful circuit, but we will still
 be able to see that this is the case.
 
-Of course, we cannot claim that mathematics had ignored sequential circuits
-until we came along!
+Of course, we cannot claim that we are the first to bring mathematics to
+sequential circuits!
 \emph{Mealy machines}~\cite{mealy1955method}, the \emph{de facto} structure for
 specifying the behaviour of sequential circuits, are ancient and it is well
-known how they should be composed (e.g. \cite{ginzburg2014algebraic}).
+known how they should be composed~\cite{ginzburg2014algebraic}.
 In more recent times Mealy machines have been given a categorical treatment as
 certain kinds of \emph{coalgebra}~\cite{rutten2006algebraic,bonsangue2008coalgebraic}.
-However, Mealy machines abstract away from the \emph{components} of the circuit:
-we are keen to preserve the link between structure and behaviour by constructing
-circuits as morphisms in some symmetric monoidal category.
+However, Mealy machines abstract away from the \emph{components} of the circuit;
+we are keen to preserve the link between structure and behaviour.
 
 While not explicitly categorical, the idea of representing circuits as
 mathematical expressions built up from primitive components was studied in the
@@ -143,7 +109,7 @@ already bears a great resemblance to the work presented in this thesis; circuits
 are presented as morphisms in a symmetric monoidal category freely generated
 over a set of primitive logic gates.
 
-However, as the name might suggest, Lafont's work only considered circuits that
+As the name might suggest, Lafont's work only considered circuits that
 implemented \emph{Boolean functions}; these circuits did not have any notion of
 delay or feedback.
 It was not until 2016 that these circuits were given the categorical treatment
@@ -190,12 +156,10 @@ include an extended case study into circuits constructed from
 \emph{Belnap logic gates}~\cite{belnap1977useful}, an extension of traditional
 Boolean logic containing the usual \(\andgate\), \(\orgate\) and \(\notgate\)
 gates.
-The switch from a two-valued to a four-valued logic is crucial to how a fully
-compositional theory for sequential digital circuits has been obtained.
 
 \subsubsection{Denotational semantics}
 
-While the previous circuits work did discuss assigning semantics to circuits
+While the previous circuits work discussed assigning semantics to circuits
 of circuits in terms of streams, soundness and completeness of this model was
 not considered.
 It was not even deemed important enough to appear in the conference version of
@@ -209,7 +173,7 @@ circuit can be expressed as one of these stream functions, and every such stream
 function can be mapped to a syntactic circuit which has the original stream
 function as its behaviour.
 
-On the way, we also define a traced PROP of Mealy machines lifted to work on
+Along the way, we also define a traced PROP of Mealy machines lifted to work on
 lattices as a `bridge' between circuits and stream functions.
 As well as being essential for showing the soundness and completeness of the
 denotational semantics, having this category of Mealy machines is nice to have
@@ -239,7 +203,7 @@ adequate congruence relation~\cite{gordon1998operational}.
 
 One of the confusing points of the original work on circuits was the category
 of circuits was quotiented by certain equations that `felt right'.
-However, in the end these circuits were not enough to show the desired results,
+In the end these equations were not enough to show the desired results,
 so additional quotients of `extensional equivalence' were used to add in the
 remaining equalities.
 

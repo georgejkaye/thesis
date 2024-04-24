@@ -4,38 +4,87 @@ When setting about developing a \emph{mathematical foundation} for something,
 the first step is of course to decide exactly what foundation to pick!
 In this thesis, our foundation is that of \emph{category theory}, in which
 mathematical structures are expressed in terms of \emph{objects} and
-\emph{morphisms} between them.
+\emph{morphisms} between them, which can be composed together.
 
 Category theory has its origins in the early 1940s when Eilenberg and Mac Lane
 were working on problems in algebraic topology.
-The pair discovered that many homomorphisms were `natural' ;
-this led to the notion of \emph{functors} and \emph{natural transformations},
-two key categorical concepts which will be explored in
-\cref{sec:functors} and \cref{sec:natural-transformations} respectively.
-To establish the general framework in which functors and natural transformations
-operate, the notion of a \emph{category} was required; Eilenberg and Mac Lane
-first presented the definition later in 1945~\cite{eilenberg1945general}.
+The pair discovered that many homomorphisms were
+`natural'~\cite{eilenberg1942natural}; this led to the notion of
+\emph{functors} and \emph{natural transformations}, two key categorical
+concepts
+To establish the general framework in which these structures operate, the notion
+of a \emph{category} was required; Eilenberg and Mac Lane presented the
+formal definition later in 1945~\cite{eilenberg1945general}.
 
-Since then, the use of category theory has become prevalent in computer science
-for all sort of applications.
-We are particularly keen on the use of category theory to model
-\emph{processes}; here, we use a special kind of category known as a
-\emph{symmetric monoidal category}, in which a morphism \(A \to B\) denotes a
-process from \(A\) to \(B\).
-There has recently been an explosion in the use of symmetric monoidal categories
-for modelling of processes, such as for quantum
-protocols~\cite{abramsky2004categorical}, signal flow
-diagrams~\cite{bonchi2014categorical,bonchi2015full}, linear
-algebra~\cite{bonchi2017interacting,zanasi2015interacting,bonchi2019graphical,boisseau2022graphical},
-dynamical systems~\cite{baez2015categories,fong2016categorical}, electrical
-circuits~\cite{boisseau2022string} and automatic
-differentiation~\cite{alvarez-picallo2023functorial}.
+It has since turned out that category theory can be used as something of a
+`universal language' in mathematics, as many familiar mathematical structures
+can be expressed solely in terms of objects and morphisms.
+This makes category theory an incredibly powerful tool; rather than having to
+repeatedly prove things about concrete structures, abstract results can be
+instantiated to a plethora of settings.
 
-Our goal is to apply this methodology to \emph{sequential digital circuits}.
+\begin{example}
+    A common structure in set theory is the \emph{Cartesian product}, in
+    which two sets \(A\) and \(B\) can be combined to create a new set
+    \(A \times B\) containing pairs of elements \((a,b)\).
+    A product is equipped with two functions
+    \(\morph{\mathsf{fst}}{A \times B}{A}\) and
+    \(\morph{\mathsf{snd}}{A \times B}{B}\) to extract the first and second
+    element from a pair respectively.
+
+    Many properties of Cartesian products are not specific to sets,
+    but arise from the presence of the two projections.
+    In category theory there is a notion of \emph{categorical product} in which
+    sets are generalised to objects and the projection functions to morphisms;
+    this allows results about products to be applied to a wide range of
+    structures in addition to the Cartesian product, such as set intersection,
+    greatest lower bounds, greatest common divisors, and more complicated
+    algebraic structures.
+\end{example}
+
+Category theory has found a good home among computer scientists, as
+it can be used to shed new light upon topics such as semantics of programming
+languages~\cite{oles1982categorytheoretic}, databases~\cite{spivak2012functorial},
+probabilistic programming~\cite{cho2019disintegration,fritz2020synthetic}, and
+machine learning~\cite{fong2019backprop,cockett2020reverse}.
+Category theory also underpins functional programming languages such as
+Haskell and OCaml, which use categorical concepts such as functors and monads
+for computational purposes.
+
+One application of category theory we are particularly interested in is that of
+\emph{process theories}; here a morphism \(A \to B\) is a process that
+transforms some input \(A\) into an output \(B\).
+Modelling processes categorically relies on a class of categories known as
+\emph{symmetric monoidal categories}~\cite{maclane1963natural}, in which the
+usual \emph{sequential} composition is joined by another operation called the
+\emph{tensor}, a notion of \emph{parallel} composition.
+This opens a whole new dimension to play with, and allows for a plethora of
+interesting structures to be modelled.
+Our setting of digital circuits introduces another way of creating new things
+from simpler components: we can create a \emph{feedback loop} by attaching some
+outputs to inputs.
+This too can be viewed in a categorical perspective in the form of a
+\emph{symmetric traced monoidal category}~\cite{joyal1996traced}.
+
+The use of symmetric monoidal categories to model compositional processes, has
+seen an explosion in the past thirty years.
+In additional to the aforementioned quantum protocols~\cite{coecke2008interacting},
+they have been used in the study of cyclic lambda
+calculi~\cite{hasegawa1997recursion}, dynamical
+systems~\cite{baez2015categories,fong2016categorical}, signal flow
+diagrams~\cite{bonchi2014categorical,bonchi2015full,bonchi2017refinement,bonchi2021survey},
+linear algebra~\cite{bonchi2017interacting,zanasi2015interacting,bonchi2019graphical,boisseau2022graphical},
+finite-state automata~\cite{piedeleu2021string,piedeleu2022finite}, electrical
+circuits~\cite{boisseau2022string}, automatic
+differentiation~\cite{alvarez-picallo2023functorial}, synthetic
+chemistry~\cite{gale2023categorical}, first order
+logic~\cite{bonchi2024diagrammatic}, among many others!
+
 To begin, we will take a meander through the various categorical definitions and
 notation that underpin the mathematical work of this thesis.
-A similar outline can be found in any category theory textbook, inspiration was
-taken in particular from the opening of \cite{ghica2023hierarchical}.
+A similar outline can be found in most category theory textbooks, but
+inspiration was taken in particular from the opening of
+\cite{ghica2023hierarchical}.
 
 \input{sections/categories/terms}
 \input{sections/categories/categories}
