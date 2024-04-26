@@ -124,9 +124,10 @@ context.
 
 \section{String diagrams}
 
-It is clear that even simple terms described using one-dimensional text
+Even simple terms described using one-dimensional text
 strings quickly become indecipherable.
-Fortunately, terms have an graphical syntax known as \emph{string diagrams} that
+Fortunately, terms have an graphical syntax known as
+\emph{string diagrams}~\cite{joyal1991geometry} that
 can shed much light on what is actually going on.
 In a string diagram, a generator \(\morph{\phi}{m}{n}\) is drawn as a box with
 \(m\) inputs and \(n\) outputs \(
@@ -155,6 +156,14 @@ tensor as \emph{vertical juxtaposition}.
     =
     \iltikzfig{strings/monoidal/tensor-tiles}[box1=f,box2=g,dom1=m,cod1=n,dom2=p,cod2=q]
 \]
+
+\begin{remark}
+    The direction that the `flow' of string diagrams travels from inputs to
+    outputs is a hotly-debated topic; in this thesis we adopt the left-to-right
+    approach.
+    If you disagree, you could rotate the document by ninety degrees or
+    use a mirror.
+\end{remark}
 
 \begin{example}\label{ex:term-diagrams}
     Recall the set of logic gate generators \(\Sigma\) from \cref{ex:terms}.

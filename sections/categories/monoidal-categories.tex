@@ -26,26 +26,26 @@ parallel composition!
     along with natural isomorphisms
     \begin{itemize}
         \item \(
-            \associator{A}{B}{C}
-            \colon
-            A \tensor (B \tensor C)
-            \cong
-            (A \tensor B) \tensor C
-            \) called the \emph{associator};
+              \associator{A}{B}{C}
+              \colon
+              A \tensor (B \tensor C)
+              \cong
+              (A \tensor B) \tensor C
+              \) called the \emph{associator};
         \item \(
-            \leftunitor{A}
-            \colon
-            I \tensor A
-            \cong
-            A
-            \) called the \emph{left unitor}; and
+              \leftunitor{A}
+              \colon
+              I \tensor A
+              \cong
+              A
+              \) called the \emph{left unitor}; and
         \item \(
-            \rightunitor{A}
-            \colon
-            A \tensor I
-            \cong
-            A
-            \) called the \emph{right unitor}
+              \rightunitor{A}
+              \colon
+              A \tensor I
+              \cong
+              A
+              \) called the \emph{right unitor}
     \end{itemize}
     such that the \emph{pentagon} and the \emph{triangle} diagrams below
     commute:
@@ -63,7 +63,6 @@ parallel composition!
     Cartesian product (\(A \tensor B \coloneqq A \times B\)) and the unit as the
     singleton set (\(I \coloneqq \mathbbm{1}\)).
 \end{example}
-
 
 \begin{notation}
     We adopt the convention that \(f \tensor g \seq h \tensor k\) should be
@@ -87,6 +86,12 @@ draw two wires \(A\) and \(B\).
     \iltikzfig{strings/monoidal/tensor-notation-noboxes}[colour=white,dom1=A,dom2=C,cod1=B,cod2=D,box1=f,box2=g]
 \end{gather*}
 
+\begin{example}
+    \(\set\) is a monoidal category, with the tensor product defined as the
+    Cartesian product (\(A \tensor B \coloneqq A \times B\)) and the unit as the
+    singleton set (\(I \coloneqq \mathbbm{1}\)).
+\end{example}
+
 The definition of monoidal category we have presented is quite general,
 particularly with regards to the natural isomorphisms for unitors and
 associators.
@@ -101,21 +106,13 @@ nose'.
 In a strict monoidal category, the unitality and associativity of the tensor
 hold as equations, as they do for regular composition in a category.
 With this in mind, it can be instructive to view the coherences of a strict
-monoidal category in terms of equations: these are listed in
+monoidal category in terms of equations: these are illustrated in
 \cref{fig:mc-equations}.
-Once again, intuition is better gleaned when these equations are drawn as string
-diagrams, as illustrated in \cref{fig:mc-equations-strings}.
 
-\input{floats/mc-equations}
-\input{floats/mc-equations-strings}
+\input{sections/categories/floats/mc-equations}
 
-\begin{example}
-    \(\set\) is a monoidal category, with the tensor product defined as the
-    Cartesian product (\(A \tensor B \coloneqq A \times B\)) and the unit as the
-    singleton set (\(I \coloneqq \mathbbm{1}\)).
-\end{example}
 
-\subsection{Symmetric monoidal categories}
+\section{Symmetric monoidal categories}
 
 We can now construct morphisms by composing them in sequence and in parallel.
 However, there is no way to cross over the wires that connect boxes together.
@@ -126,7 +123,7 @@ isormorphism.
     \label{def:symmetric-monoidal-category}
     A \emph{symmetric monoidal category} (SMC) is a monoidal category \(\mcc\)
     equipped with a natural isomorphism \(
-        \swap{A}{B} \colon A \tensor B \cong B \tensor A
+    \swap{A}{B} \colon A \tensor B \cong B \tensor A
     \) such that the following diagrams commute:
     \begin{center}
         \includestandalone{figures/category/coherences/symmetry-unit}
@@ -138,12 +135,12 @@ isormorphism.
     \end{center}
 \end{definition}
 
-Recall that as \(\sigma\) is a natural isomorphism, it induces
+As \(\sigma\) is a natural isomorphism, it induces
 a \emph{family} of morphisms \(
-    \morph{\swap{A}{B}}{A \tensor B}{B \tensor A}
+\morph{\swap{A}{B}}{A \tensor B}{B \tensor A}
 \) for every pair of objects \(A\) and \(B\).
 In string diagrams, each such morphism \(\swap{A}{B}\) is drawn as \(
-    \iltikzfig{strings/symmetric/symmetry}[obj1=A, obj2=B, colour=white]
+\iltikzfig{strings/symmetric/symmetry}[obj1=A, obj2=B, colour=white]
 \): the swapping of wires \(A\) and \(B\).
 As with identities, the use of this morphism is so common that we usually
 drop the box around it.
@@ -151,15 +148,12 @@ drop the box around it.
 Once again, we are primarily concerned with \emph{strict} symmetric
 monoidal categories.
 The equations of strict symmetric monoidal categories are listed in
-\cref{fig:smc-equations} and the string diagram interpretations in
-\cref{fig:smc-equations-strings}.
+\cref{fig:smc-equations}.
 
-\input{floats/smc-equations}
-
-\input{floats/smc-equations-strings}
+\input{sections/categories/floats/smc-equations}
 
 \begin{example}
     \(\set\) is a symmetric monoidal category, with \(
-        \morph{\swap{A}{B}}{A \times B}{B \times A}
+    \morph{\swap{A}{B}}{A \times B}{B \times A}
     \) defined as the function that swaps elements of a pair.
 \end{example}

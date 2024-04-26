@@ -6,21 +6,34 @@ However, we do not need the full generality of an arbitrary SMC; we can restrict
 to a more specialised setting known as \emph{PROPs}.
 
 \begin{definition}[PROP~\cite{maclane1965categorical}]
-    A \emph{PROP} (category of \emph{PRO}ducts and \emph{P}ermutations) is a
-    strict symmetric monoidal category with the natural numbers as objects and
-    addition as tensor product on objects.
+    A \emph{PROP} (short for category of \emph{PRO}ducts and
+    \emph{P}ermutations) is a strict symmetric monoidal category with the
+    natural numbers as objects and addition as tensor product on objects.
 \end{definition}
 
 PROPs are an especially good fit for reasoning with string diagrams; as any
 object \(n\) is equal to \(\bigotimes_{i < n} 1\), we can represent a morphism
 \(m \to n\) as a box with \(m\) incoming wires and \(n\) outgoing wires.
 
-\begin{example}
+\begin{definition}\label{def:freely-generated-prop}
+    Given a set of generators \(\generators\), let \(\smcsigma\) be the
+    PROP where \(\smcsigma(m, n)\) is the set of \(\Sigma\)-terms of type
+    \(m \to n\) quotiented by the equations of PROPs.
+\end{definition}
 
-\end{example}
+Such a category is known as a category \emph{freely generated over}
+\(\Sigma\), in that all of the morphisms in \(\smc{\generators}\) have been
+`generated' by combining elements of \(\Sigma\) in various ways using
+composition and tensor.
+Crucially, many \(\Sigma\)-terms correspond to the \emph{same} morphism in
+\(\smc{\generators}\), as the latter are subject to the equations of PROPs.
+
+When we discussed terms we also mentioned the notion of \emph{coloured} terms
+where the wires can be of different colours; appropriately, there is also a
+notion of a coloured PROP.
 
 \begin{definition}[Coloured PROP]
-    Given a set of \emph{olours} \(C\), a \emph{\(C\)-coloured PROP} is a strict
+    Given a set of \emph{colours} \(C\), a \emph{\(C\)-coloured PROP} is a strict
     symmetric monoidal category with the objects as lists in \(\freemon{C}\) and
     tensor product as word concatenation.
 \end{definition}
@@ -33,6 +46,11 @@ object \(n\) is equal to \(\bigotimes_{i < n} 1\), we can represent a morphism
 Note that this definition means that the empty list \(\varepsilon\) is the unit
 object in any \(\mcc\)-sorted PROP.
 
-\begin{example}
-
-\end{example}
+\begin{definition}\label{def:freely-generated-coloured-prop}
+    Given a countable set of colours \(C\) generators \(\generators\), let
+    \(\smcsigmac\) be the
+    \(\natplus\)-sorted PROP where
+    \(\smc{\generators}(\listvar{m}, \listvar{n})\) is the set of
+    \(\Sigma\)-terms of type \(\listvar{m} \to \listvar{n}\) quotiented by
+    the equations of \(C\)-coloured PROPs.
+\end{definition}

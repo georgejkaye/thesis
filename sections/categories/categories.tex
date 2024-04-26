@@ -80,19 +80,26 @@ The subscripts on the object and morphism classes are also often omitted.
     too big to be encapsulated in a set, such as the category of categories.
 \end{remark}
 
-The definition of composition \(\circ\) is `right to left': \(g \circ f\) means
-`g after f'.
-For our use case of processes and string diagrams it can be more intuitive to
-define composition the other way round.
+By treating terms as morphisms, it is clear to see how they they slip into the
+categorical setting.
+When discussing terms in the previous section it was more intutiive to use
+composition `left-to-right' rather than the `right-to-left' composition
+\(\circ\).
 
 \begin{notation}
     \emph{Diagrammatic order} composition is written as
     \(f \seq g \coloneqq g \circ f\).
 \end{notation}
 
-The expression \(f \seq g\) is read `f then g'.
-The name `diagrammatic order' comes from how it corresponds to how we draw
-composition in string diagrams.
+\input{sections/categories/floats/c-equations}
+
+The equations of categories are illustrated with string diagram notation
+in~\cref{fig:c-equations}.
+With these equations in play, we can drop the tile boundaries around terms
+comprised only of generators, identities and sequential composition.
+However, this only helps with one-dimensional diagrams; how do we deal with
+\emph{parallel} composition?
+To do this we will require some more structure on our categories.
 
 \subsection{Commutative diagrams}
 
@@ -181,11 +188,13 @@ now be provided.
 As we have established, the whole point of category theory is to \emph{abstract}
 away from concrete settings.
 This means that rather than proving results about specific objects and
-morphisms, we can prove results about \emph{properties} they may have.
+morphisms, we can often reuse results about particular \emph{properties} they
+may have.
 
 \begin{definition}[Initial object]
     An object \(C\) in a category \(\mcc\) is \emph{initial} if, for any other
-    object \(X \in \mcc\) there exists a unique morphism \(C \to X\).
+    object \(X \in \mcc\) there exists a unique morphism \(C \to X\), the
+    so-called `absurd function'.
 \end{definition}
 
 \begin{example}
@@ -193,8 +202,8 @@ morphisms, we can prove results about \emph{properties} they may have.
     a unique function from \(\emptyset\) to any set \(X\).
 \end{example}
 
-In category theory there is often the notion of a \emph{dual} construction, in
-which all the arrows are flipped.
+Most notions in category also have a \emph{dual} variant, in which all the
+arrows are flipped.
 
 \begin{definition}[Terminal object]
     An object \(C\) in a category \(\mcc\) is \emph{terminal} if, for any other
@@ -207,8 +216,7 @@ which all the arrows are flipped.
     the function with action \(x \mapsto \star\).
 \end{example}
 
-Morphisms are usually the interesting part of any category; sometimes we are
-only concerned with certain subclasses of morphisms.
+There are also some properties of morphisms that we will make use of.
 
 \begin{definition}[Monomorphism]
     A morphism \(\morph{f}{A}{B} \in \mcc\) is called a \emph{monomorphism} (or
@@ -217,8 +225,8 @@ only concerned with certain subclasses of morphisms.
     \(g_1 = g_2\).
 \end{definition}
 
-One can think of monomorphisms are \emph{left-cancellative} morphisms.
-There is also a categorical generalisation of \emph{invertible} morphisms.
+One can think of monomorphisms as morphisms which are \emph{left-cancellative}.
+There is also a way to describe \emph{invertible} morphisms.
 
 \begin{definition}[Isomorphism]
     A morphism \(\morph{f}{A}{B} \in \mcc\) is called an \emph{isomorphism} (or
@@ -233,7 +241,7 @@ There is also a categorical generalisation of \emph{invertible} morphisms.
 
 \begin{example}
     In \(\set\), the monomorphisms are the injective functions and the
-    isomorphisms are the surjective functions.
+    isomorphisms are the bijective functions.
 \end{example}
 
 \subsection{Universal constructions}
@@ -260,7 +268,7 @@ apply the relevant results without worrying about the precise construction.
 \end{definition}
 
 \begin{example}
-    \(\set\) has products: the Cartesian product.
+    The product is \(\set\) is the Cartesian product.
 \end{example}
 
 As usual, there is the dual notion to consider.
@@ -281,7 +289,7 @@ As usual, there is the dual notion to consider.
 \end{definition}
 
 \begin{example}
-    \(\set\) has coproducts: the disjoint union.
+    The coproduct in \(\set\) is the disjoint union.
 \end{example}
 
 Finally, we will look at a useful construction concerning \emph{pairs} of

@@ -1,0 +1,35 @@
+\begin{figure}
+    \begin{center}
+        \begin{tabular}{ccccc}
+            \(
+            \id[A] \seq f = f
+            \)
+             &  &
+            \(f \seq \id[B] = f\)
+             &  &
+            \((f \seq g) \seq h = f \seq (g \seq h)\)
+            \\[1em]
+            \(
+            \iltikzfig{strings/category/identity-l-lhs}[box=f,colour=white,dom=A,cod=B]
+            =
+            \iltikzfig{strings/category/f}[box=f,dom=A,cod=B,colour=white]
+            \)
+             &  &
+            \(
+            \iltikzfig{strings/category/identity-r-lhs}[box=f,dom=A,cod=B,colour=white]
+            =
+            \iltikzfig{strings/category/f}[box=f,dom=A,cod=B,colour=white]
+            \)
+             &  &
+            \(
+            \iltikzfig{strings/category/associativity-lhs}[box1=f,box2=g,box3=h,colour=white,dom=A,cod=C]
+            =
+            \iltikzfig{strings/category/associativity-rhs}[box1=f,box2=g,box3=h,colour=white,dom=A,cod=C]
+            \)
+        \end{tabular}
+    \end{center}
+    \caption{
+        Equations of a category
+    }
+    \label{fig:c-equations}
+\end{figure}

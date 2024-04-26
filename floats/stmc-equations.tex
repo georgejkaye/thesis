@@ -1,27 +1,72 @@
 \begin{figure}
     \centering
-    \begin{gather*}
+    \begin{tabular}{c}
+        \(\trace{X}[A][D]{
+            \id[X] \tensor f \seq g \seq \id[X] \seq h
+        }
+        =
+        f \seq \trace{X}[B][C]{g} \seq h
+        \)
+        \\[1em]
+        \(
         \iltikzfig{strings/traced/naturality-lhs}[colour=white,box1=f,box2=g,box3=h,dom=A,cod=D]
         =
         \iltikzfig{strings/traced/naturality-rhs}[colour=white,box1=f,box2=g,box3=h,dom=A,cod=D]
-        \qquad
+        \)
+    \end{tabular}
+    \\[1em]
+    \rule[1em]{\textwidth}{0.1mm}
+    \\[0.1em]
+    \begin{tabular}{ccc}
+        \(
+        \trace{X}[A][B]{f \seq g \tensor \id[B]}
+        =
+        \trace{Y}[A][B]{g \tensor \id[A] \seq f}
+        \)
+         &  &
+        \(
+        \trace{X}[X][X]{\swap{X}{X}} = \id[X]
+        \)
+        \\[1em]
+        \(
         \iltikzfig{strings/traced/sliding-lhs}[colour=white,box1=f,box2=g,dom=A,cod=B]
         =
         \iltikzfig{strings/traced/sliding-rhs}[colour=white,box1=f,box2=g,dom=A,cod=B]
-        \\[1.5em]
+        \)
+         &  &
+        \(
         \iltikzfig{strings/traced/yanking-lhs}[obj=X,colour=white]
         =
         \iltikzfig{strings/category/identity}[obj=X,colour=white]
-        \qquad
+        \)
+    \end{tabular}
+    \\[1em]
+    \rule[1em]{\textwidth}{0.1mm}
+    \\[0.1em]
+    \begin{tabular}{ccc}
+        \(
+        \trace{X}[A][B]{\trace{X}[Y \tensor A][Y \tensor B]{f}}
+        =
+        \trace{X \tensor Y}[A][B]{f}
+        \)
+         &  &
+        \(
+        \trace{X}[A \tensor C][B \tensor F]{f \tensor g}
+        = \trace{X}[A][B]{f} \tensor g
+        \)
+        \\[1em]
+        \(
         \iltikzfig{strings/traced/vanishing-lhs}[colour=white,box=f,dom=A,cod=B,trace1=X,trace2=Y]
         =
         \iltikzfig{strings/traced/vanishing-rhs}[colour=white,box=f,dom=A,cod=B,trace1=X,trace2=Y]
-        \qquad
-        \iltikzfig{strings/traced/superposing-lhs}[colour=white,box1=f,box2=g,dom1=A,dom2=B,cod1=C,cod2=D,trace=X]
+        \)
+         &  &
+        \(
+        \iltikzfig{strings/traced/superposing-lhs}[colour=white,box1=f,box2=g,dom1=A,cod1=B,dom2=C,cod2=D,trace=X]
         =
-        \iltikzfig{strings/traced/superposing-rhs}[colour=white,box1=f,box2=g,dom1=A,dom2=B,cod1=C,cod2=D,trace=X]
-    \end{gather*}
-    \todo[inline]{Fix boxes in naturality equation}
+        \iltikzfig{strings/traced/superposing-rhs}[colour=white,box1=f,box2=g,dom1=A,cod1=B,dom2=C,cod2=D,trace=X]
+        \)
+    \end{tabular}
     \caption{Equations of STMCs in string diagram notation}
     \label{fig:stmc-equations}
 \end{figure}
