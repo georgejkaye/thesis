@@ -37,10 +37,10 @@ the current cycle.
 \section{Circuit signatures}
 
 Before we can start doing anything exciting with digital circuits, we need to
-define a \emph{syntactic} category in which we can construct digital circuits.
+define a \emph{syntactic} category in which we construct them.
 While we could go ahead and define a category of circuits with some fixed gate
-set, at some point someone would come along and complain that their favourite
-logic gate has been forgotten.
+set, at some point someone would come along and complain we missed out their
+favourite.
 Instead, we set a \emph{circuit signature} to define the components in a
 particular category of circuits.
 
@@ -159,10 +159,10 @@ boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
     The structural generators are only defined on single bits, but it is a
     simple exercise to define them on arbitrary bit inputs and outputs using the
     axioms of symmetric monoidal categories.
-    \todo[inline]{Show the constructions}
-    To avoid cluttering diagrams, these are drawn as their single-bit
-    counterparts:
-    \[
+    Much like we often draw multiple wires as one
+    (\cref{not:arbitrary-width-wires}), we can also draw these `thicker'
+    constructs as the single-bit versions:
+    \begin{gather*}
         \iltikzfig{strings/structure/monoid/init}[colour=comb,obj=n]
         \quad
         \iltikzfig{strings/structure/comonoid/copy}[colour=comb,obj=n]
@@ -170,12 +170,122 @@ boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
         \iltikzfig{strings/structure/monoid/merge}[colour=comb,obj=n]
         \quad
         \iltikzfig{strings/structure/comonoid/discard}[colour=comb,obj=n]
-    \]
-    \todo[inline]{Zero width}
+    \end{gather*}
+    These composite constructs are defined inductively over the width of the
+    wires.
+
+    \vspace{\abovedisplayskip}
+
+    \begin{tabular}{cc}
+        \(\iltikzfig{strings/structure/comonoid/copy-unit}[obj=0,colour=comb]
+        \coloneqq
+        \iltikzfig{strings/monoidal/empty}
+        \)
+        \quad
+        \(
+        \iltikzfig{strings/structure/comonoid/copy}[obj=n+1,colour=comb]
+        \coloneqq
+        \iltikzfig{strings/structure/comonoid/copy-construction}
+        \)
+         &
+        \(\iltikzfig{strings/structure/monoid/merge-unit}[obj=0,colour=comb]
+        \coloneqq
+        \iltikzfig{strings/monoidal/empty}
+        \)
+        \quad
+        \(
+        \iltikzfig{strings/structure/monoid/merge}[obj=n+1,colour=comb]
+        \coloneqq
+        \iltikzfig{strings/structure/monoid/merge-construction}
+        \)
+        \\[1em]
+        \(
+        \iltikzfig{strings/structure/monoid/init-unit}[obj=0,colour=comb]
+        \coloneqq
+        \iltikzfig{strings/monoidal/empty}
+        \)\quad\(
+        \iltikzfig{strings/structure/monoid/init}[obj=n+1,colour=comb]
+        \coloneqq
+        \iltikzfig{strings/structure/monoid/init-construction}
+        \)
+         &
+        \(\iltikzfig{strings/structure/comonoid/discard-unit}[obj=0,colour=comb]
+        \coloneqq
+        \iltikzfig{strings/monoidal/empty}
+        \)\quad\(
+        \iltikzfig{strings/structure/comonoid/discard}[obj=n+1,colour=comb]
+        \coloneqq
+        \iltikzfig{strings/structure/comonoid/discard-construction}
+        \)
+    \end{tabular}
+
+    \vspace{\belowdisplayskip}
 \end{notation}
 
+\begin{remark}
+    As mentioned during \cref{not:arbitary-width-wires}, wires of zero width
+    are usually drawn as empty space.
+    The definition of zero width fork, join, and elimination constructs means
+    that we can also draw them as empty space or using `faded' wires.
+\end{remark}
+
+\begin{example}[More logic gates]
+    The \(\andgate\), \(\orgate\), and \(\notgate\) gates are not the only logic
+    gates used in circuit design.
+
+    A \(\nandgate\) gate \(
+    \iltikzfig{circuits/components/gates/nand}
+    \) acts as as the inverse of an \(\nandgate\) gate: it
+    only produces a true output if none of the inputs are true.
+    In \(\ccirc{\belnapsignature}\) this is constructed as \(
+    \iltikzfig{circuits/components/gates/nand}
+    \coloneqq
+    \iltikzfig{circuits/components/gates/nand-construction}
+    \).
+    Similarly, a \(\norgate\) gate \(
+    \iltikzfig{circuits/components/gates/nor}
+    \) is the inverse of an \(\orgate\) gate, and
+    is constructed as \(
+    \iltikzfig{circuits/components/gates/nor}
+    \coloneqq
+    \iltikzfig{circuits/components/gates/nor-construction}
+    \).
+
+    Another type of gate is the \(\xorgate\) gate \(
+    \iltikzfig{circuits/components/gates/xor}
+    \), which produces a true output if and only if exactly one of the inputs is
+    true.
+    In \(\ccirc{\belnapsignature}\) this is constructed as \(
+    \iltikzfig{circuits/components/gates/xor}
+    \coloneqq
+    \iltikzfig{circuits/components/gates/xor-construction-1}
+    =
+    \iltikzfig{circuits/components/gates/xor-construction-2}
+    \).
+\end{example}
+
 \begin{example}[Half adder]
-    \todo[inline]{Do the half adder example}
+    The \(\xorgate\) is used in a classic combinational circuit known as a
+    \emph{half adder}, the basic building block of circuit arithmetic.
+    A half adder takes two inputs and computes their \emph{sum} modulo
+    \(2\) and the resulting \emph{carry}.
+    That is to say, \(0+0\) has sum \(0\) and carry \(0\), \(1+0\) and \(0+1\)
+    have sum \(1\) and carry \(0\), and \(1+1\) has sum \(0\) and carry \(1\).
+
+    The sum is computed using an \(\xorgate\) gate and the carry by an
+    \(\andgate\) gate.
+    The design of a half adder along with its construction in
+    \(\ccirc{\belnapsignature}\) at different levels of unfolding definitions
+    is shown below.
+    \[
+        \iltikzfig{circuits/examples/half-adder/circuit}
+        \qquad
+        \iltikzfig{circuits/examples/half-adder/circuit-ccirc}
+        =
+        \iltikzfig{circuits/examples/half-adder/circuit-ccirc-1}
+        =
+        \iltikzfig{circuits/examples/half-adder/circuit-ccirc-2}
+    \]
 \end{example}
 
 \section{Sequential circuits}

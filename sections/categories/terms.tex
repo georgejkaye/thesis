@@ -196,7 +196,7 @@ We need some equations to identify terms appropriately; we will soon see how
 these equations can be derived using a mathematical structure known as a
 \emph{category}.
 
-\begin{notation}
+\begin{notation}\label{not:arbitrary-width-wires}
     So far we have drawn multiple wires in parallel either explicitly or
     by using vertical dots.
     In the interests of clarity, we will now start to collapse multiple wires
@@ -205,6 +205,13 @@ these equations can be derived using a mathematical structure known as a
     \iltikzfig{strings/category/f-tile}[box=f,dom=m,cod=n]
     \coloneqq
     \iltikzfig{strings/category/f-wires-tile}[box=f,dom=m,cod=n]
+    \).
+
+    Note that these values \(m\) or \(n\) could be zero, and as such can just be
+    drawn as empty space.
+    It may be useful to explicitly draw wires of zero width for applying
+    reasoning steps; we will do so with a `faded' wire, like \(
+    \iltikzfig{strings/category/identity-unit-tile}[obj=0,colour=white]
     \).
 \end{notation}
 
