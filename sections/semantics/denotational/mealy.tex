@@ -7,8 +7,9 @@ in \(\scircsigma\).
 Even though these stream functions have finitely many stream derivatives, how
 does one encapsulate this behaviour into a circuit made from finitely many
 components while taking into account inputs and state?
-Fortunately, we have a secret weapon; the old chestnut that is the
+Fortunately, we have a secret weapon: the
 \emph{Mealy machine}~\cite{mealy1955method}.
+
 Working tirelessly in industry as a way of specifying the behaviour of a
 circuit without restricting to particular circuitry, Mealy machines also have
 a very useful \emph{coalgebraic} viewpoint which we will wield in order to
@@ -16,7 +17,7 @@ build a bridge from circuits into stream functions: there is a unique
 homomorphism from a Mealy machine to a causal, finitely specified stream
 function.
 
-We will do this by assembling a special class of Mealy machines which we dub
+Our strategy is to assemble a special class of Mealy machines which we dub
 \emph{monotone Mealy machines} into another traced PROP.
 As well as helping us on our way to our end goal of a sound and complete
 denotational semantics, having a PROP of Mealy machines from which we can
@@ -51,7 +52,7 @@ takes in a currrent state and input \((s, a)\) and produces a pair
 
 The definition of Mealy machine above is timeless and forms the basis for most
 of modern electronics.
-Of course, the natural question for the categorist to ask is
+The natural question for the categorist to ask is
 \emph{can we make it more categorical?}
 And as is often the case, we can, using the notion of a \emph{coalgebra}.
 
@@ -63,12 +64,13 @@ And as is often the case, we can, using the notion of a \emph{coalgebra}.
     usually written \((A,\alpha)\).
 \end{definition}
 
-The light bulb should already have lit up: a Mealy machine is a pair of a set
+A Mealy machine is a pair of a set
 and a function, so this is clearly a coalgebra in \(\set\).
 
 \begin{definition}
-    An \emph{\((A,B)\)-Mealy coalgebra} is a coalgebra of the functor
-    \(\morph{Y}{\set}{\set}\) defined as \(S \mapsto (S \times B)^A\).
+    For sets \(A\) and \(B\), an \emph{\((A,B)\)-Mealy coalgebra} is a coalgebra
+    of the functor \(\morph{Y}{\set}{\set}\), defined as
+    \(S \mapsto (S \times B)^A\).
 \end{definition}
 
 \begin{example}
@@ -129,7 +131,7 @@ which every other \((M,N)\)-Mealy coalgebra has a unique homomorphism to.
         \mealyarrow{\sigma(3)}{b_3}
         \cdots
     \]
-    The stream function \(!(s)\) is defined for input \(\sigma\) and
+    Then \(!(s)\) is defined for input \(\sigma\) and
     index \(i \in \nat\) as \(!(s)(\sigma)(i) \coloneqq b_i\).
 \end{proof}
 
@@ -202,7 +204,7 @@ With an ordering on the states of a Mealy machine, monotonicity quickly follows.
 
 This establishes the properties of Mealy machines required to model circuits.
 To map to Mealy machines from circuits we need to assemble them into another
-PROP, in which the morphisms \(\listvar{m} \to \listvar{n}\) are
+PROP, in which the morphisms \(m \to n\) are
 \((\valuetuple{m},\valuetuple{n})\)-Mealy machines.
 There is one nuance to consider: circuits in \(\scircsigma\) have a `hardcoded'
 initial state in the form of the value generators, whereas the Mealy machines
@@ -263,8 +265,8 @@ Tensor product is far more straightforward.
 
 \begin{definition}
     Let \(\mealyi\) be the PROP in which the morphisms
-    \(\listvar{m} \to \listvar{n}\) are the initialised monotone
-    \((\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}})\)-Mealy machines.
+    \(m \to n\) are the initialised monotone
+    \((\valuetuple{m}, \valuetuple{n})\)-Mealy machines.
     Composition is by cascade product and tensor on morphisms is by
     direct product.
     The identity and the symmetry are the single-state machines that output the
@@ -276,14 +278,14 @@ This can be computed in much the same way as it was for stream functions.
 
 \begin{definition}
     Let \((S, f)\) be a monotone \(
-    (\valuetuple{\listvar{xm}}, \valuetuple{\listvar{xn}})
+    (\valuetuple{x+m}, \valuetuple{x+n})
     \)-Mealy machine.
-    For a state \(s \in S\) and input \(\listvar{a} \in \listvar{m}\), let
+    For a state \(s \in S\) and input \(\listvar{a} \in m\), let
     \(\mu_{s,\listvar{a}}\) be the least fixpoint of \(
     \listvar{r} \mapsto \proj{0}\left(f\left(s, \listvar{ra}\right)\right)
     \).
     The \emph{least fixed point} of \((S, f)\) with start state \(s_0\) is a \(
-    (\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}})
+    (\valuetuple{m}, \valuetuple{n})
     \)-Mealy machine \(
     (S, (s, \listvar{a}) \mapsto f((\mu_{s,\listvar{a}})\listvar{a}))
     \) with start state \(s_0\).
@@ -294,15 +296,15 @@ This can be computed in much the same way as it was for stream functions.
 \end{proposition}
 \begin{proof}
     Let \((S, f)\) be a monotone
-    \((\valuetuple{\listvar{xm}}, \valuetuple{\listvar{xn}})\)-Mealy machine.
+    \((\valuetuple{x+m}, \valuetuple{x+n})\)-Mealy machine.
     The Mealy function \(
     \morph{f}{
-        S \times \valuetuple{\listvar{xm}}
+        S \times \valuetuple{x+m}
     }{
-        S \times \valuetuple{\listvar{xn}}
+        S \times \valuetuple{x+n}
     }
     \) is monotone with regards to the orders on \(S\) and
-    \(\valuetuple{\listvar{xm}}\) and \(S \times \listvar{xn}\) is finite, so
+    \(\valuetuple{x+m}\) and \(S \times x+n\) is finite, so
     \(f\) has a fixed point.
     The function \(
     f^\prime \coloneqq (s, \listvar{a})
@@ -310,7 +312,7 @@ This can be computed in much the same way as it was for stream functions.
     \proj{1}\left(f((\mu_{s,\listvar{a}})\listvar{a})\right)
     \) is a composition of monotone functions, so it is itself monotone.
     This means \((S, f^\prime)\) is a monotone \(
-    (\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}})
+    (\valuetuple{m}, \valuetuple{n})
     \)-Mealy machine.
     This construction is a trace for the same reason as the trace of
     \(\streami\) is.

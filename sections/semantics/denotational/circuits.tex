@@ -17,7 +17,7 @@ goal of defining a denotational semantics for digital circuits.
 \subsection{Interpreting circuit components}
 
 Before diving straight into what the denotation of a particular circuit \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
+\iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
 \) might be, we will first decide how to interpret the individual
 \emph{components} of a given circuit signature.
 This is crucial because a denotational semantics is defined
@@ -27,8 +27,8 @@ of particular components.
 First we consider the interpretation of the \emph{values} that flow through the
 wires in our circuits.
 Recall that in a circuit signature these are specified by a set \(\values\).
-In the denotational semantics, we need a bit more structure than this; values
-will need a notion of \emph{order}.
+In the denotational semantics these values will need to have a bit more
+structure, as they must be ordered by how much \emph{information} they contain.
 
 \begin{definition}[Partially ordered set]
     A \emph{partially ordered set}, or \emph{poset} for short, is a set \(A\)
@@ -37,17 +37,15 @@ will need a notion of \emph{order}.
     \begin{itemize}
         \item for all \(a \in A\), \(a \leq a\);
         \item for all \(a, b \in A\), if \(a \leq b\) and \(b \leq a\) then
-                \(a = b\); and
+              \(a = b\); and
         \item for all \(a, b, c \in A\), if \(a \leq b\) and \(b \leq c\) then
-                \(a \leq c\).
+              \(a \leq c\).
     \end{itemize}
 \end{definition}
 
-To be more specific, values must be ordered by how much \emph{information} they
-contain.
-At the bottom of the order will be a value representing a complete \emph{lack}
-of information; this corresponds to the disconnected wire generator \(
-    \iltikzfig{strings/structure/monoid/init}[colour=comb]
+The minimum element of such an ordered set of values represents a complete
+\emph{lack} of information, corresponding to the disconnected wire generator \(
+\iltikzfig{strings/structure/monoid/init}[colour=comb]
 \).
 At the other end of the order will be a value representing \emph{every possible}
 piece of information; a `short circuit'.
@@ -113,9 +111,9 @@ Values in a circuit signature will be interpreted as elements of a finite
 lattice; now the concepts of no information and all information are formalised
 as the \(\bot\) and \(\top\) elements respectively.
 
-Next the primitives in the signature must be interpreted.
-Clearly they should be interpreted as functions, but no just any functions:
-these functions must respect the order on the value lattice.
+Now the primitives in the signature must be interpreted.
+Clearly they should be interpreted as functions between the values, but they
+cannot just be any function as they must respect the order on the value lattice.
 One should not be able to lose information by performing a computation!
 
 \begin{definition}
@@ -124,8 +122,8 @@ One should not be able to lose information by performing a computation!
     \(x \leq_A y\) if and only if \(f(x) \leq_B f(y)\).
 \end{definition}
 
-One more conditions on functions is that when all the inputs to a primitive are
-\(\bot\), then it should produce \(\bot\).
+One more conditions on the interpretation of primitives is that when all the
+inputs to a primitive are \(\bot\), then it should produce \(\bot\).
 We cannot produce information from nothing!
 
 \begin{definition}
@@ -138,20 +136,7 @@ We cannot produce information from nothing!
 Assigning interpretations to the combinational components of a circuit sets the
 stage for the entire denotational semantics.
 
-\begin{notation}
-    Given a set \(A\) and a word \(\listvar{v} \in \natplus^\star\) of
-    length \(n\), we write \(
-        A^{\listvar{v}}
-        \coloneqq
-        A^{\listvar{v}(0)}
-        \times
-        A^{\listvar{v}(1)}
-        \times
-        \dots
-        \times
-        A^{\listvar{v}(n-1)}
-    \).
-\end{notation}
+
 
 \begin{remark}
     If \(A\) is a lattice, then for any \(n \in \nat\), \(A^n\) is also a
@@ -168,9 +153,9 @@ stage for the entire denotational semantics.
     \(\{0,1\}\{1\} \not\leq \{0\}\{1,2\}\) because \(\{0,1\} \not\leq \{0\}\).
     The join and meet are computed by taking the join and meet of each
     component: \(
-        \{0,1\}\{1\} \vee \{0,1,2\}\{1,2\} = \{0,1,2\}\{1,2\}
+    \{0,1\}\{1\} \vee \{0,1,2\}\{1,2\} = \{0,1,2\}\{1,2\}
     \) and \(
-        \{0,1\}\{1\} \vee \{0\}\{1,2\} = \{0,1\}\{1,2\}
+    \{0,1\}\{1\} \vee \{0\}\{1,2\} = \{0,1\}\{1,2\}
     \).
 
     For a word \(\listvar{n} \in \natplus^\star\), a lattice
@@ -179,26 +164,26 @@ stage for the entire denotational semantics.
 
 \begin{definition}[Interpretation]
     For a signature \(
-        \signature = (
-            \values, \bullet, \circuitsignaturegates, \circuitsignaturearity,
-            \circuitsignaturecoarity
+    \signature = (
+    \values, \bullet, \circuitsignaturegates, \circuitsignaturearity,
+    \circuitsignaturecoarity
     )\), an \emph{interpretation} of
     \(\signature\) is a tuple \((\sqsubseteq, \gateinterpretation)\) where
     \((\values, \sqsubseteq)\) is a lattice with \(\bullet\) as the
     infimum, and \(\gateinterpretation\) maps each
     \(p \in \circuitsignaturegates\) to a \(\bot\)-preserving monotone function
     \(
-        \valuetuple{\circuitsignaturearity(p)}
-        \to
-        \valuetuple{\circuitsignaturecoarity(p)}
+    \valuetuple{\circuitsignaturearity(p)}
+    \to
+    \valuetuple{\circuitsignaturecoarity(p)}
     \).
 \end{definition}
 
 \begin{example}\label{ex:belnap-interpretation}
     Recall the Belnap signature \(
-        \belnapsignature = (
-            \belnapvalues, \bot, \belnapgates, \belnaparity, \belnapcoarity
-        )
+    \belnapsignature = (
+    \belnapvalues, \bot, \belnapgates, \belnaparity, \belnapcoarity
+    )
     \) from \cref{ex:belnap-signature}.
     We assign a partial order \(\leq_\mathsf{B}\) to values in
     \(\belnapvalues\) as follows:
@@ -212,47 +197,47 @@ stage for the entire denotational semantics.
     \end{center}
 
     The gate interpretation \(\belnapgateinterpretation\) has action \(
-        \andgate \mapsto \land, \orgate \mapsto \lor, \notgate \mapsto \neg
+    \andgate \mapsto \land, \orgate \mapsto \lor, \notgate \mapsto \neg
     \) where \(\land\), \(\lor\) and \(\neg\) are defined by the following
     truth tables~\cite{belnap1977useful}:
 
     \begin{center}
         \begin{tabular}{|c|cccc|}
             \hline
-            \(\land\) & \(\bot\) & \(\belnapfalse\) & \(\belnaptrue\) & \(\top\) \\
+            \(\land\)        & \(\bot\)         & \(\belnapfalse\) & \(\belnaptrue\)  & \(\top\)         \\
             \hline
-            \(\bot\)  & \(\bot\) & \(\belnapfalse\) & \(\bot\) & \(\belnapfalse\) \\
+            \(\bot\)         & \(\bot\)         & \(\belnapfalse\) & \(\bot\)         & \(\belnapfalse\) \\
             \(\belnapfalse\) & \(\belnapfalse\) & \(\belnapfalse\) & \(\belnapfalse\) & \(\belnapfalse\) \\
-            \(\belnaptrue\) & \(\bot\) & \(\belnapfalse\) & \(\belnaptrue\) & \(\top\) \\
-            \(\top\) & \(\belnapfalse\) & \(\belnapfalse\) & \(\top\) & \(\top\) \\
+            \(\belnaptrue\)  & \(\bot\)         & \(\belnapfalse\) & \(\belnaptrue\)  & \(\top\)         \\
+            \(\top\)         & \(\belnapfalse\) & \(\belnapfalse\) & \(\top\)         & \(\top\)         \\
             \hline
         \end{tabular}
         \quad
         \begin{tabular}{|c|cccc|}
             \hline
-            \(\lor\) & \(\bot\) & \(\belnapfalse\) & \(\belnaptrue\) & \(\top\) \\
+            \(\lor\)         & \(\bot\)        & \(\belnapfalse\) & \(\belnaptrue\) & \(\top\)        \\
             \hline
-            \(\bot\)  & \(\bot\) & \(\bot\) & \(\belnaptrue\) & \(\belnaptrue\) \\
-            \(\belnapfalse\) & \(\bot\) & \(\belnapfalse\) & \(\belnaptrue\) & \(\top\) \\
-            \(\belnaptrue\) & \(\belnaptrue\) & \(\belnaptrue\) & \(\belnaptrue\) & \(\belnaptrue\) \\
-            \(\top\) & \(\belnaptrue\) & \(\top\) & \(\belnaptrue\) & \(\top\) \\
+            \(\bot\)         & \(\bot\)        & \(\bot\)         & \(\belnaptrue\) & \(\belnaptrue\) \\
+            \(\belnapfalse\) & \(\bot\)        & \(\belnapfalse\) & \(\belnaptrue\) & \(\top\)        \\
+            \(\belnaptrue\)  & \(\belnaptrue\) & \(\belnaptrue\)  & \(\belnaptrue\) & \(\belnaptrue\) \\
+            \(\top\)         & \(\belnaptrue\) & \(\top\)         & \(\belnaptrue\) & \(\top\)        \\
             \hline
         \end{tabular}
         \quad
         \begin{tabular}{|c|c|}
             \hline
-            \(\neg\) & \\
+            \(\neg\)         &                  \\
             \hline
-            \(\bot\) & \(\bot\) \\
-            \(\belnaptrue\) & \(\belnapfalse\) \\
-            \(\belnapfalse\) & \(\belnaptrue\) \\
-            \(\top\) & \(\top\) \\
+            \(\bot\)         & \(\bot\)         \\
+            \(\belnaptrue\)  & \(\belnapfalse\) \\
+            \(\belnapfalse\) & \(\belnaptrue\)  \\
+            \(\top\)         & \(\top\)         \\
             \hline
         \end{tabular}
     \end{center}
 
     The Belnap interpretation is then \(
-        (\leq_\mathsf{B}, \belnapgateinterpretation)
+    (\leq_\mathsf{B}, \belnapgateinterpretation)
     \).
 \end{example}
 \subsection{Denotational semantics of combinational circuits}
@@ -262,8 +247,8 @@ circuit maps to a monotone function.
 
 \begin{definition}
     Let \(\funci\) be the \(\natplus\)-coloured PROP in which the morphisms
-    \(\listvar{m} \to \listvar{n}\) are the monotone \(\bot\)-preserving
-    functions \(\valuetuple{\listvar{m}} \to \valuetuple{\listvar{n}}\).
+    \(m \to n\) are the monotone \(\bot\)-preserving
+    functions \(\valuetuple{m} \to \valuetuple{n}\).
 \end{definition}
 
 \begin{definition}
@@ -278,13 +263,13 @@ circuit maps to a monotone function.
                 \circuittofunci[
                     \iltikzfig{strings/structure/comonoid/copy}
                 ]
-                &\coloneqq
+                 & \coloneqq
                 (v) \mapsto (v, v)
                 \\
                 \circuittofunci[
                     \iltikzfig{strings/structure/monoid/merge}
                 ]
-                &\coloneqq
+                 & \coloneqq
                 (v, w) \mapsto v \sqcup w
             \end{align*}
         \end{minipage}
@@ -295,13 +280,13 @@ circuit maps to a monotone function.
                 \circuittofunci[
                     \iltikzfig{strings/structure/comonoid/discard}
                 ]
-                &\coloneqq
+                 & \coloneqq
                 (v) \mapsto ()
                 \\
                 \circuittofunci[
                     \iltikzfig{strings/structure/monoid/init}
                 ]
-                &\coloneqq
+                 & \coloneqq
                 () \mapsto \bot
             \end{align*}
         \end{minipage}
@@ -310,7 +295,7 @@ circuit maps to a monotone function.
             \centering
             \vspace{1.5em}
             \(\circuittofunci[
-                \iltikzfig{circuits/components/gates/gate}[gate=p,dom=\listvar{m},cod=\listvar{n}]
+                \iltikzfig{circuits/components/gates/gate}[gate=p,dom=m,cod=n]
             ]
             \coloneqq
             \gateinterpretation[p]
@@ -341,8 +326,8 @@ In a combinational circuit, the output only depends on the inputs at the current
 cycle, but for sequential circuits inputs can affect outputs many cycles after
 they occur.
 
-We therefore have to reason with \emph{streams} (infinite sequences) of inputs
-rather than individual values.
+We therefore have to reason with \emph{infinite sequences}, or \emph{streams} of
+inputs rather than individual values.
 
 \begin{notation}
     Given a set \(A\), we denote the set of streams (infinite sequences) of
@@ -351,10 +336,10 @@ rather than individual values.
     write \(\sigma(i) \in A\) for the \(i\)-th element of stream
     \(\sigma \in \stream{A}\).
     Individual streams are written as \(
-        \sigma \in \stream{A}
-        \coloneqq
-        \sigma(0) \streamcons \sigma(1) \streamcons
-        \sigma(2) \streamcons \cdots
+    \sigma \in \stream{A}
+    \coloneqq
+    \sigma(0) \streamcons \sigma(1) \streamcons
+    \sigma(2) \streamcons \cdots
     \).
 \end{notation}
 
@@ -406,9 +391,9 @@ first element of the stream.
     \(a \in A\), the
     \emph{functional stream derivative of \(f\) on input \(a\)} is the
     stream function \(
-        \streamderivative{f}{a}
-        \coloneqq
-        \sigma \mapsto \streamderv(f(a \streamcons \sigma))
+    \streamderivative{f}{a}
+    \coloneqq
+    \sigma \mapsto \streamderv(f(a \streamcons \sigma))
     \).
 \end{definition}
 
@@ -421,7 +406,7 @@ function which acts as \(f\) would `had it seen \(a\) first'.
     and the functional stream derivative is the transition to a new state.
     As with most things in mathematics, this is no coincidence; there is a
     homomorphism from any Mealy machine to a stream function.
-    But we're getting ahead of ourselves; more on that later.
+    We will exploit this fact in the next section.
 \end{remark}
 
 The functional stream derivative, and indeed the above remark, leads us to the
@@ -435,17 +420,17 @@ This means they cannot specify infinite \emph{behaviour}.
     somewhat and write \(\streamderivative{f}{\listvar{a}}\) for the repeated
     application of the functional stream derivative for the elements of
     \(\listvar{a}\), i.e.\ \(
-        \streamderivative{f}{\varepsilon} \coloneqq f
+    \streamderivative{f}{\varepsilon} \coloneqq f
     \) and \(
-        \streamderivative{f}{a \streamcons \listvar{b}} \coloneqq
-        \streamderivative{(\streamderivative{f}{a})}{\listvar{b}}
+    \streamderivative{f}{a \streamcons \listvar{b}} \coloneqq
+    \streamderivative{(\streamderivative{f}{a})}{\listvar{b}}
     \).
 \end{notation}
 
 \begin{definition}
     Given a stream function \(\morph{f}{\stream{A}}{\stream{B}}\), we say it is
     \emph{finitely specified} if the set \(\{
-        \streamderivative{f}{\listvar{a}} \,|\, \listvar{a} \in \freemon{A}
+    \streamderivative{f}{\listvar{a}} \,|\, \listvar{a} \in \freemon{A}
     \}\) is finite.
 \end{definition}
 
@@ -463,7 +448,6 @@ functions.
 
 This completes the trio of properties we need to express the semantics of
 sequential circuits as stream functions.
-To this aim, we will now asssemble them into a \(\natplus\)-coloured PROP.
 
 \begin{lemma}\label{lem:causality-preserved}
     Causality is preserved by composition and tensor product.
@@ -496,33 +480,27 @@ To this aim, we will now asssemble them into a \(\natplus\)-coloured PROP.
 \end{notation}
 
 \begin{proposition}
-    There is a bundled \(\natplus\)-coloured PROP \(\streami\) where morphisms
-    \(\listvar{m} \to \listvar{n}\) are the causal, finitely specified and
-    monotone stream functions \(
-        \valuetuplestream{\listvar{m}} \to \valuetuplestream{\listvar{n}}
+    There is a PROP \(\streami\) where morphisms \(m \to n\) are the causal,
+    finitely specified and monotone stream functions \(
+    \valuetuplestream{m} \to \valuetuplestream{n}
     \).
 \end{proposition}
 \begin{proof}
     Identity is the identity function, the symmetry swaps streams, composition
-    is function composition, tensor is product, and the bundlers and splitters
-    are the components of the isomorphism \(
-        (\stream{\values})^{\listvar{m}}
-        \cong
-        (\valuetuplestream{\listvar{m}})
-    \).
+    is function composition, and tensor is product.
 
     As these constructs satisfy the categorical axioms, and as composition and
     tensor preserve causality (\cref{lem:causality-preserved}),
     finite specification (\cref{lem:finitely-specified-preserved}),
     and monotonicity (\cref{lem:monotonicity-preserved}), this data defines a
-    bundled \(\natplus\)-coloured PROP.
+    PROP.
 \end{proof}
 
 Modelling sequential circuits as stream functions deals with the temporal
 aspects of the former, but what about feedback?
 As the assignment of denotations to circuits needs to be compositional, we need
 to map the trace on \(\scircsigma\) to a trace on \(\streami\).
-For this, we will need a notion of ordering on stream functions themselves.
+For this, we will need to order the stream functions themselves.
 
 \begin{definition}\label{def:state-order}
     Let \(A\) and \(B\) be posets and let
@@ -532,17 +510,19 @@ For this, we will need a notion of ordering on stream functions themselves.
 \end{definition}
 
 A trace on \(\streami\) can now be defined in terms of a least fixed
-point\footnote{The original proof idea for the following is by David Sprunger.}.
+point.
 
 \begin{notation}
     For a morphism \(
-        \morph{f}{\valuetuplestream{\listvar{xm}}}{\valuetuplestream{\listvar{xn}}}
-        \in \streami
-    \), and stream \(\sigma \in \valuetuplestream{\listvar{xm}}\), let
+    \morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{x+n}}
+    \in \streami
+    \), and stream \(\sigma \in \valuetuplestream{x+m}\), let
     \(\mu_f(\sigma)\) be the least fixed point of the endofunction \(
-        \tau \mapsto \proj{0}\left(f(\tau\sigma)\right)
+    \tau \mapsto \proj{0}\left(f(\tau\sigma)\right)
     \).
 \end{notation}
+
+The original proof idea for the following is due to David Sprunger.
 
 \begin{proposition}
     The function \(\sigma \mapsto \proj{1}\left(f(\mu_f(\sigma)\sigma)\right)\)
@@ -554,21 +534,21 @@ point\footnote{The original proof idea for the following is by David Sprunger.}.
     \(\streami\): it is causal, finitely specified, and monotone.
 
     Since \(
-        \morph{f}{\valuetuplestream{\listvar{xm}}}{\valuetuplestream{\listvar{xm}}}
+    \morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{x+m}}
     \) is a morphism of \(\streami\), it has finitely many stream derivatives.
     For each stream derivative \(\streamderivative{f}{\,\listvar{w}}\), let the
     function \(
-        \morph{
-            \widehat{\streamderivative{f}{\listvar{w}}}
-        }{
-            \valuetuplestream{\listvar{xm}}
-        }{
-            \valuetuplestream{\listvar{x}}
-        }
+    \morph{
+        \widehat{\streamderivative{f}{\listvar{w}}}
+    }{
+        \valuetuplestream{x+m}
+    }{
+        \valuetuplestream{x}
+    }
     \) to be \(
-        \tau\sigma
-        \mapsto
-        \proj{0}(\streamderivative{f}{\listvar{w}}(\tau\sigma))
+    \tau\sigma
+    \mapsto
+    \proj{0}(\streamderivative{f}{\listvar{w}}(\tau\sigma))
     \).
     Note that each of these functions are causal and monotone, because they are
     constructed from pieces that are causal and monotone.
@@ -579,14 +559,14 @@ point\footnote{The original proof idea for the following is by David Sprunger.}.
     \(\widehat{f}((-)\sigma)\) can be obtained by composing
     \(\widehat{f}((-)\sigma)\) repeatedly with itself.
     This means that \(
-        \mu_f(\sigma)
-        =
-        \bigsqcup_{k \in \nat} \widehat{f^k}(\bot^\omega,\sigma)
+    \mu_f(\sigma)
+    =
+    \bigsqcup_{k \in \nat} \widehat{f^k}(\bot^\omega,\sigma)
     \) where \(\widehat{f^k}\) is the \(k\)-fold composition of \(f(-,\sigma)\)
     with itself, i.e.\ \(\widehat{f^0}(\tau\sigma) = \tau\) and \(
-        \widehat{f^{k+1}}(\tau\sigma)
-        =
-        \widehat{f}\left(\left(\widehat{f^{k}}(\sigma, \tau)\right)\sigma\right)
+    \widehat{f^{k+1}}(\tau\sigma)
+    =
+    \widehat{f}\left(\left(\widehat{f^{k}}(\sigma, \tau)\right)\sigma\right)
     \).
     That the mapping \(\mu_f\) is causal and monotone is
     straightforward: each of the functions in the join is causal and monotone,
@@ -594,9 +574,9 @@ point\footnote{The original proof idea for the following is by David Sprunger.}.
     It remains to show this mapping has finitely many stream derivatives.
 
     When equipped with \(\stateorder\), the set of functions
-    \(\valuetuplestream{\listvar{xm}} \to \valuetuplestream{\listvar{x}}\)
+    \(\valuetuplestream{x+m} \to \valuetuplestream{x}\)
     is a poset, of which
-    \(\{\widehat{f_w} \,|\, w \in (\valuetuple{\listvar{xm}})^\star\}\)
+    \(\{\widehat{f_w} \,|\, w \in (\valuetuple{x+m})^\star\}\)
     is a finite subset.
     Restricting the ordering \(\stateorder\) to this set yields a finite poset.
     Since this poset is finite, the set of strictly increasing sequences in this
@@ -605,52 +585,52 @@ point\footnote{The original proof idea for the following is by David Sprunger.}.
     derivatives of \(\mu_f\).
 
     Suppose \(
-        S = \widehat{f_{\,\listvar{w_0}}} \prec \widehat{f_{\,\listvar{w_1}}} \prec
-            \cdots \prec \widehat{f_{\,\listvar{w_{\ell-1}}}}
+    S = \widehat{f_{\,\listvar{w_0}}} \prec \widehat{f_{\,\listvar{w_1}}} \prec
+    \cdots \prec \widehat{f_{\,\listvar{w_{\ell-1}}}}
     \) is a strictly increasing sequence of length \(\ell\) in the set of stream
     functions \(
-        \{\widehat{f_w} \,|\, w \in (\valuetuple{\listvar{xm}})^\star\}
+    \{\widehat{f_w} \,|\, w \in (\valuetuple{x+m})^\star\}
     \).
     We define a function \(
-        \morph{g_S}{
-            \valuetuplestream{\listvar{m}}
-        }{
-            \valuetuplestream{\listvar{x}}
-        }
+    \morph{g_S}{
+        \valuetuplestream{m}
+    }{
+        \valuetuplestream{x}
+    }
     \) as \(
-        (\sigma) \mapsto \bigsqcup_{k \in \nat} g_k(\sigma)
+    (\sigma) \mapsto \bigsqcup_{k \in \nat} g_k(\sigma)
     \) where \[
         g_k(\sigma) =
         \begin{cases}
-            \bot^\omega & \text{ if } k = 0 \\
-            \widehat{f_{\,\listvar{w_k}}}(\left(g_{k-1}(\sigma)\right)\sigma) & \text{ if } 1 \leq k \leq \ell \\
+            \bot^\omega                                                              & \text{ if } k = 0              \\
+            \widehat{f_{\,\listvar{w_k}}}(\left(g_{k-1}(\sigma)\right)\sigma)        & \text{ if } 1 \leq k \leq \ell \\
             \widehat{f_{\,\listvar{w_{\ell-1}}}}(\left(g_{k-1}(\sigma)\right)\sigma) & \text{ if } \ell < k
         \end{cases}.
     \]
     Let the set \(G \coloneqq \{
-        g_S \,|\, S \text{ is a strictly increasing sequence}
+    g_S \,|\, S \text{ is a strictly increasing sequence}
     \}\).
     When \(S\) is set to the one-item sequence \(\widehat{f}\), \(g_S\) is
     \(\mu_f\), so \(\mu_f \in G\).
     As \(G\) is finite, this means that if \(G\) is closed under stream
     derivative, \(\mu_f\) has finitely many stream derivatives.
     Any element of \(G\) is either \(\bot^\omega\) or has the form \(
-        \sigma
-        \mapsto
-        \widehat{\streamderivative{f}{\,\listvar{w}}}(g_k(\sigma)\sigma)
-    \) for some \(\sigma \in \valuetuplestream{\listvar{m}}\) and
+    \sigma
+    \mapsto
+    \widehat{\streamderivative{f}{\,\listvar{w}}}(g_k(\sigma)\sigma)
+    \) for some \(\sigma \in \valuetuplestream{m}\) and
     \(k > 0\).
     As \(\bot^\omega\) is its own stream derivative, we need to show that
     applying stream derivative to the latter produces another element of \(G\).
     \begin{align*}
         \streamderivative{\sigma \mapsto \left(\widehat{\streamderivative{f}{\, \listvar{w}}}(\left(g_{k-1}(\sigma)\right)\sigma)\right)}{ab}
-            &= \sigma \mapsto \streamderv\left(\widehat{\streamderivative{f}{\, \listvar{w}}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right) \\
-            &= \sigma \mapsto \streamderv\left(\proj{0}\left(\streamderivative{f}{\, \listvar{w}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\right) \\
-            &= \sigma \mapsto \proj{0}\left(\streamderv\left(\streamderivative{f}{\, \listvar{w}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\right) \\
-            &= \sigma \mapsto \proj{0}\left(\streamderivative{\left(\streamderivative{f}{\, \listvar{w}}(\left(g_{k-1}(\sigma)\right)\sigma)\right)}{ab}\right) \\
-            &= \sigma \mapsto \proj{0}\left(\streamderivative{f}{\, ab \streamcons \listvar{w}}(\left(g_{k-1}(\sigma)\right)\sigma)\right) \\
-            &= \sigma \mapsto \widehat{\streamderivative{f}{\, ab \streamcons \listvar{w}}}(\left(g_{k-1}(\sigma)\right)\sigma)
-        \end{align*}
+         & = \sigma \mapsto \streamderv\left(\widehat{\streamderivative{f}{\, \listvar{w}}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)            \\
+         & = \sigma \mapsto \streamderv\left(\proj{0}\left(\streamderivative{f}{\, \listvar{w}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\right) \\
+         & = \sigma \mapsto \proj{0}\left(\streamderv\left(\streamderivative{f}{\, \listvar{w}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\right) \\
+         & = \sigma \mapsto \proj{0}\left(\streamderivative{\left(\streamderivative{f}{\, \listvar{w}}(\left(g_{k-1}(\sigma)\right)\sigma)\right)}{ab}\right)    \\
+         & = \sigma \mapsto \proj{0}\left(\streamderivative{f}{\, ab \streamcons \listvar{w}}(\left(g_{k-1}(\sigma)\right)\sigma)\right)                         \\
+         & = \sigma \mapsto \widehat{\streamderivative{f}{\, ab \streamcons \listvar{w}}}(\left(g_{k-1}(\sigma)\right)\sigma)
+    \end{align*}
     As \(\proj{0}\left(\streamderivative{f}{ab \streamcons \listvar{w}}\right)\)
     is in \(G\), the latter  is closed under stream derivative.
     Subsequently, \(\mu_f\) has finitely many stream derivatives.
@@ -665,108 +645,17 @@ point\footnote{The original proof idea for the following is by David Sprunger.}.
 \end{proof}
 
 \begin{remark}
-    Using the least fixpoint as a trace operator is a common idea in the
-    denotational semantics of programming languages, where it is often used to
+    Using the least fixpoint as a trace is a common idea in
+    denotational semantics for programming languages, where it is used to
     model \emph{recursion}.
 \end{remark}
 
-We now have two traced PROPs: a \emph{syntactic} category of sequential circuit
-terms \(\scircsigma\) and a \emph{semantic} category of causal, finitely
+We now have two traced PROPs: a \emph{syntactic} PROP of sequential circuit
+terms \(\scircsigma\) and a \emph{semantic} PROP of causal, finitely
 specified, monotone stream functions \(\streami\).
 
-We could now go ahead and define a map from circuits to stream functions;
-indeed, this is what is done in~\cite{ghica2024fully}.
+We could go ahead and define a map from circuits to stream functions;
+indeed, this is the strategy in~\cite{ghica2024fully}.
 Instead, motivated by our quest for a sound and complete denotational semantics,
 we will examine another structure with close links to both circuits and stream
 functions; that of \emph{Mealy machines}.
-
-% To assign semantics in the latter to terms in the former, we use a traced PROP
-% morphism.
-% First we establish candidates for the semantics of the sequential generators.
-
-% \begin{definition}\label{def:state-stream-functions}
-%     For each \(v \in \values\), let \(
-%         \morph{\valstream{v}}{\valuetuplestream{0}}{\valuestream}
-%     \) be defined as \(
-%         \mealyoutput{(\valstream{v})}{()} \coloneqq v
-%     \) and \(
-%         \mealytransition{(\valstream{v})}{()} \coloneqq \valstream{\bot}
-%     \).
-%     Let \(
-%         \morph{\shiftstream{v}}{\valuestream}{\valuestream}
-%     \) be defined as \(
-%         \mealyoutput{(\shiftstream{v})}{\sigma}
-%         \coloneqq
-%         v
-%     \) and \(
-%         \mealytransition{(\shiftstream{v})}{a \streamcons \sigma}
-%         \coloneqq
-%         \shiftstream{a}
-%     \).
-% \end{definition}
-
-% \begin{lemma}
-%     The stream functions in \cref{def:state-stream-functions} are causal,
-%     monotone and finitely specified.
-% \end{lemma}
-% \begin{proof}
-%     For the first four functions, the \(k\)th element of the output stream is
-%     computed by a monotone operation on \(k\)th element of the input stream, so
-%     the stream function is monotone and causal.
-%     Since the \(k\)th input element cannot affect a later output element, there
-%     is one stream derivative: the original function.
-%     The function \(\valstream{v}\) has no inputs so it is trivially causal and
-%     monotone.
-%     It has one stream derivative: the stream function that constantly outputs
-%     \(\bot\).
-%     The function \(\shiftstream{\bot}\) is causal as the \(i+1\)th output
-%     element depends on only the \(i\)th element.
-%     There are \(|\values|\) stream derivatives, as there is a different one for
-%     each possible input value.
-%     Each of these stream derivatives is monotone, as the initial output is fixed
-%     regardless of input, and, on input \(a\), the stream derivative is the
-%     stream function that initially outputs \(a\).
-% \end{proof}
-
-% With those out of the way, we can move onto the complete translation.
-
-% \begin{definition}\label{def:circuit-to-stream}
-%     Let \(
-%         \morph{\circuittostream{\interpretation}}{\scircsigma}{\streami}
-%     \) be the traced PROP morphism defined as \(
-%         \circuittostream[
-%             \iltikzfig{strings/category/f}[box=F,colour=comb]
-%         ]{\interpretation}(\sigma)(k)
-%         \coloneqq
-%         \circuittofunc[
-%             \iltikzfig{strings/category/f}[box=F,colour=comb]
-%         ]{\interpretation}(\sigma(k))
-%     \), \(
-%         \circuittostream[
-%             \iltikzfig{circuits/components/values/vs}[val=v]
-%         ]{\interpretation}
-%         \coloneqq
-%         \valstream{v}
-%     \) and \(
-%         \circuittostream[
-%             \iltikzfig{circuits/components/waveforms/delay}
-%         ]{\interpretation}
-%         \coloneqq
-%         \shiftstream{\bot}
-%     \).
-% \end{definition}
-
-% Given a sequential circuit \(
-%     \iltikzfig{strings/category/f}[box=F,colour=seq]
-% \), we say that the stream function \(
-%     \circuittostream[\iltikzfig{strings/category/f}[box=F,colour=seq]]{\interpretation}
-% \) is its \emph{behaviour under} \(\interpretation\), or simply its
-% \emph{behaviour} if the interpretation is arbitrary.
-
-% If we were less invested in our denotational quest, we could stop here.
-% Each circuit in \(\scircsigma\) now has a denotation in \(\scircsigma\): what
-% more could we want?
-% But we are not content with this, for we are mathematicians.
-% We need to show that this is a \emph{complete} denotational semantics: every
-% stream function in \(\streami\) must also correspond to at least one
-% circuit in \(\scircsigma\).
