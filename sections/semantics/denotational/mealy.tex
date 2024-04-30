@@ -321,20 +321,23 @@ This can be computed in much the same way as it was for stream functions.
 \begin{example}\label{ex:trace-mealy}
     Consider the monotone \((\valuetuple{3},\valuetuple{3})\)-Mealy machine with
     state set \(\belnapvalues\), initial state \(\bot\), and Mealy function \[
-        g \coloneqq (s, (v, u, w))
-        \mapsto \left\langle
-        \neg(u \land v),
-        (\neg(s \land w), \neg(u \land v), \neg(s \land w))
+        g \coloneqq (s, (x, y, z))
+        \mapsto \left\langle \neg y \land \neg x,
+        \left(\neg s \land \neg z, s, \neg s \land \neg z\right)
         \right\rangle
         ).\]
     To take the trace of this machine, we must first compute the least fixed
-    point of \(v \mapsto \neg(s \land w)\), which is clearly just
-    \(\neg(s \land w)\).
+    point of \(v \mapsto \neg s \land \neg z\), which is clearly just
+    \(\neg s \land \neg z\).
     Therefore the Mealy function of the traced
     \((\valuetuple{2}, \valuetuple{2})\) machine is \(
-    (s, (u, w)) \mapsto g(s, (\neg(s \land w), u, w))
+    (s, (y, z)) \mapsto g(s, (\neg s \land \neg z, y, \neg s \land \neg z))
     \).
 \end{example}
+
+\input{sections/semantics/denotational/floats/latch-machine}
+
+\todo[inline]{Is the latch simple enough to do the diagram for}
 
 With monotone Mealy machines in a PROP, we can now represent the unique
 homomorphism from a Mealy machine to a set of state functions as a PROP
@@ -399,6 +402,8 @@ taking stream derivatives to compute the state set.
     stream derivative of the original stream function.
     The initial state of the Mealy machine is \(f\).
 \end{example}
+
+\todo[inline]{Is the latch simple enough for this?}
 
 In fact, for a function \(f\) this procedure produces a \emph{minimal} Mealy
 machine.

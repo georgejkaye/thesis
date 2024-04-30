@@ -13,14 +13,14 @@ PROP morphism need only be defined on generators!
 
 \begin{definition}
     Let \(\morph{\circuittomealyi}{\scircsigma}{\mealyi}\) be the traced PROP
-    morphism defined on the generators as:
+    morphism defined on generators as
     \begin{gather*}
         \circuittomealy[
             \iltikzfig{circuits/components/gates/gate}[colour=comb]
         ]{\interpretation}
         \coloneqq \left(
         \{()\},
-        \listvar{v} \mapsto
+        v \mapsto
         \left\langle(), \gateinterpretation[g](\listvar{v})\right\rangle,
         ()
         \right)
@@ -30,16 +30,16 @@ PROP morphism need only be defined on generators!
         ]{\interpretation}
         \coloneqq \left(
         \{()\},
-        \listvar{v} \mapsto \left\langle(), \listvar{vv}\right\rangle,
+        v \mapsto \left\langle(), \listvar{vv}\right\rangle,
         ()
         \right)
-        \\[1em]
+        \\
         \circuittomealy[
             \iltikzfig{strings/structure/monoid/merge}[colour=comb]
         ]{\interpretation}
         \coloneqq \left(
         \{()\},
-        \listvar{vw} \mapsto
+        vw \mapsto
         \left\langle(), \listvar{v} \ljoin \listvar{w}\right\rangle,
         ()
         \right)
@@ -53,7 +53,7 @@ PROP morphism need only be defined on generators!
         \left\langle(), ()\right\rangle,
         ()
         \right)
-        \\[0.5em]
+        \\
         \circuittomealy[
             \iltikzfig{circuits/components/values/vs}[val=v]
         ]{\interpretation}
@@ -67,7 +67,7 @@ PROP morphism need only be defined on generators!
             \}\right),
         s_v
         \right)
-        \\[0.5em]
+        \\
         \circuittomealy[
             \iltikzfig{circuits/components/waveforms/delay}
         ]{\interpretation}
@@ -79,10 +79,15 @@ PROP morphism need only be defined on generators!
         s_\bot
         \right)
     \end{gather*}
-    \todo[inline]{Fiddle with spacing}
 \end{definition}
 
-\todo[inline]{Draw diagrams for values and delays maybe?}
+\begin{example}
+    The action of \(\circuittomealy{\belnapinterpretation}\) on values and
+    delays in \(\scirc{\belnapsignature}\) is illustrated in
+    \cref{fig:belnap-machines}.
+\end{example}
+
+\input{sections/semantics/denotational/floats/belnap-machines}
 
 \begin{example}\label{ex:mealy-translation}
     Applying \(\circuittomealy{\belnapinterpretation}\) to the SR NOR latch from
@@ -102,14 +107,14 @@ as the \emph{de facto} denotation, is a stream function in \(\streami\).
 \end{definition}
 
 We have now finally established the \emph{denotation} of a sequential circuit \(
-\iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+\iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
 \): it is the stream function \(
-\morph{\circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]}{\valuetuplestream{\listvar{m}}}{\valuetuplestream{\listvar{n}}}
+\morph{\circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]}{\valuetuplestream{m}}{\valuetuplestream{n}}
 \).
 The existence of the PROP morphism \(\circuittostreami\) confirms that causal,
 finitely specified and monotone stream functions are a \emph{sound} denotational
-semantics for sequential circuits, as every circuit in \(\scircsigma\)
-maps to one.
+semantics for sequential circuits, as every circuit in \(\scircsigma\) has a
+corresponding stream function in \(\streami\).
 
 \subsection{Monotone Mealy machines to circuits}
 
@@ -133,6 +138,7 @@ inputs into appropriate outputs.
     \begin{center}
         \includestandalone{figures/mealy/boolean-example}
     \end{center}
+    \vspace{-\belowdisplayskip}
     To convert this machine to a circuit, we assign each state a boolean value:
     in this case \(s_0 \mapsto \belnapfalse, s_1 \mapsto \belnaptrue\).
     We can now construct a truth table to show how a state and an input map to
@@ -224,8 +230,8 @@ Using this encoding, we will construct a combinational circuit morphism that,
 when interpreted as a function, implements the output and transition function
 of the Mealy machine.
 There is no reason for such a morphism to exist for an arbitrary interpretation:
-why should we expect some hurriedly slapped together collection of gates to be
-able to model every function?
+why should we expect some collection of gates to be able to model every
+function?
 The useful interpretations are those that \emph{can} model every function.
 
 \begin{definition}[Functional completeness]\label{def:functional-completeness}
@@ -233,9 +239,9 @@ The useful interpretations are those that \emph{can} model every function.
     \emph{functionally complete} if there exists a map \(
     \morph{\mealytofunc}{\funci}{\scircsigma}
     \) which sends functions \(
-    \morph{f}{\valuetuple{\listvar{m}}}{\valuetuple{\listvar{n}}}
+    \morph{f}{\valuetuple{m}}{\valuetuple{n}}
     \), to circuits of the form \(
-    \iltikzfig{circuits/synthesis/normalised-function}
+    \iltikzfig{circuits/synthesis/normalised-function}[box=f]
     \) for some word \(\listvar{v} \in \freemon{\values}\) such that
     \(\circuittostreami[\mealytofunc[f]](\sigma)(i) = f(\sigma(i))\).
 \end{definition}
@@ -265,9 +271,8 @@ to circuits, but for convenience we will assume there is a fixed procedure
     The Belnap interpretation from \cref{ex:belnap-interpretation} is
     functionally complete; for interests of space we postpone the proof for
     \cref{sec:denotational-belnap}.
-    In essence, this is due to a variation of the standard functional
-    completeness method for Boolean values, in which a term in disjunctive
-    normal form is created by reading lines off a truth table.
+    This is due to a variation of the standard functional
+    completeness method for Boolean values.
 \end{example}
 
 With the knowledge that any monotone function has a corresponding circuit
