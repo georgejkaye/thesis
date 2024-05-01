@@ -4,10 +4,13 @@ Although we have discussed the denotation semantics in terms of monochromatic
 circuit signatures, it is straightforward to extend the results to categories
 generated over \emph{generalised} circuit signatures
 
-As the input and output wires of generalised circuits are not all the same
-width, the domains and
-codomains of circuit stream functions will no longer be streams of tuples of
-values, but streams of tuples of tuples of values!
+In the semantic categories \(\funci\), \(\streami\), and \(\mealyi\), the
+morphisms are all variants on functions of the form
+\(\valuetuple{m} \to \valuetuple{n}\) that operate on powers of elements in
+\(\values\): one element for each (single-bit) input or output wire.
+In the generalised setting, these input and output wires may not all be the
+same width, so the input and output sets must be \emph{powers of powers} of
+values!
 
 \begin{notation}
     Given a set \(A\) and a word \(\listvar{v} \in \natplus^\star\) of
@@ -24,31 +27,70 @@ values, but streams of tuples of tuples of values!
     \).
 \end{notation}
 
-When the primitive interfaces are lists containing only \(1\), the domains and
-codomains of morphisms in \(\funcig\) are tuples of single-element tuples,
-which can be equivalently viewed as `flat' tuples as in \(\funci\).
+Note that for a word \(\listvar{m} \coloneqq 11\dots1\) of length \(k\), the set
+\(A^{\listvar{m}} = A^1 \times A^1 \times \dots A^1\) is isomorphic to \(A^k\),
+much like how setting the set of colours in a coloured PROP to the singleton
+recovers a monochromatic PROP.
 
-We generalise the category of streams in much the same way.
-
-\begin{definition}
-    Let \(\mealyig\) be the \(\natplus\)-coloured PROP in which the moprhisms
-    \(\listvar{m} \to \listvar{n}\) are the monotone
-    \((\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}})\)-Mealy machines.
-    Let \(\morph{\circuittomealyig}{\scircsigmaplus}{\mealyig}\) be defined
-    in the same manner as \(\circuittomealyi\).
-\end{definition}
+The semantic categories can now be extended to these \emph{coloured} interfaces.
 
 \begin{definition}
+    Let \(\funcig\) be the \(\natplus\)-coloured PROP in which the morphisms
+    \(\listvar{m} \to \listvar{n}\) are the monotone functions
+    \(\valuetuple{\listvar{m}} \to \valuetuple{\listvar{n}}\).
     Let \(\streamig\) be the \(\natplus\)-coloured PROP in which the morphisms
     \(\listvar{m} \to \listvar{n}\) are the causal, monotone, and finitely
     specified stream functions \(
     \valuetuplestream{\listvar{m}} \to \valuetuplestream{\listvar{n}}
     \).
+    Let \(\mealyig\) be the \(\natplus\)-coloured PROP in which the moprhisms
+    \(\listvar{m} \to \listvar{n}\) are the monotone
+    \((\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}})\)-Mealy machines.
 \end{definition}
 
 
+\begin{definition}
+    Let the coloured PROP morphisms
+    \begin{align*}
+        \morph{\circuittofuncig}{\ccircsigmag}{\funcig}
+         &   &
+        \morph{\circuittomealyig}{\scircsigmag}{\mealyig}
+         &
+        \morph{\mealytostreamig}{\mealyig}{\streamig}
+        \\
+        \morph{\streamtomealyig}{\streamig}{\mealyig}
+         &   &
+        \morph{\mealytocircuitig}{\mealyig}{\scircsigmag}
+         &
+        \morph{\circuittostreamig}{\scircsigmag}{\streamig}
+    \end{align*}
+    be defined in the same manner as the monochromatic versions.
+\end{definition}
 
+\begin{definition}
+
+\end{definition}
+
+\begin{definition}
+    Two generalised sequential circuits are \emph{denotationally equivalent}
+    under \(\interpretation\), written \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \approx_{\interpretation}^+
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \) if \(
+    \circuittostreamig[
+        \iltikzfig{strings/category/f}[box=f,colour=seq]
+    ]
+    =
+    \circuittostreamig[
+        \iltikzfig{strings/category/f}[box=g,colour=seq]
+    ]
+    \).
+    Let \(\scircsigmaig\) be the result of quotienting \(\scircsigma\) by \(
+    \approx_{\interpretation}^+
+    \).
+\end{definition}
 
 \begin{corollary}
-
+    \(\scircsigmaig \cong \streamig\).
 \end{corollary}
