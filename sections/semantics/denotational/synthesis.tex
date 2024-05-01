@@ -8,12 +8,11 @@ of this chapter is to introduce \(\scircsigma\) to the mix.
 
 Circuits have a very natural interpretation as Mealy machines, so the action
 of a PROP morphism from \(\scircsigma\) to \(\mealyi\) is fairly intuitive.
-We are further buoyed by the fact that since the former is freely generated, the
-PROP morphism need only be defined on generators!
 
 \begin{definition}
     Let \(\morph{\circuittomealyi}{\scircsigma}{\mealyi}\) be the traced PROP
     morphism defined on generators as
+    \vspace{-1em}
     \begin{gather*}
         \circuittomealy[
             \iltikzfig{circuits/components/gates/gate}[colour=comb]
@@ -30,7 +29,7 @@ PROP morphism need only be defined on generators!
         ]{\interpretation}
         \coloneqq \left(
         \{()\},
-        v \mapsto \left\langle(), \listvar{vv}\right\rangle,
+        v \mapsto \left\langle(), vv\right\rangle,
         ()
         \right)
         \\
@@ -40,7 +39,7 @@ PROP morphism need only be defined on generators!
         \coloneqq \left(
         \{()\},
         vw \mapsto
-        \left\langle(), \listvar{v} \ljoin \listvar{w}\right\rangle,
+        \left\langle(), v \ljoin w\right\rangle,
         ()
         \right)
         \qquad
@@ -165,7 +164,7 @@ inputs into appropriate outputs.
     \(\andgate\), \(\orgate\) and \(\notgate\) gates; the entire circuit
     corresponding to the Mealy machine is constructed by combining the
     combinational logic with registers to hold the state.
-    \[\dsptikzfig{mealy/synthesis}.\]
+    \[\iltikzfig{mealy/synthesis}\]
 \end{example}
 
 We will use a variation of this procedure to map from \(\mealyi\) to
@@ -341,9 +340,9 @@ Mealy machines to circuit terms.
 But before we get too ahead of ourselves, there is one more thing to consider:
 \cref{def:encoding} depends on some arbitrary total ordering on the states in a
 given monotone Mealy machine.
-While this may not seem much of an issue (surely one could simply choose?), when
-defining a PROP morphism this must be \emph{fixed}, otherwise a Mealy machine
-might be mapped to different circuit morphisms depending on the time of day!
+While this may not seem much of an issue, when
+defining a PROP morphism this must be \emph{fixed}, otherwise the mapping of
+Mealy machines to circuits might be nondeterministic!
 
 \begin{definition}[Chosen state order]
     Let \((S, f, s_0)\) be a monotone Mealy machine with input space
@@ -376,32 +375,6 @@ there is a canonical term in \(\scircsigma\) for each monotone Mealy machine.
     \iltikzfig{circuits/synthesis/mealy-term-spaced}
     \).
 \end{definition}
-
-\begin{lemma}\label{lem:combinational-streams}
-    For a combinational circuit \(
-    \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
-    \in \ccircsigma
-    \) and \(i \in \nat\), \(
-    \circuittostreami[
-        \iltikzfig{strings/category/f}[box=f,colour=comb]
-    ](\sigma)(i)
-    =
-    \circuittofunci[
-        \iltikzfig{strings/category/f}[box=f,colour=comb]
-    ](\sigma(i))
-    \).
-\end{lemma}
-\begin{proof}
-    Combinational circuits map to monotone Mealy machines, so subsequently
-    their stream functions are their own stream derivative, i.e.\ given an
-    input stream \(\sigma\), the \(i\)-th element of \(
-    \circuittostreami[
-        \iltikzfig{strings/category/f}[box=f,colour=comb]
-    ](\sigma)
-    \) is a function that only depends on the \(i\)-th element of \(\sigma\).
-    Since \(\circuittofunci\) and \(\circuittomealyi\) assign the same functions
-    as semantics of combinational circuits, the statement holds.
-\end{proof}
 
 Before proceeding to the result that this PROP morphism is behaviour-preserving,
 we must show a lemma linking the behaviour circuits in the image of
@@ -483,14 +456,14 @@ Now we can show the behaviour-preserving result.
     =
     \iltikzfig{circuits/synthesis/mealy-term-spaced}
     \).
-    By \cref{def:functional-completeness}, \(
-    \iltikzfig{circuits/synthesis/encoded-core}
-    \) is of the form \(
-    \iltikzfig{circuits/synthesis/normalised-function}[box=g]
-    \), which means that
-    \(\mealytocircuiti[(S,f,s_0)]\) can be expressed as \(
-    \iltikzfig{circuits/synthesis/mealy-term-comb-core}
-    \).
+    By definition of \(\mealytocircuiti\) and \(\mealytofunc\),
+    we have that\[
+        \mealytocircuiti[(S, f, s_0)]
+        =
+        \iltikzfig{circuits/synthesis/mealy-term-spaced}
+        =
+        \iltikzfig{circuits/synthesis/mealy-term-comb-core}.
+    \]
     Let \(
     g^\prime
     =
@@ -508,7 +481,6 @@ Now we can show the behaviour-preserving result.
     we need to show that these `agree' with those of
     \(\mealytostreami[(S, f, s)]\).
     For the initial output, this means we just need to show they are equal:
-
     \begin{align*}
         \initialoutput{\circuittostreami[\mealytocircuiti[(S, f, s)]]}{\listvar{a}}
          & =
@@ -529,12 +501,10 @@ Now we can show the behaviour-preserving result.
          & =
         \mealyfunctionoutput{f}(s, \listvar{a})
     \end{align*}
-
     For the stream derivative, we need to show that as states vary over
     \(s \in S\), the stream derivative of \(
     \circuittostreami[\mealytocircuiti[(S, f, s)]]
     \) is the \(\gamma_\leq\)-encoding of \(\mealytostreami[(S, f, s)]\).
-
     \begin{align*}
         \streamderivative{\left(\circuittostreami[\mealytocircuiti[(S, f, s)]]\right)}{\listvar{a}}
          & =
@@ -558,6 +528,8 @@ Now we can show the behaviour-preserving result.
         \gamma_\leq(
         \mealyfunctiontransition{f}(s, \listvar{a}))
     \end{align*}
+    The initial outputs and stream derivatives agree, so
+    \(\mealytostream = \circuittostreami \circ \mealytocircuiti\).
 \end{proof}
 
 This brings our foray into Mealy machines to a close: we can translate back and
@@ -566,8 +538,6 @@ altering their behaviour in terms of their stream functions.
 
 This already is quite nice to have; if we only know the specification of a
 circuit in terms of a (monotone) Mealy machine, we can use the PROP morphism
-\(\mealytocircuiti\) to generate a circuit rather than attempting to blindly
-construct one from primitive logical
-
-The stage is now set for the final result of this chapter: the completeness of
-the denotational semantics.
+\(\mealytocircuiti\) to generate a circuit in \(\scircsigma\).
+But we have loftier ambitions: using what we have defined in this section we
+will now show the completeness of the denotational semantics.

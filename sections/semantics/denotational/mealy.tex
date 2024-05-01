@@ -1,4 +1,4 @@
-\section{Monotone Mealy machines}
+section{Monotone Mealy machines}
 
 While it would not be too difficult to define a map from circuits in
 \(\scircsigma\) to stream functions in \(\streami\), it is not immediately
@@ -337,8 +337,6 @@ This can be computed in much the same way as it was for stream functions.
 
 \input{sections/semantics/denotational/floats/latch-machine}
 
-\todo[inline]{Is the latch simple enough to do the diagram for}
-
 With monotone Mealy machines in a PROP, we can now represent the unique
 homomorphism from a Mealy machine to a set of state functions as a PROP
 morphism.
@@ -511,7 +509,7 @@ Ideally we would be able to work in whichever setting is most beneficial at a
 given time, so we need to show that the translations are
 \emph{behaviour-preserving}.
 
-\begin{proposition}
+\begin{proposition}\label{prop:mealy-to-stream}
     \(\mealytostreami \circ \streamtomealyi = \id[\streami]\).
 \end{proposition}
 \begin{proof}

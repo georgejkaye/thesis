@@ -1,8 +1,10 @@
 \section{Completeness of the denotational semantics}
 
-
-We conclude by showing that each function in \(\streami\) has at least one
-circuit in \(\scircsigma\) with the same behaviour under \(\interpretation\).
+We want \(\streami\) to be a \emph{complete} denotational semantics for digital
+circuits.
+This means that for every stream function \(f \in \streami\), there must be at
+least one one circuit in \(\scircsigma\) such that its behaviour under
+\(\interpretation\) is \(f\).
 
 \begin{corollary}\label{thm:circuit-stream-correspondence}
     \(
@@ -16,66 +18,27 @@ circuit in \(\scircsigma\) with the same behaviour under \(\interpretation\).
     \).
 \end{corollary}
 \begin{proof}
-    First we show the former:
-    \begin{align*}
-        \circuittostream{\interpretation} \circ
-        \psi \circ
-        \phi
-         & =
-        \circuittostream{\interpretation} \circ
-        \mealytocircuiti \circ
-        \streamtomealyi \circ
-        \mealytostream \circ
-        \circuittomealy{\interpretation}
-        \\
-         & =
-        \mealytostream \circ
-        \streamtomealyi \circ
-        \mealytostream \circ
-        \circuittomealy{\interpretation}
-         & \text{\cref{thm:mealy-to-circuit}}
-        \\
-         & =
-        \mealytostream \circ
-        \circuittomealy{\interpretation}
-         & \text{\cref{cor:minimal-mealy}}
-        \\
-         & =
-        \circuittostream{\interpretation}
-         & \text{\cref{thm:mealy-to-circuit}}
-    \end{align*}
-
-    Now the latter:
-    \begin{align*}
-        \phi \circ \psi
-         & =
-        \mealytostream \circ
-        \circuittomealy{\interpretation} \circ
-        \mealytocircuiti \circ
-        \streamtomealyi
-        \\
-         & =
-        \circuittostream{\interpretation} \circ
-        \mealytocircuiti \circ
-        \streamtomealyi
-         & \text{\cref{thm:mealy-preserves-behaviour}}
-        \\
-         & =
-        \mealytostream \circ
-        \streamtomealyi
-         & \text{\cref{thm:mealy-to-circuit}}
-        \\
-         & =
-        \id[\streami]
-         & \text{\cref{cor:minimal-mealy}}
-    \end{align*}
+    This follows immediately from \cref{thm:mealy-to-circuit} and
+    \cref{prop:mealy-to-stream}, as we have that \(
+    \circuittostreami
+    \circ
+    \mealytocircuiti
+    \circ
+    \streamtomealyi
+    =
+    \mealytostreami
+    \circ
+    \streamtomealyi
+    =
+    \id[\streami]
+    \).
 \end{proof}
 
 There is no isomorphism between \(\scircsigma\) and \(\streami\)
 as many circuits may have the same semantics but different syntax.
 
 \begin{definition}[Denotational equivalence]
-    We say that two sequential circuits are \emph{denotationally equivalent}
+    Two sequential circuits are \emph{denotationally equivalent}
     under \(\interpretation\), written \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \approx_{\interpretation}
@@ -94,13 +57,11 @@ as many circuits may have the same semantics but different syntax.
     \).
 \end{definition}
 
+Every morphism in \(\scircsigmai\) is a class of circuits which all have the
+same behaviour under \(\interpretation\).
+Since each of these behaviours is a stream function in \(\streami\), we can
+conclude the following.
+
 \begin{corollary}
     \(\scircsigmai \cong \streami\).
 \end{corollary}
-
-This confirms that, for a functionally complete interpretation
-\(\interpretation\), the PROP \(\streami\) of causal, finitely specified and
-monotone stream functions, is a \emph{sound and complete} semantic domain for
-sequential circuits: every circuit in \(\scircsigma\) has a stream
-function in \(\streami\) and every function \(f \in \streami\) has a class of
-circuits with \(f\) as their behaviour.

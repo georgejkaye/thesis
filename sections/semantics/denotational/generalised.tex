@@ -1,5 +1,14 @@
 \section{Denotational semantics for generalised circuits}
 
+Although we have discussed the denotation semantics in terms of monochromatic
+circuit signatures, it is straightforward to extend the results to categories
+generated over \emph{generalised} circuit signatures
+
+As the input and output wires of generalised circuits are not all the same
+width, the domains and
+codomains of circuit stream functions will no longer be streams of tuples of
+values, but streams of tuples of tuples of values!
+
 \begin{notation}
     Given a set \(A\) and a word \(\listvar{v} \in \natplus^\star\) of
     length \(n\), we write \(
@@ -14,3 +23,32 @@
     A^{\listvar{v}(n-1)}
     \).
 \end{notation}
+
+When the primitive interfaces are lists containing only \(1\), the domains and
+codomains of morphisms in \(\funcig\) are tuples of single-element tuples,
+which can be equivalently viewed as `flat' tuples as in \(\funci\).
+
+We generalise the category of streams in much the same way.
+
+\begin{definition}
+    Let \(\mealyig\) be the \(\natplus\)-coloured PROP in which the moprhisms
+    \(\listvar{m} \to \listvar{n}\) are the monotone
+    \((\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}})\)-Mealy machines.
+    Let \(\morph{\circuittomealyig}{\scircsigmaplus}{\mealyig}\) be defined
+    in the same manner as \(\circuittomealyi\).
+\end{definition}
+
+\begin{definition}
+    Let \(\streamig\) be the \(\natplus\)-coloured PROP in which the morphisms
+    \(\listvar{m} \to \listvar{n}\) are the causal, monotone, and finitely
+    specified stream functions \(
+    \valuetuplestream{\listvar{m}} \to \valuetuplestream{\listvar{n}}
+    \).
+\end{definition}
+
+
+
+
+\begin{corollary}
+
+\end{corollary}

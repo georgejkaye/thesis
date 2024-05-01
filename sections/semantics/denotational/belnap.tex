@@ -388,12 +388,12 @@ functions.
     (v_0,v_1) \mapsto v_1 \lor (v_0 \land v_1)
     \).
     Adding in the translations from \cref{def:translation-tables} and the join
-    at the end, the overall Belnap expression becomes \(
-    (v_0,v_1) \mapsto
-    (v_0 \land \bot) \land ((v_0 \land \bot) \lor \neg(v_1 \lor \bot))
-    \ljoin
-    (v_1 \lor \bot) \lor (\neg(v_0 \land \bot) \land (v_1 \lor \bot))
-    \).
+    at the end, the overall Belnap expression becomes \[
+        (v_0,v_1) \mapsto
+        (v_0 \land \bot) \land ((v_0 \land \bot) \lor \neg(v_1 \lor \bot))
+        \ljoin
+        (v_1 \lor \bot) \lor (\neg(v_0 \land \bot) \land (v_1 \lor \bot)).
+    \]
 \end{example}
 
 Although this result only applies to functions with a single output, it is
@@ -407,12 +407,12 @@ easily generalised to arbitrary-output functions.
     By repeating the process in \cref{thm:belnap-complete} for each output.
 \end{proof}
 
-Since an expression can be defining using only operations with counterparts in
-the syntactic realm, it is possible to define a map \(
+Since an expression can be  using only operations with counterparts in
+the syntactic realm, the map \(
 \morph{\mealytofunc_\belnap}{\func{\interpretation_\belnap}}{\scirc{\Sigma_\belnap}}
-\) such that \(\mealytofunc[f]_\belnap\) is a term of the form \(
-\iltikzfig{circuits/axioms/belnap/translation/exploded-form}[box=F]
-\), in which \(
+\) sends functions \(f\) to circuits of the form \[
+    \iltikzfig{circuits/axioms/belnap/translation/exploded-form}[box=f]
+\] in which \(
 \iltikzfig{strings/category/f}[box=f_0,colour=comb]
 \) and \(
 \iltikzfig{strings/category/f}[box=f_1,colour=comb]
