@@ -512,10 +512,6 @@ circuits.
         \iltikzfig{circuits/components/gates/gate}[gate=g,colour=comb,dom=\circuitsignaturearity(g),cod=\circuitsignaturecoarity(g)]
         \quad
         \text{for each}\ g \in \circuitsignaturegates
-        \qquad
-        \iltikzfig{strings/strictifiers/bundle}[colour=comb,dom=\listvar{m},cod=\listvar{n}]
-        \quad
-        \text{for each}\ \listvar{m},\listvar{n} \in \natplus^\star
         \\
         \iltikzfig{strings/structure/monoid/init}[colour=comb,obj=n]
         \quad
@@ -524,6 +520,10 @@ circuits.
         \iltikzfig{strings/structure/monoid/merge}[colour=comb, obj=n]
         \quad
         \iltikzfig{strings/structure/comonoid/discard}[colour=comb,obj=n]
+        \quad
+        \iltikzfig{strings/strictifiers/expand}[colour=comb,obj=n]
+        \quad
+        \iltikzfig{strings/strictifiers/collapse}[colour=comb,obj=n]
         \quad
         \text{for each}\ n \in \natplus
     \end{gather*}
@@ -535,7 +535,7 @@ Most of the generators  in \(\ccircsigmag\) are fairly straightforward
 generalisations of the primitives in \(\ccircsigma\) to act on each
 colour (width) of wires.
 
-The only new generators are the \emph{bundlers} on the right of the first row:
+The only new generators are the \emph{bundlers} at the end of the bottom row;
 their intended meaning is that they can be used to \emph{split} and
 \emph{combine} bundles of wire buses into bundles with different widths.
 These constructs were first proposed by Wilson et al in~\cite{wilson2023string}
@@ -573,10 +573,8 @@ applied to strict categories.
 
     In two's complement representation, the most significant bit indicates if
     the sum is negative.
-    To model this, the lower bundler splits the four-bit sum into two
-    wires, one containing the most significant bit and the other containing the
-    least significant bits.
-    The former is output and the latter is discarded.
+    To model this, the lower bundler splits the four-bit sum into its
+    constituent bits, discarding the least significant three.
 \end{example}
 
 Sequential circuits are generalised in the same way.
@@ -592,7 +590,7 @@ Sequential circuits are generalised in the same way.
     \(
     \iltikzfig{circuits/components/waveforms/delay}[width=n]
     \) for each \(n \in \natplus\).
-    We write \(\scircsigmaplus\) for the freely generated PROP
+    We write \(\scircsigmag\) for the freely generated PROP
     \(\stmc{\generators[\scirc{}^+]}\).
 \end{definition}
 
