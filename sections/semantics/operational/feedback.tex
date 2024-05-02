@@ -30,7 +30,7 @@ it follows immediately from axioms of STMCs.
 
 \begin{example}
     The SR NOR latch circuit from \cref{ex:sr-latch} is assembled into global
-    trace-delay form in \cref{fig:sr-latch-global-trace-delay-form}.
+    trace-delay form in \cref{fig:sr-latch-global-trace-delay}.
 \end{example}
 
 \input{sections/semantics/operational/floats/sr-latch-global-trace-delay}
@@ -38,13 +38,15 @@ it follows immediately from axioms of STMCs.
 This form is evocative of what we saw when mapping from Mealy machines to
 circuits in the previous section, but rather than the state being determined by
 one word, the instantaneous values and the delays are kept separate.
-Our first global translation will remedy this.
 
 \begin{definition}[Pre-Mealy form]\label{def:pre-mealy}
     A sequential circuit is in \emph{pre-Mealy form} if it is in the form \(
-    \iltikzfig{circuits/productivity/pre-mealy-form}[core=\hat{f},state=\listvar{s},dom=m,cod=n,trace=x,delay=y]
+    \iltikzfig{circuits/productivity/pre-mealy-form}[core=f,state=\listvar{s},dom=m,cod=n,trace=x,delay=y]
     \).
 \end{definition}
+
+Our first reduction will transform any circuit in global trace-delay form into
+pre-Mealy form.
 
 \begin{lemma}\label{lem:mealy-rule}
     The rule \(
@@ -100,7 +102,7 @@ instance of \emph{non-delay-guarded feedback}.
     \cref{fig:cyclic-combinational}, where \(
     \iltikzfig{strings/category/f}[box=f,colour=comb]
     \) and \(
-    \iltikzfig{strings/category/f}[box=G,colour=comb]
+    \iltikzfig{strings/category/f}[box=g,colour=comb]
     \) are arbitrary combinational circuits.
     The trapezoidal gate is a \emph{multiplexer}; it has a vertical
     \emph{control} input and two horizontal \emph{data} inputs.
@@ -109,40 +111,37 @@ instance of \emph{non-delay-guarded feedback}.
     \coloneqq
     \iltikzfig{circuits/components/gates/mux-construction}
     \).
-    The multiplexer is a particularly common circuit component as it is used as
-    a rudimentary if statement: when the control is \(\belnapfalse\) the output
-    is the first data input and when it is \(\belnaptrue\) the output is the
-    second data input.
+    The multiplexer is effectively an if statement: when the control is
+    \(\belnapfalse\) the output is the first data input and when it is
+    \(\belnaptrue\) the output is the second data input.
 
     The circuit in \cref{fig:cyclic-combinational} has no state and its trace is
     global so it is already in pre-Mealy form, and has
     non-delay-guarded feedback.
-    Despite this, it produces useful output when the control signal is \(0\)
-    or \(1\):
+    Despite this, it produces useful output when the control signal is true or
+    false:
     \begin{gather*}
         \circuittostream[
             \iltikzfig{strings/category/f-2-1}[box=f,colour=seq]
         ]{\interpretation_\star}(\sigma)(i)
         =
-        \circuittofunc[
-            \iltikzfig{circuits/examples/cyclic-combinational/reduced-false}
-        ]{\interpretation_\star}
-        (\proj{1}(\sigma(i)))
-        \text{ if } \proj{0}(\sigma(i)) = \belnapfalse
-        \\
-        \circuittostream[
-            \iltikzfig{strings/category/f-2-1}[box=f,colour=seq]
-        ]{\interpretation_\star}(\sigma)(i)
-        =
-        \circuittofunc[
-            \iltikzfig{circuits/examples/cyclic-combinational/reduced-true}
-        ]{\interpretation_\star}
-        (\proj{1}(\sigma(i)))
-        \text{ if } \proj{0}(\sigma(i)) = \belnaptrue
+        \begin{cases}
+            \circuittofunc[
+                \iltikzfig{circuits/examples/cyclic-combinational/reduced-false}
+            ]{\interpretation_\star}
+            (\proj{1}(\sigma(i)))
+            \quad
+            \text{ if } \proj{0}(\sigma(i)) = \belnapfalse
+            \\
+            \circuittofunc[
+                \iltikzfig{circuits/examples/cyclic-combinational/reduced-true}
+            ]{\interpretation_\star}
+            (\proj{1}(\sigma(i)))
+            \quad
+            \text{ if } \proj{0}(\sigma(i)) = \belnaptrue
+        \end{cases}
     \end{gather*}
-    The feedback is just used as a clever way to share circuit components: the
-    multiplexers and control signal simply determine which order the two
-    subcircuits are applied in.
+    The feedback is just used as a clever way to share circuit components.
 \end{example}
 
 \input{sections/semantics/operational/floats/cyclic-combinational}
@@ -172,20 +171,20 @@ Kleene fixed-point theorem.
 \end{proof}
 
 \begin{definition}[Iteration]\label{def:iteration}
-    For a combinational circuit \(
+    Given a combinational circuit \(
     \iltikzfig{strings/category/f-2-2}[box=f,colour=comb,dom1=x,dom2=m,cod1=x,cod2=n],
     \)
-    its \emph{\(n\)th iteration} \(
+    its \emph{\(n\)-th iteration} \(
     \iltikzfig{strings/category/f-1-2}[box=f^n,colour=comb,dom=m,cod1=x,cod2=n]
-    \) is defined inductively over \(n\) as \(
-    \iltikzfig{circuits/instant-feedback/f0-box}[dom=m,trace=x,cod=n]
-    \coloneqq
-    \iltikzfig{circuits/instant-feedback/f0-definition}[dom=m,trace=x,cod=n]
-    \) and \(
-    \iltikzfig{circuits/instant-feedback/fkp1-box}[dom=m,trace=x,cod=n]
-    \coloneqq
-    \iltikzfig{circuits/instant-feedback/fkp1-definition}[dom=m,trace=x,cod=n]
-    \).
+    \) is defined inductively over \(n\) in the following way: \[
+        \iltikzfig{circuits/instant-feedback/f0-box}[dom=m,trace=x,cod=n]
+        \coloneqq
+        \iltikzfig{circuits/instant-feedback/f0-definition}[box=f,dom=m,trace=x,cod=n]
+        \qquad
+        \iltikzfig{circuits/instant-feedback/fkp1-box}[dom=m,trace=x,cod=n]
+        \coloneqq
+        \iltikzfig{circuits/instant-feedback/fkp1-definition}[dom=m,trace=x,cod=n]
+    \]
 \end{definition}
 
 The trace in \(\streami\) is by the least fixed point, computed by repeatedly
@@ -211,9 +210,9 @@ feedback at all!
 
 \begin{proposition}\label{prop:instant-feedback}
     The instant feedback rule \(
-    \iltikzfig{circuits/instant-feedback/equation-lhs}
+    \iltikzfig{circuits/instant-feedback/equation-lhs}[box=f]
     \reduction[(\instantfeedbackeqn)]
-    \iltikzfig{circuits/instant-feedback/equation-rhs}
+    \iltikzfig{circuits/instant-feedback/equation-rhs}[box=f]
     \) is sound.
 \end{proposition}
 \begin{proof}
@@ -221,26 +220,25 @@ feedback at all!
     times reaches a fixpoint.
     The circuit is combinational so each element of the output
     \(\circuittostreami[
-        \iltikzfig{strings/category/f}[box=f,colour=comb]
+        \iltikzfig{strings/category/f-2-2}[box=f,colour=comb]
     ](\sigma)(i)\) is a function; this means that \cref{lem:monotone-fixpoint}
     can be applied to each element.
 \end{proof}
 
 \begin{example}
-    The \((\instantfeedbackeqn)\) rule is applied to the cyclic combinational
-    circuit from \cref{fig:cyclic-combinational} in
-    \cref{fig:cyclic-combinational-unrolled}.
-\end{example}
-
-\input{sections/semantics/operational/floats/cyclic-combinational-unrolled}
-
-\begin{example}
-    \cref{fig:sr-latch-unrolled} applies \(\instantfeedbackeqn\) to the
-    SR latch circuit in pre-Mealy form from
+    In \cref{fig:sr-latch-unrolled}, the \(\instantfeedbackeqn\) is applied to
+    the SR latch circuit in pre-Mealy form from
     \cref{fig:sr-latch-global-trace-delay}.
 \end{example}
 
+\begin{example}
+    In \cref{fig:cyclic-combinational-unrolled}, the \((\instantfeedbackeqn)\)
+    rule is applied to the cyclic combinational circuit from
+    \cref{fig:cyclic-combinational}.
+\end{example}
+
 \input{sections/semantics/operational/floats/sr-latch-unrolled}
+\input{sections/semantics/operational/floats/cyclic-combinational-unrolled}
 
 If applied locally for every feedback loop, the \(\instantfeedbackeqn\)
 equation would cause an exponential blowup.
