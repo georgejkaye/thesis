@@ -48,28 +48,185 @@ The semantic categories can now be extended to these \emph{coloured} interfaces.
     \((\valuetuple{\listvar{m}}, \valuetuple{\listvar{n}})\)-Mealy machines.
 \end{definition}
 
+The various PROP morphisms between these categories are defined in a similar way
+to the monochromatic versions, but now we have to account for the structural
+generators for each \(n \in \natplus\), as well as the bundlers.
+
+\begin{definition}
+    Let \(\morph{\circuittofuncig}{\ccircsigmag}{\funcig}\) be the coloured PROP
+    morphism with action defined as%
+    \vspace{-\abovedisplayskip}
+    \begin{gather*}
+        \circuittofuncig[
+            \iltikzfig{circuits/components/gates/gate}[gate=p,dom=\listvar{m},cod=\listvar{n}]
+        ]
+        \coloneqq
+        \gateinterpretation[p]
+        \\
+        \circuittofuncig[
+            \iltikzfig{strings/structure/comonoid/copy}[colour=comb,obj=n]
+        ]
+        \coloneqq
+        (\listvar{v}) \mapsto (\listvar{v}, \listvar{v})
+        \qquad
+        \circuittofuncig[
+            \iltikzfig{strings/structure/comonoid/discard}[colour=comb,obj=n]
+        ]
+        \coloneqq
+        (\listvar{v}) \mapsto ()
+        \\
+        \circuittofuncig[
+            \iltikzfig{strings/structure/monoid/merge}[colour=comb,obj=n]
+        ]
+        \coloneqq
+        (\listvar{v}, \listvar{w})
+        \mapsto \listvar{v} \sqcup \listvar{w}
+        \qquad
+        \circuittofuncig[
+            \iltikzfig{strings/structure/monoid/init}[colour=comb,obj=n]
+        ]
+        \coloneqq
+        () \mapsto \bot^n
+        \\
+        \circuittofuncig[
+            \iltikzfig{strings/strictifiers/expand}[colour=comb,obj=n]
+        ]
+        \coloneqq
+        (\listvar{v}) \mapsto (\listvar{v}(0), \listvar{v}(1), \dots, \listvar{v}(n-1))
+        \\
+        \circuittofuncig[
+            \iltikzfig{strings/strictifiers/collapse}[colour=comb,obj=n]
+        ]
+        \coloneqq
+        (v_0, v_1, \dots, v_{n-1}) \mapsto (v_0v_1\dots v_{n-1})
+    \end{gather*}
+\end{definition}
+
+The map from coloured circuits to Mealy machines proceeds in a similar
+manner.
+
+\begin{definition}
+    Let \(\morph{\circuittomealyig}{\scircsigmag}{\mealyig}\) be the traced PROP
+    morphism defined on generators as
+    \begin{gather*}
+        \circuittomealyig[
+            \iltikzfig{circuits/components/gates/gate}[colour=comb]
+        ]
+        \coloneqq \left(
+        \{()\},
+        (\listvar{v}_0,\listvar{v}_1,\dots,\listvar{v}_{m-1}) \mapsto
+        \left\langle
+        (),
+        \gateinterpretation[g]\left(
+        \listvar{v}_0,\listvar{v}_1,\dots,\listvar{v}_{m-1}
+        \right)
+        \right\rangle,
+        ()
+        \right)
+        \\
+        \circuittomealyig[
+            \iltikzfig{strings/structure/comonoid/copy}[colour=comb,obj=n]
+        ]
+        \coloneqq \left(
+        \{()\},
+        \listvar{v}
+        \mapsto
+        \left\langle(), (\listvar{v},\listvar{v})\right\rangle,
+        ()
+        \right)
+        \\
+        \circuittomealyig[
+            \iltikzfig{strings/structure/monoid/merge}[colour=comb,obj=n]
+        ]
+        \coloneqq \left(
+        \{()\},
+        (\listvar{v}, \listvar{w}) \mapsto
+        \left\langle(), \listvar{v} \ljoin \listvar{w}\right\rangle,
+        ()
+        \right)
+        \\
+        \circuittomealyig[
+            \iltikzfig{strings/structure/comonoid/discard}[colour=comb,obj=n]
+        ]
+        \coloneqq \left(
+        \{()\},
+        \listvar{v} \mapsto
+        \left\langle(), ()\right\rangle,
+        ()
+        \right)
+        \\
+        \circuittomealyig[
+            \iltikzfig{strings/strictifiers/expand}[colour=comb,obj=n]
+        ]
+        \coloneqq
+        \left(
+        \{()\},
+        ((), (v_0,v_1,\dots,v_{n-1})) \mapsto ((v_0), (v_1), \dots, (v_{n-1})),
+        ()
+        \right)
+        \\
+        \circuittomealyig[
+            \iltikzfig{strings/strictifiers/collapse}[colour=comb,obj=n]
+        ]
+        \coloneqq
+        \left(
+        \{()\},
+        ((), ((v_0), (v_1), \dots, (v_{n-1}))) \mapsto (v_0,v_1,\dots,v_{n-1})
+        \right)
+        \\
+        \circuittomealyig[
+            \iltikzfig{circuits/components/values/vs}[val=\listvar{v},width=n]
+        ]
+        \coloneqq
+        \left(
+        \left(
+        \{s_{\listvar{v}}, s_\bot\},
+        \{
+        s_{\listvar{v}} \mapsto \left\langle{s_\bot,\listvar{v}}\right\rangle,
+        s_\bot \mapsto \left\langle{s_\bot,\bot}\right\rangle
+        \}\right),
+        s_{\listvar{v}}
+        \right)
+        \\
+        \circuittomealyig[
+            \iltikzfig{circuits/components/waveforms/delay}[width=n]
+        ]
+        \coloneqq
+        \left(
+        \left(
+        \{ s_{\listvar{v}} \,|\, \listvar{v} \in \valuetuple{n}\},
+        (s_{\listvar{v}}, \listvar{w}) \mapsto
+        \left\langle{s_{\listvar{w}},\listvar{v}}\right\rangle\right),
+        s_{\bot^n}
+        \right)
+    \end{gather*}
+\end{definition}
+
+Although morphisms in \(\mealyig\) have different interfaces to those in
+\(\streamig\), they are still monotone Mealy machines so it is simple to
+translate them into stream functions or coloured circuits.
 
 \begin{definition}
     Let the coloured PROP morphisms
-    \[\arraycolsep=2em\def\arraystretch{1.2}\begin{array}{cc}
-            \morph{\circuittofuncig}{\ccircsigmag}{\funcig}
-             &
-            \morph{\circuittomealyig}{\scircsigmag}{\mealyig}
-            \\
-            \morph{\mealytostreamig}{\mealyig}{\streamig}
-             &
-            \morph{\streamtomealyig}{\streamig}{\mealyig}
-            \\
-            \morph{\mealytocircuitig}{\mealyig}{\scircsigmag}
-             &
-            \morph{\circuittostreamig}{\scircsigmag}{\streamig}
-        \end{array}\]
-    be defined in the same manner as the monochromatic versions.
+    \(\morph{\mealytostreamig}{\mealyig}{\streamig}\),
+    \(\morph{\streamtomealyig}{\streamig}{\mealyig}\) and
+    \(\morph{\streamtomealyig}{\mealyig}{\scircsigmag}\) be defined using the
+    same procedure as for their monochromatic counterparts.
+    Subsequently, let \(\morph{\circuittostreamig}{\scircsigmag}{\streamig}\)
+    be defined as \(\mealytostreamig \circ \circuittomealyig\).
 \end{definition}
 
-\begin{definition}
+By putting all these coloured PROP morphism together, we can show the same
+results as we did in the previous section.
 
-\end{definition}
+\begin{theorem}
+    \(\mealytostreamig = \circuittostreamig \circ \mealytostreamig\) and
+    \(\circuittostreamig \circ \mealytocircuitig \circ \streamtomealyig =
+    \id[\streamig]\).
+\end{theorem}
+
+As before, we derive a notion of denotational equivalence for generalised
+circuits.
 
 \begin{definition}
     Two generalised sequential circuits are \emph{denotationally equivalent}

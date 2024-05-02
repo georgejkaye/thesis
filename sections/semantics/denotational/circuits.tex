@@ -252,8 +252,8 @@ circuit maps to a monotone function.
 \end{definition}
 
 \begin{definition}
-    Let \(\morph{\circuittofunci}{\ccircsigma}{\funci}\) be the coloured PROP
-    morphism with action defined as%
+    Let \(\morph{\circuittofunci}{\ccircsigma}{\funci}\) be the PROP morphism
+    with action defined as%
     \vspace{-\abovedisplayskip}
     % \vspace{-\parskip}
     \begin{center}
@@ -261,13 +261,13 @@ circuit maps to a monotone function.
             \centering
             \begin{align*}
                 \circuittofunci[
-                    \iltikzfig{strings/structure/comonoid/copy}
+                    \iltikzfig{strings/structure/comonoid/copy}[colour=comb]
                 ]
                  & \coloneqq
                 (v) \mapsto (v, v)
                 \\
                 \circuittofunci[
-                    \iltikzfig{strings/structure/monoid/merge}
+                    \iltikzfig{strings/structure/monoid/merge}[colour=comb]
                 ]
                  & \coloneqq
                 (v, w) \mapsto v \sqcup w
@@ -278,13 +278,13 @@ circuit maps to a monotone function.
             \centering
             \begin{align*}
                 \circuittofunci[
-                    \iltikzfig{strings/structure/comonoid/discard}
+                    \iltikzfig{strings/structure/comonoid/discard}[colour=comb]
                 ]
                  & \coloneqq
                 (v) \mapsto ()
                 \\
                 \circuittofunci[
-                    \iltikzfig{strings/structure/monoid/init}
+                    \iltikzfig{strings/structure/monoid/init}[colour=comb]
                 ]
                  & \coloneqq
                 () \mapsto \bot

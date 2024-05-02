@@ -12,14 +12,13 @@ of a PROP morphism from \(\scircsigma\) to \(\mealyi\) is fairly intuitive.
 \begin{definition}
     Let \(\morph{\circuittomealyi}{\scircsigma}{\mealyi}\) be the traced PROP
     morphism defined on generators as
-    \vspace{-1em}
     \begin{gather*}
         \circuittomealy[
             \iltikzfig{circuits/components/gates/gate}[colour=comb]
         ]{\interpretation}
         \coloneqq \left(
         \{()\},
-        v \mapsto
+        \left((), \listvar{v}\right) \mapsto
         \left\langle(), \gateinterpretation[g](\listvar{v})\right\rangle,
         ()
         \right)
@@ -29,7 +28,7 @@ of a PROP morphism from \(\scircsigma\) to \(\mealyi\) is fairly intuitive.
         ]{\interpretation}
         \coloneqq \left(
         \{()\},
-        v \mapsto \left\langle(), vv\right\rangle,
+        ((), v) \mapsto \left\langle(), vv\right\rangle,
         ()
         \right)
         \\
@@ -38,7 +37,7 @@ of a PROP morphism from \(\scircsigma\) to \(\mealyi\) is fairly intuitive.
         ]{\interpretation}
         \coloneqq \left(
         \{()\},
-        vw \mapsto
+        ((), (v, w)) \mapsto
         \left\langle(), v \ljoin w\right\rangle,
         ()
         \right)
@@ -48,7 +47,7 @@ of a PROP morphism from \(\scircsigma\) to \(\mealyi\) is fairly intuitive.
         ]{\interpretation}
         \coloneqq \left(
         \{()\},
-        \listvar{v} \mapsto
+        ((), v) \mapsto
         \left\langle(), ()\right\rangle,
         ()
         \right)
