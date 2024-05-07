@@ -47,11 +47,17 @@ input with an instantaneous and a delayed component, the circuit can be copied
 so that one copy handles what is happening `now' and the other handles what is
 happening `later'.
 
-\begin{example}
-    \cref{fig:sr-latch-streamed} shows how the SR NOR latch in Mealy form from
-    \cref{fig:sr-latch-unrolled} is transformed by the \((\streamingeqn)\) rule.
-
+\begin{example}\label{ex:streaming}
+    Pulsing \(\belnapfalse\belnaptrue\) to the inputs of an SR NOR latch starts
+    the procedure for `setting' the latch, causing it to output
+    \(\belnaptrue\belnapfalse\).
+    \cref{fig:sr-latch-streamed} shows how the \(\streamingeqn\) rule is applied
+    to the unrolled SR NOR circuit from
+    \cref{fig:sr-latch-unrolled} with these inputs to create a copy for what
+    is happening `now' and another for what is happening `later'.
 \end{example}
+
+\input{sections/semantics/operational/floats/sr-latch-streamed}
 
 As there is a delay on the bottom argument of the join, the output of a streamed
 circuit at the current tick is now contained entirely in the top argument of the
@@ -79,8 +85,8 @@ The final rules we present will reduce this copy to values, as desired.
     \end{gather*}
 \end{lemma}
 \begin{proof}
-    These follow immediately from \cref{lem:combinational-streams} and the
-    interpretation of combinational circuits as function.
+    Straightforward by considering the interpretations of values as stream
+    functions.
 \end{proof}
 
 Reducing the `now' core is the only time in which exhaustive application is
@@ -104,6 +110,11 @@ required, as more is involved than than just copying circuit components.
     \iltikzfig{circuits/components/values/vs}[val=\listvar{w}]
     \).
 \end{lemma}
+\begin{proof}
+    By induction on the structure of \(
+    \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
+    \).
+\end{proof}
 
 These rules are all we need to propagate input values across a circuit.
 
@@ -122,22 +133,20 @@ These rules are all we need to propagate input values across a circuit.
     exhaustively.
 \end{corollary}
 
-\begin{example}\label{ex:productivity}
-    \cref{fig:sr-latch-streamed} shows how the `now' copy of the transformed SR
-    latch circuit from \cref{fig:sr-latch-unrolled} for inputs
-    \(\belnaptrue\belnapfalse\) (a `reset' pulse) is reduced by the
-    combinational rules.
-    The next state is \(\belnaptrue\), the first output is \(\belnapfalse\) and
-    the second is \(\bot\).
-    The first output (false) is what we would expect given a reset pulse, but
-    the second may raise an eyebrow.
-    This arises due to the delay; recall that this models inertial delay in the
-    wires rather than an actual memory element.
-    Subsequently, it will take another cycle to produce the expected output
-    \(\belnapfalse\belnaptrue\).
+\begin{example}
+    \cref{fig:sr-latch-value-rules} shows how the value rules are applied to
+    the streamed circuit from \cref{fig:sr-latch-streamed}.
+    After performing all the reductions exhaustively on the `now' circuit, the
+    next state is \(\belnaptrue\), the first output is \(\bot\) and
+    the second is \(\belnapfalse\).
+    While the next state and second output make sense (if we apply Set, the
+    state of the latch should turn true and the negated output false), the first
+    output may raise eyebrows.
+    This arises due to the presence of the delay; it will take another cycle to
+    produce the expected output \(\belnaptrue\belnapfalse\).
 \end{example}
 
-\input{sections/semantics/operational/floats/sr-latch-streamed}
+\input{sections/semantics/operational/floats/sr-latch-value-rules}
 
 By now putting together all the components in this section and the previous,
 we have a productive strategy for processing inputs to \emph{any} sequential
@@ -159,10 +168,7 @@ circuit.
     As we saw in \cref{cor:mealy-form-productivity}, applying
     \((\streamingeqn)\) followed by the value rules to a circuit in Mealy form
     produces another circuit in Mealy form.
-    This means that for one circuit and a whole stream of inputs,
+    This means that for one circuit and a long waveform stream of inputs,
     \((\mealyeqn)\) and \((\instantfeedbackeqn)\) need only be applied
-    \emph{once} to get a circuit into Mealy form at the beginning before
-    processing values.
-    As we shall see late on this is very handy for implementing these reductions
-    mechanically, as very few large circuit transformations are required.
+    \emph{once} at the very start before processing values.
 \end{remark}

@@ -18,7 +18,7 @@ it follows immediately from axioms of STMCs.
     \) and \(\overline{v} \in \valuetuple{z}\) such that \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     =
-    \iltikzfig{circuits/productivity/trace-delay}[core=F,state=\listvar{v},dom=m,cod=n,delay=y,trace=x,valwidth=z]
+    \iltikzfig{circuits/productivity/trace-delay}[core=f,state=\listvar{v},dom=m,cod=n,delay=y,trace=x,valwidth=z]
     \) by axioms of STMCs.
 \end{lemma}
 \begin{proof}
@@ -253,21 +253,21 @@ semantics in this section and the algebraic semantics of the next.
 
 \begin{definition}[Mealy form]\label{def:delay-guarded}
     A sequential circuit
-    \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     is in \emph{Mealy form} if it is in the form \(
-    \iltikzfig{circuits/productivity/mealy-form}[core=\hat{F},state=\listvar{s},dom=m,cod=n,delay=y]
+    \iltikzfig{circuits/productivity/mealy-form}[core=g,state=\listvar{s},dom=m,cod=n,delay=y]
     \).
 \end{definition}
 
 \begin{theorem}\label{thm:all-mealy-form}
     For a sequential circuit
-    \(\iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]\), there exist
+    \(\iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]\), there exist
     at least one combinational circuit \(
-    \iltikzfig{strings/category/f-2-2}[box=\hat{F},colour=comb,dom1=x,dom2=m,cod1=x,cod2=n]
-    \) and values \(s \in \valuetuple{x}\) such that \(
-    \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+    \iltikzfig{strings/category/f-2-2}[box=g,colour=comb,dom1=x,dom2=m,cod1=x,cod2=n]
+    \) and values \(\listvar{s} \in \valuetuple{x}\) such that \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \reductions
-    \iltikzfig{circuits/productivity/mealy-form}[core=F,state=\listvar{s},dom=m,cod=n]
+    \iltikzfig{circuits/productivity/mealy-form}[core=g,state=\listvar{s},dom=m,cod=n]
     \) by applying \(\mealyeqn\) followed by \(\instantfeedbackeqn\).
 \end{theorem}
 \begin{proof}

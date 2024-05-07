@@ -1,4 +1,4 @@
-\section{The multicoloured case}
+\section{Generalising the operational semantics}
 
 When dealing with arbitrary-width wires, the only part of the operational
 semantics that does not completely generalise in the obvious way are the value
@@ -24,27 +24,23 @@ rules.
         \iltikzfig{circuits/axioms/gate-rhs}[gate=p,input=\listvar{v}]
         \\[1em]
         \iltikzfig{circuits/axioms/unbundle-lhs}
-        \reduction[(\unbundleeqn)]
+        \reduction[(\spliteqn)]
         \iltikzfig{circuits/axioms/unbundle-rhs}
         \quad
         \iltikzfig{circuits/axioms/bundle-lhs}
-        \reduction[(\bundleeqn)]
+        \reduction[(\combineeqn)]
         \iltikzfig{circuits/axioms/bundle-rhs}
     \end{gather*}
 \end{lemma}
-\begin{proof}
-    These follow immediately from \cref{lem:combinational-streams} and the
-    interpretation of combinational circuits as function.
-\end{proof}
 
-\begin{lemma}\label{lem:reduce-core-confluent}
+\begin{lemma}
     Applying the generalised value rules is confluent.
 \end{lemma}
 \begin{proof}
     There are no overlaps between the rules.
 \end{proof}
 
-\begin{lemma}\label{lem:reduce-core-terminating}
+\begin{lemma}
     For a generalised combinational circuit \(
     \iltikzfig{strings/category/f}[box=f,colour=comb,dom=\listvar{m},cod=\listvar{n}]
     \) and \(\listvar{v} \in \valuetuple{\listvar{m}}\), there exists a word
@@ -56,9 +52,10 @@ rules.
     \).
 \end{lemma}
 
-These rules are all we need to propagate input values across a circuit.
+With the addition of the bundler rules, the inputs to a generalised circuit can
+be processed.
 
-\begin{corollary}\label{cor:mealy-form-productivity}
+\begin{corollary}
     For generalised circuit \(
     \iltikzfig{circuits/productivity/mealy-form-applied}[core=f,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
     \) there exist \(
@@ -69,11 +66,11 @@ These rules are all we need to propagate input values across a circuit.
     \iltikzfig{circuits/productivity/mealy-form-applied}[core=f,dom=\listvar{m},cod=\listvar{n},delay=x]
     \reductions
     \iltikzfig{circuits/productivity/mealy-form-produced}[core=f,dom=\listvar{m},cod=\listvar{n},delay=x]
-    \) by applying \(\streamingeqn\) once followed by the generalised value
+    \) by applying \((\streamingeqn)\) once followed by the generalised value
     rules exhaustively.
 \end{corollary}
 
-\begin{corollary}[Generalised productivity]\label{cor:productivity}
+\begin{corollary}[Generalised productivity]
     For sequential circuit \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
     \) and inputs \(\listvar{v} \in \valuetuple{m}\), there exists
@@ -117,7 +114,7 @@ observational equivalence we must consider longer input waveforms.
 The observational equivalence results from the previous section then generalise
 nicely to the multicoloured case.
 
-\begin{theorem}\label{thm:operational-denotational}
+\begin{theorem}
     Given two sequential circuits \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
     \) and \(
