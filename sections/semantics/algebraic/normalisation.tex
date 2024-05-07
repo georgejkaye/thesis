@@ -14,10 +14,8 @@ Nevertheless, it is a useful starting point so we will need equations to bring
 circuits to Mealy form in our theory.
 
 We could just naively port across the Mealy rules from the operational semantics
-by changing the squiggly arrow into an equals sign and hoping nobody notices,
-but we are better people than that.
-Instead we will show how Mealy form can be derived using a finite set of
-equations, rather than with an equation parameterised over all circuits.
+by changing the squiggly arrow into an equals sign, but we will instead show how
+Mealy form can be derived using a finite set of equations.
 
 \input{sections/semantics/algebraic/floats/mealy-equations}
 
@@ -39,13 +37,13 @@ equations, rather than with an equation parameterised over all circuits.
 
 \begin{proposition}\label{prop:mealy-equations}
     Given a sequential circuit \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \), there exists combinational circuit \(
-    \iltikzfig{strings/category/f-2-2}[box=\hat{f},colour=comb,dom1=\listvar{x},dom2=\listvar{m},cod1=\listvar{x},cod2=\listvar{n}]
-    \) and \(\listvar{s} \in \valuetuple{\listvar{x}}\) such that \(
+    \iltikzfig{strings/category/f-2-2}[box=g,colour=comb,dom1=x,dom2=m,cod1=x,cod2=n]
+    \) and \(\listvar{s} \in \valuetuple{x}\) such that \(
     \iltikzfig{strings/category/f}[box=f,colour=seq]
     =
-    \iltikzfig{circuits/productivity/mealy-form}[core=\hat{f}]
+    \iltikzfig{circuits/productivity/mealy-form}[core=g]
     \) in \(\scircsigma / \mealyequations\).
 \end{proposition}
 \begin{proof}
@@ -83,7 +81,7 @@ functional completeness map \(\mealytofunc\) from \(\funci\) to \(\scircsigma\).
 
 \begin{definition}[Normalised circuit]
     A sequential circuit \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \) is \emph{normalised} if it is in the image of \(\mealytofunc\).
 \end{definition}
 
@@ -116,7 +114,7 @@ Instead, these must be specified on a interpretation-by-interpretation basis.
     For a functionally complete interpretation \(\interpretation\), a set of
     equations \(\normalisingequations\) is \emph{normalising} if any
     essentially combinational circuit \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \) is equal to a circuit in the image of \(\mealytofunc\) by equations in
     \(\normalisingequations\).
 \end{definition}
@@ -132,22 +130,22 @@ table.
 
 \begin{theorem}\label{thm:normalising}
     For every sequential circuit \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \) in normalisable interpretation \(\interpretation\), there exists essentially combinational \(
-    \iltikzfig{strings/category/f-2-2-wide}[box=\mealytofunc[g],colour=seq,dom1=\listvar{x},dom2=\listvar{m},cod1=\listvar{x},cod2=\listvar{n}]
-    \) and \(\listvar{s} \in \valuetuple{\listvar{x}}\) such that \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f-2-2-wide}[box=\mealytofunc[g],colour=seq,dom1=x,dom2=m,cod1=x,cod2=n]
+    \) and \(\listvar{s} \in \valuetuple{x}\) such that \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     =
     \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[g],colour=seq,state=\listvar{s}]
     \) in \(\scircsigma / \mealyequations + \normalisingequations\).
 \end{theorem}
 \begin{proof}
     By \cref{prop:mealy-equations}, \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     =
-    \iltikzfig{circuits/productivity/mealy-form}[core=\hat{f}]
+    \iltikzfig{circuits/productivity/mealy-form}[core=h]
     \) and by the normalising equations \(
-    \iltikzfig{strings/category/f-2-2-wide}[box=\hat{f},colour=comb]
+    \iltikzfig{strings/category/f-2-2}[box=h,colour=comb]
     =
     \iltikzfig{strings/category/f-2-2-wide}[box=\mealytofunc[g],colour=seq]
     \).

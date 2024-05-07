@@ -2,7 +2,7 @@
     \centering
     \(
     \equationdisplay{
-        \iltikzfig{circuits/productivity/mealy-form}[core=\mealytofunc[f],delay=x, colour=seq]
+        \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[f],delay=x, colour=seq]
     }{
         \iltikzfig{circuits/algebraic/state-encoding}[core=\mealytofunc[f],delay=x]
     }{
@@ -14,9 +14,9 @@
     \\[0.5em]
     \(
     \equationdisplay{
-        \iltikzfig{circuits/axioms/gate-lhs}
+        \iltikzfig{circuits/axioms/gate-lhs}[gate=p]
     }{
-        \iltikzfig{circuits/axioms/gate-rhs}
+        \iltikzfig{circuits/axioms/gate-rhs}[gate=p]
     }{
         \gateeqn
     }
@@ -110,7 +110,7 @@
     }
     \)
     \caption{
-        Set \(\encodingequations\) of eqauations for encoding circuit states
+        Set \(\encodingequations\) of equations for encoding circuit states
     }
     \label{fig:encoding-equation}
 \end{figure}

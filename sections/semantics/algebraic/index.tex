@@ -12,8 +12,8 @@ subcircuits and \emph{quotienting} \(\scircsigma\) by these equations.
 A proof of equivalence between two circuits is then presented using algebraic
 reasoning: applying equations to translate one circuit into the other.
 This is often \emph{far more efficient} than having to test every input!
-This is the focus of our final perspective on semantics for sequential
-circuits, \emph{algebraic semantics}.
+This is known as \emph{algebraic} semantics, which is our final flavour of
+circuit semantics.
 
 \begin{example}\label{ex:expressions-algebraic}
     For the last time we return to the language of arithmetical expressions from
@@ -120,11 +120,9 @@ That is to say, for each equation \(
     semantics are sufficient: are any two denotationally equal circuits
     identified by equations?
 
-    Fans of the original work should fear not, because what came before has not
-    been entirely discarded.
-    Most of the original equations have found a home as rules of the operational
-    semantics in the previous chapter, and the fact that categories of circuits
-    should be Cartesian will crop up later on; stay tuned!
+    In fact, it turns out that the way the equations in the previous work had
+    been defined looked a lot more like \emph{reduction rules}, so they have
+    found their home in the previous section.
 \end{remark}
 
 When defining such an equational theory, choosing which set of equations can be
