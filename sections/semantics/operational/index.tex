@@ -22,9 +22,8 @@ We now turn our attention to the next course in our menu of semantics,
 This is quite a different beast to denotational semantics: rather than assigning
 a mathematical structure to each circuit, semantics are derived from how
 something is \emph{executed}.
-Effectively, one can think of an operational semantics as stepping through a
-program using a debugger, with rules applied to the current context in order to
-derive the next state.
+One can think of an operational semantics as stepping through a
+program using a debugger, with rules applied in order to derive the next state.
 
 Operational semantics is another classic concept in computer science; `steps' of
 execution were used to define the semantics of ALGOL
@@ -114,7 +113,7 @@ such that reductions may be applied to their parent expressions and so on.
     Note that as the numbers \(\overline{n}\) are the `primitives' of the
     language (their meaning is theirselves), there is no corresponding reduction
     for the \((\text{Value})\) rule.
-    Using these re
+    Using these reductions an expression can be reduced to a value.
     \begin{gather*}
         add \, (mul \, \overline{4} \, \overline{2}) \, (add \, \overline{2} \, \overline{3})
         \,\reduction[(\text{Mul})]\,
@@ -210,3 +209,4 @@ if \(
 \input{sections/semantics/operational/feedback}
 \input{sections/semantics/operational/productivity}
 \input{sections/semantics/operational/observational}
+\input{sections/semantics/operational/generalised}

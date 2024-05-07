@@ -39,7 +39,7 @@ Fortunately, since circuits are constructed from a finite number of
 
 \begin{lemma}\label{lem:number-of-states}
     Let \(
-    \iltikzfig{strings/category/f}[box=F,colour=seq]
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
     \) be a sequential circuit with \(c\) delay components.
     Then applying \cref{cor:productivity} successively to a Mealy form of this
     circuit will produce at most \(|\values|^c\) unique states.
@@ -76,14 +76,14 @@ circuits.
 
 \begin{definition}[Observational equivalence of circuits]
     We say that two sequential circuits \(
-    \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \) and \(
-    \iltikzfig{strings/category/f}[box=G,colour=seq,dom=m,cod=n]
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
     \) with no more than \(c\) delays are said to be
     \emph{observationally equivalent under} \(\interpretation\), written \(
-    \iltikzfig{strings/category/f}[box=F,colour=seq]
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
     \sim_{\interpretation}
-    \iltikzfig{strings/category/f}[box=G,colour=seq]
+    \iltikzfig{strings/category/f}[box=g,colour=seq]
     \) if applying productivity produces the same output
     waveforms for all input waveforms \(
     \listlistvar{v} \in \valuetupleseq{m}\) of length
@@ -99,20 +99,20 @@ observational equivalence is then defined as the largest adequate congruence.
 
 \begin{theorem}\label{thm:operational-denotational}
     Given two sequential circuits \(
-    \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \) and \(
-    \iltikzfig{strings/category/f}[box=G,colour=seq,dom=m,cod=n]
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
     \), \(
-    \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \sim_\interpretation
-    \iltikzfig{strings/category/f}[box=G,colour=seq,dom=m,cod=n]
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
     \) if and only if \(
     \circuittostreami[
-        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+        \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     ]
     =
     \circuittostreami[
-        \iltikzfig{strings/category/f}[box=G,colour=seq,dom=m,cod=n]
+        \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
     ]
     \).
 \end{theorem}
@@ -121,28 +121,28 @@ observational equivalence is then defined as the largest adequate congruence.
     possible internal configuration of the circuit will be tested.
     For \(\ifdir\), if \(
     \circuittostreami[
-        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+        \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     ]
     =
     \circuittostreami[
-        \iltikzfig{strings/category/f}[box=G,colour=seq,dom=m,cod=n]
+        \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
     ]
     \), then this means \(
     \circuittostreami[
-        \iltikzfig{strings/category/f}[box=F,colour=seq,dom=m,cod=n]
+        \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     ](\listlistvar{v} \streamcons \sigma)
     =
     \circuittostreami[
-        \iltikzfig{strings/category/f}[box=G,colour=seq,dom=m,cod=n]
+        \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
     ](\listlistvar{v} \streamcons \sigma)
     \) for any \(\sigma,\tau \in \valuetuplestream{m}\).
     By definition of \(\circuittostreami\), we then have that \(
     \circuittostreami[
-        \iltikzfig{circuits/components/circuits/f-applied-waveform}[box=F,colour=seq,dom=m,cod=n,input=\listlistvar{v}]
+        \iltikzfig{circuits/components/circuits/f-applied-waveform}[box=f,colour=seq,dom=m,cod=n,input=\listlistvar{v}]
     ](\sigma)
     =
     \circuittostreami[
-        \iltikzfig{circuits/components/circuits/f-applied-waveform}[box=G,colour=seq,dom=m,cod=n,input=\listlistvar{v}]
+        \iltikzfig{circuits/components/circuits/f-applied-waveform}[box=g,colour=seq,dom=m,cod=n,input=\listlistvar{v}]
     ](\sigma)
     \).
     Since this holds for \emph{all} sequences \(\listlistvar{v}\), it must hold

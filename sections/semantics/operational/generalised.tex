@@ -1,0 +1,151 @@
+\section{The multicoloured case}
+
+When dealing with arbitrary-width wires, the only part of the operational
+semantics that does not completely generalise in the obvious way are the value
+rules.
+
+\begin{lemma}[Generalised value rules]
+    The following \emph{generalised value rules} are sound:
+    \begin{gather*}
+        \iltikzfig{circuits/axioms/fork-lhs}[val=\listvar{v}, cod=n]
+        \reduction[(\forkeqn)]
+        \iltikzfig{circuits/axioms/fork-rhs}[val=\listvar{v}, cod=n]
+        \quad
+        \iltikzfig{circuits/axioms/join-lhs}[val1=\listvar{v},val2=\listvar{w}, cod=n]
+        \reduction[(\joineqn)]
+        \iltikzfig{circuits/axioms/join-rhs}[val1=\listvar{v},val2=\listvar{w}, cod=n]
+        \quad
+        \iltikzfig{circuits/axioms/stub-lhs}[val=\listvar{v}]
+        \reduction[(\stubeqn)]
+        \iltikzfig{strings/monoidal/empty}
+        \quad
+        \iltikzfig{circuits/axioms/gate-lhs}[gate=p,input=\listvar{v}]
+        \reduction[(\gateeqn)]
+        \iltikzfig{circuits/axioms/gate-rhs}[gate=p,input=\listvar{v}]
+        \\[1em]
+        \iltikzfig{circuits/axioms/unbundle-lhs}
+        \reduction[(\unbundleeqn)]
+        \iltikzfig{circuits/axioms/unbundle-rhs}
+        \quad
+        \iltikzfig{circuits/axioms/bundle-lhs}
+        \reduction[(\bundleeqn)]
+        \iltikzfig{circuits/axioms/bundle-rhs}
+    \end{gather*}
+\end{lemma}
+\begin{proof}
+    These follow immediately from \cref{lem:combinational-streams} and the
+    interpretation of combinational circuits as function.
+\end{proof}
+
+\begin{lemma}\label{lem:reduce-core-confluent}
+    Applying the generalised value rules is confluent.
+\end{lemma}
+\begin{proof}
+    There are no overlaps between the rules.
+\end{proof}
+
+\begin{lemma}\label{lem:reduce-core-terminating}
+    For a generalised combinational circuit \(
+    \iltikzfig{strings/category/f}[box=f,colour=comb,dom=\listvar{m},cod=\listvar{n}]
+    \) and \(\listvar{v} \in \valuetuple{\listvar{m}}\), there exists a word
+    \(\listvar{w} \in \valuetuple{\listvar{n}}\) such that applying the value
+    rules exhaustively to \(
+    \iltikzfig{circuits/components/circuits/f-applied}[box=f,colour=comb]
+    \) terminates at \(
+    \iltikzfig{circuits/components/values/vs}[val=\listvar{w}]
+    \).
+\end{lemma}
+
+These rules are all we need to propagate input values across a circuit.
+
+\begin{corollary}\label{cor:mealy-form-productivity}
+    For generalised circuit \(
+    \iltikzfig{circuits/productivity/mealy-form-applied}[core=f,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
+    \) there exist \(
+    \listvar{t} \in \valuetuple{x}
+    \) and \(
+    \listvar{w} \in \valuetuple{n}
+    \) such that \(
+    \iltikzfig{circuits/productivity/mealy-form-applied}[core=f,dom=\listvar{m},cod=\listvar{n},delay=x]
+    \reductions
+    \iltikzfig{circuits/productivity/mealy-form-produced}[core=f,dom=\listvar{m},cod=\listvar{n},delay=x]
+    \) by applying \(\streamingeqn\) once followed by the generalised value
+    rules exhaustively.
+\end{corollary}
+
+\begin{corollary}[Generalised productivity]\label{cor:productivity}
+    For sequential circuit \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \) and inputs \(\listvar{v} \in \valuetuple{m}\), there exists
+    \(\listvar{w} \in \valuetuple{n}\) such that \(
+    \iltikzfig{circuits/productivity/productive-goal-lhs}[box=f,input=\listvar{v},dom=\listvar{m},cod=\listvar{n}]
+    \reductions
+    \iltikzfig{circuits/productivity/productive-goal-rhs}[box=g,output=\listvar{w},dom=\listvar{m},cod=\listvar{n}]
+    \) by applying \(\mealyeqn\), \(\instantfeedbackeqn\) and \(\streamingeqn\)
+    once successively followed by the value rules exhaustively.
+\end{corollary}
+
+Since register components can now hold words rather than just values, for
+observational equivalence we must consider longer input waveforms.
+
+\begin{definition}[Register width]
+    For a generalised sequential circuit \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \), let \(c_n\) be the number of \(n\)-width delay components
+    \(\iltikzfig{circuits/components/waveforms/delay}[width=n]\).
+    Then the \emph{register width} of \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \) is computed as \(\Sigma_{n \in \nat}\ c_n \cdot n\).
+\end{definition}
+
+\begin{definition}
+    We say that two generalised sequential circuits \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \) and \(
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \) with at most register width \(c\) are said to be
+    \emph{observationally equivalent under} \(\interpretation\), written \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
+    \sim_{\interpretation}
+    \iltikzfig{strings/category/f}[box=g,colour=seq]
+    \) if applying productivity produces the same output
+    waveforms for all input waveforms \(
+    \listlistvar{v} \in \valuetupleseq{\listvar{m}}\) of length
+    \(|\values^c| + 1\).
+\end{definition}
+
+The observational equivalence results from the previous section then generalise
+nicely to the multicoloured case.
+
+\begin{theorem}\label{thm:operational-denotational}
+    Given two sequential circuits \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \) and \(
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \), \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \sim^+_{\interpretation}
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \) if and only if \(
+    \circuittostreami[
+        \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    ]
+    =
+    \circuittostreami[
+        \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    ]
+    \).
+\end{theorem}
+
+\begin{corollary}
+    \(\sim_\interpretation\) is the largest adequate congruence on
+    \(\scircsigma\).
+\end{corollary}
+
+\begin{definition}
+    Let \(\scircsigmagobs\) be defined as \(\scircsigmag / \sim^+_{\interpretation}\).
+\end{definition}
+
+\begin{corollary}
+    There is an isomorphism \(\scircsigmaig \cong \scircsigmagobs\).
+\end{corollary}
