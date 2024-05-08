@@ -1,19 +1,16 @@
 \begin{figure}
     \centering
     \(\equationdisplay{
-        \iltikzfig{circuits/productivity/mealy-form}[core=\mealytofunc[f]]
+        \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[f]]
     }{
-        \iltikzfig{circuits/productivity/mealy-form}[core=|g|]
+        \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[g]]
     }{\restrictionequation}\)
     \,\,
-    \begin{minipage}{0.25\textwidth}
-        \centering
-        where \(
-        f|S_{f,\listvar{s}} \times \valuetuple{\listvar{m}}
-        =
-        g|S_{f,\listvar{s}} \times \valuetuple{\listvar{m}}
-        \)
-    \end{minipage}
+    where \(
+    f|(S_{f,\listvar{s}} \times \valuetuple{\listvar{m}})
+    =
+    g|(S_{g,\listvar{s}} \times \valuetuple{\listvar{m}})
+    \)
     \caption{The \emph{restriction} equation}
     \label{fig:restriction-equation}
 \end{figure}

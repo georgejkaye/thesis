@@ -7,28 +7,28 @@ equations we have seen so far.
 
 \begin{definition}
     For an interpretation \(\interpretation\), let
-    \(\mce_{\interpretation}\) be defined as \(
+    \(\mce_{\interpretation}\) be \(
     \mealyequations +
     \instantfeedbackeqn +
     \normalisingequations +
     \encodingequations +
-    \restrictionequation
+    (\restrictionequation)
     \), and let \(\scircsigmae\) be defined as
     \(\scircsigma / \mce_{\interpretation}\).
 \end{definition}
 
 \begin{theorem}
     For a functionally complete interpretation \(\interpretation\), \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     =
-    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
     \) in \(\scircsigmae\) if and only if \(
     \circuittostreami[
-        \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+        \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     ]
     =
     \circuittostreami[
-        \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+        \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
     ]
     \).
 \end{theorem}
@@ -62,7 +62,7 @@ equations we have seen so far.
     ]{\interpretation}
     \).
     The circuit \(
-    \iltikzfig{strings/category/f}[box=H,colour=seq]
+    \iltikzfig{strings/category/f}[box=h,colour=seq]
     \) is encoded such that the state words are in the image of
     \(\gamma_\leq\).
     This means that applying the encoding equation with \(\leq\) to the
@@ -79,9 +79,9 @@ can establish another isomorphism of PROPs.
 \end{corollary}
 
 This brings our jaunt into algebraic semantics to a close; given a circuit \(
-\iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+\iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
 \) we know that we can translate it into another circuit \(
-\iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+\iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
 \) with the same behaviour by only using equations in \(\mce_\interpretation\).
 
 Of course, the procedure of using the normalisation equations to translate a

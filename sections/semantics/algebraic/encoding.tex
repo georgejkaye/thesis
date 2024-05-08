@@ -52,7 +52,7 @@ While two `inverse' homomorphisms may not be isomorphisms, the round
 trip will always map to a state with the same behaviour.
 
 \begin{lemma}
-    For Mealy homomorphisms \(\morph{h}{(S,f)}{(T,g)}\) and
+    Given two Mealy homomorphisms \(\morph{h}{(S,f)}{(T,g)}\) and
     \(\morph{h^\prime}{(T,g)}{(S,f)}\), any state \(s \in S\) and input
     \(a \in A\), \(
     \mealyfunctiontransition{f}(s, a)
@@ -128,12 +128,12 @@ and
 These are homomorphisms on the subset of states that a circuit
 can assume, \emph{not} the entire set of words that can fit into the state!
 This means that encoding and decoding circuits cannot be inserted arbitrarily
-but only in the context of a larger circuit in Mealy form.
+but only in certain contexts.
 
 \begin{proposition}[Encoding equation]\label{prop:encoding-equation}
     For a normalised circuit \(
-    \iltikzfig{strings/category/f-2-2}[box=\mealytofunc[f],colour=seq,dom1=x,dom2=m,cod1=x,cod2=y]
-    \) and initial state \(\listvar{s} \in \valuetuple{x}\), let
+    \iltikzfig{strings/category/f-2-2-wide}[box=\mealytofunc[f],colour=seq,dom1=x,dom2=m,cod1=x,cod2=y]
+    \) and \(\listvar{s} \in \valuetuple{x}\), let
     \(\morph{\mathsf{enc}}{S_{f,\listvar{s}}}{\valuetuple{y}}\) and
     \(\morph{\mathsf{dec}}{\valuetuple{y}}{S_{f, \listvar{s}}}\) be Mealy
     homomorphisms.
@@ -200,8 +200,36 @@ terms of smaller components
     It is a straightforward exercise to compare the stream functions.
 \end{proof}
 
-Using the equations in \cref{fig:encoding-equation}, we can derive some larger
-equations.
+Using the encoding equations we can derive some useful results on larger
+circuits.
+
+\begin{lemma}\label{lem:unroll-waveform}
+    For a value \(v \in \values\), \(
+    \iltikzfig{circuits/algebraic/unroll-waveform/step-0}[value=v]
+    =
+    \iltikzfig{circuits/algebraic/unroll-waveform/step-6}[value=v]
+    \) by the encoding equations.
+\end{lemma}
+\begin{proof}
+    The proof is straightforward:
+    \begin{gather*}
+        \iltikzfig{circuits/algebraic/unroll-waveform/step-0}[value=v]
+        \coloneqq
+        \iltikzfig{circuits/algebraic/unroll-waveform/step-1}[value=v]
+        \eqaxioms[(\joinforkeqn)]
+        \iltikzfig{circuits/algebraic/unroll-waveform/step-2}[value=v]
+        \eqaxioms[(\forkeqn)]
+        \iltikzfig{circuits/algebraic/unroll-waveform/step-3}[value=v]
+        \eqaxioms[(\delayforkeqn)]
+        \\
+        \iltikzfig{circuits/algebraic/unroll-waveform/step-4}[value=v]
+        \coloneqq
+        \iltikzfig{circuits/algebraic/unroll-waveform/step-5}[value=v]
+        =
+        \iltikzfig{circuits/algebraic/unroll-waveform/step-6}[value=v]
+    \end{gather*}
+    This completes the proof.
+\end{proof}
 
 \begin{lemma}\label{lem:generalised-streaming}
     For a combinational circuit \(
@@ -210,7 +238,7 @@ equations.
     \iltikzfig{circuits/axioms/generalised-streaming-lhs}[box=f]
     =
     \iltikzfig{circuits/axioms/generalised-streaming-rhs}[box=f]
-    \) by the equations in \cref{fig:encoding-equation}.
+    \) by the encoding equations.
 \end{lemma}
 \begin{proof}
     This is by induction on the structure of \(
@@ -254,69 +282,177 @@ equations.
     need to check composition and tensor, which are also trivial.
 \end{proof}
 
-\begin{lemma}\label{lem:unroll-waveform}
-    For a value \(v \in \values\), \(
-    \iltikzfig{circuits/algebraic/unroll-waveform/step-0}[value=v]
+\begin{lemma}\label{lem:interpretation-combinational}
+    Let \(\iltikzfig{strings/category/f}[box=f,colour=comb]\) be a combinational
+    circuit such that \(
+    \circuittofunci[\iltikzfig{strings/category/f}[box=f,colour=comb]]
     =
-    \iltikzfig{circuits/algebraic/unroll-waveform/step-6}[value=v]
-    \) by equations in \cref{fig:encoding-equation}.
+    g\).
+    Then \(\circuittostreami[
+        \iltikzfig{circuits/components/circuits/f-applied}[box=f,colour=comb]
+    ]
+    =
+    g(\listvar{v}) \streamcons \bot \streamcons \bot \streamcons \dots\).
 \end{lemma}
 \begin{proof}
-    The proof is straightforward:
-    \begin{gather*}
-        \iltikzfig{circuits/algebraic/unroll-waveform/step-0}[value=v]
-        \coloneqq
-        \iltikzfig{circuits/algebraic/unroll-waveform/step-1}[value=v]
-        \eqaxioms[(\joinforkeqn)]
-        \iltikzfig{circuits/algebraic/unroll-waveform/step-2}[value=v]
-        \eqaxioms[(\forkeqn)]
-        \iltikzfig{circuits/algebraic/unroll-waveform/step-3}[value=v]
-        \eqaxioms[(\delayforkeqn)]
-        \\
-        \iltikzfig{circuits/algebraic/unroll-waveform/step-4}[value=v]
-        \coloneqq
-        \iltikzfig{circuits/algebraic/unroll-waveform/step-5}[value=v]
-        =
-        \iltikzfig{circuits/algebraic/unroll-waveform/step-6}[value=v]
-    \end{gather*}
+    By definition of \(\circuittostreami\), \(
+    \circuittostreami[
+        \iltikzfig{circuits/components/circuits/f-applied}[box=f,colour=comb]
+    ]
+    =
+    \mealytostreami[\circuittomealyi[
+            \iltikzfig{circuits/components/values/vs}[val=\listvar{v}]
+        ]] \seq \mealytostreami[
+        \circuittomealyi[
+            \iltikzfig{strings/category/f}[box=f,colour=comb]]
+    ]
+    \).
+    By \cref{lem:sequential-combinational-semantics} we know that \(
+    \mealytostreami[
+        \circuittomealyi[
+            \iltikzfig{strings/category/f}[box=f,colour=comb]]
+    ](\sigma)(i) = \circuittofunci[
+        \iltikzfig{strings/category/f}[box=f,colour=comb]
+    ] = g(\sigma)(i)\) for all \(\sigma \in \valuetuplestream{m}\) and
+    \(i \in \nat\).
+    Since \(\mealytostreami[\circuittomealyi[
+            \iltikzfig{circuits/components/values/vs}[val=\listvar{v}]
+        ]] = \listvar{v} \streamcons \bot \streamcons \bot \streamcons \dots\), we
+    have that \(
+    \circuittostreami[
+        \iltikzfig{circuits/components/circuits/f-applied}[box=f,colour=comb]
+    ]
+    =
+    g(\listvar{v}) \streamcons \bot \streamcons \bot \streamcons \dots
+    \) as desired.
 \end{proof}
 
-We will now show that the equations in \cref{fig:encoding-equation} allow us to
-translate a circuit into one with an encoded state.
+\begin{lemma}\label{lem:combinational-circuit-inputs}
+    Let \(\iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]\) be a
+    combinational circuit such that \(
+    \circuittofunci[\iltikzfig{strings/category/f}[box=f,colour=comb]]
+    =
+    g
+    \).
+    Then \(
+    \iltikzfig{circuits/components/circuits/f-applied}[box=f,colour=comb]
+    =
+    \iltikzfig{circuits/components/values/vs-even-longer}[val=g(\listvar{v})]
+    \) by the encoding equations.
+\end{lemma}
+\begin{proof}
+    For the same reasoning as \cref{lem:reduce-core-terminating}, the
+    \((\gateeqn)\), \((\forkeqn)\), \((\joineqn)\) and \((\stubeqn)\) equations
+    can be used to show that there exists \(\listvar{w} \in \valuetuple{n}\)
+    such that \(
+    \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
+    =
+    \iltikzfig{circuits/components/values/vs}[val=\listvar{w}]
+    \).
+    By \cref{lem:interpretation-combinational}, \(
+    \circuittostreami[
+        \iltikzfig{circuits/components/circuits/f-applied}[box=f,colour=comb]
+    ]
+    =
+    g(\listvar{v}) \streamcons \bot \streamcons \bot
+    =
+    \circuittostreami[
+        \iltikzfig{circuits/components/values/vs-even-longer}[val=g(\listvar{v})]
+    ]
+    \).
+    As the equations are sound they must preserve the stream semantics, so
+    \(\listvar{w} = g(\listvar{v})\).
+\end{proof}
+
+\begin{lemma}\label{lem:essentially-combinational-applied}
+    Let \(\morph{f}{\valuetuple{m}}{\valuetuple{n}}\) be a monotone function
+    such that \(
+    \iltikzfig{strings/category/f-wide}[box=\mealytofunc[f],colour=seq]
+    \coloneqq
+    \iltikzfig{circuits/synthesis/normalised-function}[box=g]
+    \).
+    Then \(
+    \iltikzfig{circuits/algebraic/normalised-inputs}[box=g,input1=\listvar{v},input2=\listvar{w}]
+    =
+    \iltikzfig{circuits/components/values/vs-even-longer}[val=f(\listvar{w})]
+    \).
+\end{lemma}
+\begin{proof}
+    Let \(h \coloneqq \circuittofunci[
+        \iltikzfig{strings/category/f-2-1}[box=g,colour=comb]
+    ]\); using \cref{lem:combinational-circuit-inputs}, we have that \(
+    \iltikzfig{circuits/algebraic/normalised-inputs}[box=g,input1=\listvar{v},input2=\listvar{w}]
+    =
+    \iltikzfig{circuits/components/values/vs-really-long}[val={h(\listvar{v},\listvar{w})}]
+    \).
+    So we must show that \(f(\listvar{w}) = h(\listvar{v}, \listvar{w})\).
+    \begin{align*}
+        f(\listvar{w})
+         & =
+        \circuittostreami[
+            \iltikzfig{strings/category/f-wide}[box=\mealytofunc[f],colour=seq]
+        ](\listvar{w} \streamcons \bot^\omega)(0)
+         &
+        \text{\cref{def:functional-completeness}}
+        \\
+         & \coloneqq
+        \circuittostreami[
+            \iltikzfig{circuits/synthesis/normalised-function}[box=g]
+        ](\listvar{w} \streamcons \bot^\omega)(0)
+        \\
+         & =
+        \circuittostreami[
+            \iltikzfig{strings/category/f-2-1}[box=g,colour=comb]
+        ](\listvar{v}^\omega, \listvar{w} \streamcons \bot^\omega)(0)
+        \\
+         & =
+        \circuittofunci[
+            \iltikzfig{strings/category/f-2-1}[box=g,colour=comb]
+        ](\listvar{v}, \listvar{w})
+         &
+        \text{\cref{lem:sequential-combinational-semantics}}
+        \\
+         & =
+        h(\listvar{v}, \listvar{w})
+    \end{align*}
+    This completes the proof.
+\end{proof}
+
+We will now show that the encoding equations allow us to translate a circuit
+into one with an encoded state.
 
 \begin{theorem}
-    For a normalised circuit \(
+    For a circuit \(
     \iltikzfig{strings/category/f-2-2-wide}[box=\mealytofunc[f],colour=seq,dom1=x,dom2=m,cod1=x,cod2=y]
     \) and initial state \(\listvar{s} \in \valuetuple{x}\), the
     equation \(
     \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[f], colour=seq]
     =
     \iltikzfig{circuits/algebraic/state-encoded}[core=\mealytofunc[f],state=\listvar{s}]
-    \) is derivable by the equations in \cref{fig:encoding-equation}.
+    \) is derivable by the equations in \(\encodingequations\).
 \end{theorem}
 \begin{proof}
-    By the \((\encodingequation)\) equation we have that \(
+    We have that \(
     \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[f],delay=x, colour=seq]
     =
     \iltikzfig{circuits/algebraic/state-encoding}[core=\mealytofunc[f],delay=x,state=\listvar{s}]
-    \); we need to `push' the encoder \(
+    \) by the \((\encodingequation)\) equation; we need to `push' the encoder \(
     \iltikzfig{circuits/algebraic/encoder}
     \) through the state.
-    Although the encoder is sequential, by the definition of \(\lvert-\rvert\),
+    Although the encoder is sequential, by the definition of \(\mealytofunc\),
     it must be of the form \(
     \iltikzfig{circuits/synthesis/normalised-function}[box=g]
-    \) by definition of functional completeness; this means we can perform a
-    variant of streaming.
+    \) by definition of functional completeness.
     \begin{gather*}
         \iltikzfig{circuits/algebraic/encoding-state/step-0a}[box=g]
         \coloneqq
         \iltikzfig{circuits/algebraic/encoding-state/step-0}[box=g]
-        \eqaxioms[\text{\cref{lem:unroll-waveform}}]
+        \eqaxioms[\text{(\cref{lem:unroll-waveform})}]
         \iltikzfig{circuits/algebraic/encoding-state/step-1}[box=g]
-        \eqaxioms[\text{\cref{lem:generalised-streaming}}]
+        \eqaxioms[\text{(\cref{lem:generalised-streaming})}]
         \\[0.5em]
         \iltikzfig{circuits/algebraic/encoding-state/step-2}[box=g]
-        \eqaxioms[\text{\cref{def:encoder}}]
+        \eqaxioms[\text{(\cref{lem:essentially-combinational-applied})}]
         \iltikzfig{circuits/algebraic/encoding-state/step-3}[box=g]
         \coloneqq
         \\[0.5em]
@@ -334,7 +470,7 @@ We are now ready to show that the encoding equations allow us to translate the
 states of a circuit into those of a denotationally equivalent circuit.
 
 \begin{corollary}
-    For denotationally equivalent circuits \(
+    For two denotationally equivalent circuits \(
     \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[f],state=\listvar{s},colour=seq,dom=m,cod=n,delay=x]
     \) and \(
     \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[g],state=\listvar{t},colour=seq,dom=m,cod=n,delay=y]
@@ -344,7 +480,7 @@ states of a circuit into those of a denotationally equivalent circuit.
     \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[f],state=\listvar{s},colour=seq,dom=m,cod=n,delay=x]
     =
     \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[h],state=\listvar{t},colour=seq,dom=m,cod=n,delay=x]
-    \) by equations in \cref{fig:encoding-equation}.
+    \) by equations in \(\encodingequations\).
 \end{corollary}
 
 If we have the right encoders, we can translate the initial state of a circuit
