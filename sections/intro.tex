@@ -1,11 +1,49 @@
 \chapter{Introduction}
 
-\todo[inline]{Write opening spiel, circuits}
+The year is 2024. It is the future. Today's society has grown addicted to the humble digital circuit,
+akin maybe to the Fremen use of spice in popular media property Dune part 2 (2024). Allegory babyyyy.
 
-\todo[inline]{Segue into compositionality and category theory}
+Today's society has become dependent on the humble digital circuit.
 
+In fact, digital circuits are so common, so fundamental, that one may doubt that
+there are \emph{any} gaps in our theoretical understanding of them.
+We already use the
+Our goal is to define a \emph{fully compositional} mathematical foundation of
+digital sequential circuits.
+It is important, then, to immediately set about what this means.
+
+The phrase \emph{digital circuit} most likely evokes images
+When one imagines a digital circuit, they might think of piecing together
+primitive components such as \(\andgate\), \(\orgate\) and \(\notgate\) gates
+in order to make
+\emph{Combinational} circuits are exactly this; a set of primitives pieced
+together.
+Crucially, combinational circuits may not contain feedback cycles.
+
+However, these circuits are not nearly sophisticated enough, as they merely
+perform functions on their inputs; they have no sort of \emph{state}.
+For digital circuits to have state they must be \emph{sequential} circuits, in
+which state is provided by the use of \emph{delay} and \emph{feedback}.
+In a sequential circuit, the output at a particular time may depend on any of
+the previous inputs.
+It is in these \emph{sequential} components that nuance arises.
+For instance, what happens when you connect the output of gate to its input
+without passing it through any memory elements?
+Such a phenomenon, the so-called \emph{non-delay-guarded feedback loop}, can
+lead to undefined behaviour if not treated with care.
+
+Of course, in practice such situations are not treated as major issues and
+the practice of circuit design carries on unhindered.
+But this raises interesting questions when viewed from a \emph{mathematical}
+perspective.
+What is the right technique to deal with these issues?
+
+\todo[inline]{Refine}
 
 \section{Category theory and compositionality}
+
+When setting about creating a mathematical foundation for sequential digital
+circuits.
 
 Category theory is an especially natural concept to apply to computer science
 because it is a setting in which \emph{composition} is king.
@@ -32,7 +70,7 @@ fear that we will somehow create a degenerate term and leave our well-behaved
 setting.
 We should not have to perform any sort of semantic check or `peek inside' a term
 to find out if composition is permitted; we should be able to treat everything
-as a black box and reason solely with interfaces.
+as a black box.
 
 Perhaps the most successful use of category theory for compositional processes
 in recent times is for modelling
