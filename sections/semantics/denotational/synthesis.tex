@@ -12,71 +12,69 @@ of a PROP morphism from \(\scircsigma\) to \(\mealyi\) is fairly intuitive.
 \begin{definition}
     Let \(\morph{\circuittomealyi}{\scircsigma}{\mealyi}\) be the traced PROP
     morphism defined on generators as
-    \begin{gather*}
+    \begin{align*}
         \circuittomealy[
             \iltikzfig{circuits/components/gates/gate}[colour=comb]
         ]{\interpretation}
-        \coloneqq \left(
-        \{()\},
-        \left((), \listvar{v}\right) \mapsto
-        \left\langle(), \gateinterpretation[g](\listvar{v})\right\rangle,
-        ()
+         & \coloneqq \left(
+        \{s\},
+        \left(s, \listvar{v}\right) \mapsto
+        \left\langle{s, \gateinterpretation[g](\listvar{v})}\right\rangle,
+        s
         \right)
-        \qquad
+        \\
         \circuittomealy[
             \iltikzfig{strings/structure/comonoid/copy}[colour=comb]
         ]{\interpretation}
-        \coloneqq \left(
-        \{()\},
-        ((), v) \mapsto \left\langle(), vv\right\rangle,
-        ()
+         & \coloneqq \left(
+        \{s\},
+        (s, v) \mapsto \left\langle{s, (v, v)}\right\rangle,
+        s
         \right)
         \\
         \circuittomealy[
             \iltikzfig{strings/structure/monoid/merge}[colour=comb]
         ]{\interpretation}
-        \coloneqq \left(
-        \{()\},
-        ((), (v, w)) \mapsto
-        \left\langle(), v \ljoin w\right\rangle,
-        ()
+         & \coloneqq \left(
+        \{s\},
+        (s, (v, w)) \mapsto
+        \left\langle{s, (v \ljoin w)}\right\rangle,
+        s
         \right)
-        \qquad
+        \\
         \circuittomealy[
             \iltikzfig{strings/structure/comonoid/discard}[colour=comb]
         ]{\interpretation}
-        \coloneqq \left(
-        \{()\},
-        ((), v) \mapsto
-        \left\langle(), ()\right\rangle,
-        ()
+         & \coloneqq \left(
+        \{s\},
+        (s, v) \mapsto
+        \left\langle{s, ()}\right\rangle,
+        s
         \right)
         \\
         \circuittomealy[
             \iltikzfig{circuits/components/values/vs}[val=v]
         ]{\interpretation}
-        \coloneqq
+         & \coloneqq
         \left(
-        \left(
-            \{s_v, s_\bot\},
-            \{
-            s_v \mapsto \left\langle{s_\bot,v}\right\rangle,
-            s_\bot \mapsto \left\langle{s_\bot,\bot}\right\rangle
-            \}\right),
+        \{s_v, s_\bot\},
+        \{
+        s_v \mapsto \left\langle{s_\bot,v}\right\rangle,
+        s_\bot \mapsto \left\langle{s_\bot,\bot}\right\rangle
+        \},
         s_v
         \right)
         \\
         \circuittomealy[
             \iltikzfig{circuits/components/waveforms/delay}
         ]{\interpretation}
-        \coloneqq
-        \left(
+         & \coloneqq
         \left(
         \{ s_v \,|\, v \in \values\},
-        (s_v, a) \mapsto \left\langle{v,s_a}\right\rangle\right),
+        (s_v, a) \mapsto \left\langle{v,s_a}\right\rangle,
         s_\bot
         \right)
-    \end{gather*}
+    \end{align*}
 \end{definition}
 
 \begin{example}
@@ -113,6 +111,47 @@ The existence of the PROP morphism \(\circuittostreami\) confirms that causal,
 finitely specified and monotone stream functions are a \emph{sound} denotational
 semantics for sequential circuits, as every circuit in \(\scircsigma\) has a
 corresponding stream function in \(\streami\).
+
+It is useful to verify that this denotational semantics of sequential circuits
+agrees with the denotational semantics we defined earlier for
+\emph{combinational} circuits in \cref{sec:intepretating-components}.
+
+\begin{lemma}\label{lem:sequential-combinational-semantics}
+    Let \(\iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]\) be
+    a combinational circuit; for \(\sigma \in \valuetuplestream{m}\) and
+    \(i \in \nat\), \(
+    \circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=comb]](\sigma)(i)
+    =
+    \circuittofunci[\iltikzfig{strings/category/f}[box=f,colour=comb]](\sigma(i))
+    \).
+\end{lemma}
+\begin{proof}
+    Since \(\iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]\) is
+    combinational, \(
+    \circuittomealyi[
+        \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
+    ]
+    \) is a Mealy machine with a single state \(s\), i.e.\ there is a function
+    \(\morph{g}{\valuetuple{m}}{\valuetuple{n}}\) such that  \(
+    \circuittomealyi[
+        \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
+    ] = (
+    \{s\},
+    (s, \listvar{v}) \mapsto \left\langle{s, g(\listvar{v})}\right\rangle,
+    s
+    )\).
+    By definition of \(\mealytostreami\), we have that \(\mealytocircuiti[
+        \circuittomealyi[
+            \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
+        ]
+    ](\sigma)(i) = g(\sigma(i))\).
+
+    To complete the proof, we need to show that \(
+    g(\sigma)(i) =
+    \circuittofunci[\iltikzfig{strings/category/f}[box=f,colour=comb]](\sigma(i))
+    \); this holds because \(\circuittomealyi\) and \(\circuittofunci\) freely
+    build functions using exactly the same constructs.
+\end{proof}
 
 \subsection{Monotone Mealy machines to circuits}
 
@@ -382,52 +421,52 @@ we must show a lemma linking the behaviour circuits in the image of
 \begin{proposition}
     \label{prop:mealy-form-image}
     For a combinational circuit \(
-    \iltikzfig{strings/category/f-2-2}[box=\hat{f},dom1=x,dom2=m,cod1=x,cod2=n,colour=comb]
-    \), let \(f\) be the map with action \(
+    \iltikzfig{strings/category/f-2-2}[box=f,dom1=x,dom2=m,cod1=x,cod2=n,colour=comb]
+    \), let \(\mathsf{mf}(g)\) be the map with action \(
     (\listvar{s}) \mapsto
     \circuittostreami[
-        \iltikzfig{circuits/productivity/mealy-form}[core=\hat{f},state=\listvar{s},dom=m,cod=n,delay=x]
+        \iltikzfig{circuits/productivity/mealy-form}[core=f,state=\listvar{s},dom=m,cod=n,delay=x]
     ]
     \) and let \(
-    \hat{f}
+    g
     :=
     \circuittofunci[
-        \iltikzfig{strings/category/f-2-2}[box=\hat{f},colour=comb]
+        \iltikzfig{strings/category/f-2-2}[box=f,colour=comb]
     ]
     \).
     Then, \(
-    \mealyoutput{f(\listvar{s})}{\listvar{a}}
+    \mealyoutput{\mathsf{mf}(f)(\listvar{s})}{\listvar{a}}
     =
-    \proj{1}(\hat{f}(\listvar{s}, \listvar{a}))
+    \proj{1}(g(\listvar{s}, \listvar{a}))
     \) and \(
-    \mealytransition{f(\listvar{s})}{\listvar{a}}
+    \mealytransition{\mathsf{mf}(f)(\listvar{s})}{\listvar{a}}
     =
-    f(\proj{0}(\hat{f}(\listvar{s}, \listvar{a})))
+    \mathsf{mf}(f)(\proj{0}(g(\listvar{s}, \listvar{a})))
     \).
 \end{proposition}
 \begin{proof}
-    \(\circuittomealyi[
-        \iltikzfig{circuits/productivity/mealy-form}[core=\hat{f},state=\listvar{s},dom=m,cod=n,delay=x]
+    The machine \(\circuittomealyi[
+        \iltikzfig{circuits/productivity/mealy-form}[core=f,state=\listvar{s},dom=m,cod=n,delay=x]
     ]\) is the fixpoint of \(
     \left(\valuetuple{x},
     (\listvar{r}, \listvar{a}) \mapsto \left\langle
-    \listvar{r}, \hat{f}(\listvar{s}, \listvar{a})
-    \right\rangle, \listvar{s}\right),
-    \) which can be computed as \(
+    \listvar{r}, g(\listvar{s}, \listvar{a})
+    \right\rangle, \listvar{s}\right)
+    \), which is \(
     \left(\valuetuple{x},
     \listvar{v} \mapsto \left\langle
-    \proj{0}\left(\hat{f}(\listvar{s},\listvar{a})\right),
-    \proj{1}\left(\hat{f}(\listvar{s}, \listvar{a})\right)
-    \right\rangle, \listvar{s}\right).
-    \)
+    \proj{0}\left(g(\listvar{s},\listvar{a})\right),
+    \proj{1}\left(g(\listvar{s}, \listvar{a})\right)
+    \right\rangle, \listvar{s}\right)
+    \).
     Since the initial output and the stream derivative of \(
     \mealytocircuiti[
         \circuittomealyi[
-            \iltikzfig{circuits/productivity/mealy-form}[core=\hat{f},state=\listvar{s},dom=m,cod=n,delay=x]
+            \iltikzfig{circuits/productivity/mealy-form}[core=f,state=\listvar{s},dom=m,cod=n,delay=x]
         ]
     ]
     \) are the output and transition of the Mealy machine, the original
-    statement holds.
+    statement holds by \cref{lem:sequential-combinational-semantics}.
 \end{proof}
 
 Now we can show the behaviour-preserving result.
@@ -449,7 +488,8 @@ Now we can show the behaviour-preserving result.
     \mealytostreami[(\mealyfunctiontransition{f}\left(s, \listvar{a}\right))]
     \).
 
-    Now we consider \(\circuittostreami[\mealytocircuiti[(S, f, s)]]\).
+    Now we consider the composite
+    \(\circuittostreami[\mealytocircuiti[(S, f, s)]]\).
     By \cref{def:mealy-to-circuit} we have that \(
     \mealytocircuiti[(S, f, s_0)]
     =
