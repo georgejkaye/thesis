@@ -298,7 +298,7 @@ morphisms with a common domain.
 \begin{definition}[Pushout]
     Given morphisms \(\morph{f}{A}{B}\) and \(\morph{g}{A}{C}\), a
     \emph{pushout} is an object \(D\) and a pair of morphisms
-    \(\morph{h}{B}{D}\) and \(\morph{k}{h}{k}\) such that for any other pair of
+    \(\morph{h}{B}{D}\) and \(\morph{k}{C}{D}\) such that for any other pair of
     morphisms \(\morph{h^\prime}{B}{Z}\) and \(\morph{k^\prime}{C}{Z}\) there
     exists a unique morphism \(\morph{u}{D}{Z}\), i.e.\ the following diagram
     commutes:
@@ -338,8 +338,24 @@ We demonstrate this with a well-known result.
 \begin{proof}
     Given objects \(A,B \in \mcc\), the coproduct \(A + B\) is constructed as
     follows:
-    \begin{center}
+    \begin{gather*}
         \includestandalone{figures/category/diagrams/coproduct-pushout}%
-    \end{center}
+    \end{gather*}
     This is a coproduct due to the universal property of pushouts.
 \end{proof}
+
+As
+
+\begin{definition}[Pullback]
+    Given morphisms \(\morph{f}{A}{B}\) and \(\morph{g}{C}{B}\), a
+    \emph{pullback} is an object \(D\) and a pair of morphisms
+    \(\morph{h}{D}{A}\) and \(\morph{k}{h}{k}\) such that for any other pair of
+    morphisms \(\morph{h^\prime}{B}{Z}\) and \(\morph{k^\prime}{C}{Z}\) there
+    exists a unique morphism \(\morph{u}{D}{Z}\), i.e.\ the following diagram
+    commutes:
+    \begin{center}
+        \includestandalone{figures/category/diagrams/pullback}
+    \end{center}
+    A category \(\mcc\) is said to \emph{have pullbacks} if a pushout exists for
+    any pair of morphisms.
+\end{definition}
