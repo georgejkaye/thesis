@@ -3,6 +3,19 @@
 \newbool{shade-envs}
 % This can be used to toggle the coloured environments on or off.
 \setboolean{shade-envs}{true}
+% modify proof style
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+    \pushQED{\qed}%
+    \fontfamily{lmss}\selectfont \topsep0\p@\relax
+    \tikzcdset{background color=ShadeOfGray}
+    \renewcommand{\bgcolour}{ShadeOfGray}
+    \trivlist
+    \item[\hskip\labelsep\itshape#1\@addpunct{.}]\ignorespaces}{%
+    \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
 %%
 \ifthenelse{\boolean{shade-envs}}{%
     % Colours are as in Andrej Bauer's notes on realizability:
@@ -113,12 +126,3 @@
 
 % Note that proofs will still have the \qed symbol at the end, even when shaded,
 % because we prefer to keep up the tradition.
-\makeatletter
-\renewenvironment{proof}[1][\proofname]{\par
-    \pushQED{\qed}%
-    \fontfamily{lmss}\selectfont \topsep0\p@\relax
-    \trivlist
-    \item[\hskip\labelsep\itshape#1\@addpunct{.}]\ignorespaces}{%
-    \popQED\endtrivlist\@endpefalse
-}
-\makeatother
