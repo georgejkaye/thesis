@@ -15,15 +15,16 @@ jobs:
           submodules: recursive
       - name: Enable nomencl
         run: cat .latexmkrc >> $HOME/.latexmkrc
-      - name: Package the thesis
-        uses: georgejkaye/latex-packager@v1.0
-        with:
-          input-dir: .
-          main: main
-          project-name: thesis
       - name: Set release name
         id: name
         run: echo "name=$(date +'%Y-%m-%d-%H%M')" >> $GITHUB_OUTPUT
+      - name: Package the thesis
+        uses: georgejkaye/latex-packager@v1.3
+        with:
+          input-dir: .
+          main: main
+          project-name: ${{ github.event.repository.name }}-${{ steps.name.outputs.name }}
+          chapters: true
       - name: Create a new release
         uses: actions/create-release@v1
         id: create_release
@@ -38,8 +39,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: main.pdf
-          asset_name: thesis-${{ steps.name.outputs.name }}.pdf
+          asset_path: ${{ github.event.repository.name }}-${{ steps.name.outputs.name }}.pdf
+          asset_name: ${{ github.event.repository.name }}-${{ steps.name.outputs.name }}.pdf
           asset_content_type: pdf
       - name: Upload the zip to the release
         uses: actions/upload-release-asset@v1
@@ -47,8 +48,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: thesis.zip
+          asset_path: ${{ github.event.repository.name }}-${{ steps.name.outputs.name }}.zip
           asset_name: ${{ github.event.repository.name }}-${{ steps.name.outputs.name }}.zip
+          asset_content_type: zip
+      - name: Upload the chapters to the release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.event.repository.name }}-${{ steps.name.outputs.name }}-chapters.zip
+          asset_name: ${{ github.event.repository.name }}-${{ steps.name.outputs.name }}-chapters.zip
           asset_content_type: zip
       - name: Delete older releases
         uses: dev-drprasad/delete-older-releases@v0.2.0
