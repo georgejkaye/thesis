@@ -51,18 +51,18 @@ form.
 \end{proof}
 
 \begin{proposition}\label{prop:exploded-belnap}
-    Given a combinational Belnap circuit \(
+    Given an essentially combinational Belnap circuit \(
     \iltikzfig{strings/category/f}[box=f,dom=m,cod=1,colour=comb]
-    \), there exists combinational Belnap circuits \(
-    \iltikzfig{strings/category/f}[box=f_0,dom=4m,cod=1,colour=comb]
+    \), there exists essentially combinational Belnap circuits \(
+    \iltikzfig{strings/category/f}[box=f_0,dom=4m,cod=1,colour=seq]
     \) and \(
-    \iltikzfig{strings/category/f}[box=f_1,dom=4m,cod=1,colour=comb]
+    \iltikzfig{strings/category/f}[box=f_1,dom=4m,cod=1,colour=seq]
     \) containing no \(
     \iltikzfig{circuits/components/gates/not}
     \) or \(
     \iltikzfig{strings/structure/monoid/merge}[colour=comb]
     \) generators, such that \[
-        \iltikzfig{strings/category/f}[box=f,dom=m,cod=1,colour=comb]
+        \iltikzfig{strings/category/f}[box=f,dom=m,cod=1,colour=seq]
         =
         \iltikzfig{circuits/axioms/belnap/translation/exploded-form}[box=f,dom=m,cod=1].
     \]
@@ -147,22 +147,22 @@ forms.
 
 \begin{proposition}\label{prop:normal-form}
     Let \(
-    \iltikzfig{strings/category/f}[box=f,colour=comb]
-    \) be a combinational Belnap circuit containing no \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
+    \) be an essentially combinational Belnap circuit containing no \(
     \iltikzfig{circuits/components/gates/not}
     \) or \(
     \iltikzfig{strings/structure/monoid/merge}[colour=comb]
     \) generators.
     Then there exists a circuit \(
     \iltikzfig{strings/category/f}[box=g,colour=comb]
-    \) containing only forks and symmetries and a Belnap circuit \(
+    \) containing only forks and symmetries, a Belnap circuit \(
     \iltikzfig{strings/category/f}[box=h,colour=comb]
     \) in conjunctive normal form such that \(
     \iltikzfig{strings/category/f}[box=f,colour=comb]
     =
-    \iltikzfig{strings/category/composition}[box1=g,box2=h,colour=comb]
+    \iltikzfig{circuits/algebraic/belnap-normal}[box1=g,box2=h,val=\listvar{v}]
     \) in \(
-    \scirc{\belnapsignature} / \mathcal{F}
+    \scirc{\belnapsignature} / \normalisingequations
     \).
     Simlarly, there exists a circuit \(
     \iltikzfig{strings/category/f}[box=g^\prime,colour=comb]
@@ -171,19 +171,23 @@ forms.
     \) in disjunctive normal form such that \(
     \iltikzfig{strings/category/f}[box=f,colour=comb]
     =
-    \iltikzfig{strings/category/composition}[box1=g^\prime,box2=h^\prime,colour=comb]
+    \iltikzfig{circuits/algebraic/belnap-normal}[box1=g^\prime,box2=h^\prime]
     \) in \(
-    \scirc{\belnapsignature} / \mathcal{P}
+    \scirc{\belnapsignature} / \normalisingequations
     \).
 \end{proposition}
 \begin{proof}
-    The circuits \(
+    As \(
     \iltikzfig{strings/category/f}[box=h,colour=comb]
-    \) and \(
-    \iltikzfig{strings/category/f}[box=h^\prime,colour=comb]
-    \) can be obtained using well-known procedures for obtaining disjunctive or
-    conjunctive normal form; propagating the `root' gate through the `leaf'
-    gates using distributivity, and using the other equations to `tidy up' the
+    \) is essentially combinational, it can be written in the form \(
+    \iltikzfig{circuits/synthesis/normalised-function}[box=f^\prime]
+    \).
+    The combinational circuit \(
+    \iltikzfig{strings/category/f}[box=f,colour=comb]
+    \) can then be translated into conjunctive normal form by applying the
+    well-known procedure for Booleans: i.e.\ propagating any \(\orgate\) gates
+    through the \(\andgate\) gates using \(\oranddisteqn\)
+    the `leaf' gates using distributivity, and using the other equations to `tidy up' the
     term until it is in the desired normal form.
     The terms of forks and symmetries is then the result of propagating the
     other gates to the left.

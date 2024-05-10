@@ -72,6 +72,7 @@ jobs:
         with:
           main: main.tex
           pdf: ${{ github.event.repository.name }}-${{ steps.name.outputs.name }}.pdf
+          log: ${{ github.event.repository.name }}-${{ steps.name.outputs.name }}.log
           sha: ${{ github.sha }}
           datetime: ${{ github.event.head_commit.timestamp }}
           endpoint: ${{ vars.TRACKER_API }}
