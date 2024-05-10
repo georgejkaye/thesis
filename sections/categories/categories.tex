@@ -344,18 +344,21 @@ We demonstrate this with a well-known result.
     This is a coproduct due to the universal property of pushouts.
 \end{proof}
 
-As
+Pushouts have a dual construction, known as a \emph{pullback}.
 
 \begin{definition}[Pullback]
-    Given morphisms \(\morph{f}{A}{B}\) and \(\morph{g}{C}{B}\), a
+    Given morphisms \(\morph{f}{B}{A}\) and \(\morph{g}{C}{A}\), a
     \emph{pullback} is an object \(D\) and a pair of morphisms
-    \(\morph{h}{D}{A}\) and \(\morph{k}{h}{k}\) such that for any other pair of
-    morphisms \(\morph{h^\prime}{B}{Z}\) and \(\morph{k^\prime}{C}{Z}\) there
-    exists a unique morphism \(\morph{u}{D}{Z}\), i.e.\ the following diagram
+    \(\morph{h}{D}{B}\) and \(\morph{k}{D}{C}\) such that for any other pair of
+    morphisms \(\morph{h^\prime}{Z}{B}\) and \(\morph{k^\prime}{Z}{C}\) there
+    exists a unique morphism \(\morph{u}{Z}{D}\), i.e.\ the following diagram
     commutes:
     \begin{center}
         \includestandalone{figures/category/diagrams/pullback}
     \end{center}
-    A category \(\mcc\) is said to \emph{have pullbacks} if a pushout exists for
-    any pair of morphisms.
+    A category \(\mcc\) is said to \emph{have pullbacks} if a pullback exists
+    for any pair of morphisms.
 \end{definition}
+
+Pushouts and pullbacks are essential for performing \emph{graph rewriting}
+categorically, which will be explored in the second part of this thesis.
