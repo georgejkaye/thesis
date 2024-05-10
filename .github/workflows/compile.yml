@@ -70,7 +70,7 @@ jobs:
       - name: Upload stats to the server
         uses: georgejkaye/latex-stats-uploader@v1.2
         with:
-          main: ${{ github.event.repository.name }}-${{ steps.name.outputs.name }}.tex
+          main: main.tex
           pdf: ${{ github.event.repository.name }}-${{ steps.name.outputs.name }}.pdf
           sha: ${{ github.sha }}
           datetime: ${{ github.event.head_commit.timestamp }}
