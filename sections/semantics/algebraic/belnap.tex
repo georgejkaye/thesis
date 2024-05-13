@@ -2,20 +2,17 @@
 
 For a sound and complete equational theory, equations are required to bring any
 essentially combinational circuit into a canonical form.
-Recall that the canonical form for circuits using components in the Belnap
-signature \(\belnapsignature\) is a circuit that `explodes' its inputs into
-two circuits computing the `falsy' and the `truthy' components of the output,
-before joining these together.
+Recall from \cref{sec:denotational-belnap} that the canonical form for circuits
+using components in the Belnap signature \(\belnapsignature\) is a circuit that
+`explodes' its inputs into two circuits computing the `falsy' and the `truthy'
+components of the output, before joining these together.
 
 Since this form is a variation of the standard disjunctive normal form for
 Boolean circuits, most of the equations required here should be familiar.
-The only unusual equation is one to translate an identity into an `exploded'
-identity, so that the rest of the circuit can be divided into the two
-components.
 
 \begin{definition}
     Let the set \(\mathcal{X}\) of \emph{explosion equations} be defined as
-    in \cref{fig:explosion-equations}
+    in \cref{fig:explosion-equations}.
 \end{definition}
 
 \input{sections/semantics/algebraic/floats/explode-equations}
@@ -36,8 +33,8 @@ form.
 \end{proof}
 
 \begin{lemma}\label{lem:explode-copy}
-    For any combinational Belnap circuit \(
-    \iltikzfig{strings/category/f}[box=f,dom=m,cod=n,colour=comb]
+    For any essentially combinational Belnap circuit \(
+    \iltikzfig{strings/category/f}[box=f,dom=m,cod=n,colour=seq]
     \), the equation \(
     \iltikzfig{strings/structure/cartesian/naturality-copy-lhs}[colour=comb,box=f]
     =
@@ -45,14 +42,17 @@ form.
     \) in \(\ccirc{\belnapsignature} / \mathcal{X}\).
 \end{lemma}
 \begin{proof}
-    This follows for the base cases by applying
-    \(\andforkeqn\), \(\orforkeqn\), \(\notforkeqn\) and \(\joinforkeqn\); the
-    inductive cases are then trivial.
+    This follows for the combinational base cases by applying
+    \((\andforkeqn)\), \((\orforkeqn)\), \((\notforkeqn)\) and
+    \((\joinforkeqn)\).
+    Now consider the base case for \(
+    \iltikzfig{circuits/algebraic/fork-infinite-register}
+    \).
 \end{proof}
 
 \begin{proposition}\label{prop:exploded-belnap}
     Given an essentially combinational Belnap circuit \(
-    \iltikzfig{strings/category/f}[box=f,dom=m,cod=1,colour=comb]
+    \iltikzfig{strings/category/f}[box=f,dom=m,cod=1,colour=seq]
     \), there exists essentially combinational Belnap circuits \(
     \iltikzfig{strings/category/f}[box=f_0,dom=4m,cod=1,colour=seq]
     \) and \(
@@ -68,13 +68,16 @@ form.
     \]
 \end{proposition}
 \begin{proof}
-    If \(\iltikzfig{strings/category/f}[box=f,colour=comb]\) is just
-    the identity, then it can be transformed into the desired form with
+    First let us consider when \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
+    \) is fully combinational.
+    If it is just the identity, then it can be transformed into the desired form
+    with
     \((\belnapexpeqn)\).
     Since \(\iltikzfig{strings/category/f}[box=f,colour=comb]\) has codomain
     \(1\) it cannot be a symmetry.
-    For the other generators, \((\belnapexpeqn)\) can first be applied
-    to the output wire to create the exploded `skeleton'.
+    For the other generators, \((\belnapexpeqn)\) can first be
+    applied to the output wire to create the exploded `skeleton'.
     The \(
     \iltikzfig{circuits/components/gates/and}
     \), \(
@@ -90,24 +93,40 @@ form.
     restore the correct order of gates, and \((\dneeqn)\) used to eliminate the
     additional \(\iltikzfig{circuits/components/gates/not}\) gates.
 
-    For composition, we assume that the two subcircuits are in the desired form,
+    Since \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
+    \) may not be fully combinational but \emph{essentially} combinational, it
+    may contain \(
+    \iltikzfig{circuits/components/waveforms/infinite-register}
+    \) subcircuits.
+    However, we do not need to worry about these, as we only need translators
+    for each input wire; since \(
+    \iltikzfig{circuits/components/waveforms/infinite-register}
+    \) is closed no translators are required, and hence no equations on
+
+    For composition, we assume that we have
     so we have \[
         \iltikzfig{circuits/axioms/belnap/translation/exploded-composition}.
     \]
     By \cref{lem:explode-copy}, the first circuit can be propagated across
-    the forks at the start of the second circuit, each of the four
-    `translators' has as input a copy of the first circuit.
+    the forks at the start of the second circuit.
+    This means that each of the four `translators' has as input a copy of the
+    first circuit.
     Using the same strategy as for the base case the components of the circuit
     can then be propagated across the translators.
     To complete the proof we need to ensure there is exactly one of each
     translator.
     Duplicates are handled by \cref{lem:explode-copy}.
-    Translators are flipped between using \(
+    When propagating the \(
+    \iltikzfig{circuits/components/gates/not}
+    \) component from the second and third branch of the first circuit across,
+    the \(
     \iltikzfig{circuits/components/gates/and}
     \) and \(
     \iltikzfig{circuits/components/gates/or}
-    \) when a \(\iltikzfig{circuits/components/gates/not}\) is propagated across
-    them, but since the same circuit is applied to each translator the same
+    \) components will be switched.
+    However, since the same circuit is propagated across each branch of the
+    second circuit, the same
     flip will happen in reverse elsewhere.
     Therefore the eventual circuit will be in the correct form.
 
@@ -117,10 +136,55 @@ form.
 This form already looks very similar to a circuit in the image of
 \(\mealytofunc\) in that it is the join of two circuits prefixed by
 `translators'.
-However, these circuits are not in conjunctive or disjunctive normal form.
-Fortunately, there are standard equations for translating `ordinary' Boolean
-expressions (i.e.\ those without joins) into disjunctive and conjunctive normal
-forms.
+However, these two circuits are not necessarily in the correct form specified by
+\(\mealytofunc\).
+
+\begin{definition}[Conjunction]
+    A Belnap circuit is a \emph{conjunction} if it is \(
+    \iltikzfig{circuits/components/waveforms/infinite-register}[val=\belnaptrue]
+    \) or of the form \(
+    \iltikzfig{circuits/algebraic/conjunction}
+    \), where \(
+    \iltikzfig{strings/category/f}[box=f, colour=seq]
+    \) is another conjunction.
+\end{definition}
+
+\begin{definition}[Disjunction]
+    A Belnap circuit is a \emph{disjunction} if it is \(
+    \iltikzfig{circuits/components/waveforms/infinite-register}[val=\belnapfalse]
+    \) or of the form \(
+    \iltikzfig{circuits/algebraic/disjunction}
+    \), where \(
+    \iltikzfig{strings/category/f}[box=f, colour=seq]
+    \) is another disjunction.
+\end{definition}
+
+\begin{definition}[Conjunctive normal form]
+    A Belnap circuit is in \emph{conjunctive normal form} if it is \(
+    \iltikzfig{circuits/components/waveforms/infinite-register}[val=\belnaptrue]
+    \) or of the form \(
+    \iltikzfig{circuits/algebraic/conjunctive-normal}
+    \), where \(
+    \iltikzfig{strings/category/f}[box=f, colour=seq]
+    \) is in conjunctive normal form and \(
+    \iltikzfig{strings/category/f}[box=g, colour=seq]
+    \) is a disjunction.
+\end{definition}
+
+\begin{definition}[Disjunctive normal form]
+    A Belnap circuit is in \emph{disjunctive normal form} if it is \(
+    \iltikzfig{circuits/components/waveforms/infinite-register}[val=\belnaptrue]
+    \) or of the form \(
+    \iltikzfig{circuits/algebraic/conjunctive-normal}
+    \), where \(
+    \iltikzfig{strings/category/f}[box=f, colour=seq]
+    \) is in disjunctive normal form and \(
+    \iltikzfig{strings/category/f}[box=g, colour=seq]
+    \) is a conjunction.
+\end{definition}
+
+The equations required to bring circuits into conjunctive or disjunctive normal
+form are standard.
 
 \begin{definition}
     Let \(\mathcal{F}\) be defined as the set of \emph{normal form equations}
@@ -129,23 +193,87 @@ forms.
 
 \input{sections/semantics/algebraic/floats/normal-form-equations}
 
-\begin{definition}
-    A circuit \(
-    \iltikzfig{strings/category/f}[box=f,colour=comb]
-    \) is a \emph{conjunction} if it only contains \(
-    \iltikzfig{circuits/components/gates/and}
-    \) gates and no symmetries, and a \emph{disjunction} if it only contains \(
-    \iltikzfig{circuits/components/gates/or}
-    \) gates and no symmetries.
-    A circuit \(
-    \iltikzfig{strings/category/f}[box=g,colour=comb]
-    \) is in \emph{disjunctive normal form} if it can be expressed as a
-    tensor of conjunctions composed with a disjunction, and is in
-    \emph{conjunctive normal form} if it can be expressed as a tensor of
-    disjunctions composed with a conjunction.
-\end{definition}
+We will now show that these equations suffice to translate a
 
-\begin{proposition}\label{prop:normal-form}
+\begin{lemma}\label{lem:or-normalising}
+    Given a combinational circuit \(
+    \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
+    \) containing only \(
+    \iltikzfig{circuits/components/gates/or}
+    \) components and structural generators, there exists a circuit
+    \(
+    \iltikzfig{strings/category/f}[box=g,colour=comb,dom=m,cod=mn]
+    \) containing only structural generators and a circuit
+    \(
+    \iltikzfig{strings/category/f}[box=h,colour=comb,dom=mn,cod=n]
+    \) containing only identities and \(
+    \iltikzfig{circuits/components/gates/or}
+    \) components such that \(
+    \iltikzfig{strings/category/f}[box=h,colour=comb,dom=mn,cod=n]
+    \) is the tensor of \(n\) circuits \(
+    \iltikzfig{strings/category/f}[box=h_i,colour=comb,dom=m,cod=1]
+    \) and \(
+    \iltikzfig{strings/category/f}[box=f,colour=comb]
+    =
+    \iltikzfig{strings/category/composition}[box1=g,box2=h,colour=comb]
+    \) by equations in \(\mathcal{F}\).
+\end{lemma}
+\begin{proof}
+    Repeatedly applying \((\orforkeqn)\) to \(
+    \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
+    \)propagates the \(
+    \iltikzfig{circuits/components/gates/or}
+    \) components as far to the right
+    as possible.
+    This divides \(
+    \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
+    \) into several parts: \(n\) parallel circuits \(
+    \iltikzfig{strings/category/f}[box=h_i,colour=comb,dom=p_0,cod=n]
+    \) containing just identities and \(
+    \iltikzfig{circuits/components/gates/or}
+    \) components, and a circuit \(
+    \iltikzfig{strings/category/f}[box=g_0,colour=comb,dom=m,cod={\Sigma_{i<n}\ p_i}]
+    \) containing only structural generators.
+    \[
+        \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
+        =
+        \iltikzfig{circuits/algebraic/belnap-after-copying}
+    \]
+    Each of these circuits is not guaranteed to have domain \(m\); some of the
+    input wires may not be used or may be used more than once.
+    By using \((\forkcommeqn)\), \((\forkassoceqn)\), and \((\forkuniteqn)\) to
+    manipulate the forks in \(
+    \iltikzfig{strings/category/f}[box=g_0,colour=comb]
+    \)
+    we get that \[
+        \iltikzfig{circuits/algebraic/belnap-after-copying}
+        =
+        \iltikzfig{circuits/algebraic/belnap-rearrange-forks}
+    \] where each \(
+    \iltikzfig{strings/category/f}[box=k_i,colour=comb,dom=m,cod=p_i]
+    \) contains only structural generators.
+    Due to the idempotency of \(\lor\), we know that in a disjunction
+    \(x_0 \lor x_1 \lor \dots \lor x_{n-1}\), any duplicate variables can
+    be removed.
+    Since \(
+    \iltikzfig{strings/category/f}[box=h_i,colour=comb,dom=m,cod=1]
+    \) only contains identities and \(
+    \iltikzfig{circuits/components/gates/or}
+    \) gates, this can be replicated syntactically
+    using the \((\oridemeqn)\) equation; to translate the circuit into a form
+    where this can be applied requires the use of the \((\forkcommeqn)\),
+    \((\forkassoceqn)\), \((\orassoc)\) and \((\orcomm)\) equations.
+
+    By repeating this for each subcircuit \(
+    \iltikzfig{strings/category/f}[box=h_i,colour=comb,dom=m,cod=1]
+    \), the proof is completed.
+\end{proof}
+
+\begin{example}
+    \todo[inline]{Example}
+\end{example}
+
+\begin{proposition}\label{prop:conjunctive-normal-form}
     Let \(
     \iltikzfig{strings/category/f}[box=f,colour=seq]
     \) be an essentially combinational Belnap circuit containing no \(
@@ -155,45 +283,90 @@ forms.
     \) generators.
     Then there exists a circuit \(
     \iltikzfig{strings/category/f}[box=g,colour=comb]
-    \) containing only forks and symmetries, a Belnap circuit \(
-    \iltikzfig{strings/category/f}[box=h,colour=comb]
-    \) in conjunctive normal form such that \(
-    \iltikzfig{strings/category/f}[box=f,colour=comb]
+    \) containing only structural generators, a Belnap circuit \(
+    \iltikzfig{strings/category/f-2-1}[box=h,colour=comb,dom1=x,dom2=m,cod=n]
+    \) in conjunctive normal form, and values \(\listvar{v} \in \valuetuple{x}\)
+    such that \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
     =
     \iltikzfig{circuits/algebraic/belnap-normal}[box1=g,box2=h,val=\listvar{v}]
     \) in \(
-    \scirc{\belnapsignature} / \normalisingequations
-    \).
-    Simlarly, there exists a circuit \(
-    \iltikzfig{strings/category/f}[box=g^\prime,colour=comb]
-    \) containing only forks and symmetries and a circuit \(
-    \iltikzfig{strings/category/f}[box=h^\prime,colour=comb]
-    \) in disjunctive normal form such that \(
-    \iltikzfig{strings/category/f}[box=f,colour=comb]
-    =
-    \iltikzfig{circuits/algebraic/belnap-normal}[box1=g^\prime,box2=h^\prime]
-    \) in \(
-    \scirc{\belnapsignature} / \normalisingequations
+    \scirc{\belnapsignature} / \mathcal{F}
     \).
 \end{proposition}
 \begin{proof}
     As \(
-    \iltikzfig{strings/category/f}[box=h,colour=comb]
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
     \) is essentially combinational, it can be written in the form \(
     \iltikzfig{circuits/synthesis/normalised-function}[box=f^\prime]
     \).
-    The combinational circuit \(
-    \iltikzfig{strings/category/f}[box=f,colour=comb]
-    \) can then be translated into conjunctive normal form by applying the
-    well-known procedure for Booleans: i.e.\ propagating any \(\orgate\) gates
-    through the \(\andgate\) gates using \(\oranddisteqn\)
-    the `leaf' gates using distributivity, and using the other equations to `tidy up' the
-    term until it is in the desired normal form.
-    The terms of forks and symmetries is then the result of propagating the
-    other gates to the left.
+    By applying repeatedly \((\andorddisteqn)\), the combinational circuit \(
+    \iltikzfig{strings/category/f}[box=g,colour=comb]
+    \) can then be translated into a conjunction of circuits.
+    These circuits will only contain \(
+    \iltikzfig{circuits/components/gates/or}
+    \) components, so the remainder of the proof follows by
+    \cref{lem:or-normalising}.
 \end{proof}
 
-Putting these two results together gives us the desired canonical form theorem.
+The above results apply to circuits in conjunctive normal form, but with some
+simple tweaks they can be used for disjunctive normal form as well.
+
+\begin{lemma}\label{lem:and-normalising}
+    Given a combinational circuit \(
+    \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
+    \) containing only \(
+    \iltikzfig{circuits/components/gates/and}
+    \) components and structural generators, there exists a circuit
+    \(
+    \iltikzfig{strings/category/f}[box=g,colour=comb,dom=m,cod=mn]
+    \) containing only structural generators, and a circuit
+    \(
+    \iltikzfig{strings/category/f}[box=h,colour=comb,dom=mn,cod=n]
+    \) containing only identities and \(
+    \iltikzfig{circuits/components/gates/and}
+    \) components such that \(
+    \iltikzfig{strings/category/f}[box=h,colour=comb,dom=mn,cod=n]
+    \) is the tensor of \(n\) circuits \(
+    \iltikzfig{strings/category/f}[box=h_i,colour=comb,dom=m,cod=1]
+    \) and \(
+    \iltikzfig{strings/category/f}[box=f,colour=comb]
+    =
+    \iltikzfig{strings/category/composition}[box1=g,box2=h,colour=comb]
+    \) by equations in \(\mathcal{F}\).
+\end{lemma}
+\begin{proof}
+    As \cref{lem:or-normalising}, but by using the \(\andgate\) version of the
+    relevant equations, i.e.\ \((\andforkeqn)\), \((\andassoc)\) and \((\andidemeqn)\).
+\end{proof}
+
+\begin{proposition}\label{prop:disjunctive-normal-form}
+    Let \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
+    \) be an essentially combinational Belnap circuit containing no \(
+    \iltikzfig{circuits/components/gates/not}
+    \) or \(
+    \iltikzfig{strings/structure/monoid/merge}[colour=comb]
+    \) generators.
+    Then there exists a circuit \(
+    \iltikzfig{strings/category/f}[box=g,colour=comb]
+    \) containing only structural generators, a Belnap circuit \(
+    \iltikzfig{strings/category/f-2-1}[box=h,colour=comb,dom1=x,dom2=m,cod=n]
+    \) in disjunctive normal form, and values \(\listvar{v} \in \valuetuple{x}\)
+    such that \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
+    =
+    \iltikzfig{circuits/algebraic/belnap-normal}[box1=g,box2=h,val=\listvar{v}]
+    \) in \(
+    \scirc{\belnapsignature} / \mathcal{F}
+    \).
+\end{proposition}
+\begin{proof}
+    As \cref{prop:conjunctive-normal-form}, but using \((\andorddisteqn)\) and
+    applying \cref{lem:and-normalising} to the result.
+\end{proof}
+
+Putting this all together gives us the desired canonical form theorem.
 
 \begin{theorem}
     Let \(
@@ -211,7 +384,8 @@ Putting these two results together gives us the desired canonical form theorem.
     \) in \(\ccirc{\Sigma_\belnap} / \mathcal{X} + \mathcal{F}\).
 \end{theorem}
 \begin{proof}
-    \cref{prop:exploded-belnap} and \cref{prop:normal-form} can be applied in
+    \cref{prop:exploded-belnap}, \cref{prop:conjunctive-normal-form},
+    \cref{prop:disjunctive-normal-form} can be applied in
     sequence to create a circuit of the correct form.
     By using \((\forkuniteqn\), \(\forkassoceqn\) and \(\forkcommeqn)\) the
     initial construct of forks and symmetries can be adjusted until it in the

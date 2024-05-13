@@ -113,24 +113,23 @@
     \rule{\textwidth}{0.1mm}
     \\[0.5em]
     \(\equationdisplay{
-        \iltikzfig{circuits/axioms/belnap/translation/and-and-idempotent-lhs}
+        \iltikzfig{circuits/axioms/belnap/and-idempotent-lhs}
     }{
-        \iltikzfig{circuits/axioms/belnap/translation/and-and-idempotent-rhs}
+        \iltikzfig{circuits/axioms/belnap/and-idempotent-rhs}
     }{
-        \andandidemeqn
+        \andidemeqn
     }\)
     \quad
     \(\equationdisplay{
-        \iltikzfig{circuits/axioms/belnap/translation/or-or-idempotent-lhs}
+        \iltikzfig{circuits/axioms/belnap/or-idempotent-lhs}
     }{
-        \iltikzfig{circuits/axioms/belnap/translation/or-or-idempotent-rhs}
+        \iltikzfig{circuits/axioms/belnap/or-idempotent-rhs}
     }{
-        \ororidemeqn
+        \oridemeqn
     }\)
     \\[0.25em]
     \rule{\textwidth}{0.1mm}
     \\[0.5em]
-    \quad
     \(\equationdisplay{
         \iltikzfig{circuits/axioms/belnap/and-or-distributivity-lhs}
     }{
@@ -172,6 +171,33 @@
     }{
         \botnoteqn
     }\)
+    \\[0.25em]
+    \rule{\textwidth}{0.1mm}
+    \\[0.5em]
+    \(\equationdisplay{
+        \iltikzfig{circuits/axioms/fork-lhs}
+    }{
+        \iltikzfig{circuits/axioms/fork-rhs}
+    }{
+        \forkeqn
+    }\)
+    \quad
+    \(\equationdisplay{
+        \iltikzfig{circuits/axioms/delay-fork-lhs}
+    }{
+        \iltikzfig{circuits/axioms/delay-fork-rhs}
+    }{
+        \delayforkeqn
+    }\)
+    \quad
+    \(\equationdisplay{
+        \iltikzfig{strings/structure/bialgebra/fork-join-rhs}
+    }{
+        \iltikzfig{strings/category/identity}
+    }{
+        \forkjoineqn
+    }\)
+    \\[0.5em]
     \caption{Set \(\mathcal{X}\) of \emph{explosion equations}}
     \label{fig:explosion-equations}
 \end{figure*}
