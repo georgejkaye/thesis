@@ -1,36 +1,39 @@
 \begin{figure*}
     \centering
-    \begin{minipage}{0.4\textwidth}
-        \centering
-        \(\equationdisplay{
-            \iltikzfig{circuits/axioms/belnap/translation/explosion-lhs}
-        }{
-            \iltikzfig{circuits/axioms/belnap/translation/explosion-rhs}
-        }{
-            \belnapexpeqn
-        }\)
-    \end{minipage}
-    \begin{minipage}{0.5\textwidth}
-        \centering
-        \(\equationdisplay{
-            \iltikzfig{circuits/axioms/belnap/translation/join-and-lhs}
-        }{
-            \iltikzfig{circuits/axioms/belnap/translation/join-and-rhs}
-        }{
-            \joinandeqn
-        }\)
-        \\[0.25em]
-        \rule{\textwidth}{0.1mm}
-        \\[0.5em]
-        \(\equationdisplay{
-            \iltikzfig{circuits/axioms/belnap/translation/join-or-lhs}
-        }{
-            \iltikzfig{circuits/axioms/belnap/translation/join-or-rhs}
-        }{
-            \joinoreqn
-        }\)
-    \end{minipage}
+    \(\equationdisplay{
+        \iltikzfig{circuits/axioms/belnap/translation/explosion-lhs}
+    }{
+        \iltikzfig{circuits/axioms/belnap/translation/explosion-rhs}
+    }{
+        \belnapexpeqn
+    }\)
+    \quad
+    \(\equationdisplay{
+        \iltikzfig{circuits/algebraic/infinite-register-fork-lhs}
+    }{
+        \iltikzfig{circuits/algebraic/infinite-register-fork-rhs}
+    }{
+        \regforkeqn
+    }\)
+    \\[0.25em]
+    \rule{\textwidth}{0.1mm}
     \\[0.5em]
+    \(\equationdisplay{
+        \iltikzfig{circuits/axioms/belnap/translation/join-and-lhs}
+    }{
+        \iltikzfig{circuits/axioms/belnap/translation/join-and-rhs}
+    }{
+        \joinandeqn
+    }\)
+    \quad
+    \(\equationdisplay{
+        \iltikzfig{circuits/axioms/belnap/translation/join-or-lhs}
+    }{
+        \iltikzfig{circuits/axioms/belnap/translation/join-or-rhs}
+    }{
+        \joinoreqn
+    }\)
+    \\[0.25em]
     \rule{\textwidth}{0.1mm}
     \\[0.5em]
     \(\equationdisplay{
@@ -108,6 +111,14 @@
         \iltikzfig{strings/structure/comonoid/commutativity-rhs}
     }{
         \forkcommeqn
+    }\)
+    \quad
+    \(\equationdisplay{
+        \iltikzfig{strings/structure/comonoid/associativity-lhs}
+    }{
+        \iltikzfig{strings/structure/comonoid/associativity-rhs}
+    }{
+        \forkassoceqn
     }\)
     \\[0.25em]
     \rule{\textwidth}{0.1mm}
@@ -191,9 +202,9 @@
     }\)
     \quad
     \(\equationdisplay{
-        \iltikzfig{strings/structure/bialgebra/fork-join-rhs}
+        \iltikzfig{strings/structure/bialgebra/copy-merge-lhs}
     }{
-        \iltikzfig{strings/category/identity}
+        \iltikzfig{strings/structure/bialgebra/copy-merge-rhs}
     }{
         \forkjoineqn
     }\)
