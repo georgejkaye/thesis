@@ -416,8 +416,64 @@ the syntactic realm, the map \(
 \iltikzfig{strings/category/f}[box=f_0,colour=comb]
 \) and \(
 \iltikzfig{strings/category/f}[box=f_1,colour=comb]
-\) are `syntactic' conjunctive and disjunctive normal forms respectively.
-The exact definition of these terms is fiddly but one can easily imagine what
-they might look like.
+\) are `syntactic' disjunctive normal forms respectively.
+While the truthy circuit is just a regular disjunctive normal form, because
+the falsy operations are simulated by the opposite gate, it looks a bit
+different.
+
+\begin{definition}[Conjunction]
+    A Belnap circuit is a \emph{truthy conjunction} if it is \(
+    \iltikzfig{circuits/components/waveforms/infinite-register}[val=\belnaptrue]
+    \) or of the form \(
+    \iltikzfig{circuits/algebraic/conjunction}[ccolour=seq]
+    \), where \(
+    \iltikzfig{strings/category/f}[box=f, colour=seq]
+    \) is another truthy conjunction.
+    A Belnap circuit is a \emph{falsy conjunction} if it is \(
+    \iltikzfig{circuits/components/waveforms/infinite-register}[val=\belnapfalse]
+    \) or of the form \(
+    \iltikzfig{circuits/algebraic/disjunction}[dcolour=seq]
+    \), where \(
+    \iltikzfig{strings/category/f}[box=f, colour=seq]
+    \) is another falsy conjunction.
+\end{definition}
+
+\begin{definition}[Disjunctive normal form]
+    A Belnap circuit is in \emph{truthy disjunctive normal form} if it is \(
+    \iltikzfig{strings/structure/monoid/init}[colour=comb]
+    \) or of the form \(
+    \iltikzfig{circuits/algebraic/disjunctive-normal}[ccolour=seq]
+    \), where \(
+    \iltikzfig{strings/category/f}[box=f, colour=seq]
+    \) is in truthy disjunctive normal form and \(
+    \iltikzfig{strings/category/f}[box=g, colour=seq]
+    \) is a truthy conjunction.
+    A Belnap circuit is in \emph{falsy disjunctive normal form} if it is \(
+    \iltikzfig{strings/structure/monoid/init}[colour=comb]
+    \) or of the form \(
+    \iltikzfig{circuits/algebraic/conjunctive-normal}[dcolour=seq]
+    \), where \(
+    \iltikzfig{strings/category/f}[box=f, colour=seq]
+    \) is in falsy disjunctive normal form and \(
+    \iltikzfig{strings/category/f}[box=g, colour=seq]
+    \) is a falsy conjunction.
+\end{definition}
+
+\begin{definition}
+    Let \(\morph{\mealytofunc_\belnap}{\func{\belnapinterpretation}}{\ccirc{\belnapsignature}}\)
+    be defined as the map sending a function \(\morph{f}{\valuetuple{m}}{\valuetuple{n}}\)
+    to a circuit \[
+        \iltikzfig{circuits/axioms/belnap/translation/exploded-form-cnf}[dom=m,cod=n,box=f]
+    \], where \(
+    \iltikzfig{strings/category/f}[box=g_0,colour=comb]
+    \) and \(
+    \iltikzfig{strings/category/f}[box=g_0,colour=comb]
+    \) only contain identity and elimination constructs, and \(
+    \iltikzfig{strings/category/f}[box=h_0,colour=seq]
+    \) and \(
+    \iltikzfig{strings/category/f}[box=h_1,colour=seq]
+    \) and in falsy and truthy conjunctive normal form respectively, defined
+    in the obvious way derived from the procedure detailed in this section.
+\end{definition}
 
 \todo[inline]{Implementation?}
