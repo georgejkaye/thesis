@@ -13,7 +13,36 @@
     }{
         \iltikzfig{circuits/algebraic/infinite-register-fork-rhs}
     }{
-        \regforkeqn
+        \infregforkeqn
+    }\)
+    \\[0.5em]
+    \rule{\textwidth}{0.1mm}
+    \\[0.5em]
+    \quad
+    \(\equationdisplay{
+        \iltikzfig{circuits/algebraic/infinite-register-and}
+    }{
+        \iltikzfig{circuits/components/waveforms/infinite-register-wide}[val={\bot \land v}]
+    }{
+        \infregandeqn
+    }\)
+    \quad
+    \(\equationdisplay{
+        \iltikzfig{circuits/algebraic/infinite-register-or}
+    }{
+        \iltikzfig{circuits/components/waveforms/infinite-register-wide}[val={\bot \lor v}]
+    }{
+        \infregoreqn
+    }\)
+    \\[0.25em]
+    \rule{\textwidth}{0.1mm}
+    \\[0.5em]
+    \(\equationdisplay{
+        \iltikzfig{circuits/algebraic/infinite-register-not}
+    }{
+        \iltikzfig{circuits/components/waveforms/infinite-register-slightly-wide}[val={\neg v}]
+    }{
+        \infregnoteqn
     }\)
     \\[0.25em]
     \rule{\textwidth}{0.1mm}
@@ -43,6 +72,7 @@
     }{
         \demorganand
     }\)
+    \quad
     \(\equationdisplay{
         \iltikzfig{circuits/axioms/belnap/translation/de-morgan-or-lhs}
     }{
@@ -199,14 +229,6 @@
         \iltikzfig{circuits/axioms/delay-fork-rhs}
     }{
         \delayforkeqn
-    }\)
-    \quad
-    \(\equationdisplay{
-        \iltikzfig{strings/structure/bialgebra/copy-merge-lhs}
-    }{
-        \iltikzfig{strings/structure/bialgebra/copy-merge-rhs}
-    }{
-        \forkjoineqn
     }\)
     \\[0.5em]
     \caption{Set \(\mathcal{X}\) of \emph{explosion equations}}
