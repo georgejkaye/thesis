@@ -201,7 +201,52 @@ forks composed with a circuit in truthy disjunctive normal form.
 \end{proof}
 
 \begin{example}
-    \todo[inline]{Example}
+    Consider the circuit \(
+    \iltikzfig{circuits/examples/conjunction/step-0}
+    \); we transform it into a truthy conjunction as follows.
+    \begin{gather*}
+        \iltikzfig{circuits/examples/conjunction/step-0}
+        \eqaxioms[(\forkuniteqn)]
+        \iltikzfig{circuits/examples/conjunction/step-1}
+        \eqaxioms[(\forkuniteqn)]
+        \iltikzfig{circuits/examples/conjunction/step-2}
+        \eqaxioms[(\forkcommeqn)]
+        \\
+        \iltikzfig{circuits/examples/conjunction/step-3}
+        \eqaxioms[(\forkassoceqn)]
+        \iltikzfig{circuits/examples/conjunction/step-4}
+        \eqaxioms[(\andcomm)]
+        \iltikzfig{circuits/examples/conjunction/step-5}
+        \eqaxioms[(\andforkeqn)]
+        \\
+        \iltikzfig{circuits/examples/conjunction/step-6}
+        \eqaxioms[(\andassoc)]
+        \iltikzfig{circuits/examples/conjunction/step-7}
+        \eqaxioms[(\forkassoceqn)]
+        \\
+        \iltikzfig{circuits/examples/conjunction/step-8}
+        \eqaxioms[(\andidemeqn)]
+        \iltikzfig{circuits/examples/conjunction/step-9}
+        \eqaxioms[(\andassoc)]
+        \\
+        \iltikzfig{circuits/examples/conjunction/step-10}
+        \eqaxioms[(\andcomm)]
+        \iltikzfig{circuits/examples/conjunction/step-11}
+        \eqaxioms[(\andassoc)]
+        \\
+        \iltikzfig{circuits/examples/conjunction/step-12}
+        \eqaxioms[(\andidemeqn)]
+        \iltikzfig{circuits/examples/conjunction/step-13}
+        \eqaxioms[(\andassoc)]
+        \\
+        \iltikzfig{circuits/examples/conjunction/step-14}
+        \eqaxioms[(\andidemeqn)]
+        \iltikzfig{circuits/examples/conjunction/step-15}
+        \eqaxioms
+        \iltikzfig{circuits/examples/conjunction/step-16}
+        \eqaxioms[(\andideqn)]
+        \iltikzfig{circuits/examples/conjunction/step-17}
+    \end{gather*}
 \end{example}
 
 The proof for the falsy circuit is almost exactly the same.
