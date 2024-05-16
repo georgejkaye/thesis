@@ -1,1 +1,83 @@
 \section{Algebraic semantics for generalised circuits}
+
+When it comes to lifting the algebraic semantics to the generalised
+
+\begin{definition}
+    Let the set \(\mealyequations^+\) be defined as \(\mealyequations\) but
+    with equations \((\monoidunitleqn)\), \((\monoidunitreqn)\), and
+    \((\bottomdelayeqn)\) for wires of each with \(n \in \natplus\).
+\end{definition}
+
+Since the set of normalising equations \(\normalisingequations\) is determined
+by the interpretation, we do not need to do anything there.
+The encoding equations need to be extended to act on all wire widths, and we
+need to be able to handle encoders that contain bundlers.
+
+\begin{definition}
+    Let the set \(\encodingequations^+\) be defined as \(\encodingequations\)
+    but with all equations adjusted to operate on wires of all widths
+    \(n \in \natplus\), and with the addition of equations \[
+        \equationdisplay{
+            \iltikzfig{circuits/axioms/unbundle-lhs}
+        }{
+            \iltikzfig{circuits/axioms/unbundle-rhs}
+        }{
+            \spliteqn
+        }
+        \quad
+        \equationdisplay{
+            \iltikzfig{circuits/axioms/bundle-lhs}
+        }{
+            \iltikzfig{circuits/axioms/bundle-rhs}
+        }{
+            \combineeqn
+        }
+    \] on bundlers.
+\end{definition}
+
+Finally the restriction schema also needs to operate on arbitrary-width wires.
+
+\begin{definition}
+    Let \((\mathsf{Res}^+)\) be defined as \((\mathsf{Res})\) but extended to
+    operate on wires of widths \(n \in \natplus\).
+\end{definition}
+
+By putting all these equations together we obtain a set of equations for
+generalised circuits.
+
+\begin{definition}
+    For a generalised interpretation \(\interpretation^+\), let \(
+    \mathcal{E}^+_{\mathcal{I}}
+    \coloneqq
+    \mealyequations^+ +
+    \mathcal{N}^+_{\mathcal{I}} +
+    \encodingequations^+ +
+    (\mathsf{Res^+})
+    \), and let \(\scircsigmage\) be defined as
+    \(\scircsigmag / \mathcal{E}^+_{\mathcal{I}}\).
+\end{definition}
+
+This set of equations is sound and complete.
+
+\begin{theorem}
+    For a functionally complete generalised interpretation \(\interpretation\),
+    \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    =
+    \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
+    \) in \(\scircsigmage\) if and only if \(
+    \circuittostreamig[
+        \iltikzfig{strings/category/f}[box=f,colour=seq]
+    ]
+    =
+    \circuittostreamig[
+        \iltikzfig{strings/category/f}[box=g,colour=seq]
+    ]
+    \).
+\end{theorem}
+
+Subsequently we obtain another isomorphism of categories.
+
+\begin{corollary}
+    \(\scircsigmaig \cong \scircsigmage\).
+\end{corollary}
