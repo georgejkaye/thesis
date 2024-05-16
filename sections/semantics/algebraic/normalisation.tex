@@ -48,15 +48,15 @@ Mealy form can be derived using a finite set of equations.
 \end{proposition}
 \begin{proof}
     Any circuit can be assembled into global trace-delay form solely using the
-    axioms of STMCs, which hold by default in \(\scircsigma\).
+    axioms of STMCs.
     From this, a circuit in pre-Mealy form can be obtained by translating
     delays into registers using \(
     \iltikzfig{circuits/axioms/delay-to-register/step-0}
-    \eqaxioms[(\monoidunitleqn)]
+    \eqaxioms[(\joinunitleqn)]
     \iltikzfig{circuits/axioms/delay-to-register/step-1}
     \) and translating values into registers using \(
     \iltikzfig{circuits/axioms/value-to-register/step-0}
-    \eqaxioms[(\monoidunitreqn)]
+    \eqaxioms[(\joinunitreqn)]
     \iltikzfig{circuits/axioms/value-to-register/step-1}
     \eqaxioms[(\bottomdelayeqn)]
     \iltikzfig{circuits/axioms/value-to-register/step-2}
