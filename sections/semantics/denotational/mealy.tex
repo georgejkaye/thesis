@@ -1,4 +1,4 @@
-section{Monotone Mealy machines}
+\section{Monotone Mealy machines}
 
 While it would not be too difficult to define a map from circuits in
 \(\scircsigma\) to stream functions in \(\streami\), it is not immediately
@@ -45,7 +45,30 @@ takes in a currrent state and input \((s, a)\) and produces a pair
 \end{notation}
 
 \begin{example}
-    \todo[inline]{Example!}
+    Let the set of Booleans be defined as \(\booleans \coloneqq \{0,1\}\).
+    We define a \((\booleans,\booleans)\)-Mealy machine \((S, f)\) as follows:
+    \begin{gather*}
+        S \coloneqq \{s_0, s_1\}
+        \\
+        f(s_0, \mathsf{t}) \mapsto \langle{s_1, \mathsf{t}}\rangle
+        \quad
+        f(s_0, \mathsf{f}) \mapsto \langle{s_0, \mathsf{f}}\rangle
+        \\
+        f(s_1, \mathsf{t}) \mapsto \langle{s_1, \mathsf{f}}\rangle
+        \quad
+        f(s_0, \mathsf{f}) \mapsto \langle{s_0, \mathsf{t}}\rangle
+    \end{gather*}
+    This is a Mealy machine with two states; at state \(s_0\) the output is just
+    the input, and at state \(s_1\) the output is the negation.
+    At either state, if a \(\mathsf{t}\) is input the state switches.
+
+    It is often more intuitive to draw out a Mealy machine.
+    We draw states as circles; if there is a transition from one state to
+    another on input \(v\) that produces output \(w\), we draw an arrow between
+    them labelled with \(v|w\).
+    \begin{center}
+        \includestandalone{figures/mealy/example}
+    \end{center}
 \end{example}
 
 \subsection{The coalgebraic perspective}
@@ -65,7 +88,7 @@ And as is often the case, we can, using the notion of a \emph{coalgebra}.
 \end{definition}
 
 A Mealy machine is a pair of a set
-and a function, so this is clearly a coalgebra in \(\set\).
+and a function, so this is a coalgebra in \(\set\).
 
 \begin{definition}
     For sets \(A\) and \(B\), an \emph{\((A,B)\)-Mealy coalgebra} is a coalgebra
