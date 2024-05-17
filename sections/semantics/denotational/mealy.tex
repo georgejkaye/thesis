@@ -44,19 +44,20 @@ takes in a currrent state and input \((s, a)\) and produces a pair
     \) for the transition and output component of the Mealy function respectively.
 \end{notation}
 
-\begin{example}
-    Let the set of Booleans be defined as \(\booleans \coloneqq \{0,1\}\).
+\begin{example}\label{ex:mealy}
+    Let the set of Booleans be defined as
+    \(\booleans \coloneqq \{\mathsf{f},\mathsf{t}\}\).
     We define a \((\booleans,\booleans)\)-Mealy machine \((S, f)\) as follows:
     \begin{gather*}
         S \coloneqq \{s_0, s_1\}
         \\
-        f(s_0, \mathsf{t}) \mapsto \langle{s_1, \mathsf{t}}\rangle
-        \quad
         f(s_0, \mathsf{f}) \mapsto \langle{s_0, \mathsf{f}}\rangle
-        \\
-        f(s_1, \mathsf{t}) \mapsto \langle{s_1, \mathsf{f}}\rangle
         \quad
-        f(s_0, \mathsf{f}) \mapsto \langle{s_0, \mathsf{t}}\rangle
+        f(s_0, \mathsf{t}) \mapsto \langle{s_0, \mathsf{t}}\rangle
+        \\
+        f(s_1, \mathsf{f}) \mapsto \langle{s_1, \mathsf{t}}\rangle
+        \quad
+        f(s_1, \mathsf{t}) \mapsto \langle{s_1, \mathsf{f}}\rangle
     \end{gather*}
     This is a Mealy machine with two states; at state \(s_0\) the output is just
     the input, and at state \(s_1\) the output is the negation.
@@ -240,6 +241,17 @@ equipped with such a start state.
     \((S, f)\) is a Mealy machine, and \(s_0 \in S\) is an \emph{initial state}.
 \end{definition}
 
+
+\begin{example}\label{ex:mealy-init}
+    We can initialise the \((\booleans,\booleans)\)-Mealy machine
+    \((\{s_0,s_1\},f)\) from \cref{ex:mealy} in two ways; here we will choose to
+    initialise it as \((S,f,s_0\).
+    In the diagrams, we label the initial state with an arrow.
+    \begin{center}
+        \includestandalone{figures/mealy/example-init}
+    \end{center}
+\end{example}
+
 All that remains to define is the composition of Mealy machines, which is
 standard.
 
@@ -248,10 +260,10 @@ standard.
     initialised \((B,C)\)-Mealy machine \((T,g,t_0)\), their
     \emph{cascade product} is an initialised \((A,C)\)-Mealy machine defined as
     \[
-        \left(S \times T, ((s, t), a) \mapsto \left(
+        \left(S \times T, ((s, t), a) \mapsto \left\langle
         \mealyfunctiontransition{f}(s,a),
         \mealyfunctiontransition{g}(t, \mealyfunctionoutput{f}(s, a))
-        \right),
+        \right\rangle,
         \mealyfunctionoutput{g}(t, \mealyfunctionoutput{f}(s, a)),
         (s_0, t_0)\right).
     \]
@@ -261,8 +273,67 @@ The cascade product of two Mealy machines effectively executes the first on the
 inputs, then executes the second on the outputs of the first; the inputs are
 `cascaded' through the two Mealy machines.
 
-\begin{example}
-    \todo[inline]{Example!}
+\begin{example}\label{ex:mealy-cascade}
+    Recall the initialised \((\booleans,\booleans)\)-Mealy machine
+    \((S, f, s_0)\) from \cref{ex:mealy-init}; we will now compose this with
+    another initialised \((\booleans,\booleans)\)-Mealy machine
+    \((\{t_0,t_1\},g,t_0)\) where \(g\) is defined as follows:
+    \begin{gather*}
+        g(t_0, \mathsf{f}) \coloneqq \langle{t_0,\mathsf{f}}\rangle
+        \quad
+        g(t_0, \mathsf{t}) \coloneqq \langle{t_1,\mathsf{t}}\rangle
+        \quad
+        g(t_0, \mathsf{f}) \coloneqq \langle{t_1,\mathsf{t}}\rangle
+        \quad
+        g(t_0, \mathsf{t}) \coloneqq \langle{t_2,\mathsf{t}}\rangle
+    \end{gather*}
+    \vspace{-\abovedisplayskip}
+    \begin{center}
+        \includestandalone{figures/mealy/example2-init}
+    \end{center}
+    The cascade product of these two machines is another initialised
+    \((\booleans,\booleans)\)-Mealy machine \((R,h,r_0)\) defined as follows:
+    \begin{gather*}
+        R \coloneqq \{(s_0,t_0), (s_1,t_0), (s_0,t_1), (s_1,t_1)\}
+        \quad
+        r_0 \coloneqq (s_0,t_0)
+        \\
+        h((s_0, t_0), \mathsf{f})
+        \coloneqq
+        \left\langle(s_0, t_0), \mathsf{f}\right\rangle
+        \quad
+        h((s_0, t_0), \mathsf{t})
+        \coloneqq
+        \left\langle(s_0, t_1), \mathsf{t}\right\rangle
+        \\
+        h((s_1, t_0), \mathsf{f})
+        \coloneqq
+        \left\langle(s_1, t_1), \mathsf{t}\right\rangle
+        \quad
+        h((s_1, t_0), \mathsf{t})
+        \coloneqq
+        \left\langle(s_0, t_0), \mathsf{f}\right\rangle
+        \\
+        h((s_0, t_1), \mathsf{f})
+        \coloneqq
+        \left\langle(s_0, t_1), \mathsf{t}\right\rangle
+        \quad
+        h((s_0, t_1), \mathsf{t})
+        \coloneqq
+        \left\langle(s_1, t_1), \mathsf{t}\right\rangle
+        \\
+        h((s_1, t_1), \mathsf{f})
+        \coloneqq
+        \left\langle(s_1, t_1), \mathsf{t}\right\rangle
+        \quad
+        h((s_1, t_1), \mathsf{t})
+        \coloneqq
+        \left\langle(s_0, t_1), \mathsf{t}\right\rangle
+    \end{gather*}
+    As always, the diagram is more instructive:
+    {\centering
+    \includestandalone{figures/mealy/cascade}
+    }
 \end{example}
 
 Tensor product is far more straightforward.
@@ -285,6 +356,88 @@ Tensor product is far more straightforward.
         ).
     \]
 \end{definition}
+
+\begin{example}\label{ex:mealy-direct}
+    The direct product of the two initialised \((\booleans,\booleans)\)-Mealy
+    machines introduced in \cref{ex:mealy-init} and \cref{ex:mealy-cascade} is
+    a \((\booleans^2,\booleans^2)\)-Mealy machine \((Q,k,q_0)\) defined as
+    follows:
+    \begin{gather*}
+        Q \coloneqq \{(s_0,t_0), (s_1,t_0), (s_0,t_1), (s_1,t_1)\}
+        \quad
+        q_0 \coloneqq (s_0,t_0)
+        \\
+        h((s_0, t_0), \mathsf{ff})
+        \coloneqq
+        \left\langle(s_0, t_0), \mathsf{ff}\right\rangle
+        \quad
+        h((s_0, t_0), \mathsf{tf})
+        \coloneqq
+        \left\langle(s_0, t_1), \mathsf{tf}\right\rangle
+        \\
+        h((s_0, t_0), \mathsf{ft})
+        \coloneqq
+        \left\langle(s_0, t_1), \mathsf{ft}\right\rangle
+        \quad
+        h((s_0, t_0), \mathsf{tt})
+        \coloneqq
+        \left\langle(s_0, t_0), \mathsf{f}\right\rangle
+        \\
+        h((s_1, t_0), \mathsf{ff})
+        \coloneqq
+        \left\langle(s_1, t_0), \mathsf{tf}\right\rangle
+        \quad
+        h((s_1, t_0), \mathsf{tf})
+        \coloneqq
+        \left\langle(s_0, t_0), \mathsf{ft}\right\rangle
+        \\
+        h((s_1, t_0), \mathsf{ft})
+        \coloneqq
+        \left\langle(s_1, t_1), \mathsf{tt}\right\rangle
+        \quad
+        h((s_1, t_0), \mathsf{tt})
+        \coloneqq
+        \left\langle(s_0, t_1), \mathsf{ft}\right\rangle
+        \\
+        h((s_0, t_1), \mathsf{ff})
+        \coloneqq
+        \left\langle(s_0, t_1), \mathsf{ft}\right\rangle
+        \quad
+        h((s_0, t_1), \mathsf{tf})
+        \coloneqq
+        \left\langle(s_0, t_1), \mathsf{tf}\right\rangle
+        \\
+        h((s_1, t_1), \mathsf{ft})
+        \coloneqq
+        \left\langle(s_0, t_1), \mathsf{ft}\right\rangle
+        \quad
+        h((s_0, t_1), \mathsf{tt})
+        \coloneqq
+        \left\langle(s_1, t_1), \mathsf{tt}\right\rangle
+        \\
+        h((s_1, t_1), \mathsf{ff})
+        \coloneqq
+        \left\langle(s_1, t_1), \mathsf{tt}\right\rangle
+        \quad
+        h((s_1, t_1), \mathsf{tf})
+        \coloneqq
+        \left\langle(s_0, t_1), \mathsf{ft}\right\rangle
+        \\
+        h((s_1, t_1), \mathsf{ft})
+        \coloneqq
+        \left\langle(s_1, t_1), \mathsf{tt}\right\rangle
+        \quad
+        h((s_1, t_1), \mathsf{tt})
+        \coloneqq
+        \left\langle(s_0, t_1), \mathsf{ft}\right\rangle
+    \end{gather*}
+    \begin{center}
+        \includestandalone{figures/mealy/direct}
+    \end{center}
+\end{example}
+
+With cascade product as composition and direct product as tensor, initialised
+monotone Mealy machines form a PROP.
 
 \begin{definition}
     Let \(\mealyi\) be the PROP in which the morphisms
