@@ -276,15 +276,42 @@ can be sure that rewriting is defined uniquely.
 However, there may be useful rewrite rules which are \emph{not} left-linear.
 
 \begin{example}
-    \todo[inline]{Do classic non left-linear example}
+    Consider the following term rewrite rule and corresponding DPO rule.
+    \[
+        \rrule{
+            \iltikzfig{strings/category/identity}
+        }{
+            \iltikzfig{strings/category/generator}[box=e]
+        }
+        \qquad
+        \iltikzfig{graphs/dpo/non-left-linear/l}
+        \leftarrow
+        \iltikzfig{graphs/dpo/non-left-linear/k}
+        \to
+        \iltikzfig{graphs/dpo/non-left-linear/r}
+    \]
+    A rule where a generator is inserted into an identity wire is a perfectly
+    reasonable rule, but its interpretation is not left-linear.
+    This means that the pushout complement may not be unique for a given
+    matching.
+    For example, consider the following pair of morphisms:
+    \[
+        \iltikzfig{graphs/dpo/non-left-linear/k}
+        \to
+        \iltikzfig{graphs/dpo/non-left-linear/l}
+        \to
+        \iltikzfig{graphs/dpo/non-left-linear/g}
+    \]
+    This matching yields the following valid pushout complements:
+    \todo[inline]{Draw out complements}
 \end{example}
 
 One might think this is undesirable, as surely for a rule and matching we would
 want a unique rewrite?
 However, we must not forget that hypergraphs model terms
 \emph{modulo Frobenius structure}.
-The multiple rewrites are not coming from nowhere, but arise because there are
-`hidden' rewriting opportunities thanks to the Frobenius algebras!
+The multiple rewrites are not coming from nowhere, but arise because of the
+presence of the Frobenius algebras.
 
 \begin{example}
     \todo[inline]{Show how the above contexts correspond to term rewrite}
