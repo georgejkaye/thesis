@@ -29,7 +29,36 @@ Fortunately, these conditions are well-known.
 \end{definition}
 
 \begin{example}
-    \todo[inline]{No-dangling example}
+    The following pair of morphisms does not satisfy the no-dangling-hyperedges
+    condition.
+    \[
+        \iltikzfig{graphs/dpo/no-dangling/k}
+        \xrightarrow{a}
+        \iltikzfig{graphs/dpo/no-dangling/l}
+        \xrightarrow{f}
+        \iltikzfig{graphs/dpo/no-dangling/g}
+    \]
+    To obtain the pushout complement we `cut out' any vertices in the
+    rightmost graph which are in the image of \(f\) but not the image of
+    \(f \circ a\), as the latter are the interfaces of the rule.
+    However, if we cut out the vertices labelled \(2\) and \(3\), the edge
+    \(e_2\) will be left with `dangling' tentacles connected to no vertices, a
+    malformed hypergraph.
+    \begin{center}
+        \begin{tikzcd}
+            \iltikzfig{graphs/dpo/no-dangling/l}
+            \arrow{d}{f}
+            &
+            \iltikzfig{graphs/dpo/no-dangling/k}
+            \arrow{l}{a}
+            \arrow{d}
+            \\
+            \iltikzfig{graphs/dpo/no-dangling/g}
+            &
+            \iltikzfig{graphs/dpo/no-dangling/c}
+            \arrow{l}
+        \end{tikzcd}
+    \end{center}
 \end{example}
 
 \begin{definition}[No-identification condition~\cite{corradini1997algebraic}, Prop. 3.3.4]
@@ -39,7 +68,36 @@ Fortunately, these conditions are well-known.
 \end{definition}
 
 \begin{example}
-    \todo[inline]{No-identification example}
+    The following pair of morphisms does not satisfy the no-identification
+    condition.
+    \[
+        \iltikzfig{graphs/dpo/no-identification/k}
+        \xrightarrow{a}
+        \iltikzfig{graphs/dpo/no-identification/l}
+        \xrightarrow{f}
+        \iltikzfig{graphs/dpo/no-identification/g}
+    \]
+    When trying to construct a pushout complement, the edge \(e_2\) will be
+    removed.
+    However, since vertices \(2\) and \(3\) are not mapped from the rule
+    interfaces, there is no reason that a pushout would glue them together so
+    that they are merged in the final graph.
+    Therefore no pushout complement can exist.
+    \begin{center}
+        \begin{tikzcd}
+            \iltikzfig{graphs/dpo/no-identification/l}
+            \arrow{d}{f}
+            &
+            \iltikzfig{graphs/dpo/no-identification/k}
+            \arrow{l}{a}
+            \arrow{d}
+            \\
+            \iltikzfig{graphs/dpo/no-identification/g}
+            &
+            \iltikzfig{graphs/dpo/no-identification/c}
+            \arrow{l}
+        \end{tikzcd}
+    \end{center}
 \end{example}
 
 With these two conditions, we can establish when pushout complements exist at
@@ -215,11 +273,6 @@ complement is \emph{uniquely} defined for a given matching.
 
 This means that, for a large class of rewrite rules, if we find a matching we
 can be sure that rewriting is defined uniquely.
-
-\begin{example}
-    \todo[inline]{Do rewriting example}
-\end{example}
-
 However, there may be useful rewrite rules which are \emph{not} left-linear.
 
 \begin{example}

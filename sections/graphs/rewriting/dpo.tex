@@ -1,3 +1,4 @@
+% !TeX root = ../../../main.tex
 \section{Double pushout rewriting}
 
 As a backdrop, let us first consider how equations in a monoidal theory are
@@ -296,5 +297,23 @@ the complete DPO diagram.
 \end{center}
 
 \begin{example}
-    \todo[inline]{Do a concrete example}
+    Consider the following term rewrite rule and its interpretation as a DPO
+    rule. \[
+        \rrule{
+            \iltikzfig{strings/category/generator}[box=e_1]
+        }{
+            \iltikzfig{strings/category/generator}[box=e_2]
+        }
+        \qquad
+        \includestandalone{figures/graphs/dpo/example/rule}
+    \]
+    Now consider the term \(
+    \iltikzfig{graphs/dpo/example/term}
+    \); a complete DPO rewrite is performed as follows:
+    \begin{center}
+        \includestandalone{figures/graphs/dpo/example/rewrite}
+    \end{center}
+    As expected, the result is the term \(
+    \iltikzfig{graphs/dpo/example/term-rewritten}
+    \).
 \end{example}
