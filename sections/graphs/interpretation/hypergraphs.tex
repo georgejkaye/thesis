@@ -25,7 +25,7 @@ set of nodes and \(\edges{F}{k}{l}\) for the set of edges with \(k\) sources and
 \(l\) targets.
 
 \begin{example}\label{ex:hypergraph}
-    We define the hypergraph \(F\) as follows:
+    We define a hypergraph \(F\) as follows:
     \begin{gather*}
         \vertices{F} \coloneqq \{v_0,v_1,v_2,v_3,v_4,v_5\}
         \quad
@@ -66,7 +66,7 @@ Since it is a functor category, the morphisms in \(\hyp\) are natural
 transformations: structure-preserving maps between hypergraphs.
 
 \begin{definition}[Hypergraph homomorphism]\label{def:hypergraph-homomorphism}
-    Given two hypergraphs \(F, G \in \hyp\), \emph{hypergraph homomorphism}
+    For two hypergraphs \(F, G \in \hyp\), a \emph{hypergraph homomorphism}
     \(F \to G\) consists of functions
     \(\morph{\vertices{f}}{\vertices{F}}{\vertices{G}}\) and
     \(\morph{\edges{f}{k}{l}}{\edges{F}{k}{l}}{\edges{G}{k}{l}}\) such that the

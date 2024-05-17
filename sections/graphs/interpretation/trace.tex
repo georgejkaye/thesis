@@ -109,12 +109,11 @@ loop \(
 \).
 
 \begin{remark}
-    One might think a closed loop can be discarded, in that \(
+    One might think a closed loop can be discarded, i.e.\ \(
     \iltikzfig{strings/traced/trace-id}
     =
     \iltikzfig{strings/monoidal/empty}
-    \), but this is \emph{not} always the case.
-    For example, it is not true in
+    \), but this is \emph{not} always the case, such as in
     \(\finvectk{k}\)~\cite[Sec. 6.1]{hasegawa1997recursion}.
 \end{remark}
 
@@ -154,11 +153,19 @@ either interface.
     \end{center}
 \end{definition}
 
-\input{floats/partial-monogamous-examples}
-
-\begin{example}
-    Examples of cospans that are and are not partial monogamous are shown
-    in \cref{fig:partial-monogamous-examples}.
+\begin{example}\label{ex:partial-monogamous}
+    The following cospans of hypergraphs are partial monogamous:
+    \[
+        \iltikzfig{graphs/monogamy/yes-0}
+        \quad
+        \iltikzfig{graphs/monogamy/yes-1}
+    \]
+    The following cospans of hypergraphs are not partial monogamous:
+    \[
+        \iltikzfig{graphs/monogamy/no-0}
+        \quad
+        \iltikzfig{graphs/monogamy/no-1}
+    \]
 \end{example}
 
 As with the monogamous acyclic cospans, a sub-PROP of \(\cspdhyp\) containing
@@ -314,15 +321,35 @@ that this particular sub-PROP is the one that corresponds to traced terms.
 This shows that \(
 \termandfrobtohypsigma \circ \tracedtosymandfrobsigma
 \) is a \emph{full} mapping from \(\stmcsigma\) to \(\pmcspdchyp\).
-As it is both full and faithful, we can then conclude the final result.
+As it is both full and faithful, we have that there is an isomorphism
+between the category of terms and the category of cospans of partial
+monogamous hypergraphs.
 
 \begin{corollary}\label{cor:stmc-graph-iso}
     \(\stmc{\Sigma} \cong \pmcspdhyp\).
 \end{corollary}
 
-\todo[inline]{Do some examples}
+This means that \(\pmcspdchyp\) is a suitable setting for interpreting terms in
+\(\stmcsigma\): every term has a corresponding cospan of hypergraphs, and
+every cospan has a corresponding term.
+
+\begin{example}
+    The partial monogamous cospans from \cref{ex:partial-monogamous} are shown
+    below with their corresponding terms in \(\stmcsigma\).
+    \[
+        \iltikzfig{graphs/monogamy/yes-0}
+        \quad
+        \iltikzfig{graphs/terms/term-0}
+        \qquad
+        \iltikzfig{graphs/monogamy/yes-1}
+        \quad
+        \iltikzfig{graphs/terms/term-1}
+    \]
+\end{example}
 
 \subsection{Traced coloured terms}
+
+The results above all also hold for the coloured case.
 
 \begin{lemma}\label{lem:stmc-subcat-hypc}
     \(\stmcsigmac\) is a subcategory of \(\hypcsigmac\).
@@ -338,7 +365,8 @@ As it is both full and faithful, we can then conclude the final result.
 \end{corollary}
 
 The partial monogamy condition works exactly the same for coloured cospans, so
-the partial monogamous cospans of coloured hypergraphs form a traced category.
+the partial monogamous cospans of coloured hypergraphs form a traced coloured
+category.
 
 \begin{definition}
     Let \(\pmcspdchyp\) be the sub-PROP of \(\cspdchyp\) containing only the

@@ -173,26 +173,19 @@ Partial left-monogamy is a weakening of partial monogamy that allows vertices
 to have multiple `out' connections, which represent the use of the comonoid
 structure to fork wires; vertices must still only have one `in' connection.
 
-\begin{figure}
-    \centering
+\begin{example}\label{ex:partial-left-monogamous}
+    The following cospans are partial left-monogamous:
     \[
-        \underbrace{
-            \iltikzfig{graphs/monogamy/yes-comonoid-0}
-            \iltikzfig{graphs/monogamy/yes-comonoid-1}
-        }_{\text{partial left-monogamous}}
-        \qquad
-        \underbrace{
-            \iltikzfig{graphs/monogamy/no-comonoid-0}
-            \iltikzfig{graphs/monogamy/no-comonoid-1}
-        }_{\text{not partial left-monogamous}}
+        \iltikzfig{graphs/monogamy/yes-comonoid-0}
+        \quad
+        \iltikzfig{graphs/monogamy/yes-comonoid-1}
     \]
-    \caption{Examples of cospans that are and are not partial left-monogamous}
-    \label{fig:partial-left-monogamous-examples}
-\end{figure}
-
-\begin{example}
-    Examples of cospans that are and are not partial left-monogamous are shown
-    in \cref{fig:partial-left-monogamous-examples}.
+    The following cospans are not partial left-monogamous:
+    \[
+        \iltikzfig{graphs/monogamy/no-comonoid-0}
+        \quad
+        \iltikzfig{graphs/monogamy/no-comonoid-1}
+    \]
 \end{example}
 
 \begin{remark}
@@ -224,7 +217,7 @@ operations, so partial left-monogamous cospans form another PROP.
 \end{proof}
 
 \begin{lemma}
-    Given partial left-monogamous cospans
+    For partial left-monogamous cospans
     \(\cospan{m}{F}{n}\) and
     \(\cospan{n}{G}{p}\), the composition \(
     (\cospan{m}{F}{n})
@@ -369,6 +362,20 @@ faithful, we immediately find the following.
 This means the PROP \(\plmcspdhyp\) of partial left-monogamous cospans of
 hypergraphs is suitable for modelling terms in \(\stmcsigma + \ccomon\):
 traced terms with a comonoid structure.
+
+\begin{example}
+    The partial monogamous cospans from \cref{ex:partial-left-monogamous} are
+    shown below with their corresponding terms in \(\stmcsigma + \ccomon\).
+    \[
+        \iltikzfig{graphs/monogamy/yes-comonoid-0}
+        \quad
+        \iltikzfig{graphs/terms/comonoid-term-0}
+        \qquad
+        \iltikzfig{graphs/monogamy/yes-comonoid-1}
+        \quad
+        \iltikzfig{graphs/terms/comonoid-term-1}
+    \]
+\end{example}
 
 \subsection{Traced coloured comonoids}
 
