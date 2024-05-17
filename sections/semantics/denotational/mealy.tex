@@ -52,11 +52,11 @@ takes in a currrent state and input \((s, a)\) and produces a pair
         S \coloneqq \{s_0, s_1\}
         \\
         f(s_0, \mathsf{f}) \mapsto \langle{s_0, \mathsf{f}}\rangle
-        \quad
+        \qquad
         f(s_0, \mathsf{t}) \mapsto \langle{s_0, \mathsf{t}}\rangle
         \\
         f(s_1, \mathsf{f}) \mapsto \langle{s_1, \mathsf{t}}\rangle
-        \quad
+        \qquad
         f(s_1, \mathsf{t}) \mapsto \langle{s_1, \mathsf{f}}\rangle
     \end{gather*}
     This is a Mealy machine with two states; at state \(s_0\) the output is just
@@ -280,28 +280,26 @@ inputs, then executes the second on the outputs of the first; the inputs are
     \((\{t_0,t_1\},g,t_0)\) where \(g\) is defined as follows:
     \begin{gather*}
         g(t_0, \mathsf{f}) \coloneqq \langle{t_0,\mathsf{f}}\rangle
-        \quad
+        \qquad
         g(t_0, \mathsf{t}) \coloneqq \langle{t_1,\mathsf{t}}\rangle
-        \quad
+        \qquad
         g(t_0, \mathsf{f}) \coloneqq \langle{t_1,\mathsf{t}}\rangle
-        \quad
-        g(t_0, \mathsf{t}) \coloneqq \langle{t_2,\mathsf{t}}\rangle
-    \end{gather*}
-    \vspace{-\abovedisplayskip}
-    \begin{center}
+        \qquad
+        g(t_0, \mathsf{t}) \coloneqq \langle{t_1,\mathsf{t}}\rangle
+        \\
         \includestandalone{figures/mealy/example2-init}
-    \end{center}
+    \end{gather*}
     The cascade product of these two machines is another initialised
     \((\booleans,\booleans)\)-Mealy machine \((R,h,r_0)\) defined as follows:
     \begin{gather*}
         R \coloneqq \{(s_0,t_0), (s_1,t_0), (s_0,t_1), (s_1,t_1)\}
-        \quad
+        \qquad
         r_0 \coloneqq (s_0,t_0)
         \\
         h((s_0, t_0), \mathsf{f})
         \coloneqq
         \left\langle(s_0, t_0), \mathsf{f}\right\rangle
-        \quad
+        \qquad
         h((s_0, t_0), \mathsf{t})
         \coloneqq
         \left\langle(s_0, t_1), \mathsf{t}\right\rangle
@@ -309,7 +307,7 @@ inputs, then executes the second on the outputs of the first; the inputs are
         h((s_1, t_0), \mathsf{f})
         \coloneqq
         \left\langle(s_1, t_1), \mathsf{t}\right\rangle
-        \quad
+        \qquad
         h((s_1, t_0), \mathsf{t})
         \coloneqq
         \left\langle(s_0, t_0), \mathsf{f}\right\rangle
@@ -317,7 +315,7 @@ inputs, then executes the second on the outputs of the first; the inputs are
         h((s_0, t_1), \mathsf{f})
         \coloneqq
         \left\langle(s_0, t_1), \mathsf{t}\right\rangle
-        \quad
+        \qquad
         h((s_0, t_1), \mathsf{t})
         \coloneqq
         \left\langle(s_1, t_1), \mathsf{t}\right\rangle
@@ -325,15 +323,13 @@ inputs, then executes the second on the outputs of the first; the inputs are
         h((s_1, t_1), \mathsf{f})
         \coloneqq
         \left\langle(s_1, t_1), \mathsf{t}\right\rangle
-        \quad
+        \qquad
         h((s_1, t_1), \mathsf{t})
         \coloneqq
         \left\langle(s_0, t_1), \mathsf{t}\right\rangle
+        \\
+        \includestandalone{figures/mealy/cascade}
     \end{gather*}
-    As always, the diagram is more instructive:
-    {\centering
-    \includestandalone{figures/mealy/cascade}
-    }
 \end{example}
 
 Tensor product is far more straightforward.
@@ -364,13 +360,13 @@ Tensor product is far more straightforward.
     follows:
     \begin{gather*}
         Q \coloneqq \{(s_0,t_0), (s_1,t_0), (s_0,t_1), (s_1,t_1)\}
-        \quad
+        \qquad
         q_0 \coloneqq (s_0,t_0)
         \\
         h((s_0, t_0), \mathsf{ff})
         \coloneqq
         \left\langle(s_0, t_0), \mathsf{ff}\right\rangle
-        \quad
+        \qquad
         h((s_0, t_0), \mathsf{tf})
         \coloneqq
         \left\langle(s_0, t_1), \mathsf{tf}\right\rangle
@@ -378,7 +374,7 @@ Tensor product is far more straightforward.
         h((s_0, t_0), \mathsf{ft})
         \coloneqq
         \left\langle(s_0, t_1), \mathsf{ft}\right\rangle
-        \quad
+        \qquad
         h((s_0, t_0), \mathsf{tt})
         \coloneqq
         \left\langle(s_0, t_0), \mathsf{f}\right\rangle
@@ -386,7 +382,7 @@ Tensor product is far more straightforward.
         h((s_1, t_0), \mathsf{ff})
         \coloneqq
         \left\langle(s_1, t_0), \mathsf{tf}\right\rangle
-        \quad
+        \qquad
         h((s_1, t_0), \mathsf{tf})
         \coloneqq
         \left\langle(s_0, t_0), \mathsf{ft}\right\rangle
@@ -394,7 +390,7 @@ Tensor product is far more straightforward.
         h((s_1, t_0), \mathsf{ft})
         \coloneqq
         \left\langle(s_1, t_1), \mathsf{tt}\right\rangle
-        \quad
+        \qquad
         h((s_1, t_0), \mathsf{tt})
         \coloneqq
         \left\langle(s_0, t_1), \mathsf{ft}\right\rangle
@@ -402,7 +398,7 @@ Tensor product is far more straightforward.
         h((s_0, t_1), \mathsf{ff})
         \coloneqq
         \left\langle(s_0, t_1), \mathsf{ft}\right\rangle
-        \quad
+        \qquad
         h((s_0, t_1), \mathsf{tf})
         \coloneqq
         \left\langle(s_0, t_1), \mathsf{tf}\right\rangle
@@ -410,7 +406,7 @@ Tensor product is far more straightforward.
         h((s_1, t_1), \mathsf{ft})
         \coloneqq
         \left\langle(s_0, t_1), \mathsf{ft}\right\rangle
-        \quad
+        \qquad
         h((s_0, t_1), \mathsf{tt})
         \coloneqq
         \left\langle(s_1, t_1), \mathsf{tt}\right\rangle
@@ -418,7 +414,7 @@ Tensor product is far more straightforward.
         h((s_1, t_1), \mathsf{ff})
         \coloneqq
         \left\langle(s_1, t_1), \mathsf{tt}\right\rangle
-        \quad
+        \qquad
         h((s_1, t_1), \mathsf{tf})
         \coloneqq
         \left\langle(s_0, t_1), \mathsf{ft}\right\rangle
@@ -426,14 +422,13 @@ Tensor product is far more straightforward.
         h((s_1, t_1), \mathsf{ft})
         \coloneqq
         \left\langle(s_1, t_1), \mathsf{tt}\right\rangle
-        \quad
+        \qquad
         h((s_1, t_1), \mathsf{tt})
         \coloneqq
         \left\langle(s_0, t_1), \mathsf{ft}\right\rangle
-    \end{gather*}
-    \begin{center}
+        \\
         \includestandalone{figures/mealy/direct}
-    \end{center}
+    \end{gather*}
 \end{example}
 
 With cascade product as composition and direct product as tensor, initialised
