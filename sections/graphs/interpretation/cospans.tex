@@ -87,21 +87,18 @@ countable set of colours \(C\).
 This is formally performed by another functor.
 
 \begin{theorem}[\cite{bonchi2022string}, Thm. 3.6]\label{thm:csp-construction}
-    Let \(\mathbb{X}\) be a PROP whose monoidal product is a coproduct,
-    \(\mathbf{C}\) a category with pushouts and an initial object, and \(
-    \morph{F}{\mathbb{X}}{\mathbf{C}}
-    \) a coproduct-preserving functor.
+    Let \(\mathbb{X}\) be a PROP in which the monoidal product is a coproduct,
+    let \(\mathbf{C}\)be  a category with pushouts and an initial object, and
+    let \(\morph{F}{\mathbb{X}}{\mathbf{C}}\) a coproduct-preserving functor.
     Then there exists a PROP \(\csp[F]{\mathbf{C}}\) whose arrows
     \(\listvar{m} \to \listvar{n}\) are isomorphism classes of \(\mathbf{C}\)
     cospans \(\cospan{Fn}{C}{Fn}\).
 \end{theorem}
 \begin{proof}
     Composition is given by pushout.
-    Note that \(F(m+p) \cong Fm + Fp\) and
-    \(F(n+q) \cong Fn + Fq\) because \(F\)
-    preserves coproducts; subsequently for cospans
-    \(\cospan{Fm}{C}{Fn}\) and \(\cospan{Fp}{C}{Fq}\), their
-    coproduct is given by \(
+    Because \(F\) preserves coproducts, \(F(m+p) \cong Fm + Fp\) and
+    \(F(n+q) \cong Fn + Fq\); subsequently the coproduct of
+    \(\cospan{Fm}{C}{Fn}\) and \(\cospan{Fp}{C}{Fq}\) is given by \(
     \cospan{Fm + Fp}{C + D}{Fp + Fq}
     \).
     Symmetries in \(\mathbb{X}\) are determined by the universal property of
@@ -144,29 +141,28 @@ combinatorially.
     Interfaces are drawn on the left and right of a main graph, with numbers
     illustrating the action of the cospan maps.
     \[
-        \iltikzfig{graphs/example-interfaces}
+        \iltikzfig{graphs/example-interfaces-2}
     \]
     For clarity, we number the outputs after the inputs, but this does not
     reflect the mapping performed by \(D\).
-
     Composition in \(\cspdhyp\) is by pushout; effectively the vertices in the
     output of the first cospan are `glued together' with the inputs of the
     second.
-    \[
-        \iltikzfig{graphs/example-interfaces}
+    \begin{gather*}
+        \iltikzfig{graphs/example-interfaces-2}
         \seq
         \iltikzfig{graphs/example-2-interfaces}
         =
-        \iltikzfig{graphs/example-composition}
-    \]
+        \iltikzfig{graphs/example-composition-2}
+    \end{gather*}
     Tensor in \(\cspdhyp\) is by direct product; putting cospans on top of each
     other.
     \[
-        \iltikzfig{graphs/example-interfaces}
+        \iltikzfig{graphs/example-interfaces-2}
         \tensor
         \iltikzfig{graphs/example-2-interfaces}
         =
-        \iltikzfig{graphs/example-tensor}
+        \iltikzfig{graphs/example-tensor-2}
     \]
 \end{example}
 
@@ -260,21 +256,21 @@ way as the monochromatic version.
 
 \begin{example}
     Composition in \(\cspdchyp\) is as in \(\cspdhyp\) but now the glueing
-    must also be preserve colours.
+    must also preserve colours.
     \[
-        \iltikzfig{graphs/example-interfaces-coloured}
+        \iltikzfig{graphs/example-interfaces-coloured-2}
         \seq
         \iltikzfig{graphs/example-2-interfaces-coloured}
         =
-        \iltikzfig{graphs/example-composition-coloured}
+        \iltikzfig{graphs/example-composition-coloured-2}
     \]
     Since the tensor does not perform any glueing, it is exactly the same as in
     \(\cspdhyp\).
     \[
-        \iltikzfig{graphs/example-interfaces-coloured}
+        \iltikzfig{graphs/example-interfaces-coloured-2}
         \tensor
         \iltikzfig{graphs/example-2-interfaces-coloured}
         =
-        \iltikzfig{graphs/example-tensor-coloured}
+        \iltikzfig{graphs/example-tensor-coloured-2}
     \]
 \end{example}

@@ -1,7 +1,7 @@
 \section{Hypergraphs}
 
-We will begin by defining the categories of hypergraphs required, following the
-pattern detailed in \cite{bonchi2022string}.
+We will begin by defining categories of hypergraphs, following the
+pattern outline in \cite{bonchi2022string}.
 Hypergraphs are formally defined as a functor category.
 
 \begin{definition}[Hypergraph~\cite{bonchi2016rewriting}]\label{def:hypergraph}
@@ -25,41 +25,34 @@ set of nodes and \(\edges{F}{k}{l}\) for the set of edges with \(k\) sources and
 \(l\) targets.
 
 \begin{example}\label{ex:hypergraph}
-    We define a hypergraph \(F\) as follows:
+    Let the hypergraph \(F\) be defined as follows:
     \begin{gather*}
         \vertices{F} \coloneqq \{v_0,v_1,v_2,v_3,v_4,v_5\}
         \quad
-        \edges{F}{2}{1} \coloneqq \{e_0,e_2\}
+        \edges{F}{2}{1} \coloneqq \{e_0\}
         \quad
         \edges{F}{1}{2} \coloneqq \{e_1\}
         \\
-        \sources{0}(e_0) \coloneqq v_0
+        \sources{0}(e_0) \coloneqq v_1
         \quad
-        \sources{1}(e_0) \coloneqq v_2
+        \sources{1}(e_0) \coloneqq v_0
         \quad
-        \sources{0}(e_1) \coloneqq v_3
-        \quad
-        \sources{0}(e_2) \coloneqq v_3
-        \quad
-        \sources{1}(e_2) \coloneqq v_2
+        \sources{0}(e_1) \coloneqq v_1
         \\
         \targets{0}(e_0) \coloneqq v_3
         \quad
-        \targets{0}(e_1) \coloneqq v_5
+        \targets{0}(e_1) \coloneqq v_4
         \quad
-        \targets{1}(e_1) \coloneqq v_4
-        \quad
-        \targets{0}(e_2) \coloneqq v_4
+        \targets{1}(e_1) \coloneqq v_5
     \end{gather*}
     Much like with regular graphs, it is much more intuitive to draw out hypergraphs
     rather than look at their combinatorial representation.
     We draw nodes as black dots, and hyperedges as `bubbles' with ordered tentacles
     on the left and right that connect to source and target nodes respectively.
     \[
-        \iltikzfig{graphs/blank-example}
+        \iltikzfig{graphs/blank-example-2}
     \]
-    Note that the vertices themselves do not have any notion of ordering or
-    directionality.
+    Note that the vertices do not have any notion of ordering or directionality.
 \end{example}
 
 Since it is a functor category, the morphisms in \(\hyp\) are natural
@@ -75,11 +68,11 @@ transformations: structure-preserving maps between hypergraphs.
 \end{definition}
 
 \begin{example}\label{ex:hypergraph-homomorphism}
-    Consider the following hypergraph
+    Consider the following hypergraph \(G\):
     \begin{gather*}
         \vertices{G} \coloneqq \{v_6,v_7,v_8\}
         \quad
-        \edges{G}{2}{1} \coloneqq \{e_3\}
+        \edges{G}{2}{1} \coloneqq \{e_2\}
         \\
         \sources{0}(e_3) \coloneqq v_6
         \quad
@@ -89,24 +82,53 @@ transformations: structure-preserving maps between hypergraphs.
         \\
         \iltikzfig{graphs/blank-smaller}
     \end{gather*}
-    A hypergraph homomorphism \(\morph{h}{F}{G}\) is a map from the former into
+    Recall the hypergraph \(F\) from \cref{ex:hypergraph}.
+    A hypergraph homomorphism \(\morph{h}{G}{F}\) is a map from the former into
     the latter preserving sources and targets.
     One possible homomorphism could be
     \begin{gather*}
-        \vertices{h}(v_6) \coloneqq v_0
+        \vertices{h}(v_6) \coloneqq v_1
         \quad
-        \vertices{h}(v_7) \coloneqq v_1
+        \vertices{h}(v_7) \coloneqq v_0
         \quad
-        \vertices{h}(v_8) \coloneqq v_2
+        \vertices{h}(v_8) \coloneqq v_3
         \quad
-        \edges{h}{2}{1}(e_3) \coloneqq e_3
+        \edges{h}{2}{1}(e_2) \coloneqq e_0
     \end{gather*}
     The image of the homomorphism is illustrated below:
     \[
-        \iltikzfig{graphs/blank-hom}
+        \iltikzfig{graphs/blank-hom-2}
     \]
     Injective hypergraph homomorphisms are often known as \emph{embeddings}.
-    There is however no requirement for hypergraphs to be injectivirefe.
+    However, there is no requirement for hypergraph homomorphisms to be
+    injective.
+    Conisder another hypergraph
+    \begin{gather*}
+        \vertices{H} \coloneqq \{v_9\}
+        \quad
+        \edges{H}{2}{1} \coloneqq \{e_4\}
+        \\
+        \sources{0}{e_4} = v_9
+        \quad
+        \sources{1}{e_4} = v_9
+        \quad
+        \targets{0}{e_4} = v_9
+        \\
+        \iltikzfig{graphs/blank-merge}
+    \end{gather*}
+    There is a non-injective homomorphism \(\morph{k}{G}{H}\) defined as
+    follows:
+    \begin{gather*}
+        \vertices{h}(v_6) \coloneqq v_9
+        \quad
+        \vertices{h}(v_7) \coloneqq v_9
+        \quad
+        \vertices{h}(v_8) \coloneqq v_9
+        \quad
+        \edges{h}{2}{1}(e_3) \coloneqq e_4
+    \end{gather*}
+    Although the vertices of \(G\) are merged by \(h\), the sources and
+    targets are preserved.
 \end{example}
 
 \subsection{Labelled hypergraphs}
@@ -166,11 +188,10 @@ To do this, we must first translate the notion of signature to hypergraphs.
     \]
 \end{example}
 
-A hypergraph \(F\) labelled with generators from \(\generators\) is then defined
+A hypergraph \(F\) labelled with generators from \(\generators\) is defined
 as a hypergraph homomorphism \(\morph{\Gamma}{F}{\hypsignature{\generators}}\);
-an edge \(e \in \edges{F}{k}{l}\) is considered to be labelled with generator
+an edge \(e \in \edges{F}{k}{l}\) is labelled with generator
 \(\phi\) if \(\edges{\Gamma}{k}{l} = e_\phi\).
-
 This means a category of hypergraphs \emph{labelled} over a set of generators
 \(\generators\) is a category in which the objects are all hypergraph
 homomorphisms to \(\hypsignature{\generators}\).
@@ -190,8 +211,9 @@ When we set \(C\) to some hypergraph signature, this is a perfect setting for
 labelled hypergraphs.
 
 \begin{definition}[Labelled hypergraphs~\cite{bonchi2016rewriting}]
-    The category of \emph{labelled hypergraphs} over a set
-    of generators \(\generators\) is defined as the slice category
+    For a set of generators \(\generators\), the category of
+    \emph{hypergraphs labelled over \(\generators\)} is defined as the slice
+    category
     \(\hypsigma \coloneqq \hyp \slice \hypsignature{\Sigma}\).
 \end{definition}
 
@@ -203,14 +225,12 @@ labelled hypergraphs.
         \quad
         \edges{\Gamma}{2}{1}(e_0) \coloneqq e_\phi
         \quad
-        \edges{\Gamma}{2}{1}(e_2) \coloneqq e_\phi
-        \quad
         \edges{\Gamma}{1}{2}(e_1) \coloneqq e_\psi
     \end{gather*}
     We draw a labelled hypergraph as a regular hypergraph but with labelled
     edges.
     \[
-        \iltikzfig{graphs/blank-example-labelled}
+        \iltikzfig{graphs/blank-example-labelled-2}
     \]
     Note that if there are multiple generators with the same arity and coarity
     in a signature, there may well be multiple valid labellings of a hypergraph.
@@ -268,8 +288,7 @@ hypergraph signatures.
         \quad
         \targets{1}(e_\psi) \coloneqq v_{\redbullet}
     \end{gather*}
-    and is drawn as follows, where we notate the vertices and edges with the
-    appropriate colour and label to aid in clarity.
+    and is drawn by labelling edges appropriately:
     \[
         \iltikzfig{graphs/signature-example-coloured}
     \]
@@ -300,13 +319,11 @@ hypergraph signatures.
         \\
         \edges{\Gamma}{2}{1}(e_0) \coloneqq e_{\phi}
         \quad
-        \edges{\Gamma}{2}{1}(e_2) \coloneqq e_{\phi}
-        \quad
         \edges{\Gamma}{1}{2}(e_1) \coloneqq e_{\psi}
     \end{gather*}
     Coloured hypergraphs are drawn as labelled hypergraphs, but their vertices
     are additionally coloured.
     \[
-        \iltikzfig{graphs/blank-example-labelled-coloured}
+        \iltikzfig{graphs/blank-example-labelled-coloured-2}
     \]
 \end{example}
