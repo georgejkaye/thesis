@@ -16,8 +16,8 @@ First of all, a pushout complement may not even exist for arbitrary morphisms
     has at least one pushout complement.
 \end{definition}
 
-If there is no pushout complement, there is no possible rewrite, so it is fairly
-essential to know when one exists!
+If there is no pushout complement, there is no possible rewrite, so when
+performing graph rewriting it is essential to know when one exists.
 Fortunately, these conditions are well-known.
 
 \begin{definition}[No-dangling-hyperedges condition~\cite{corradini1997algebraic}, Prop. 3.3.4]
@@ -164,8 +164,7 @@ One can think of these as categories in which graph rewriting `plays nicely'.
 \end{definition}
 
 The definition of van Kampen square and subsequently adhesive categories may
-look a bit confusing to the uninitiated; indeed, there are arrows flying about
-all over the place!
+look a bit confusing to the uninitiated.
 At a high level, an adhesive category is one in which one in which objects can
 be `split apart' and `glued together' by using pushouts and pullbacks.
 
@@ -275,8 +274,8 @@ This means that, for a large class of rewrite rules, if we find a matching we
 can be sure that rewriting is defined uniquely.
 However, there may be useful rewrite rules which are \emph{not} left-linear.
 
-\begin{example}
-    Consider the following term rewrite rule and corresponding DPO rule.
+\begin{example}\label{ex:non-left-linear}
+    Consider the following rule.
     \[
         \rrule{
             \iltikzfig{strings/category/identity}
@@ -290,11 +289,14 @@ However, there may be useful rewrite rules which are \emph{not} left-linear.
         \to
         \iltikzfig{graphs/dpo/non-left-linear/r}
     \]
-    A rule where a generator is inserted into an identity wire is a perfectly
-    reasonable rule, but its interpretation is not left-linear.
+    A rule where a generator is inserted into an identity wire is perfectly
+    reasonable, but its interpretation as a span of hypergraphs is not
+    left-linear.
     This means that the pushout complement may not be unique for a given
     matching.
-    For example, consider the following pair of morphisms:
+    For example, consider trying to use the above rule in the term
+    \(\iltikzfig{graphs/dpo/non-left-linear/g-term}\) using the following pair
+    of morphisms on graphs:
     \[
         \iltikzfig{graphs/dpo/non-left-linear/k}
         \to
@@ -302,23 +304,122 @@ However, there may be useful rewrite rules which are \emph{not} left-linear.
         \to
         \iltikzfig{graphs/dpo/non-left-linear/g}
     \]
-    This matching yields the following valid pushout complements:
-    \todo[inline]{Draw out complements}
+    This matching yields the following valid pushout complements and subsequent
+    rewrites:
+    \begin{gather*}
+        \iltikzfig{graphs/dpo/non-left-linear/c1}
+        \to
+        \iltikzfig{graphs/dpo/non-left-linear/h1}
+        \qquad
+        \iltikzfig{graphs/dpo/non-left-linear/c2}
+        \to
+        \iltikzfig{graphs/dpo/non-left-linear/h2}
+        \\
+        \iltikzfig{graphs/dpo/non-left-linear/c3}
+        \to
+        \iltikzfig{graphs/dpo/non-left-linear/h3}
+        \qquad
+        \iltikzfig{graphs/dpo/non-left-linear/c4}
+        \to
+        \iltikzfig{graphs/dpo/non-left-linear/h4}
+        \\
+        \iltikzfig{graphs/dpo/non-left-linear/c5}
+        \to
+        \iltikzfig{graphs/dpo/non-left-linear/h5}
+    \end{gather*}
 \end{example}
 
-One might think this is undesirable, as surely for a rule and matching we would
-want a unique rewrite?
-However, we must not forget that hypergraphs model terms
-\emph{modulo Frobenius structure}.
-The multiple rewrites are not coming from nowhere, but arise because of the
-presence of the Frobenius algebras.
+One might think this is undesirable, but these multiple rewrites actually arise
+due to the presence of the Frobenius algebra.
 
 \begin{example}
-    \todo[inline]{Show how the above contexts correspond to term rewrite}
+    Each of the five complements and rewrites in \cref{ex:non-left-linear}
+    corresponds to a valid application of equations on terms, perhaps modulo
+    Frobenius equations.
+    The first rewrite \(
+    \iltikzfig{graphs/dpo/non-left-linear/h1}
+    \) is the `obvious' one:
+    \begin{gather*}
+        \iltikzfig{graphs/dpo/non-left-linear/g-term}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-1-0}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-1-1}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-1-2}
+    \end{gather*}
+    The second rewrite \(
+    \iltikzfig{graphs/dpo/non-left-linear/h2}
+    \) uses the compact closed structure:
+    \begin{gather*}
+        \iltikzfig{graphs/dpo/non-left-linear/g-term}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-2-0}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-2-1}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-2-2}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-2-3}
+    \end{gather*}
+    The third rewrite \(
+    \iltikzfig{graphs/dpo/non-left-linear/h3}
+    \) uses the unitality of the monoid:
+    \begin{gather*}
+        \iltikzfig{graphs/dpo/non-left-linear/g-term}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-3-0}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-3-1}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-3-2}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-3-3}
+    \end{gather*}
+    Similarly, the third rewrite \(
+    \iltikzfig{graphs/dpo/non-left-linear/h4}
+    \) uses the counitality of the comonoid:
+    \begin{gather*}
+        \iltikzfig{graphs/dpo/non-left-linear/g-term}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-4-0}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-4-1}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-4-2}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-4-3}
+    \end{gather*}
+    The fifth rewrite \(
+    \iltikzfig{graphs/dpo/non-left-linear/h5}
+    \) uses the Frobenius equations:
+    \begin{gather*}
+        \iltikzfig{graphs/dpo/non-left-linear/g-term}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-0}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-1}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-2}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-3}
+        =
+        \\
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-4}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-5}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-6}
+        =
+        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-7}
+    \end{gather*}
+    All of the rewrites other than the first were `hidden' behind the equations
+    of a Frobenius algebra, but arose naturally in the graph rewriting
+    framework.
 \end{example}
 
-Even if every rewrite is `correct' in some way, there is still the question of
-how to find the `desired' rewrite.
+Even if every rewrite is correct, there is still the question of how to find
+them all.
 Fortunately, for hypergraphs this problem has already been
 tackled~\cite{heumuller2011construction}; the pushout complements can be
 enumerated as quotients of an `exploded' context.
@@ -344,22 +445,22 @@ Pushout complements can then be computed as quotients of this exploded
 context.
 
 \begin{proposition}[\cite{heumuller2011construction} (Props. 3-4), \cite{bonchi2022string}]
-    For morphisms \(i+j \to L \to G\) in \(\hypsigma\), let
-    \(i + j + \tilde{G}\) be its `exploded' context, and define a map
-    \(\morph{q}{i + j + \tilde{G}}{G}\) sending elements in \(\tilde{G}\)
-    that came from \(G\) to themselves, and sending vertices from
+    For a pair of morphisms \(i+j \to L \to G\) in \(\hypsigma\), let
+    \(i + j + \tilde{G}\) be its exploded context.
+    Define a map \(\morph{q}{i + j + \tilde{G}}{G}\) sending elements in
+    \(\tilde{G}\) from \(G\) to themselves, and sending vertices from
     \(i + j\) to their image under \(i + j \to L \to G\).
-    A pushout complement \(i + j \to C \to G\) is valid if and only
+    Then a pushout complement \(i + j \to C \to G\) is valid if and only
     \(C\) is obtained as a quotient on the exploded context
     that only identifies vertices in the image of \(q^{-1}(v)\) for each vertex
     \(v \in G\).
 \end{proposition}
 
-So this means that given a DPO rule and an incidence of this rule inside a
+This means that given a DPO rule and an incidence of this rule inside a
 larger graph such that the no-dangling and no-identification conditions are
 satisfied, we can enumerate all the possible pushout complements.
 It can be shown that each of these pushout complements correspond to a valid
-rewrite in a Frobenius setting!
+rewrite in a Frobenius setting.
 
 \begin{notation}
     Given a rewrite rule \(
@@ -383,7 +484,7 @@ rewrite in a Frobenius setting!
                 \iltikzfig{strings/category/f}[box=l,colour=white]
             ]
         ]
-    }{\listvar{ij}}{
+    }{i+j}{
         \termandfrobtohypsigma[
             \foldinterfaces[
                 \iltikzfig{strings/category/f}[box=r,colour=white]
@@ -394,13 +495,14 @@ rewrite in a Frobenius setting!
 \end{notation}
 
 \begin{theorem}[\cite{bonchi2022string}, Thm. 4.9]
-    For a rewrite rule \(\rrule{
+    Let  \(\rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white]
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white]
-    }\) in \(
+    }\) be a rewrite rule in \(
     \smcsigma + \frob
-    \), \(
+    \).
+    Then, \(
     \iltikzfig{strings/category/f}[box=g,colour=white]
     \rewrite[\rrule{
             \iltikzfig{strings/category/f}[box=l,colour=white]

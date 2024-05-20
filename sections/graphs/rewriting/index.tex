@@ -7,8 +7,8 @@ This already gives us a straightforward way to interpret these structures
 computationally.
 
 However, it is very rare that we will only be working modulo the equations of
-traced comonoids; we will often also have the equations of a
-\emph{monoidal theory} to worry about.
+traced comonoids; the equations of some \emph{monoidal theory} will also be in
+play.
 Since an equation \(
 \iltikzfig{strings/category/f}[box=f,colour=white]
 =
@@ -28,14 +28,14 @@ interpretations \(
 ]
 \) to be isomorphic.
 Instead, to reason about cospans of hypergraphs modulo the equations of some
-monoidal theory we must \emph{rewrite} the components of the term.
+monoidal theory the graphs must be \emph{rewritten}.
 
 Traditional term rewriting is inherently one-dimensional, which can be somewhat
 restrictive as it enforces that each generator must have a coarity of \(1\).
 On the other hand, string diagrams are an example of \emph{higher dimensional}
 rewriting, which its roots in Burroni's work on
 polygraphs~\cite{burroni1993higherdimensional}.
-This higher-dimensional approach even briefly entered our world of digital
+This higher-dimensional approach briefly entered the world of digital
 circuits in Lafont's work on Boolean circuits~\cite{lafont2003algebraic}, which
 used a rudimentary form of graphical syntactic rewriting.
 However, in this approach even the axioms of SMCs needed to be applied
@@ -64,7 +64,7 @@ traced comonoid case, allowing us to perform graph rewriting on the cospans
 defined in the previous chapter.
 
 \begin{remark}
-    The content of this section is a revised and expanded version
+    The content of this section is a revised version
     of~\cite[Sec. 5]{ghica2023rewriting}.
 \end{remark}
 

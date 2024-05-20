@@ -113,7 +113,7 @@ involved map to the same (discrete) cospan of hypergraphs.
 
 However, the converse does not hold: it is not possible to derive the Frobenius
 equations from the bialgebra equation without having one of the Frobenius
-equations to begin with!
+equations to begin with.
 This poses a problem: we want to use \(\cspdchyp\) as a setting for rewriting
 digital circuits, but as it by default contains a Frobenius structure,
 \emph{too many} equations would hold.
@@ -122,7 +122,7 @@ Not all is lost; since the issue only arises with the interactions between the
 monoid and the comonoid, we can use cospans of hypergraphs to reason modulo the
 equations of just one of the two structures.
 This means that not all of the equations of a bialgebra will be absorbed into
-the combinatorial structure, but this is better than too many taking effect!
+the combinatorial structure, but this is better than too many taking effect.
 
 \begin{remark}
     Alas, we cannot claim to have pioneered the idea of interpreting terms with
@@ -156,11 +156,10 @@ From now on, we write `comonoid' to mean `commutative comonoid'.
 
 When identifying the cospans of hypergraphs that correspond to terms with traced
 comonoid structure, the notion of monogamy will once again need to be modified.
-Partial monogamy is now too strong, as with a comonoid structure we actually
-want wires to fork!
+Partial monogamy is now too strong, as this means wires cannot fork.
 Weakening to no monogamy at all is too much, as we do not want wires to join as
 well as fork.
-Effectively, we want vertices to be `monogamous on one side'.
+Effectively, vertices need to be `monogamous on one side'.
 
 \begin{definition}[Partial left-monogamy]
     For a cospan \(\cospan{m}[f]{H}[g]{n}\), we say it is

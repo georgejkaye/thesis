@@ -36,6 +36,11 @@ applied to terms without any sort of special graph interpretation.
     =
     \iltikzfig{strings/rewriting/rewrite-r}
     \) by axioms of STMCs.
+    We write \(
+    \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
+    \rewrites[\mcr_{\equations}]
+    \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
+    \) if there is a sequence of such rules.
 \end{definition}
 
 The difference between a rewriting system and an equational theory is that in
@@ -44,32 +49,32 @@ Of course, it is straightforward to derive a rewriting system from an equational
 theory by adding the reductions for `both ways' of each equation.
 
 \begin{definition}[\cite{bonchi2022stringa}, Sec. 2.4]
-    Given a monoidal theory \((\generators,\equations)\), let
-    \(\mcr_{\equations}\) be the rewriting theory defined as \(\{
-    \rrule{
+    For a monoidal theory \((\generators,\equations)\), let
+    \(\mcr_{\equations}\) be the rewriting theory defined as \[\{
+        \rrule{
+            \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
+        }{
+            \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
+        }
+        \,|\,
         \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
-    }{
+        =
         \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
-    }
-    \,|\,
-    \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
-    =
-    \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
-    \in
-    \mce
-    \} \cup \{
-    \rrule{
-        \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
-    }{
+        \in
+        \mce
+        \} \cup \{
+        \rrule{
+            \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
+        }{
+            \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
+        }
+        \,|\,
         \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
-    }
-    \,|\,
-    \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
-    =
-    \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
-    \in
-    \mce
-    \}\).
+        =
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
+        \in
+        \mce
+        \}.\]
 \end{definition}
 
 \begin{proposition}[\cite{bonchi2022stringa}, Prop. 2.18]
@@ -116,7 +121,7 @@ a possible rewrite as a span of hypergraphs.
 \end{definition}
 
 Note that the DPO rule is a span in the category of hypergraphs \(\hypsigma\),
-\emph{not} the category of interfaced hypergraphs \(\cspdhyp\)!
+\emph{not} the category of interfaced hypergraphs \(\cspdhyp\).
 This is because identifying the occurrence of a DPO rule in some larger
 hypergraph will be performed using a \emph{hypergraph homomorphism}.
 
