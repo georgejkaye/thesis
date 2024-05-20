@@ -33,10 +33,10 @@ characterising it as a \emph{boundary complement}.
             \arrow[swap]{u}{d \coloneqq [d_1,d_2]}
         \end{tikzcd}
     \end{center}
-    is called a \emph{boundary complement} if \(c_1\) and \(c_2\) are
+    is called a \emph{boundary complement} if the morphisms \(c_1\) and \(c_2\) are
     mono and \(
     \cospan{j + m}[[c_2,d_1]]{C}[[d_2,c_1]]{n + i}
-    \) is a boundary monogamous cospan.
+    \) is a monogamous cospan.
 \end{definition}
 
 What is particularly special about boundary complements is that for morphisms
@@ -78,8 +78,8 @@ monogamy with partial monogamy.
             \arrow[swap]{u}{d \coloneqq [d_1,d_2]}
         \end{tikzcd}
     \end{center}
-    is called a \emph{traced boundary complement} if \(c_1\) and \(c_2\) are
-    mono and \(
+    is called a \emph{traced boundary complement} if the morphisms \(c_1\) and
+    \(c_2\) are mono and \(
     \cospan{j + m}[[c_2,d_1]]{C}[[d_2,c_1]]{n + i}
     \) is a partial monogamous cospan.
 \end{definition}
@@ -101,9 +101,8 @@ for terms in a traced setting.
 Traced boundary complements are not much more powerful than regular boundary
 complements; \(c_1\) is still not permitted to merge vertices in the inputs and
 the same for \(c_2\) and the outputs.
-The real power of traced DPO, and what increases the number of pushout
-complements, is the fact that the matching \(L \to G\) is no longer required to
-be mono.
+The power of traced DPO, and what increases the number of pushout
+complements, is that the matching \(L \to G\) is no longer required to be mono.
 
 Since \(\cospan{m}{G}{n}\) is partial monogamous, vertices
 in \(L\) can only be merged if their degrees sum to no more than \((1,1)\).
@@ -177,7 +176,6 @@ a choice in rewrites.
         \quad
         \scalebox{0.95}{\includestandalone{figures/graphs/dpo/non-unique/rewrite-2}}
     \end{center}
-
     These two derivations arise through yanking:
     \begin{gather*}
         \iltikzfig{graphs/dpo/non-unique/derivation-1}
@@ -205,7 +203,7 @@ a choice in rewrites.
 There is another condition on graph rewriting modulo symmetric monoidal
 structure in that the matching must be \emph{convex}: any path between vertices
 must also be captured.
-Luckily for us, this is not necessary in the traced case.
+This is not necessary in the traced case.
 
 \begin{example}
     Consider the rule \(
@@ -238,10 +236,9 @@ Luckily for us, this is not necessary in the traced case.
     This shows that convexity is not a required component of traced rewriting.
 \end{example}
 
-We are almost ready to show the soundness and completeness of this DPO rewriting
-system; we will do this by showing that even though rewriting takes place in the
-more liberal compact closed setting, the rewritten graph will always correspond
-to a traced term.
+We will show that traced DPO is sound and complete by showing that even though
+rewriting takes place in themore liberal compact closed setting, the rewritten
+graph will always correspond to a traced term.
 First we prove a lemma to show how using the compact closed structure of
 \(\smcsigma + \frob\) to reorganise interfaces corresponds to switching the
 cospan maps in \(\cspdhyp\).
@@ -411,14 +408,13 @@ this rule.
     Using the same reasoning, \(\cospan{R}{G}{C}\) is also a pushout; this
     gives us the DPO diagram.
     All that remains is to check that the aforementioned pushouts are traced
-    boundary complements; this follows as \(
+    boundary complements; this follows by \cref{lem:switch-interfaces} as \(
     \termandfrobtohypsigma[
         \tracedandcomonoidtofrobsigma[
             \iltikzfig{strings/category/f-2-2}[box=c,colour=white]
         ]
     ]
-    \) is partial monogamous, so by \cref{lem:switch-interfaces} the traced
-    boundary complement condition holds.
+    \) is partial monogamous.
 
     Now for the \(\ifdir\) direction: we assume that we have a traced DPO
     rewrite, so there exist cospans \(

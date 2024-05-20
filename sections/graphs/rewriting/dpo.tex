@@ -38,7 +38,7 @@ applied to terms without any sort of special graph interpretation.
     \) by axioms of STMCs.
     We write \(
     \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
-    \rewrites[\mcr_{\equations}]
+    \rewrites[\mcr]
     \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
     \) if there is a sequence of such rules.
 \end{definition}
@@ -46,11 +46,12 @@ applied to terms without any sort of special graph interpretation.
 The difference between a rewriting system and an equational theory is that in
 the former the rules are \emph{directed} whereas equations are not.
 Of course, it is straightforward to derive a rewriting system from an equational
-theory by adding the reductions for `both ways' of each equation.
+theory by adding the reductions for both directions of each equation.
 
 \begin{definition}[\cite{bonchi2022stringa}, Sec. 2.4]
     For a monoidal theory \((\generators,\equations)\), let
-    \(\mcr_{\equations}\) be the rewriting theory defined as \[\{
+    \(\mcr_{\equations}\) be the rewriting theory defined as
+    \begin{gather*}\{
         \rrule{
             \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
         }{
@@ -74,7 +75,8 @@ theory by adding the reductions for `both ways' of each equation.
         \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
         \in
         \mce
-        \}.\]
+        \}.
+    \end{gather*}
 \end{definition}
 
 \begin{proposition}[\cite{bonchi2022stringa}, Prop. 2.18]
@@ -94,47 +96,42 @@ theory by adding the reductions for `both ways' of each equation.
 \end{proposition}
 
 The equivalent for graphs is, unsurprisingly, \emph{graph rewriting}.
-There has been a wealth of research into various graph rewriting techniques;
-we use one known as \emph{double pushout (DPO)} rewriting.
+While there are many graph rewriting techniques, we use one known as
+\emph{double pushout (DPO)} rewriting.
 DPO was introduced in the early 70s by Ehrig, Pfender, and
 Schneider~\cite{ehrig1973graphgrammars} as one of the first \emph{algebraic}
 approaches to graph rewriting.
 Although first defined in the category of graphs, it has since been generalised
-to encompass a variety of combinatorial structures; later on we will see the
-precise categorical properties required for DPO rewriting to be well-defined.
-Since we are working with hypergraphs we will present the definitions in terms
-of hypergraphs, but one can see how they could be adapted in terms of other
-structures.
+to encompass a variety of combinatorial structures; we will later see the
+categorical properties required for DPO rewriting to be well-defined.
 
-The core element of a DPO rewriting system is a \emph{DPO rule}, which specifies
-a possible rewrite as a span of hypergraphs.
+A double pushout rewrite rule is a span of graphs.
 
 \begin{definition}[DPO rule]\label{def:dpo-rule}
-    Given interfaced hypergraphs \(
+    Given two interfaced hypergraphs \(
     \cospan{i}[a_1]{L}[a_2]{j}
     \) and \(
     \cospan{i}[b_1]{R}[b_2]{j}
-    \) in \(\cspdhyp\), their \emph{DPO rule} is a span in \(\hypsigma\)
+    \) in \(\cspdhyp\), their corresponding \emph{DPO rule} is a span in \(\hypsigma\)
     defined as \(
     \spann{L}[[a_1,a_2]]{i + j}[[b_1,b_2]]{R}
     \).
 \end{definition}
 
-Note that the DPO rule is a span in the category of hypergraphs \(\hypsigma\),
-\emph{not} the category of interfaced hypergraphs \(\cspdhyp\).
-This is because identifying the occurrence of a DPO rule in some larger
-hypergraph will be performed using a \emph{hypergraph homomorphism}.
+A DPO rule is a span in the category of hypergraphs \(\hypsigma\),
+rather than the category of interfaced hypergraphs \(\cspdhyp\).
+This is because identifying the occurrence of a DPO rule in a larger graph will
+be performed using a hypergraph homomorphism.
 
-Although we could press on now and define `normal' DPO rewriting, we will
-actually use an extension, known as
+We will actually use an extension of traditional DPO rewriting, known as
 \emph{double pushout rewriting with interfaces}
 (DPOI rewriting)~\cite{bonchi2017confluence}.
 This framework enjoys the \emph{Knuth-Bendix property}~\cite{knuth1970simple};
 graph rewriting is confluent when all \emph{critical pairs are joinable}.
 Put more simply, this means that a rewriting system is confluent if, whenever
-there is an overlap of rules such that \(G \grewrite H\) and
-\(G \grewrite H^\prime\), then there exists another graph \(K\) such that
-\(H \grewrites K\) and \(H^\prime \grewrites K\).
+there is an overlap of rules in a graph \(G\) such that \(G\) could rewrite to
+\(H\) or \(H^\prime\), there exists another graph \(K\) and series of rewrites
+such that both \(H\) and \(H^\prime\) rewrite to \(K\).
 
 \begin{definition}[DPOI rewriting]\label{def:dpo-rewriting}
     Let \(\mcr\) be a set of DPO rules.
@@ -159,14 +156,12 @@ there is an overlap of rules such that \(G \grewrite H\) and
     \end{center}
 \end{definition}
 
-The DPO diagram above may look a little intimidating a first glance, so we will
+The DPO diagram above may look intimidating at first glance, so we will
 break it down and describe what happens during a typical graph rewrite.
 The first thing to note is that the graphs all have a \emph{single} interface
-\(G \leftarrow m + n\) rather than the cospans
-\(\cospan{m}{G}{n}\) we are used to.
-This means that to perform graph rewriting on graphs in \(\hypsigma\),
-interfaces of terms in \(\smcsigma + \frob\) must be `folded' into one using
-the compact closed structure.
+\(G \leftarrow m + n\); this means that to perform graph rewriting on graphs in
+\(\hypsigma\), interfaces of terms in \(\smcsigma + \frob\) must be `folded'
+into one using the compact closed structure.
 
 \begin{definition}[\cite{bonchi2022stringa}]\label{def:fold-interfaces}
     Let \(\morph{\foldinterfaces}{\smcsigma + \frob}{\smcsigma + \frob}\)
@@ -180,12 +175,16 @@ the compact closed structure.
 The image of \(\foldinterfaces\) is not in the image of
 \(\tracedtosymandfrobsigma\) or \(\tracedandcomonoidtofrobsigma\) any more,
 as inputs of generators may now connect to outputs of the term.
-Fortunately this is not an issue, as long as we `unfold' the interfaces once
-rewriting is completed.
+This is not an issue, as long as we `unfold' the interfaces once rewriting is
+completed.
 
 \begin{proposition}[\cite{bonchi2022string}, Prop. 4.8]
-    If \(
-    \termandfrobtohypsigma[\iltikzfig{strings/category/f}[box=f,colour=white,dom=m,cod=n]]
+    For a term \(
+    \iltikzfig{strings/category/f}[box=f,colour=white,dom=m,cod=n]
+    \in
+    \smcsigma + \frob
+    \), if \(
+    \termandfrobtohypsigma[\iltikzfig{strings/category/f}[box=f,colour=white]]
     =
     \cospan{m}[i]{F}[o]{n}
     \) then \(
@@ -226,7 +225,7 @@ rewritten.
 \begin{center}
     \begin{tikzcd}[row sep = small, column sep = small]
         L \arrow{d}
-        & \listvar{ij} \arrow{l}\arrow{r}
+        & i+j \arrow{l}\arrow{r}
         & R \\
         G
         &
@@ -249,7 +248,7 @@ formally defined with what is known as a \emph{pushout complement}, a sort of
         \begin{tikzcd}[column sep=large]
             L \arrow[swap]{d}{f}
             &
-            ij
+            i+j
             \arrow[swap]{l}{a \coloneqq [a_1, a_2]}
             \arrow{d}{c \coloneqq [c_1, c_2]}
             \\
@@ -269,7 +268,6 @@ formally defined with what is known as a \emph{pushout complement}, a sort of
 
 Is a pushout complement always guaranteed to exist for any morphism \(L \to G\)?
 The answer is no; this will be discussed at length in the next section.
-
 If a pushout complement does exist, it specifies the rewriting context.
 This leaves us a hole in which the other side of the rewrite rule can be glued
 in.
@@ -304,11 +302,11 @@ the complete DPO diagram.
 \begin{example}
     Consider the following term rewrite rule and its interpretation as a DPO
     rule. \[
-        \rrule{
-            \iltikzfig{strings/category/generator}[box=e_1]
-        }{
-            \iltikzfig{strings/category/generator}[box=e_2]
-        }
+        \raisebox{1.5em}{\(\rrule{
+                \iltikzfig{strings/category/generator}[box=e_1]
+            }{
+                \iltikzfig{strings/category/generator}[box=e_2]
+            }\)}
         \qquad
         \includestandalone{figures/graphs/dpo/example/rule}
     \]

@@ -1,13 +1,12 @@
 \section{Pushout complements}
 
-With any luck, the reader should now have a good grasp on how DPO rewriting
+The reader should now have a good grasp on how DPO rewriting
 works; find a matching, compute the pushout complement, and perform one more
 pushout to complete the rewrite.
 While the final step is a deterministic procedure, finding the pushout
-complement is a little more hazy.
+complement is a little more subtle.
 Since the pushout complement uniquely defines the final rewrite, one might be
 cautious about how we choose it.
-
 First of all, a pushout complement may not even exist for arbitrary morphisms
 \(i+j \to L \to G\).
 
@@ -16,9 +15,9 @@ First of all, a pushout complement may not even exist for arbitrary morphisms
     has at least one pushout complement.
 \end{definition}
 
-If there is no pushout complement, there is no possible rewrite, so when
-performing graph rewriting it is essential to know when one exists.
-Fortunately, these conditions are well-known.
+If there is no pushout complement, there is no possible rewrite, so it is
+important to know when one exists.
+Fortunately, the existence conditions are well-known.
 
 \begin{definition}[No-dangling-hyperedges condition~\cite{corradini1997algebraic}, Prop. 3.3.4]
     Given morphisms \(i+j \xrightarrow{a} L \xrightarrow{f} G\) in
@@ -68,7 +67,7 @@ Fortunately, these conditions are well-known.
 \end{definition}
 
 \begin{example}
-    The following pair of morphisms does not satisfy the no-identification
+    The following morphisms do not satisfy the no-identification
     condition.
     \[
         \iltikzfig{graphs/dpo/no-identification/k}
@@ -114,7 +113,6 @@ It is all very well knowing if there is at least one pushout complement, but
 what about when there is \emph{exactly one} pushout complement?
 When this is the case, the rewrite is uniquely specified for a given rule and
 matching.
-
 To answer this question, we must examine a class of categories to which
 \(\hypsigmac\) belongs to, known as \emph{adhesive} categories.
 One can think of these as categories in which graph rewriting `plays nicely'.
@@ -171,7 +169,7 @@ be `split apart' and `glued together' by using pushouts and pullbacks.
 \begin{example}
     A natural example of an adhesive category is \(\set\), which has pushouts
     and pullbacks.
-    To get some idea how the van Kampen condition also holds, consider the
+    To get some idea how the van Kampen condition holds, consider the
     following commutative cube in \(\set\), adapted from
     \cite[Sec. 4.3]{kissinger2012pictures}.
     \begin{center}
@@ -213,7 +211,7 @@ be `split apart' and `glued together' by using pushouts and pullbacks.
             A \cup B
         \end{tikzcd}
     \end{center}
-    The bottom face is clearly a pushout, and since \(A \cup B \to A\) and
+    The bottom face is a pushout, and since \(A \cup B \to A\) and
     \(A \cup B \to B\) are monomorphisms, this is a pushout along a
     monomorphism.
     Furthermore, the left and back faces are pullbacks because \(f_A\) and
@@ -304,8 +302,7 @@ However, there may be useful rewrite rules which are \emph{not} left-linear.
         \to
         \iltikzfig{graphs/dpo/non-left-linear/g}
     \]
-    This matching yields the following valid pushout complements and subsequent
-    rewrites:
+    This matching yields the following pushout complements and rewrites:
     \begin{gather*}
         \iltikzfig{graphs/dpo/non-left-linear/c1}
         \to
@@ -314,7 +311,7 @@ However, there may be useful rewrite rules which are \emph{not} left-linear.
         \iltikzfig{graphs/dpo/non-left-linear/c2}
         \to
         \iltikzfig{graphs/dpo/non-left-linear/h2}
-        \\
+        \\[0.5em]
         \iltikzfig{graphs/dpo/non-left-linear/c3}
         \to
         \iltikzfig{graphs/dpo/non-left-linear/h3}
@@ -322,7 +319,7 @@ However, there may be useful rewrite rules which are \emph{not} left-linear.
         \iltikzfig{graphs/dpo/non-left-linear/c4}
         \to
         \iltikzfig{graphs/dpo/non-left-linear/h4}
-        \\
+        \\[0.5em]
         \iltikzfig{graphs/dpo/non-left-linear/c5}
         \to
         \iltikzfig{graphs/dpo/non-left-linear/h5}
@@ -413,14 +410,13 @@ due to the presence of the Frobenius algebra.
         =
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-7}
     \end{gather*}
-    All of the rewrites other than the first were `hidden' behind the equations
-    of a Frobenius algebra, but arose naturally in the graph rewriting
-    framework.
+    All of the rewrites other than the first were `hidden' behind the Frobenius
+    equations, but were exposed automatically by the graph rewriting framework.
 \end{example}
 
 Even if every rewrite is correct, there is still the question of how to find
 them all.
-Fortunately, for hypergraphs this problem has already been
+For hypergraphs this problem has already been
 tackled~\cite{heumuller2011construction}; the pushout complements can be
 enumerated as quotients of an `exploded' context.
 
@@ -469,7 +465,7 @@ rewrite in a Frobenius setting.
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
     }
-    \), its interpretation as a DPO rule is written as \(
+    \), its interpretation as a DPO rule is \(
     \termandfrobtohypsigma[
         \rrule{
             \iltikzfig{strings/category/f}[box=l,colour=white]
@@ -537,7 +533,7 @@ rewrite in a Frobenius setting.
 The results generalise in the obvious way to the coloured setting.
 
 \begin{notation}
-    Given a rewrite rule \(
+    For rule \(
     \rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
     }{
