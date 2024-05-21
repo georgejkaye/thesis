@@ -10,11 +10,11 @@
 By characterising the cospans of hypergraphs that correspond to \emph{traced}
 terms, we already have a setting in which we can model sequential circuit
 morphisms combinatorially.
-But why stop there?
+But we can go further.
 When modelling \emph{Frobenius} terms, we were modelling them modulo the
-Frobenius \emph{equations}; when interpreted as cospans of hypergraphs the
-comonoid and monoid structures merge together into single vertices so we do not
-need to consider the equations of associativity, commutativity or unitality.
+Frobenius equations; when interpreted as cospans of hypergraphs the
+comonoid and monoid structures merged together into single vertices so we did
+not need to consider the equations of associativity, commutativity or unitality.
 
 In the realm of sequential circuits we also have monoid and comonoid structures,
 but instead of forming a Frobenius structure they only form a \emph{bialgebra}.
@@ -22,29 +22,17 @@ The equations of a bialgebra are different to those of a Frobenius algebra in
 how the monoid and comonoid interact.
 Compare the two Frobenius equations with the bialgebra equation shown below:
 \[
-    \equationdisplay{
-        \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
-    }{
-        \iltikzfig{strings/structure/frobenius/frobenius-l}
-    }{
-        \frobleqn
-    }
+    \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
+    =
+    \iltikzfig{strings/structure/frobenius/frobenius-l}
     \qquad
-    \equationdisplay{
-        \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
-    }{
-        \iltikzfig{strings/structure/frobenius/frobenius-r}
-    }{
-        \frobreqn
-    }
+    \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
+    =
+    \iltikzfig{strings/structure/frobenius/frobenius-r}
     \qquad\qquad
-    \equationdisplay{
-        \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
-    }{
-        \iltikzfig{strings/structure/frobenius/frobenius-r}
-    }{
-        \bialgcommoneqn
-    }
+    \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
+    =
+    \iltikzfig{strings/structure/frobenius/frobenius-r}
 \]
 When operating in a Frobenius setting, it is possible to derive the bialgebra
 equation \(\bialgcommoneqn\) from the Frobenius equations combined with the
@@ -62,20 +50,20 @@ equations of monoids and comonoids.
         \iltikzfig{strings/structure/bialgebra/merge-copy-rhs}
         \eqaxioms
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-1}
-        \eqaxioms[\comonoidcommeqn]
+        \eqaxioms[(\comonoidcommeqn)]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-2}
-        \eqaxioms[\frobreqn]
+        \eqaxioms[(\frobreqn)]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-3}
-        \eqaxioms[\frobleqn]
+        \eqaxioms[(\frobleqn)]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-4}
-        \eqaxioms[\monoidassoceqn]
+        \eqaxioms[(\monoidassoceqn)]
         \\[0.5em]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-5}
-        \eqaxioms[\monoidcommeqn]
+        \eqaxioms[(\monoidcommeqn)]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-6}
-        \eqaxioms[\frobleqn]
+        \eqaxioms[(\frobleqn)]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-7}
-        \eqaxioms[\frobspeceqn]
+        \eqaxioms[(\frobspeceqn)]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-8}
     \end{gather*}
 \end{proof}
@@ -117,19 +105,16 @@ equations to begin with.
 This poses a problem: we want to use \(\cspdchyp\) as a setting for rewriting
 digital circuits, but as it by default contains a Frobenius structure,
 \emph{too many} equations would hold.
-
-Not all is lost; since the issue only arises with the interactions between the
-monoid and the comonoid, we can use cospans of hypergraphs to reason modulo the
-equations of just one of the two structures.
-This means that not all of the equations of a bialgebra will be absorbed into
-the combinatorial structure, but this is better than too many taking effect.
+Since the issue only arises with the interactions between the monoid and the
+comonoid, we can use cospans of hypergraphs to reason modulo the equations of
+just one of the two structures.
 
 \begin{remark}
     Alas, we cannot claim to have pioneered the idea of interpreting terms with
     just a monoid or comonoid structure as cospans of
     hypergraphs~\cite{fritz2023free,milosavljevic2023string}.
     What we bring to the table is studying how such terms interact with the
-    \emph{trace}; does removing acyclicity lead to any degeneracies?
+    \emph{trace}: does removing acyclicity lead to any degeneracies?
 \end{remark}
 
 In the case of sequential circuits, it makes sense to focus on the comonoid
@@ -175,15 +160,15 @@ structure to fork wires; vertices must still only have one `in' connection.
 \begin{example}\label{ex:partial-left-monogamous}
     The following cospans are partial left-monogamous:
     \[
-        \iltikzfig{graphs/monogamy/yes-comonoid-0}
+        \iltikzfig{graphs/partial-monogamy/yes-comonoid-0}
         \quad
-        \iltikzfig{graphs/monogamy/yes-comonoid-1}
+        \iltikzfig{graphs/partial-monogamy/yes-comonoid-1}
     \]
     The following cospans are not partial left-monogamous:
     \[
-        \iltikzfig{graphs/monogamy/no-comonoid-0}
+        \iltikzfig{graphs/partial-monogamy/no-comonoid-0}
         \quad
-        \iltikzfig{graphs/monogamy/no-comonoid-1}
+        \iltikzfig{graphs/partial-monogamy/no-comonoid-1}
     \]
 \end{example}
 
@@ -366,11 +351,11 @@ traced terms with a comonoid structure.
     The partial monogamous cospans from \cref{ex:partial-left-monogamous} are
     shown below with their corresponding terms in \(\stmcsigma + \ccomon\).
     \[
-        \iltikzfig{graphs/monogamy/yes-comonoid-0}
+        \iltikzfig{graphs/partial-monogamy/yes-comonoid-0}
         \quad
         \iltikzfig{graphs/terms/comonoid-term-0}
         \qquad
-        \iltikzfig{graphs/monogamy/yes-comonoid-1}
+        \iltikzfig{graphs/partial-monogamy/yes-comonoid-1}
         \quad
         \iltikzfig{graphs/terms/comonoid-term-1}
     \]
@@ -384,7 +369,7 @@ As with \(\frob\), a multicoloured version of \(\ccomon\) is defined as a
 coproduct in \(\cprop\).
 
 \begin{definition}
-    For a countable set of colours \(C\), let
+    For a countable set \(C\), let
     \(\ccomonc \coloneqq \Sigma_{c \in C} \ccomon\).
 \end{definition}
 

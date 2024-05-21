@@ -1,21 +1,59 @@
 \section{Frobenius terms as hypergraphs}
 
-It is now time to establish the correspondences between cospans of hypergraphs
-and string diagrams.
+In order to perform graph rewriting on string diagrams, we will interpret the
+latter as cospans of hypergraphs.
 We will first recount the constructions used by Bonchi et al in
-\cite{bonchi2022string} for settings with a Frobenius structure before showing
-how we can use their ingredients for a \emph{traced} setting either with or
-without a comonoid structure.
+\cite{bonchi2022string} for a broader class of terms before showing their
+recipe can be adapted for a \emph{traced} setting either with or without a
+comonoid structure.
 
 \subsection{Frobenius structure}
 
-Monoids and comonoids are structures that crop up all over mathematics.
-However, things become really interesting when multiple such structures
-\emph{interact}.
-One particular combination of a monoid and comonoid structure is known as a
-\emph{Frobenius structure}; such structures are particularly relevant to us
-because symmetric monoidal terms equipped with a Frobenius structure correspond
-precisely to the cospans of hypergraphs defined in the previous section.
+When reasoning with monoidal theories and string diagrams, two structures that
+often appear are a \emph{commutative monoid} (for joining and introducing wires) and a
+\emph{cocommutative comonoid} (for forking and eliminating wires).
+\[
+    \iltikzfig{strings/structure/monoid/merge}[colour=white]
+    \quad
+    \iltikzfig{strings/structure/monoid/init}[colour=white]
+    \qquad
+    \iltikzfig{strings/structure/comonoid/copy}[colour=white]
+    \quad
+    \iltikzfig{strings/structure/comonoid/discard}[colour=white]
+\]
+The monoid and comonoid are subject to the usual equations of (co)unitality,
+(co)associativity and (co)commutativity.
+\begin{gather*}
+    \iltikzfig{strings/structure/monoid/unitality-l-lhs}
+    =
+    \iltikzfig{strings/structure/monoid/unitality-l-rhs}
+    \quad
+    \iltikzfig{strings/structure/monoid/associativity-lhs}
+    =
+    \iltikzfig{strings/structure/monoid/associativity-rhs}
+    \quad
+    \iltikzfig{strings/structure/monoid/commutativity-lhs}
+    =
+    \iltikzfig{strings/structure/monoid/commutativity-rhs}
+    \\
+    \iltikzfig{strings/structure/comonoid/unitality-l-lhs}
+    =
+    \iltikzfig{strings/structure/comonoid/unitality-l-rhs}
+    \quad
+    \iltikzfig{strings/structure/comonoid/associativity-lhs}
+    =
+    \iltikzfig{strings/structure/comonoid/associativity-rhs}
+    \quad
+    \iltikzfig{strings/structure/comonoid/commutativity-lhs}
+    =
+    \iltikzfig{strings/structure/comonoid/commutativity-rhs}
+\end{gather*}
+When monoids and comonoids appear together, there are multiple ways they can
+interact.
+One way is by using the equations of a \emph{Frobenius algebra}; this is
+particularly relevant to us because symmetric monoidal terms equipped
+with a Frobenius structure correspond precisely to the cospans of hypergraphs
+defined in the previous section.
 
 \begin{definition}
     \label{def:frob}
@@ -35,7 +73,7 @@ precisely to the cospans of hypergraphs defined in the previous section.
 \input{floats/frobenius}
 
 The equations of special Frobenius algebras are those of commutative monoids and
-commutative comonoids along with the `Frobenius' and the 'special' equation.
+cocommutative comonoids along with the `Frobenius' and the 'special' equation.
 
 \begin{example}\label{ex:frobenius}
     The following are all terms in \(\frob\):
@@ -50,13 +88,13 @@ commutative comonoids along with the `Frobenius' and the 'special' equation.
     latter two terms are equal:
     \begin{gather*}
         \iltikzfig{strings/structure/frobenius/example-2}
-        \eqaxioms[\monoidunitleqn]
+        \eqaxioms[(\monoidunitleqn)]
         \iltikzfig{strings/structure/frobenius/example-equational/step-1}
-        \eqaxioms[\frobleqn]
+        \eqaxioms[(\frobleqn)]
         \iltikzfig{strings/structure/frobenius/example-equational/step-2}
-        \eqaxioms[\monoidassoceqn]
+        \eqaxioms[(\monoidassoceqn)]
         \iltikzfig{strings/structure/frobenius/example-equational/step-3}
-        \eqaxioms[\frobreqn]
+        \eqaxioms[(\frobreqn)]
         \iltikzfig{strings/structure/frobenius/example-3}
     \end{gather*}
 \end{example}
@@ -72,7 +110,7 @@ of \(\frob\) to represent each colour, using a fact about \(\propcat\) and
     \(\propcat\) has coproducts.
 \end{theorem}
 
-This easily generalises to \(\cprop\) by replacing natural numbers with words.
+This generalises to \(\cprop\) by replacing natural numbers with words.
 This means that given coloured PROPs \(\mcc\) and \(\mcd\) with objects the
 words in \(\freemon{C}\) and \(\freemon{D}\) respectively, there is also a
 coloured PROP \(\mcc + \mcd\) with objects the words in \(\freemon{(C + D)}\)
@@ -82,7 +120,7 @@ a coproduct of copies of \(\frob\).
 
 \begin{definition}[\cite{bonchi2022string}]
     \label{def:frobc}
-    For a countable set of colours \(C\), let \(\frobc \in \cprop\) be
+    For a countable set \(C\), let \(\frobc \in \cprop\) be
     defined as \(\frobc \coloneqq \sum_{c \in C}\frob\).
 \end{definition}
 
@@ -187,11 +225,12 @@ We can also proceed similarly for the multi-coloured case.
 
 Viewing \(\hypcsigma\) and \(\hypcsigmac\) as coproducts will prove to be
 beneficial when establishing a correspondence between terms and graphs in the
-the next section.
+the next section, as it allows us to consider the symmetric monoidal and the
+Frobenius components separately.
 
 \subsection{Hypergraph categories and hypergraphs}
 
-Perhaps confusingly, the category of \emph{hypergraphs} \(\hypcsigmac\) is
+Perhaps confusingly, the category of \emph{hypergraphs} \(\hypsigma\) is
 \emph{not} a hypergraph category, but the category of \emph{cospans} of
 hypergraphs is.
 This can be shown by exploiting a correspondence between \(\frob\) and the PROPs
@@ -249,9 +288,10 @@ this arises as a special case of the following theorem.
 
 \begin{theorem}[\cite{bonchi2022string}, Thm. 3.8]
     \label{thm:cospan-homomorphism}
-    Let \(\mathbb{X}\) be a PROP whose monoidal product is a coproduct,
-    \(\mathbf{C}\) a category with pushouts and an initial object, and
-    \(\morph{F}{\mathbb{X}}{\mathbf{C}}\) a coproduct-preserving functor.
+    Let \(\mathbb{X}\) be a PROP in which the monoidal product is a coproduct,
+    let \(\mathcal{C}\) be a category such that \(\mathbb{X}\) and
+    \(\mathcal{C}\) have finite limits, and let
+    \(\morph{F}{\mathbb{X}}{\mathbf{C}}\) be a colimit-preserving functor.
     Then there is a homomorphism of PROPs \(
     \morph{\tilde{F}}{\csp{\mathbb{X}}}{\csp[F]{\mathbf{C}}}
     \) that sends \(\cospan{m}[f]{X}[g]{n}\) to
@@ -477,7 +517,7 @@ discrete hypergraphs.
     \).
 \end{corollary}
 
-It is now possible to map from coloured Frobeniusterms to cospans of coloured
+It is now possible to map from coloured Frobenius terms to cospans of coloured
 hypergraphs.
 
 \begin{definition}

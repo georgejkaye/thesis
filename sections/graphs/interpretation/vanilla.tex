@@ -30,8 +30,8 @@ The former is tackled by a condition on the connectivity of vertices.
     For a cospan \(\cospan{m}[f]{F}[g]{n}\) in
     \(\cspdhyp\), let \(\mathsf{in}(F)\) and \(\mathsf{out}(F)\) be the image of
     \(f\) and \(g\) respectively.
-    \(\cospan{m}[f]{F}[g]{n}\) is \emph{monogamous} if \(f\) and \(g\) are mono
-    and, for all nodes \(v\), the degree of \(v\) is
+    We call the cospan \(\cospan{m}[f]{F}[g]{n}\) \emph{monogamous} if \(f\) and
+    \(g\) are mono and, for all nodes \(v\), the degree of \(v\) is
     \begin{center}
         \begin{tabular}{rlcrl}
             \((0,0)\)
@@ -56,6 +56,25 @@ The former is tackled by a condition on the connectivity of vertices.
         \end{tabular}
     \end{center}
 \end{definition}
+
+\begin{example}\label{ex:monogamous}
+    The following cospans of hypergraphs are monogamous:
+    \[
+        \iltikzfig{graphs/monogamy/yes-0}
+        \quad
+        \iltikzfig{graphs/monogamy/yes-1}
+    \]
+    The following cospans of hypergraphs are not monogamous:
+    \[
+        \iltikzfig{graphs/monogamy/no-0}
+        \quad
+        \iltikzfig{graphs/monogamy/no-1}
+    \]
+\end{example}
+
+Since our goal is to assemble monogamous cospans into a category, it is
+necessary to check that the property is preserved by the various categorical
+operations.
 
 \begin{lemma}[\cite{bonchi2022stringa}, Lem. 15]\label{lem:identities-symmetries-monogamous}
     Identities and symmetries are monogamous.
@@ -88,8 +107,9 @@ The former is tackled by a condition on the connectivity of vertices.
 
 \subsection{Acyclicity}
 
-Identifying hypergraphs without cycles is a much more common task, but it still
-requires a few additional definitions.
+As seen in \cref{ex:monogamous}, monogamy makes no guarantees about cycles.
+Since symmetric monoidal terms cannot have cycles, a notion of \emph{acyclicity}
+must also be enforced.
 
 \begin{definition}[Predecessor (\cite{bonchi2022stringa}, Def. 18)]
     A hyperedge \(e\) is a \emph{predecessor} of another hyperedge \(e^\prime\)
@@ -114,8 +134,23 @@ nodes.
     A cospan \(\morph{m}{F}{n}\) is acyclic if \(F\) is.
 \end{definition}
 
+\begin{example}\label{ex:acyclic}
+    The following cospans of hypergraphs are acyclic:
+    \[
+        \iltikzfig{graphs/acyclic/yes-0}
+        \quad
+        \iltikzfig{graphs/acyclic/yes-1}
+    \]
+    The following cospans of hypergraphs are not acyclic:
+    \[
+        \iltikzfig{graphs/acyclic/no-0}
+        \quad
+        \iltikzfig{graphs/acyclic/no-1}
+    \]
+\end{example}
+
 Once again, for acyclicity to be a suitable condition on a category of cospans,
-it needs to be preserved by the various categorical operations.
+it needs to be preserved by categorical operations.
 
 \begin{lemma}[\cite{bonchi2022stringa}, Prop. 21]\label{lem:identities-symmetries-monogamous-acyclic}
     Identities and symmetries are acyclic.
@@ -152,16 +187,30 @@ safely performed.
     respectively.
 \end{proof}
 
-
 This shows that monogamous acyclic cospans of hypergraphs form a category.
 
 \begin{definition}[\cite{bonchi2022stringa}]
-    Let \(\macspdchyp\) be the sub-PROP of \(\cspdchyp\) containing only the
+    Let \(\macspdhyp\) be the sub-PROP of \(\cspdhyp\) containing only the
     monogamous acyclic cospans of hypergraphs.
 \end{definition}
 
-Bonchi et al then proceeded to show that \(\smcsigmac\) is isomorphic to
-\(\macspdchyp\); to do this they needed a few more ingredients.
+\begin{example}\label{ex:monogamous-acyclic}
+    The following cospans of hypergraphs are monogamous acyclic:
+    \[
+        \iltikzfig{graphs/monogamous-acyclic/yes-0}
+        \quad
+        \iltikzfig{graphs/monogamous-acyclic/yes-1}
+    \]
+    The following cospans of hypergraphs are not monogamous acyclic:
+    \[
+        \iltikzfig{graphs/monogamous-acyclic/no-0}
+        \quad
+        \iltikzfig{graphs/monogamous-acyclic/no-1}
+    \]
+\end{example}
+
+Bonchi et al then proceeded to show that \(\smcsigma\) is isomorphic to
+\(\macspdhyp\); to do this they needed a few more ingredients.
 The first is a lemma showing that a special class of subgraphs can always be
 `extracted' from a parent graph.
 
@@ -307,8 +356,9 @@ final destination.
 
 As with the Frobenius case, it is a simple exercise to generalise the above
 results to the countably coloured case.
-The only modification is we need to apply the 3-for-2 condition in the
-category of \(C\)-coloured PROPs.
+Monogamy and acyclicity translate simply to coloured cospans, so the only
+modification is we need to apply the 3-for-2 condition in the category of
+\(C\)-coloured PROPs.
 
 \begin{definition}
     For a countable set of colours \(C\), let \(\cpropc\) be the category of
@@ -324,6 +374,8 @@ category of \(C\)-coloured PROPs.
     For a countable set of colours \(C\), \(\permspropwithnat\) is the initial
     object in \(\cpropc\).
 \end{lemma}
+
+This means that we obtain correspondence results in the coloured case.
 
 \begin{proposition}
     \(\morph{\termandfrobtohypsigmac}{\smcsigmac}{\cspdchyp}\) is faithful.
