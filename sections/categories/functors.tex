@@ -135,7 +135,10 @@ functors are no different.
     then their composite \(\morph{G \circ F}{\mcc}{\mcd}\) is also a functor.
 \end{example}
 
-Identity and (associative) composition are all we need to define a category!
+Identity and (associative) composition are all we need to define a category.
+However, to deal with `size issues', we cannot define a category containing
+\emph{all} categories: how could it contain itself?
+What we can do is collect all `small' categories into another category.
 
 \begin{definition}
     A category \(\mcc\) is \emph{small} if \(\ob{\mcc}\) and
@@ -147,6 +150,10 @@ Identity and (associative) composition are all we need to define a category!
     \(\mor{\cat}{\mcc}{\mcd}\) contains functors \(\mcc \to \mcd\).
     Identity is the identity functor, and composition is function composition.
 \end{example}
+
+Using the category of categories can be useful when establishing properties
+about small categories, as we can reuse the same reasoning used for considering
+objects and morphisms.
 
 \section{Universal constructions through functors}
 

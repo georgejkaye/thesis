@@ -24,9 +24,9 @@ in which all of the equations are identified in this way.
     morphisms in \(\mathbf{C}\) with the same source and target, the
     \emph{quotient category} \(\mathbf{C} / \mce\) is the category in which
     \(\ob{(\mathbf{C} / \mce)} \coloneqq \ob{\mathbf{C}}\) and \(
-            \mor{(\mathbf{C} / \mce)}{X}{Y}
-            \coloneqq
-            \mor{\mathbf{C}}{X}{Y} / \mce
+    \mor{(\mathbf{C} / \mce)}{X}{Y}
+    \coloneqq
+    \mor{\mathbf{C}}{X}{Y} / \mce
     \): i.e.\ morphisms are the \emph{equivalence classes} of morphisms
     modulo \(\mce\).
 \end{definition}
@@ -47,12 +47,12 @@ One such structure is that of \emph{commutative monoids}.
 \begin{definition}[Commutative monoids]\label{def:commutative-monoid}
     The monoidal theory of
     \emph{commutative monoids} is \(
-        (\generators[\cmon], \equations[\cmon])
+    (\generators[\cmon], \equations[\cmon])
     \), where \(
-        \generators[\cmon] \coloneqq \{
-            \iltikzfig{strings/structure/monoid/merge}[colour=white],
-            \iltikzfig{strings/structure/monoid/init}[colour=white]
-        \}
+    \generators[\cmon] \coloneqq \{
+    \iltikzfig{strings/structure/monoid/merge}[colour=white],
+    \iltikzfig{strings/structure/monoid/init}[colour=white]
+    \}
     \) called the \emph{multiplication} and the \emph{unit} respectively,
     and \(\equations[\frob]\) comprises the equations
     \begin{gather*}
@@ -85,20 +85,20 @@ intuitive visual interpretations; often it is insightful to reason
 
 \begin{example}[Right unitality]
     \(
-        \iltikzfig{strings/structure/monoid/unitality-r-lhs}
-        =
-        \iltikzfig{strings/structure/monoid/unitality-r-rhs}
+    \iltikzfig{strings/structure/monoid/unitality-r-lhs}
+    =
+    \iltikzfig{strings/structure/monoid/unitality-r-rhs}
     \) is a valid equation in \(\cmon\).
 \end{example}
 \begin{proof}
     \(
-        \iltikzfig{strings/structure/monoid/unitality-r-lhs}
-        \eqaxioms[(\dagger)]
-        \iltikzfig{strings/structure/monoid/right-unitality/step-1}
-        =
-        \iltikzfig{strings/structure/monoid/unitality-l-lhs}
-        =
-        \iltikzfig{strings/structure/monoid/unitality-l-rhs}
+    \iltikzfig{strings/structure/monoid/unitality-r-lhs}
+    \eqaxioms[(\dagger)]
+    \iltikzfig{strings/structure/monoid/right-unitality/step-1}
+    =
+    \iltikzfig{strings/structure/monoid/unitality-l-lhs}
+    =
+    \iltikzfig{strings/structure/monoid/unitality-l-rhs}
     \)
 \end{proof}
 
@@ -126,67 +126,67 @@ These explicit steps are shown below, explicitly drawing the unit wire in grey:
 %
 Already much more verbose than the simple deformation, this does not
 even take into account the repeated applications of associativity of both
-composition and tensor required if reasoning in the term language!
+composition and tensor required if reasoning in the term language.
 If we write \(
-    \iltikzfig{strings/structure/monoid/merge}[colour=white]
+\iltikzfig{strings/structure/monoid/merge}[colour=white]
 \) as \(\mu\) and \(
-    \iltikzfig{strings/structure/monoid/init}[colour=white]
+\iltikzfig{strings/structure/monoid/init}[colour=white]
 \) as \(\eta\), then the proof on terms becomes:
 \begin{align*}
     \id[n] \tensor \eta \seq \mu
-    &=
+     & =
     \id[n] \tensor (\eta \seq \id[n]) \seq \mu
-    &
+     &
     \text{unitality of } \seq
     \\
-    &=
+     & =
     (\id[n] \seq \id[n]) \tensor (\eta \seq \id[n]) \seq \mu
-    &
+     &
     \text{unitality of } \seq
     \\
-    &=
+     & =
     ((\id[n] \tensor \eta) \seq (\id[n] \tensor \id[n])) \seq \mu
-    &
+     &
     \text{functoriality of } \tensor
     \\
-    &=
+     & =
     ((\id[n] \tensor \eta) \seq (\swap{n}{n} \seq \swap{n}{n})) \seq \mu
-    &
+     &
     \sigma \text{ is self inverse}
     \\
-    &=
+     & =
     (((\id[n] \tensor \eta) \seq \swap{n}{n}) \seq \swap{n}{n}) \seq \mu
-    &
+     &
     \text{associativity of } \seq
     \\
-    &=
+     & =
     ((\swap{\varepsilon}{n} \seq (\eta \tensor \id[n])) \seq \swap{n}{n}) \seq \mu
-    &
+     &
     \text{naturality of } \sigma
     \\
-    &=
+     & =
     ((\id[n] \seq (\eta \tensor \id[n])) \seq \swap{n}{n}) \seq \mu
-    &
+     &
     \text{unitality of } \sigma
     \\
-    &=
+     & =
     ((\eta \tensor \id[n]) \seq \swap{n}{n}) \seq \mu
-    &
+     &
     \text{unitality of } \seq
     \\
-    &=
+     & =
     (\eta \tensor \id[n]) \seq (\swap{n}{n} \seq \mu)
-    &
+     &
     \text{associativity of} \seq
     \\
-    &=
+     & =
     (\eta \tensor \id[n]) \seq \mu
-    &
+     &
     \text{commutativity of } \mu
     \\
-    &=
+     & =
     \id[n]
-    &
+     &
     \text{left unitality of } \mu
 \end{align*}
 
