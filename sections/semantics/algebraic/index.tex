@@ -1,9 +1,9 @@
 \chapter{Algebraic semantics}
 
-Testing that the behaviour of two circuits is equivalent by testing that every
-input produces the same output for each circuit is a perfectly reasonable
-strategy.
-But this is somewhat `nuclear'; rather than using what we know
+The operational semantics and notion of observational equivalence means that
+that the behaviour of two circuits can be tested for equivalence by checking
+whether every input produces the same output for both circuits.
+But this is somewhat of a nuclear option; rather than using what we know
 about the structure of a circuit's components, we just blast away
 exhaustively trying all the inputs to find a contradiction.
 
@@ -11,9 +11,9 @@ A more elegant method of reasoning is by defining a set \emph{equations} between
 subcircuits and \emph{quotienting} \(\scircsigma\) by these equations.
 A proof of equivalence between two circuits is then presented using algebraic
 reasoning: applying equations to translate one circuit into the other.
-This is often \emph{far more efficient} than having to test every input!
-This is known as \emph{algebraic} semantics, which is our final flavour of
-circuit semantics.
+This is often \emph{far more efficient} that having test every input, and is
+known formally this is known as an \emph{algebraic} semantics.
+
 
 \begin{example}\label{ex:expressions-algebraic}
     For the last time we return to the language of arithmetical expressions from
@@ -108,7 +108,7 @@ That is to say, for each equation \(
     `extensional equivalence', an attempt to rectify the fact that the
     equations only dealt with closed circuits.
     Soundness and completeness of the equational theory was not considered
-    because there was no other semantics to compare it against!
+    because there was no other semantics to compare it against.
 
     In essence, the previous work was almost `the wrong way round': equations
     were defined and semantics drawn from them.
@@ -120,14 +120,13 @@ That is to say, for each equation \(
     semantics are sufficient: are any two denotationally equal circuits
     identified by equations?
 
-    In fact, it turns out that the way the equations in the previous work had
-    been defined looked a lot more like \emph{reduction rules}, so they have
-    found their home in the previous section.
+    The equations in the previous work looked a lot more like
+    \emph{reduction rules}, so they have found their home in the previous
+    section.
 \end{remark}
 
-When defining such an equational theory, choosing which set of equations can be
-a controversial topic, as there may be several different sound and complete
-formulations!
+When defining such an equational theory, there may be several different sound
+and complete formulations.
 Ideally, we want to stick to simple \emph{local} equations that concern the
 interactions of concrete generators as much as possible, but as we will see
 we will sometimes have no choice but to define \emph{families} of equations

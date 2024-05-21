@@ -80,15 +80,16 @@ combinational circuit components across the opening forks of the explosion.
     First we consider the base cases.
     If \(
     \iltikzfig{strings/category/f}[box=f,colour=seq]
-    \) is just the identity, then it can be transformed into the desired form
+    \) is the identity, then it can be transformed into the desired form
     with
     \((\belnapexpeqn)\).
     Since \(\iltikzfig{strings/category/f}[box=f,colour=seq]\) has codomain
     \(1\) it cannot be a symmetry.
     For the other generators and the infinite register,
-    \((\belnapexpeqn)\) can first be applied to the output wire to create the
+    \((\belnapexpeqn)\) can be applied to the output wire to create the
     exploded `skeleton', followed by using \cref{lem:explode-copy} to copy the
-    components into four, and the pushing the copies through the translators
+    components into four.
+    The four copies can be pushed through the translators
     using \((\joinforkeqn)\), \((\joinandeqn)\), \((\joinoreqn)\),
     \((\botforkeqn)\), \((\botoreqn)\) \((\andcomm)\), \((\orcomm)\),
     \((\andorddisteqn)\), \((\oranddisteqn)\), \((\infregandeqn)\),
@@ -97,8 +98,8 @@ combinational circuit components across the opening forks of the explosion.
     As propagating the \(
     \iltikzfig{circuits/components/gates/not}
     \) flips the translators by using \((\demorganand)\) and \((\demorganor)\),
-    \((\forkcommeqn)\) must be used to restore the correct order of the
-    translators, and \((\dneeqn)\) is used to eliminate additional
+    \((\forkcommeqn)\) must be used to restore the correct order, and
+    \((\dneeqn)\) is used to eliminate additional
     \(\iltikzfig{circuits/components/gates/not}\) gates.
     Any infinite registers containing \(\bot\) can be converted to
     \(\iltikzfig{strings/structure/monoid/init}[colour=comb]\) components using
