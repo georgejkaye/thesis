@@ -7,7 +7,7 @@ run as fast as possible and reduce the \emph{clock cycle}.
     The clock cycle of a circuit is determined by the longest paths between
     registers. Altering the paths between registers can be achieved using
     \emph{retiming}~\cite{leiserson1991retiming}: moving registers across gates.
-    This is modelled by the streaming equation (\cref{prop:streaming});
+    This is modelled by the streaming rule (\cref{lem:streaming});
     forward retiming (streaming left to right) is always possible
     but for backward retiming (streaming right to left), the value
     in the register must be in the image of the gates.

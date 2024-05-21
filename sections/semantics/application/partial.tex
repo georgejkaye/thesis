@@ -142,19 +142,20 @@ which we either know nothing about or know can only take some specified values.
 
 The additional value generators indicate \emph{uncertainty} over what the value
 may be.
-The intended interpretation of an uncertain value \(
-\iltikzfig{circuits/components/values/vs-longer}[val=\listvar{v?}]
-\) where \(\listvar{v?}\) is a word of length \(k\) is that there are \(k\)
-possible values the generator can take.
-In possibility \(0\) the value will be \(\listvar{v?}(0)\), in possibility \(1\)
-the value will be \(\listvar{v?}(1)\), and so on up to \(\listvar{v?}(k-1)\).
-If an uncertain value word has length shorter than the number of possibilities,
-we take the convention that the value is interpreted as \(\bot\).
+When a circuit contains uncertain values \(
+\iltikzfig{circuits/components/values/vs-longer}[val=\listvar{v_0?}],
+\iltikzfig{circuits/components/values/vs-longer}[val=\listvar{v_1?}],
+\dots
+\iltikzfig{circuits/components/values/vs-longer}[val=\listvar{v_{n-1}?}],
+\) where the maximum length of a given \(v_i\) is \(k\), there are \(k\)
+possible value assignments.
+For a given assignment \(i < k\), each value will produce a concrete value
+defined as \(v_i(j)\) if \(|v_i| > j\) or \(\bot\) otherwise.
 
 To avoid confusion with our syntax sugar for arbitrary-width values, we will
 always end uncertain value lists with \(?\).
 When writing out specific uncertain words, we delimit the elements with vertical
-bars as in \(\mathsf{f}|\mathsf{t}\) to allude to the fact this value is either
+bars like\(\mathsf{f}|\mathsf{t}\) to allude to the fact this value is either
 the first \emph{or} the second element.
 
 \begin{example}
@@ -165,7 +166,6 @@ the first \emph{or} the second element.
     \) in a circuit, then there are two universes to consider, one where the
     values output \(\belnapfalse\belnaptrue\) and one where they output
     \(\belnaptrue\belnapfalse\).
-
     If we add in another uncertain value with three possible values, \(
     \iltikzfig{circuits/components/values/vs-even-longer}[val=\belnaptrue|\belnapfalse|\top]
     \), we now have three possible universes, in which the values output
@@ -182,6 +182,11 @@ reasoning before and during execution.
 \begin{definition}[Uncertain rules]
     The \emph{uncertain rules} are listed in \cref{fig:uncertain-rules}.
 \end{definition}
+
+After applying uncertain values to a primitive, it may turn out that all the
+possibilities are in fact the same.
+This removes any uncertainty, and means the value can be treated as an
+ordinary value in future reductions and outputs.
 
 \input{sections/semantics/application/floats/uncertain-rules}
 
