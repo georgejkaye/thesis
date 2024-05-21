@@ -132,9 +132,6 @@ circuit.
 
 Sometimes we may not know the exact inputs to a circuit, but know that they make
 up a fixed subset of all possible inputs, or they follow some sort of protocol.
-We can reason about this by considering all of the \emph{universes}
-
-
 We can implement this in our reduction framework with \emph{uncertain values}
 which we either know nothing about or know can only take some specified values.
 
@@ -148,12 +145,11 @@ may be.
 The intended interpretation of an uncertain value \(
 \iltikzfig{circuits/components/values/vs-longer}[val=\listvar{v?}]
 \) where \(\listvar{v?}\) is a word of length \(k\) is that there are \(k\)
-possible `universes' in play.
-in each universe the uncertain value is  interpreted as a concrete value; in
-universe \(0\) the value will be \(\listvar{v?}(0)\), in universe \(1\) the
-value will be \(\listvar{v?}(1)\), and so on up to \(\listvar{v?}(k-1)\).
-If an uncertain value word has length shorter than the number of universes, we
-take the convention that the value in this universe is interpreted as \(\bot\).
+possible values the generator can take.
+In possibility \(0\) the value will be \(\listvar{v?}(0)\), in possibility \(1\)
+the value will be \(\listvar{v?}(1)\), and so on up to \(\listvar{v?}(k-1)\).
+If an uncertain value word has length shorter than the number of possibilities,
+we take the convention that the value is interpreted as \(\bot\).
 
 To avoid confusion with our syntax sugar for arbitrary-width values, we will
 always end uncertain value lists with \(?\).
