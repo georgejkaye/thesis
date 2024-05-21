@@ -45,7 +45,10 @@ vein natural transformations are morphisms between functors.
 Functor categories are often useful in category theory; they will crop up for us
 in Part II of this thesis.
 
-\subsubsection{Examples of natural transformations}
+\subsection{Examples of natural transformations}
+
+Much like functors, natural transformations often arise across mathematics and
+computer science.
 
 \begin{example}[Singleton]
     Recall the \(\listf\) functor from \cref{ex:list-functor}.
@@ -62,7 +65,7 @@ in Part II of this thesis.
     functor \(\mon \to \mon\): such a functor has action \(
     (X, *, e) \mapsto (\freemon{X}, \concat, [])
     \).
-    Subsequently, the component of a natural transformation \(
+    The component of a natural transformation \(
     F \circ U \to \idf
     \) at object \((X, *, e)\) is a monoid homomorphism \(
     (\freemon{X}, \concat, []) \to (X, *, e)

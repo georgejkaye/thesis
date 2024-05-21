@@ -1,8 +1,8 @@
 \section{Monoidal categories}
 
-We will now apply the concepts of functors and natural transformations in order
-to interpret \emph{parallel} composition \(\tensor\).
-To do this, we use a special kind of functor known as a \emph{bifunctor}.
+The concepts of functors and natural transformations are used to interpret
+the \emph{parallel} composition \(\tensor\).
+To do this, a special kind of functor known as a \emph{bifunctor} is used.
 
 \begin{definition}[Bifunctor]
     A \emph{bifunctor} is a functor with a product category as its domain, i.e.\
@@ -75,7 +75,6 @@ For this reason, when drawing string diagrams for monoidal categories we will
 not forego drawing the (bi)functor boxes and usually draw wires exclusively in
 their `deconstructed' state: instead of a single wire \(A \tensor B\) we will
 draw two wires \(A\) and \(B\).
-
 \begin{gather*}
     \iltikzfig{strings/monoidal/tensor-notation-compact}[colour=white,dom1=A,dom2=C,cod1=B,cod2=D,box1=f,box2=g]
     \coloneqq
@@ -85,7 +84,6 @@ draw two wires \(A\) and \(B\).
     \coloneqq
     \iltikzfig{strings/monoidal/tensor-notation-noboxes}[colour=white,dom1=A,dom2=C,cod1=B,cod2=D,box1=f,box2=g]
 \end{gather*}
-
 \begin{example}
     \(\set\) is a monoidal category, with the tensor product defined as the
     Cartesian product (\(A \tensor B \coloneqq A \times B\)) and the unit as the

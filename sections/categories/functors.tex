@@ -34,10 +34,12 @@ The functoriality equations are represented as in
 \input{floats/functoriality-equations}
 
 \begin{definition}[Endofunctor]
-    An \emph{endofunctor} on a category \(\mcc\) is a functor \(\mcc \to \mcc\).
+    An \emph{endofunctor} on category \(\mcc\) is a functor \(\mcc \to \mcc\).
 \end{definition}
 
-\subsubsection{Examples of functors}
+\subsection{Examples of functors}
+
+Many notions in mathematics and computer science can be viewed as functors.
 
 \begin{example}[Powerset functor]
     The notion of powerset can be interpreted as an endofunctor \(
@@ -145,3 +147,144 @@ Identity and (associative) composition are all we need to define a category!
     \(\mor{\cat}{\mcc}{\mcd}\) contains functors \(\mcc \to \mcd\).
     Identity is the identity functor, and composition is function composition.
 \end{example}
+
+\section{Universal constructions through functors}
+
+Previously we defined some \emph{universal constructions} such as initial
+objects and pullbacks.
+Using functors, these universal constructions can be viewed as special cases of
+even more abstract notions: \emph{limits} and \emph{colimits}.
+
+\begin{definition}[Cone]
+    Let \(\mathcal{J}\) and \(\mathcal{C}\) be categories, and let
+    \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) be a functor.
+    A \emph{cone to \(F\)} is an object \(N \in \mathcal{C}\) equipped with
+    a family of morphisms \(\morph{\phi_X}{N}{FX}\) for each
+    \(X \in \mathcal{J}\), such that for each
+    \(\morph{f}{X}{Y} \in \mathcal{J}\),
+    \(Ff \circ \phi_X = \phi_Y\).
+    \begin{center}
+        \includestandalone{figures/category/diagrams/cone}
+    \end{center}
+\end{definition}
+
+The limit is the `best possible cone'.
+
+\begin{definition}[Limit]
+    Let \(\mathcal{J}\) and \(\mathcal{C}\) be categories, and let
+    \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) be a functor.
+    The \emph{limit of \(F\)} is a cone to \(F\) \((L,\phi) \)such that for
+    every other cone to \(F\) \((N, \psi)\), there exists a unique morphism
+    \(\morph{u}{N}{L}\) such that \(\phi_X \circ u = \psi_X\) for all
+    \(X \in \mathcal{J}\).
+    \begin{center}
+        \includestandalone{figures/category/diagrams/limit}
+    \end{center}
+\end{definition}
+
+Limits generalise several of the universal constructions we have encountered so
+far.
+
+\begin{example}[Terminal object]\label{ex:terminal-limit}
+    When the category \(\mathcal{J}\) is the empty category, the only functor
+    \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) is the empty functor.
+    Since there are no objects in \(\mathcal{J}\), a cone of \(F\) is just an
+    object \(C\), so the limit of \(F\) is an object \(L\) to which there is a
+    unique morphism \(C \to L\); the terminal object.
+\end{example}
+
+\begin{example}[Products]\label{ex:product-limit}
+    When the category \(\mathcal{J}\) has objects but no morphisms other than
+    identities, a functor \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) is one that
+    indexes objects of \(\mathcal{C}\) by objects in \(\mathcal{J}\).
+    A cone of \(F\) is an object \(N\) with morphisms that pick each of these
+    indexed elements, so the limit of \(F\) is the product.
+\end{example}
+
+\begin{example}[Pullbacks]\label{ex:pullback-limit}
+    Let \(\mathcal{J}\) be a category containing three objects \(A\), \(B\),
+    \(C\) with non-identity morphisms \(B \to A\) and \(C \to A\).
+    A cone of \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) is an object \(N\) and
+    morphisms \(N \to FA\), \(N \to FB\) and \(N \to FC\), so the limit of
+    \(F\) is the pullback.
+\end{example}
+
+Since limits define so many categorical structures, the ability to define
+arbitrary limits in a category makes it a much more appealing setting to work
+in.
+
+\begin{definition}
+    For a small category \(\mathcal{J}\), a category \(\mathcal{C}\)
+    \emph{has limits of shape \(\mathcal{J}\)} if every functor
+    \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) has a limit in \(\mathcal{C}\).
+\end{definition}
+
+\begin{definition}[Complete category]
+    A category \(\mathcal{C}\) is \emph{complete} if it has limits for all
+    functors \(\morph{F}{\mathcal{J}}{\mathcal{C}}\), where \(\mathcal{J}\) is a
+    small category.
+\end{definition}
+
+Limits do not generalise all the universal constructions we have seen so far;
+for the rest we must flip the arrows and consider the dual version.
+
+\begin{definition}[Cocone]
+    Let \(\mathcal{J}\) and \(\mathcal{C}\) be categories, and let
+    \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) be a functor.
+    A \emph{cocone to \(F\)} is an object \(N \in \mathcal{C}\) equipped with
+    a family of morphisms \(\morph{\phi_X}{FX}{N}\) for each
+    \(X \in \mathcal{J}\), such that for each
+    \(\morph{f}{X}{Y} \in \mathcal{J}\),
+    \(\phi_Y \circ Ff = \phi_X\).
+    \begin{center}
+        \includestandalone{figures/category/diagrams/cocone}
+    \end{center}
+\end{definition}
+
+\begin{definition}[Limit]
+    Let \(\mathcal{J}\) and \(\mathcal{C}\) be categories, and let
+    \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) be a functor.
+    The \emph{colimit of \(F\)} is a cocone to \(F\) \((L,\phi)\) such that for
+    every other cocone to \(F\) \((N, \psi)\), there exists a unique morphism
+    \(\morph{u}{L}{N}\) such that \(u \circ \phi_X = \psi_X\) for all
+    \(X \in \mathcal{J}\).
+    \begin{center}
+        \includestandalone{figures/category/diagrams/colimit}
+    \end{center}
+\end{definition}
+
+\begin{example}
+    By using the reasoning in
+    \cref{ex:terminal-limit,ex:product-limit,ex:pullback-limit} and reversing
+    the arrows, it is straightforward to see that initial objects, coproducts,
+    and pushouts are examples of colimits.
+\end{example}
+
+\begin{definition}
+    For a small category \(\mathcal{J}\), a category \(\mathcal{C}\)
+    \emph{has colimits of shape \(\mathcal{J}\)} if every functor
+    \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) has a colimit in \(\mathcal{C}\).
+\end{definition}
+
+\begin{definition}[Cocomplete category]
+    A category \(\mathcal{C}\) is \emph{cocomplete} if it has colimits for all
+    functors \(\morph{F}{\mathcal{J}}{\mathcal{C}}\), where \(\mathcal{J}\) is a
+    small category.
+\end{definition}
+
+It is often the case that we are interested in functors that \emph{preserve}
+structure, so we can exploit it in both categories.
+Since a lot of structure can be expressed in terms of limits or colimits, this
+can be expressed succinctly by saying that a functor merely preserves these
+limits or colimits.
+
+\begin{definition}
+    A functor \(\morph{F}{\mcc}{\mcd}\) \emph{preserves all (co)limits} if
+    \((FL,F\phi)\) is a (co)limit whenever \((L,\phi)\) is a (co)limit.
+\end{definition}
+
+Sometimes a functor may not preserve \emph{all} (co)limits but only some of
+them.
+For example, we may talk about \(F\) being a coproduct-preserving functor .
+This is defined in the same way as above: \(F(A+B)\) must itself a coproduct
+\(FA + FB\).
