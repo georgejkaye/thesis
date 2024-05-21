@@ -2,7 +2,15 @@
 
 We have now established the close links between \(\streami\) and \(\mealyi\).
 These results are nice to have but hardly ground-breaking; the main contribution
-of this chapter is to introduce \(\scircsigma\) to the mix.
+of this chapter is to introduce \(\scircsigma\) to the mix and define maps
+\(\scircsigma \to \mealyi\) and \(\mealyi \to \scircsigma\), allowing us to use
+monotone Mealy machines as a stepping stone in the correspondence between
+sequential circuits and stream functions.
+By exploiting the coalgebraic properties shared between Mealy machines and
+stream functions, this can be used to show that \(\streami\) is both a
+\emph{sound} and \emph{complete} denotational semantics: there is a stream
+function in \(\streami\) for every circuit in \(\scircsigma\), and there is a
+circuit in \(\scircsigma\) for every stream function in \(\streami\).
 
 \subsection{Circuits to monotone Mealy machines}
 
@@ -469,7 +477,17 @@ we must show a lemma linking the behaviour circuits in the image of
     statement holds by \cref{lem:sequential-combinational-semantics}.
 \end{proof}
 
-Now we can show the behaviour-preserving result.
+The goal of this section is to show that the translation from Mealy machines to
+circuits and back again using \(\circuittomealyi \circ \mealytocircuiti\) is
+\emph{behaviour-preserving}: while the mapping may not be the identity in
+\(\mealyi\), the stream functions obtained using \(\streamtomealyi\) should
+be equal.
+This is an important new result, as it means that rather than showing
+results about the denotational semantics of circuits in \(\scircsigma\) by
+directly comparing it with \(\streami\), we can view morphisms of the former as
+Mealy machines instead, which simultaneously are a much more natural
+interpretation of sequential circuits and also have close coalgebraic links with
+stream functions.
 
 \begin{theorem}\label{thm:mealy-to-circuit}
     \(
@@ -571,12 +589,9 @@ Now we can show the behaviour-preserving result.
     \(\mealytostream = \circuittostreami \circ \mealytocircuiti\).
 \end{proof}
 
-This brings our foray into Mealy machines to a close: we can translate back and
-forth between circuits and \emph{monotone} Mealy machines without fear of
-altering their behaviour in terms of their stream functions.
-
-This already is quite nice to have; if we only know the specification of a
-circuit in terms of a (monotone) Mealy machine, we can use the PROP morphism
-\(\mealytocircuiti\) to generate a circuit in \(\scircsigma\).
-But we have loftier ambitions: using what we have defined in this section we
-will now show the completeness of the denotational semantics.
+On its own, this is a nice result to have; if we only know the specification of
+a circuit in terms of a (monotone) Mealy machine, we can use the PROP morphism
+\(\mealytocircuiti\) to generate a circuit in \(\scircsigma\) which has the
+same behaviour as a stream function.
+However, this is but one ingredient in our ultimate goal: the completeness of
+the denotational semantics.

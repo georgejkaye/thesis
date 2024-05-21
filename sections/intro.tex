@@ -183,17 +183,17 @@ As the name might suggest, Lafont's work only considered circuits that
 implemented \emph{Boolean functions}; these circuits did not have any notion of
 delay or feedback.
 It was not until 2016 that these circuits were given the categorical treatment
-by Dan Ghica and Achim Jung~\cite{ghica2016categorical}, who were later joined
-by Aliaume Lopez when considering how to use this for a graph-rewriting based
+by Ghica and Jung~\cite{ghica2016categorical}, who were later joined
+by Lopez when considering how to use this for a graph-rewriting based
 operational semantics~\cite{ghica2017diagrammatic}.
 
 While this thesis would not have come about without this foundational work, it
-was presented relatively informally and in a sometimes confusing manner:
-the categories of circuits were quotiented by some equations that `seemed right'
-without consulting any sort of `baseline' denotational semantics.
-Moreover, these equations were not enough to handle all circuits, so the
-categories were furthermore quotiented by a notion of `extensional equivalence',
-but what this meant exactly was not made formal.
+was presented in a different manner: the categories of circuits were quotiented
+by some `natural laws' without consulting any sort of `baseline' mathematical
+model.
+Such laws could of course be tested experimentally, but to truly say we have a
+`sound and complete` theory we need a formal model to compare any new model
+against.
 
 \section{Contributions}
 

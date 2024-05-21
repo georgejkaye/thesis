@@ -36,6 +36,8 @@ least one one circuit in \(\scircsigma\) such that its behaviour under
 
 There is no isomorphism between \(\scircsigma\) and \(\streami\)
 as many circuits may have the same semantics but different syntax.
+Instead, we can work in \emph{equivalence classes} of syntactic circuits based
+on their behaviour in \(\streami\).
 
 \begin{definition}[Denotational equivalence]
     Two sequential circuits are \emph{denotationally equivalent}
@@ -57,11 +59,22 @@ as many circuits may have the same semantics but different syntax.
     \).
 \end{definition}
 
-Every morphism in \(\scircsigmai\) is a class of circuits which all have the
+Every morphism in \(\scircsigmai\) is a class of circuits which share the
 same behaviour under \(\interpretation\).
-Since each of these behaviours is a stream function in \(\streami\), we can
-conclude the following.
+As we have a PROP morphism \(\mealytocircuiti \circ \streamtomealyi\), we know
+that for every such behaviour there must be at least one such syntactic circuit,
+and subsequently exactly one equivalence class \(\scircsigmai\).
+Using \cref{thm:circuit-stream-correspondence}, we know that all the circuits in
+this equivalence class have the same behaviour as the original stream function,
+so we can derive an isomorphism between \(\scircsigmai\) and
+\(\streami\).
 
 \begin{corollary}
     \(\scircsigmai \cong \streami\).
 \end{corollary}
+
+This gives us, for the first time, a fully compositional, sound and complete,
+denotational semantics for sequential circuits with delay and (possibly
+non-delay-guarded) feedback.
+This formal model with serve as a backdrop against the operational and
+algebraic semantics presented in the upcoming chapters.

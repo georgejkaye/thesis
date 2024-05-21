@@ -28,7 +28,7 @@ Boolean logic.
     function.
 \end{proof}
 
-We will make use of this result by `simulating' the Boolean operations in the
+We make use of this result by `simulating' the Boolean operations in the
 Belnap realm.
 
 \begin{lemma}
@@ -69,6 +69,7 @@ Note that for \(v \in \values_0\), \(\phi(v)(1) = 0\), and for
 \end{lemma}
 \begin{proof}
     This can be verified by inspecting the truth tables:
+
     \begin{center}
         \begin{tabular}{|c|cc|}
             \hline
@@ -87,8 +88,7 @@ Note that for \(v \in \values_0\), \(\phi(v)(1) = 0\), and for
             \(\belnapfalse\) & \(\bot\) & \(\belnapfalse\) \\
             \hline
         \end{tabular}
-    \end{center}
-    \begin{center}
+        \quad
         \begin{tabular}{|c|cc|}
             \hline
             \(\land\)       & \(\bot\) & \(\belnaptrue\) \\
@@ -254,7 +254,7 @@ components, and then unify the two at the end.
         \morph{\psi^0_0,\psi^1_0}{\values}{\values_0}
         \quad
         \morph{\psi^0_1,\psi^1_1}{\values}{\values_1}
-    \] be defined according to the tables below.
+    \] be defined according to the table below.
     \begin{center}
         \begin{tabular}{c|cccc}
                              & \(\psi^0_0\)     & \(\psi^1_0\)     & \(\psi^0_1\)    & \(\psi^1_1\)    \\
@@ -267,9 +267,9 @@ components, and then unify the two at the end.
     \end{center}
 \end{definition}
 
-The functions \(\psi^0_0\) and \(\psi^0_1\) sends a Belnap value \(v\) to
-\(\belnapfalse\) or \(\belnaptrue\) respectively if \(v\) is falsy.
-Similarly, \(\psi^1_0\) and \(\psi^1_1\) sends a Belnap value \(v\) to
+The functions \(\psi^0_0\) and \(\psi^0_1\) send a value \(v\) to
+\(\belnapfalse\) or \(\belnaptrue\) respectively if \(v\) is falsy;
+\(\psi^1_0\) and \(\psi^1_1\) send a value \(v\) to
 \(\belnapfalse\) or \(\belnaptrue\) if \(v\) is truthy.
 Otherwise, they produce \(\bot\).
 
@@ -416,20 +416,22 @@ the syntactic realm, the map \(
 \iltikzfig{strings/category/f}[box=f_0,colour=comb]
 \) and \(
 \iltikzfig{strings/category/f}[box=f_1,colour=comb]
-\) are `syntactic' disjunctive normal forms respectively.
+\) are `syntactic' falsy and truthy disjunctive normal forms respectively.
 While the truthy circuit is just a regular disjunctive normal form, because
 the falsy operations are simulated by the opposite gate, it looks a bit
 different.
 
 \begin{definition}[Conjunction]
-    A Belnap circuit is a \emph{truthy conjunction} if it is \(
+    A Belnap circuit is a \emph{truthy conjunction} if it is the infinite
+    register \(
     \iltikzfig{circuits/components/waveforms/infinite-register}[val=\belnaptrue]
     \) or of the form \(
     \iltikzfig{circuits/algebraic/conjunction}[ccolour=seq]
     \), where \(
     \iltikzfig{strings/category/f}[box=f, colour=seq]
     \) is another truthy conjunction.
-    A Belnap circuit is a \emph{falsy conjunction} if it is \(
+    A Belnap circuit is a \emph{falsy conjunction} if it is the infinite
+    register \(
     \iltikzfig{circuits/components/waveforms/infinite-register}[val=\belnapfalse]
     \) or of the form \(
     \iltikzfig{circuits/algebraic/disjunction}[dcolour=seq]
@@ -439,7 +441,8 @@ different.
 \end{definition}
 
 \begin{definition}[Disjunctive normal form]
-    A Belnap circuit is in \emph{truthy disjunctive normal form} if it is \(
+    A Belnap circuit is in \emph{truthy disjunctive normal form} if it is the
+    eliminator \(
     \iltikzfig{strings/structure/monoid/init}[colour=comb]
     \) or of the form \(
     \iltikzfig{circuits/algebraic/disjunctive-normal}[ccolour=seq]
@@ -448,7 +451,8 @@ different.
     \) is in truthy disjunctive normal form and \(
     \iltikzfig{strings/category/f}[box=g, colour=seq]
     \) is a truthy conjunction.
-    A Belnap circuit is in \emph{falsy disjunctive normal form} if it is \(
+    A Belnap circuit is in \emph{falsy disjunctive normal form} if it is the
+    eliminator \(
     \iltikzfig{strings/structure/monoid/init}[colour=comb]
     \) or of the form \(
     \iltikzfig{circuits/algebraic/conjunctive-normal}[dcolour=seq]
@@ -464,7 +468,7 @@ different.
     be defined as the map sending a function \(\morph{f}{\valuetuple{m}}{\valuetuple{n}}\)
     to a circuit \[
         \iltikzfig{circuits/axioms/belnap/translation/exploded-form-cnf}[dom=m,cod=n,box=f]
-    \], where \(
+    \] where \(
     \iltikzfig{strings/category/f}[box=g_0,colour=comb]
     \) and \(
     \iltikzfig{strings/category/f}[box=g_0,colour=comb]
@@ -476,4 +480,24 @@ different.
     in the obvious way derived from the procedure detailed in this section.
 \end{definition}
 
-\todo[inline]{Implementation?}
+This means that the denotational semantics for sequential circuits can
+definitely be used for the Belnap interpretation \(\belnapinterpretation\).
+In particular, this means we can translate any Mealy machine in
+\(\mealy{\belnapinterpretation}\) (and subsequently, any stream function in
+\(\stream{\belnapinterpretation})\) into a syntactic circuit in
+\(\scirc{\belnapsignature}\).
+
+While the signature containing \(\andgate\), \(\orgate\) and \(\notgate\) gates
+is common, it is by no means the only useful one.
+For example, it is well known that the \(\nandgate\) gate on its own is also
+functionally complete.
+Since the other logic gates can be expressed in terms of \(\andgate\),
+\(\orgate\) and \(\notgate\) gates, the functional completeness result for
+\(\belnapinterpretation\) can be adapted for these other gate sets.
+
+Even when applying the above techniques to small concrete examples,
+the results quickly balloon in size and it is not feasible nor desirable to work
+them out by hand.
+A tool has been developed to generate Belnap expressions and
+visualise their circuits automatically, and it can be found at
+\url{https://github.com/georgejkaye/catcircs}.
