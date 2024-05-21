@@ -114,7 +114,7 @@ as the \(\bot\) and \(\top\) elements respectively.
 Now the primitives in the signature must be interpreted.
 Clearly they should be interpreted as functions between the values, but they
 cannot just be any function as they must respect the order on the value lattice.
-One should not be able to lose information by performing a computation!
+One should not be able to lose information by performing a computation.
 
 \begin{definition}
     Let \((A, \leq_A)\) and \((B, \leq_B)\) be partial orders.
@@ -123,8 +123,8 @@ One should not be able to lose information by performing a computation!
 \end{definition}
 
 One more conditions on the interpretation of primitives is that when all the
-inputs to a primitive are \(\bot\), then it should produce \(\bot\).
-We cannot produce information from nothing!
+inputs to a primitive are \(\bot\), then it should produce \(\bot\); we cannot
+produce information from nothing.
 
 \begin{definition}
     Let \(A,B\) be finite lattices, where \(\bot_A\) is the infimum of \(A\) and
@@ -356,8 +356,8 @@ inputs rather than individual values.
 Streams will serve as our inputs and outputs.
 The denotations of sequential circuits themselves will therefore be
 \emph{stream functions}, which consume and produce streams.
-However, just like with functions we cannot just claim that all streams are the
-denotations of sequential circuits!
+Just like with functions, we cannot claim that all streams are the
+denotations of sequential circuits.
 
 \begin{definition}[Causal stream function~\cite{rutten2006algebraic}]
     A stream function \(\morph{f}{\stream{A}}{\stream{B}}\) is \emph{causal} if
@@ -368,7 +368,7 @@ denotations of sequential circuits!
 Casuality is a form of continuity; a causal stream function is a stream function
 in which the \(i\)-th element of its output stream only depends on elements
 \(0\) through \(i\) inclusive of the input stream; it cannot look into the
-future!
+future.
 
 A neat consequence of causality is that it enables us to lift the stream
 operations of initial value and stream derivative to stream \emph{functions}.

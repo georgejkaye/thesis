@@ -11,7 +11,7 @@ Unfortunately, denotational semantics is not the be-all and end-all of circuit
 semantics.
 Crucially, it obscures the \emph{structure} of a circuit by compressing all the
 behaviour into one function: we don't know \emph{why} the circuit is behaving
-the way it does, just that something in the mire has caused it to do so!
+the way it does, just that something has caused it to do so.
 When it comes to circuit design, the structure of the circuit is of course
 important, as that is what is going to be printed onto silicon.
 Space is at a premium, so knowing how each part of a circuit contributes to the
@@ -125,8 +125,8 @@ such that reductions may be applied to their parent expressions and so on.
     \end{gather*}
 \end{example}
 
-Several readers will have immediately leapt onto the fact that this reduction
-sequence is not necessarily canonical!
+
+This reduction sequence is not necessarily canonical.
 Indeed, while there is one canonical proof tree for a given term there may be
 potentially many reduction sequences, but in an ideal reduction system this
 should not be an issue.
@@ -139,7 +139,7 @@ should not be an issue.
 \end{definition}
 
 While it is important that different reduction sequences should always converge,
-it is equally important that we aren't stuck performing reductions forever!
+it is equally important that we are not stuck performing reductions forever.
 
 \begin{definition}
     A reduction system is \emph{terminating} if, for every term \(e\), there is

@@ -3,7 +3,7 @@
 One of the major issues that comes with trying to reduce circuits in
 \(\scircsigma\) is the presence of feedback.
 Without proper attention, one could end up infinitely unfolding and we never
-produce any output values!
+produce any output values.
 The first portion of our operational semantics will revolve around defining some
 \emph{global transformations} to make a circuit suitable for reductions.
 
@@ -64,7 +64,7 @@ applying the \((\mealyeqn)\) rule, we can establish a word \(\listvar{s}\)
 representing the initial state of a circuit.
 This word is by no means unique: it depends on how the circuit is put into
 global trace-delay form.
-What matters most is that we \emph{can} do it!
+What matters most is that we \emph{can} do it.
 
 \begin{corollary}
     For any sequential circuit \(
@@ -84,7 +84,7 @@ instance of \emph{non-delay-guarded feedback}.
 
 \begin{remark}
     The mere mention of non-delay-guarded feedback may trigger alarm bells in
-    the minds of those well-acquainted with circuit design!
+    the minds of those well-acquainted with circuit design.
     It is often common in industry to enforce that circuits have no
     non-delay-guarded feedback; one might ask if we should also enforce this
     tenet in order to stick to `well-behaved' circuits.
@@ -93,7 +93,7 @@ instance of \emph{non-delay-guarded feedback}.
     feedback can still result in useful circuits as a clever way of sharing
     resources~\cite{malik1994analysis,riedel2004cyclic,mendler2012constructive}.
     The minimal circuit to implement a function often \emph{must} be
-    constructed using cycles~\cite{rivest1977necessity,riedel2003synthesis}!
+    constructed using cycles~\cite{rivest1977necessity,riedel2003synthesis}.
 \end{remark}
 
 \begin{example}\label{ex:cyclic-combinational}
@@ -206,7 +206,7 @@ We can port this over to the syntactic setting.
 
 Using these constructs we can replace a combinational circuit wrapped in
 non-delay-guarded feedback with a behaviourally equivalent circuit with no
-feedback at all!
+feedback at all.
 
 \begin{proposition}\label{prop:instant-feedback}
     The instant feedback rule \(
