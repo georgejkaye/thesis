@@ -184,8 +184,16 @@ by \emph{simulating} it and seeing what happens.
 We can simulate the subcomponents, but what does this mean for their composite?
 Without a guarantee of full compositionality, we have no reason to
 believe that connecting two well-behaved circuits together will result in
-another well-behaved circuit: for example, there is always the threat of
-creating a dreaded \emph{non-delay-guarded feedback loop}.
+another well-behaved circuit.
+
+Progress towards full compositionality for sequential circuits has been hampered
+by the presence of the dreaded \emph{non-delay-guarded feedback loop}, in which
+there exists a cycle in a circuit that does not pass through any memory elements.
+Non-delay-guarded feedback can lead to undefined behaviour; for example, what is
+the meaning of the following circuit?
+\[
+    \iltikzfig{circuits/instant-feedback/trand-no-value}
+\]
 
 Some approaches try to nullify this by considering only some `safe' subset of
 circuits which will always be well-behaved~\cite{christensen2021wire}, by
@@ -193,19 +201,21 @@ introducing some sort of `type system' on wires so that components may only be
 connected if their timings match up~\cite{nigam2023modular}, or by only
 considering certain kinds of composition~\cite{alekseyev2014compositional}.
 While these are useful perspectives, they still shy away from true full
-compositionality.
-Our goals are simple: we wish to be able to compose \emph{any} two circuits
-together without our reasoning falling apart.
-The result of the composition may not be a useful circuit, but we will still
-be able to see that this is the case.
-Allowing non-delay-guarded feedback has benefits too, in that it means that
-loops can be `yanked' in or out of wires, which may lead to optimisation
-potential.
+compositionality for sequential circuits.
+
+Even though there are indeed times when non-delay-guarded feedback can lead to
+unwanted behaviour, careful use can still result in useful circuits, and for
+this reason it should not be excluded from a fully compositional mathematical
+theory of sequential circuits.
+For example, the following intuitive equation on circuits can only be performed
+if such loops are permitted.
 \[
-    \iltikzfig{circuits/examples/yanking-lhs}
-    =
     \iltikzfig{circuits/examples/yanking-rhs}
+    =
+    \iltikzfig{circuits/examples/yanking-lhs}
 \]
+In larger circuits such an equation could unlock more optimisation potential.
+
 Non-delay-guarded feedback can also be used in clever ways to create sequential
 circuits that exhibit combinational behaviour.
 The following is a classic example~\cite{malik1994analysis} in which the
@@ -214,9 +224,14 @@ feedback is just used to share resources; the circuit acts as \(f \seq g\) or
 \[
     \iltikzfig{circuits/examples/cyclic-combinational/circuit}
 \]
+Such circuits, while not following conventional design methodology, are more
+efficient in terms of circuit size, and hence power consumption.
 
-We cannot claim that we are the first to bring mathematics to sequential
-circuits.
+\section{Categorical theories of digital circuits}
+
+While this thesis details our work to define a fuly compositional
+\emph{categorical} theory of digital circuits, this is by no means the first
+time sequential circuits have been given the mathematical treatment.
 \emph{Mealy machines}~\cite{mealy1955method}, the \emph{de facto} structure for
 specifying the behaviour of sequential circuits, are ancient and it is well
 known how they should be composed~\cite{ginzburg2014algebraic}.
@@ -227,7 +242,7 @@ we are keen to preserve the link between structure and behaviour.
 
 While not explicitly categorical, the idea of representing circuits as
 mathematical expressions built up from primitive components was studied in the
-80s by Mike Gordon, who worked on
+80s by Gordon, who worked on
 \emph{denotational semantics for sequential machines}~\cite{gordon1980denotational}
 and used this idea to present
 \emph{a model of register transfer systems}~\cite{gordon1982model}.
