@@ -174,6 +174,8 @@ With string diagrams, it is possible to give talks about category theory without
 even mentioning categories at all; there have even been books written with this
 philosophy~\cite{coecke2018picturing}.
 
+
+
 \section{Compositionality and sequential circuits}
 
 One might argue that composition is already widespread in sequential circuit
@@ -227,9 +229,9 @@ feedback is just used to share resources; the circuit acts as \(f \seq g\) or
 Such circuits, while not following conventional design methodology, are more
 efficient in terms of circuit size, and hence power consumption.
 
-\section{Categorical theories of digital circuits}
+\section{Theories of digital circuits}
 
-While this thesis details our work to define a fuly compositional
+While this thesis details a fully compositional
 \emph{categorical} theory of digital circuits, this is by no means the first
 time sequential circuits have been given the mathematical treatment.
 \emph{Mealy machines}~\cite{mealy1955method}, the \emph{de facto} structure for
@@ -250,22 +252,25 @@ Gordon subsequently noted that \emph{higher order logic} would make a good fit
 for a hardware description language~\cite{gordon1985why}, and this has become
 a ubiquitous concept in formal verification of hardware~\cite{gupta1992formal}.
 
-It was at the turn of the millennium that the ball really got rolling when it
-came to developing a \emph{categorical} theory of digital circuits.
-In the early noughties, Lafont presented an
-\emph{algebraic theory of boolean circuits}~\cite{lafont2003algebraic}, which
-already bears a great resemblance to the work presented in this thesis; circuits
+The first steps towards a categorical theory of digits took place at the turn of
+the millenium, when Lafont presented an
+\emph{algebraic theory of boolean circuits}~\cite{lafont2003algebraic}.
+This work already bears a great resemblance to the framework presented in this
+thesis; circuits
 are presented as morphisms in a symmetric monoidal category freely generated
 over a set of primitive logic gates.
-
-As the name might suggest, Lafont's work only considered circuits that
-implemented \emph{Boolean functions}; these circuits did not have any notion of
-delay or feedback.
-It was not until 2016 that these circuits were given the categorical treatment
-by Ghica and Jung~\cite{ghica2016categorical}, who were later joined
-by Lopez when considering how to use this for a graph-rewriting based
-operational semantics~\cite{ghica2017diagrammatic}.
-
+However, Lafont's work only considered circuits for \emph{Boolean functions};
+these circuits did not have any notion of delay or feedback.
+\[
+    \iltikzfig{circuits/examples/lafont}
+\]
+It was not until 2016 that \emph{sequential} circuits were given the
+categorical treatment by Ghica and Jung~\cite{ghica2016categorical}, who were
+later joined by Lopez when considering how to use this for a graph-rewriting
+based operational semantics~\cite{ghica2017diagrammatic}.
+\[
+    \iltikzfig{circuits/examples/sr-latch/circuit}
+\]
 While this thesis would not have come about without this foundational work, it
 was presented in a different manner: the categories of circuits were quotiented
 by some `natural laws' without consulting any sort of `baseline' mathematical
