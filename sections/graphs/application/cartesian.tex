@@ -1,0 +1,220 @@
+\section{Cartesian structure}
+
+One important class of categories with a traced comonoid structure are
+\emph{traced Cartesian}, or \emph{dataflow},
+categories~\cite{cazanescu1990new}.
+
+\begin{definition}[Cartesian category~\cite{fox1976coalgebras}]
+    A monoidal category is \emph{Cartesian} if its tensor is given by the
+    category-theoretic product.
+\end{definition}
+
+As the tensor is a product, every object in a Cartesian category is
+automatically equipped with a comonoid structure.
+An alternative way of viewing a Cartesian category is as a category with such
+comonoid structure in which the comonoid and the counit are \emph{natural}:
+morphisms can be `pushed' through them.
+
+\begin{theorem}[\cite{fox1976coalgebras}]
+    A category \(\mcc\) equipped with a commutative comonoid structure is
+    Cartesian if and only if the equations in \cref{fig:cartesian-equations}
+    hold for all \(\iltikzfig{strings/category/f}[box=f,dom=m,cod=n]\).
+\end{theorem}
+
+These two equations show how morphisms in Cartesian categories can be
+\emph{copied} and \emph{discarded}.
+Sequential circuits have a natural notion of copying and discarding data, so it
+makes sense that the semantic categories of circuits should be Cartesian.
+In \cite{ghica2016categorical}, the equational theory is used to show that this
+is the case, but with the stream semantics we have a much more elementary proof.
+
+\begin{theorem}
+    \(\streami\) is Cartesian.
+\end{theorem}
+\begin{proof}
+    The tensor in \(\streami\) is defined to be the Cartesian product.
+\end{proof}
+
+As the three semantic categories are isomorphic to \(\streami\) they are also
+Cartesian.
+
+\begin{corollary}
+    \(\scircsigmai\), \(\scircsigmaobs\) and \(\scircsigmae\) are Cartesian.
+\end{corollary}
+
+Traced Cartesian categories are important because they are closely linked to
+\emph{fixpoint operators}.
+Several equivalent axiomatisations for fixpoint operators
+exist~\cite{hasegawa1997recursion,simpson2000complete}; we use the equations
+presented in~\cite{hasegawa2009traced}.
+
+\begin{definition}[\cite{hasegawa2009traced}]
+    Let \(\mcc\) be a Cartesian category.
+    A \emph{Conway fixpoint operator} in \(\mcc\) is a family of functions \(
+    \morph{
+        (-)^{\dagger_{A,X}}
+    }{
+        \mcc(A \times X, X)
+    }{
+        \mcc(A, X)
+    }
+    \) drawn as \[
+        \left(\iltikzfig{strings/category/f-2-1}[colour=white,box=f,dom1=X,dom2=A,cod=X]\right)
+        \coloneqq
+        \iltikzfig{strings/structure/cartesian/fixpoint}
+    \] subject to the following equations:
+    \begin{gather*}
+        \iltikzfig{strings/structure/cartesian/fixpoint-lhs}
+        =
+        \iltikzfig{strings/structure/cartesian/fixpoint-rhs}
+        \qquad
+        \iltikzfig{strings/structure/cartesian/dinaturality-fixpoint-lhs}
+        =
+        \iltikzfig{strings/structure/cartesian/dinaturality-fixpoint-rhs}
+        \\[0.5em]
+        \iltikzfig{strings/structure/cartesian/naturality-fixpoint-lhs}
+        =
+        \iltikzfig{strings/structure/cartesian/naturality-fixpoint-rhs}
+        \qquad
+        \iltikzfig{strings/structure/cartesian/diagonal-fixpoint-lhs}
+        =
+        \iltikzfig{strings/structure/cartesian/diagonal-fixpoint-rhs}
+    \end{gather*}
+\end{definition}
+
+The notation we use for fixpoint operator is already evocative of a trace, and
+the two are indeed equivalent.
+
+\begin{theorem}[\cite{hasegawa1997recursion}, Thm.\ 3.1, \cite{hasegawa1999models}]
+    A category \(\mcc\) is traced if and only if it has a Conway operator.
+\end{theorem}
+\begin{proof}
+    This can be shown by constructing a Conway operator using a trace operator
+    and vice versa.
+    \begin{gather*}
+        (\iltikzfig{strings/category/f-2-1}[box=f,colour=white])^{\dagger_{X,A}}
+        =
+        \iltikzfig{strings/structure/cartesian/fixpoint-from-trace}
+        \qquad
+        \trace{X}[A][B]{\iltikzfig{strings/category/f-2-2}[box=f,colour=white]}
+        =
+        \iltikzfig{strings/structure/cartesian/trace-from-fixpoint}
+    \end{gather*}
+\end{proof}
+
+In addition to Hasegawa's proof, the above result was independently observed by
+Hyland, Bloom and Ésik \cite{bloom1993iteration}, and
+Ștefănescu \cite{stefanescu2000network}, the latter two before the notion of
+traced monoidal categories were formalised.
+
+We can express the data of a Cartesian category as an extension of the
+monoidal theory of commutative comonoids.
+
+\begin{definition}
+    The Cartesian monoidal theory \(
+    (\generators[\mathbf{Cart}], \equations[\mathbf{Cart}])
+    \) is defined as \(
+    \generators[\mathbf{Cart}] \coloneqq \generators[\ccomon]
+    \) and \(
+    \equations[\mathbf{Cart}]
+    \coloneqq
+    \generators[\ccomon] + (\cartnatcopyeqn) + (\cartnatdisceqn)
+    \) where \((\cartnatcopyeqn)\) and \((\cartnatdisceqn)\) are defined as in
+    \cref{fig:cartesian-equations}.
+\end{definition}
+
+The hypergraph interpretations of these rules for a generator \(e\)
+is shown in \cref{fig:cartesian-graphs}.
+
+\begin{remark}
+    The combination of Cartesian equations with the underlying compact closed
+    structure of \(\cspdhyp\) may prompt alarm bells, as a compact closed
+    category in which the tensor is the Cartesian product is trivial.
+    However, it is important to note that \(\cspdhyp\) is \emph{not} subject to
+    these equations: it is only a setting for performing graph
+    rewrites.
+\end{remark}
+
+\begin{figure}
+    \centering
+    \(
+    \equationdisplay{
+        \iltikzfig{strings/structure/cartesian/naturality-copy-lhs}[box=f,colour=white,dom=m,cod=n]
+    }{
+        \iltikzfig{strings/structure/cartesian/naturality-copy-rhs}[box=f,colour=white,dom=m,cod=n]
+    }{
+        \cartnatcopyeqn
+    }
+    \)
+    \qquad
+    \(
+    \equationdisplay{
+        \iltikzfig{strings/structure/cartesian/naturality-discard-lhs}[box=f,colour=white,dom=m]
+    }{
+        \iltikzfig{strings/structure/cartesian/naturality-discard-rhs}[dom=m]
+    }{
+        \cartnatdisceqn
+    }
+    \)
+    \caption{
+        Equations of the monoidal theory \(\mathbf{Cart}_\mathcal{C}\),
+        for generator \(f\)
+    }
+    \label{fig:cartesian-equations}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includestandalone{figures/graphs/dpo/cartesian/copy/rule}
+    \qquad
+    \raisebox{1em}{\includestandalone{figures/graphs/dpo/cartesian/discard/rule}}
+    \caption{
+        Interpretations of equations in \(\mathbf{Cart}_\mathcal{C}\) for
+        generator \(e\).
+    }
+    \label{fig:cartesian-graphs}
+\end{figure}
+
+Reasoning about Cartesian categories by using the hypergraph interpretation is
+beneficial because the equations of the comonoid no longer have to be applied
+explicitly, and one can focus on the two naturality equations
+\((\cartnatcopyeqn)\) and \((\cartnatdisceqn)\).
+
+\begin{example}[Unfolding]
+    Reasoning about fixpoints in a traced category can be performed using the
+    \emph{unfolding} rule.
+    \begin{gather*}
+        \iltikzfig{strings/traced/trace-rhs}[box=f,colour=white,dom=m,cod=n,trace=x]
+        =
+        \iltikzfig{circuits/examples/reasoning/unfolding/unfolding-1}[box=f,colour=white,dom=m,cod=n,trace=x]
+        =
+        \iltikzfig{circuits/examples/reasoning/unfolding/unfolding-2}[box=f,colour=white,dom=m,cod=n,trace=x]
+        =
+        \iltikzfig{circuits/examples/reasoning/unfolding/unfolding-3}[box=f,colour=white,dom=m,cod=n,trace=x]
+    \end{gather*}
+    In the syntactic setting, this requires the application of multiple
+    equations: the two counitality equations followed by the copy equation and
+    optionally some axioms of STMCs for housekeeping.
+    If we interpret this in the hypergraph setting, the comonoid equations
+    are absorbed into the notation so only one rule needs to be applied.
+
+    \begin{center}
+        \includestandalone{figures/graphs/dpo/unfolding/rewrite-1}
+    \end{center}
+\end{example}
+
+The dual notion of traced \emph{cocartesian}
+categories~\cite{bainbridge1976feedback} are also important in computer science:
+a trace in a traced cocartesian category corresponds to \emph{iteration} in the
+context of \emph{control flow}.
+The details of this section could also be applied to the cocartesian case by
+flipping all the directions and working with partial \emph{right}-monogamous
+cospans.
+
+However, attempting to combine the product and coproduct approaches for settings
+with a \emph{biproduct} would simply yield the category \(\cspdhyp\), a
+hypergraph category (\cref{prop:frobenius-map}) subject to the Frobenius
+equations in \cref{fig:frobenius-equations}.
+A category with biproducts is not necessarily subject to such equations, so this
+would not be a suitable approach.
+
