@@ -1,12 +1,11 @@
 \chapter{Introduction}
 
-Today's society has become dependent on the humble digital circuit, which works
-tirelessly inside our computers, homes, vehicles and many more.
-These days, digital circuits are so common, so fundamental, that one may doubt
-that there are \emph{any} gaps in our theoretical understanding of them.
+Today's society has become dependent on digital circuits, which are the brains
+of our computers, homes, vehicles and much more.
+These days, digital circuits are so common that one may doubt that there are
+\emph{any} gaps in our theoretical understanding of them.
 
-But this depends on the perspective one chooses to take.
-While the \emph{design} of increasingly more and more efficient circuits is a
+But while the \emph{design} of increasingly more efficient circuits is a
 well-trodden area, it is relatively self-contained.
 We wish to reframe our view of digital circuits in such a way that techniques
 that have been successfully applied in other fields, such as that of programming
@@ -71,13 +70,12 @@ at least some memory.
 How exactly these state registers change over time leads to another way
 to classify sequential circuits.
 A \emph{synchronous} circuit is one in which the state only changes in time with
-some global clock signal.
-Conversely, in \emph{asynchronous} circuits the state changes as soon as the
-inputs do.
-Such circuits are useful when speed is of the essence, but are harder to design
-because of race conditions between circuit components: if one gate is slightly
-faster then the circuit could temporarily assume an unexpected state and produce
-the incorrect output.
+some global clock signal, whereas in \emph{asynchronous} circuits the state
+changes as soon as the inputs do.
+The latter type of circuits are useful when speed is of the essence, but are
+harder to design because of race conditions between circuit components: if one
+gate is slightly faster then the circuit could temporarily assume an unexpected
+state and produce the incorrect output.
 For this reason, most practical circuits are restricted to the synchronous
 kind.
 
@@ -88,8 +86,7 @@ circuits.
 But `fully compositional' is also a phrase thrown around without much thought to
 its precise meaning.
 Here, we take full compositionality to mean that we can compose circuits
-without fear that we will somehow create something degenerate and leave our
-well-behaved setting.
+without fear that we will somehow create something degenerate.
 We should not have to perform any sort of semantic check or `peek inside' a
 circuit to find out if composition is permitted; we should be able to treat
 everything as a black box.
@@ -97,10 +94,10 @@ everything as a black box.
 Compositionality is an appealing paradigm to follow because it means we can
 split complicated and unwieldy circuits into simpler components.
 These components can themselves be split up into simpler components, and so on
-until we reach some sort of atomic components that can be divided no further.
-This means that if one defines the behaviour of these atomic components and
-how they interact with composition, it is possible to quickly establish the
-behaviour of some larger circuit \emph{inductively} by piecing things together.
+until we reach some indivisible atomic components.
+If one defines the behaviour of these atomic components and how they interact
+with composition, it is possible to quickly establish the behaviour of some
+larger circuit \emph{inductively} by piecing things together.
 \[
     \iltikzfig{strings/compositional/example-0}
     =
@@ -108,6 +105,7 @@ behaviour of some larger circuit \emph{inductively} by piecing things together.
     =
     \iltikzfig{strings/compositional/example-2}
 \]
+
 In the above example, we can define the behaviour of the large component \(f\)
 by defining the behaviour of the two small components \(g\) and \(k\), along
 with what it means to compose horizontally and vertically.
@@ -125,10 +123,9 @@ compositionality, it is important to establish a rigorous mathematical
 foundation to determine what it means to compose and the properties that
 arise from it; to do this, we turn to the field of
 \emph{category theory}~\cite{maclane1978categories}.
-Category theory is the study of \emph{categories} which contain \emph{objects}
-and \emph{morphisms} (`arrows') between them.
-The only enforced properties are that any two morphisms \(f\) and \(g\) can be
-composed to make a new morphism \(f \seq g\) in an
+A \emph{category} is made up of \emph{objects} and \emph{morphisms} (`arrows')
+between them; the only required properties are that any two morphisms \(f\) and
+\(g\) can be composed to make a new morphism \(f \seq g\) in an
 associative manner (\((f \seq g) \seq h = f \seq (g \seq h)\)), and that every
 object \(A\) has a special \emph{identity} morphism \(\id[A]\) that is
 \emph{unital} (\(\id \seq f = f = f \seq \id\)).
@@ -199,8 +196,8 @@ believe that connecting two well-behaved circuits together will result in
 another well-behaved circuit.
 
 Progress towards full compositionality for sequential circuits has been hampered
-by the presence of the dreaded \emph{non-delay-guarded feedback loop}, in which
-there exists a cycle in a circuit that does not pass through any memory elements.
+by the presence of the dreaded \emph{non-delay-guarded feedback loop}; a cycle
+that does not pass through any memory elements.
 Non-delay-guarded feedback can lead to undefined behaviour; for example, what is
 the meaning of the following circuit?
 \[
@@ -216,10 +213,9 @@ While these are useful perspectives, they still shy away from true full
 compositionality for sequential circuits.
 
 Even though there are indeed times when non-delay-guarded feedback can lead to
-unwanted behaviour, careful use can still result in useful circuits, and for
-this reason it should not be excluded from a fully compositional mathematical
-theory of sequential circuits.
-For example, the following intuitive equation on circuits can only be performed
+unwanted behaviour, careful use can still result in useful circuits, so it
+should not be excluded from our mathematical theory of sequential circuits.
+For example, the following equation on circuits can only be performed
 if such loops are permitted.
 \[
     \iltikzfig{circuits/examples/yanking-rhs}
@@ -284,7 +280,8 @@ based operational semantics~\cite{ghica2017diagrammatic}.
 Here, sequential circuits were modelled as morphisms in a
 \emph{symmetric traced monoidal category}, a symmetric monoidal category
 extended with a \emph{trace operator}.
-For sequential circuits, the trace operator models \emph{feedback}.
+In the context of sequential circuits, the trace operator models
+\emph{feedback}.
 \[
     \trace{}{
         \iltikzfig{strings/category/f-2-2}[colour=white,box=f]
@@ -296,8 +293,8 @@ This marks a departure from many other recent works on compositional processes,
 such as the work on string diagrammatic
 \emph{signal flow theory}~\cite{bonchi2021survey} or analog
 circuits~\cite{boisseau2022string}.
-These works operate in a setting with a \emph{Frobenius} structure: a setting
-equipped with a commutative monoid \((
+These works operate in a setting with a \emph{Frobenius} structure equipped with
+a commutative monoid \((
 \iltikzfig{strings/structure/monoid/merge},
 \iltikzfig{strings/structure/monoid/init}
 )\) and a cocommutative comonoid \((
@@ -315,7 +312,7 @@ bidirectional and can be `bent' by using these primitive components.
     \coloneqq
     \iltikzfig{strings/structure/frobenius/cap}
 \]
-The Frobenius setting is appealing because even a feedback loop can be
+The Frobenius setting is appealing because a feedback loop can be
 constructed by piecing together tiles rather than having to use an explicit
 operation.
 \[
@@ -410,8 +407,8 @@ circuit can be expressed as one of these stream functions, and every such stream
 function can be mapped to a syntactic circuit which has the original stream
 function as its behaviour.
 
-Along the way, we also define a category of Mealy machines \(\mealyi\) lifted to
-work on lattices as a `bridge' between circuits and stream functions.
+Along the way, we also define a category \(\mealyi\)  of Mealy machines lifted
+to work on lattices as a `bridge' between circuits and stream functions.
 As well as being essential for showing the soundness and completeness of the
 denotational semantics, having this category of Mealy machines is nice to have
 in its own right, as it shows how existing circuit
@@ -437,13 +434,13 @@ which, combined with a generalisation of the previous reduction procedure to
 work on open circuits, means that any circuit applied to some inputs can be
 reduced in order to determine its outputs and next state.
 
-As a result of this, we also present a formal notion of
+As a result of this, we also present a new formal notion of
 \emph{observational equivalence} on sequential circuits, and show that it is the
 correct one using the well-known universal property that it is the largest
 adequate congruence relation~\cite{gordon1998operational}.
 By quotienting \(\scircsigma\) by observational equivalence we obtain another
 semantic category of circuits \(\scircsigmaobs\).
-By establishing an isomorphism between \(\scircsigmai\) and \(\scircsigmaobs\)
+By establishing an isomorphism between \(\scircsigmai\) and \(\scircsigmae\)
 we show that the operational semantics is also sound and complete: two circuits
 have the same behaviour as stream functions if and only if they reduce to the
 same outputs.
