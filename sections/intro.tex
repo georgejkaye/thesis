@@ -271,6 +271,28 @@ based operational semantics~\cite{ghica2017diagrammatic}.
 \[
     \iltikzfig{circuits/examples/sr-latch/circuit}
 \]
+Here, sequential circuits were modelled as morphisms in a
+\emph{symmetric traced monoidal category}, a symmetric monoidal category
+extended with a \emph{trace operator}.
+For sequential circuits, the trace operator models \emph{feedback}.
+\[
+    \trace{}{
+        \iltikzfig{strings/category/f-2-2}[colour=white,box=f]
+    }
+    =
+    \iltikzfig{strings/traced/trace-rhs}[colour=white,box=f]
+\]
+This marks a departure from many other recent works on compositional processes,
+such as the work on string diagrammatic
+\emph{signal flow theory}~\cite{bonchi2021survey} or analog
+circuits~\cite{boisseau2022string}.
+These works operate in a setting with a \emph{Frobenius} structure: a particular
+interaction of a commutative monoid and a cocommutative comonoid.
+In such a setting, feedback is constructed from primitive components:
+\[
+    \iltikzfig{strings/traced/trace-from-product}
+\]
+
 While this thesis would not have come about without this foundational work, it
 was presented in a different manner: the categories of circuits were quotiented
 by some `natural laws' without consulting any sort of `baseline' mathematical
@@ -313,35 +335,59 @@ include an extended case study into circuits constructed from
 Boolean logic containing the usual \(\andgate\), \(\orgate\) and \(\notgate\)
 gates.
 
+\begin{figure}
+    \centering
+    \includestandalone{figures/circuits/map}
+    \caption{Categories of digital circuits}
+    \label{fig:circuits-map}
+\end{figure}
+
+\subsubsection{Syntax of sequential circuits}
+
+Previously, the syntax and semantics of digital circuits were confusingly
+intermingled, with components, equations, and extensional equivalence defined
+all in one go.
+We take a more modular approach, in which we first define the syntactic
+categories \(\ccircsigma\) of \emph{combinational} circuits and \(\scircsigma\)
+of \emph{sequential} circuits.
+These are categories in which we can construct circuit morphisms; the three
+semantic theories that we will present next provide different ways of
+\emph{quotienting} this category in order to identify circuits with the same
+behaviour under some interpretation.
+
 \subsubsection{Denotational semantics}
 
-While the previous circuits work discussed assigning semantics to circuits
-of circuits in terms of streams, soundness and completeness of this model was
-not considered.
+While the previous circuits work discussed assigning semantics to circuits in
+terms of streams, soundness and completeness of this model was not considered.
 It was not even deemed important enough to appear in the conference version of
 the paper, only being examined in detail in the arXiv
 preprint~\cite{ghica2017diagrammatica}.
 Here we present a denotational semantics for sequential circuits as
-\emph{stream functions} with certain properties using a traced PROP morphism
-mapping syntax to semantics.
+\emph{stream functions} with certain properties.
 This denotational semantics is sound and complete in that every syntactic
 circuit can be expressed as one of these stream functions, and every such stream
 function can be mapped to a syntactic circuit which has the original stream
 function as its behaviour.
 
-Along the way, we also define a traced PROP of Mealy machines lifted to work on
-lattices as a `bridge' between circuits and stream functions.
+Along the way, we also define a category of Mealy machines \(\mealyi\) lifted to
+work on lattices as a `bridge' between circuits and stream functions.
 As well as being essential for showing the soundness and completeness of the
 denotational semantics, having this category of Mealy machines is nice to have
 in its own right, as it shows how existing circuit
 methodologies~\cite{kohavi2009switching} are compatible with our rigorous
 mathematic framework.
 
+Circuits that map to the same stream function are called
+\emph{denotationally equivalent}.
+By quotienting \(\scircsigma\) by denotational equivalence we obtain a category
+\(\scircsigmai\); this is the category against which we will compare our next
+two semantic theories.
+
 \subsubsection{Operational semantics}
 
-The previous work on circuits was primarily motivated by creating an operational
-semantics for digital circuits, bringing techniques from software to the realm
-of hardware.
+The original motivation for a categorical theory of circuits was to create an
+\emph{operational semantics} for digital circuits, bringing techniques from
+software to hardware.
 While such a system was presented in~\cite{ghica2017diagrammatic}, this only
 worked on \emph{closed} circuits with no \emph{non-delay-guarded feedback}.
 One of the main contributions of this section is a novel reduction rule for
@@ -354,18 +400,26 @@ As a result of this, we also present a formal notion of
 \emph{observational equivalence} on sequential circuits, and show that it is the
 correct one using the well-known universal property that it is the largest
 adequate congruence relation~\cite{gordon1998operational}.
+By quotienting \(\scircsigma\) by observational equivalence we obtain another
+semantic category of circuits \(\scircsigmaobs\).
+By establishing an isomorphism between \(\scircsigmai\) and \(\scircsigmaobs\)
+we show that the operational semantics is also sound and complete: two circuits
+have the same behaviour as stream functions if and only if they reduce to the
+same outputs.
 
 \subsubsection{Algebraic semantics}
 
-One of the confusing points of the original work on circuits was the category
-of circuits was quotiented by certain equations that `felt right'.
-In the end these equations were not enough to show the desired results,
-so additional quotients of `extensional equivalence' were used to add in the
+The previous framework of digital circuits was presented as an
+\emph{algebraic semantics}: the category of circuits was quotiented by certain
+`natural laws', which were stated as axioms rather than being derived from any
+mathematical model.
+These equations were not actually enough to show the desired results, so
+additional quotients of `extensional equivalence' were used to add in the
 remaining equalities.
 
 In this thesis our equational theory is guided by the stream semantics,
-building up to a sound and complete algebraic semantics for circuits without
-having to add any arbitrary quotients.
+building up to an algebraic semantics for circuits without having to add any
+arbitrary quotients.
 We try to stick to standard equations on algebraic structures and small `local'
 equations detailing the interactions on individual generators, but the nature of
 digital circuits means that some larger circuits including \emph{context} are
@@ -373,13 +427,26 @@ necessary to include.
 The main result is showing the equations suffice to bring any circuit to a
 pseudo-normal form.
 
+Quotienting \(\scircsigma\) by these equations gives us our last semantic
+category \(\scircsigmae\); establishing an isomorphism between \(\scircsigmai\)
+and \(\scircsigmaobs\) shows that the algebraic semantics is sound and complete:
+two circuits have the same behaviour as stream functions if and only if they
+can be translated into each other using the equations.
+
 \subsection{Graph Rewriting for Digital Circuits}
+
+\begin{figure}
+    \centering
+    \includestandalone{figures/graphs/roadmap}
+    \caption{Categories of terms and cospans of hypergraphs}
+    \label{fig:hypergraphs-map}
+\end{figure}
 
 While this work marks the first time the semantics of sequential digital
 circuits have been given a rigorous mathematical treatment, it is not really
 feasible to apply the techniques to anything more than toy circuits by hand;
-trying to apply the techniques to actual, practical, circuits would quickly lead
-to someone having a very bad time.
+trying to manually apply the techniques to actual, practical, circuits would
+quickly become impractical.
 Instead it is desirable to have a computer deal with all the hard work
 for us and reason \emph{automatically}.
 To do this, we need to represent circuits \emph{combinatorially} as graphs.
@@ -392,8 +459,16 @@ These had several drawbacks, such as the need to reason modulo
 adhesive.
 In the second part of the thesis, we extend more recent work on
 \emph{hypergraph string diagram rewriting}~\cite{bonchi2022string,bonchi2022stringa,bonchi2022stringb}
-so we can apply it to sequential digital circuits; to be precise, we adapt it
-for settings with a \emph{traced comonoid} structure.
+so we can apply it to sequential digital circuits.
+
+The existing work showed how terms in a freely generated symmetric monoidal
+category \(\smcsigma\) equipped with a
+\emph{special commutative Frobenius structure} \(\frob\) could be interpreted as
+morphisms in a category of
+\emph{cospans of (monogamous) hypergraphs} \(\cspdhyp\).
+We extend this work for terms in a freely generated symmetric \emph{traced}
+monoid category \(\stmcsigma\) equipped with a
+\emph{commutative comonoid structure} \(\ccomon\).
 Using graph rewriting, we can express the operational and algebraic semantics
 in a language that is easy for computers can understand and reason with, opening
 up the possibility for automatic reasoning about complex, actually useful,
