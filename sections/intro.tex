@@ -12,13 +12,13 @@ We wish to reframe our view of digital circuits in such a way that techniques
 that have been successfully applied in other fields, such as that of programming
 languages, can be applied here also.
 To see where the parallels lie between digital circuits and other areas,
-we need a foundational, mathematically rigorous theory for the former.
+we need a foundational, mathematically rigorous theory.
 Unfortunately, such a theory has thus far eluded us.
 
 \section{Synchronous sequential circuits}
 
-To define such a mathematical theory of digital circuits we must be precise
-about what we mean.
+To define a mathematical theory for digital circuits we must be precise about
+what we mean.
 The term \emph{circuit} (or \emph{network}) is often used as a blanket term
 for a system constructed by connecting wires between primitive components.
 Even when restricting to \emph{electronic} circuits there are different flavours
@@ -72,7 +72,7 @@ How exactly these state registers change over time leads to another way
 to classify sequential circuits.
 A \emph{synchronous} circuit is one in which the state only changes in time with
 some global clock signal.
-Conversely, in \emph{asynchronous} circuits the state changesas soon as the
+Conversely, in \emph{asynchronous} circuits the state changes as soon as the
 inputs do.
 Such circuits are useful when speed is of the essence, but are harder to design
 because of race conditions between circuit components: if one gate is slightly
@@ -83,10 +83,10 @@ kind.
 
 \section{Compositionality and category theory}
 
-The first thing to pin down here is, of course, what does it mean for a theory
-to be \emph{fully} compositional?
-It is a term often thrown around without much thought to its precise meaning,
-not least by the author.
+Our goal is a \emph{fully compositional} theory of synchronous sequential
+circuits.
+But `fully compositional' is also a phrase thrown around without much thought to
+its precise meaning.
 Here, we take full compositionality to mean that we can compose circuits
 without fear that we will somehow create something degenerate and leave our
 well-behaved setting.
@@ -94,14 +94,26 @@ We should not have to perform any sort of semantic check or `peek inside' a
 circuit to find out if composition is permitted; we should be able to treat
 everything as a black box.
 
-Compositionality is an appealing paradigm to follow because, rather than dealing
-with complicated and unwieldy circuits, we can split them up into simpler
-components.
-These components can themselves be split up into simpler components and so on
+Compositionality is an appealing paradigm to follow because it means we can
+split complicated and unwieldy circuits into simpler components.
+These components can themselves be split up into simpler components, and so on
 until we reach some sort of atomic components that can be divided no further.
 This means that if one defines the behaviour of these atomic components and
 how they interact with composition, it is possible to quickly establish the
 behaviour of some larger circuit \emph{inductively} by piecing things together.
+\[
+    \iltikzfig{strings/compositional/example-0}
+    =
+    \iltikzfig{strings/compositional/example-1}
+    =
+    \iltikzfig{strings/compositional/example-2}
+\]
+In the above example, we can define the behaviour of the large component \(f\)
+by defining the behaviour of the two small components \(g\) and \(k\), along
+with what it means to compose horizontally and vertically.
+To prove properties about \(f\), we can prove properties about \(g\) and \(k\)
+and verify if composition \emph{preserves} these properties.
+
 Composition is not even restricted to the mathematical realm; it is generally
 considered good practice to write programs in terms of small, easily reusable
 pieces that can be pieced together by composing functions, which is why
@@ -113,8 +125,8 @@ compositionality, it is important to establish a rigorous mathematical
 foundation to determine what it means to compose and the properties that
 arise from it; to do this, we turn to the field of
 \emph{category theory}~\cite{maclane1978categories}.
-As one might expect, category theory is the study of \emph{categories} which
-contain \emph{objects} and \emph{morphisms} (`arrows') between them.
+Category theory is the study of \emph{categories} which contain \emph{objects}
+and \emph{morphisms} (`arrows') between them.
 The only enforced properties are that any two morphisms \(f\) and \(g\) can be
 composed to make a new morphism \(f \seq g\) in an
 associative manner (\((f \seq g) \seq h = f \seq (g \seq h)\)), and that every
@@ -150,7 +162,7 @@ up more complicated terms.
     g
 \]
 
-Large term can be built up compositionally in this way, but the one-dimensional
+While complex terms can be built this way, the one-dimensional
 syntactic notation quickly becomes unwieldy and confusing.
 Fortunately, symmetric monoidal categories admin an intuitive graphical notation
 known as \emph{string diagrams}, in which generators are drawn as boxes connected
@@ -160,20 +172,18 @@ swapping over wires.
     \iltikzfig{strings/example-smc}
 \]
 
-While string diagrams do not add any more computational power to
-standard one-dimensional reasoning, they are
+String diagrams do not add any more computational power to
+standard one-dimensional reasoning, but they are
 immensely beneficial because the categorical axioms of associativity and
 unitality are `absorbed' by the notation: two morphisms are equal if and only if
 their string diagrams are isomorphic~\cite{kelly1980coherence,kissinger2014abstract}.
-This makes proofs far less bureaucratic, meaning that the mathematician need
-only focus on the non-trivial steps without having to constantly rearrange the
-bracketing of a term.
-As a useful aside, they also make the work more approachable and easier to
-explain to non-mathematicians.
-With string diagrams, it is possible to give talks about category theory without
-even mentioning categories at all; there have even been books written with this
-philosophy~\cite{coecke2018picturing}.
-
+This makes proofs far less bureaucratic, as one can focus on the non-trivial
+steps without having to constantly rearrange the bracketing of a term.
+String diagrams also make the work more approachable and easier to explain to
+non-mathematicians.
+Using the diagrammatic approach it is possible to give talks about category
+theory without mentioning categories at all; there have even been books written
+with this philosophy~\cite{coecke2018picturing}.
 
 
 \section{Compositionality and sequential circuits}
@@ -286,22 +296,52 @@ This marks a departure from many other recent works on compositional processes,
 such as the work on string diagrammatic
 \emph{signal flow theory}~\cite{bonchi2021survey} or analog
 circuits~\cite{boisseau2022string}.
-These works operate in a setting with a \emph{Frobenius} structure: a particular
-interaction of a commutative monoid and a cocommutative comonoid.
-In such a setting, feedback is constructed from primitive components:
+These works operate in a setting with a \emph{Frobenius} structure: a setting
+equipped with a commutative monoid \((
+\iltikzfig{strings/structure/monoid/merge},
+\iltikzfig{strings/structure/monoid/init}
+)\) and a cocommutative comonoid \((
+\iltikzfig{strings/structure/comonoid/copy},
+\iltikzfig{strings/structure/comonoid/discard}
+)\).
+The primary difference in such settings is that wires are implicitly
+bidirectional and can be `bent' by using these primitive components.
+\[
+    \iltikzfig{strings/compact-closed/cup}
+    \coloneqq
+    \iltikzfig{strings/structure/frobenius/cup}
+    \quad
+    \iltikzfig{strings/compact-closed/cap}
+    \coloneqq
+    \iltikzfig{strings/structure/frobenius/cap}
+\]
+The Frobenius setting is appealing because even a feedback loop can be
+constructed by piecing together tiles rather than having to use an explicit
+operation.
 \[
     \iltikzfig{strings/traced/trace-from-product}
 \]
+So why not opt for such a route for sequential circuits?
+One might think that the bidirectional nature of the wires already raises a
+problem, as digital circuits have a much more rigorous notion of input-output
+causality: they model \emph{functions} rather than \emph{relations}.
+But even in a Frobenius setting it is possible to restrict to the circuits with
+`left-to-right' flow, as illustrated in~\cite{bonchi2021survey}.
 
-While this thesis would not have come about without this foundational work, it
-was presented in a different manner: the categories of circuits were quotiented
-by some `natural laws' without consulting any sort of `baseline' mathematical
-model.
-Such laws could of course be tested experimentally, but to truly say we have a
-`sound and complete` theory we need a formal model to compare any new model
-against.
-
-\todo[inline]{Traced vs compact closed}
+The actual problem arises from the construction of the trace from smaller
+components; since circuits have a notion of \emph{copying}, this is
+fundamentally incompatible with the Frobenius structure.
+\[
+    \iltikzfig{strings/traced/trace-from-product}
+    =
+    \iltikzfig{strings/traced/trace-from-product-1}
+    =
+    \iltikzfig{strings/traced/trace-from-product-2}
+    =
+    \iltikzfig{strings/traced/trace-from-product-bialg}
+\]
+For this reason, any feedback loop on circuits needs to be constructed as one
+operation.
 
 \section{Contributions}
 
@@ -334,6 +374,7 @@ include an extended case study into circuits constructed from
 \emph{Belnap logic gates}~\cite{belnap1977useful}, an extension of traditional
 Boolean logic containing the usual \(\andgate\), \(\orgate\) and \(\notgate\)
 gates.
+An overview of the categories involved can be seen in \cref{fig:circuits-map}.
 
 \begin{figure}
     \centering
@@ -460,6 +501,8 @@ adhesive.
 In the second part of the thesis, we extend more recent work on
 \emph{hypergraph string diagram rewriting}~\cite{bonchi2022string,bonchi2022stringa,bonchi2022stringb}
 so we can apply it to sequential digital circuits.
+An overview of the categories involved can be seen in
+\cref{fig:hypergraphs-map}.
 
 The existing work showed how terms in a freely generated symmetric monoidal
 category \(\smcsigma\) equipped with a
