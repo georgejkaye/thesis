@@ -1,1 +1,73 @@
-\section{Operational semantics via graph rewrite}
+\section{Sequential circuits}
+
+Of course, our intended application for graph rewriting modulo traced
+comonoid structure is that of sequential circuits.
+
+\begin{example}
+    Recall the SR NOR latch circuit from \cref{ex:sr-latch}.
+    This is interpreted as a partial left-monogamous cospan of hypergraphs as
+    follows, where the \(\wedge\), \(\neg\) and \(\delta\) edges respectively
+    represent the \(\orgate\) gate, \(\notgate\) gate, and delay.
+    \begin{center}
+        \begin{tikzcd}[bezier bounding box=true]
+            \iltikzfig{graphs/circuits/sr-latch/inputs}
+            \arrow{r}
+            &
+            \iltikzfig{graphs/circuits/sr-latch/latch}
+            &
+            \arrow{l}
+            \iltikzfig{graphs/circuits/sr-latch/outputs}
+        \end{tikzcd}
+    \end{center}
+\end{example}
+
+When performing the instant feedback reduction on terms, it can lead to a
+complicated term with the inputs forked multiple times in order to pass them to
+each of the copies of the original circuit.
+In the hypergraph representation, the forks are all absorbed into one.
+
+\begin{example}
+    \begin{center}
+        \includestandalone{figures/graphs/circuits/unroll/rewrite}
+    \end{center}
+\end{example}
+
+\begin{example}
+    The SR latch
+\end{example}
+
+
+
+\begin{remark}
+    One minor issue that arises when performing the circuit reduction arises
+    when considering the fork rewrite rule.
+    \begin{gather*}
+        \iltikzfig{circuits/axioms/fork-lhs}
+        \reduction
+        \iltikzfig{circuits/axioms/fork-rhs}
+        \qquad\qquad
+        \raisebox{-2em}{\includestandalone{figures/graphs/circuits/fork-rewrite/rule}}
+    \end{gather*}
+    Now consider the term \(
+    \iltikzfig{graphs/circuits/fork-rewrite/term-g}
+    \), which does not immediately appear to have any instances of the fork
+    rule.
+    However, if we consider the hypergraph interpretation, we can see that
+    modulo comonoid structure it \emph{is} possible to apply it.
+    \begin{gather*}
+        \includestandalone{figures/graphs/circuits/fork-rewrite/fork-rewrite}
+    \end{gather*}
+    This reduction has arisen due to the counitality of the comonoid.
+    \begin{gather*}
+        \iltikzfig{graphs/circuits/fork-rewrite/term-g}
+        =
+        \iltikzfig{graphs/circuits/fork-rewrite/term-g-1}
+        \reduction
+        \iltikzfig{graphs/circuits/fork-rewrite/term-h}
+    \end{gather*}
+    This means that care must be taken when performing the reduction procedure;
+    a fork rewrite is only productive if the vertex in the image of \(f\) has
+    out-degree strictly greater than \(1\).
+    If we arbitrarily any rewrite we find, we end up stuck in a loop of forking
+    and stubbing the same subcircuit.
+\end{remark}

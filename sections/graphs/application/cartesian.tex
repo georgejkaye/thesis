@@ -89,8 +89,7 @@ the two are indeed equivalent.
     A category \(\mcc\) is traced if and only if it has a Conway operator.
 \end{theorem}
 \begin{proof}
-    This can be shown by constructing a Conway operator using a trace operator
-    and vice versa.
+    This can be shown by constructing a one operator using the other.
     \begin{gather*}
         (\iltikzfig{strings/category/f-2-1}[box=f,colour=white])^{\dagger_{X,A}}
         =
@@ -100,12 +99,15 @@ the two are indeed equivalent.
         =
         \iltikzfig{strings/structure/cartesian/trace-from-fixpoint}
     \end{gather*}
+    As these constructions are inverses, the conditions are equivalent.
 \end{proof}
 
 In addition to Hasegawa's proof, the above result was independently observed by
 Hyland, Bloom and Ésik \cite{bloom1993iteration}, and
 Ștefănescu \cite{stefanescu2000network}, the latter two before the notion of
 traced monoidal categories were formalised.
+
+\subsection{Cartesian monoidal theories}
 
 We can express the data of a Cartesian category as an extension of the
 monoidal theory of commutative comonoids.
@@ -195,8 +197,8 @@ explicitly, and one can focus on the two naturality equations
     In the syntactic setting, this requires the application of multiple
     equations: the two counitality equations followed by the copy equation and
     optionally some axioms of STMCs for housekeeping.
-    If we interpret this in the hypergraph setting, the comonoid equations
-    are absorbed into the notation so only one rule needs to be applied.
+    If we use the hypergraph interpretation, the comonoid equations are absorbed
+    into the notation so only one rule needs to be applied.
 
     \begin{center}
         \includestandalone{figures/graphs/dpo/unfolding/rewrite-1}
@@ -213,8 +215,7 @@ cospans.
 
 However, attempting to combine the product and coproduct approaches for settings
 with a \emph{biproduct} would simply yield the category \(\cspdhyp\), a
-hypergraph category (\cref{prop:frobenius-map}) subject to the Frobenius
+hypergraph category subject to the Frobenius
 equations in \cref{fig:frobenius-equations}.
 A category with biproducts is not necessarily subject to such equations, so this
 would not be a suitable approach.
-
