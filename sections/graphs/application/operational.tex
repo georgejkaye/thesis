@@ -92,11 +92,14 @@ In the hypergraph representation, the forks are all absorbed into one.
     \end{center}
 \end{example}
 
+As the instant feedback rule eliminates non-delay-guarded feedback loops, there
+are no red tentacles in the right hand side of the rule or the rewritten graph.
+
 \begin{example}\label{ex:sr-latch-instant-feedback-graph}
     The interpretation of the SR latch from \cref{ex:sr-latch-mealy-graph}
     after being rewritten by the instant feedback rewrite is shown below.
     \begin{center}
-        \begin{tikzcd}[bezier bounding box=true, column sep=small]
+        \begin{tikzcd}[bezier bounding box=true]
             \iltikzfig{graphs/circuits/sr-latch/inputs}
             \arrow{r}
             &
@@ -107,6 +110,8 @@ In the hypergraph representation, the forks are all absorbed into one.
         \end{tikzcd}
     \end{center}
 \end{example}
+
+
 
 
 \begin{remark}
