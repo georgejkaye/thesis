@@ -99,7 +99,7 @@ are no red tentacles in the right hand side of the rule or the rewritten graph.
     The interpretation of the SR latch from \cref{ex:sr-latch-mealy-graph}
     after being rewritten by the instant feedback rewrite is shown below.
     \begin{center}
-        \begin{tikzcd}[bezier bounding box=true]
+        \begin{tikzcd}[bezier bounding box=true, column sep=tiny]
             \iltikzfig{graphs/circuits/sr-latch/inputs}
             \arrow{r}
             &
@@ -111,25 +111,61 @@ are no red tentacles in the right hand side of the rule or the rewritten graph.
     \end{center}
 \end{example}
 
+After performing the instant feedback rewrite, the graph is ready to receive
+inputs.
+As with the string diagrammatic procedure, we precompose the graph with some
+inputs and perform the streaming rewrite.
 
+\begin{example}\label{ex:sr-latch-streaming-graph}
+    We apply the inputs \(\belnaptrue\belnapfalse\) to the prepared SR latch
+    hypergraph from \cref{ex:sr-latch-instant-feedback-graph} by precomposing
+    some value registers.
+    \begin{center}
+        \begin{tikzcd}[bezier bounding box=true, column sep=tiny]
+            \iltikzfig{graphs/circuits/sr-latch/inputs}
+            \arrow{r}
+            &
+            \iltikzfig{graphs/circuits/sr-latch/applied}
+            &
+            \arrow{l}
+            \iltikzfig{graphs/circuits/sr-latch/outputs}
+        \end{tikzcd}
+    \end{center}
+    This graph is then rewritten by the streaming rule.
+    \begin{center}
+        \begin{tikzcd}[bezier bounding box=true, column sep=tiny]
+            \iltikzfig{graphs/circuits/sr-latch/inputs}
+            \arrow{r}
+            &
+            \iltikzfig{graphs/circuits/sr-latch/streamed}
+            &
+            \arrow{l}
+            \iltikzfig{graphs/circuits/sr-latch/outputs}
+        \end{tikzcd}
+    \end{center}
+\end{example}
+
+The final step is to propgate the values across the `top' subcircuit using the
+value rules, which have straightforward hypergraph interpretations.
+
+\begin{center}
+    \includestandalone{figures/graphs/circuits/gate/rule}
+    \quad
+    \includestandalone{figures/graphs/circuits/fork-rewrite/rule}
+    \\
+    \includestandalone{figures/graphs/circuits/join/rule}
+    \quad
+    \includestandalone{figures/graphs/circuits/stub/rule}
+\end{center}
 
 
 \begin{remark}
     One minor issue that arises when performing the circuit reduction arises
-    when considering the fork rewrite rule.
-    \begin{gather*}
-        \iltikzfig{circuits/axioms/fork-lhs}
-        \reduction
-        \iltikzfig{circuits/axioms/fork-rhs}
-        \qquad\qquad
-        \raisebox{-2em}{\includestandalone{figures/graphs/circuits/fork-rewrite/rule}}
-    \end{gather*}
-    Now consider the term \(
+    when considering the fork rule.
+    Consider the term \(
     \iltikzfig{graphs/circuits/fork-rewrite/term-g}
-    \), which does not immediately appear to have any instances of the fork
-    rule.
-    However, if we consider the hypergraph interpretation, we can see that
-    modulo comonoid structure it \emph{is} possible to apply it.
+    \); in the hypergraph interpretation it is possible to apply the fork rule
+    to this term.
     \begin{gather*}
         \includestandalone{figures/graphs/circuits/fork-rewrite/fork-rewrite}
     \end{gather*}
