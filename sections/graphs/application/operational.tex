@@ -3,7 +3,14 @@
 Of course, our intended application for graph rewriting modulo traced
 comonoid structure is that of sequential circuits.
 
-\begin{example}
+Much of the nuance that arises when using the operational semantics is the
+treatment of feedback, which may or may not be delay-guarded.
+In the hypergraph interpretation there is no distinguishing between a wire going
+`backwards' or a regular wire, so we must explicitly keep track of traces if we
+are going to need to use them in rewrites later.
+To represent this in our diagrams, we will colour any trace source tentacle red.
+
+\begin{example}\label{ex:sr-latch-interpretation}
     Recall the SR NOR latch circuit from \cref{ex:sr-latch}.
     This is interpreted as a partial left-monogamous cospan of hypergraphs as
     follows, where the \(\wedge\), \(\neg\) and \(\delta\) edges respectively
@@ -21,21 +28,85 @@ comonoid structure is that of sequential circuits.
     \end{center}
 \end{example}
 
+Since the transformation into global trace-delay form is purely through axioms
+of STMCs, in the hypergraph interpretation a circuit and corrsponding
+trace-delay form are isomorphic.
+
+\begin{example}
+    We may suggestively adjust the positioning of the nodes and vertices in
+    order to evoke an idea of global trace-delay form, but the graph
+    interpretation of the SR NOR latch from \cref{ex:sr-latch-interpretation}
+    remains the same.
+    Note that although the red tentacle no longer looks like a trace, we still
+    keep track of it with the red tentacle.
+    Moreover, even though the source of the delay looks like a trace in the
+    diagram, it is not marked as such; this reflects how this loop has been
+    introduced through yanking and as such is not a true non-delay-guarded
+    feedback loop.
+    \begin{center}
+        \begin{tikzcd}[bezier bounding box=true]
+            \iltikzfig{graphs/circuits/sr-latch/inputs}
+            \arrow{r}
+            &
+            \iltikzfig{graphs/circuits/sr-latch/global}
+            &
+            \arrow{l}
+            \iltikzfig{graphs/circuits/sr-latch/outputs}
+        \end{tikzcd}
+    \end{center}
+\end{example}
+
+The first rewrite that needs to be applied is the global Mealy reduction
+\((\mealyeqn)\).
+As this is a reduction parameterised over an arbitrary core \(
+\iltikzfig{strings/category/f-3-3}[box=f]
+\), it actually specifies a \emph{family} of rewrites, one for each possible
+core.
+
+\begin{example}\label{ex:sr-latch-mealy-graph}
+    Applying the Mealy rewrite to the SR latch graph produces the following
+    cospan.
+    \begin{center}
+        \begin{tikzcd}[bezier bounding box=true]
+            \iltikzfig{graphs/circuits/sr-latch/inputs}
+            \arrow{r}
+            &
+            \iltikzfig{graphs/circuits/sr-latch/mealy}
+            &
+            \arrow{l}
+            \iltikzfig{graphs/circuits/sr-latch/outputs}
+        \end{tikzcd}
+    \end{center}
+\end{example}
+
 When performing the instant feedback reduction on terms, it can lead to a
 complicated term with the inputs forked multiple times in order to pass them to
 each of the copies of the original circuit.
 In the hypergraph representation, the forks are all absorbed into one.
 
-\begin{example}
+\begin{example}\label{ex:instant-feedback-rewrite}
+    Below is an example showing how the instant feedback rewrite is applied to
+    a circuit in Mealy form containing one generator \(e\).
     \begin{center}
         \includestandalone{figures/graphs/circuits/unroll/rewrite}
     \end{center}
 \end{example}
 
-\begin{example}
-    The SR latch
+\begin{example}\label{ex:sr-latch-instant-feedback-graph}
+    The interpretation of the SR latch from \cref{ex:sr-latch-mealy-graph}
+    after being rewritten by the instant feedback rewrite is shown below.
+    \begin{center}
+        \begin{tikzcd}[bezier bounding box=true, column sep=small]
+            \iltikzfig{graphs/circuits/sr-latch/inputs}
+            \arrow{r}
+            &
+            \iltikzfig{graphs/circuits/sr-latch/instant-feedback}
+            &
+            \arrow{l}
+            \iltikzfig{graphs/circuits/sr-latch/outputs}
+        \end{tikzcd}
+    \end{center}
 \end{example}
-
 
 
 \begin{remark}
@@ -68,6 +139,6 @@ In the hypergraph representation, the forks are all absorbed into one.
     This means that care must be taken when performing the reduction procedure;
     a fork rewrite is only productive if the vertex in the image of \(f\) has
     out-degree strictly greater than \(1\).
-    If we arbitrarily any rewrite we find, we end up stuck in a loop of forking
-    and stubbing the same subcircuit.
+    If we arbitrarily any rewrite we find, we may end up stuck in a loop of
+    forking and stubbing the same subcircuit.
 \end{remark}
