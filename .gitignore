@@ -280,3 +280,6 @@ TSWLatexianTemp*
 
 # Makeindex log files
 *.lpz
+
+# generated svgs
+svg-inkscape

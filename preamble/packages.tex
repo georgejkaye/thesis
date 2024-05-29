@@ -136,12 +136,53 @@
 \usepackage{todonotes}
 
 \usepackage{standalone}
+\usepackage{svg}
 
 \usepackage{listings}
+\makeatletter
+\newcommand\BeraMonottfamily{%
+  \def\fvm@Scale{0.85}% scales the font down
+  \fontfamily{fvm}\selectfont% selects the Bera Mono font
+}
+\makeatother
+\definecolor{keyword}{HTML}{BA2CA3}
+\definecolor{string}{HTML}{D12F1B}
+\definecolor{comment}{HTML}{008400}
+\definecolor{function}{HTML}{4040ff}
+\lstdefinelanguage{swift}{
+  morekeywords={
+      open,catch,@escaping,nil,throws,func,if,then,else,for,in,while,do,switch,case,default,where,break,continue,fallthrough,return,
+      typealias,struct,class,enum,protocol,var,func,let,get,set,willSet,didSet,inout,init,deinit,extension,
+      subscript,prefix,operator,infix,postfix,precedence,associativity,left,right,none,convenience,dynamic,
+      final,lazy,mutating,nonmutating,optional,override,required,static,unowned,safe,weak,internal,
+      private,public,is,as,self,unsafe,dynamicType,true,false,nil,Type,Protocol,
+    },
+  keywordstyle={\color{keyword}},
+  keywordstyle=[2]{\color{function}},
+  otherkeywords={UseWire,UseSubcircuit,UseAnd,MakeSubcircuit,InterfaceWire,Feedback,UseDelay,UseOr},
+  morekeywords=[2]{UseWire,UseSubcircuit,UseAnd,MakeSubcircuit,InterfaceWire,Feedback,UseDelay,UseOr},
+  morecomment=[l]{//}, % l is for line comment
+  morecomment=[s]{/*}{*/}, % s is for start and end delimiter
+  morestring=[b]", % defines that strings are enclosed in double quotes
+  stringstyle=\color{string},
+  commentstyle=\color{comment},
+  breaklines=true,
+  escapeinside={\%*}{*)},
+  captionpos=b,
+  breakatwhitespace=true,
+  basicstyle=\linespread{1.0}\ttfamily\footnotesize, % https://tex.stackexchange.com/a/102728/129441
+}
+
+
 \lstset{
-  basicstyle=\ttfamily,
-  columns=fullflexible,
+  language=swift,
+  inputencoding=utf8,
+  extendedchars=\true,
+  basicstyle=\BeraMonottfamily\small,
+  showstringspaces=false, % lets spaces in strings appear as real spaces
+  columns=fixed,
   keepspaces=true,
+  belowskip=-0.5\baselineskip
 }
 
 \usepackage[
