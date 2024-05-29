@@ -7,6 +7,8 @@ To this end, the operational semantics for sequential circuits from
 \emph{hardware description language} in Cangjie, a new programming
 language developed by Huawei.
 
+\subsection{Design}
+
 Much like the theoretical background, circuits created using the tool are
 parameterised over a particular signature of components.
 Rather than designing circuits using the categorical style of juxtaposing
@@ -68,7 +70,7 @@ components.
 As usual, it is the \emph{sequential} circuits which are the most interesting.
 The tool can be used to insert delays and feedback loops to circuits.
 
-\begin{example}
+\begin{example}\label{ex:sr-latch-hdl}
     The SR NOR latch from \cref{ex:sr-latch} can be created
     \begin{lstlisting}
       let r = sig.UseWire(1)
@@ -76,16 +78,62 @@ The tool can be used to insert delays and feedback loops to circuits.
       let fb = sig.UseWire(1)
       let or1 = UseOr(r, fb)
       let not1 = UseNot(or1, delay: 1)
-      let or2 = UseOr(delay, s)
+      let or2 = UseOr(not1, s)
       let not2 = UseNot(or2)
       Feedback(not2, fb)
-      let circ = MakeSubcircuit(
+      let latch = MakeSubcircuit(
         [InterfaceWire(r, "R"), InterfaceWire(s, "S")],
-        [InterfaceWire(delay, "Q"), InterfaceWire(not2, "Q'")],
+        [InterfaceWire(not1, "Q"), InterfaceWire(not2, "Q'")],
         "SR NOR Latch"
       )
     \end{lstlisting}
     \begin{center}
         \scalebox{0.3}{\includesvg{figures/circuits/hdl/latch}}
+    \end{center}
+\end{example}
+
+\subsection{Evaluation}
+
+The real power of the tool comes from how it can automatically \emph{evaluate}
+circuits using a reduction procedure based on the operational semantics.
+As with the theory, it does this by first assembling circuits into Mealy form
+and eliminating non-delay-guarded feedback.
+
+\begin{example}
+    Before evaluation can be performed, the SR NOR latch defined in
+    \cref{ex:sr-latch} is automatically translated into Mealy form.
+    \begin{lstlisting}
+      let eval = Evaluator(latch)
+    \end{lstlisting}
+    \begin{center}
+        \scalebox{0.25}{\includesvg{figures/circuits/hdl/latch-mealy}}
+    \end{center}
+    Note that this is a simpler circuit than the corresponding string diagram
+    version in \cref{ex:sr-latch-unrolled} because the tool automatically
+    applies combinational reductions (in particular, the elimination rule) to
+    tidy up the resulting circuit.
+\end{example}
+
+Once the circuit is translated into the correct form, inputs can be provided
+and the circuit evaluated step-by-step.
+
+\begin{example}
+    We now provide inputs to the evaluator created in
+    \cref{ex:sr-latch-evaluator}.
+    \begin{lstlisting}
+      let eval = Evaluator(latch)
+      eval.PerformCycle([FALSE, TRUE])
+      eval.PerformCycle([FALSE, FALSE])
+      eval.PerformCycle([FALSE, FALSE])
+      eval.PerformCycle([TRUE, FALSE])
+    \end{lstlisting}
+    This automatically applies the streaming and value rules in order to
+    determine the output values over time.
+    The inputs detailed above produce the output stream \(
+    \bot\mathsf{f} \streamcons \mathsf{t}\mathsf{f} \streamcons
+    \mathsf{t}\mathsf{f} \streamcons \mathsf{f}\mathsf{t}
+    \), as expected.
+    \begin{center}
+        \scalebox{0.225}{\includesvg{figures/circuits/hdl/latch-outputs}}
     \end{center}
 \end{example}
