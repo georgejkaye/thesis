@@ -7,6 +7,8 @@ To this end, the operational semantics for sequential circuits from
 \emph{hardware description language} in Cangjie, a new programming
 language developed by Huawei.
 
+\todo[inline]{VHDL, Verilog, Hardcaml, Bluespec, Clash, Chisel}
+
 \subsection{Design}
 
 Much like the theoretical background, circuits created using the tool are
@@ -17,10 +19,10 @@ where the user manipulates wires and provides them as arguments to other
 components.
 
 \begin{example}
-    We will first demonstrate how to define the combinational half adder circuit
-    from \cref{ex:half-adder}.
-    For pedagogical purposes, we begin by defining an \(\xorgate\) gate.
-    \begin{lstlisting}
+  We will first demonstrate how to define the combinational half adder circuit
+  from \cref{ex:half-adder}.
+  For pedagogical purposes, we begin by defining an \(\xorgate\) gate.
+  \begin{lstlisting}
       let xorA = sig.UseWire(1)
       let xorB = sig.UseWire(1)
       let xorOr = UseOr(xorA, xorB)
@@ -33,16 +35,16 @@ components.
       )
     \end{lstlisting}
 
-    Once a subcircuit has been defined, a specification in Dot can be generated
-    and rendered using Graphviz.
+  Once a subcircuit has been defined, a specification in Dot can be generated
+  and rendered using Graphviz.
 
-    \begin{center}
-        \includesvg[scale=0.3]{figures/circuits/hdl/xor}
-    \end{center}
+  \begin{center}
+    \includesvg[scale=0.3]{figures/circuits/hdl/xor}
+  \end{center}
 
-    Using the \(\xorgate\) as a subcomponent, we can define the half adder.
+  Using the \(\xorgate\) as a subcomponent, we can define the half adder.
 
-    \begin{lstlisting}
+  \begin{lstlisting}
     let addA = sig.UseWire(1)
     let addB = sig.UseWire(1)
     let sum = UseSubcircuit(xor, [addA, addB])[0]
@@ -54,25 +56,25 @@ components.
     )
     \end{lstlisting}
 
-    The generated graphs have a hierarchical structure: because we defined the
-    \(\xorgate\) gate as a subcircuit, we can view it as a black box or
-    expand it.
+  The generated graphs have a hierarchical structure: because we defined the
+  \(\xorgate\) gate as a subcircuit, we can view it as a black box or
+  expand it.
 
-    \begin{center}
-        \includesvg[scale=0.3]{figures/circuits/hdl/add-0}
+  \begin{center}
+    \includesvg[scale=0.3]{figures/circuits/hdl/add-0}
 
-        \vspace{1em}
+    \vspace{1em}
 
-        \includesvg[scale=0.3]{figures/circuits/hdl/add-1}
-    \end{center}
+    \includesvg[scale=0.3]{figures/circuits/hdl/add-1}
+  \end{center}
 \end{example}
 
 As usual, it is the \emph{sequential} circuits which are the most interesting.
 The tool can be used to insert delays and feedback loops to circuits.
 
 \begin{example}\label{ex:sr-latch-hdl}
-    The SR NOR latch from \cref{ex:sr-latch} can be created
-    \begin{lstlisting}
+  The SR NOR latch from \cref{ex:sr-latch} can be created
+  \begin{lstlisting}
       let r = sig.UseWire(1)
       let s = sig.UseWire(1)
       let fb = sig.UseWire(1)
@@ -87,9 +89,9 @@ The tool can be used to insert delays and feedback loops to circuits.
         "SR NOR Latch"
       )
     \end{lstlisting}
-    \begin{center}
-        \scalebox{0.3}{\includesvg{figures/circuits/hdl/latch}}
-    \end{center}
+  \begin{center}
+    \scalebox{0.3}{\includesvg{figures/circuits/hdl/latch}}
+  \end{center}
 \end{example}
 
 \subsection{Evaluation}
@@ -100,40 +102,157 @@ As with the theory, it does this by first assembling circuits into Mealy form
 and eliminating non-delay-guarded feedback.
 
 \begin{example}
-    Before evaluation can be performed, the SR NOR latch defined in
-    \cref{ex:sr-latch} is automatically translated into Mealy form.
-    \begin{lstlisting}
+  Before evaluation can be performed, the SR NOR latch defined in
+  \cref{ex:sr-latch} is automatically translated into Mealy form.
+  \begin{lstlisting}
       let eval = Evaluator(latch)
     \end{lstlisting}
-    \begin{center}
-        \scalebox{0.25}{\includesvg{figures/circuits/hdl/latch-mealy}}
-    \end{center}
-    Note that this is a simpler circuit than the corresponding string diagram
-    version in \cref{ex:sr-latch-unrolled} because the tool automatically
-    applies combinational reductions (in particular, the elimination rule) to
-    tidy up the resulting circuit.
+  \begin{center}
+    \scalebox{0.25}{\includesvg{figures/circuits/hdl/latch-mealy}}
+  \end{center}
+  Note that this is a simpler circuit than the corresponding string diagram
+  version in \cref{ex:sr-latch-unrolled} because the tool automatically
+  applies combinational reductions (in particular, the elimination rule) to
+  tidy up the resulting circuit.
 \end{example}
 
 Once the circuit is translated into the correct form, inputs can be provided
 and the circuit evaluated step-by-step.
 
 \begin{example}
-    We now provide inputs to the evaluator created in
-    \cref{ex:sr-latch-evaluator}.
-    \begin{lstlisting}
-      let eval = Evaluator(latch)
-      eval.PerformCycle([FALSE, TRUE])
-      eval.PerformCycle([FALSE, FALSE])
-      eval.PerformCycle([FALSE, FALSE])
-      eval.PerformCycle([TRUE, FALSE])
-    \end{lstlisting}
-    This automatically applies the streaming and value rules in order to
-    determine the output values over time.
-    The inputs detailed above produce the output stream \(
-    \bot\mathsf{f} \streamcons \mathsf{t}\mathsf{f} \streamcons
-    \mathsf{t}\mathsf{f} \streamcons \mathsf{f}\mathsf{t}
-    \), as expected.
-    \begin{center}
-        \scalebox{0.225}{\includesvg{figures/circuits/hdl/latch-outputs}}
-    \end{center}
+  We now provide inputs to the evaluator created in
+  \cref{ex:sr-latch-evaluator}; recall that the first input is the
+  \textsf{R}eset input and the second is the \textsf{S}et input.
+  \begin{lstlisting}
+    let eval = Evaluator(latch)
+    eval.PerformCycle([FALSE, TRUE])
+    eval.PerformCycle([FALSE, FALSE])
+    eval.PerformCycle([TRUE, FALSE])
+    eval.PerformCycle([FALSE, FALSE])
+  \end{lstlisting}
+  This automatically applies the streaming and value rules in order to
+  determine the output values over time.
+  The inputs detailed above produce the output stream \(
+  \bot\mathsf{f} \streamcons \mathsf{t}\mathsf{f} \streamcons
+  \mathsf{t}\mathsf{f} \streamcons \mathsf{f}\mathsf{t}
+  \).
+  This is the expected output as the delay causes the outputs to be shifted back
+  one time-step, and subsequently the first output is underdefined.
+  \begin{center}
+    \includesvg[scale=0.225]{figures/circuits/hdl/latch-outputs}
+  \end{center}
+\end{example}
+
+\subsubsection{Cyclic combinational circuits}
+
+The use of the instant feedback rule means that the tool can also handle
+circuits with non-delay-guarded feedback that exhibit combinational behaviour.
+
+\begin{example}
+  Recall the cyclic combinational circuit from \cref{ex:cyclic-combinational}
+  containing two blackbox circuits \(f\) and \(g\), in which the control signal
+  dictates the order the two circuits are applied.
+  \begin{lstlisting}
+    // Input wires
+    let x = sig.UseWire(1)
+    let c = sig.UseWire(1)
+    // Wire from feedback
+    let feedback = sig.UseWire(1)
+    // Top half of the circuit
+    let muxa = UseMux2(s0: c, i0: x, i1: feedback)
+    let fbb = belnapSignature.AddBlackbox("F", [Port(1, "A")], [Port(1, "Z")])
+    let f = UseBlackbox(fbb, [muxa])[0]
+    // Bottom half of the circuit
+    let muxb = UseMux2(s0: c, i0: f, i1: x)
+    let gbb = belnapSignature.AddBlackbox("G", [Port(1, "A")], [Port(1, "Z")])
+    let g = UseBlackbox(gbb, [muxb])[0]
+    Feedback(g, feedback)
+    // Final multiplexer
+    let muxc = UseMux2(s0: c, i0: g, i1: f)
+    let cyclic = MakeSubcircuit(
+      [InterfaceWire(x, "x"), InterfaceWire(c, "c")],
+      [InterfaceWire(muxc, "z")],
+      "cyclic_combinational"
+    )
+  \end{lstlisting}
+  \begin{center}
+    \includesvg[scale=0.25]{figures/circuits/hdl/cyclic-combinational/circuit}
+  \end{center}
+  By providing input values we can verify that this circuit truly does have
+  combinational behaviour.
+  \begin{lstlisting}
+    let eval = Evaluator(sig, cyclic)
+    eval.PerformCycle([TRUE, TRUE])
+    eval.PerformCycle([TRUE, FALSE])
+  \end{lstlisting}
+  \begin{center}
+    \includesvg[scale=0.3]{figures/circuits/hdl/cyclic-combinational/reduced}
+  \end{center}
+\end{example}
+
+\subsection{Partial evaluation}
+
+One of the benefits of the graph-rewrite-based evaluation style is that it
+allows for \emph{partial evaluation}.
+The tool implements some of the strategies discussed in \cref{sec:partial}, such
+as tidying rules, shortcut rules, and uncertain values for reasoning with
+protocols.
+
+
+\begin{example}
+  Recall the circuit from \cref{ex:protocols}, which reduces to the identity
+  when the first input is fixed as either true or false.
+  This circuit can be designed as follows:
+  \begin{lstlisting}
+    let v = sig.UseWire(1)
+    let w = sig.UseWire(1)
+    let not = UseNot(v)
+    let or1 = UseOr(not, v)
+    let fb = sig.UseWire(1)
+    let or2 = UseOr(fb, or1)
+    let and = UseAnd(or2, w)
+    DelayGuardedFeedback(and, fb)
+    let circ = MakeSubcircuit(
+      [InterfaceWire(v, "A"), InterfaceWire(w, "B")],
+      [InterfaceWire(and, "Z")],
+      "circuit"
+    )
+  \end{lstlisting}
+  \begin{center}
+    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/circuit}
+  \end{center}
+  We apply some uncertain values and partially evaluate.
+  \begin{lstlisting}
+    let eval = PartiallyEvaluate(
+      sig, [GetVariable([TRUE, FALSE]), GetUnspecified(sig)], circ
+    )
+  \end{lstlisting}
+  \begin{center}
+    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-1}
+    \(\grewrite\)
+
+    \vspace{1em}
+
+    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-2}
+    \(\grewrite\)
+
+    \vspace{1em}
+
+    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-3}
+    \(\grewrite\)
+
+    \vspace{1em}
+
+    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-4}
+    \(\grewrite\)
+
+
+    \vspace{1em}
+
+    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-5}
+    \qquad
+    \(\grewrite\)
+    \qquad
+    \raisebox{1em}{\includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-6}}
+  \end{center}
 \end{example}
