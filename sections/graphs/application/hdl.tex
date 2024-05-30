@@ -96,17 +96,15 @@ The tool can be used to insert delays and feedback loops to circuits.
 
 \subsection{Evaluation}
 
-The real power of the tool comes from how it can automatically \emph{evaluate}
-circuits using a reduction procedure based on the operational semantics.
+Once circuits are designed, the tool can automatically \emph{reduce} them
+using a procedure based on the operational semantics from
+\cref{sec:operational}.
 As with the theory, it does this by first assembling circuits into Mealy form
 and eliminating non-delay-guarded feedback.
 
 \begin{example}
   Before evaluation can be performed, the SR NOR latch defined in
   \cref{ex:sr-latch} is automatically translated into Mealy form.
-  \begin{lstlisting}
-      let eval = Evaluator(latch)
-    \end{lstlisting}
   \begin{center}
     \scalebox{0.25}{\includesvg{figures/circuits/hdl/latch-mealy}}
   \end{center}
@@ -143,7 +141,7 @@ and the circuit evaluated step-by-step.
   \end{center}
 \end{example}
 
-\subsubsection{Cyclic combinational circuits}
+\subsection{Cyclic combinational circuits}
 
 The use of the instant feedback rule means that the tool can also handle
 circuits with non-delay-guarded feedback that exhibit combinational behaviour.
@@ -175,8 +173,9 @@ circuits with non-delay-guarded feedback that exhibit combinational behaviour.
       "cyclic_combinational"
     )
   \end{lstlisting}
+  This generates the following circuit:
   \begin{center}
-    \includesvg[scale=0.25]{figures/circuits/hdl/cyclic-combinational/circuit}
+    \includesvg[scale=0.275]{figures/circuits/hdl/cyclic-combinational/circuit}
   \end{center}
   By providing input values we can verify that this circuit truly does have
   combinational behaviour.
@@ -185,6 +184,8 @@ circuits with non-delay-guarded feedback that exhibit combinational behaviour.
     eval.PerformCycle([TRUE, TRUE])
     eval.PerformCycle([TRUE, FALSE])
   \end{lstlisting}
+  Due to the blackboxes, this circuit cannot be be reduced to a stream of output
+  values, but it can be reduced to an expression in terms of \(f\) and \(g\).
   \begin{center}
     \includesvg[scale=0.3]{figures/circuits/hdl/cyclic-combinational/reduced}
   \end{center}
@@ -228,31 +229,35 @@ protocols.
     )
   \end{lstlisting}
   \begin{center}
-    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-1}
+    \includesvg[scale=0.275]{figures/circuits/hdl/protocol/rewrite-1}
+    \quad
     \(\grewrite\)
 
     \vspace{1em}
 
     \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-2}
+    \quad
     \(\grewrite\)
 
     \vspace{1em}
 
     \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-3}
+    \quad
     \(\grewrite\)
 
     \vspace{1em}
 
     \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-4}
+    \quad
     \(\grewrite\)
 
 
     \vspace{1em}
 
     \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-5}
-    \qquad
+    \quad
     \(\grewrite\)
-    \qquad
+    \quad
     \raisebox{1em}{\includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-6}}
   \end{center}
 \end{example}
