@@ -4,10 +4,40 @@ We motivated graph rewriting for digital circuits as an avenue for
 \emph{automating} their reasoning.
 To this end, the operational semantics for sequential circuits from
 \cref{sec:operational} has been implemented into a
-\emph{hardware description language} in Cangjie, a new programming
+\emph{hardware description language} (HDL) in Cangjie, a new programming
 language developed by Huawei.
 
-\todo[inline]{VHDL, Verilog, Hardcaml, Bluespec, Clash, Chisel}
+\subsection{Types of HDLs}
+
+Designing the intricate circuits of today using pen and paper would be
+incredibly tedious and complicated.
+For this reason, \emph{hardware description languages}, programming languages
+specialised for designing hardware, are often employed to design circuits on a
+computer.
+
+A hardware description may be a completely bespoke language; this is the case
+with the two most commonly used HDLs: VHDL~\cite{ieeecomputersociety1988ieee}
+and Verilog~\cite{ieeecomputersociety1996ieee}.
+These two languages are quite different to traditional programming languages.
+As well as being able to construct circuits \emph{structurally} by piecing
+components together, behavioural descriptions
+can be specified in a \emph{dataflow} manner, in which constants are immediately
+propagated across the program upon updating, much like in a spreadsheet.
+This differs from the \emph{control flow} style of execution in ordinary
+programming languages, in which each line of code runs sequentially.
+
+Because they are so different to traditional programming languages, this can
+make VHDL and Verilog inpenetrable to outsiders.
+An alternative is to \emph{embed} a HDL into an already existing language.
+Choices of parent language include Haskell
+(Lava~\cite{bjesse1998lava}, Bluespec~\cite{nikhil2004bluespec}, Clash~\cite{kooijman2009haskell,baaij2010clash})
+OCaml (Hardcaml~\cite{ray2023hardcaml}), and Scala (Chisel~\cite{bachrach2012chisel}).
+Because these are primarily \emph{functional}, these HDLs are more structural in
+nature; circuits are created by composing functions together.
+
+We opted to follow the latter approach when implementing our theoretical
+framework into a hardware description language, avoiding the need to design a
+completely new language from scratch.
 
 \subsection{Design}
 
@@ -219,6 +249,7 @@ protocols.
       "circuit"
     )
   \end{lstlisting}
+  This produces the following circuit:
   \begin{center}
     \includesvg[scale=0.3]{figures/circuits/hdl/protocol/circuit}
   \end{center}
@@ -228,36 +259,38 @@ protocols.
       sig, [GetVariable([TRUE, FALSE]), GetUnspecified(sig)], circ
     )
   \end{lstlisting}
+  For each input provided, the tool prepends infinite waveforms containing the1
+  (potentially uncertain) waveforms.
   \begin{center}
     \includesvg[scale=0.275]{figures/circuits/hdl/protocol/rewrite-1}
-    \quad
-    \(\grewrite\)
-
-    \vspace{1em}
-
-    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-2}
-    \quad
-    \(\grewrite\)
-
-    \vspace{1em}
-
-    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-3}
-    \quad
-    \(\grewrite\)
-
-    \vspace{1em}
-
-    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-4}
-    \quad
-    \(\grewrite\)
-
-
-    \vspace{1em}
-
-    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-5}
-    \quad
-    \(\grewrite\)
-    \quad
-    \raisebox{1em}{\includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-6}}
   \end{center}
+  We can then visualise the reduction procedure step by step. First the
+  waveform is propagated over the \(\notgate\) gate:
+  \begin{center}
+    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-2}
+  \end{center}
+  As the inputs to the \(\orgate\) gate can only ever produce true, this can be
+  rewritten:
+  \begin{center}
+    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-3}
+  \end{center}
+  An \(\orgate\) gate with one input as true will always produce true, so this
+  can be replaced and its other input eliminated:
+  \begin{center}
+    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-4}
+  \end{center}
+  The delay can also be eliminated:
+  \begin{center}
+    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-5}
+  \end{center}
+  Finally, since an \(\andgate\) with a true input acts as the identity on the
+  other input, this can also be replaced:
+  \begin{center}
+    \includesvg[scale=0.3]{figures/circuits/hdl/protocol/rewrite-6}
+  \end{center}
+  This shows how the entire circuit can be automatically reduced to the
+  identity.
 \end{example}
+
+While this is just a toy example, the procedure can easily be applied to more
+complex circuits and potentially find optimisations.
