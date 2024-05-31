@@ -21,6 +21,8 @@ morphisms can be `pushed' through them.
     hold for all \(\iltikzfig{strings/category/f}[box=f,dom=m,cod=n]\).
 \end{theorem}
 
+\input{sections/graphs/application/floats/cartesian-equations}
+
 These two equations show how morphisms in Cartesian categories can be
 \emph{copied} and \emph{discarded}.
 Sequential circuits have a natural notion of copying and discarding data, so it
@@ -122,8 +124,17 @@ monoidal theory of commutative comonoids.
     \coloneqq
     \generators[\ccomon] + (\cartnatcopyeqn) + (\cartnatdisceqn)
     \) where \((\cartnatcopyeqn)\) and \((\cartnatdisceqn)\) are defined as in
-    \cref{fig:cartesian-equations}.
+    \cref{fig:cartesian-theory-equations}.
 \end{definition}
+
+\begin{remark}
+    Note that we do not need the two `coherence' Cartesian equations when
+    considering monoidal theories, because they follow immediately from the
+    construction of multiple-bit structures
+    (\cref{not:arbitrary-width-structure}).
+\end{remark}
+
+\input{sections/graphs/application/floats/cartesian-prop}
 
 The hypergraph interpretations of these rules for a generator \(e\)
 is shown in \cref{fig:cartesian-graphs}.
@@ -136,34 +147,6 @@ is shown in \cref{fig:cartesian-graphs}.
     these equations: it is only a setting for performing graph
     rewrites.
 \end{remark}
-
-\begin{figure}
-    \centering
-    \(
-    \equationdisplay{
-        \iltikzfig{strings/structure/cartesian/naturality-copy-lhs}[box=f,colour=white,dom=m,cod=n]
-    }{
-        \iltikzfig{strings/structure/cartesian/naturality-copy-rhs}[box=f,colour=white,dom=m,cod=n]
-    }{
-        \cartnatcopyeqn
-    }
-    \)
-    \qquad
-    \(
-    \equationdisplay{
-        \iltikzfig{strings/structure/cartesian/naturality-discard-lhs}[box=f,colour=white,dom=m]
-    }{
-        \iltikzfig{strings/structure/cartesian/naturality-discard-rhs}[dom=m]
-    }{
-        \cartnatdisceqn
-    }
-    \)
-    \caption{
-        Equations of the monoidal theory \(\mathbf{Cart}_\mathcal{C}\),
-        for generator \(f\)
-    }
-    \label{fig:cartesian-equations}
-\end{figure}
 
 \begin{figure}
     \centering
