@@ -1,15 +1,16 @@
 \chapter{Introduction}
 
-Today's society has become dependent on digital circuits, which are the brains
+Today's society has become dependent on digital
+circuits~\cite{katz2005contemporary}, which are the brains
 of our computers, homes, vehicles and much more.
 These days, digital circuits are so common that one may doubt that there are
 \emph{any} gaps in our theoretical understanding of them.
 
 But while the \emph{design} of increasingly more efficient circuits is a
 well-trodden area, it is relatively self-contained.
-We wish to reframe our view of digital circuits in such a way that techniques
-that have been successfully applied in other fields, such as that of programming
-languages, can be applied here also.
+We wish to reframe our view of digital circuits in such a way that we can
+support the existing techniques and procedures with alternatives successfully
+applied in other fields, such as that of programming languages.
 To see where the parallels lie between digital circuits and other areas,
 we need a foundational, mathematically rigorous theory.
 Unfortunately, such a theory has thus far eluded us.
@@ -18,16 +19,16 @@ Unfortunately, such a theory has thus far eluded us.
 
 To define a mathematical theory for digital circuits we must be precise about
 what we mean.
-The term \emph{circuit} (or \emph{network}) is often used as a blanket term
-for a system constructed by connecting wires between primitive components.
+`'\emph{Circuit}' (or `\emph{network}') is often used as a blanket term
+for any system constructed by connecting wires between primitive components.
 Even when restricting to \emph{electronic} circuits there are different flavours
 to consider.
-One might consider \emph{analog} circuits constructed from components such as
-resistors, capacitors and inductors.
+One variety is that of \emph{analog} circuits constructed from components such
+as resistors, capacitors and inductors.
 Reasoning with analog circuits requires manipulating equations relating
-quantities such as voltage, current and resistance.
-In a parallel line of work to our own, analog circuits have already been given
-the compositional mathematical treatment~\cite{boisseau2022string}.
+quantities such as voltage, current and resistance; in a parallel line of work
+to our own, analog circuits have already been given a compositional mathematical
+treatment~\cite{boisseau2022string}.
 
 \begin{center}
     \scalebox{0.5}{
@@ -49,23 +50,24 @@ number of \emph{discrete} values.
 Here there is much stricter notion of causality linking input and output; the
 input signals change and these propagate across the circuit, producing outputs
 and updating state.
-While every digital circuit could just be viewed as an analog circuit, the
+While every digital circuit could be viewed as an analog circuit, this
 discrete style of reasoning makes it far easier to design and reuse them.
 
 \begin{center}
     \iltikzfig{circuits/examples/sr-latch/real-circuit-no-text}
 \end{center}
 
-Digital circuits can further be divided based on their components and how they
-process input; our work focuses on \emph{synchronous sequential circuits}.
-In a \emph{sequential} circuit, the output at a given time can depend on any of
-the inputs received since the circuit was switched on; succinctly, it is a
-circuit with \emph{memory}.
+Digital circuits can further be divided into classes based on their components.
+A \emph{combinational} circuit is a circuit that just contains logical
+operations for computing functions.
+Such circuits have no memory; the outputs at one tick of the clock only depend
+on the inputs received at that moment.
+A far more useful class of circuits is the \emph{sequential} circuits, which
+have have \emph{delay} and \emph{feedback} in addition to logic gates.
 Most sequential circuits can be divided into two parts:
-\emph{combinational logic} for performing logical functions, and
-\emph{state registers} for storing data.
-While purely combinational circuits do exist, most useful circuits need
-at least some memory.
+the \emph{combinational logic} for performing logical functions, the results of
+which are stored in \emph{state registers} to be used in future cycles of
+execution.
 
 How exactly these state registers change over time leads to another way
 to classify sequential circuits.
@@ -77,12 +79,12 @@ harder to design because of race conditions between circuit components: if one
 gate is slightly faster then the circuit could temporarily assume an unexpected
 state and produce the incorrect output.
 For this reason, most practical circuits are restricted to the synchronous
-kind.
+kind, and so this is where we are focusing our mathematical theory.
 
 \section{Compositionality and category theory}
 
-Our goal is a \emph{fully compositional} theory of synchronous sequential
-circuits.
+Our goal is to define a \emph{fully compositional} theory of synchronous
+sequential circuits.
 But `fully compositional' is also a phrase thrown around without much thought to
 its precise meaning.
 Here, we take full compositionality to mean that we can compose circuits
@@ -92,11 +94,10 @@ circuit to find out if composition is permitted; we should be able to treat
 everything as a black box.
 
 Compositionality is an appealing paradigm to follow because it means we can
-split complicated and unwieldy circuits into simpler components.
-These components can themselves be split up into simpler components, and so on
-until we reach some indivisible atomic components.
-If one defines the behaviour of these atomic components and how they interact
-with composition, it is possible to quickly establish the behaviour of some
+split complicated circuits into simpler parts; by repeatedly splitting up
+circuits we eventually reach some indivisible atomic components.
+If one defines the behaviour of these components and how they interact
+with composition, it is possible to establish the behaviour of some
 larger circuit \emph{inductively} by piecing things together.
 \[
     \iltikzfig{strings/compositional/example-0}
@@ -106,41 +107,37 @@ larger circuit \emph{inductively} by piecing things together.
     \iltikzfig{strings/compositional/example-2}
 \]
 
-In the above example, we can define the behaviour of the large component \(f\)
-by defining the behaviour of the two small components \(g\) and \(k\), along
-with what it means to compose horizontally and vertically.
-To prove properties about \(f\), we can prove properties about \(g\) and \(k\)
-and verify if composition \emph{preserves} these properties.
+To prove properties about \(f\) in the above example, we can prove properties
+about \(g\) and \(k\) and verify if horizontal and vertical composition
+\emph{preserves} these properties.
 
-Composition is not even restricted to the mathematical realm; it is generally
-considered good practice to write programs in terms of small, easily reusable
-pieces that can be pieced together by composing functions, which is why
-functional programming paradigms are starting to creep into even the most
-imperative of languages.
-
-While it is possible to work with this abstract, surface-level notion of
+While it is possible to work with this surface-level notion of
 compositionality, it is important to establish a rigorous mathematical
 foundation to determine what it means to compose and the properties that
-arise from it; to do this, we turn to the field of
+arise from it; for this, we turn to the field of
 \emph{category theory}~\cite{maclane1978categories}.
 A \emph{category} is made up of \emph{objects} and \emph{morphisms} (`arrows')
-between them; the only required properties are that any two morphisms \(f\) and
-\(g\) can be composed to make a new morphism \(f \seq g\) in an
-associative manner (\((f \seq g) \seq h = f \seq (g \seq h)\)), and that every
-object \(A\) has a special \emph{identity} morphism \(\id[A]\) that is
-\emph{unital} (\(\id \seq f = f = f \seq \id\)).
+between them which must satisfy two properties.
+The first is that arrows \(\morph{f}{A}{B}\) and \(\morph{g}{B}{C}\) can be
+\emph{composed} to make a new morphism \(\morph{g \circ f}{A}{C}\) in an
+associative manner: \((f \seq g) \seq h = f \seq (g \seq h)\),
+The second is that every object \(A\) has a \emph{identity} morphism \(\id[A]\)
+which acts as the \emph{unit} for composition: for a morphism
+\(\morph{f}{A}{B}\), \(\id_A \seq f = f = f \seq \id\).
 It turns out that these simple concepts pave the way to an array of
 theorems that can generalise many areas of computer science, mathematics, and
 beyond.
 
-Compositional processes go hand-in-hand with a class of categories known as
+It is straightforward to see how a compositional process with inputs of type
+\(A\) and outputs of type \(B\) could be modelled as a morphism
+\(\morph{f}{A}{B}\).
+But to model more complex processes one needs to work with a class of categories
+known as
 \emph{freely generated symmetric monoidal categories}~\cite{maclane1963natural},
-categories equipped with a notion of \emph{parallel} composition \(\tensor\) in
-addition to the ordinary categorical \emph{sequential} composition \(\seq\),
-along with morphisms known as \emph{symmetries} \(\sigma\) to swap over inputs.
-In a symmetric monoidal category, a process that takes something of shape \(A\)
-as input and outputs something of shape \(B\) is modelled as a morphism
-\(A \to B\).
+categories equipped with an additional notion of \emph{parallel} composition
+\(\tensor\) along with a family of morphisms
+\(\morph{\swap{A}{B}}{A\tensor B}{B \tensor A}\) known as \emph{symmetries} to
+swap over inputs.
 Using a set of primitive components as \emph{generators}, the two composition
 operators can be used in combination with the identities and symmetries to build
 up more complicated terms.
@@ -159,12 +156,14 @@ up more complicated terms.
     g
 \]
 
-While complex terms can be built this way, the one-dimensional
-syntactic notation quickly becomes unwieldy and confusing.
-Fortunately, symmetric monoidal categories admin an intuitive graphical notation
-known as \emph{string diagrams}, in which generators are drawn as boxes connected
-by wires; the identity is then depicted as an empty wire and the symmetry as
-swapping over wires.
+Terms described in this way are quite intuitive, as the two different types of
+composition are compressed into a one-dimensional text string.
+Fortunately, symmetric monoidal categories admit an intuitive graphical notation
+known as \emph{string diagrams}, in which generators are drawn as boxes
+connected by wires, with the identity depicted as an empty wire and the symmetry
+as swapping over wires.
+For example, the term described above can be depicted diagrammatically as
+follows.
 \[
     \iltikzfig{strings/example-smc}
 \]
@@ -177,10 +176,10 @@ their string diagrams are isomorphic~\cite{kelly1980coherence,kissinger2014abstr
 This makes proofs far less bureaucratic, as one can focus on the non-trivial
 steps without having to constantly rearrange the bracketing of a term.
 String diagrams also make the work more approachable and easier to explain to
-non-mathematicians.
-Using the diagrammatic approach it is possible to give talks about category
-theory without mentioning categories at all; there have even been books written
-with this philosophy~\cite{coecke2018picturing}.
+non-mathematicians; using the diagrammatic approach it is possible to give talks
+about category theory without mentioning categories at all.
+There have even been books written with this
+philosophy~\cite{coecke2018picturing}.
 
 
 \section{Compositionality and sequential circuits}
@@ -215,25 +214,31 @@ compositionality for sequential circuits.
 Even though there are indeed times when non-delay-guarded feedback can lead to
 unwanted behaviour, careful use can still result in useful circuits, so it
 should not be excluded from our mathematical theory of sequential circuits.
-For example, the following equation on circuits can only be performed
-if such loops are permitted.
+For example, if we were to enforce that every loop in our circuits is
+`delay-guarded', then the following line of reasoning is unsound, as the `delay`
+in the wires vanishes.
 \[
+    \iltikzfig{circuits/examples/yanking-lhs}
+    =
     \iltikzfig{circuits/examples/yanking-rhs}
     =
-    \iltikzfig{circuits/examples/yanking-lhs}
+    \iltikzfig{circuits/examples/yanking-simple}
 \]
-In larger circuits such an equation could unlock more optimisation potential.
+However, without the equation to remove the self-loop, the equation cannot be
+applied and the potential optimisation missed.
 
 Non-delay-guarded feedback can also be used in clever ways to create sequential
 circuits that exhibit combinational behaviour.
 The following is a classic example~\cite{malik1994analysis} in which the
 feedback is just used to share resources; the circuit acts as \(f \seq g\) or
-\(g \seq f\) depending on the control input.
+\(g \seq f\) depending on the control input \(\mathsf{c}\).
 \[
     \iltikzfig{circuits/examples/cyclic-combinational/circuit}
 \]
 Such circuits, while not following conventional design methodology, are more
-efficient in terms of circuit size, and hence power consumption.
+efficient in terms of circuit size and power consumption.
+This once more illustrates how working in a setting where not all loops are
+delay-guarded may be beneficial to us.
 
 \section{Theories of digital circuits}
 
@@ -258,8 +263,8 @@ Gordon subsequently noted that \emph{higher order logic} would make a good fit
 for a hardware description language~\cite{gordon1985why}, and this has become
 a ubiquitous concept in formal verification of hardware~\cite{gupta1992formal}.
 
-The first steps towards a categorical theory of digits took place at the turn of
-the millenium, when Lafont presented an
+The first steps towards a categorical theory of digital circuits took place at
+the turn of the millennium, when Lafont presented an
 \emph{algebraic theory of boolean circuits}~\cite{lafont2003algebraic}.
 This work already bears a great resemblance to the framework presented in this
 thesis; circuits
@@ -277,7 +282,7 @@ based operational semantics~\cite{ghica2017diagrammatic}.
 \[
     \iltikzfig{circuits/examples/sr-latch/circuit}
 \]
-Here, sequential circuits were modelled as morphisms in a
+In this line of work, sequential circuits were modelled as morphisms in a
 \emph{symmetric traced monoidal category}, a symmetric monoidal category
 extended with a \emph{trace operator}.
 In the context of sequential circuits, the trace operator models
@@ -289,12 +294,11 @@ In the context of sequential circuits, the trace operator models
     =
     \iltikzfig{strings/traced/trace-rhs}[colour=white,box=f]
 \]
-This marks a departure from many other recent works on compositional processes,
+This marks a departure from many other recent works on compositional processes
 such as the work on string diagrammatic
 \emph{signal flow theory}~\cite{bonchi2021survey} or analog
-circuits~\cite{boisseau2022string}.
-These works operate in a setting with a \emph{Frobenius} structure equipped with
-a commutative monoid \((
+circuits~\cite{boisseau2022string}, which operate in a setting with a
+\emph{Frobenius} structure equipped with a commutative monoid \((
 \iltikzfig{strings/structure/monoid/merge},
 \iltikzfig{strings/structure/monoid/init}
 )\) and a cocommutative comonoid \((
@@ -356,17 +360,17 @@ These sections respectively correspond to two papers:
 
 \subsection{Semantics of Digital Circuits}
 
-In the previous work, semantics of digital circuits was defined in a sometimes
-confusing manner, intermingling equations on circuits with other quotients.
+In previous work, semantics of digital circuits was defined in a confusing
+manner, intermingling equations on circuits with other quotients.
 In the first part of this thesis we set about fixing this: we first define the
 categorical syntax of sequential digital circuits and follow this up with three
 sound and complete semantic frameworks: denotational, operational, and
 algebraic.
 Each of these frameworks has their own benefits and intended uses; together they
-make a part of a comprehensive examination of semantics of digital circuits.
+form a comprehensive examination of semantics of digital circuits.
 The framework is sufficiently general to encompass circuits constructed from
 all manner of components ranging from the level of transistors to the level of
-logic gates and beyond to higher abstraction, but to provide some intuition we
+logic gates and beyond, but to provide some intuition we
 include an extended case study into circuits constructed from
 \emph{Belnap logic gates}~\cite{belnap1977useful}, an extension of traditional
 Boolean logic containing the usual \(\andgate\), \(\orgate\) and \(\notgate\)
@@ -380,28 +384,28 @@ An overview of the categories involved can be seen in \cref{fig:circuits-map}.
     \label{fig:circuits-map}
 \end{figure}
 
-\subsubsection{Syntax of sequential circuits}
+\subsubsection{\cref{chap:syntax}: Syntax of sequential circuits}
 
-Previously, the syntax and semantics of digital circuits were confusingly
-intermingled, with components, equations, and extensional equivalence defined
-all in one go.
+Previously, the syntax and semantics of digital circuits were defined in a
+haphazard way; categories of syntactic circuits were immediately quotiented by
+some ad-hoc `natural laws' and `extensional equivalence'.
 We take a more modular approach, in which we first define the syntactic
 categories \(\ccircsigma\) of \emph{combinational} circuits and \(\scircsigma\)
 of \emph{sequential} circuits.
 These are categories in which we can construct circuit morphisms; the three
 semantic theories that we will present next provide different ways of
-\emph{quotienting} this category in order to identify circuits with the same
+\emph{quotienting} these categories in order to identify circuits with the same
 behaviour under some interpretation.
 
-\subsubsection{Denotational semantics}
+\subsubsection{\cref{chap:denotational}: Denotational semantics}
 
 While the previous circuits work discussed assigning semantics to circuits in
 terms of streams, soundness and completeness of this model was not considered.
 It was not even deemed important enough to appear in the conference version of
 the paper, only being examined in detail in the arXiv
 preprint~\cite{ghica2017diagrammatica}.
-Here we present a denotational semantics for sequential circuits as
-\emph{stream functions} with certain properties.
+Here we present a category \(\streami\) of \emph{stream functions} with certain
+properties, which serve as the denotational semantics for sequential circuits.
 This denotational semantics is sound and complete in that every syntactic
 circuit can be expressed as one of these stream functions, and every such stream
 function can be mapped to a syntactic circuit which has the original stream
@@ -421,31 +425,32 @@ By quotienting \(\scircsigma\) by denotational equivalence we obtain a category
 \(\scircsigmai\); this is the category against which we will compare our next
 two semantic theories.
 
-\subsubsection{Operational semantics}
+\subsubsection{\cref{chap:operational}: Operational semantics}
 
 The original motivation for a categorical theory of circuits was to create an
 \emph{operational semantics} for digital circuits, bringing techniques from
 software to hardware.
 While such a system was presented in~\cite{ghica2017diagrammatic}, this only
 worked on \emph{closed} circuits with no \emph{non-delay-guarded feedback}.
-One of the main contributions of this section is a novel reduction rule for
-eliminating non-delay-guarded feedback inspired by the Kleene fixpoint theorem,
-which, combined with a generalisation of the previous reduction procedure to
-work on open circuits, means that any circuit applied to some inputs can be
+One of the main contributions of this chapter is to lift this restriction using
+a novel reduction rule for eliminating non-delay-guarded feedback inspired by
+the Kleene fixpoint theorem.
+Combined with a generalisation of the previous reduction procedure to
+work on open circuits, this means that any circuit applied to some inputs can be
 reduced in order to determine its outputs and next state.
 
 As a result of this, we also present a new formal notion of
 \emph{observational equivalence} on sequential circuits, and show that it is the
 correct one using the well-known universal property that it is the largest
 adequate congruence relation~\cite{gordon1998operational}.
-By quotienting \(\scircsigma\) by observational equivalence we obtain another
+Quotienting \(\scircsigma\) by observational equivalence gives us another
 semantic category of circuits \(\scircsigmaobs\).
 By establishing an isomorphism between \(\scircsigmai\) and \(\scircsigmae\)
 we show that the operational semantics is also sound and complete: two circuits
 have the same behaviour as stream functions if and only if they reduce to the
-same outputs.
+same outputs for all inputs.
 
-\subsubsection{Algebraic semantics}
+\subsubsection{\cref{chap:algebraic}: Algebraic semantics}
 
 The previous framework of digital circuits was presented as an
 \emph{algebraic semantics}: the category of circuits was quotiented by certain
@@ -466,7 +471,8 @@ The main result is showing the equations suffice to bring any circuit to a
 pseudo-normal form.
 
 Quotienting \(\scircsigma\) by these equations gives us our last semantic
-category \(\scircsigmae\); establishing an isomorphism between \(\scircsigmai\)
+category \(\scircsigmae\).
+Establishing an isomorphism between \(\scircsigmai\)
 and \(\scircsigmaobs\) shows that the algebraic semantics is sound and complete:
 two circuits have the same behaviour as stream functions if and only if they
 can be translated into each other using the equations.
