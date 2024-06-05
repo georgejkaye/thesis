@@ -1,20 +1,18 @@
 \chapter{A crash course in category theory}
 
-When setting about developing a \emph{mathematical foundation} for something,
-the first step is of course to decide exactly what foundation to pick.
+When setting about developing a mathematical foundation for something,
+the first step is to decide exactly what foundation to pick.
 In this thesis, our foundation is that of \emph{category theory}, in which
-mathematical structures are expressed in terms of \emph{objects} and
-\emph{morphisms} between them, which can be composed together.
+mathematical structures are expressed in terms of \emph{objects} and composable
+\emph{morphisms} between them.
 
-Category theory has its origins in the early 1940s.
-When Eilenberg and Mac Lane were working on problems in algebraic topology, they
-set about defining what it meant for a homomorphism to be
-`natural'~\cite{eilenberg1942natural}; what we now call a
+Category theory has its origins in the early 1940s, when Eilenberg and Mac Lane
+were working on problems in algebraic topology.
+The pair's original goal was to define what it meant for a homomorphism to be
+`natural'~\cite{eilenberg1942natural}, a concept which nowadays we would call a
 \emph{natural transformation}.
-To do this, they needed to establish a notion of \emph{functors}, between which
-natural transformations map.
-Later on, to properly work with functors the notion of a \emph{category} was
-required; the formal definition was first presented in
+To properly define this required the additional notions of a \emph{functor}
+and a \emph{category}; the formal definition was first presented in
 1945~\cite{eilenberg1945general}.
 
 It has since turned out that category theory can be used as something of a
@@ -35,7 +33,7 @@ instantiated to a plethora of settings.
 
     Many properties of Cartesian products are not specific to sets,
     but arise from the presence of the two projections.
-    In category theory there is a notion of \emph{categorical product} in which
+    Category theory has is a notion of \emph{categorical product} in which
     sets are generalised to objects and the projection functions to morphisms;
     this allows results about products to be applied to a wide range of
     structures in addition to the Cartesian product, such as set intersection,
@@ -43,7 +41,7 @@ instantiated to a plethora of settings.
     algebraic structures.
 \end{example}
 
-Category theory has found a good home among computer scientists, as
+Category theory has found a home among computer scientists, as
 it can be used to shed new light upon topics such as semantics of programming
 languages~\cite{oles1982categorytheoretic}, databases~\cite{spivak2012functorial},
 probabilistic programming~\cite{cho2019disintegration,fritz2020synthetic}, and
@@ -83,7 +81,7 @@ To begin, we will take a meander through the various categorical definitions and
 notation that underpin the mathematical work of this thesis.
 A similar outline can be found in most category theory textbooks, but
 inspiration was taken in particular from the opening of
-\cite{ghica2023hierarchical}.
+\cite{ghica2023string}.
 
 \input{sections/categories/terms}
 \input{sections/categories/categories}

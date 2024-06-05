@@ -1,8 +1,9 @@
 \section{Terms}
 
-Processes are modelled as \emph{terms}.
-Before we can begin, the components that make up processes in a given system
-must be specified.
+We are interested in using category theory as a tool to study \emph{processes},
+which we model as \emph{terms}.
+First we must specify the primitive components that can be used to build
+processes in a given setting.
 
 \begin{definition}[Generators]
     A set of \emph{generators} \(\generators\) is a set equipped with two
@@ -10,7 +11,7 @@ must be specified.
 \end{definition}
 
 Generators are the primitive building blocks of terms: their domains and
-codomains specify how many input and output wires they have respectively.
+codomains specify how many input and output wires they have.
 Terms are defined by combining these primitives together.
 
 \begin{definition}[Term]
@@ -53,7 +54,7 @@ Terms are defined by combining these primitives together.
             \BinaryInfC{\(\morph{f \seq g}{m}{p} \in \sigmaterms\)}
         \end{bprooftree}
         \begin{bprooftree}
-            \AxiomC{\(\morph{f}{m}{p} \in \sigmaterms\)}
+            \AxiomC{\(\morph{f}{m}{n} \in \sigmaterms\)}
             \AxiomC{\(\morph{g}{p}{q} \in \sigmaterms\)}
             \BinaryInfC{\(
                 \morph{f \tensor g}{m+p}{n+q} \in \sigmaterms
@@ -64,7 +65,7 @@ Terms are defined by combining these primitives together.
 
 \(\Sigma\)-terms are constructed recursively.
 There are four base cases: a generator from \(\generators\) with appropriate
-inputs and outputs; an \emph{identity} for single wires and empty space, and
+inputs and outputs; an \emph{identity} for single wires, empty space, and
 a \emph{symmetry} for swapping over two wires.
 The two inductive cases are called \emph{composition} and \emph{tensor}
 respectively.
@@ -85,22 +86,22 @@ a simple exercise to define them for larger numbers of wires.
 \end{notation}
 \begin{notation}[Composite symmetries]\label{not:composite-symmetries}
     Composite symmetries \(\swap{m}{n}\) for \(m, n \in \nat\) are defined
-    inductively as \(
-    \swap{0}{n}
-    \coloneqq
-    \id[n]
-    \), \(
-    \swap{m}{0}
-    \coloneqq \id[m]
-    \), and \(
-    \swap{k+1}{l+1}
-    \coloneqq
-    \id[k] \tensor \swap{1}{l} \tensor \id[1]
-    \seq
-    \swap{k}{l} \tensor \swap{1}{1}
-    \seq
-    \id[l] \tensor \swap{k}{1} \tensor \id[1]
-    \).
+    inductively as \[
+        \swap{0}{n}
+        \coloneqq
+        \id[n]
+        \quad
+        \swap{m}{0}
+        \coloneqq \id[m]
+        \quad
+        \swap{k+1}{l+1}
+        \coloneqq
+        \id[k] \tensor \swap{1}{l} \tensor \id[1]
+        \seq
+        \swap{k}{l} \tensor \swap{1}{1}
+        \seq
+        \id[l] \tensor \swap{k}{1} \tensor \id[1]
+    \]
 \end{notation}
 
 \(\Sigma\)-terms will be abbreviated to `terms' when the signature is clear from
@@ -124,11 +125,11 @@ context.
 
 \section{String diagrams}
 
-Even simple terms described using one-dimensional text
-strings quickly become indecipherable.
+Even simple terms described using one-dimensional text strings quickly become
+indecipherable.
 Fortunately, terms have an graphical syntax known as
-\emph{string diagrams}~\cite{joyal1991geometry} that
-can shed much light on what is actually going on.
+\emph{string diagrams}~\cite{joyal1991geometry} that makes reading terms far
+more intuitive.
 In a string diagram, a generator \(\morph{\phi}{m}{n}\) is drawn as a box with
 \(m\) inputs and \(n\) outputs \(
 \iltikzfig{strings/category/generator-wires-tile}[dom=m,cod=n]
@@ -193,7 +194,7 @@ even the `tile' graphical syntax; there are terms which are `morally' the same
 but because of variations in how they are constructed they are \emph{not} the
 same term syntactically.
 We need some equations to identify terms appropriately; we will soon see how
-these equations can be derived using a mathematical structure known as a
+these equations can be derived using the mathematical structure of a
 \emph{category}.
 
 \begin{notation}\label{not:arbitrary-width-wires}
