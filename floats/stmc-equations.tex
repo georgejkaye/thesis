@@ -43,29 +43,36 @@
     \\[1em]
     \rule[1em]{\textwidth}{0.1mm}
     \\[0.1em]
-    \begin{tabular}{ccc}
+    \begin{tabular}{ccccccc}
         \(
-        \trace{X}[A][B]{\trace{X}[Y \tensor A][Y \tensor B]{f}}
-        =
+        \trace{X}[A][B]{\trace{Y}[X \tensor A][X \tensor B]{f}}
+        \)
+         &
+        \(=\)
+         &
+        \(
         \trace{X \tensor Y}[A][B]{f}
         \)
-         &  &
+         &   &
         \(
-        \trace{X}[A \tensor C][B \tensor F]{f \tensor g}
-        = \trace{X}[A][B]{f} \tensor g
+        \trace{X}[A \tensor C][B \tensor D]{f \tensor g}
         \)
+         &
+        \(=\)
+         &
+        \( \trace{X}[A][B]{f} \tensor g\)
         \\[1em]
-        \(
         \iltikzfig{strings/traced/vanishing-lhs}[colour=white,box=f,dom=A,cod=B,trace1=X,trace2=Y]
-        =
+         &
+        \(=\)
+         &
         \iltikzfig{strings/traced/vanishing-rhs}[colour=white,box=f,dom=A,cod=B,trace1=X,trace2=Y]
-        \)
-         &  &
-        \(
+         &   &
         \iltikzfig{strings/traced/superposing-lhs}[colour=white,box1=f,box2=g,dom1=A,cod1=B,dom2=C,cod2=D,trace=X]
-        =
+         &
+        \(=\)
+         &
         \iltikzfig{strings/traced/superposing-rhs}[colour=white,box1=f,box2=g,dom1=A,cod1=B,dom2=C,cod2=D,trace=X]
-        \)
     \end{tabular}
     \caption{Equations of STMCs in string diagram notation}
     \label{fig:stmc-equations}

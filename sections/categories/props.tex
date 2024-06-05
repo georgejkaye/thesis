@@ -2,12 +2,12 @@
 
 By this point, it should be clear that symmetric monoidal categories provide
 an excellent setting for modelling terms modulo `structural equations'.
-However, we do not need the full generality of an arbitrary SMC; we can restrict
-to a more specialised setting known as \emph{PROPs}.
+For our purpose, we do not need the full generality of an arbitrary SMC; we can
+restrict to a more specialised setting known as a \emph{PROP}: a category of
+\emph{PRO}ducts and \emph{P}ermutations.
 
 \begin{definition}[PROP~\cite{maclane1965categorical}]
-    A \emph{PROP} (short for category of \emph{PRO}ducts and
-    \emph{P}ermutations) is a strict symmetric monoidal category with the
+    A \emph{PROP} is a strict symmetric monoidal category with the
     natural numbers as objects and addition as tensor product on objects.
 \end{definition}
 
@@ -18,19 +18,18 @@ object \(n\) is equal to \(\bigotimes_{i < n} 1\), we can represent a morphism
 \begin{definition}\label{def:freely-generated-prop}
     Given a set of generators \(\generators\), let \(\smcsigma\) be the
     PROP where \(\smcsigma(m, n)\) is the set of \(\Sigma\)-terms of type
-    \(m \to n\) quotiented by the equations of PROPs.
+    \(m \to n\) quotiented by the equations of SMCs.
 \end{definition}
 
-Such a category is known as a category \emph{freely generated over}
-\(\Sigma\), in that all of the morphisms in \(\smc{\generators}\) have been
-`generated' by combining elements of \(\Sigma\) in various ways using
-composition and tensor.
+This is known as a category \emph{freely generated over} \(\Sigma\), in that all
+of the morphisms in \(\smc{\generators}\) have been `generated' by combining
+elements of \(\Sigma\) in various ways using composition and tensor.
 Crucially, many \(\Sigma\)-terms correspond to the \emph{same} morphism in
-\(\smc{\generators}\), as the latter are subject to the equations of PROPs.
+\(\smc{\generators}\), as the latter are subject to the equations of SMCs.
 
 When we discussed terms we also mentioned the notion of \emph{coloured} terms
-where the wires can be of different colours; appropriately, there is also a
-notion of a coloured PROP.
+where the wires can be of different colours; appropriately, there are also
+coloured PROPs.
 
 \begin{definition}[Coloured PROP]
     Given a set of \emph{colours} \(C\), a \emph{\(C\)-coloured PROP} is a strict
@@ -52,5 +51,5 @@ object in any \(\mcc\)-sorted PROP.
     \(\natplus\)-sorted PROP where
     \(\smc{\generators}(\listvar{m}, \listvar{n})\) is the set of
     \(\Sigma\)-terms of type \(\listvar{m} \to \listvar{n}\) quotiented by
-    the equations of \(C\)-coloured PROPs.
+    the equations of SMCs.
 \end{definition}

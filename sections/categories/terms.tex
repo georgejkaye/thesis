@@ -221,14 +221,9 @@ these equations can be derived using the mathematical structure of a
 In \(\Sigma\)-terms, the wires are \emph{monochromatic}; there is no
 distinguishing between them.
 Sometimes it is advantageous to \emph{annotate} wires with some information: in
-the realm of terms this is often known as \emph{colouring} the wires.
-
-\begin{remark}
-    Colours are also often referred to as \emph{sorts} in the literature, which
-    leads to less pretty diagrams.
-\end{remark}
-
-When working with coloured terms, we need to fix a set of \emph{colours} before
+the realm of terms this is known as assigning the wires \emph{colours} or
+\emph{sorts}.
+When working with coloured terms, we need to fix the set of colours before
 specifying a set of generators.
 
 \begin{notation}
@@ -266,7 +261,8 @@ must be specified in terms of their colours and their ordering.
 
 \begin{definition}[Coloured generators]
     For a countable set \(C\), a set of \emph{\(C\)-coloured generators}
-    \(\Sigma\) is a set equipped with two functions \(\Sigma \to \freemon{C}\).
+    \(\Sigma\) is a set equipped with two functions
+    \(\morph{\dom,\cod}{\Sigma}{\freemon{C}}\).
 \end{definition}
 
 Coloured terms are then generated in the same way as monochromatic terms, but

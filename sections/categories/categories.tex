@@ -5,21 +5,18 @@ precisely the same way.
 As we have already seen, this is far too strong a relation; there may be
 many terms that, while constructed in different ways, look the same when drawn
 out as a diagram modulo the tiling.
-We need a way to discard the tile boundaries and work just with
-wires and generators.
-
-To identify the terms that describe the same process, we need to impose some
-equations on terms.
+To identify the terms that actually describe the same process, we need to impose
+some equations on terms.
 There is an obvious question: what are these equations?
 
 \begin{example}
-    Consider the term \(f \seq \id[n]\), which can be read as `run \(f\) and
-    then do nothing' and is drawn as \(
+    Consider the term \(\id[m] \seq f\), which can be read as `do nothing and
+    then run \(f\)`, and is drawn as \(
     \iltikzfig{strings/category/identity-l-lhs-tiles}[dom=m,cod=n]
     \).
     Clearly this is the same \(
     \iltikzfig{strings/category/f-tile}[dom=m,cod=n]
-    \) but with the left wire elongated a bit.
+    \) but with an elongated input wire.
     So one equation we need is \(
     \iltikzfig{strings/category/identity-l-lhs-tiles}[dom=m,cod=n]
     =
@@ -27,12 +24,12 @@ There is an obvious question: what are these equations?
     \).
 \end{example}
 
-We could continue like this, thinking up the `right' equations, but this is a
-very ad-hoc way of working.
-It turns out that all the work has actually already been done before us, in the
-form of \emph{symmetric monoidal categories}.
-
-We start by defining what a \emph{category} is.
+Rather than having to conjure up equations in this adh
+It turns out that all the work has actually already been done before us, as the
+required equations are the equations of \emph{symmetric monoidal categories}.
+To grasp how these equations are derived one requires quite a
+bit of technical knowledge, so we will build it up one step at a time.
+We start with the basic notion of a \emph{category}.
 
 \begin{definition}[Category]
     \label{def:category}
@@ -70,21 +67,20 @@ We start by defining what a \emph{category} is.
 
 A morphism \(f \in \mor{\mcc}{A}{B}\) is also called an \emph{arrow}, and will
 often be written \(\morph{f}{A}{B}\) accordingly.
+When clear from context, we will use the notation \(A \in \mcc\) or
+\(f \in \mcc\) for objects and morphisms belonging to a particular category.
 The subscripts on the object and morphism classes are also often omitted.
 
 \begin{remark}
     The definition of a category uses \emph{classes} rather than sets as one
     might expect; this is due to size issues and Russell's paradox regarding
     the impossibility of the `set of all sets'.
-    Later on we will encounter categories where the class of objects really is
-    too big to be encapsulated in a set, such as the category of categories.
 \end{remark}
 
 By treating terms as morphisms, it is clear to see how they they slip into the
 categorical setting.
-When discussing terms in the previous section it was more intutiive to use
-composition `left-to-right' rather than the `right-to-left' composition
-\(\circ\).
+One difference is that in the previous section we used `left-to-right'
+composition \(\seq\) rather than `right-to-left' composition \(\circ\).
 
 \begin{notation}
     \emph{Diagrammatic order} composition is written as
@@ -95,11 +91,6 @@ composition `left-to-right' rather than the `right-to-left' composition
 
 The equations of categories are illustrated with string diagram notation
 in~\cref{fig:c-equations}.
-With these equations in play, we can drop the tile boundaries around terms
-comprised only of generators, identities and sequential composition.
-However, this only helps with one-dimensional diagrams; how do we deal with
-\emph{parallel} composition?
-To do this we will require some more structure on our categories.
 
 \subsection{Commutative diagrams}
 
@@ -120,8 +111,8 @@ takes, the results are equal.
 
 \subsection{Examples of categories}
 
-Categories generalise a plethora of mathematical structures: some examples will
-now be provided.
+The definition of a category is quite abstract and might take some getting used
+to: it can be helpful to consider some concrete examples.
 
 \begin{example}[Preorder]
     A \emph{preorder} is a binary relation \(\leq\) on a set \(X\) which is
@@ -134,8 +125,8 @@ now be provided.
 \begin{example}[Sets]
     The category \(\set\) has sets as objects and functions as morphisms.
     Composition is then just function composition.
-    Compare this with the category \(\rel\), which has sets as objects and
-    \emph{relations} as morphisms.
+    Compare this with the category \(\rel\), which has the same objects as
+    \(\set\) but with \emph{relations} as morphisms.
     There is also a category \(\finset\) containing only the \emph{finite} sets
     and functions between them.
 \end{example}
@@ -150,7 +141,7 @@ now be provided.
     implies that \(f(a) \leq_B f(a^\prime)\).
 
     Much like how sets form a category, posets form the category \(\pos\), where
-    \(\ob{\pos}\) are sets and \(\mor{\pos}{X}{Y}\) are the monotone functions
+    \(\ob{\pos}\) are posets and \(\mor{\pos}{X}{Y}\) are the monotone functions
     \(X \to Y\).
 \end{example}
 
@@ -163,14 +154,14 @@ now be provided.
     A \emph{monoid homomorphism} between two monoids \((A, *, e_A)\) and
     \((B, +, e_B)\) is a map \(\morph{h}{A}{B}\) such that
     \(h(a * a^\prime) = h(a) + h(a^\prime)\) and \(h(e_A) = e_B\).
-    There is a category \(\mon\) with the objects as monoids and morphisms as
-    their homomorphisms.
+    There is a category \(\mon\) with monoids as the objects as monoids and
+    monoid homomorphisms as the morphisms.
 \end{example}
 
 \begin{example}[Product category]
     Given two categories \(\mcc\) and \(\mcd\), their \emph{product category}
     \(\mcc \times \mcd\) is the category with objects are defined as \(
-    \ob{(\mcc \times \mcd)} \coloneqq \ob{\mcc} \times \ob{\mcd}
+    \ob{\mcc \times \mcd} \coloneqq \ob{\mcc} \times \ob{\mcd}
     \) and the morphisms as \[
         \mor{(\mcc \times \mcd)}{(A, A^\prime)}{(B, B^\prime)}
         \coloneqq
@@ -183,46 +174,35 @@ now be provided.
     \]
 \end{example}
 
-\subsection{Properties of objects and morphisms}
+\subsection{Universal properties}
 
-As we have established, the whole point of category theory is to \emph{abstract}
-away from concrete settings.
-This means that rather than proving results about specific objects and
-morphisms, we can often reuse results about particular \emph{properties} they
-may have.
+One of the reasons that category theory is an appealing foundation is because
+of how it can be used to \emph{abstract} away from concrete constructions.
+Rather than proving results about some particular objects and morphisms, we can
+show how they are an instantiation of some more abstract concept.
+This means that the important theorems only need to be shown for the abstract
+case and then reused in a variety of applications.
 
-\begin{definition}[Initial object]
-    An object \(C\) in a category \(\mcc\) is \emph{initial} if, for any other
-    object \(X \in \mcc\) there exists a unique morphism \(C \to X\), the
-    so-called `absurd function'.
-\end{definition}
-
-\begin{example}
-    In \(\set\), the initial object is the empty set \(\emptyset\), as there is
-    a unique function from \(\emptyset\) to any set \(X\).
-\end{example}
-
-Most notions in category also have a \emph{dual} variant, in which all the
-arrows are flipped.
-
-\begin{definition}[Terminal object]
-    An object \(C\) in a category \(\mcc\) is \emph{terminal} if, for any other
-    object \(X \in \mcd\) there exists a unique morphism \(X \to C\).
-\end{definition}
-
-\begin{example}
-    In \(\set\), the terminal object is the singleton set \(\{\star\}\):
-    from any set \(X\) there is a unique function \(X \to \{\star\}\); namely
-    the function with action \(x \mapsto \star\).
-\end{example}
-
-There are also some properties of morphisms that we will make use of.
+One simple way we can abstract away from concrete definitions is by considering
+the properties of a particular morphism.
 
 \begin{definition}[Monomorphism]
     A morphism \(\morph{f}{A}{B} \in \mcc\) is called a \emph{monomorphism} (or
     simply \emph{mono} for short) if for any two morphisms
     \(\morph{g_1,g_2}{C}{A}\), if \(f \circ g_1 = f \circ g_2\), then
     \(g_1 = g_2\).
+    \begin{center}
+        \begin{tikzcd}
+            C
+            \arrow[bend left]{r}{g_1}
+            \arrow[bend right, swap]{r}{g_2}
+            &
+            A
+            \arrow{r}{f}
+            &
+            B
+        \end{tikzcd}
+    \end{center}
 \end{definition}
 
 One can think of monomorphisms as morphisms which are \emph{left-cancellative}.
@@ -237,6 +217,28 @@ There is also a way to describe \emph{invertible} morphisms.
     \) and \(
     f \circ \inverse{f} = \id[B]
     \).
+    \begin{center}
+        \begin{tikzcd}
+            A
+            \arrow{r}{f}
+            \arrow[swap, bend right]{rr}{\id[A]}
+            &
+            B
+            \arrow{r}{\inverse{f}}
+            &
+            A
+            &
+            &
+            B
+            \arrow{r}{\inverse{f}}
+            \arrow[swap, bend right]{rr}{\id[B]}
+            &
+            A
+            \arrow{r}{f}
+            &
+            B
+        \end{tikzcd}
+    \end{center}
 \end{definition}
 
 \begin{example}
@@ -244,13 +246,47 @@ There is also a way to describe \emph{invertible} morphisms.
     isomorphisms are the bijective functions.
 \end{example}
 
-\subsection{Universal constructions}
+Often we want to say that a \emph{category} has some property or admits
+some class of constructions.
+This is specified in terms of a \emph{universal property}: a unique
+morphism that shows that a certain candidate construction is the `best' way to
+describe something.
 
-One of the core ideas in category theory is that of a \emph{universal property}:
-a unique morphism that shows that a certain candidate construction is indeed the
-`best' way to describe something.
-If something satisfies a universal property, then we know that we can safely
-apply the relevant results without worrying about the precise construction.
+The first universal properties we will consider give particular objects in a
+category special significance.
+
+\begin{definition}[Initial object]
+    An object \(C\) in a category \(\mcc\) is \emph{initial} if, for any other
+    object \(X \in \mcc\) there exists a unique morphism \(C \to X\).
+\end{definition}
+
+\begin{example}
+    In \(\set\), the initial object is the empty set \(\emptyset\), as there is
+    a unique function from \(\emptyset\) to any set \(X\), the so-called
+    `absurd function'.
+\end{example}
+
+Most notions in category also have a \emph{dual}, in which all the
+arrows are flipped.
+
+\begin{definition}[Terminal object]
+    An object \(C\) in a category \(\mcc\) is \emph{terminal} if, for any other
+    object \(X \in \mcd\) there exists a unique morphism \(X \to C\).
+\end{definition}
+
+\begin{example}
+    In \(\set\), the terminal object is the singleton set \(\{\star\}\):
+    from any set \(X\) there is a unique function \(X \to \{\star\}\); namely
+    the function with action \(x \mapsto \star\).
+\end{example}
+
+If a category has an initial or terminal object, then it is
+\emph{unique up to unique isomorphism}: if we have two objects that
+satisfies the universal property, then these objects are isomorphic in a unique
+way.
+
+The next properties we will see illustrate how a notion of objects being `built
+up' from other objects can be expressed in terms of the morphisms between them.
 
 \begin{definition}[Product]
     Given a category \(\mcc\) and objects \(A,B \in \mcc\), their \emph{product}
@@ -264,14 +300,15 @@ apply the relevant results without worrying about the precise construction.
         \includestandalone{figures/category/diagrams/product}
     \end{center}
     A category \(\mcc\) is said to \emph{have products} if the product exists
-    for all pairs of objects \(A,B \in \mcc\).
+    for all objects \(A,B \in \mcc\).
 \end{definition}
 
 \begin{example}
     The product is \(\set\) is the Cartesian product.
 \end{example}
 
-As usual, there is the dual notion to consider.
+The dual of a product is a construction with \emph{in}jections rather than
+\emph{pro}jections.
 
 \begin{definition}[Coproduct]
     Given a category \(\mcc\) and objects \(A,B \in \mcc\), their \emph{coproduct}
@@ -292,8 +329,8 @@ As usual, there is the dual notion to consider.
     The coproduct in \(\set\) is the disjoint union.
 \end{example}
 
-Finally, we will look at a useful construction concerning \emph{pairs} of
-morphisms with a common domain.
+Finally, we will look at properties showing how pairs of morphisms with a
+common domain or codomain can be in some way `unified'.
 
 \begin{definition}[Pushout]
     Given morphisms \(\morph{f}{A}{B}\) and \(\morph{g}{A}{C}\), a
@@ -309,18 +346,41 @@ morphisms with a common domain.
     any pair of morphisms.
 \end{definition}
 
+\begin{example}
+    \(\set\) has pushouts: given morphisms \(\morph{f}{A}{B}\) and
+    \(\morph{g}{A}{C}\), the pushout is the union of \(B\) and \(C\) identifying
+    elements with a common preimage in \(X\).
+    Concretely, let \({\sim} \subseteq B \cup C\) be a relation defined as
+    \(\{(b, c) \,|\, \exists a \in A.\, b = f(a) \wedge c = g(a)\}\).
+    Then the pushout set \(D\) is defined as \(B \cup C / \sim\) with the
+    morphisms \(\morph{h}{B}{D}\) and \(\morph{k}{C}{D}\) sending elements in
+    \(B\) and \(C\) to the appropriate element in \(D\).
+\end{example}
+
 A pushout square is normally indicated with a \raisebox{-0.25em}{\(\ulcorner\)}
 symbol as shown above.
+The dual of the pushout is a \emph{pullback}.
+
+\begin{definition}[Pullback]
+    Given morphisms \(\morph{f}{B}{A}\) and \(\morph{g}{C}{A}\), a
+    \emph{pullback} is an object \(D\) and a pair of morphisms
+    \(\morph{h}{D}{B}\) and \(\morph{k}{D}{C}\) such that for any other pair of
+    morphisms \(\morph{h^\prime}{Z}{B}\) and \(\morph{k^\prime}{Z}{C}\) there
+    exists a unique morphism \(\morph{u}{Z}{D}\), i.e.\ the following diagram
+    commutes:
+    \begin{center}
+        \includestandalone{figures/category/diagrams/pullback}
+    \end{center}
+    A category \(\mcc\) is said to \emph{have pullbacks} if a pullback exists
+    for any pair of morphisms.
+\end{definition}
 
 \begin{example}
-    \(\set\) has pushouts: given morphisms \(\morph{f}{X}{Y}\) and
-    \(\morph{g}{X}{Z}\), the pushout is the union of \(Y\) and \(Z\) identifying
-    elements with a common preimage in \(X\).
-    Concretely, let \({\sim} \subseteq Y \cup Z\) be a relation defined as
-    \(\{(y, z) \,|\, \exists x \in X.\, y = f(x) \wedge z = g(x)\}\).
-    Then the pushout set \(U\) is defined as \(X \cup Y / \sim\) and the
-    morphisms \(\morph{h}{Y}{U}\) and \(\morph{k}{Z}{U}\) to the appropriate
-    elements.
+    \(\set\) also has pullbacks: given morphisms \(\morph{f}{B}{A}\) and
+    \(\morph{g}{C}{A}\), the pullback is defined as
+    \(\{(b,c) \in B \times C \, f(b) = g(c)\}\) and the maps
+    \(\morph{h}{D}{B}\) and \(\morph{k}{D}{C}\) defined as the first and second
+    projection respectively.
 \end{example}
 
 Using universal properties means we do not need to restrict ourselves to a
@@ -343,22 +403,3 @@ We demonstrate this with a well-known result.
     \end{gather*}
     This is a coproduct due to the universal property of pushouts.
 \end{proof}
-
-Pushouts have a dual construction, known as a \emph{pullback}.
-
-\begin{definition}[Pullback]
-    Given morphisms \(\morph{f}{B}{A}\) and \(\morph{g}{C}{A}\), a
-    \emph{pullback} is an object \(D\) and a pair of morphisms
-    \(\morph{h}{D}{B}\) and \(\morph{k}{D}{C}\) such that for any other pair of
-    morphisms \(\morph{h^\prime}{Z}{B}\) and \(\morph{k^\prime}{Z}{C}\) there
-    exists a unique morphism \(\morph{u}{Z}{D}\), i.e.\ the following diagram
-    commutes:
-    \begin{center}
-        \includestandalone{figures/category/diagrams/pullback}
-    \end{center}
-    A category \(\mcc\) is said to \emph{have pullbacks} if a pullback exists
-    for any pair of morphisms.
-\end{definition}
-
-Pushouts and pullbacks are essential for performing \emph{graph rewriting}
-categorically, which will be explored in the second part of this thesis.

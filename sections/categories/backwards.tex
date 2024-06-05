@@ -85,19 +85,19 @@ simply as \(\trace{X}{f}\).
 
 \begin{example}
     The classic example of a symmetric traced monoidal category is the category
-    \(\finvectk{k}\) in which the objects are finite dimensional vector spaces
-    over a field \(k\) and the morphisms are linear maps.
-    The monoidal product is the usual tensor product of vector spaces and the
-    trace by an operation known as the `partial trace'.
+    \(\finvectk{k}\), with finite dimensional vector spaces over a field \(k\)
+    as objects, and linear maps as morphisms.
+    The monoidal product is the tensor product of vector spaces and the
+    trace is an operation known as the `partial trace'.
 \end{example}
 
 In a computer science contexts, traces are often used to model \emph{fixpoints}.
 
 \subsection{Compact closed categories}
 
-In a traced category, while wires can flow backwards across the page, regular
-left-to-right flow must still be in effect at a wire's \emph{endpoints}.
-This means that outputs will always be connected to inputs.
+While wires can flow backwards across the page in a traced category, regular
+left-to-right flow must still be in effect at a wire's \emph{endpoints}, so
+outputs must be connected to inputs.
 We will now consider another setting in which this is not the case.
 
 \begin{definition}[Compact closed category]
@@ -120,9 +120,9 @@ instead of left-to-right; when labelling wires with objects we will drop the
 notation for duals and recover the information solely from directionality of the
 wires.
 The unit and counit `bend' wires: the unit is drawn as \(
-\iltikzfig{strings/compact-closed/cup-self-dual}[obj=A,colour=white]
+\iltikzfig{strings/compact-closed/cup}[obj1=A,obj2=\dual{A},colour=white]
 \) and the counit as \(
-\iltikzfig{strings/compact-closed/cap-self-dual}[obj=A,colour=white]
+\iltikzfig{strings/compact-closed/cap}[obj1=A,obj2=\dual{A},colour=white]
 \).
 As a result of this units and counits are often referred to as \emph{cups} and
 \emph{caps} respectively.

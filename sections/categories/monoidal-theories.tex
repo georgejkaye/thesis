@@ -20,24 +20,28 @@ When reasoning with a monoidal theory, we therefore need to work in a category
 in which all of the equations are identified in this way.
 
 \begin{definition}[Quotient category]
-    Given a category \(\mathbf{C}\) and a set of equations \(\mce\) between
-    morphisms in \(\mathbf{C}\) with the same source and target, the
-    \emph{quotient category} \(\mathbf{C} / \mce\) is the category in which
-    \(\ob{(\mathbf{C} / \mce)} \coloneqq \ob{\mathbf{C}}\) and \(
-    \mor{(\mathbf{C} / \mce)}{X}{Y}
+    Given a category \(\mcc\) and a set of equations \(\mce\) between
+    morphisms in \(\mcc\) with the same source and target, the
+    \emph{quotient category} \(\mcc / \mce\) is the category in which
+    \(\ob{\mcc / \mce} \coloneqq \ob{\mcc}\) and \(
+    \mor{(\mcc / \mce)}{X}{Y}
     \coloneqq
-    \mor{\mathbf{C}}{X}{Y} / \mce
-    \): i.e.\ morphisms are the \emph{equivalence classes} of morphisms
-    modulo \(\mce\).
+    \mor{\mcc}{X}{Y} / \mce
+    \).
 \end{definition}
+
+In a quotient category \(\mcc / \mce\) the morphisms are the
+\emph{equivalence classes} of morphisms in \(\mcc\) modulo the equations in
+\(\mce\).
 
 \begin{definition}
     Given a monoidal theory \((\generators, \equations)\), let
     \(\smc{\generators, \equations} \coloneqq \smc{\generators} / \equations\).
 \end{definition}
 
-Note that when \(\equations\) is empty,
-\(\smc{\generators, \emptyset} = \smc{\generators}\).
+When the set of equations \(\equations\) is empty,
+\(\smc{\generators, \emptyset} = \smc{\generators}\), and we recover an ordinary
+PROP.
 
 \subsection{Case study: commutative monoids}
 
@@ -103,11 +107,11 @@ intuitive visual interpretations; often it is insightful to reason
 \end{proof}
 
 Note that the first step \((\dagger)\) of the proof is performed solely by
-deforming the string diagram; as connectivity is preserved this is a valid
-proof step.
+deforming the string diagram; this is permitted so long as connectivity is
+preserved.
 Deforming the string diagram corresponds to implicitly applying equations
 of symmetric monoidal categories.
-These explicit steps are shown below, explicitly drawing the unit wire in grey:
+These explicit steps are shown below, with the unit wire in grey:
 %
 \begin{gather*}
     \iltikzfig{strings/structure/monoid/right-unitality/lhs-unit}
@@ -123,6 +127,7 @@ These explicit steps are shown below, explicitly drawing the unit wire in grey:
     \eqaxioms[\text{unitality of } \seq]
     \iltikzfig{strings/structure/monoid/right-unitality/step-1-5}
 \end{gather*}
+\todo[inline]{Draw lines}
 %
 Already much more verbose than the simple deformation, this does not
 even take into account the repeated applications of associativity of both
@@ -190,7 +195,6 @@ If we write \(
     \text{left unitality of } \mu
 \end{align*}
 
-It should be clear that reasoning string diagrammatically makes things a lot
-easier.
-Not only is it less verbose, but the insight required to make a proof step is
-often far easier to see in the string diagram notation.
+This is already far more verbose than the string diagram proof, but the term
+notation also blocks the insight required to make a proof step, which is often
+much easier to see in the string diagrammatic representation.

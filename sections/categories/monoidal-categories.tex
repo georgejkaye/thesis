@@ -50,6 +50,8 @@ parallel composition.
     such that the \emph{pentagon} and the \emph{triangle} diagrams below
     commute:
     \begin{center}
+        \vspace{-1em}
+
         \includestandalone{figures/category/coherences/pentagon}
 
         \vspace{1em}
@@ -67,12 +69,12 @@ parallel composition.
 \begin{notation}
     We adopt the convention that \(f \tensor g \seq h \tensor k\) should be
     bracketed as \((f \tensor g) \seq (h \tensor k)\), i.e.\ \(\tensor\) binds
-    more strongly than \(\seq\).
+    more strongly than \(\fatsemi\).
 \end{notation}
 
 We will use the \(\tensor\) bifunctor extensively through this thesis.
 For this reason, when drawing string diagrams for monoidal categories we will
-not forego drawing the (bi)functor boxes and usually draw wires exclusively in
+forego drawing the (bi)functor boxes and usually draw wires exclusively in
 their `deconstructed' state: instead of a single wire \(A \tensor B\) we will
 draw two wires \(A\) and \(B\).
 \begin{gather*}
@@ -84,11 +86,6 @@ draw two wires \(A\) and \(B\).
     \coloneqq
     \iltikzfig{strings/monoidal/tensor-notation-noboxes}[colour=white,dom1=A,dom2=C,cod1=B,cod2=D,box1=f,box2=g]
 \end{gather*}
-\begin{example}
-    \(\set\) is a monoidal category, with the tensor product defined as the
-    Cartesian product (\(A \tensor B \coloneqq A \times B\)) and the unit as the
-    singleton set (\(I \coloneqq \mathbbm{1}\)).
-\end{example}
 
 The definition of monoidal category we have presented is quite general,
 particularly with regards to the natural isomorphisms for unitors and
@@ -109,11 +106,10 @@ monoidal category in terms of equations: these are illustrated in
 
 \input{sections/categories/floats/mc-equations}
 
-
 \section{Symmetric monoidal categories}
 
-We can now construct morphisms by composing them in sequence and in parallel.
-However, there is no way to cross over the wires that connect boxes together.
+We can now construct morphisms by composing them in sequence and in parallel,
+but there is no way to cross over the wires that connect boxes together.
 This can be achieved by equipping the categorical setting with another natural
 isormorphism.
 
