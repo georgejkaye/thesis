@@ -477,6 +477,14 @@ and \(\scircsigmaobs\) shows that the algebraic semantics is sound and complete:
 two circuits have the same behaviour as stream functions if and only if they
 can be translated into each other using the equations.
 
+\subsubsection{\cref{chap:semantics-applications}: Potential applications}
+
+We conclude the first part of the thesis by examining some potential
+applications for the categorical framework of digital circuits.
+In particular, we show how one could use the framework for
+\emph{partial evaluation} of circuits, and how we can use (in)equational
+reasoning to develop more efficient circuits.
+
 \subsection{Graph Rewriting for Digital Circuits}
 
 \begin{figure}
@@ -507,15 +515,53 @@ so we can apply it to sequential digital circuits.
 An overview of the categories involved can be seen in
 \cref{fig:hypergraphs-map}.
 
-The existing work showed how terms in a freely generated symmetric monoidal
-category \(\smcsigma\) equipped with a
-\emph{special commutative Frobenius structure} \(\frob\) could be interpreted as
-morphisms in a category of
-\emph{cospans of (monogamous) hypergraphs} \(\cspdhyp\).
-We extend this work for terms in a freely generated symmetric \emph{traced}
-monoid category \(\stmcsigma\) equipped with a
-\emph{commutative comonoid structure} \(\ccomon\).
-Using graph rewriting, we can express the operational and algebraic semantics
-in a language that is easy for computers can understand and reason with, opening
-up the possibility for automatic reasoning about complex, actually useful,
-digital sequential circuits.
+\subsubsection{\cref{chap:hypergraphs}: String diagrams as hypergraphs}
+
+Previous work on hypergraph string diagram hypergraph rewriting showed how terms
+in a freely generated symmetric monoidal category \(\smcsigma\) equipped with a
+\emph{special commutative Frobenius structure} \(\frob\) correspond to morphisms
+in a category of \emph{cospans of hypergraphs} \(\cspdhyp\), and terms without a
+Frobenius structure correspond to morphisms in a category of
+cospans of \emph{monogamous acyclic} \(\macspdhyp\).
+
+We extend this work to terms in a freely generated symmetric traced monoidal
+category \(\stmcsigma\); since these terms occupy the space in between regular
+symmetric monoidal terms and those with a Frobenius structure, the interpretation as
+cospans accordinly sits between \(\macspdhyp\) and \(\cspdhyp\) in the form of
+the category of \emph{partial monogamous} cospans of hypergraphs \(\pmcspdhyp\).
+
+We furthermore extend this to the case where the traced terms are additionally
+equipped with a cocommutative comonoid structure \(\ccomon\), leading to a
+category of \emph{partial left-monogamous} cospans of hypergraphs
+\(\plmcspdhyp\).
+
+\subsubsection{\cref{chap:rewriting}: Graph rewriting}
+
+Reasoning on terms interpreted as cospans of hypergraphs is performed using
+\emph{double pushout (DPO) graph rewriting}.
+The main computational step during this procedure is identifying a valid
+\emph{pushout complement}: the context of the rewrite step.
+Bonchi et al showed that or Frobenius terms, any pushout complement corresponds
+to a term rewrite~\cite{bonchi2022string}, and for symmetric monoidal terms
+exactly one pushout complement corresponds to a term
+rewrite~\cite{bonchi2022stringa}: the \emph{boundary complement}.
+
+For the traced and traced comonoid case some pushout complements are valid and
+some are not.
+We characterise those that are as \emph{traced boundary complements} in the case
+of the former and \emph{traced left-boundary complements} in the case of the
+latter.
+
+\subsubsection{\cref{chap:graphs-applications}: Applications of graph rewriting}
+
+Interpreting circuits as hypergraphs introduces the opportunity to evaluate them
+\emph{automatically} using graph rewriting.
+As a first case study, we show how graph rewriting modulo traced comonoid
+structure can aid reasoning in settings with a \emph{Cartesian} structure, of
+which the semantic categories of digital circuits are an example.
+
+Subsequently, we illustrate how graph rewriting can be used as a combinatorial
+implemnetation of the operational semantics for digital circuits.
+This culminates in the presentation of a graph-rewriting-based hardware
+description language based on the work throughout the thesis, with which one can
+design and (partially) evaluate circuits in a step-by-step manner.
