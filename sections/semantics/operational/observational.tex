@@ -6,10 +6,8 @@ denotations as streams are equal.
 For operational semantics we have another notion of relation on circuits: that
 of \emph{observational equivalence}.
 This is due to Morris~\cite{morris1969lambdacalculus}, who named it
-`extensional equivalence': essentially, two processes are observationally if they
-cannot be distinguished by their input-output behaviour.
-To apply this to circuits we first define some notation for sequences of inputs
-to a circuit.
+`extensional equivalence': essentially, two processes are observationally
+equivalent if they cannot be distinguished by their input-output behaviour.
 
 \begin{notation}[Waveform]\label{def:waveform}
     The empty waveform is defined as \(
@@ -30,8 +28,8 @@ to a circuit.
 
 Testing for observational equivalence is traditionally performed by checking
 that a program behaves the same in all \emph{contexts}.
-In the setting of digital circuits, this means that for all possible streams of
-inputs, the circuit produces the same inputs.
+For digital circuits, this means that for all possible streams of inputs, the
+circuit produces the same inputs.
 Of course, there are infinitely many streams of inputs, despite the set of
 values being finite.
 Fortunately, since circuits are constructed from a finite number of
@@ -70,7 +68,7 @@ Fortunately, since circuits are constructed from a finite number of
 \end{corollary}
 
 This means that every possible behaviour of a circuit can be evaluated using
-a finite number of streams.
+a finite number of sequences.
 This can be used to define our notion of observational equivalence for digital
 circuits.
 
@@ -90,12 +88,10 @@ circuits.
     \(|\values^c| + 1\).
 \end{definition}
 
-To verify that this is the `best' such relation, we turn to a
-definition of observational equivalence in terms of universal
-properties~\cite{gordon1998operational}.
-Gordon states that a relation is an \emph{adequate} observational semantics if
-it only relates circuits that have the same denotational semantics;
-observational equivalence is then defined as the largest adequate congruence.
+Observational equivalence is our semantic relation for operational semantics,
+which relates two circuits based on their \emph{execution}.
+To ensure it is suitable, it must be sound and complete with respect to the
+denotational semantics.
 
 \begin{theorem}\label{thm:operational-denotational}
     Given two sequential circuits \(
@@ -150,6 +146,13 @@ observational equivalence is then defined as the largest adequate congruence.
     equivalence is met.
 \end{proof}
 
+To verify that this is the `best' equivalence relation, we turn to a
+definition of observational equivalence in terms of universal
+properties~\cite{gordon1998operational}.
+Gordon states that a relation is an \emph{adequate} observational semantics if
+it only relates circuits that have the same denotational semantics;
+observational equivalence is defined as the largest adequate congruence.
+
 \begin{corollary}
     \(\sim_\interpretation\) is the largest adequate congruence on
     \(\scircsigma\).
@@ -192,6 +195,6 @@ inputs.
 Often, it is the case that one knows a particular input is fixed for long
 periods of time: perhaps it is some sort of control signal.
 By precomposing the circuit with appropriate infinite waveforms to represent the
-fixed inputs, the behaviour of the circuit can be evaluated and inspected.
-This is known as \emph{partial evaluation}, which will be examined more
+fixed inputs, insight and potential optimisations may be gleaned; this is known
+as \emph{partial evaluation}, which will be examined more
 in \cref{chap:semantics-applications}.

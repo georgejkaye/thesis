@@ -4,8 +4,8 @@ One of the major issues that comes with trying to reduce circuits in
 \(\scircsigma\) is the presence of feedback.
 Without proper attention, one could end up infinitely unfolding and we never
 produce any output values.
-The first portion of our operational semantics will revolve around defining some
-\emph{global transformations} to make a circuit suitable for reductions.
+The first portion of our operational semantics revolves around some
+\emph{global transformations} to make a circuit suitable for reduction.
 
 The first observation we make does not even need anything new to be defined as
 it follows immediately from axioms of STMCs.
@@ -82,19 +82,30 @@ The result of applying the \((\mealyeqn)\) reduction still differs from the
 image of \(\mealytocircuiti\) as it may have a trace with no delay on it: an
 instance of \emph{non-delay-guarded feedback}.
 
+The mere mention of non-delay-guarded feedback may trigger alarm bells in
+the minds of those well-acquainted with circuit design.
+It is often common in industry to enforce that circuits have no
+non-delay-guarded feedback; one might ask if we should also enforce this
+tenet in order to stick to `well-behaved' circuits.
+
 \begin{remark}
-    The mere mention of non-delay-guarded feedback may trigger alarm bells in
-    the minds of those well-acquainted with circuit design.
-    It is often common in industry to enforce that circuits have no
-    non-delay-guarded feedback; one might ask if we should also enforce this
-    tenet in order to stick to `well-behaved' circuits.
-    However, not only would this violate the categorical setting of a STMC (the
-    `yanking' equation would no longer hold), careful use of non-delay-guarded
-    feedback can still result in useful circuits as a clever way of sharing
-    resources~\cite{malik1994analysis,riedel2004cyclic,mendler2012constructive}.
-    The minimal circuit to implement a function often \emph{must} be
-    constructed using cycles~\cite{rivest1977necessity,riedel2003synthesis}.
+    \emph{Categories with feedback}~\cite{katis2002feedback} are a weakening of
+    traced categories that remove the yanking axiom: this effectively makes all
+    traces delay-guarded.
+    \emph{Categories with delayed trace}~\cite{sprunger2019differentiable}
+    weaken this further by removing the sliding axiom, so no components can be
+    `pushed round' into the next tick of execution.
+    Neither of these are suitable for us as we actually \emph{want} to allow
+    non-delay-guarded trace.
 \end{remark}
+
+In fact, careful use of non-delay-guarded feedback can still result in useful
+circuits as a clever way of sharing
+resources~\cite{malik1994analysis,riedel2004cyclic,mendler2012constructive}.
+The minimal circuit to implement a function often \emph{must} be
+constructed using cycles~\cite{rivest1977necessity,riedel2003synthesis}.
+
+
 
 \begin{example}\label{ex:cyclic-combinational}
     A particularly famous circuit~\cite{malik1994analysis} which is useful
@@ -120,27 +131,16 @@ instance of \emph{non-delay-guarded feedback}.
     non-delay-guarded feedback.
     Despite this, it produces useful output when the control signal is true or
     false:
-    \begin{gather*}
-        \circuittostream[
-            \iltikzfig{strings/category/f-2-1}[box=f,colour=seq]
-        ]{\interpretation_\star}(\sigma)(i)
-        =
-        \begin{cases}
-            \circuittofunc[
-                \iltikzfig{circuits/examples/cyclic-combinational/reduced-false}
-            ]{\interpretation_\star}
-            (\proj{1}(\sigma(i)))
-            \quad
-            \text{ if } \proj{0}(\sigma(i)) = \belnapfalse
-            \\
-            \circuittofunc[
-                \iltikzfig{circuits/examples/cyclic-combinational/reduced-true}
-            ]{\interpretation_\star}
-            (\proj{1}(\sigma(i)))
-            \quad
-            \text{ if } \proj{0}(\sigma(i)) = \belnaptrue
-        \end{cases}
-    \end{gather*}
+    when the control signal is \(\belnapfalse\) then the behaviour of the
+    circuit is \(
+    \circuittofunc[
+        \iltikzfig{circuits/examples/cyclic-combinational/reduced-false}
+    ]{\interpretation_\star}
+    \) and when the control is \(\belnaptrue\) then the behaviour is \(
+    \circuittofunc[
+        \iltikzfig{circuits/examples/cyclic-combinational/reduced-true}
+    ]{\interpretation_\star}
+    \).
     The feedback is just used as a clever way to share circuit components.
 \end{example}
 
@@ -191,7 +191,7 @@ The trace in \(\streami\) is by the least fixed point, computed by repeatedly
 applying \(f\) to itself starting from \(\bot\).
 The above lemma gives a fixed upper bound for the number of times we need to
 apply \(f\) to reach this fixed point, based on the size of the lattice.
-We can port this over to the syntactic setting.
+We can use this in the syntactic setting.
 
 \begin{definition}[Unrolling]\label{def:unrolling}
     For an interpretation with values \(\values\), the \emph{unrolling}
@@ -216,8 +216,11 @@ feedback at all.
     \) is sound.
 \end{proposition}
 \begin{proof}
-    By \cref{lem:monotone-fixpoint}, applying the circuit \(c\)
-    times reaches a fixpoint.
+    By \cref{lem:monotone-fixpoint}, applying the function \(
+    (\listvar{x}) \mapsto \proj{x}\left(\circuittfunci[
+        \iltikzfig{strings/category/f-2-2}[box=f,colour=comb]
+    ]\right)(\listvar{x}, \listvar{v})\) to itself \(c\) times reaches a
+    fixpoint.
     The circuit is combinational so each element of the output
     \(\circuittostreami[
         \iltikzfig{strings/category/f-2-2}[box=f,colour=comb]
@@ -240,12 +243,11 @@ feedback at all.
 \input{sections/semantics/operational/floats/sr-latch-unrolled}
 \input{sections/semantics/operational/floats/cyclic-combinational-unrolled}
 
-If applied locally for every feedback loop, the \(\instantfeedbackeqn\)
-equation would cause an exponential blowup.
-However, if a circuit is in global trace-delay form, the equation need only be
-applied once to the global loop; although the value of \(c\) increases as the
-number of feedback wires increases, it only does so linearly in the height of
-the lattice.
+If applied locally for every feedback loop, the \((\instantfeedbackeqn)\)
+rule would cause an exponential blowup, but if a circuit is in global
+trace-delay form, the rule need only be applied once to the global loop.
+Although the value of \(c\) increases as the number of feedback wires increases,
+it only does so linearly in the height of the lattice.
 
 With a method to eliminate non-delay-guarded feedback, we can establish the
 class of circuits which will act as the keystone of both the operational
@@ -255,7 +257,7 @@ semantics in this section and the algebraic semantics of the next.
     A sequential circuit
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     is in \emph{Mealy form} if it is in the form \(
-    \iltikzfig{circuits/productivity/mealy-form}[core=g,state=\listvar{s},dom=m,cod=n,delay=y]
+    \iltikzfig{circuits/productivity/mealy-form}[core=g,state=\listvar{s},dom=m,cod=n,delay=x]
     \).
 \end{definition}
 
@@ -268,7 +270,7 @@ semantics in this section and the algebraic semantics of the next.
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \reductions
     \iltikzfig{circuits/productivity/mealy-form}[core=g,state=\listvar{s},dom=m,cod=n]
-    \) by applying \(\mealyeqn\) followed by \(\instantfeedbackeqn\).
+    \) by applying \((\mealyeqn)\) followed by \((\instantfeedbackeqn)\).
 \end{theorem}
 \begin{proof}
     Any circuit can be assembled into global trace-delay form by

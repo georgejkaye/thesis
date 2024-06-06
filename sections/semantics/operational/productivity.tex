@@ -48,8 +48,8 @@ so that one copy handles what is happening `now' and the other handles what is
 happening `later'.
 
 \begin{example}\label{ex:streaming}
-    Pulsing \(\belnapfalse\belnaptrue\) to the inputs of an SR NOR latch starts
-    the procedure for `setting' the latch, causing it to output
+    Pulsing the signals \(\belnapfalse\belnaptrue\) to the inputs of an SR NOR
+    latch starts the procedure for `setting' the latch, causing it to output
     \(\belnaptrue\belnapfalse\).
     \cref{fig:sr-latch-streamed} shows how the \(\streamingeqn\) rule is applied
     to the unrolled SR NOR circuit from
@@ -119,7 +119,7 @@ required, as more is involved than than just copying circuit components.
 These rules are all we need to propagate input values across a circuit.
 
 \begin{corollary}\label{cor:mealy-form-productivity}
-    For circuit \(
+    For a circuit \(
     \iltikzfig{circuits/productivity/mealy-form-applied}[core=f,dom=m,cod=n,delay=x]
     \) there exist \(
     \listvar{t} \in \valuetuple{x}
@@ -160,8 +160,9 @@ circuit.
     \iltikzfig{circuits/productivity/productive-goal-lhs}[box=f,input=\listvar{v},dom=m,cod=n]
     \reductions
     \iltikzfig{circuits/productivity/productive-goal-rhs}[box=g,output=\listvar{w},dom=m,cod=n]
-    \) by applying \(\mealyeqn\), \(\instantfeedbackeqn\) and \(\streamingeqn\)
-    once successively followed by the value rules exhaustively.
+    \) by applying \((\mealyeqn)\), \((\instantfeedbackeqn)\) and
+    \((\streamingeqn)\) once successively followed by the value rules
+    exhaustively.
 \end{corollary}
 
 \begin{remark}

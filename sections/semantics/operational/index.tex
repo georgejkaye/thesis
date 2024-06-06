@@ -7,17 +7,16 @@ programming languages.
 To compare the behaviour of two circuits in \(\scircsigma\), we examine their
 corresponding stream functions.
 
-Unfortunately, denotational semantics is not the be-all and end-all of circuit
-semantics.
+Denotational semantics is not the be-all and end-all of circuit semantics.
 Crucially, it obscures the \emph{structure} of a circuit by compressing all the
 behaviour into one function: we don't know \emph{why} the circuit is behaving
 the way it does, just that something has caused it to do so.
-When it comes to circuit design, the structure of the circuit is of course
-important, as that is what is going to be printed onto silicon.
+When it comes to circuit design, the structure of the circuit is important, as
+that is what is going to be printed onto silicon.
 Space is at a premium, so knowing how each part of a circuit contributes to the
 output behaviour is of critical importance.
 
-We now turn our attention to the next course in our menu of semantics,
+We now turn our attention to the next course in our menu of semantics:
 \emph{operational semantics}.
 This is quite a different beast to denotational semantics: rather than assigning
 a mathematical structure to each circuit, semantics are derived from how
@@ -79,9 +78,8 @@ ignored'.
 \end{example}
 
 The operational semantics described thus far is commonly known as
-\emph{structural operational semantics}~\cite{plotkin1981structural}
-semantics; it shows how the behaviour of the whole is represented by the
-behaviour of its parts.
+\emph{structural operational semantics}~\cite{plotkin1981structural}; it shows
+how the behaviour of the whole is represented by the behaviour of its parts.
 However, deriving a proof tree as above can be clunky: to find the meaning of a
 large term one has to `drill down' into the contexts until a value is reached
 before propagating these values back up the tree.
@@ -125,11 +123,11 @@ such that reductions may be applied to their parent expressions and so on.
     \end{gather*}
 \end{example}
 
-
-This reduction sequence is not necessarily canonical.
-Indeed, while there is one canonical proof tree for a given term there may be
-potentially many reduction sequences, but in an ideal reduction system this
-should not be an issue.
+We write \(\reductions\) for a sequence of reduction steps.
+Such a reduction sequence to a value is not necessarily canonical; while there
+is one canonical proof tree for a given term there may be many reduction
+sequences.
+In an ideal reduction system this should not be an issue.
 
 \begin{definition}
     A reduction system is \emph{confluent} if, for any term \(e\), if there
@@ -174,7 +172,7 @@ of the term.
     \end{gather*}
     This means that \(\overline{13}\) is the normal form of
     \(add \, (mul \, \overline{4} \, \overline{2}) \, (add \, \overline{2} \, \overline{3})\)
-    and subsequently its semantics.
+    and subsequently the behaviour of the term.
 \end{example}
 
 When defining an operational semantics for digital circuits we prefer to use

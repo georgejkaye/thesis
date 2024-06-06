@@ -52,20 +52,19 @@ rules.
     \).
 \end{lemma}
 
-With the addition of the bundler rules, the inputs to a generalised circuit can
-be processed.
+With these rules, the inputs to a generalised circuit can be processed.
 
 \begin{corollary}
     For generalised circuit \(
     \iltikzfig{circuits/productivity/mealy-form-applied}[core=f,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
     \) there exist \(
-    \listvar{t} \in \valuetuple{x}
+    \listvar{t} \in \valuetuple{\listvar{x}}
     \) and \(
-    \listvar{w} \in \valuetuple{n}
+    \listvar{w} \in \valuetuple{\listvar{n}}
     \) such that \(
-    \iltikzfig{circuits/productivity/mealy-form-applied}[core=f,dom=\listvar{m},cod=\listvar{n},delay=x]
+    \iltikzfig{circuits/productivity/mealy-form-applied}[core=f,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
     \reductions
-    \iltikzfig{circuits/productivity/mealy-form-produced}[core=f,dom=\listvar{m},cod=\listvar{n},delay=x]
+    \iltikzfig{circuits/productivity/mealy-form-produced}[core=f,dom=\listvar{m},cod=\listvar{n},delay=\listvar{x}]
     \) by applying \((\streamingeqn)\) once followed by the generalised value
     rules exhaustively.
 \end{corollary}
@@ -73,8 +72,8 @@ be processed.
 \begin{corollary}[Generalised productivity]
     For sequential circuit \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
-    \) and inputs \(\listvar{v} \in \valuetuple{m}\), there exists
-    \(\listvar{w} \in \valuetuple{n}\) such that \(
+    \) and inputs \(\listvar{v} \in \valuetuple{\listvar{m}}\), there exists
+    \(\listvar{w} \in \valuetuple{\listvar{n}}\) such that \(
     \iltikzfig{circuits/productivity/productive-goal-lhs}[box=f,input=\listvar{v},dom=\listvar{m},cod=\listvar{n}]
     \reductions
     \iltikzfig{circuits/productivity/productive-goal-rhs}[box=g,output=\listvar{w},dom=\listvar{m},cod=\listvar{n}]
@@ -100,7 +99,7 @@ observational equivalence we must consider longer input waveforms.
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
     \) and \(
     \iltikzfig{strings/category/f}[box=g,colour=seq,dom=\listvar{m},cod=\listvar{n}]
-    \) with at most register width \(c\) are said to be
+    \) with register width at most \(c\) are said to be
     \emph{observationally equivalent under} \(\interpretation\), written \(
     \iltikzfig{strings/category/f}[box=f,colour=seq]
     \sim_{\interpretation}
