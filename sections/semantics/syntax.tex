@@ -1,10 +1,12 @@
 \chapter{Syntax}\label{chap:syntax}
 
-Our \emph{soup du jour} is that of \emph{sequential digital circuits}
+Our \emph{soup du jour} is that of
+\emph{sequential synchronous digital circuits}
 constructed from primitive components such as logic gates or transistors.
 These circuits are \emph{sequential} as they have a notion of \emph{state}:
 outputs can be impacted by inputs in previous cycles rather than solely those in
-the current cycle.
+the current cycle, and \emph{synchronous} because their state changes in time
+with some global clock.
 
 \begin{remark}
     Digital (electric) circuits are not to be confused with \emph{electronic}
@@ -26,13 +28,15 @@ the current cycle.
 
 \section{Circuit signatures}
 
-Before we can start doing anything exciting with digital circuits, we need to
-define a \emph{syntactic} category in which we construct them.
-While we could go ahead and define a category of circuits with some fixed gate
-set, at some point someone would come along and complain we missed out their
-favourite.
-Instead, we set a \emph{circuit signature} to define the components in a
-particular category of circuits.
+When working with digital circuits, the first thing to do is to construct them.
+Categorically, this corresponds to defining a category in which a morphism
+\(m \to n\) is a circuit with \(m\) inputs and \(n\) outputs.
+These circuits are purely \emph{syntactic}, in that they do not have meaning
+assigned to them other than their structure.
+
+Rather than restricting to any particular gate set, we parameterise a given
+category of circuits over a \emph{circuit signature} containing details about
+the available components.
 
 \begin{definition}[Circuit signature, value, gate symbol]
     A \emph{circuit signature} \(\circuitsignature\) is a tuple \((
@@ -55,8 +59,8 @@ A particularly important signature, and one which we will turn to for the
 majority of examples in this thesis, is that of gate-level circuits.
 
 \begin{example}[Gate-level circuits]\label{ex:sig}
-    The signature for \emph{gate-level circuits} is \(
-    \belnapsignature = (
+    The circuit signature for \emph{gate-level circuits} is \(
+    \belnapsignature \coloneqq (
     \belnapvalues,
     \bot,
     \belnapgates,
@@ -140,15 +144,13 @@ When drawing circuits, the coloured backgrounds of generators will often be
 omitted in the interests of clarity.
 Since the category is freely generated, morphisms are defined by
 juxtaposing the generators in a given signature sequentially or in parallel with
-each other, the identity \iltikzfig{strings/category/identity}[colour=comb], and
-the symmetry \iltikzfig{strings/symmetric/symmetry}[colour=comb].
+each other, the identity and the symmetry.
 Arbitrary combinational circuit morphisms defined in this way are drawn as light
 boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
 
 \begin{notation}\label{not:arbitrary-width-structure}
-    The structural generators are only defined on single bits, but it is a
-    simple exercise to define them on arbitrary bit inputs and outputs using the
-    axioms of symmetric monoidal categories.
+    The structural generators are only defined on single bits, but it is
+    straightforward to define versions for arbitrary bit wires.
     Much like we often draw multiple wires as one
     (\cref{not:arbitrary-width-wires}), we can also draw these `thicker'
     constructs as the single-bit versions:
@@ -220,9 +222,9 @@ boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
 
 \begin{remark}
     As mentioned during \cref{not:arbitrary-width-wires}, wires of zero width
-    are usually drawn as empty space.
-    The definition of zero width fork, join, and elimination constructs means
-    that we can also draw them as empty space or using `faded' wires.
+    are usually drawn as empty space; in a similar fashion the zero width fork,
+    join, and elimination constructs can be drawn as empty space or using
+    `faded' wires.
 \end{remark}
 
 \begin{example}[More logic gates]
@@ -231,8 +233,8 @@ boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
 
     A \(\nandgate\) gate \(
     \iltikzfig{circuits/components/gates/nand}
-    \) acts as as the inverse of an \(\nandgate\) gate: it
-    only produces a true output if none of the inputs are true.
+    \) acts as as the inverse of an \(\andgate\) gate: it
+    outputs true if none of the inputs are true.
     In \(\ccirc{\belnapsignature}\) this is constructed as \(
     \iltikzfig{circuits/components/gates/nand}
     \coloneqq
@@ -249,7 +251,7 @@ boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
 
     Another type of gate is the \(\xorgate\) gate \(
     \iltikzfig{circuits/components/gates/xor}
-    \), which produces a true output if and only if exactly one of the inputs is
+    \), which outputs true if and only if exactly one of the inputs is
     true.
     In \(\ccirc{\belnapsignature}\) this is constructed as \(
     \iltikzfig{circuits/components/gates/xor}
@@ -261,7 +263,7 @@ boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
 \end{example}
 
 \begin{example}[Half adder]\label{ex:half-adder}
-    The \(\xorgate\) is used in a classic combinational circuit known as a
+    The \(\xorgate\) gate is used in a classic combinational circuit known as a
     \emph{half adder}, the basic building block of circuit arithmetic.
     A half adder takes two inputs and computes their \emph{sum} modulo
     \(2\) and the resulting \emph{carry}.
@@ -301,16 +303,16 @@ The latter means we need to move into a symmetric \emph{traced} monoidal categor
     let \(\scircsigma\) be the STMC freely generated over the generators of
     \(\ccircsigma\) along with new generators \(
     \iltikzfig{circuits/components/values/vs}[val=v]
-    \) for each \(v \in \values \setminus \bullet\), and \(
+    \) for each \(v \in \values \setminus \bullet\), and a generator \(
     \iltikzfig{circuits/components/waveforms/delay}
     \).
 \end{definition}
 
 The first set of generators are \emph{instantaneous values} for each value in
 \(\values \setminus \bullet\).
-Value generators are intended to be interpreted as producing their value in the
-first cycle of execution, followed by producing the disconnected \(\bullet\)
-after that.
+Value generators are intended to be interpreted as an \emph{initial state}:
+in the first cycle of execution they will emit their value, and produce the
+disconnected \(\bullet\) vaulue after that.
 This is why there is no \(\bullet\) value generator; instead it is a
 \emph{combinational} generator \(
 \iltikzfig{strings/structure/monoid/init}[colour=comb]
@@ -319,7 +321,7 @@ This is why there is no \(\bullet\) value generator; instead it is a
 \begin{notation}
     Although \(
     \iltikzfig{strings/structure/monoid/init}[colour=comb]
-    \) is itself not a sequential value, when we refer to an arbitrary `value'
+    \) is itself not a sequential value, when we refer to an arbitrary value
     \(
     \iltikzfig{circuits/components/values/vs}[val=v]
     \), \(v\) can be any value in \(\values\) including \(\bullet\).
@@ -354,22 +356,22 @@ This is why there is no \(\bullet\) value generator; instead it is a
 
 The delay component is the opposite of a value; in the first cycle of execution
 it is intended to produce the \(\bullet\) value, but in future cycles it outputs
-the input it received in the previous cycle.
+the signal it received in the previous cycle.
 
 \begin{remark}
     While the mathematical interpretation of a delay is straightforward, the
     physical aspect of a digital circuit it models is less clear.
-    An obvious interpretation could be that the delay models as D flipflop in
+    An obvious interpretation could be that the delay models a D flipflop in
     a clocked circuit, so the delay is one clock cycle.
     A more subtle interpretation is the `minimum obervable duration'; in this
     case the delay models inertial delay on wires up to some fixed precision.
 \end{remark}
 
 \begin{notation}
-    Like values, we can derive delay components for thicker wires, drawn like
-    \(
+    Like values, we can derive delay components for arbitrary-bit wires, drawn
+    like \(
     \iltikzfig{circuits/components/waveforms/delay}[width=n]
-    \); the definition is very straightforward.
+    \).
     \begin{gather*}
         \iltikzfig{circuits/components/waveforms/unit-delay}[width=0]
         \coloneqq
@@ -401,7 +403,7 @@ morphisms are drawn as green boxes \(
 \begin{example}[SR latch]\label{ex:sr-latch}
     A sequential circuit one might come across early on in an electronics
     textbook is the the \emph{SR NOR latch}, one of the simplest registers.
-    One design and its interpretation in \(\scirc{\belnapsignature}\) are
+    A possible design and interpretation in \(\scirc{\belnapsignature}\) are
     illustrated below.
     \begin{gather*}
         \iltikzfig{circuits/examples/sr-latch/real-circuit}
@@ -413,10 +415,10 @@ morphisms are drawn as green boxes \(
     They have two inputs: Reset (\(\mathsf{R}\)) and Set (\(\mathsf{S}\)), and
     two outputs \(\mathsf{Q}\) and \(\overline{\mathsf{Q}}\) which are always
     negations of each other.
-    When Set receives a high signal, the \(\mathsf{Q}\) output is forced high,
-    and will remain as such even if the Set input stops being pulsed high.
-    It is only until the Reset input is pulse high that the \(\mathsf{Q}\)
-    output will return to low.
+    When Set receives a true signal, the \(\mathsf{Q}\) output is forced true,
+    and will remain as such even if the Set input stops being pulsed true.
+    It is only until the Reset input is pulsed true that the \(\mathsf{Q}\)
+    output will return to false.
     (It is illegal for both Set and Reset to be pulsed high simultaneously; this
     issue is fixed in more complicated latches).
 
@@ -435,13 +437,13 @@ In a circuit signature, gates are assigned a number of input and output wires.
 This serves us well when we want to model lower level circuits in which we
 really are dealing with single-bit wires.
 However, when designing circuits it is often advantageous to work at a higher
-level of abstraction where with `thicker' wires carrying words of information.
+level of abstraction with `thicker' wires carrying words of information.
 For example, the values in the circuits could be used to represent binary
 numbers.
 
 This can still be modelled in \(\scircsigma\) `as is' by using lots of parallel
 wires to connect to the various primitives, but this can get messy with wires
-flying all over the place.
+all over the place.
 Instead, we will introduce a generalisation of circuit signatures in which these
 thicker buses of wires are treated as first-class objects.
 
@@ -461,6 +463,9 @@ thicker buses of wires are treated as first-class objects.
     \morph{\circuitsignaturecoarity}{\circuitsignaturegates}{\natplus^\star}
     \) is a \emph{coarity} function.
 \end{definition}
+
+In a generalised circuit signature, primitives are typed with input and output
+\emph{words} rather than just natural numbers.
 
 \begin{example}
     The generalised circuit signature for \emph{simple arithmetic circuits} is
@@ -493,11 +498,16 @@ thicker buses of wires are treated as first-class objects.
         \\[0.5em]
         \belnapcoarity^+
         \coloneqq
-        \andgate_n \mapsto [n],
-        \orgate_n \mapsto [n],
+        \andgate_{k,n} \mapsto [n],
+        \orgate_{k,n} \mapsto [n],
         \notgate_n \mapsto [n],
-        \mathsf{add}_n \mapsto [1,1,n]
+        \mathsf{add}_n \mapsto [n]
     \end{gather*}
+    The gates \(\andgate_{k,n}\) and \(\orgate_{k,n}\) are gates that operate
+    on \(k\) input wires of width \(n\); similarly the \(\notgate_n\) gate
+    operates on input wires of width \(n\).
+    The \(\mathsf{add}_n\) component represents an adder that takes as input
+    two \(n\)-bit wires and outputs their \(n\)-bit sum.
 \end{example}
 
 Just like a monochromatic circuit signature generates monochromatic PROPs, a
@@ -534,7 +544,6 @@ generalised circuit signature generates \(\natplus\)-coloured PROPs.
 Most of the generators  in \(\ccircsigmag\) are fairly straightforward
 generalisations of the primitives in \(\ccircsigma\) to act on each
 colour (width) of wires.
-
 The only new generators are the \emph{bundlers} at the end of the bottom row;
 their intended meaning is that they can be used to \emph{split} and
 \emph{combine} bundles of wire buses into bundles with different widths.
@@ -552,10 +561,9 @@ applied to strict categories.
     example operating on four-bit wires that performs a bitwise \(\andgate\)
     operation when the control is false, and an addition when the control is
     true.
-    The ALU will also produce an output indicating if the sum is zero, and theti
-    sign of the sum.
-    These outputs of course only produce useful output when the addition
-    operation is selected.
+    This ALU will also produce an output indicating if the sum is zero, and
+    the sign of the sum; these auxiliary outputs only produce useful output when
+    the addition operation is selected.
 
     \begin{center}
         \iltikzfig{circuits/examples/alu}
