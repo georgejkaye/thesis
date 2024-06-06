@@ -2,6 +2,10 @@
 
 Now that we comprehend what exactly denotational semantics is, we turn to our
 goal of defining a denotational semantics for digital circuits.
+We will interpret digital circuits as a certain class of
+\emph{stream functions}, functions that operate on infinite sequences of values.
+This represents how the output of a circuit may not just operate on the current
+input, but all of the previous ones as well.
 
 \begin{remark}
     In \cite{mendler2012constructive}, the semantics of digital circuits with
@@ -16,18 +20,16 @@ goal of defining a denotational semantics for digital circuits.
 
 \subsection{Interpreting circuit components}\label{sec:interpreting-components}
 
-Before diving straight into what the denotation of a particular circuit \(
-\iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
-\) might be, we will first decide how to interpret the individual
-\emph{components} of a given circuit signature.
+Before assigning stream functions to a given circuit in \(\scircsigma\), we will
+first decide how to interpret the individual \emph{components} of a given
+circuit signature.
 This is crucial because a denotational semantics is defined
 \emph{compositionally}; eventually we will need to refer to the interpretations
 of particular components.
 
 First we consider the interpretation of the \emph{values} that flow through the
 wires in our circuits.
-Recall that in a circuit signature these are specified by a set \(\values\).
-In the denotational semantics these values will need to have a bit more
+In the denotational semantics the set of values will need to have a bit more
 structure, as they must be ordered by how much \emph{information} they contain.
 
 \begin{definition}[Partially ordered set]
@@ -47,12 +49,9 @@ The minimum element of such an ordered set of values represents a complete
 \emph{lack} of information, corresponding to the disconnected wire generator \(
 \iltikzfig{strings/structure/monoid/init}[colour=comb]
 \).
-At the other end of the order will be a value representing \emph{every possible}
-piece of information; a `short circuit'.
-
-Mathematically-inclined readers (or partial order enjoyers) may have noticed
-that what we have just described is more than just a vanilla partial order, but
-in fact carries the structure of a \emph{lattice}.
+At the other end of the order will be a value representing \emph{all} pieces of
+information; a `short circuit'.
+This structure is known as a \emph{lattice}.
 
 \begin{definition}
     Given a poset \((A, \leq)\) and elements \(a, b\in A\), an
@@ -107,35 +106,6 @@ Conversely, by repeatedly taking the meet, one obtains its \emph{infimum}
     infimum \(\bot\) is the empty set \(\{\}\).
 \end{example}
 
-Values in a circuit signature will be interpreted as elements of a finite
-lattice; now the concepts of no information and all information are formalised
-as the \(\bot\) and \(\top\) elements respectively.
-
-Now the primitives in the signature must be interpreted.
-Clearly they should be interpreted as functions between the values, but they
-cannot just be any function as they must respect the order on the value lattice.
-One should not be able to lose information by performing a computation.
-
-\begin{definition}
-    Let \((A, \leq_A)\) and \((B, \leq_B)\) be partial orders.
-    A function \(\morph{f}{A}{B}\) is monotone if, for every \(x, y \in A\),
-    \(x \leq_A y\) if and only if \(f(x) \leq_B f(y)\).
-\end{definition}
-
-One more conditions on the interpretation of primitives is that when all the
-inputs to a primitive are \(\bot\), then it should produce \(\bot\); we cannot
-produce information from nothing.
-
-\begin{definition}
-    Let \(A,B\) be finite lattices, where \(\bot_A\) is the infimum of \(A\) and
-    \(\bot_B\) is the infimum of \(B\).
-    A function \(\morph{f}{A}{B}\) is \(\bot\)-preserving if
-    \(f(\bot_A) = \bot_B\).
-\end{definition}
-
-Assigning interpretations to the combinational components of a circuit sets the
-stage for the entire denotational semantics.
-
 \begin{remark}
     If \(A\) is a lattice, then for any \(n \in \nat\), \(A^n\) is also a
     lattice by comparing elements pointwise.
@@ -155,10 +125,36 @@ stage for the entire denotational semantics.
     \) and \(
     \{0,1\}\{1\} \vee \{0\}\{1,2\} = \{0,1\}\{1,2\}
     \).
-
-    For a word \(\listvar{n} \in \natplus^\star\), a lattice
-    structure on \(A^{\listvar{n}}\) is induced in the same way.
 \end{remark}
+
+Values in a circuit signature are interpreted as elements of a finite
+lattice; now the concepts of no information and all information are encoded
+as the \(\bot\) and \(\top\) element.
+
+Now the primitives in the signature must be interpreted.
+Clearly they should be interpreted as functions between the values, but these
+functions must respect the order on the value lattice; one should not be able to
+lose information by performing a computation.
+
+\begin{definition}
+    Let \((A, \leq_A)\) and \((B, \leq_B)\) be partial orders.
+    A function \(\morph{f}{A}{B}\) is monotone if, for every \(x, y \in A\),
+    \(x \leq_A y\) if and only if \(f(x) \leq_B f(y)\).
+\end{definition}
+
+Another condition on the primitives is that when all the inputs to a primitive
+are \(\bot\), then it should produce \(\bot\); we cannot produce information
+from nothing.
+
+\begin{definition}
+    Let \(A,B\) be finite lattices, where \(\bot_A\) is the infimum of \(A\) and
+    \(\bot_B\) is the infimum of \(B\).
+    A function \(\morph{f}{A}{B}\) is \(\bot\)-preserving if
+    \(f(\bot_A) = \bot_B\).
+\end{definition}
+
+Assigning interpretations to the combinational components of a circuit sets the
+stage for the entire denotational semantics.
 
 \begin{definition}[Interpretation]
     For a signature \(
@@ -324,8 +320,8 @@ In a combinational circuit, the output only depends on the inputs at the current
 cycle, but for sequential circuits inputs can affect outputs many cycles after
 they occur.
 
-We therefore have to reason with \emph{infinite sequences}, or \emph{streams} of
-inputs rather than individual values.
+We therefore have to reason with \emph{infinite sequences} of inputs rather than
+individual values; these are known as \emph{streams}.
 
 \begin{notation}
     Given a set \(A\), we denote the set of streams (infinite sequences) of
@@ -341,6 +337,9 @@ inputs rather than individual values.
     \).
 \end{notation}
 
+Streams can be viewed a bit like lists, in that they have a head component and
+an (infinite) tail component.
+
 \begin{definition}[Operations on streams]\label{def:stream-operations}
     Given a stream \(\sigma \in \stream{A}\), its \emph{initial value}
     \(\streaminit(\sigma) \in A\) is defined as \(\sigma \mapsto \sigma(0)\)
@@ -353,8 +352,8 @@ inputs rather than individual values.
     \(\tau\) we write it as \(\sigma \coloneqq a \streamcons \tau\).
 \end{notation}
 
-Streams will serve as our inputs and outputs.
-The denotations of sequential circuits themselves will therefore be
+Streams will serve as the inputs and outputs to circuits.
+The denotations of sequential circuits will therefore be
 \emph{stream functions}, which consume and produce streams.
 Just like with functions, we cannot claim that all streams are the
 denotations of sequential circuits.
@@ -375,9 +374,10 @@ operations of initial value and stream derivative to stream \emph{functions}.
 
 \begin{definition}[Initial output~\cite{rutten2006algebraic}]
     For a causal stream function \(\morph{f}{\stream{A}}{\stream{B}}\) and
-    \(a \in A\), the \emph{initial output of \(f\) on input \(a\)} is
-    \(\initialoutput{f}{a} \coloneqq \streaminit(f(a \streamcons \sigma))\) for an
-    arbitrary \(\sigma \in \stream{A}\).
+    \(a \in A\), the \emph{initial output of \(f\) on input \(a\)} is an element
+    \(\initialoutput{f}{a} \in A\) defined as
+    \(\initialoutput{f}{a} \coloneqq \streaminit(f(a \streamcons \sigma))\) for
+    an arbitrary \(\sigma \in \stream{A}\).
 \end{definition}
 
 Since \(f\) is causal, the stream \(\sigma\) in the definition of initial
@@ -387,8 +387,8 @@ first element of the stream.
 \begin{definition}[Functional stream derivative~\cite{rutten2006algebraic}]
     For a causal stream function \(\morph{f}{\stream{A}}{\stream{B}}\) and
     \(a \in A\), the
-    \emph{functional stream derivative of \(f\) on input \(a\)} is the
-    stream function \(
+    \emph{functional stream derivative of \(f\) on input \(a\)} is a stream
+    function \(\streamderivative{f}{a}\) defined as \(
     \streamderivative{f}{a}
     \coloneqq
     \sigma \mapsto \streamderv(f(a \streamcons \sigma))
@@ -407,15 +407,14 @@ function which acts as \(f\) would `had it seen \(a\) first'.
     We will exploit this fact in the next section.
 \end{remark}
 
-The functional stream derivative, and indeed the above remark, leads us to the
-next property of denotations of sequential circuits.
+This leads us to the next property of denotations of sequential circuits.
 Although they may have infinitely many inputs and outputs, circuits themselves
 are built from a finite number of components.
 This means they cannot specify infinite \emph{behaviour}.
 
 \begin{notation}
     Given a finite word \(\listvar{a} \in \freemon{A}\), we abuse notation
-    somewhat and write \(\streamderivative{f}{\listvar{a}}\) for the repeated
+    and write \(\streamderivative{f}{\listvar{a}}\) for the repeated
     application of the functional stream derivative for the elements of
     \(\listvar{a}\), i.e.\ \(
     \streamderivative{f}{\varepsilon} \coloneqq f
@@ -441,11 +440,14 @@ To equip streams with a similar notion, we must set an order on them.
     \(i \in \nat\).
 \end{notation}
 
-Monotonicity of stream functions is then defined just like monotonity for normal
-functions.
-
-This completes the trio of properties we need to express the semantics of
+Monotonicity of stream functions is then defined in the normal way; this
+completes the trio of properties we need to express the semantics of
 sequential circuits as stream functions.
+To use stream functions with these properties as a denotation semantics for
+circuits we must assemble them into another PROP and map into it from
+\(\scircsigma\) using a \emph{PROP morphism}, a strict symmetric monoidal
+functor between PROPs.
+To this end, we must show that these properties are preserved by composition.
 
 \begin{lemma}\label{lem:causality-preserved}
     Causality is preserved by composition and tensor product.
@@ -471,11 +473,8 @@ sequential circuits as stream functions.
     The composition and product of any monotone function is monotone.
 \end{proof}
 
-\begin{notation}
-    Given stream functions \(\sigma \in A^m\) and \(\tau \in A^n\), we write
-    \(\sigma\tau \in A^{m+n}\) for their pointwise concatenation, i.e\
-    \((\sigma\tau)(i) = \sigma(i)\tau(i)\).
-\end{notation}
+As the categorical operations preserve the desired properties, these stream
+functions form a PROP.
 
 \begin{proposition}
     There is a PROP \(\streami\) where morphisms \(m \to n\) are the causal,
@@ -491,14 +490,29 @@ sequential circuits as stream functions.
     tensor preserve causality (\cref{lem:causality-preserved}),
     finite specification (\cref{lem:finitely-specified-preserved}),
     and monotonicity (\cref{lem:monotonicity-preserved}), this data defines a
-    PROP.
+    symmetric monoidal category.
 \end{proof}
 
 Modelling sequential circuits as stream functions deals with the temporal
 aspects of the former, but what about feedback?
 As the assignment of denotations to circuits needs to be compositional, we need
 to map the trace on \(\scircsigma\) to a trace on \(\streami\).
-For this, we will need to order the stream functions themselves.
+
+A usual candidate for the trace when considering settings with some sort of
+order is the \emph{least fixed point}.
+
+\begin{definition}
+    For a poset \(A\) and an endofunction \(\morph{f}{A}{A}\), the least fixed
+    point of \(f\) is a value \(\mu_f\) such that \(f(\mu_f) = f\).
+\end{definition}
+
+For a lattice with a unique minimal element \(\bot\) and join \(\ljoin\), the
+least fixpoint of a function \(f\) can be computed as
+\(f(\bot) \ljoin f(f(\bot)) \ljoin f(f(f(\bot))) \dots\); iterating the function
+repeatedly from the \(\bot\) element.
+
+To compute the least fixed point of stream functions, they will need to be
+ordered.
 
 \begin{definition}\label{def:state-order}
     Let \(A\) and \(B\) be posets and let
@@ -511,6 +525,12 @@ A trace on \(\streami\) can now be defined in terms of a least fixed
 point.
 
 \begin{notation}
+    Given stream functions \(\sigma \in A^m\) and \(\tau \in A^n\), we write
+    \(\sigma\tau \in A^{m+n}\) for their pointwise concatenation, i.e\
+    \((\sigma\tau)(i) = \sigma(i)\tau(i)\).
+\end{notation}
+
+\begin{notation}
     For a morphism \(
     \morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{x+n}}
     \in \streami
@@ -520,6 +540,7 @@ point.
     \).
 \end{notation}
 
+We must show that this notion of least fixed point is a trace on \(\streami\).
 The original proof idea for the following is due to David Sprunger.
 
 \begin{proposition}
@@ -527,7 +548,7 @@ The original proof idea for the following is due to David Sprunger.
     is a trace on \(\streami\).
 \end{proposition}
 \begin{proof}
-    To show this, we must first show that
+    To show this, we need to prove that
     \(\sigma \mapsto \proj{1}\left(f(\mu_f(\sigma)\sigma)\right)\) is in
     \(\streami\): it is causal, finitely specified, and monotone.
 
@@ -543,7 +564,7 @@ The original proof idea for the following is due to David Sprunger.
     }{
         \valuetuplestream{x}
     }
-    \) to be \(
+    \) be defined as \(
     \tau\sigma
     \mapsto
     \proj{0}(\streamderivative{f}{\listvar{w}}(\tau\sigma))
@@ -652,7 +673,8 @@ We now have two traced PROPs: a \emph{syntactic} PROP of sequential circuit
 terms \(\scircsigma\) and a \emph{semantic} PROP of causal, finitely
 specified, monotone stream functions \(\streami\).
 It would be straightforward to now define a map from circuits to these stream
-functions; indeed, this is the strategy in~\cite{ghica2024fully}.
-Instead, motivated by our quest for a sound and complete denotational semantics,
-we will examine another structure with close links to both circuits and stream
-functions; that of \emph{Mealy machines}.
+functions; indeed, this is the strategy used in~\cite{ghica2024fully}.
+Instead, we will first examine another structure with close links to both
+circuits and stream functions; that of \emph{Mealy machines}.
+The structure of Mealy machines will come in useful when considering the
+\emph{completeness} of the denotational semantics.

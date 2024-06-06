@@ -95,15 +95,15 @@ of a PROP morphism from \(\scircsigma\) to \(\mealyi\) is fairly intuitive.
 
 \begin{example}\label{ex:mealy-translation}
     Applying \(\circuittomealy{\belnapinterpretation}\) to the SR NOR latch from
-    \cref{ex:latch} produces the monotone Mealy machine in
+    \cref{ex:sr-latch} produces the monotone Mealy machine in
     \cref{ex:trace-mealy}.
 \end{example}
 
 Mealy machines are a reasonable semantics for sequential circuits, but the
 image of \(\circuittomealyi\) does not always lead to minimal Mealy machines,
 and there are many Mealy machines that may correspond to the same behaviour.
-The `purest' semantics of a sequential circuit, and the one that we will as use
-as the \emph{de facto} denotation, is a stream function in \(\streami\).
+The `purest' semantics of a sequential circuit is a stream function in
+\(\streami\).
 
 \begin{definition}
     Let \(\morph{\circuittostreami}{\scircsigma}{\streami}\) be defined as
@@ -122,7 +122,7 @@ corresponding stream function in \(\streami\).
 
 It is useful to verify that this denotational semantics of sequential circuits
 agrees with the denotational semantics we defined earlier for
-\emph{combinational} circuits in \cref{sec:intepretating-components}.
+\emph{combinational} circuits in \cref{sec:intepreting-components}.
 
 \begin{lemma}\label{lem:sequential-combinational-semantics}
     Let \(\iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]\) be
@@ -153,22 +153,29 @@ agrees with the denotational semantics we defined earlier for
             \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
         ]
     ](\sigma)(i) = g(\sigma(i))\).
-
     To complete the proof, we need to show that \(
     g(\sigma)(i) =
     \circuittofunci[\iltikzfig{strings/category/f}[box=f,colour=comb]](\sigma(i))
     \); this holds because \(\circuittomealyi\) and \(\circuittofunci\) freely
-    build functions using exactly the same constructs.
+    build functions using the same constructs.
 \end{proof}
+
+Using this idea, it will be convenient to have a mapping from functions to
+these constant stream functions.
+
+\begin{definition}
+    Let \(\morph{\functostreami}{\funci}{\streami}\) be defined as the PROP
+    morphism with action \(
+    \functostreami[f] \coloneqq \sigma \mapsto i \mapsto f(\sigma)(i)
+    \)
+\end{definition}
 
 \subsection{Monotone Mealy machines to circuits}
 
-It is usually the case that soundness is easy while completeness is a bit more
-fiddly, and who are we to interfere with tradition?
-We now need a way to retrieve a circuit morphism from a stream
-function \(f\).
-Moreover, to prevent us from cheating and picking an arbitrary circuit, the
-denotation of the circuit must also be \(f\).
+We now need a way to retrieve a circuit morphism in \(\scircsigma\) from a
+stream function \(f \in \streami\).
+To prevent us from picking an arbitrary circuit, the denotation of the circuit
+must also be \(f\).
 
 We already know by \cref{cor:minimal-mealy} that given a stream function
 \(f\) we can retrieve a monotone Mealy machine \(\streamtomealyi[f]\).
@@ -219,7 +226,7 @@ However, when considering \emph{monotone} Mealy machines, this procedure must
 additionally respect monotonicity as the combinational logic is constructed
 using monotone components.
 This means that an arbitrary encoding cannot be used; we will now show how to
-select a suitable encoding.
+select something suitable.
 
 \begin{definition}[Encoding]\label{def:encoding}
     Let \(S\) be a set equipped with a partial order \(\stateorder\) and a total

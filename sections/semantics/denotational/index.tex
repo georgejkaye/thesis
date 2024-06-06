@@ -1,23 +1,21 @@
 \chapter{Denotational semantics}\label{chap:denotational}
 
-One can have potentially hours of fun making pretty pictures of circuits in
-\(\scircsigma\).
-Ultimately though, these circuits are still just \emph{syntax}; they have no
-\emph{behaviour}, or more formally \emph{semantics}, assigned to them.
+Circuits in \(\scircsigma\) just \emph{syntax}; they have no
+\emph{behaviour} (or \emph{semantics}), assigned to them.
 At its core, a semantics for digital circuits relates circuits which have `the
 same behaviour given some interpretation'.
-However, there is not just one way to construct said relation.
+But there is not just one way to construct such a relation.
 In this thesis we will examine three such ways: a \emph{denotational} semantics,
 an \emph{operational} semantics and an \emph{algebraic} semantics.
 Each approach comes with advantages and drawbacks; skillful use of all three
 will lead to a powerful, fully compositional, perspective on sequential
 circuits.
 
-Although the construction of the semantic relation is different, each semantics
-must relate the \emph{same} circuits; the behaviour of a circuit should not be
+Although each semantics relation is constructed differently, they must
+relate the \emph{same} circuits; the behaviour of a circuit should not be
 different depending on which lens we are viewing it through.
-Formally, each form of semantics must be \emph{sound and complete} with respect
-to each other; two sequential circuits \(
+Formally, this means that each semantics is \emph{sound and complete} with
+respect to the others; two circuits \(
 \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
 \) and \(
 \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]

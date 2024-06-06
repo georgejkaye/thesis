@@ -8,12 +8,12 @@ components while taking into account inputs and state?
 Fortunately, we have a secret weapon: the
 \emph{Mealy machine}~\cite{mealy1955method}.
 
-Working tirelessly in industry as a way of specifying the behaviour of a
-circuit without restricting to particular circuitry, Mealy machines also have
+Mealy machines are used in circuit design to specify the behaviour of a circuit
+without having to use concrete components.  They also have
 a very useful \emph{coalgebraic} viewpoint which we will wield in order to
-build a bridge from circuits into stream functions: there is a unique
-homomorphism from a Mealy machine to a causal, finitely specified stream
-function.
+build a bridge from circuits into stream functions.
+In particular, there is a unique homomorphism from a Mealy machine to a causal,
+finitely specified stream function.
 
 Our strategy is to assemble a special class of Mealy machines which we dub
 \emph{monotone Mealy machines} into another traced PROP.
@@ -28,11 +28,11 @@ translate into sequential circuit morphisms is nice to have in its own right.
     \(\morph{f}{S}{(S \times B)^A}\) is the \emph{Mealy function}.
 \end{definition}
 
-An \((M,N\)-Mealy machine is parameterised over a set \(A\) of \emph{inputs} and
+An \((M,N)\)-Mealy machine is parameterised over a set \(A\) of \emph{inputs} and
 a set \(B\) of \emph{outputs}.
 Each Mealy machine then has a set \(S\) of \emph{states}; the Mealy function
-takes in a currrent state and input \((s, a)\) and produces a pair
-\(\langle{s^\prime, b}\rangle\) of a transition and output.
+takes in a pair \((s, a)\) consisting a currrent state and input and produces a
+pair \(\langle{t,b}\rangle\) consisting of a transition and output.
 
 \begin{notation}
     We will use the shorthand \(
@@ -57,9 +57,9 @@ takes in a currrent state and input \((s, a)\) and produces a pair
         \qquad
         f(s_1, \mathsf{t}) \mapsto \langle{s_1, \mathsf{f}}\rangle
     \end{gather*}
-    This is a Mealy machine with two states; at state \(s_0\) the output is just
-    the input, and at state \(s_1\) the output is the negation.
-    At either state, if a \(\mathsf{t}\) is input the state switches.
+    This is a Mealy machine with two states; at state \(s_0\) the output is the
+    input, and at state \(s_1\) the output is the negation.
+    If the input is true then the state switches.
 
     It is often more intuitive to draw out a Mealy machine.
     We draw states as circles; if there is a transition from one state to
@@ -99,7 +99,7 @@ and a function, so this is a coalgebra in \(\set\).
     In \cite{bonsangue2008coalgebraic}, the notation \(
     f(s)(a) = \langle{\initialoutput{s}{a},\streamderivative{s}{a}}\rangle
     \) is used to describe the Mealy function, which coincides with the notation
-    used for stream functions; this is not a coincidence.
+    used for stream functions.
 
     Given sets \(A\) and \(B\), let \(\Gamma\) be the set of causal stream
     functions \(\stream{A} \to \stream{B}\), and let
@@ -109,9 +109,8 @@ and a function, so this is a coalgebra in \(\set\).
     Then \((\Gamma,\nu)\) is a \((A,B)\)-Mealy coalgebra.
 \end{example}
 
-The above example is incredibly important, as it lays the groundwork we will
-use extensively to establish connections between circuits, stream functions and
-Mealy machines.
+The above example lays the groundwork to establish connections between circuits,
+stream functions and Mealy machines.
 If we inspect it a little closer, we find that stream functions are even more
 special than just being `a' \((A,B)\)-Mealy coalgebra.
 
@@ -124,13 +123,6 @@ special than just being `a' \((A,B)\)-Mealy coalgebra.
 
 The \emph{final} \((M,N)\)-Mealy coalgebra is a \((M,N)\)-Mealy coalgebra to
 which every other \((M,N)\)-Mealy coalgebra has a unique homomorphism to.
-
-\begin{remark}
-    The coalgebra crowd tend to prefer the use of the word \emph{final} over
-    \emph{terminal}; one could quite reasonably call the final coalgebra a
-    terminal coalgebra and everything would be alright, but you might get a few
-    funny looks.
-\end{remark}
 
 \begin{proposition}[\cite{rutten2006algebraic}, Prop. 2.2]
     \label{prop:final-coalgebra}
@@ -187,7 +179,7 @@ we only work with \emph{finite} Mealy machines we can also conclude the
 following:
 
 \begin{lemma}
-    For a Mealy machine \((S, f)\) and start state \(s_0 \in S\), \(!(s_0)\)
+    For a Mealy machine \((S, f)\) and state \(s_0 \in S\), \(!(s_0)\)
     is finitely specified.
 \end{lemma}
 \begin{proof}
@@ -243,7 +235,7 @@ equipped with such a start state.
 \begin{example}\label{ex:mealy-init}
     We can initialise the \((\booleans,\booleans)\)-Mealy machine
     \((\{s_0,s_1\},f)\) from \cref{ex:mealy} in two ways; here we will choose to
-    initialise it as \((S,f,s_0\).
+    initialise it as \((S,f,s_0)\).
     In the diagrams, we label the initial state with an arrow.
     \begin{center}
         \includestandalone{figures/mealy/example-init}
@@ -375,7 +367,7 @@ Tensor product is far more straightforward.
         \qquad
         h((s_0, t_0), \mathsf{tt})
         \coloneqq
-        \left\langle(s_0, t_0), \mathsf{f}\right\rangle
+        \left\langle(s_0, t_0), \mathsf{tt}\right\rangle
         \\
         h((s_1, t_0), \mathsf{ff})
         \coloneqq
@@ -449,7 +441,7 @@ This can be computed in much the same way as it was for stream functions.
     Let \((S, f)\) be a monotone \(
     (\valuetuple{x+m}, \valuetuple{x+n})
     \)-Mealy machine.
-    For a state \(s \in S\) and input \(\listvar{a} \in m\), let
+    For a state \(s \in S\) and input \(\listvar{a} \in \valuetuple{m}\), let
     \(\mu_{s,\listvar{a}}\) be the least fixpoint of \(
     \listvar{r} \mapsto \proj{0}\left(f\left(s, \listvar{ra}\right)\right)
     \).
@@ -459,6 +451,25 @@ This can be computed in much the same way as it was for stream functions.
     (S, (s, \listvar{a}) \mapsto f((\mu_{s,\listvar{a}})\listvar{a}))
     \) with start state \(s_0\).
 \end{definition}
+
+\begin{example}\label{ex:trace-mealy}
+    Consider the monotone \((\valuetuple{3},\valuetuple{3})\)-Mealy machine with
+    state set \(\belnapvalues\), initial state \(\bot\), and Mealy function \[
+        g \coloneqq (s, (x, y, z))
+        \mapsto \left\langle \neg y \land \neg x,
+        \left(\neg s \land \neg z, s, \neg s \land \neg z\right)
+        \right\rangle
+        ).\]
+    To take the trace of this machine, we must first compute the least fixed
+    point of \(v \mapsto \neg s \land \neg z\), which is clearly just
+    \(\neg s \land \neg z\).
+    Therefore the Mealy function of the traced
+    \((\valuetuple{2}, \valuetuple{2})\) machine is \(
+    (s, (y, z)) \mapsto g(s, (\neg s \land \neg z, y, \neg s \land \neg z))
+    \).
+\end{example}
+
+We must show that this is the trace on \(\mealyi\).
 
 \begin{proposition}
     The least fixed point is a trace on \(\mealyi\).
@@ -487,23 +498,6 @@ This can be computed in much the same way as it was for stream functions.
     \(\streami\) is.
 \end{proof}
 
-\begin{example}\label{ex:trace-mealy}
-    Consider the monotone \((\valuetuple{3},\valuetuple{3})\)-Mealy machine with
-    state set \(\belnapvalues\), initial state \(\bot\), and Mealy function \[
-        g \coloneqq (s, (x, y, z))
-        \mapsto \left\langle \neg y \land \neg x,
-        \left(\neg s \land \neg z, s, \neg s \land \neg z\right)
-        \right\rangle
-        ).\]
-    To take the trace of this machine, we must first compute the least fixed
-    point of \(v \mapsto \neg s \land \neg z\), which is clearly just
-    \(\neg s \land \neg z\).
-    Therefore the Mealy function of the traced
-    \((\valuetuple{2}, \valuetuple{2})\) machine is \(
-    (s, (y, z)) \mapsto g(s, (\neg s \land \neg z, y, \neg s \land \neg z))
-    \).
-\end{example}
-
 \input{sections/semantics/denotational/floats/latch-machine}
 
 With monotone Mealy machines in a PROP, we can now represent the unique
@@ -525,20 +519,21 @@ morphism.
 
 \subsection{Streams to Mealy machines}
 
-As a causal stream function \(\morph{f}{\stream{A}}{\stream{B}}\) is just a
-\((A,B)\)-Mealy machine, when such a function has finitely many stream
-derivatives it is easy to retrieve a finite Mealy machine by repeatedly
-taking stream derivatives to compute the state set.
+A causal stream function \(\morph{f}{\stream{A}}{\stream{B}}\) is just an
+\((A,B)\)-Mealy machine.
+This means that when such a function has finitely many stream
+derivatives, the states of a a finite Mealy machine can be retrieved by
+repeatedly taking stream derivatives.
 
 \begin{example}
     Let \(\morph{f}{\belnapvalues}{\belnapvalues}\) be a stream function defined
     as \(f(\sigma)(0) = \sigma(0)\) and
     \(f(\sigma)(k+1) = f(\sigma)(k) \land \sigma(k+1)\).
     We will derive a Mealy machine in \(\mealyi\) from this stream function.
-    The set of states is \(\{
+    The complete set of states is \(\{
     f, \streamderivative{f}{\bot}, \streamderivative{f}{\belnapfalse},
     \streamderivative{f}{\top}
-    \}\): this completely specifies the Mealy machine because
+    \}\):
     \begin{itemize}
         \item \(\streamderivative{f}{\belnaptrue} = f\);
         \item \(\streamderivative{(\streamderivative{f}{\bot})}{\bot}
@@ -591,13 +586,13 @@ machine.
     Since \(S\) is generated from the function \(f\) and is the \emph{smallest}
     possible set, there are no unreachable states in \(S\).
     Since the output and transition of states in
-    \(\streamtomealyi[f]\) is just initial output and stream derivative, this
-    means these two states can only have the same `behaviour' if they are
-    derived from the same original stream function.
+    \(\streamtomealyi[f]\) are initial output and stream derivative, two
+    states can only have the same `behaviour' if they are derived from the same
+    original stream function.
 \end{proof}
 
 We will encode this data into a PROP morphism from \(\streami\) to \(\mealyi\);
-in order to this we must quickly verify the produced Mealy machine is monotone.
+in order to this we must verify the produced Mealy machine is monotone.
 
 \begin{lemma}\label{lem:head-tail-monotone}
     The functions \(\sigma \mapsto \streaminit(\sigma)\) and
@@ -668,7 +663,7 @@ in order to this we must quickly verify the produced Mealy machine is monotone.
 \end{corollary}
 
 This means we can map between monotone Mealy machines and causal, finitely
-specified and monotone stream functions in either direction.
+specified, monotone stream functions in either direction.
 Mealy machines are perhaps more intuitive to work with, but stream functions
 are the `purest' specification of the behaviour in that they have the smallest
 possible state set.
