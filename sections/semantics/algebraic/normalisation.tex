@@ -67,9 +67,8 @@ how Mealy form can be derived using smaller equations.
 \(\scircsigma / \mealyequations\) is a category in which all circuits are equal
 to at least one circuit in Mealy form.
 In general, there will be many Mealy forms depending on the ordering one picks
-for the delays and values.
-Our task is to provide equations to map any two denotationally equivalent
-circuits to the \emph{same} Mealy form.
+for the delays and value; our task is to provide equations to map any two
+denotationally equivalent circuits to the \emph{same} Mealy form.
 
 Even if the combinational cores of two Mealy forms have the same behaviour, they
 may not have the same structure.
@@ -88,7 +87,7 @@ As a shorthand, we will often abuse notation and write \(
 \mealytofunc[f]
 \coloneqq
 \iltikzfig{strings/category/f-wide}[box=\mealytofunc[f],colour=seq]
-\)
+\).
 Recall that even though \(\mealytofunc\) maps into \(\scircsigma\), every
 circuit in its image has combinational behaviour.
 This is quite an important distinction to make, so we will give it a proper
@@ -107,10 +106,10 @@ constants which do not alter over time.
 
 As the normalised version of a given circuit is interpretation-dependent, there
 is no standard set of equations for normalising a circuit.
-Instead, these must be specified on a interpretation-by-interpretation basis.
+Instead, these must be specified on an interpretation-by-interpretation basis.
 
 \begin{definition}[Normalising equations]
-    For a functionally complete interpretation \(\interpretation\), a set of
+    For a complete interpretation \((\interpretation,\mealytofunc)\), a set of
     equations \(\normalisingequations\) is \emph{normalising} if any
     essentially combinational circuit \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
@@ -119,7 +118,7 @@ Instead, these must be specified on a interpretation-by-interpretation basis.
 \end{definition}
 
 \begin{definition}[Normalisable interpretation]
-    An interpretation \(\interpretation\) is called \emph{normalisable} if there
+    A complete interpretation \(\interpretation\) is called \emph{normalisable} if there
     exists a set of normalising equations \(\normalisingequations\).
 \end{definition}
 
@@ -130,7 +129,9 @@ table.
 \begin{theorem}\label{thm:normalising}
     For every sequential circuit \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
-    \) in normalisable interpretation \(\interpretation\), there exists essentially combinational \(
+    \) in normalisable complete interpretation
+    \((\interpretation,\mealytofunc)\) over \(\Sigma\), there exists essentially
+    combinational \(
     \iltikzfig{strings/category/f-2-2-wide}[box=\mealytofunc[g],colour=seq,dom1=x,dom2=m,cod1=x,cod2=n]
     \) and \(\listvar{s} \in \valuetuple{x}\) such that \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
@@ -143,7 +144,7 @@ table.
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     =
     \iltikzfig{circuits/productivity/mealy-form}[core=h]
-    \) and by the normalising equations \(
+    \) and by equations in \(\normalisingequations\), \(
     \iltikzfig{strings/category/f-2-2}[box=h,colour=comb]
     =
     \iltikzfig{strings/category/f-2-2-wide}[box=\mealytofunc[g],colour=seq]

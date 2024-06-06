@@ -35,7 +35,7 @@ equations we have seen so far.
     All the equations are sound, so we only need to consider the \(\ifdir\)
     direction.
 
-    By \cref{lem:normalised-mealy}, the two circuits can be brought to
+    By \cref{thm:normalising}, the two circuits can be brought to
     normalised Mealy form using
     \(
     \mealyequations +
@@ -62,9 +62,8 @@ equations we have seen so far.
     \).
     The circuit \(
     \iltikzfig{strings/category/f}[box=h,colour=seq]
-    \) is encoded such that the state words are in the image of
-    \(\gamma_\leq\).
-    This means that applying the encoding equation with \(\leq\) to the
+    \) is encoded such that the state words are in the image of a Mealy encoding
+    \(\gamma_\leq\); applying the encoding equation with \(\gamma_\leq\) to the
     normalised Mealy forms obtained above will yield the circuit \(
     \iltikzfig{strings/category/f}[box=h,colour=seq]
     \).
@@ -77,7 +76,7 @@ can establish another isomorphism of PROPs.
     \(\scircsigmai \cong \scircsigmae\).
 \end{corollary}
 
-This brings our jaunt into algebraic semantics to a close; given a circuit \(
+This means that given a circuit \(
 \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
 \) we know that we can translate it into another circuit \(
 \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]

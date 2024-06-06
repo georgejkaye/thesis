@@ -1,7 +1,10 @@
 \section{Algebraic semantics for Belnap logic}\label{sec:algebraic-belnap}
 
 For a sound and complete equational theory, equations are required to bring any
-essentially combinational circuit into a canonical form.
+essentially combinational circuit into a canonical form; it is instructive to
+illustrate the equations required for the Belnap interpretation to be
+normalisable.
+
 Recall from \cref{sec:denotational-belnap} that the canonical form for circuits
 using components in the Belnap signature \(\belnapsignature\) is a circuit that
 `explodes' its inputs into two circuits computing the `falsy' and the `truthy'
@@ -37,7 +40,7 @@ exploded form.
 Broadly, the strategy here is to use the \((\belnapexpeqn)\) equation to
 introduce an empty explosion on the right of a circuit, then use the remaining
 equations to push the components of the original circuit inside the explosion.
-The first thing to do, then, is to be able to propagate essentially
+The first thing to do is to propagate essentially
 combinational circuit components across the opening forks of the explosion.
 
 \begin{lemma}\label{lem:explode-copy}
@@ -119,10 +122,10 @@ combinational circuit components across the opening forks of the explosion.
 This form already looks very similar to a circuit in the image of
 \(\mealytofunc_\belnap\) in that it is the join of two circuits prefixed by
 `translators'.
-However, these two circuits are not necessarily in the correct form specified by
+These two circuits are not necessarily in the correct form specified by
 \(\mealytofunc_\belnap\), as they must be in \emph{truthy} or \emph{falsy}
 disjunctive normal form.
-Fortunately, the equations required to bring circuits into such a form are
+The equations required to bring circuits into such a form are
 relatively standard.
 
 \begin{definition}
@@ -345,3 +348,7 @@ Putting this all together gives us the desired canonical form theorem.
     This follows by applying \cref{prop:exploded-belnap} followed by
     \cref{prop:disjunctive-normal-form}.
 \end{proof}
+
+This shows that the equations detailed in this section can translate any
+essentially combinational circuit in \(\scirc{\belnapinterpretation}\) to one in
+the image of the Belnap functional completeness map.

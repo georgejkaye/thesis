@@ -10,16 +10,15 @@ Circuits in this image are already in normalised Mealy form, so this is a good
 start.
 However, they are more specialised than that: their internal states are made up
 only of \(\bot\) and \(\top\) elements, and the width of the state is equal to
-the number of stream derivatives the original stream function had including
-itself.
+the number of stream derivatives of the original stream function.
 We will establish this as our pseudo-normal form for circuits; depending on the
 ordering of the states picked, there may be multiple such circuits.
 
 \begin{corollary}
     Given a circuit \(
     \iltikzfig{strings/category/f}[box=f,colour=seq]
-    \), there exists at least one word \(\listvar{s} \in \{\bot,\top\}^x\) and
-    normalised circuit \(
+    \), there exists \(x \in \nat\) and word \(\listvar{s} \in \{\bot,\top\}^x\)
+    and normalised circuit \(
     \iltikzfig{strings/category/f}[box=g,colour=comb]
     \) such that \(
     \circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
@@ -30,7 +29,7 @@ ordering of the states picked, there may be multiple such circuits.
     \).
 \end{corollary}
 
-By \cref{thm:possible-encodings}, we have that there is an encoding that maps
+By \cref{cor:encoding-circuits}, we have that there is an encoding that maps
 state sets between denotationally equivalent circuits.
 If we can encode a circuit's state sets to one where the states are all elements
 of \(\{\bot,\top\}^x\), does this mean we have a sound and complete equational
@@ -67,6 +66,6 @@ circuits that agree on the context, but may differ otherwise.
 \begin{example}
     By a restriction equation, the circuits in \cref{ex:restriction-example} are
     now equal, as the cores produce equal outputs for inputs where the state is
-    \(\belnaptrue\belnapfalse\) or \(\belnapfalse\belnaptrue\).
+    \(\belnaptrue\belnapfalse\).
 \end{example}
 \input{sections/semantics/algebraic/floats/restriction-equation}

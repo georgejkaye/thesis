@@ -1,19 +1,18 @@
 \chapter{Algebraic semantics}\label{chap:algebraic}
 
 The operational semantics and notion of observational equivalence means that
-that the behaviour of two circuits can be tested for equivalence by checking
+that the behaviour of two circuits can be compared by checking
 whether every input produces the same output for both circuits.
 But this is somewhat of a nuclear option; rather than using what we know
 about the structure of a circuit's components, we just blast away
 exhaustively trying all the inputs to find a contradiction.
 
-A more elegant method of reasoning is by defining a set \emph{equations} between
-subcircuits and \emph{quotienting} \(\scircsigma\) by these equations.
+A more elegant method of reasoning is by defining a set of \emph{equations}
+between subcircuits and \emph{quotienting} \(\scircsigma\) by these equations.
 A proof of equivalence between two circuits is then presented using algebraic
 reasoning: applying equations to translate one circuit into the other.
-This is often \emph{far more efficient} that having test every input, and is
-known formally this is known as an \emph{algebraic} semantics.
-
+This is often far more efficient than having test every input, and is
+known formally as an \emph{algebraic} semantics.
 
 \begin{example}\label{ex:expressions-algebraic}
     For the last time we return to the language of arithmetical expressions from
@@ -21,7 +20,7 @@ known formally this is known as an \emph{algebraic} semantics.
     An algebraic semantics for this language can be defined using a set of
     equations: the familiar equations of associativity, commutativity,
     unitality, annihiliation and distributivity, along with equations for
-    actually performing arithmetic.
+    performing arithmetic.
     \begin{gather*}
         add\,(add\,e_1\,e_2)\,e_3 = add\,e_1\,(add\,e_2\,e_3)
         \qquad
@@ -39,7 +38,7 @@ known formally this is known as an \emph{algebraic} semantics.
         \\
         mul\,e_1\,(add\,e_2\,e_3) = add\,(mul\,e_1\,e_2)\,(mul\,e_1\,e_3)
         \\
-        add\,\overline{n_1}\,\overline{n_2} = add\,\overline{n_1+n_2}
+        add\,\overline{n_1}\,\overline{n_2} = \overline{n_1+n_2}
         \qquad
         add\,\overline{n_1}\,\overline{n_2} = \overline{n_1 \cdot n_2}
     \end{gather*}
@@ -76,8 +75,8 @@ known formally this is known as an \emph{algebraic} semantics.
 \end{example}
 
 As with the operational semantics, we are especially interested in defining a
-\emph{sound and complete} algebraic semantics for sequential digital circuits
-with respect to the denotational semantics.
+\emph{sound and complete} algebraic semantics with respect to the denotational
+semantics.
 That is to say, for each equation \(
 \iltikzfig{strings/category/f}[box=f,colour=seq]
 =
@@ -91,15 +90,15 @@ That is to say, for each equation \(
 =
 \circuittostreami[\iltikzfig{strings/category/f}[box=g,colour=seq]]
 \) then there exists a series of equations identifying \(
-\circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
+\iltikzfig{strings/category/f}[box=f,colour=seq]
 \) and \(
-\circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
+\iltikzfig{strings/category/f}[box=f,colour=seq]
 \).
 
 \begin{remark}
     An `equational theory' for sequential circuits was one of the first things
-    presented in the original circuits
-    paper~\cite{ghica2016categorical,ghica2017diagrammatic}.
+    presented in the previous
+    work~\cite{ghica2016categorical,ghica2017diagrammatic}.
     In that paper, equations that `seemed right' were used to quotient the
     syntax, with the ultimate aim of showing that the resulting category was
     \emph{Cartesian}.

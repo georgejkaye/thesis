@@ -12,8 +12,7 @@ they dictate whether an equation is valid.
 
 \begin{definition}[States]
     Let \(\morph{f}{\valuetuple{x+m}}{\valuetuple{x+n}}\) be a
-    monotone function and let \(\listvar{s} \in  \valuetuple{x}\) be an
-    initial state.
+    monotone function and let \(\listvar{s} \in  \valuetuple{x}\) be a state.
     Then the \emph{states of \(f\) from \(\listvar{s}\)}, denoted
     \(S_{f,\listvar{s}}\), is the smallest set containing \(\listvar{s}\) and
     closed under \(
@@ -52,7 +51,7 @@ While two `inverse' homomorphisms may not be isomorphisms, the round
 trip will always map to a state with the same behaviour.
 
 \begin{lemma}
-    Given two Mealy homomorphisms \(\morph{h}{(S,f)}{(T,g)}\) and
+    For Mealy homomorphisms \(\morph{h}{(S,f)}{(T,g)}\) and
     \(\morph{h^\prime}{(T,g)}{(S,f)}\), any state \(s \in S\) and input
     \(a \in A\), \(
     \mealyfunctiontransition{f}(s, a)
@@ -64,11 +63,11 @@ trip will always map to a state with the same behaviour.
     Immediate as Mealy homomorphisms preserve outputs.
 \end{proof}
 
-Pairs of `inverse' Mealy homomorphisms as described above will act as state
-encoders and decoders between circuits.
+We will use pairs of `inverse' Mealy homomorphisms as state encoders and
+decoders between circuits.
 To create circuits representing these homomorphisms, we once again use the
-functional completeness map for an interpretation, which assigns a syntactic
-circuit to any monotone (combinational) function.
+functional completeness map for an interpretation.
+This means we need to ensure the encoders and decoders are monotone.
 
 \begin{lemma}
     For partial orders \(S\) and \(T\) and monotone Mealy coalgebra
@@ -120,9 +119,6 @@ and
     As the two circuits are denotationally equivalent, at least one valid
     mapping of states can be obtained by sending states in the former to the
     state in the latter obtained after inputting the same word.
-    However, there will be more than one valid homomorphism if the second
-    circuit has more states than the first, as there will be multiple states in
-    the second that act like a single state in the first.
 \end{proof}
 
 These are homomorphisms on the subset of states that a circuit
@@ -139,8 +135,8 @@ but only in certain contexts.
     homomorphisms.
     Then the \emph{encoding equation} \((\encodingequation)\) in
     \cref{fig:encoding-equation} is sound, where
-    \(\mathsf{enc}_\mathsf{m},\mathsf{dec}_\mathsf{m}\) are monotone completions
-    as defined in \cref{def:monotone-completion}.
+    \(\mathsf{enc}_\mathsf{m}\) and \(\mathsf{dec}_\mathsf{m}\) are monotone
+    completions as defined in \cref{def:monotone-completion}.
 \end{proposition}
 \begin{proof}
     Let \(g\) be the map \(\listvar{r} \mapsto
@@ -155,7 +151,7 @@ but only in certain contexts.
     g(\proj{0}(f(\mathsf{dec}(\mathsf{enc}(\listvar{t})), \listvar{v})))
     \).
     When \(\listvar{t} \in S_{f, \listvar{s}}\) we have that \(
-    \mathsf{dec}(\mathsf{enc}(\listvar{s}))\) is an equivalent state to
+    \mathsf{dec}(\mathsf{enc}(\listvar{s}))\) acts the same as
     \(\listvar{s}\),
     so
     \(
@@ -164,9 +160,9 @@ but only in certain contexts.
     \proj{1}(f(\listvar{t}), \listvar{v})
     \) and \(
     \mealytransition{g(\listvar{t})}{\listvar{v}}
-    \) is equivalent to \(
+    \) acts the same \(
     g(\proj{0}(f(\listvar{t})), \listvar{v})
-    \) by definition of encoders.
+    \) by definition of Mealy homomorphisms.
     As \(
     \iltikzfig{circuits/algebraic/state-encoding}[core=\mealytofunc[f],delay=x,state=\listvar{s}]
     \coloneqq
@@ -187,21 +183,19 @@ but only in certain contexts.
 
 After applying the encoding equation, the state has not actually changed; we
 have just inserted a pair of an encoder and a decoder circuit.
-To translate the state we recycle some of the rules from the operational
-semantics.
-As with the Mealy equations, it is desirable to express these transformations in
-terms of smaller components
+To translate the state we use similar equations to the rules used in the
+productivity reduction procedure.
 
 \begin{lemma}
-    The equations on the bottom three rows of \cref{fig:encoding-equation} are
+    The equations on the bottom four rows of \cref{fig:encoding-equation} are
     sound.
 \end{lemma}
 \begin{proof}
     It is a straightforward exercise to compare the stream functions.
 \end{proof}
 
-Using the encoding equations we can derive some useful results on larger
-circuits.
+Using the encoding equations we can derive some lemmas that will come in useful
+for showing the final result.
 
 \begin{lemma}\label{lem:unroll-waveform}
     For a value \(v \in \values\), \(
@@ -244,8 +238,7 @@ circuits.
     This is by induction on the structure of \(
     \iltikzfig{strings/category/f}[box=f,colour=comb]
     \).
-    First the base cases.
-    The case for the gate is immediate by \((\streamingeqn)\).
+    The case for the primitive is immediate by \((\streamingeqn)\).
     For \(\iltikzfig{strings/structure/comonoid/copy}[colour=comb]\) we have
     that \(
     \iltikzfig{circuits/productivity/generalised-streaming/fork-step-0}
@@ -254,7 +247,7 @@ circuits.
     \eqaxioms[(\delayforkeqn)]
     \iltikzfig{circuits/productivity/generalised-streaming/fork-step-2}
     \).
-    For \(\iltikzfig{strings/structure/monoid/merge}[colour=comb]\):
+    For \(\iltikzfig{strings/structure/monoid/merge}[colour=comb]\) we have that
     \begin{gather*}
         \iltikzfig{circuits/productivity/generalised-streaming/join-step-2}
         \eqaxioms[(\monoidassoceqnletter)]
@@ -295,36 +288,7 @@ circuits.
     g(\listvar{v}) \streamcons \bot \streamcons \bot \streamcons \dots\).
 \end{lemma}
 \begin{proof}
-    By definition of \(\circuittostreami\), \(
-    \circuittostreami[
-        \iltikzfig{circuits/components/circuits/f-applied}[box=f,colour=comb]
-    ]
-    =
-    \mealytostreami[\circuittomealyi[
-            \iltikzfig{circuits/components/values/vs}[val=\listvar{v}]
-        ]] \seq \mealytostreami[
-        \circuittomealyi[
-            \iltikzfig{strings/category/f}[box=f,colour=comb]]
-    ]
-    \).
-    By \cref{lem:sequential-combinational-semantics} we know that \(
-    \mealytostreami[
-        \circuittomealyi[
-            \iltikzfig{strings/category/f}[box=f,colour=comb]]
-    ](\sigma)(i) = \circuittofunci[
-        \iltikzfig{strings/category/f}[box=f,colour=comb]
-    ] = g(\sigma)(i)\) for all \(\sigma \in \valuetuplestream{m}\) and
-    \(i \in \nat\).
-    Since \(\mealytostreami[\circuittomealyi[
-            \iltikzfig{circuits/components/values/vs}[val=\listvar{v}]
-        ]] = \listvar{v} \streamcons \bot \streamcons \bot \streamcons \dots\), we
-    have that \(
-    \circuittostreami[
-        \iltikzfig{circuits/components/circuits/f-applied}[box=f,colour=comb]
-    ]
-    =
-    g(\listvar{v}) \streamcons \bot \streamcons \bot \streamcons \dots
-    \) as desired.
+
 \end{proof}
 
 \begin{lemma}\label{lem:combinational-circuit-inputs}
@@ -349,16 +313,46 @@ circuits.
     =
     \iltikzfig{circuits/components/values/vs}[val=\listvar{w}]
     \).
-    By \cref{lem:interpretation-combinational}, \(
+
+    Now we need to show that \(
     \circuittostreami[
         \iltikzfig{circuits/components/circuits/f-applied}[box=f,colour=comb]
     ]
     =
-    g(\listvar{v}) \streamcons \bot \streamcons \bot
-    =
     \circuittostreami[
         \iltikzfig{circuits/components/values/vs-even-longer}[val=g(\listvar{v})]
     ]
+    \).
+    By functoriality of \(\circuittostreami\), \(
+    \circuittostreami[
+        \iltikzfig{circuits/components/circuits/f-applied}[box=f,colour=comb]
+    ]
+    =
+    \circuittostreami[
+        \iltikzfig{circuits/components/values/vs}[val=\listvar{v}]
+    ] \seq
+    \circuittostreami[
+        \iltikzfig{strings/category/f}[box=f,colour=comb]
+    ]
+    \).
+    By \cref{lem:sequential-combinational-semantics} we know that \(
+    \circuittostreami[
+        \iltikzfig{strings/category/f}[box=f,colour=comb]
+    ](\sigma)(i) = \circuittofunci[
+        \iltikzfig{strings/category/f}[box=f,colour=comb]
+    ] = g(\sigma)(i)\) for all \(\sigma \in \valuetuplestream{m}\) and
+    \(i \in \nat\).
+    Since \(\circuittostreami[
+        \iltikzfig{circuits/components/values/vs}[val=\listvar{v}]
+    ] = \listvar{v} \streamcons \bot \streamcons \bot \streamcons \dots\), we
+    have that \(
+    \circuittostreami[
+        \iltikzfig{circuits/components/circuits/f-applied}[box=f,colour=comb]
+    ]
+    =
+    g(\listvar{v}) \streamcons \bot \streamcons \bot \streamcons \dots
+    \), which is the interpretation of \(
+    \iltikzfig{circuits/components/values/vs-even-longer}[val=g(\listvar{v})]
     \).
     As the equations are sound they must preserve the stream semantics, so
     \(\listvar{w} = g(\listvar{v})\).
@@ -442,7 +436,8 @@ into one with an encoded state.
     Although the encoder is sequential, by the definition of \(\mealytofunc\),
     it must be of the form \(
     \iltikzfig{circuits/synthesis/normalised-function}[box=g]
-    \) by definition of functional completeness.
+    \) by definition of complete interpretations.
+    This means we have
     \begin{gather*}
         \iltikzfig{circuits/algebraic/encoding-state/step-0a}[box=g]
         \coloneqq
@@ -466,11 +461,9 @@ into one with an encoded state.
 Before proceeding to our next set of equations, we will show how the encoding
 equations can be used to encode the states of any circuit as those of a
 denotationally equivalent one.
-We are now ready to show that the encoding equations allow us to translate the
-states of a circuit into those of a denotationally equivalent circuit.
 
-\begin{corollary}
-    Given two denotationally equivalent circuits \(
+\begin{corollary}\label{cor:encoding-circuits}
+    For denotationally equivalent circuits \(
     \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[f],state=\listvar{s},colour=seq,dom=m,cod=n,delay=x]
     \) and \(
     \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[g],state=\listvar{t},colour=seq,dom=m,cod=n,delay=y]
@@ -484,7 +477,7 @@ states of a circuit into those of a denotationally equivalent circuit.
 \end{corollary}
 
 If we have the right encoders, we can translate the initial state of a circuit
-into a different word, and end up with a new circuit in a `Mealy form' with a
+into a different word, and end up with a new circuit in a Mealy form with a
 sequential core.
-However, since the encoders, decoders, and core are essentially combinational,
+Since the encoders, decoders, and core are essentially combinational,
 these can be normalised once again to obtain a new normalised core.
