@@ -1,42 +1,62 @@
 \begin{figure}
     \centering
-    \begin{tabular}{c}
+    \begin{tabular}{ccc}
         \(\trace{X}[A][D]{
             \id[X] \tensor f \seq g \seq \id[X] \seq h
         }
-        =
-        f \seq \trace{X}[B][C]{g} \seq h
         \)
+         &
+        \(=\)
+         &
+        \(f \seq \trace{X}[B][C]{g} \seq h\)
         \\[1em]
         \(
         \iltikzfig{strings/traced/naturality-lhs}[colour=white,box1=f,box2=g,box3=h,dom=A,cod=D]
-        =
+        \)
+         &
+        \(=\)
+         &
+        \(
         \iltikzfig{strings/traced/naturality-rhs}[colour=white,box1=f,box2=g,box3=h,dom=A,cod=D]
         \)
     \end{tabular}
     \\[1em]
     \rule[1em]{\textwidth}{0.1mm}
     \\[0.1em]
-    \begin{tabular}{ccc}
+    \begin{tabular}{ccccccc}
         \(
         \trace{X}[A][B]{f \seq g \tensor \id[B]}
-        =
+        \)
+         &
+        \(=\)
+         &
+        \(
         \trace{Y}[A][B]{g \tensor \id[A] \seq f}
         \)
-         &  &
+         &   &
         \(
-        \trace{X}[X][X]{\swap{X}{X}} = \id[X]
+        \trace{X}[X][X]{\swap{X}{X}}
         \)
+         &
+        \(=\)
+         &
+        \(\id[X]\)
         \\[1em]
         \(
         \iltikzfig{strings/traced/sliding-lhs}[colour=white,box1=f,box2=g,dom=A,cod=B]
-        =
-        \iltikzfig{strings/traced/sliding-rhs}[colour=white,box1=f,box2=g,dom=A,cod=B]
         \)
-         &  &
+         &
+        \(=\)
+         &
+        \(\iltikzfig{strings/traced/sliding-rhs}[colour=white,box1=f,box2=g,dom=A,cod=B]\)
+         &   &
         \(
         \iltikzfig{strings/traced/yanking-lhs}[obj=X,colour=white]
-        =
+        \)
+         &
+        \(=\)
+         &
+        \(
         \iltikzfig{strings/category/identity}[obj=X,colour=white]
         \)
     \end{tabular}
