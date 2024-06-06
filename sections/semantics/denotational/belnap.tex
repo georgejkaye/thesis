@@ -2,10 +2,12 @@
 
 For an interpretation to admit a sound and complete denotational semantics it
 needs to be \emph{functionally complete}.
-In this section we will demonstrate how this holds for the Belnap interpretation
-introduced in \cref{ex:belnap-interpretation}.
-To show this we will make use of the well-known functional completeness for
-Boolean logic.
+One may wonder if this is a reasonable assumption to make, as if it is not then
+the denotational semantics is not particularly useful.
+
+To this end, we will demonstrate how the functional completeness condition holds
+for the Belnap interpretation introduced in \cref{ex:belnap-interpretation}.
+This will make use of the well-known functional completeness of Boolean logic.
 
 \begin{definition}
     Let \(\booleans \coloneqq \{0, 1\}\) be the set of \emph{Boolean} values,
@@ -28,7 +30,7 @@ Boolean logic.
     function.
 \end{proof}
 
-We make use of this result by `simulating' the Boolean operations in the
+We use of this result by `simulating' the Boolean operations in the
 Belnap realm.
 
 \begin{lemma}
@@ -52,7 +54,7 @@ only if \(v\) is falsy, and \(\phi(v)(1)\) is \(1\) if and only if \(v\) is
 truthy.
 We write \(\phi_0(v) \coloneqq \phi(v)(0)\) and \(\phi_1(v) \coloneqq \phi(v)(1)\).
 
-This illuminates a new path: rather than trying to divine an expression directly
+This means that rather than trying to divine an expression directly
 from a Belnap function, we can instead define \emph{two} functions; one for how
 falsy the output is, and one for how truthy is.
 
@@ -61,8 +63,10 @@ falsy the output is, and one for how truthy is.
     \(\values_1 \coloneqq \{\bot, \belnaptrue\}\).
 \end{definition}
 
-Note that for \(v \in \values_0\), \(\phi(v)(1) = 0\), and for
-\(v^\prime \in \values_1\), \(\phi(v)(0) = 0\).
+For \(v \in \values_0\), \(\phi(v)(1) = 0\) (all the information is contained
+within the falsy bit), and for \(v^\prime \in \values_1\), \(\phi(v)(0) = 0\)
+(all the information is contained in the truthy bit).
+These sets are of particular interest when comparing to Boolean operations.
 
 \begin{lemma}
     \(\values_0\) and \(\values_1\) are closed under \(\land\) and \(\lor\).
@@ -71,51 +75,42 @@ Note that for \(v \in \values_0\), \(\phi(v)(1) = 0\), and for
     This can be verified by inspecting the truth tables:
 
     \begin{center}
-        \begin{tabular}{|c|cc|}
-            \hline
+        \begin{tabular}{c|cc}
             \(\land\)        & \(\bot\)         & \(\belnapfalse\) \\
             \hline
             \(\bot\)         & \(\bot\)         & \(\belnapfalse\) \\
-            \(\belnapfalse\) & \(\belnapfalse\) & \(\belnapfalse\) \\
-            \hline
+            \(\belnapfalse\) & \(\belnapfalse\) & \(\belnapfalse\)
         \end{tabular}
         \quad
-        \begin{tabular}{|c|cc|}
-            \hline
+        \begin{tabular}{c|cc}
             \(\lor\)         & \(\bot\) & \(\belnapfalse\) \\
             \hline
             \(\bot\)         & \(\bot\) & \(\bot\)         \\
-            \(\belnapfalse\) & \(\bot\) & \(\belnapfalse\) \\
-            \hline
+            \(\belnapfalse\) & \(\bot\) & \(\belnapfalse\)
         \end{tabular}
         \quad
-        \begin{tabular}{|c|cc|}
-            \hline
+        \begin{tabular}{c|cc}
             \(\land\)       & \(\bot\) & \(\belnaptrue\) \\
             \hline
             \(\bot\)        & \(\bot\) & \(\bot\)        \\
-            \(\belnaptrue\) & \(\bot\) & \(\belnaptrue\) \\
-            \hline
+            \(\belnaptrue\) & \(\bot\) & \(\belnaptrue\)
         \end{tabular}
         \quad
-        \begin{tabular}{|c|cc|}
-            \hline
+        \begin{tabular}{c|cc}
             \(\lor\)        & \(\bot\)        & \(\belnaptrue\) \\
             \hline
             \(\bot\)        & \(\bot\)        & \(\belnaptrue\) \\
-            \(\belnaptrue\) & \(\belnaptrue\) & \(\belnaptrue\) \\
-            \hline
+            \(\belnaptrue\) & \(\belnaptrue\) & \(\belnaptrue\)
         \end{tabular}
     \end{center}
 
     \qedhere
 \end{proof}
 
-These should truth tables should look familiar; indeed, if one squints a little
-we recover the truth tables for \(\bor\) and \(\band\) on the first row, and for
-\(\band\) and \(\bor\) on the second.
+If one looks closer, these are just the truth tables for \(\bor\) and \(\band\)
+but with different symbols.
 This means that any expression we make using \(\band\) and \(\bor\) in the
-Boolean realm can be `simulated' in the two Belnap subsets.
+Boolean realm can be `simulated' in the falsy and truthy Belnap subsets.
 Formally, we have the following.
 
 \begin{lemma}\label{lem:belnap-bool-correspondence}
@@ -191,7 +186,7 @@ The more cautious reader may have noticed we have not discussed how the
 Boolean \(\neg_\booleans\) can be simulated using Belnap operations.
 This is because it is simply not possible to do this while remaining in the
 two Belnap subsets.
-Fortunately, there is a certain subset of Boolean functions that can be
+We must make use of a certain subset of Boolean functions that can be
 constructed \emph{without} using \(\neg_\booleans\).
 
 \begin{definition}
@@ -201,7 +196,7 @@ constructed \emph{without} using \(\neg_\booleans\).
 As with \(\values\), \(\booleans^m\) inherits the order on \(\booleans\)
 pointwise.
 Subsequently, a Boolean function \(\morph{f}{\booleans^m}{\booleans}\) is
-\emph{monotone} if \(f(v) \boolorder f(w)\) whenever
+\emph{monotone} if \(f(\listvar{v}) \boolorder f(\listvar{w})\) whenever
 \(\overline{v} \boolorder \overline{w}\).
 Intuitively, flipping an input bit from \(0\) to \(1\) can never flip an output
 bit from \(1\) to \(0\).
@@ -224,8 +219,8 @@ bit from \(1\) to \(0\).
     the negation.
 
     If \(f(0, 0, \dots, 0) = 1\), then the inner conjunction is empty and must
-    instead be represented by the constant \(1\), (the unit of \(\band\)).
-    This is again valid due to monotonicity, as if \(f\) produces \(1\) for the
+    be represented by the constant \(1\), (the unit of \(\band\)).
+    This is valid due to monotonicity, as if \(f\) produces \(1\) for the
     infimum, then it must produce \(1\) for all inputs.
 \end{proof}
 
@@ -250,11 +245,9 @@ components, and then unify the two at the end.
 
 \begin{definition}
     \label{def:translation-tables}
-    Let the functions \[
-        \morph{\psi^0_0,\psi^1_0}{\values}{\values_0}
-        \quad
-        \morph{\psi^0_1,\psi^1_1}{\values}{\values_1}
-    \] be defined according to the table below.
+    Let the functions \(\morph{\psi^0_0,\psi^1_0}{\values}{\values_0}\) and
+    \(\morph{\psi^0_1,\psi^1_1}{\values}{\values_1}\) be defined according to
+    the table below.
     \begin{center}
         \begin{tabular}{c|cccc}
                              & \(\psi^0_0\)     & \(\psi^1_0\)     & \(\psi^0_1\)    & \(\psi^1_1\)    \\
@@ -350,7 +343,7 @@ functions.
         \end{tabular}
     \end{center}
 
-    But this is clearly just the truth table for \(\ljoin\), so the entire
+    This is clearly just the truth table for \(\ljoin\), so the entire
     expression can be defined using the operations \(
     \{\land,\lor,\neg,\ljoin,\bot,\belnaptrue,\belnapfalse\}
     \).
@@ -394,6 +387,7 @@ functions.
         \ljoin
         (v_1 \lor \bot) \lor (\neg(v_0 \land \bot) \land (v_1 \lor \bot)).
     \]
+    which can be verified to act the same as the original table.
 \end{example}
 
 Although this result only applies to functions with a single output, it is
@@ -463,6 +457,23 @@ different.
     \) is a falsy conjunction.
 \end{definition}
 
+The two subcircuits are falsy and truthy disjunctive normal forms, and can be
+defined syntactically by using a `composite fork' to copy the inputs for each
+clause in the normal form.
+
+\begin{definition}\label{def:mk-fork}
+    For \(n \in \nat\), an \emph{\(m,k\)-fork}
+    \(\iltikzfig{circuits/components/structural/mn-fork}\)
+    is defined
+    inductively with \(
+    \iltikzfig{circuits/components/structural/m0-fork} \coloneqq
+    \iltikzfig{strings/category/identity-blank}[obj=m]
+    \) and \(
+    \iltikzfig{circuits/components/structural/mkp1-fork} \coloneqq
+    \iltikzfig{circuits/components/structural/n-fork}
+    \).
+\end{definition}
+
 \begin{definition}
     Let \(\morph{\mealytofunc_\belnap}{\func{\belnapinterpretation}}{\ccirc{\belnapsignature}}\)
     be defined as the map sending a function \(\morph{f}{\valuetuple{m}}{\valuetuple{n}}\)
@@ -471,7 +482,7 @@ different.
     \] where \(
     \iltikzfig{strings/category/f}[box=g_0,colour=comb]
     \) and \(
-    \iltikzfig{strings/category/f}[box=g_0,colour=comb]
+    \iltikzfig{strings/category/f}[box=g_1,colour=comb]
     \) only contain identity and elimination constructs, and \(
     \iltikzfig{strings/category/f}[box=h_0,colour=seq]
     \) and \(

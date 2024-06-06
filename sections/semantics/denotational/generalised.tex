@@ -1,6 +1,6 @@
 \section{Denotational semantics for generalised circuits}
 
-Although we have discussed the denotation semantics in terms of monochromatic
+Although we have discussed the denotational semantics in terms of monochromatic
 circuit signatures, it is straightforward to extend the results to categories
 generated over \emph{generalised} circuit signatures
 
@@ -56,50 +56,50 @@ generators for each \(n \in \natplus\), as well as the bundlers.
     Let \(\morph{\circuittofuncig}{\ccircsigmag}{\funcig}\) be the coloured PROP
     morphism with action defined as%
     \vspace{-\abovedisplayskip}
-    \begin{gather*}
+    \begin{align*}
         \circuittofuncig[
             \iltikzfig{circuits/components/gates/gate}[gate=p,dom=\listvar{m},cod=\listvar{n}]
         ]
-        \coloneqq
+         & \coloneqq
         \gateinterpretation[p]
         \\
         \circuittofuncig[
             \iltikzfig{strings/structure/comonoid/copy}[colour=comb,obj=n]
         ]
-        \coloneqq
+         & \coloneqq
         (\listvar{v}) \mapsto (\listvar{v}, \listvar{v})
-        \qquad
+         & \qquad
         \circuittofuncig[
             \iltikzfig{strings/structure/comonoid/discard}[colour=comb,obj=n]
         ]
-        \coloneqq
+         & \coloneqq
         (\listvar{v}) \mapsto ()
         \\
         \circuittofuncig[
             \iltikzfig{strings/structure/monoid/merge}[colour=comb,obj=n]
         ]
-        \coloneqq
+         & \coloneqq
         (\listvar{v}, \listvar{w})
         \mapsto \listvar{v} \sqcup \listvar{w}
-        \qquad
+         & \qquad
         \circuittofuncig[
             \iltikzfig{strings/structure/monoid/init}[colour=comb,obj=n]
         ]
-        \coloneqq
+         & \coloneqq
         () \mapsto \bot^n
         \\
         \circuittofuncig[
             \iltikzfig{strings/strictifiers/expand}[colour=comb,obj=n]
         ]
-        \coloneqq
+         & \coloneqq
         (\listvar{v}) \mapsto (\listvar{v}(0), \listvar{v}(1), \dots, \listvar{v}(n-1))
         \\
         \circuittofuncig[
             \iltikzfig{strings/strictifiers/collapse}[colour=comb,obj=n]
         ]
-        \coloneqq
+         & \coloneqq
         (v_0, v_1, \dots, v_{n-1}) \mapsto (v_0v_1\dots v_{n-1})
-    \end{gather*}
+    \end{align*}
 \end{definition}
 
 The map from coloured circuits to Mealy machines proceeds in a similar
@@ -108,11 +108,11 @@ manner.
 \begin{definition}
     Let \(\morph{\circuittomealyig}{\scircsigmag}{\mealyig}\) be the traced PROP
     morphism defined on generators as
-    \begin{gather*}
+    \begin{align*}
         \circuittomealyig[
             \iltikzfig{circuits/components/gates/gate}[colour=comb]
         ]
-        \coloneqq \left(
+         & \coloneqq \left(
         \{()\},
         (\listvar{v}_0,\listvar{v}_1,\dots,\listvar{v}_{m-1}) \mapsto
         \left\langle
@@ -127,7 +127,7 @@ manner.
         \circuittomealyig[
             \iltikzfig{strings/structure/comonoid/copy}[colour=comb,obj=n]
         ]
-        \coloneqq \left(
+         & \coloneqq \left(
         \{()\},
         \listvar{v}
         \mapsto
@@ -138,7 +138,7 @@ manner.
         \circuittomealyig[
             \iltikzfig{strings/structure/monoid/merge}[colour=comb,obj=n]
         ]
-        \coloneqq \left(
+         & \coloneqq \left(
         \{()\},
         (\listvar{v}, \listvar{w}) \mapsto
         \left\langle(), \listvar{v} \ljoin \listvar{w}\right\rangle,
@@ -148,7 +148,7 @@ manner.
         \circuittomealyig[
             \iltikzfig{strings/structure/comonoid/discard}[colour=comb,obj=n]
         ]
-        \coloneqq \left(
+         & \coloneqq \left(
         \{()\},
         \listvar{v} \mapsto
         \left\langle(), ()\right\rangle,
@@ -158,7 +158,7 @@ manner.
         \circuittomealyig[
             \iltikzfig{strings/strictifiers/expand}[colour=comb,obj=n]
         ]
-        \coloneqq
+         & \coloneqq
         \left(
         \{()\},
         ((), (v_0,v_1,\dots,v_{n-1})) \mapsto ((v_0), (v_1), \dots, (v_{n-1})),
@@ -168,7 +168,7 @@ manner.
         \circuittomealyig[
             \iltikzfig{strings/strictifiers/collapse}[colour=comb,obj=n]
         ]
-        \coloneqq
+         & \coloneqq
         \left(
         \{()\},
         ((), ((v_0), (v_1), \dots, (v_{n-1}))) \mapsto (v_0,v_1,\dots,v_{n-1})
@@ -177,7 +177,7 @@ manner.
         \circuittomealyig[
             \iltikzfig{circuits/components/values/vs}[val=\listvar{v},width=n]
         ]
-        \coloneqq
+         & \coloneqq
         \left(
         \left(
         \{s_{\listvar{v}}, s_\bot\},
@@ -191,7 +191,7 @@ manner.
         \circuittomealyig[
             \iltikzfig{circuits/components/waveforms/delay}[width=n]
         ]
-        \coloneqq
+         & \coloneqq
         \left(
         \left(
         \{ s_{\listvar{v}} \,|\, \listvar{v} \in \valuetuple{n}\},
@@ -199,7 +199,7 @@ manner.
         \left\langle{s_{\listvar{w}},\listvar{v}}\right\rangle\right),
         s_{\bot^n}
         \right)
-    \end{gather*}
+    \end{align*}
 \end{definition}
 
 Although morphisms in \(\mealyig\) have different interfaces to those in
@@ -210,8 +210,8 @@ translate them into stream functions or coloured circuits.
     Let the coloured PROP morphisms
     \(\morph{\mealytostreamig}{\mealyig}{\streamig}\),
     \(\morph{\streamtomealyig}{\streamig}{\mealyig}\) and
-    \(\morph{\streamtomealyig}{\mealyig}{\scircsigmag}\) be defined using the
-    same procedure as for their monochromatic counterparts.
+    \(\morph{\streamtomealyig}{\mealyig}{\scircsigmag}\) be defined in the same
+    same way as the monochromatic versions.
     Subsequently, let \(\morph{\circuittostreamig}{\scircsigmag}{\streamig}\)
     be defined as \(\mealytostreamig \circ \circuittomealyig\).
 \end{definition}

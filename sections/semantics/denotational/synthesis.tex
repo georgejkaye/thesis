@@ -185,7 +185,7 @@ design~\cite{kohavi2009switching} in which each state of a Mealy machine is
 \emph{encoded} as a power of values, and combinational logic used to transform
 inputs into appropriate outputs.
 
-\begin{example}
+\begin{example}\label{ex:boolean-to-circuit}
     Consider the following Mealy machine operating on Boolean values.
     \begin{center}
         \includestandalone{figures/mealy/boolean-example}
@@ -230,7 +230,8 @@ select something suitable.
 
 \begin{definition}[Encoding]\label{def:encoding}
     Let \(S\) be a set equipped with a partial order \(\stateorder\) and a total
-    order \(\leq\) such that \(s_0 \leq s_1 \leq \dots s_{k-1}\).
+    order \(\leq\) such that \(S\) can be represented as
+    \(s_0 \leq s_1 \leq \dots s_{k-1}\).
     The \emph{\(\leq\)-encoding} for this assignment is a function
     \(\morph{\gamma_\leq}{S}{\valuetuple{k}}\) defined as
     \(\gamma_\leq(s)(i) \coloneqq \top\) if \(s_i \stateorder s\) and
@@ -260,12 +261,15 @@ states.
 \end{lemma}
 \begin{proof}
     First the \(\onlyifdir\) direction.
-    Let \(s_i \stateorder s_j\); we need to show that for every \(l < k\),
-    \(s_i(l) \sqsubseteq s_j(l)\).
+    Let \(s_i, s_j \in S\) such that \(s_i \stateorder s_j\); we need to show
+    that for every \(l < |S|\),
+    \(\gamma_\leq(s_i)(l) \sqsubseteq \gamma_leq(s_j)(l)\).
     The only way this can be violated is if \(s_i(l) = \top\) and
-    \(s_j(l) = \bot\).
-    But since \(s_i \stateorder s_j\), if \(s_l \stateorder s_i\) then
-    \(s_l \stateorder s_j\) also holds.
+    \(s_j(l) = \bot\); this can only occur if \(s_l \stateorder s_i\) and
+    \(s_l \not\stateorder s_j\).
+    But since \(s_i \stateorder s_j\), this is a contradiction due to
+    transitivity so \(\gamma_\leq(s_l) \sqsubseteq \gamma_\leq(s_j)\) also
+    holds.
 
     Now the \(\ifdir\) direction.
     Assume that \(\gamma_\leq(s_i) \sqsubseteq \gamma_\leq(s_j)\); we need to
@@ -278,7 +282,7 @@ states.
     \(\gamma_\leq(s_j)(i)\) is also \(\top\).
 \end{proof}
 
-Using this encoding, we will construct a combinational circuit morphism that,
+Using this encoding, we will construct a circuit morphism that,
 when interpreted as a function, implements the output and transition function
 of the Mealy machine.
 There is no reason for such a morphism to exist for an arbitrary interpretation:
@@ -287,10 +291,11 @@ function?
 The useful interpretations are those that \emph{can} model every function.
 
 \begin{definition}[Functional completeness]\label{def:functional-completeness}
-    An interpretation \(\interpretation\) of a signature \(\signature\) is
-    \emph{functionally complete} if there exists a map \(
+    A \emph{complete interpretation} as a tuple
+    \((\interpretation,\mealytofunc)\) in which \(\interpretation\) is an
+    interpretation of a signature \(\signature\) and \(
     \morph{\mealytofunc}{\funci}{\scircsigma}
-    \) which sends functions \(
+    \) is a map that sends functions \(
     \morph{f}{\valuetuple{m}}{\valuetuple{n}}
     \), to circuits of the form \(
     \iltikzfig{circuits/synthesis/normalised-function}[box=f]
@@ -298,21 +303,24 @@ The useful interpretations are those that \emph{can} model every function.
     \(\circuittostreami[\mealytofunc[f]](\sigma)(i) = f(\sigma(i))\).
 \end{definition}
 
-For a particular interpretation there may well be many such maps from functions
-to circuits, but for convenience we will assume there is a fixed procedure
-\(\mealytofunc\) amd refer to a circuit \(\mealytofunc[f]\) as the
-\emph{normalised circuit for \(f\)}.\
+For a given complete interpretation \((\interpretation,\mealytofunc)\), we refer
+to a circuit \(\mealytofunc[f]\) as the \emph{normalised circuit for \(f\)}.\
 
 \begin{remark}
-    Even though \(\mealytofunc\) concerns combinational functions, it maps into
+    Even though \(\mealytofunc\) maps combinational functions, its codomain is
     the category of \emph{sequential} circuits \(\scircsigma\).
-    This is because sometimes instantaneous values must be used to create the
+    This is because instantaneous values may be required to create the
     normalised circuit.
-    However, the loop enforces that the state is \emph{constant}: it will always
-    produce the word \(\listvar{v}\).
-    This means the circuit has combinational behaviour despite using sequential
-    components; often this is the only way to ensure every function can be
-    modelled.
+    Despite the use of sequential components, the loop enforces that the state
+    is \emph{constant}: it will always produce the word \(\listvar{v}\), so the
+    the circuit still has combinational behaviour.
+
+    Sometimes this is the only way to ensure every function can be modelled.
+    For example, consider the Boolean function \(\booleans \to \booleans\) that
+    always produces \(\belnapfalse\).
+    Using the strategy from \cref{ex:boolean-to-circuit}, no lines of the truth
+    table are true, so the expression can only be defined using the unit of the
+    disjunction, the constant false.
 
     Note also that this sequential component is by no means mandatory: the
     functional completeness map may actually map only to combinational circuits,
@@ -351,8 +359,8 @@ in \(\scircsigma\), we set about encoding the Mealy function.
 \end{definition}
 
 \begin{definition}[Monotone Mealy encoding]\label{def:mealy-encoding}
-    For a monotone Mealy machine \((S, f, s_0)\) with \(k\) states and a
-    monotone encoding \(\gamma_\leq\), a \emph{monotone Mealy encoding} is a
+    For a monotone Mealy machine \((S, f, s_0)\) with \(k\) states and an
+    encoding \(\gamma_\leq\), a \emph{monotone Mealy encoding} is a
     function
     \(
     \morph{
@@ -372,7 +380,7 @@ in \(\scircsigma\), we set about encoding the Mealy function.
     \).
 \end{definition}
 
-To be able to obtain the syntactic circuit for a monotone Mealy function encoded
+To obtain the syntactic circuit for a monotone Mealy function encoded
 in this way, it needs to be a morphism in \(\funci\).
 It is monotone by definition, but we need to make sure it is also
 \(\bot\)-preserving.
@@ -390,9 +398,8 @@ It is monotone by definition, but we need to make sure it is also
 
 The foundations are now set for establishing the image of a PROP morphism from
 Mealy machines to circuit terms.
-But before we get too ahead of ourselves, there is one more thing to consider:
-\cref{def:encoding} depends on some arbitrary total ordering on the states in a
-given monotone Mealy machine.
+There is one more thing to consider: \cref{def:encoding} depends on some
+arbitrary total ordering on the states in a given monotone Mealy machine.
 While this may not seem much of an issue, when
 defining a PROP morphism this must be \emph{fixed}, otherwise the mapping of
 Mealy machines to circuits might be nondeterministic.
@@ -474,7 +481,7 @@ we must show a lemma linking the behaviour circuits in the image of
     \proj{1}\left(g(\listvar{s}, \listvar{a})\right)
     \right\rangle, \listvar{s}\right)
     \).
-    Since the initial output and the stream derivative of \(
+    Since the initial output and stream derivative of \(
     \mealytocircuiti[
         \circuittomealyi[
             \iltikzfig{circuits/productivity/mealy-form}[core=f,state=\listvar{s},dom=m,cod=n,delay=x]
@@ -519,9 +526,8 @@ stream functions.
     \mealytocircuiti[(S, f, s_0)]
     =
     \iltikzfig{circuits/synthesis/mealy-term-spaced}
-    \).
-    By definition of \(\mealytocircuiti\) and \(\mealytofunc\),
-    we have that\[
+    \); by applying \(\mealytocircuiti\) and \(\mealytofunc\),
+    we have that \[
         \mealytocircuiti[(S, f, s_0)]
         =
         \iltikzfig{circuits/synthesis/mealy-term-spaced}

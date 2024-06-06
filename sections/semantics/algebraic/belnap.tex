@@ -141,21 +141,6 @@ relatively standard.
 
 We will now show that these equations suffice to translate the subcircuits in
 the exploded circuit into falsy or truthy disjunctive normal form.
-To do this, we will use some notation for composite forks.
-
-\begin{definition}\label{def:mk-fork}
-    For \(n \in \nat\), an \emph{\(m,k\)-fork}
-    \(\iltikzfig{circuits/components/structural/mn-fork}\)
-    is defined
-    inductively with \(
-    \iltikzfig{circuits/components/structural/m0-fork} \coloneqq
-    \iltikzfig{strings/category/identity-blank}[obj=m]
-    \) and \(
-    \iltikzfig{circuits/components/structural/mkp1-fork} \coloneqq
-    \iltikzfig{circuits/components/structural/n-fork}
-    \).
-\end{definition}
-
 First we will consider the case for the truthy circuit; we need to show that
 the equations in \(\mathcal{F}\) can translate the circuit into a construct of
 forks composed with a circuit in truthy disjunctive normal form.
