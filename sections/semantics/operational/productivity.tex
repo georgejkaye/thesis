@@ -173,3 +173,33 @@ circuit.
     \((\mealyeqn)\) and \((\instantfeedbackeqn)\) need only be applied
     \emph{once} at the very start before processing values.
 \end{remark}
+
+\begin{remark}
+    This style of operational semantics differs from some other approaches in
+    the area, such as the work on signal flow graphs~\cite{bonchi2021survey}.
+
+    In \emph{loc.\ cit.\ } the operational semantics is specified in terms of
+    the state transitions that take place in a circuit over time.
+    For example, the rule that applies to the fork in signal flow graphs is
+    \[
+        t \triangleright \iltikzfig{strings/structure/comonoid/copy-notile}
+        \xrightarrow[k\ k]{k}
+        t+1 \triangleright \iltikzfig{strings/structure/comonoid/copy-notile}
+    \]
+    where \(t\) is the current timestep, \(k\) is the input signal and
+    \(k\ k\) is the (forked) output signal.
+    Note that the fork itself does not change; the `computation' occurring is
+    contained entirely within the inputs and outputs.
+
+    In our world of digital circuits we are more interested in propagating
+    values to see how this affects the internal structure of a circuit; this is
+    another instance of how we are working with a \emph{causal} rather than
+    \emph{relational} sematics.
+    This means we specify inputs as explicit components, and the reductions
+    actually change the structure of the circuit.
+    \[
+        \iltikzfig{circuits/axioms/fork-lhs}
+        \reduction
+        \iltikzfig{circuits/axioms/fork-rhs}
+    \]
+\end{remark}
