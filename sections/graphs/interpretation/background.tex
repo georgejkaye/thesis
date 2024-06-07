@@ -1,28 +1,28 @@
 \section{String diagram rewriting}
 
-Graph rewriting specialised specifically for rewriting sting diagrams is a
-relatively new field, first appearing at the turn of the 2010s using
+Graph rewriting specialised for rewriting sting diagrams is a
+relatively new field.
+One of the first approaches was developed at the turn of the 2010s using
 \emph{string graphs}~\cite{%
     dixon2010open,dixon2013opengraphs,kissinger2012pictures%
 }.
 String graphs have two classes of nodes for \emph{boxes} and \emph{wires}; the
 former nodes represent generators in string diagrams and the latter nodes
 represent the wires between them.
-Crucially, one wire in a string diagram can be represented by arbitrarily
-many wire nodes connected together; all of these different depictions are
-identified by a notion of \emph{wire homeomorphism}, in which adjacent wire
-nodes can be collapsed into one.
+One nuance of string graphs is that a wire in a string diagram can be
+represented by arbitrarily many wire nodes connected together; all of these
+different depictions are identified by a notion of \emph{wire homeomorphism}, in
+which adjacent wire nodes can be collapsed into one.
 
 \begin{center}
     \iltikzfig{graphs/examples/string-graph}
 \end{center}
 
-String graphs modulo wire homeomorphism is a suitable setting for modelling
-traced or compact closed categories.
-The main drawback with this presentation is that a given term may correspond to
-many different graphs thanks to wire homeomorphism.
+String graphs modulo wire homeomorphism are a suitable setting for modelling
+traced or compact closed categories, but their main drawback is that a given
+term may correspond to many different graphs thanks to wire homeomorphism.
 
-More recently, there has recently been a flurry of work on string
+More recently, there has been a flurry of work on string
 diagram rewriting modulo \emph{Frobenius structure} using
 \emph{hypergraphs}~\cite{%
     bonchi2016rewriting,zanasi2017rewriting,bonchi2017confluence,%
@@ -30,8 +30,9 @@ diagram rewriting modulo \emph{Frobenius structure} using
 }.
 Hypergraphs are a generalisation of graphs in which edges can have arbitrarily
 many sources and targets, rather than just one each.
-With hypergraphs, generators are represented as hyperedges, and connections
-between generators indicated by if their sources and targets overlap.
+When interpreting string diagrams as hypergraphs, generators are represented as
+hyperedges and connections between generators indicated by if they source or
+target vertices.
 The beauty of the hypergraph formalism is that there is no restriction for
 nodes to only be incident on a single source and target, so one can easily
 model structures such as monoids or comonoids.
@@ -40,9 +41,10 @@ model structures such as monoids or comonoids.
     \iltikzfig{graphs/examples/hypergraph}
 \end{center}
 
-It turns out when modelling string diagrams as hypergraphs, the equations of
-a \emph{special commutative Frobenius algebra} are `absorbed': string diagrams
-equal by Frobenius are interpreted as isomorphic hypergraphs.
+While string diagrams `absorb' the equations of SMCs, hypergraphs go one further
+and absorb the equations of
+a \emph{special commutative Frobenius algebra}: string diagrams
+equal by Frobenius equations are interpreted as isomorphic hypergraphs.
 This means that, in some sense, rewriting using hypergraphs can be even more
 advantageous than using string diagrams.
 

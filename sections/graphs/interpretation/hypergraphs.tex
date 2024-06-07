@@ -1,7 +1,7 @@
 \section{Hypergraphs}
 
 We will begin by defining categories of hypergraphs, following the
-pattern outline in \cite{bonchi2022string}.
+pattern outlined in \cite{bonchi2022string}.
 Hypergraphs are formally defined as a functor category.
 
 \begin{definition}[Hypergraph~\cite{bonchi2016rewriting}]\label{def:hypergraph}
@@ -18,14 +18,14 @@ of a hypergraph: the object \(\star\) represents the nodes and each object
 \((k, l)\) represents hyperedges with \(k\) sources and \(l\) targets; each such
 edge must pick \(k\) sources and \(l\) targets from \(\star\).
 
-Objects in \(\hyp\) are functors that instantiates each object in \(\mathbf{X}\)
+Objects in \(\hyp\) are functors that instantiate each object in \(\mathbf{X}\)
 to a concrete set.
-Subsequently, for a hypergraph \(F \in \hyp\) we write \(\vertices{F}\) for its
+For a hypergraph \(F \in \hyp\) we write \(\vertices{F}\) for its
 set of nodes and \(\edges{F}{k}{l}\) for the set of edges with \(k\) sources and
 \(l\) targets.
 
 \begin{example}\label{ex:hypergraph}
-    Let the hypergraph \(F\) be defined as follows:
+    Let a hypergraph \(F\) be defined as follows:
     \begin{gather*}
         \vertices{F} \coloneqq \{v_0,v_1,v_2,v_3,v_4,v_5\}
         \quad
@@ -45,7 +45,7 @@ set of nodes and \(\edges{F}{k}{l}\) for the set of edges with \(k\) sources and
         \quad
         \targets{1}(e_1) \coloneqq v_5
     \end{gather*}
-    Much like with regular graphs, it is much more intuitive to draw out hypergraphs
+    Much like with regular graphs, it is more intuitive to draw out hypergraphs
     rather than look at their combinatorial representation.
     We draw nodes as black dots, and hyperedges as `bubbles' with ordered tentacles
     on the left and right that connect to source and target nodes respectively.
@@ -83,9 +83,9 @@ transformations: structure-preserving maps between hypergraphs.
         \iltikzfig{graphs/blank-smaller}
     \end{gather*}
     Recall the hypergraph \(F\) from \cref{ex:hypergraph}.
-    A hypergraph homomorphism \(\morph{h}{G}{F}\) is a map from the former into
-    the latter preserving sources and targets.
-    One possible homomorphism could be
+    A homomorphism \(\morph{h}{G}{F}\) is a map from the vertices and edges
+    of the former to those of the the latter preserving sources and targets;
+    one possible homomorphism could be
     \begin{gather*}
         \vertices{h}(v_6) \coloneqq v_1
         \quad
@@ -102,17 +102,17 @@ transformations: structure-preserving maps between hypergraphs.
     Injective hypergraph homomorphisms are often known as \emph{embeddings}.
     However, there is no requirement for hypergraph homomorphisms to be
     injective.
-    Conisder another hypergraph
+    Conisder another hypergraph \(H\) defined as
     \begin{gather*}
         \vertices{H} \coloneqq \{v_9\}
         \quad
         \edges{H}{2}{1} \coloneqq \{e_4\}
         \\
-        \sources{0}{e_4} = v_9
+        \sources{0}(e_4) = v_9
         \quad
-        \sources{1}{e_4} = v_9
+        \sources{1}(e_4) = v_9
         \quad
-        \targets{0}{e_4} = v_9
+        \targets{0}(e_4) = v_9
         \\
         \iltikzfig{graphs/blank-merge}
     \end{gather*}
@@ -133,7 +133,8 @@ transformations: structure-preserving maps between hypergraphs.
 
 \subsection{Labelled hypergraphs}
 
-The graphical notation is particularly evocative of string diagrams: generators
+The graphical notation for hypergraphs is particularly evocative of string
+diagrams: generators
 correspond to hyperedges and wires to the nodes between them.
 However, the hyperedges are currently not \emph{labelled} with generator
 symbols.
