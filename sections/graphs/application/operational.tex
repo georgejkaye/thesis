@@ -28,7 +28,7 @@ To represent this in our diagrams, we will colour any trace source tentacle red.
 \end{example}
 
 Since the transformation into global trace-delay form is purely through axioms
-of STMCs, in the hypergraph interpretation a circuit and corrsponding
+of STMCs, in the hypergraph interpretation a circuit and corresponding
 trace-delay form are isomorphic.
 
 \begin{example}
@@ -39,9 +39,7 @@ trace-delay form are isomorphic.
     Note that although the red tentacle no longer looks like a trace, we still
     keep track of it with the red tentacle.
     Moreover, even though the source of the delay looks like a trace in the
-    diagram, it is not marked as such; this reflects how this loop has been
-    introduced through yanking and as such is not a true non-delay-guarded
-    feedback loop.
+    diagram, it is not marked as such; it is just an artefact of our drawing.
     \begin{center}
         \begin{tikzcd}[bezier bounding box=true]
             \iltikzfig{graphs/circuits/sr-latch/inputs}
@@ -132,7 +130,6 @@ inputs and perform the streaming rewrite.
     \end{center}
     This graph is then rewritten by the streaming rule.
     \begin{center}
-        \vspace{-1em}
         \begin{tikzcd}[bezier bounding box=true, column sep=tiny]
             \iltikzfig{graphs/circuits/sr-latch/inputs}
             \arrow{r}
@@ -158,7 +155,6 @@ value rules, which have straightforward hypergraph interpretations.
     \raisebox{0.6em}{\includestandalone{figures/graphs/circuits/stub/rule}}
 \end{center}
 
-
 \begin{example}
     When applying the value rules to the streamed circuit from
     \cref{ex:sr-latch-streaming-graph}, we apply the fork rules as much as
@@ -174,19 +170,23 @@ value rules, which have straightforward hypergraph interpretations.
             \iltikzfig{graphs/circuits/sr-latch/outputs}
         \end{tikzcd}
     \end{center}
-    We can then repeatedly apply the gate rule and the eliminate room to obtain
-    the outputs and next state.
+    We can then repeatedly apply the gate and eliminate rule in order to obtain
+    the outputs and next state, which can be seen below as the value edges
+    joined with delay edges.
     \begin{center}
         \begin{tikzcd}[bezier bounding box=true, column sep=tiny]
             \iltikzfig{graphs/circuits/sr-latch/inputs}
             \arrow{r}
             &
-            \iltikzfig{graphs/circuits/sr-latch/values-2}l
+            \iltikzfig{graphs/circuits/sr-latch/values-2}
             &
             \arrow{l}
             \iltikzfig{graphs/circuits/sr-latch/outputs}
         \end{tikzcd}
     \end{center}
+    To identify the outputs, one simply needs to traverse from the outputs of
+    the graph; if productivity is applied multiple times then there will be a
+    sequence of values to iterate through.
 \end{example}
 
 \begin{remark}
