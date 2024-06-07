@@ -669,7 +669,51 @@ the left by going `over the top' of the edges via the identity cospan
 \(\cospan{N}{N}{N}\).
 
 \begin{example}
-    \todo[inline]{Example of composite construction}
+    Consider the following interfaced hypergraph.
+    \begin{center}
+        \begin{tikzcd}
+            \iltikzfig{graphs/frobenius/correspondence/inputs}
+            \arrow{r}
+            &
+            \iltikzfig{graphs/frobenius/correspondence/example}
+            &
+            \arrow{l}
+            \iltikzfig{graphs/frobenius/correspondence/outputs}
+        \end{tikzcd}
+    \end{center}
+    This cospan can be assembled into the form detailed in the above proof as
+    follows:
+    \begin{center}
+        \begin{tikzcd}[column sep=tiny]
+            \iltikzfig{graphs/frobenius/correspondence/l-inputs}
+            \arrow{r}
+            &
+            \iltikzfig{graphs/frobenius/correspondence/l}
+            &
+            \arrow{l}
+            \iltikzfig{graphs/frobenius/correspondence/l-outputs}
+        \end{tikzcd}
+        \(\seq\)
+        \begin{tikzcd}[column sep=tiny]
+            \iltikzfig{graphs/frobenius/correspondence/e-inputs}
+            \arrow{r}
+            &
+            \iltikzfig{graphs/frobenius/correspondence/e}
+            &
+            \arrow{l}
+            \iltikzfig{graphs/frobenius/correspondence/e-outputs}
+        \end{tikzcd}
+        \(\seq\)
+        \begin{tikzcd}
+            \iltikzfig{graphs/frobenius/correspondence/r-inputs}
+            \arrow{r}
+            &
+            \iltikzfig{graphs/frobenius/correspondence/r}
+            &
+            \arrow{l}
+            \iltikzfig{graphs/frobenius/correspondence/r-outputs}
+        \end{tikzcd}
+    \end{center}
 \end{example}
 
 This result means that any two terms in \(\smcsigma + \frob\) which are equal by
