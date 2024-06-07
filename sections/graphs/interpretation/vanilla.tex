@@ -1,8 +1,7 @@
 \section{Symmetric monoidal terms}
 
-The results of the previous section show that cospans of hypergraphs are an
-excellent fit for reasoning about terms in a freely generated hypergraph
-category.
+We have now seen that that cospans of hypergraphs are an excellent fit for
+reasoning about terms in a freely generated hypergraph category.
 However, there are times we might not have so much structure in our terms;
 indeed for our case of digital circuits we only operate in a setting with a
 trace.
@@ -11,7 +10,7 @@ Fortunately, Bonchi et al also characterised the cospans of hypergraphs that
 correspond to \emph{symmetric monoidal} terms without any additional structure.
 We will use some of this machinery when it comes to tackling the traced case.
 
-\subsection{Monogamy}
+\subsection{Monogamous acyclic cospans}
 
 There are two features that distinguish vanilla symmetric monoidal terms from
 Frobenius terms; wires cannot arbitrarily fork or join, and cycles may not be
@@ -94,18 +93,20 @@ operations.
     \cospan{n}[h]{G}[k]{p}
     \).
     The interfaces remain mono as pushouts along monos are monos in
-    \(\hypsigmac\). The only vertices that are altered are those in the image of
+    \(\hypsigmac\).
+    The only altered vertices are those in the image of
     \(g\) and \(h\), which are merged pointwise; since vertices in the image of
     \(g\) have out-degree \(0\) and those in the image of \(h\) have in-degree
     \(0\), the merged vertices will have at most degree \((1, 1)\).
 \end{proof}
 
 \begin{lemma}[\cite{bonchi2022stringa}, Lem. 17]\label{lem:monogamicity-preserved-tensor}
+    Monogamicity is preserved by tensor.
+\end{lemma}
+\begin{proof}
     The degrees of nodes are unaffected as tensor is by coproduct and
     only vertices in the original interfaces will be in the new interfaces.
-\end{lemma}
-
-\subsection{Acyclicity}
+\end{proof}
 
 As seen in \cref{ex:monogamous}, monogamy makes no guarantees about cycles.
 Since symmetric monoidal terms cannot have cycles, a notion of \emph{acyclicity}
@@ -131,7 +132,7 @@ nodes.
 
 \begin{definition}[Acyclicity (\cite{bonchi2022stringa}, Def. 20)]
     A hypergraph \(F\) is acyclic if there is no path from a node to itself.
-    A cospan \(\morph{m}{F}{n}\) is acyclic if \(F\) is.
+    A cospan \(\cospan{m}{F}{n}\) is acyclic if \(F\) is.
 \end{definition}
 
 \begin{example}\label{ex:acyclic}
@@ -209,7 +210,10 @@ This shows that monogamous acyclic cospans of hypergraphs form a category.
     \]
 \end{example}
 
-Bonchi et al then proceeded to show that \(\smcsigma\) is isomorphic to
+Just like how cospans of hypergraphs correspond to string diagrams of Frobenius
+terms, monogamous acyclic terms correspond to string diagrams of symmetric
+monoidal terms.
+Bonchi et al showed this by proving that \(\smcsigma\) is isomorphic to
 \(\macspdhyp\); to do this they needed a few more ingredients.
 The first is a lemma showing that a special class of subgraphs can always be
 `extracted' from a parent graph.
@@ -224,7 +228,7 @@ The first is a lemma showing that a special class of subgraphs can always be
     \label{lem:decomposition}
     For a monogamous acyclic cospan \(\cospan{m}{F}{n}\) and
     and convex subgraph \(L\) of \(G\), there exist
-    \(\listvar{k} \in \freemon{C}\) and a unique cospan
+    \(k \in \nat\) and a unique cospan
     \(\cospan{i}{L}{j}\) such that \(G\) can be factored as
     the following composite of monogamous acyclic cospans:
     \[
@@ -244,7 +248,7 @@ The first is a lemma showing that a special class of subgraphs can always be
 
 Essentially, we can always `pull out' a convex subgraph of a monogamous acyclic
 cospan in such a way that the remaining cospans are still monogamous acyclic.
-This is an important part of characterising the image of \(\termtohypsigmac\).
+This is an important part of characterising the image of \(\termtohypsigma\).
 
 \begin{theorem}[\cite{bonchi2022stringa}, Thm. 25]\label{thm:monogamous-acyclic-full}
     A cospan \(\cospan{m}{F}{n}\) is in the image of
@@ -252,14 +256,14 @@ This is an important part of characterising the image of \(\termtohypsigmac\).
     is monogamous acyclic.
 \end{theorem}
 \begin{proof}
-    The only if direction is by induction on the structure of terms in
+    The \(\onlyifdir\) direction is by induction on the structure of terms in
     \(\smcsigma\): the interpretation of generators is monogamous acyclic and
     the inductive cases are by
     \cref{lem:identities-symmetries-monogamous,lem:identities-symmetries-monogamous-acyclic,lem:monogamous-acyclicity-preserved-composition,lem:monogamicity-preserved-tensor,lem:monogamous-acyclicity-preserved-tensor}.
 
-    The if direction is by induction on the number of edges in \(F\).
+    The \(\ifdir\) direction is by induction on the number of edges in \(F\).
     If there are none, then \(m \to F\) and \(n \to F\) are
-    bijections by monogamy and acyclicity so the term is in the image of
+    bijections by monogamy so the term is in the image of
     identities or symmetries in \(\smcsigma\).
     For the inductive step, pick a single edge \(e\).
     This is a convex subgraph of \(F\), so
@@ -278,8 +282,8 @@ This is an important part of characterising the image of \(\termtohypsigmac\).
 This shows that \(\termtohypsigma\) is full; to conclude the isomorphism we
 need to show that it is also faithful.
 We know that the copairing \(\termtohypsigma + \frobtohypsigma\) is faithful
-by \cref{thm:termtohyp-image}, so we just need to show the same is true for its
-components.
+by \cref{thm:isomorphism-smcfrob-cospans}, so we just need to show the same is
+true for its components, using a result about pushouts in \(\propcat\).
 
 \begin{definition}[\cite{macdonald2009amalgamations}, Defs. 3.1, 3.2]
     A functor \(\morph{F}{\mcc}{\mcd}\) satisfies the \emph{3-for-2 property}
@@ -301,11 +305,11 @@ components.
 
 To apply this result, we need to show that \(\hypsigma\) is a pushout.
 Recall that in a category with an initial object, every coproduct can be
-expressed as a pushout by \cref{lem:coproduct-is-pushout}.
+expressed as a pushout by \cref{lem:coproducts-pushout}.
 
 \begin{definition}
     Let \(\permsprop\) be the sub-PROP of \(\finsetprop\)
-    containing only the bijective functions.
+    containing the bijective functions.
 \end{definition}
 
 A morphism \(m \to m\) in \(\permsprop\) is a
@@ -316,9 +320,9 @@ As all the functions are bijections, there can be morphisms of no other form.
     \(\permsprop\) is the initial object in \(\propcat\).
 \end{lemma}
 \begin{proof}
-    All the morphisms in \(\permsprop\) are just
-    identities and symmetries; the unique coloured PROP morphism to any other
-    PROP maps these to the corresponding constructs.
+    All the morphisms in \(\permsprop\) are identities and symmetries; the
+    coloured PROP morphism to any other PROP maps these to the corresponding
+    constructs.
 \end{proof}
 
 Subsequently, \(\smcsigma + \frob\) can be expressed as a pushout and the

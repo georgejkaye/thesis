@@ -2,18 +2,18 @@
 
 String diagrams also have \emph{input} and \emph{output} interfaces.
 (Labelled) hypergraphs may have suggestively dangling nodes in the pictures,
-but this is not actually encoded in the definition, and moreover we may wish to
+but this is not actually encoded in the definition; moreover we may wish to
 set a non-dangling node as an input or output.
 To set the interfaces of a hypergraph, hypergraph homomorphisms are used
 to `pick' the appropriate nodes.
 
 \begin{definition}[Cospan]
-    A \emph{cospan} in a category \(\mcc\) is a pair of morphisms \(X \to A\)
+    A \emph{cospan} is a pair of morphisms \(X \to A\)
     and \(X \to B\), written \(\cospan{X}{A}{Y}\).
     A \emph{cospan morphism} \(
     (\cospan{X}[f]{A}[g]{Y}) \to (\cospan{X}[h]{B}[k]{Y})
-    \) is a morphism \(\morph{\alpha}{A}{B}\) in \(\mcc\)
-    such that the following diagram commutes:
+    \) is a morphism \(\morph{\alpha}{A}{B}\) such that the following diagram
+    commutes:
     %
     \begin{center}
         \includestandalone{figures/category/diagrams/cospan-morphism}
@@ -24,16 +24,18 @@ to `pick' the appropriate nodes.
     \(\alpha\) is an isomorphism.
 \end{definition}
 
-For our intended purpose, the `legs' of cospans will be the interfaces and the
-`apex' will be the hypergraph we are providing interfaces for.
-This means we require a categorical setting in which the objects are
-\emph{cospans} of hypergraphs, so a notion of \emph{composition} of cospans
-must be provided.
+Cospans wll be used to model interfaced hypergraphs; for a cospan
+\(\cospan{X}{A}{Y}\) the `apex' \(A\) will be a hypergraph and the `legs`
+\(X \to A\) and \(Y \to A\) are input and output maps respectively.
+Since we will be comparing interfaced hypergraphs with string diagram terms,
+we require a categorical setting in which the objects are
+\emph{cospans} of hypergraphs, so they must be composable.
 
 \begin{definition}[Composition of cospans]
     \label{def:cospan-composition}
     In a category \(\mcc\) with pushouts, the composition of cospans
-    \(\cospan{X}[f]{A}[g]{Y}\) and \(\cospan{Y}[h]{B}[k]{Z}\) is by pushout:
+    \(\cospan{X}[f]{A}[g]{Y}\) and \(\cospan{Y}[h]{B}[k]{Z}\) is a cospan
+    \(\cospan{X}{D}{Y}\) where \(D\) is computed by pushout:
     \begin{center}
         \includestandalone{figures/category/diagrams/cospan-composition}
     \end{center}
@@ -41,8 +43,8 @@ must be provided.
 
 \begin{definition}[Categories of cospans]
     Let \(\mcc\) be a category with finite colimits.
-    The category of cospans over \(\mathbf{C}\), denoted \(\csp{\mathbf{C}}\),
-    has as objects the objects of \(\mathbf{C}\) and as morphisms \(A \to B\)
+    The category of cospans over \(\mcc\), denoted \(\csp{\mcc}\),
+    has as objects the objects of \(\mcc\) and as morphisms \(A \to B\)
     the isomorphism classes of cospans \(\cospan{A}{X}{B}\) for some
     \(X \in \mcc\).
     Composition is by pushout as detailed in \cref{def:cospan-composition} and
@@ -53,7 +55,7 @@ must be provided.
     For a category \(\mcc\) with finite colimits,
     \(\csp{\mcc}\) is symmetric monoidal with the tensor given by the
     coproduct in \(\mcc\), the monoidal unit given by the initial object
-    \(0 \in \mathbf{C}\), and the symmetry defined as the cospan
+    \(0 \in \mcc\), and the symmetry defined as the cospan
     \(\cospan{A+B}{A+B}{B+A}\).
 \end{lemma}
 \begin{proof}
@@ -73,42 +75,37 @@ We must restrict the interface hypergraphs to those that contain only vertices.
     empty.
 \end{definition}
 
-\subsection{Ordering the interfaces}
-
-Even though our hypergraphs still have input and output interfaces specified
-using cospans, there is still information missing: what is the \emph{ordering}
-of the vertices in these interfaces?
-Without this data \(\csp{\hypsigma}\) is not even a PROP.
-
-A cospan \(\cospan{M}{F}{N}\) is a morphism
-\(M \to N \in \csp{\hypsigma}\); we need to ensure that the legs of each
-cospan of hypergraphs can be viewed as a word in \(\freemon{C}\) for some
-countable set of colours \(C\).
-This is formally performed by another functor.
+The legs of cospans representing interfaced hypergraphs will be discrete
+hypergraphs; if a hypergraph \(F\) has \(m\) inputs then the input hypergraph
+\(A\) will contain \(m\) vertices.
+This is not enough to fully specify the interfaces, as there must also be a
+notion of \emph{order}.
+We need a way of specifying which vertex corresponds to which numbered input or
+output; this is formally performed by another functor.
 
 \begin{theorem}[\cite{bonchi2022string}, Thm. 3.6]\label{thm:csp-construction}
     Let \(\mathbb{X}\) be a PROP in which the monoidal product is a coproduct,
-    let \(\mathbf{C}\) be a category with finite colimits, and
-    let \(\morph{F}{\mathbb{X}}{\mathbf{C}}\) a coproduct-preserving functor.
-    Then there exists a PROP \(\csp[F]{\mathbf{C}}\) whose arrows
-    \(\listvar{m} \to \listvar{n}\) are isomorphism classes of \(\mathbf{C}\)
+    let \(\mcc\) be a category with finite colimits, and
+    let \(\morph{F}{\mathbb{X}}{\mcc}\) a coproduct-preserving functor.
+    Then there exists a PROP \(\csp[F]{\mcc}\) whose arrows
+    \(\listvar{m} \to \listvar{n}\) are isomorphism classes of \(\mcc\)
     cospans \(\cospan{Fn}{C}{Fn}\).
 \end{theorem}
 \begin{proof}
     Composition is given by pushout.
-    Because \(F\) preserves coproducts, \(F(m+p) \cong Fm + Fp\) and
+    \(F\) preserves coproducts so \(F(m+p) \cong Fm + Fp\) and
     \(F(n+q) \cong Fn + Fq\); subsequently the coproduct of
     \(\cospan{Fm}{C}{Fn}\) and \(\cospan{Fp}{C}{Fq}\) is given by \(
     \cospan{Fm + Fp}{C + D}{Fp + Fq}
     \).
     Symmetries in \(\mathbb{X}\) are determined by the universal property of
-    the coproduct; they are inherited by \(\csp[F]{\mathbf{C}}\) because \(F\)
+    the coproduct; they are inherited by \(\csp[F]{\mcc}\) because \(F\)
     preserves coproducts.
 \end{proof}
 
-\(F\) is the functor that imbues the objects in the legs of the cospan with
+\(F\) is the functor that will be used to the objects in the cospan legs with
 some notion of ordering.
-For the monochromatic setting, this PROP will be that of finite sets
+For our purpose, the domain of this functor will be the PROP of finite sets
 \(\{0,1,2,\dots,m-1\}\).
 
 \begin{definition}
@@ -126,17 +123,20 @@ words.
     hypergraphs.
 \end{definition}
 
+By applying \cref{thm:csp-construction} with the functor \(D\), we obtain the
+category of interfaced hypergraphs.
 
-Subsequently we obtain a PROP \(\cspdhyp\), which will serve as the domain in
-which we interpret string diagrams
-combinatorially.
+\begin{corollary}
+    There is a PROP \(\cspdhyp\) where the morphisms are isomorphism classes of
+    interfaced hypergraphs.
+\end{corollary}
 
 \begin{example}
     Recall the labelled hypergraph \(F\) from \cref{ex:labelled-hypergraph}.
     We assign interfaces to it as the cospan \(\cospan{3}[f]{F}[g]{3}\), where
     \begin{gather*}
         f(D0) = v_0 \quad f(D1) = v_1 \\
-        g(D0) = v_4 \quad g(D1) = v_1 \quad g(D2) = v_4
+        g(D0) = v_4 \quad g(D1) = v_5 \quad g(D2) = v_2
     \end{gather*}
     Interfaces are drawn on the left and right of a main graph, with numbers
     illustrating the action of the cospan maps.
@@ -174,11 +174,11 @@ cospans are not just numbers but \emph{words} of colours in some countable set
 
 \begin{theorem}\label{thm:coloured-csp-construction}
     Let \(\mathbb{X}\) be a coloured PROP whose monoidal product is a coproduct,
-    \(\mathbf{C}\) a category with finite colimits, and \(
-    \morph{F}{\mathbb{X}}{\mathbf{C}}
+    \(\mcc\) a category with finite colimits, and \(
+    \morph{F}{\mathbb{X}}{\mcc}
     \) a coproduct-preserving functor.
-    Then there exists a coloured PROP \(\csp[F]{\mathbf{C}}\) whose arrows
-    \(\listvar{m} \to \listvar{n}\) are isomorphism classes of \(\mathbf{C}\)
+    Then there exists a coloured PROP \(\csp[F]{\mcc}\) whose arrows
+    \(\listvar{m} \to \listvar{n}\) are isomorphism classes of \(\mcc\)
     cospans \(\cospan{F\listvar{m}}{C}{F\listvar{n}}\).
 \end{theorem}
 \begin{proof}
@@ -186,10 +186,9 @@ cospans are not just numbers but \emph{words} of colours in some countable set
     than addition.
 \end{proof}
 
-It only remains to determine exactly what the functor \(F\) should be in this
-case.
+It only remains to determine exactly what the functor \(F\) should be.
 In \cite{bonchi2022string}, objects \([m] \in \finsetprop\) are be coloured over
-some finite set of colours \(\mcc\) morphisms using a morphism \([m] \to \mcc\).
+some finite set of colours \(\mcc\) using a morphism \([m] \to \mcc\).
 Since we are working with potentially countably infinite sets of colours, the
 definition of \(\finsetprop\) must first be tweaked.
 
@@ -228,7 +227,7 @@ To assist in this endeavour, we recall a property of slice categories.
     \(\mcc \slice X\) is \(A + B \to X\); the universal morphism is \([f, g]\).
 \end{proof}
 
-Following the strategy of \cite[Prop. 2.23]{bonchi2022string}, we can now show
+Following the strategy of \cite[Prop. 2.23]{bonchi2022string}, we now show
 that \(\finsetpropwithnat \slice C\) is a coloured PROP.
 
 \begin{proposition}\label{prop:hatfinsetprop-slice-is-coloured-prop}
@@ -253,6 +252,10 @@ way as the monochromatic version.
     \(\overline{n}\), and sending a function \(\overline{m} \to \overline{n}\)
     to the induced homomorphism of discrete hypergraphs.
 \end{definition}
+
+As with the monochromatic case, applying \cref{thm:coloured-csp-construction} to
+this functor gives us a category of \emph{coloured} interfaced hypergraphs
+\(\cspdchyp\).
 
 \begin{example}
     Composition in \(\cspdchyp\) is as in \(\cspdhyp\) but now the glueing

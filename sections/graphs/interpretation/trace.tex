@@ -4,9 +4,9 @@ We have now seen the classes of cospans of hypergraphs that correspond to
 terms in a hypergraph category and terms in a symmetric monoidal category.
 Terms in a symmetric traced monoidal category sit somewhere in the middle of
 these two: cycles are permitted but wires cannot fork or join arbitrarily.
-This means to characterise the cospans of hypergraphs that correspond to traced
-terms we need to weaken the conditions of monogamy and acyclicity described in
-the previous section.
+Our contribution is to characterise the cospans of hypergraphs that correspond
+to traced terms by weakening the conditions of monogamy and acyclicity described
+in the previous section.
 
 First we will establish the morphism \(\stmcsigma \to \cspdhyp\) we will use
 to map traced terms to cospans of hypergraphs.
@@ -19,7 +19,7 @@ between traced and compact closed categories.
     Every hypergraph category is self-dual compact closed.
 \end{lemma}
 \begin{proof}
-    The cup on a given object is defined as \(
+    In a hypergraph category, the cup on a given object is defined as \(
     \iltikzfig{strings/compact-closed/cup-self-dual}[colour=white,obj=A]
     \coloneqq
     \iltikzfig{strings/structure/frobenius/cup}[obj=A]
@@ -62,17 +62,17 @@ between traced and compact closed categories.
 \end{proof}
 
 \begin{definition}
-    Let \(\morph{\tracedtosymandfrobsigma}{\stmcsigma}{\hypcsigma}\) be the
-    inclusion functor induced by \cref{lem:stmc-subcat-hyp}.
+    Let \(\morph{\tracedtosymandfrobsigma}{\stmcsigma}{\hypcsigma}\) be defined
+    as the inclusion functor induced by \cref{lem:stmc-subcat-hyp}.
 \end{definition}
 
 \begin{corollary}
     \(\tracedtosymandfrobsigma\) is faithful.
 \end{corollary}
 
-To translate a term in \(\stmcsigmac\) into a cospan of hypergraphs, one uses
-the inclusion functor \(\tracedtosymandfrobsigmac\) to elevate to the
-Frobenius realm, before applying \(\termandfrobtohypsigmac\) from the previous
+To translate a term in \(\stmcsigma\) into a cospan of hypergraphs, one uses
+the inclusion functor \(\tracedtosymandfrobsigma\) to elevate to the
+Frobenius realm, before applying \(\termandfrobtohypsigma\) from the previous
 section to obtain a cospan of hypergraphs.
 
 \begin{corollary}
@@ -81,23 +81,22 @@ section to obtain a cospan of hypergraphs.
 
 \subsection{Partial monogamy}
 
-Since \(\termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac\) is faithful,
-every distinct traced term in \(\stmcsigmac\) has a unique cospan of
+Since \(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\) is faithful,
+every distinct traced term in \(\stmcsigma\) has a unique cospan of
 hypergraphs up to isomorphism.
 However, this functor is not clearly not full: as we have previously
-illustrated, there are more terms in \(\hypcsigmac\) than there are in
-\(\stmcsigmac\).
+illustrated, there are more terms in \(\hypcsigma\) than there are in
+\(\stmcsigma\).
 The next step is to characterise the image of
-\(\termandfrobtohypsigmac \circ \tracedtosymandfrobsigmac\).
+\(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\).
 
 Since monogamous acyclic cospans correspond exactly to symmetric monoidal terms,
 this property is too restrictive to be used as a setting for modelling traced
 terms.
 Clearly, we can drop the acyclicity condition, as the trace can introduce
 cycles.
-However, there is also a foible regarding the monogamicity condition which must
-also be tackled.
-Although wires are also not permitted to arbitrarily fork or join in a traced
+However, there is also a foible that arises with the monogamicity condition:
+although wires are also not permitted to arbitrarily fork or join in a traced
 category, it is possible to have a case where wires do not connect to
 any generators while also remaining disconnected from the interfaces.
 This special case is the trace of the identity, which in string diagrams is
@@ -117,13 +116,13 @@ loop \(
     \(\finvectk{k}\)~\cite[Sec. 6.1]{hasegawa1997recursion}.
 \end{remark}
 
-These closed loops can be modelled as lone vertices (`bones') disconnected from
-either interface.
+These closed loops can be modelled as vertices disconnected from either
+interface.
 
 \begin{definition}[Partial monogamy]
     For a cospan \(\cospan{m}[f]{F}[g]{n}\) in
-    \(\cspdhyp\), let \(\mathsf{in}(F)\) be the image of \(f\) and let
-    \(\mathsf{out}(F)\) be the image of \(g\).
+    \(\cspdhyp\), let \(\mathsf{in}(F)\) be defined as the image of \(f\) and
+    let \(\mathsf{out}(F)\) be defined as the image of \(g\).
     A cospan \(\cospan{m}[f]{F}[g]{n} \in \cspdhyp\) is
     \emph{partial monogamous} if \(f\) and \(g\) are mono and, for all nodes
     \(v\), the degree of \(v\) is
@@ -168,8 +167,8 @@ either interface.
     \]
 \end{example}
 
-As with the monogamous acyclic cospans, a sub-PROP of \(\cspdhyp\) containing
-the partial monogamous cospans must be constructed.
+To use partial monogamous cospans as a setting for interpreting traced terms,
+they must be assebled into a sub-PROP of \(\cspdhyp\).
 
 \begin{lemma}\label{lem:identities-symmetries-partial-monogamous}
     Identities and symmetries are partial monogamous.
@@ -197,7 +196,7 @@ the partial monogamous cospans must be constructed.
     Partial monogamy is preserved by tensor.
 \end{lemma}
 \begin{proof}
-    As with composition, tensor preserves monogamicity by
+    Tensor preserves monogamicity by
     \cref{lem:monogamicity-preserved-tensor}, and as tensor does not affect the
     degree of nodes then it preserves partial monogamy as well.
 \end{proof}
@@ -210,11 +209,10 @@ partial monogamous cospans themselves form a PROP.
     partial monogamous cospans of hypergraphs.
 \end{definition}
 
-While for the symmetric monoidal case we could stop here, we have no such luck
-now: we must show that \(\pmcspdhyp\) is also traced.
+We must additionally show that \(\pmcspdhyp\) is also traced.
 Although \(\cspdhyp\) already has a trace in the form of the canonical trace, we
-must make sure that this does not degenerate for cospans of partial monogamous
-hypergraphs.
+must make sure that using the trace in this manner does not create cospans that
+are not partial monogamous.
 
 \begin{theorem}\label{thm:partial-monogamous-trace}
     The canonical trace is a trace on \(\pmcspdhyp\).
@@ -243,12 +241,14 @@ hypergraphs.
         \item if \(f(a)\) is also in the image of \(n \to F\), then \(f(i)\)
               has \((0, 0)\) and \(g(a)\) will have degree
               \((1,0)\), so the traced vertex will have degree \((1, 0)\) and
-              be in the image of \(n \to F^\prime\); and
+              be in the image of \(n \to F^\prime\);
         \item if \(g(i)\) is in the image of \(m \to F\), then the above
-              argument applies in reverse.
+              argument applies in reverse; and
+        \item if neither vertex is in the image of \(m \to F\) and \(n \to F\),
+              then the traced vertex will have degree \((1,1)\) and be in the
+              image of no interface.
     \end{itemize}
-    In all these cases, partial monogamy is preserved, so the canonical trace is
-    still suitable for working with cospans of partial monogamous hypergraphs.
+    In all these cases, partial monogamy is preserved.
 \end{proof}
 
 Crucially, while we leave \(\pmcspdhyp\) in order to construct the trace using
@@ -318,6 +318,10 @@ that this particular sub-PROP is the one that corresponds to traced terms.
     \(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\).
 \end{proof}
 
+\begin{example}
+    \todo[inline]{Composite construction again}
+\end{example}
+
 This shows that \(
 \termandfrobtohypsigma \circ \tracedtosymandfrobsigma
 \) is a \emph{full} mapping from \(\stmcsigma\) to \(\pmcspdchyp\).
@@ -339,7 +343,7 @@ every cospan has a corresponding term.
     \[
         \iltikzfig{graphs/monogamy/yes-0}
         \quad
-        \iltikzfig{graphs/terms/term-0}
+        \raisebox{-0.5em}{\iltikzfig{graphs/terms/term-0}}
         \qquad
         \iltikzfig{graphs/monogamy/yes-1}
         \quad
@@ -349,7 +353,8 @@ every cospan has a corresponding term.
 
 \subsection{Traced coloured terms}
 
-The results above all also hold for the coloured case.
+The results above all also hold for the coloured case by following the same
+strategy but with the appropriate coloured PROPs.
 
 \begin{lemma}\label{lem:stmc-subcat-hypc}
     \(\stmcsigmac\) is a subcategory of \(\hypcsigmac\).

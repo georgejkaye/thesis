@@ -136,9 +136,11 @@ transformations: structure-preserving maps between hypergraphs.
 The graphical notation for hypergraphs is particularly evocative of string
 diagrams: generators
 correspond to hyperedges and wires to the nodes between them.
-However, the hyperedges are currently not \emph{labelled} with generator
-symbols.
-To do this, we must first translate the notion of signature to hypergraphs.
+The only thing missing is that the hyperedges are not \emph{labelled} with
+generator symbols.
+These labels can be assigned using a hypergraph homomorphism to a
+\emph{signature} graph.
+
 
 \begin{definition}[Hypergraph signature~\cite{bonchi2016rewriting}]
     For a set of generators \(\generators\) with arities and coarities as defined
@@ -152,7 +154,7 @@ To do this, we must first translate the notion of signature to hypergraphs.
         \edges{\hypsignature{\Sigma}}{k}{l}
         \coloneqq
         \{ e_g \,|\, g \in \signature\}
-        \\
+        \quad
         \sources{i}(e_g) \coloneqq v
         \quad
         \targets{j}(e_g) \coloneqq v
@@ -192,7 +194,7 @@ To do this, we must first translate the notion of signature to hypergraphs.
 A hypergraph \(F\) labelled with generators from \(\generators\) is defined
 as a hypergraph homomorphism \(\morph{\Gamma}{F}{\hypsignature{\generators}}\);
 an edge \(e \in \edges{F}{k}{l}\) is labelled with generator
-\(\phi\) if \(\edges{\Gamma}{k}{l} = e_\phi\).
+\(\phi\) if \(\edges{\Gamma}{k}{l}(e) = e_\phi\).
 This means a category of hypergraphs \emph{labelled} over a set of generators
 \(\generators\) is a category in which the objects are all hypergraph
 homomorphisms to \(\hypsignature{\generators}\).
@@ -213,14 +215,14 @@ labelled hypergraphs.
 
 \begin{definition}[Labelled hypergraphs~\cite{bonchi2016rewriting}]
     For a set of generators \(\generators\), the category of
-    \emph{hypergraphs labelled over \(\generators\)} is defined as the slice
-    category
+    \emph{\(\Sigma\)-labelled hypergraphs} is defined as the slice category
     \(\hypsigma \coloneqq \hyp \slice \hypsignature{\Sigma}\).
 \end{definition}
 
 \begin{example}\label{ex:labelled-hypergraph}
-    Recall the hypergraph \(F\) from \cref{ex:hypergraph}; one labelling
-    \(\morph{\Gamma}{F}{\hypsignature{\generators[m]}}\) could be defined as
+    One labelling of the hypergraph \(F\) from \cref{ex:hypergraph} could be
+    defined using the homomorphism
+    \(\morph{\Gamma}{F}{\hypsignature{\generators[m]}}\) with action
     \begin{gather*}
         \vertices{\Gamma}(-) \coloneqq v
         \quad
@@ -233,27 +235,27 @@ labelled hypergraphs.
     \[
         \iltikzfig{graphs/blank-example-labelled-2}
     \]
-    Note that if there are multiple generators with the same arity and coarity
+    If there are multiple generators with the same arity and coarity
     in a signature, there may well be multiple valid labellings of a hypergraph.
 \end{example}
 
 \subsection{Coloured hypergraphs}
 
 We may not always deal with monochromatic PROPs, but additionally have a
-countably infinite set of \emph{colours} \(\mcc\).
+countable set of \emph{colours}.
 Accordingly, hypergraph signatured can also be generalised to \emph{coloured}
 hypergraph signatures.
 
 \begin{definition}[Coloured hypergraph signature~\cite{bonchi2016rewriting}]\label{def:coloured-hypergraph-signature}
-    For a set of generators \(\generators\) and colours \(\mcc\) as defined
+    For a set of generators \(\generators\) and colours \(C\) as defined
     in \cref{def:generators}, the corresponding
     \emph{coloured hypergraph signature}
-    \(\hypsignature{(\mcc,\Sigma)}\) in an object of \(\hyp\) defined as
+    \(\hypsignature{(C,\Sigma)}\) in an object of \(\hyp\) defined as
     follows:
     \begin{gather*}
-        \vertices{\hypsignature{(\mcc,\Sigma)}} \coloneqq \{ v_c \,|\, c \in \mcc\}
+        \vertices{\hypsignature{(C,\Sigma)}} \coloneqq \{ v_c \,|\, c \in C\}
         \quad
-        \edges{\hypsignature{(\mcc,\Sigma)}}{k}{l} \coloneqq \{ e_g \,|\, g \in \signature\}
+        \edges{\hypsignature{(C,\Sigma)}}{k}{l} \coloneqq \{ e_g \,|\, g \in \signature\}
         \\
         \sources{i}(e_g) \coloneqq v_{\dom[e_g](i)}
         \quad
@@ -262,7 +264,7 @@ hypergraph signatures.
 \end{definition}
 
 \begin{example}\label{ex:coloured-hypergraph-signature}
-    Let \(\mcc \coloneqq \{\bullet,\redbullet\}\) be a set of colours and \(
+    Let \(C \coloneqq \{\bullet,\redbullet\}\) be let \(
     \generators[c]
     \coloneqq \{
     \morph{\phi}{\redbullet\bullet}{\redbullet},
@@ -271,11 +273,11 @@ hypergraph signatures.
     \) be a monoidal signature; the coloured hypergraph signature
     \(\hypsignature{(\mcc,\generators[c])}\) is
     \begin{gather*}
-        \vertices{\hypsignature{(\mcc,\generators[c])}} \coloneqq \{v_{\bullet},v_{\redbullet}\}
+        \vertices{\hypsignature{(C,\generators[c])}} \coloneqq \{v_{\bullet},v_{\redbullet}\}
         \quad
-        \edges{\hypsignature{(\mcc,\generators[c])}}{2}{1} \coloneqq \{e_\phi\}
+        \edges{\hypsignature{(C,\generators[c])}}{2}{1} \coloneqq \{e_\phi\}
         \quad
-        \edges{\hypsignature{(\mcc,\generators[c])}}{1}{2} \coloneqq \{e_\psi\}
+        \edges{\hypsignature{(C,\generators[c])}}{1}{2} \coloneqq \{e_\psi\}
         \\
         \sources{0}(e_\phi) \coloneqq v_{\redbullet}
         \quad
@@ -296,14 +298,14 @@ hypergraph signatures.
 \end{example}
 
 \begin{definition}[Coloured hypergraphs~\cite{bonchi2016rewriting}]
-    Let \(\hypsigmac\) be the category of \emph{coloured hypergraphs} over a set
-    of colours \(\mcc\) and generators \(\generators\), defined as the slice
+    For a countable set of colours \(C\), let \(\hypsigmac\) be the category
+    of \emph{\((C,\generators)\)-labelled hypergraphs}, defined as the slice
     category \(\hyp \slice \hypsignature{(\mcc,\generators)}\).
 \end{definition}
 
 \begin{example}\label{ex:coloured-hypergraph}
     Returning again to the hypergraph \(F\) in \cref{ex:hypergraph}, we can
-    label it with colours and generators from \((\colours,\generators[c])\) with
+    label it with colours and generators from \((C,\generators[c])\) with
     the hypergraph homomorphism
     \begin{gather*}
         \vertices{\Gamma}(v_0) \coloneqq v_{\redbullet}
