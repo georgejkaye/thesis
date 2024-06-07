@@ -13,7 +13,7 @@ propagation~\cite{singh1996expressing,singh1999partial} and
 unfolding~\cite{thompson2006bitlevel}.
 However, this has been relatively informal, and can be made rigorous using the
 categorical framework.
-In this section we will discuss how we could extend the reduction-based
+In this section we will focus on how we could extend the reduction-based
 operational semantics to define automatic procedures for applying partial
 evaluation to circuits.
 
@@ -25,7 +25,7 @@ This can be modelled by precomposing the relevant input with an
 \iltikzfig{circuits/components/waveforms/infinite-register}[val=v]
 \).
 We can propagate these waveforms across a circuit to see if we can reduce it to
-something simpler \emph{specialised} for these inputs.
+a circuit \emph{specialised} for these inputs.
 
 To propagate waveforms across circuits we need to derive a version of the
 \((\gateeqn)\) rule for applying waveforms to primitives.
@@ -43,9 +43,9 @@ a primitive with only some of the inputs specified.
     the other input.
     Similarly, if one applies a true value to an \(\orgate\) gate it will output
     true.
-
     Conversely, if one applies a true value to an \(\andgate\) gate or a false
-    value to an \(\orgate\) gate, the output will be the other input.
+    value to an \(\orgate\) gate, it will act as the identity on the other
+    input.
 \end{example}
 
 These `shortcuts' can also be implemented as rules, as illustrated in
@@ -64,7 +64,7 @@ be unsound.
     \iltikzfig{circuits/components/gates/mux-construction}
     \).
     The first input is a \emph{control} which specifies which of the two other
-    inputs is output.
+    input signals is produced as the output signal.
     It is often the case that these control signals will be fixed for long
     periods of time; perhaps they specify some sort of global circuit
     configuration.
@@ -73,11 +73,11 @@ be unsound.
     \iltikzfig{circuits/examples/control/circuit}
     \), in which the control signal to the multiplexer determines which of two
     subcircuits will become the output.
-    We will assume that the control signal is held at false; to use the shortcut
-    rules above we expand the definition of the multiplexer so the circuit is \(
-    \iltikzfig{circuits/examples/control/circuit-expanded}
-    \) and reduce as follows.
+    We will assume that the control signal is held at false, and reduce
+    accordingly.
     \begin{gather*}
+        \iltikzfig{circuits/examples/control/circuit-mux-applied}
+        \coloneqq
         \iltikzfig{circuits/examples/control/circuit-applied}
         \reduction
         \iltikzfig{circuits/examples/control/circuit-applied-1}
@@ -140,8 +140,8 @@ which we either know nothing about or know can only take some specified values.
     generators for each word \(\listvar{v?} \in \freemon{\values}\).
 \end{definition}
 
-The additional value generators indicate \emph{uncertainty} over what the value
-may be.
+The additional value generators indicate that they could produce one of multiple
+possible values.
 When a circuit contains uncertain values \(
 \iltikzfig{circuits/components/values/vs-longer}[val=\listvar{v_0?}],
 \iltikzfig{circuits/components/values/vs-longer}[val=\listvar{v_1?}],
@@ -155,7 +155,7 @@ defined as \(v_i(j)\) if \(|v_i| > j\) or \(\bot\) otherwise.
 To avoid confusion with our syntax sugar for arbitrary-width values, we will
 always end uncertain value lists with \(?\).
 When writing out specific uncertain words, we delimit the elements with vertical
-bars like\(\mathsf{f}|\mathsf{t}\) to allude to the fact this value is either
+bars like \(\mathsf{f}|\mathsf{t}\) to allude to the fact this value is either
 the first \emph{or} the second element.
 
 \begin{example}

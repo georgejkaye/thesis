@@ -23,7 +23,7 @@ behaviour of a circuit.
 
 \begin{definition}
     For two finite sequences \(
-    \listlistvar{v},\listlistvar{w} \in (\valuetuplestream{m})^k
+    \listlistvar{v},\listlistvar{w} \in (\valuetuple{m})^k
     \), we say that \(\listlistvar{w}\) is a \emph{stretching} of
     \(\listlistvar{v}\), written \(\listlistvar{v} \ll \listlistvar{w}\), if
     \(\listlistvar{w}\) contains the characters of \(\listlistvar{v}\) but
@@ -63,7 +63,7 @@ one component
     \).
     For an input stream \(\sigma\), this circuit produces output stream
     \(
-    \bot \land \sigma(0) \streamcons, \sigma(1)
+    \bot \land \sigma(0) \streamcons \sigma(1)
     \streamcons \sigma(2) \streamcons \dots
     \).
     By using equalities and logical eqivalence we can obtain a much simpler
@@ -85,11 +85,12 @@ technique could be applied to actual circuit optimisation procedures.
 \begin{example}[Pipelining]
     \emph{Pipelining}~\cite{parhi1999vlsi} is a technique in which more
     registers are inserted into a circuit to increase throughput.
-    These can be emulated in the compositional framework by applying
+    This can be emulated in the compositional framework by applying
     transformations locally to registers.
-    Ordinarily, such transformations can cause obfuscation since the state space
-    dramatically changes. In the compositional model, the structure of the
-    circuit is left relatively untouched.
+    Ordinarily, such transformations can obfuscate a circuit's behaviour since
+    the state space dramatically changes.
+    In the compositional model, the structure of the circuit is left relatively
+    untouched so this is less of an issue.
 \end{example}
 
 Not all circuit transformations are for the purpose of improving performance.
