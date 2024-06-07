@@ -5,8 +5,6 @@ works; find a matching, compute the pushout complement, and perform one more
 pushout to complete the rewrite.
 While the final step is a deterministic procedure, finding the pushout
 complement is a little more subtle.
-Since the pushout complement uniquely defines the final rewrite, one might be
-cautious about how we choose it.
 First of all, a pushout complement may not even exist for arbitrary morphisms
 \(i+j \to L \to G\).
 
@@ -67,7 +65,7 @@ Fortunately, the existence conditions are well-known.
 \end{definition}
 
 \begin{example}
-    The following morphisms do not satisfy the no-identification
+    The following does not satisfy the no-identification
     condition.
     \[
         \iltikzfig{graphs/dpo/no-identification/k}
@@ -114,7 +112,7 @@ what about when there is \emph{exactly one} pushout complement?
 When this is the case, the rewrite is uniquely specified for a given rule and
 matching.
 To answer this question, we must examine a class of categories to which
-\(\hypsigmac\) belongs to, known as \emph{adhesive} categories.
+\(\hypsigma\) belongs to, known as \emph{adhesive} categories.
 One can think of these as categories in which graph rewriting `plays nicely'.
 
 \begin{definition}[van Kampen square~(\cite{lack2005adhesive}, Def. 2.1)]
@@ -153,10 +151,10 @@ One can think of these as categories in which graph rewriting `plays nicely'.
 \end{definition}
 
 \begin{definition}[Adhesive category~(\cite{lack2005adhesive}, Def. 3.1)]
-    A category \(\mcc\) is \emph{adhesive} if
+    A category is \emph{adhesive} if
     \begin{itemize}
-        \item \(\mcc\) has pushouts along monomorphisms;
-        \item \(\mcc\) has pullbacks; and
+        \item it has pushouts along monomorphisms;
+        \item it has pullbacks; and
         \item pushouts along monomorphisms are VK squares.
     \end{itemize}
 \end{definition}
@@ -234,7 +232,7 @@ categories are also adhesive.
 \begin{proposition}[\cite{lack2005adhesive}, Prop. 3.5]
     For an adhesive category \(\mcc\) and object \(C\) of \(\mcc\),
     \(\mcc \slice C\) is adhesive.
-    For another category \(\mcx\), \([\mcx, \mcc]\) is also adhesive.
+    Given another category \(\mcx\), \([\mcx, \mcc]\) is also adhesive.
 \end{proposition}
 
 \begin{corollary}
@@ -495,7 +493,7 @@ rewrite in a Frobenius setting.
         \iltikzfig{strings/category/f}[box=l,colour=white]
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white]
-    }\) be a rewrite rule in \(
+    }\) be a rule in \(
     \smcsigma + \frob
     \).
     Then, \(
@@ -575,7 +573,7 @@ The results generalise in the obvious way to the coloured setting.
 \end{definition}
 
 \begin{theorem}[\cite{bonchi2022string}, Prop. 4.10]
-    For a rule \(\rrule{
+    Given a rewrite rule \(\rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white]
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white]
@@ -589,24 +587,24 @@ The results generalise in the obvious way to the coloured setting.
             \iltikzfig{strings/category/f}[box=r,colour=white]
         }]
     \iltikzfig{strings/category/f}[box=h,colour=white]
-    \) if and only if \(
-    \termandfrobtohypsigmac[
-        \foldinterfacesc[
-            \iltikzfig{strings/category/f}[box=g,colour=white]
-        ]
-    ]
-    \grewrite[
+    \) if and only if \[
         \termandfrobtohypsigmac[
-            \rrule{
-                \iltikzfig{strings/category/f}[box=l,colour=white]
-            }{
-                \iltikzfig{strings/category/f}[box=r,colour=white]
-            }
+            \foldinterfacesc[
+                \iltikzfig{strings/category/f}[box=g,colour=white]
+            ]
         ]
-    ]
-    \termandfrobtohypsigmac[
-        \foldinterfacesc[
-            \iltikzfig{strings/category/f}[box=g,colour=white]
+        \grewrite[
+            \termandfrobtohypsigmac[
+                \rrule{
+                    \iltikzfig{strings/category/f}[box=l,colour=white]
+                }{
+                    \iltikzfig{strings/category/f}[box=r,colour=white]
+                }
+            ]
         ]
-    ]\).
+        \termandfrobtohypsigmac[
+            \foldinterfacesc[
+                \iltikzfig{strings/category/f}[box=g,colour=white]
+            ]
+        ].\]
 \end{theorem}

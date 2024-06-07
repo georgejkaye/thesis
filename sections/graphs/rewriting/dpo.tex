@@ -1,11 +1,11 @@
 % !TeX root = ../../../main.tex
 \section{Double pushout rewriting}
 
-As a backdrop, let us first consider how equations in a monoidal theory are
+Let us first consider how equations in a monoidal theory are
 applied to terms without any sort of special graph interpretation.
 
 \begin{definition}[Rewriting system]\label{def:term-rewriting}
-    A \emph{rewriting system} \(\mcr\) for a traced PROP \(\mathbb{A}\)
+    A \emph{rewriting system} \(\mcr\) for a traced PROP \(\mcc\)
     consists of a set of \emph{rewrite rules} \(
     \rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
@@ -50,7 +50,7 @@ theory by adding the reductions for both directions of each equation.
 
 \begin{definition}[\cite{bonchi2022stringa}, Sec. 2.4]
     For a monoidal theory \((\generators,\equations)\), let
-    \(\mcr_{\equations}\) be the rewriting theory defined as
+    \(\mcr_{\equations}\) be the rewriting system defined as
     \begin{gather*}\{
         \rrule{
             \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
@@ -97,15 +97,22 @@ theory by adding the reductions for both directions of each equation.
 
 The equivalent for graphs is, unsurprisingly, \emph{graph rewriting}.
 While there are many graph rewriting techniques, we use one known as
-\emph{double pushout (DPO)} rewriting.
-DPO was introduced in the early 70s by Ehrig, Pfender, and
-Schneider~\cite{ehrig1973graphgrammars} as one of the first \emph{algebraic}
-approaches to graph rewriting.
+\emph{double pushout (DPO)} rewriting, which was introduced in the early 70s by
+Ehrig, Pfender, and Schneider~\cite{ehrig1973graphgrammars} as one of the first
+\emph{algebraic} approaches to graph rewriting.
 Although first defined in the category of graphs, it has since been generalised
-to encompass a variety of combinatorial structures; we will later see the
-categorical properties required for DPO rewriting to be well-defined.
+to encompass a variety of combinatorial structures.
+We will later see the precise categorical properties required for DPO rewriting
+to be well-defined, but first we will define the procedure in terms of
+hypergraphs.
 
-A double pushout rewrite rule is a span of graphs.
+A double pushout rewrite rule is defined by mapping to the left and right hand
+side of a rule from their shared interface.
+
+\begin{definition}
+    A \emph{span} is a pair of morphisms \(A \to B\) and \(A \to C\), usually
+    written \(\spann{B}{A}{C}\).
+\end{definition}
 
 \begin{definition}[DPO rule]\label{def:dpo-rule}
     Given two interfaced hypergraphs \(
@@ -138,7 +145,7 @@ such that both \(H\) and \(H^\prime\) rewrite to \(K\).
     Then, for morphisms \(G \leftarrow m + n\) and
     \(H \leftarrow m + n\) in
     \(\hypsigmac\), there is a rewrite \(G \trgrewrite[\mcr] H\) if there
-    exist a rule \(
+    exist a span \(
     \spann{L}{i + j}{R} \in \mcr
     \) and cospan \(
     \cospan{i + j}{C}{m + n} \in \hypsigma
@@ -218,7 +225,7 @@ We suggestively assemble them as follows:
     \end{tikzcd}
 \end{center}
 
-As mentioned above, to identify an occurrence of \(L\) in \(G\), we use a
+To identify an occurrence of \(L\) in \(G\), we use a
 hypergraph homomorphism \(L \to G\) to identify the components that will be
 rewritten.
 
@@ -236,8 +243,8 @@ rewritten.
 
 We now need to identify the \emph{context} in which the rewrite will occur in.
 Essentially, the context is the `graph \(G\) with \(L\) cut out', which can be
-formally defined with what is known as a \emph{pushout complement}, a sort of
-`reverse pushout'.
+formally defined with what is known as a \emph{pushout complement}.
+This can be thought of as a `reverse pushout'.
 
 \begin{definition}[Pushout complement]\label{def:pushout-complement}
     Let \(i+j \to L \to G \leftarrow m+n\) be morphisms in
@@ -246,11 +253,11 @@ formally defined with what is known as a \emph{pushout complement}, a sort of
     pushout and the diagram below commutes.
     \begin{center}
         \begin{tikzcd}[column sep=large]
-            L \arrow[swap]{d}{f}
+            L \arrow[swap]{d}
             &
             i+j
-            \arrow[swap]{l}{a \coloneqq [a_1, a_2]}
-            \arrow{d}{c \coloneqq [c_1, c_2]}
+            \arrow[swap]{l}
+            \arrow{d}
             \\
             G
             \arrow["\urcorner"{anchor=center, pos=0.125}, draw=none]{ur}
@@ -260,8 +267,8 @@ formally defined with what is known as a \emph{pushout complement}, a sort of
             \\
             &
             m+n
-            \arrow{ul}{[b_1,b_2]}
-            \arrow[swap]{u}{d \coloneqq [d_1,d_2]}
+            \arrow{ul}
+            \arrow[swap]{u}
         \end{tikzcd}
     \end{center}
 \end{definition}

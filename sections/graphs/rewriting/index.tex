@@ -1,11 +1,9 @@
 \chapter{Graph rewriting}\label{chap:rewriting}
 
-The results of the previous chapter have given us a combinatorial setting in
-which string diagrams equal by topological deformations or by the equations of
-commutative comonoids are translated into isomorphic cospans of hypergraphs.
+String diagrams equal by topological deformations or by the equations of
+commutative comonoids can be translated into isomorphic cospans of hypergraphs.
 This already gives us a straightforward way to interpret these structures
 computationally.
-
 However, it is very rare that we will only be working modulo the equations of
 traced comonoids; the equations of some \emph{monoidal theory} will also be in
 play.
@@ -15,14 +13,14 @@ Since an equation \(
 \iltikzfig{strings/category/f}[box=g,colour=white]
 \) may actually change the components of the term, there is no reason for the
 interpretations \(
-\termandfrobtohypsigmac[
-    \tracedandcomonoidtofrobsigmac[
+\termandfrobtohypsigma[
+    \tracedandcomonoidtofrobsigma[
         \iltikzfig{strings/category/f}[box=f,colour=white]
     ]
 ]
 \) and \(
-\termandfrobtohypsigmac[
-    \tracedandcomonoidtofrobsigmac[
+\termandfrobtohypsigma[
+    \tracedandcomonoidtofrobsigma[
         \iltikzfig{strings/category/f}[box=g,colour=white]
     ]
 ]
@@ -32,8 +30,8 @@ monoidal theory the graphs must be \emph{rewritten}.
 
 Traditional term rewriting is inherently one-dimensional, which can be somewhat
 restrictive as it enforces that each generator must have a coarity of \(1\).
-On the other hand, string diagrams are an example of \emph{higher dimensional}
-rewriting, which its roots in Burroni's work on
+On the other hand, string diagram rewiting is an example of
+\emph{higher dimensional} rewriting, which has its roots in Burroni's work on
 polygraphs~\cite{burroni1993higherdimensional}.
 This higher-dimensional approach briefly entered the world of digital
 circuits in Lafont's work on Boolean circuits~\cite{lafont2003algebraic}, which
