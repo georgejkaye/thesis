@@ -328,8 +328,8 @@ source.
 The graph \(L\) is used to make sure any identity loops are not omitted.
 
 \begin{example}
-    Consider the following term and its interpretation as a partial monogamous
-    cospan of hypergraphs.
+    Consider the following term and its interpretation as a cospan of
+    hypergraphs.
     \begin{center}
         \iltikzfig{graphs/trace/correspondence/original-term}
         \qquad
@@ -342,6 +342,53 @@ The graph \(L\) is used to make sure any identity loops are not omitted.
             \arrow{l}
             \iltikzfig{graphs/trace/correspondence/outputs}
         \end{tikzcd}
+    \end{center}
+    We assemble the latter into the composite cospan of
+    \cref{thm:termtohyp-image} as follows:
+    \begin{center}
+        \(\trace{4}{
+            \begin{tikzcd}[column sep=tiny, ampersand replacement=\&]
+                \iltikzfig{graphs/trace/correspondence/s-inputs}
+                \arrow{r}
+                \&
+                \iltikzfig{graphs/trace/correspondence/s}
+                \&
+                \arrow{l}
+                \iltikzfig{graphs/trace/correspondence/s-outputs}
+            \end{tikzcd}
+            \seq
+            \begin{tikzcd}[row sep=tiny,column sep=tiny, ampersand replacement=\&]
+                \iltikzfig{graphs/trace/correspondence/l-inputs}
+                \arrow{r}
+                \&
+                \iltikzfig{graphs/trace/correspondence/l}
+                \&
+                \arrow{l}
+                \iltikzfig{graphs/trace/correspondence/l-outputs}
+                \\
+                \iltikzfig{graphs/trace/correspondence/e-inputs}
+                \arrow{r}
+                \&
+                \iltikzfig{graphs/trace/correspondence/e}
+                \&
+                \arrow{l}
+                \iltikzfig{graphs/trace/correspondence/e-outputs}
+                \\
+                \iltikzfig{graphs/trace/correspondence/l-inputs}
+                \arrow{r}
+                \&
+                \iltikzfig{graphs/trace/correspondence/l}
+                \&
+                \arrow{l}
+                \iltikzfig{graphs/trace/correspondence/l-outputs}
+            \end{tikzcd}
+        }\)
+    \end{center}
+    Both of the components under the trace correspond to terms in \(\smcsigma\),
+    so applying the trace to this produces a term in \(\stmcsigma\) which is
+    equal to the original by string diagrammatic deformations.
+    \begin{center}
+        \iltikzfig{graphs/trace/correspondence/term}
     \end{center}
 \end{example}
 
