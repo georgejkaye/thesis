@@ -623,7 +623,7 @@ given cospan into a particular form.
     With this data, the original cospan \(\cospan{m}[f]{G}[g]{n}\) can be
     viewed as the following composition of cospans: \[
         (
-        \cospan{m}[f^\prime]{N}[(\id,h)]{N \tensor \tilde{n}}
+        \cospan{m}[f^\prime]{N}[\id,h]{N \tensor \tilde{n}}
         ) \seq (
         \cospan{
             N \tensor \tilde{n}
@@ -637,11 +637,10 @@ given cospan into a particular form.
             N \tensor \tilde{m}
         }
         ) \seq (
-        \cospan{N \tensor \tilde{m}}[(\id, k)]{N}[g^\prime]{n}
-        ).
+        \cospan{N \tensor \tilde{m}}[\id, k]{N}[g^\prime]{n}
+        )
     \]
-    This is all well-defined because \(\tensor\) is the coproduct in
-    \(\hypsigmac\).
+    This is well-defined because \(\tensor\) is the coproduct in \(\hypsigmac\).
     By computing the composition by pushout, it can be shown that the composite
     above is isomorphic to the original cospan \(\cospan{m}[f]{G}[g]{n}\).
 
