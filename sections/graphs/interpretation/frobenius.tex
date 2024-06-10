@@ -669,8 +669,11 @@ the left by going `over the top' of the edges via the identity cospan
 \(\cospan{N}{N}{N}\).
 
 \begin{example}
-    Consider the following interfaced hypergraph.
+    Consider the following term and its interpretation as a cospan of
+    hypergraphs.
     \begin{center}
+        \iltikzfig{graphs/frobenius/correspondence/original-term}
+        \qquad
         \begin{tikzcd}
             \iltikzfig{graphs/frobenius/correspondence/inputs}
             \arrow{r}
@@ -693,8 +696,18 @@ the left by going `over the top' of the edges via the identity cospan
             \arrow{l}
             \iltikzfig{graphs/frobenius/correspondence/l-outputs}
         \end{tikzcd}
+        \hspace{-1.1em}
         \(\seq\)
-        \begin{tikzcd}[column sep=tiny]
+        \hspace{-1.1em}
+        \begin{tikzcd}[column sep=tiny, row sep=0.1cm]
+            \iltikzfig{graphs/frobenius/correspondence/e-inputs}
+            \arrow{r}
+            &
+            \iltikzfig{graphs/frobenius/correspondence/n}
+            &
+            \arrow{l}
+            \iltikzfig{graphs/frobenius/correspondence/e-outputs}
+            \\
             \iltikzfig{graphs/frobenius/correspondence/e-inputs}
             \arrow{r}
             &
@@ -703,8 +716,10 @@ the left by going `over the top' of the edges via the identity cospan
             \arrow{l}
             \iltikzfig{graphs/frobenius/correspondence/e-outputs}
         \end{tikzcd}
+        \hspace{-1.1em}
         \(\seq\)
-        \begin{tikzcd}
+        \hspace{-1.1em}
+        \begin{tikzcd}[column sep=tiny]
             \iltikzfig{graphs/frobenius/correspondence/r-inputs}
             \arrow{r}
             &
@@ -714,6 +729,14 @@ the left by going `over the top' of the edges via the identity cospan
             \iltikzfig{graphs/frobenius/correspondence/r-outputs}
         \end{tikzcd}
     \end{center}
+    By following the vertex maps, one can verify that this is indeed isomorphic
+    to the original cospan.
+    The outermost components correspond to terms in \(\frob\) and the
+    innermost to a term in \(\smcsigma\).
+    \[
+        \iltikzfig{graphs/frobenius/correspondence/term}
+    \]
+    This term is equal to the original term by the Frobenius equations.
 \end{example}
 
 This result means that any two terms in \(\smcsigma + \frob\) which are equal by

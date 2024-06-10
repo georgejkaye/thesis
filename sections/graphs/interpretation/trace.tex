@@ -318,8 +318,31 @@ that this particular sub-PROP is the one that corresponds to traced terms.
     \(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\).
 \end{proof}
 
+As with the proof for the Frobenius case
+(\cref{thm:isomorphism-smcfrob-cospans}), the large composite cospan may seem
+confusing.
+Like before, we stack up the edges in the cospan
+\(\cospan{\tilde{m}}{\tilde{E}}{\tilde{n}}\), but now we join up the connections
+by tracing the targets of the edges around, and shuffling them to the correct
+source.
+The graph \(L\) is used to make sure any identity loops are not omitted.
+
 \begin{example}
-    \todo[inline]{Composite construction again}
+    Consider the following term and its interpretation as a partial monogamous
+    cospan of hypergraphs.
+    \begin{center}
+        \iltikzfig{graphs/trace/correspondence/original-term}
+        \qquad
+        \begin{tikzcd}
+            \iltikzfig{graphs/trace/correspondence/inputs}
+            \arrow{r}
+            &
+            \iltikzfig{graphs/trace/correspondence/example}
+            &
+            \arrow{l}
+            \iltikzfig{graphs/trace/correspondence/outputs}
+        \end{tikzcd}
+    \end{center}
 \end{example}
 
 This shows that \(
