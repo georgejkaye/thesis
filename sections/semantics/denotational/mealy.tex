@@ -153,27 +153,17 @@ For a Mealy coalgebra \((S, f)\) and a start state \(s_0\),
 \(!(s)(\sigma)\) maps to the stream of outputs that \((S, f)\) would produce
 by applying \(f\) to each element of \(\sigma\), starting from \(s_0\).
 
-When viewed through this perspective, stream functions are nothing more than the
-states in another Mealy machine.
-However, this is not just any Mealy machine, it is the \emph{minimal} Mealy
-machine with the same behaviour as \((S, f)\).
-
 \subsection{Monotone Mealy machines}
 
-The fact that causal stream functions are the final Mealy coalgebra is the
-ingredient that will help us build a bridge between circuits in \(\scircsigma\)
-and stream functions in \(\streami\).
-The crucial step is to now assemble Mealy machines into another traced PROP
-and define PROP morphisms between all three categories in play.
+In order to use Mealy machines as a bridge between \(\scircsigma\) and
+\(\streami\), they must be assembled into another traced PROP
+PROP morphisms defined between all three categories in play.
+But not all Mealy machines defined thus far correspond to circuits in
+\(\scircsigma\); as with stream functions, we must refine our notion of Mealy
+machine in order to find those that do.
 
-However, not all Mealy machines defined thus far correspond to circuits in
-\(\scircsigma\).
-As with stream functions, we must refine our notion of Mealy machine in
-order to find those that do.
-There is an easy check for this: a Mealy machine \((S, f)\) with start state
-\(s_0\) specifies the behaviour of a circuit in \(\scircsigma\) if the
-stream function \(!(s_0)\) is in \(\streami\).
-
+A Mealy machine \((S, f)\) with start state \(s_0\) specifies the behaviour of a
+circuit in \(\scircsigma\) if the stream function \(!(s_0)\) is in \(\streami\).
 As established, all stream functions in the image of \(!\) are causal, and since
 we only work with \emph{finite} Mealy machines we can also conclude the
 following:
@@ -186,14 +176,8 @@ following:
     \(S\) is finite, and \(\mealytostream\) must preserve transitions.
 \end{proof}
 
-Monotonicity is a little less straightforward.
-One could set the input, output and state sets to all be posets, and use the
-usual definition of monotonicity that way.
-However, this overcomplicates things: since each Mealy coalgebra has a
-corresponding stream function, we can appeal to this rather than having to
-manually order the state set.
-
-First an ordering on stream \emph{functions} is required.
+We establish monotonicity by appealing to an ordering on the corresponding
+stream functions; first an ordering on stream \emph{functions} is required.
 
 \begin{definition}
     Let \(A\) and \(B\) be posets.
@@ -208,23 +192,18 @@ First an ordering on stream \emph{functions} is required.
     we say that \(s \stateorder s^\prime\) if \(!(s) \stateorder !(s^\prime)\).
 \end{definition}
 
-With an ordering on the states of a Mealy machine, monotonicity quickly follows.
-
 \begin{definition}[Monotone Mealy machine]
     Let \(A\) and \(B\) be posets; an \((A,B)\)-Mealy machine is called a
     \emph{monotone} Mealy machine if \(f\) is monotone with respect to the
     appropriate orders.
 \end{definition}
 
-This establishes the properties of Mealy machines required to model circuits.
-To map to Mealy machines from circuits we need to assemble them into another
-PROP, in which the morphisms \(m \to n\) are
+To map to Mealy machines from circuits we need to assemble the former into
+another PROP, in which the morphisms \(m \to n\) are
 \((\valuetuple{m},\valuetuple{n})\)-Mealy machines.
-There is one nuance to consider: circuits in \(\scircsigma\) have a `hardcoded'
-initial state in the form of the value generators, whereas the Mealy machines
-as presented do not have a designated start state per se.
-This means that as well as a Mealy machine, each morphism will need to be
-equipped with such a start state.
+As circuits in \(\scircsigma\) have a `hardcoded' initial state in the form of
+the value generators, this information will also need to be specified for Mealy
+machines.
 
 \begin{definition}[Initialised Mealy machine]
     An \emph{initialised} Mealy machine is a tuple \((S, f, s_0)\), where
@@ -497,8 +476,6 @@ We must show that this is the trace on \(\mealyi\).
     This construction is a trace for the same reason as the trace of
     \(\streami\) is.
 \end{proof}
-
-\input{sections/semantics/denotational/floats/latch-machine}
 
 With monotone Mealy machines in a PROP, we can now represent the unique
 homomorphism from a Mealy machine to a set of state functions as a PROP

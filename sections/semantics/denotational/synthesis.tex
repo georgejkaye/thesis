@@ -96,8 +96,10 @@ of a PROP morphism from \(\scircsigma\) to \(\mealyi\) is fairly intuitive.
 \begin{example}\label{ex:mealy-translation}
     Applying \(\circuittomealy{\belnapinterpretation}\) to the SR NOR latch from
     \cref{ex:sr-latch} produces the monotone Mealy machine in
-    \cref{ex:trace-mealy}.
+    \cref{ex:trace-mealy}, which is illustrated in \cref{fig:latch-machine}.
 \end{example}
+
+\input{sections/semantics/denotational/floats/latch-machine}
 
 Mealy machines are a reasonable semantics for sequential circuits, but the
 image of \(\circuittomealyi\) does not always lead to minimal Mealy machines,
