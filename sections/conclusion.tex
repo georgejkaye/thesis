@@ -1,3 +1,82 @@
 \chapter{Conclusion}
 
-\todo[inline]{Write conclusion}
+This brings us to the conclusion of this work; in this final chapter we will sum
+up our contributions and look ahead to the future.
+
+\section{Summary of contributions}
+
+We presented the category of syntactic circuits \(\scircsigma\) and defined
+three semantic relations on top of it.
+
+\todo[inline]{Actually specify contributions}
+
+The first is a \emph{denotational} semantics of certain types of stream
+functions.
+
+\todo[inline]{Denotational semantics}
+
+The second is an \emph{operational semantics} based on some global
+circuit transformations and local reductions.
+
+\todo[inline]{Operational semantics}
+
+The third is an
+\emph{algebraic semantics} defined in terms of normalising, encoding, and
+restriction equations.
+
+\todo[inline]{Algebraic semantics}
+
+These three semantic relations are all sound and complete with respect to one
+another, so if two circuits are related by one then they are related by the
+others.
+
+As an extended example of how the categorical perspective opens up new avenues,
+we showed how existing work on string diagram rewriting could be adapted for
+settings equipped with a \emph{traced comonoid structure}, of which
+\(\scircsigma\) is an example.
+This lets us use graph rewriting to reason about the semantics of digital
+circuits \emph{automatically}.
+
+\todo[inline]{Graph rewriting}
+
+
+The framework presented in this thesis is parameterised over a
+\emph{signature} specifying signals and components, and an
+\emph{interpretation} mapping them to behaviour.
+Throughout the thesis we have considered a particular instantiation in terms of
+\emph{Belnap's four-valued logic}, showing how one can derive the required
+properties and equations.
+This is but one possible setting in which one could use our work; we envision
+that similar strategies could be applied for reasoning about transistor-level
+circuits all the way up to more abstract viewpoints.
+
+\section{Future work}
+
+\subsection{Beyond the abstraction}
+
+\todo[inline]{Fan-out}
+
+\todo[inline]{Asynchronous circuits}
+
+\subsection{More applications}
+
+This thesis has been primarily theoretical in nature.
+In \cref{chap:semantics-applications} we presented some ideas for how
+the categorical framework could be applied to real-world digital circuits, but
+these were just that: ideas.
+It would be interesting to actually develop these ideas into proper
+industry-grade techniques for working with circuits.
+We could then compare \emph{benchmarks} with existing procedures, allowing us to
+see whether our work has practical benefit in addition to bringing theoretical
+clarity.
+
+On the topic of implementation, our hardware description language is still
+quite open-ended.
+While circuits can currently be designed and (partially) evaluated, it would be
+useful to add a native way of \emph{verifying} circuits rather than merely
+inspecting the outputs of two circuits manually, perhaps with some built-in
+verification language.
+Moreover, \emph{synthesis} of circuits to more traditional circuit design
+languages such as VHDL or Verilog, or even to a language suitable for printing
+on silicon (so-called `netlists'), would allow for the benefits of our tool to
+be combined with the experienced power of the traditional methods.
