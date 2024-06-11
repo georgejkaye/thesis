@@ -5,11 +5,22 @@ up our contributions and look ahead to the future.
 
 \section{Summary of contributions}
 
-\subsection{Syntax of sequential circuits}
+Our contributions can be divided into two main topics: the development of a
+fully compositional theory of sequential circuits, and the application of this
+framework to graph rewriting.
+
+\subsection{Semantics of Digital Circuits}
+
+The first major contribution of this thesis was to take the existing informal
+work on categorical semantics of sequential
+circuits~\cite{ghica2016categorical,ghica2017diagrammatic} and develop it into
+a rigorous mathematical theory.
+
+\subsubsection{Syntax of sequential circuits}
 
 In the original work on categorical semantics for digital
-circuits~\cite{ghica2016categorical},
-
+circuits~\cite{ghica2016categorical}, the semantics of circuits were defined as
+part of the base categories of circuits.
 Not only was this a confusing presentation, it also `hardcoded' a particular
 approach to semantics, which made later developments more fiddly.
 In \cref{chap:syntax}, we built the foundations for a different approach, in
@@ -19,7 +30,7 @@ Behaviour of circuits can be assigned by quotienting this category by some
 semantic relation; this makes the framework as a whole more modular and
 `semantic-agnostic'.
 
-\subsection{Denotational semantics}
+\subsubsection{Denotational semantics}
 
 While circuits and streams had been linked in previous
 work~\cite{ghica2017diagrammatica}, this was not expressed formally.
@@ -27,11 +38,11 @@ In \cref{chap:denotational} we presented a rigorous \emph{denotational}
 semantics in terms of certain types of stream functions.
 
 Previously, the semantics of circuit components was defined as part of
-equations on the syntactic category; in \cref{sec:circuits} we use a notion of
-an \emph{interpretation} \(\interpretation\) of components as morphisms in a
-PROP of monotone functions \(\funci\) in order to keep syntax and semantics
-separate.
-This interpretation parameterises the \(\streami\) in which morphisms are
+equations on the syntactic category; in \cref{sec:circuits} we defined the
+notion of an \emph{interpretation} \(\interpretation\) of components as
+morphisms in a PROP of monotone functions \(\funci\) in order to keep syntax and
+semantics separate.
+This interpretation parameterises the PROP \(\streami\) in which morphisms are
 causal, monotone, finitely specified stream functions; these are the denotations
 of sequential circuits (\cref{sec:circuits}).
 The major contribution of this section is that this PROP has a \emph{trace}: the
@@ -41,29 +52,22 @@ In order to map from circuits in \(\scircsigma\) to stream functions in
 \(\streami\), we made use of \emph{Mealy machines} in \cref{sec:mealy}.
 We defined a traced PROP \(\mealyi\) of \emph{monotone} Mealy machines, and
 showed how we could use existing work on their \emph{coalgebraic} properties
-to map between Mealy machines and stream functions using two PROP morphisms
-\(\morph{\mealytostreami}{\mealyi}{\streami}\) and
-\(\morph{\streamtomealyi}{\streami}{\mealyi}\).
+to map between Mealy machines and stream functions using two PROP morphisms.
 
 The most novel contributions of this chapter arise by relating Mealy machines
 and stream functions back to circuits in \(\scircsigma\).
-In \cref{sec:synthesis}, we defined PROP morphisms
-\(\morph{\circuittomealyi}{\scircsigma}{\mealyi}\) and
-\(\morph{\mealytocircuiti}{\mealyi}{\scircsigma}\); the former by assigning
-Mealy machines to components of freely generated morphisms, and the latter by
-adapting the procedure of \emph{encoding} circuit states to be compatible with
-monotonicity.
-As a result, in \cref{sec:denotational-completeness}, we showed that
-\(\streami\) is a sound and complete denotational semantics for sequential
+In \cref{sec:synthesis}, we defined PROP morphisms between circuits and
+Mealy machines, in one direction by freely mapping circuit components to
+primitive Mealy machines, and in the other by \emph{encoding} states of a
+Mealy machine while preserving monotonicity.
+Using these PROP morphisms, we showed in \cref{sec:denotational-completeness}
+that \(\streami\) is a sound and complete denotational semantics for sequential
 circuits: every morphism in \(\scircsigma\) has a corresponding stream function
 in \(\streami\), and conversely every stream function in \(\streami\) has
 a circuit in \(\scircsigma\) with the same behaviour as the original stream
 function.
-This gives us a notion of \emph{denotational equivalence}
-\(\approx_\interpretation\); quotienting \(\scircsigma\) by this relation
-produces a PROP isomorphic to \(\streami\).
 
-\subsection{Operational semantics}
+\subsubsection{Operational semantics}
 
 A denotational semantics for sequential circuits is an important tool in our
 arsenal, but in some situations it is not ideal because it obscures how the
@@ -78,10 +82,10 @@ The major contribution of this chapter was the introduction of the
 `instant feedback' rule in \cref{sec:feedback}: eliminating non-delay-guarded
 feedback by iterating a circuit a certain number of times.
 This rule played a key part in the productive reduction strategy presented in
-\cref{sec:productivity}; while a similar strategy had been defined previously
-in \emph{loc.\ cit.\ }, this is refined presentation that drops the requirement
-to `unfold' a circuit and copy the components: here we only need to use the
-streaming equation followed by reductions detailing how values interact with
+\cref{sec:productivity}; while a similar strategy had been defined previously,
+this is refined presentation that drops the requirement
+to `unfold' a circuit and copy the components: we only require streaming
+followed by reductions detailing how values interact with
 combinational components.
 
 A final contribution in \cref{sec:observational} was the formalism of a notion
@@ -94,18 +98,20 @@ showed that \(\sim_\interpretation\) is the \emph{largest adequate congruence}
 on \(\scircsigma\), so it is indeed the most appropriate notion of observational
 equivalence.
 
-\subsection{Algebraic semantics}
+\subsubsection{Algebraic semantics}
 
 Operational semantics provides an intuitive way of reasoning step-by-step
 about circuits, but computing observational equivalence for large circuits can
 be intractible.
-In \cref{chap:algebraic} we presented an
-\emph{algebraic semantics for sequential circuits}.
-An equational theory for circuits was presented in~\cite{ghica2016categorical}
-in terms of `natural laws', but this was not complete nor was it possible
-to show it was was without a formal denotational semantics.
+It is more efficient to reason equationally; an equational theory for circuits
+was presented in~\cite{ghica2016categorical} using `natural laws', but this was
+not complete; in fact it was not possible to show this was so without a formal
+denotational semantics.
 
-We presented our new algebraic theory as three distinct classes of equations.
+The new denotational semantics allows us to revisit the equational theory with
+a new perspective.
+In \cref{chap:algebraic} we presented a sound and complete algebraic semantics
+for sequential circuits, which can be divided into three broad classes.
 The first class (\cref{sec:normalising}) contains equations for
 \emph{normalising} circuits into a Mealy form with a canonical (essentially
 combinational) core.
@@ -118,20 +124,37 @@ In \cref{sec:algebraic-completeness} we showed how these equations are enough to
 translate between any two denotationally equivalent circuits, thus exhibiting
 that this is a sound and complete algebraic semantics.
 
-\section{Graph rewriting for digital circuits}
+\subsection{Graph rewriting for digital circuits}
 
-These three semantic relations are all sound and complete with respect to one
-another, so if two circuits are related by one then they are related by the
-others.
+Viewing sequential circuits through the categorical lens opens up new ways of
+reasoning with circuits, such as by applying recent work on string diagram
+rewriting~\cite{bonchi2022string,bonchi2022stringa} using terms interpreted as
+morphisms in a category \(\cspdhyp\) of cospans of hyperrgaphs.
+Our second major contribution is to extend this for settings with a
+\emph{traced comonoid} structure, of which \(\scircsigma\) is an example.
 
-As an extended example of how the categorical perspective opens up new avenues,
-we showed how existing work on string diagram rewriting could be adapted for
-settings equipped with a \emph{traced comonoid structure}, of which
-\(\scircsigma\) is an example.
-This lets us use graph rewriting to reason about the semantics of digital
-circuits \emph{automatically}.
+\subsubsection{String diagrams as hypergraphs}
 
-\section{Case studies in Belnap logic}
+In \cref{chap:hypergraphs} we defined two sub-PROPs of \(\cspdhyp\):
+the PROP \(\pmcspdhyp\) of \emph{partial monogamous} cospans and
+the PROP \(\plmcspdhyp\) of \emph{partial left-monogamous} cospans.
+We showed that the former are in correspondence with \emph{traced} terms and the
+latter are in correspondence with such terms equipped with a
+\emph{cocommutative comonoid} structure: terms equal by equations of STMCs or
+cocommutative comonoids are mapped to ismorphic cospans of hypergraphs.
+
+\subsubsection{Graph rewriting}
+
+The primary reason for interpreting terms as hypergraphs is to perform automatic
+reasoning with them via \emph{graph rewriting}.
+In \cref{chap:rewriting} we characterised valid graph rewrites in a traced or
+traced comonoid setting using \emph{traced boundary complements} and
+\emph{traced left-boundary complements} respectively.
+While there may be multiple valid graph rewrites, we showed that every graph
+rewrite performed in this way corresponds to a valid term rewrite, so the
+rewriting system is sound and complete.
+
+\subsection{Case studies in Belnap logic}
 
 The framework presented in this thesis is parameterised over a
 \emph{signature} specifying signals and components, and an
@@ -149,13 +172,50 @@ The Belnap interpretation is but one possible setting in which one could apply
 our work; we envision that similar strategies could be applied for reasoning
 about transistor-level circuits all the way up to more abstract viewpoints.
 
+\subsection{Implementations}
+
+The developments of this thesis have been supported with some small toy
+examples, including a running example depicting an SR NOR latch.
+Unfortunately, any circuit larger than this quickly explodes in size and scope,
+and as such is not suitable for rendering in a book.
+
+For experimenting with the Belnap interpretation, we developed a small tool
+(\url{https://github.com/georgejkaye/catcircs}) which can generate the
+corresponding circuits given Belnap functions and truth tables.
+On a larger scale, we also developed a \emph{hardware description language} for
+designing and evaluating with circuits using the operational semantics,
+presented in \cref{sec:hdl}.
+
 \section{Future work}
 
-\subsection{Beyond the abstraction}
+The work presented in this thesis acts as a major milestone in the project to
+develop a fully compositional theory of sequential circuits,
+But there are several ways in which the work can be continued to create an
+even more thorough package of categorical methods for reasoning with digital
+circuits.
 
-\todo[inline]{Fan-out}
+\subsection{Theoretical extensions}
 
-\todo[inline]{Asynchronous circuits}
+The categorical framework for digital circuits may be sound and complete, but
+it only models circuits that are fully specified with concrete values; in
+\cref{chap:semantics-applications} we presented some ideas for how we could
+extend the framework.
+We proposed some alternate reduction rules to automate the tidying-up of
+circuits (\cref{sec:tidy}) or to handle persistent inputs modelled as infinite
+waveforms (\cref{sec:shortcut}).
+We also examined how we could model inputs that follow protocols by adding new
+components modelling uncertain values (\cref{sec:uncertain}).
+At a meta-level, we also discussed how we could apply work on
+\emph{layered PROPs}~\cite{lobski2022string} to view circuits at different
+levels of abstraction (\cref{sec:abstraction}), or implement new inequality
+relations to compare circuits that output the same signals but over different
+timespans (\cref{sec:refining}).
+
+We are particularly keen to investigate the ways that our framework can be
+applied to the \emph{partial evaluation} of sequential circuits; while this is a
+topic that has been examined to some
+extent~\cite{singh1999partial,mckay1998dynamic,thompson2006bitlevel}, we believe
+our rigorous foundations will provide a new perspective on the way forward.
 
 \subsection{More applications}
 
@@ -179,3 +239,51 @@ Moreover, \emph{synthesis} of circuits to more traditional circuit design
 languages such as VHDL or Verilog, or even to a language suitable for printing
 on silicon (so-called `netlists'), would allow for the benefits of our tool to
 be combined with the experienced power of the traditional methods.
+
+\subsection{Beyond the abstraction}
+
+Our categorical framework focuses on a commonly-used abstraction
+of \emph{sequential synchronous circuits}.
+Crucially we operate in a \emph{discrete} setting, both in terms of the signals
+used and the notion of time.
+A potential future research direction could be to see if it is possible to adapt
+the techniques used here to a more \emph{continuous} settings.
+
+A concept important in circuit design that is not present in our abstraction is
+that of \emph{fan-out}, the idea that there are only so many times one can fork
+a wire before the signal it carries becomes unstable.
+This cannot be modelled with discrete values using local interactions unless a
+signal immediately degrades to a \(\bot\) value upon one fork, which is
+certainly not desired.
+Instead, one would need to work with continuous signals that degrade by some
+factor on each fork.
+One immediate issue that would arise is that the fork would no longer be
+coassociativity of the comonoid, as different branches would carry different
+`strengths' of signals.
+
+When working with potentially degraded signals, circuit designers use
+\emph{amplifiers} to restore the strength of signals.
+Which signal is restored can be nondeterministic, so this could add an element
+of \emph{probability} to digital circuits.
+Care would have to be taken, as nondeterministic computations breaks the
+naturality of the copy: rolling a die once and copying the outcome is not the
+same as duplicating the die and rolling each of them separately.
+
+Our notion of delay is quite primitive, as it delays all inputs by one step.
+In reality, the \emph{propagation delay} can differ depending on the change in
+signal; for example, the transition from high to low may be quicker than the
+transition from low to high.
+This could be implemented by parameterising the \(\shiftstream{\bot}\) stream
+function with different delays for different inputs; how this might affect the
+rest of the framework remains to be seen.
+The propagation delay can also be affected by fan-out; the higher the fan-out,
+the higher the propagation delay.
+
+The model of delay could be altered even further; rather than modelling
+it as a series of discrete timesteps, it could be modelled \emph{continuously}
+to handle asynchronous circuits.
+This would be a significant change; since stream
+functions have discrete elements, what would the denotation of circuits over
+continuous time be?
+It is possible that modelling asynchronous circuits would required a completely
+different way of reasoning.

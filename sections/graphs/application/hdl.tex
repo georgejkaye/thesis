@@ -1,4 +1,4 @@
-\section{Hardware description language}
+\section{Hardware description language}\label{sec:hdl}
 
 We motivated graph rewriting for digital circuits as an avenue for
 \emph{automating} their reasoning.
@@ -28,9 +28,10 @@ programming languages, in which each line of code runs sequentially.
 Because they are so different to traditional programming languages, this can
 make VHDL and Verilog inpenetrable to outsiders.
 An alternative is to \emph{embed} a HDL into an already existing language.
-Choices of parent language include Haskell
-(Lava~\cite{bjesse1998lava}, Bluespec~\cite{nikhil2004bluespec}, Clash~\cite{kooijman2009haskell,baaij2010clash})
-OCaml (Hardcaml~\cite{ray2023hardcaml}), and Scala (Chisel~\cite{bachrach2012chisel}).
+Choices of parent language include Haskell (Lava~\cite{bjesse1998lava},
+Bluespec~\cite{nikhil2004bluespec},
+Clash~\cite{kooijman2009haskell,baaij2010clash}), OCaml
+(Hardcaml~\cite{ray2023hardcaml}), and Scala (Chisel~\cite{bachrach2012chisel}).
 Because these are primarily \emph{functional}, these HDLs are more structural in
 nature; circuits are created by composing functions together.
 
