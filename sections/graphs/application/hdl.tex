@@ -128,11 +128,11 @@ The tool can be used to insert delays and feedback loops to circuits.
 
 Once circuits are designed, the tool can automatically \emph{reduce} them
 using a procedure based on the operational semantics from
-\cref{sec:operational}.
+\cref{chap:operational}.
 As with the theory, it does this by first assembling circuits into Mealy form
 and eliminating non-delay-guarded feedback.
 
-\begin{example}
+\begin{example}\label{ex:sr-latch-evaluator}
   Before evaluation can be performed, the SR NOR latch defined in
   \cref{ex:sr-latch} is automatically translated into Mealy form.
   \begin{center}
