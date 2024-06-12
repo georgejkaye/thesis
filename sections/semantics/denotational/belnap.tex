@@ -377,17 +377,22 @@ functions.
         \end{tabular}
     \end{center}
     Using \cref{cor:func-complete-falsy-truthy}, the corresponding Belnap
-    expressions are \(
-    (v_0,v_1) \mapsto v_0 \land (v_0 \lor v_1)
-    \) and \(
-    (v_0,v_1) \mapsto v_1 \lor (v_0 \land v_1)
-    \).
-    Adding in the translations from \cref{def:translation-tables} and the join
-    at the end, the overall Belnap expression becomes \[
-        (v_0,v_1) \mapsto
-        (v_0 \land \bot) \land ((v_0 \land \bot) \lor \neg(v_1 \lor \bot))
+    expressions are \[
+        (v_0,v_1) \mapsto v_1 \land (v_0 \lor v_1)
+        \qquad
+        (v_0,v_1) \mapsto v_0 \lor (v_0 \land v_1)
+    \]
+    To combine these expressions on two inputs into a single expression on one
+    input, we need to add the appropriate translators.
+    We obtain the expression \[
+        v_0 \mapsto
+        \neg(\bot \lor v_0)
+        \land
+        \left((\bot \land v_0) \lor \neg(\bot \lor v_0)\right)
         \ljoin
-        (v_1 \lor \bot) \lor (\neg(v_0 \land \bot) \land (v_1 \lor \bot)).
+        \neg(\bot \land v_0)
+        \lor
+        (\neg(\bot \land v_0) \land (\bot \lor v_0))
     \]
     which can be verified to act the same as the original table.
 \end{example}
