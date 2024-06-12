@@ -8,9 +8,8 @@ These days, digital circuits are so common that one may doubt that there are
 
 But while the \emph{design} of increasingly more efficient circuits is a
 well-trodden area, it is relatively self-contained.
-We wish to reframe our view of digital circuits in such a way that we can
-support the existing techniques and procedures with alternatives successfully
-applied in other fields, such as that of programming languages.
+We wish to support the existing techniques and procedures with alternatives
+successfully applied in other fields, such as that of programming languages.
 To see where the parallels lie between digital circuits and other areas,
 we need a foundational, mathematically rigorous theory.
 Although there has been previous work on such a
@@ -23,15 +22,15 @@ The first point of order is to unpack exactly what this means.
 
 The term `\emph{circuit}' (or `\emph{network}') is often used for any system
 constructed by connecting wires between primitive components.
-Two common constructs are the ability to \emph{fork} wires or \emph{join} them together, traditionally drawn
-using black dots as shown below.
+Two common constructs are the ability to \emph{fork} wires or \emph{join} them
+together, traditionally drawn using black dots as shown below.
 
 \begin{center}
     \iltikzfig{circuits/forkjoin}
 \end{center}
 
 These circuits are not particularly interesting as they are structural in
-nature; it is the other components that add interesting meaning.
+nature; it is the other components that add meaning.
 When it comes to picking a set of components, there is a plethora of choices
 for various applications; even when restricting to \emph{electronic} circuits
 there are different flavours to consider.
@@ -61,9 +60,9 @@ treatment~\cite{boisseau2022string}.
 
 We are concerned with \emph{digital} circuits that operate over a finite
 number of \emph{discrete} values.
-Here there is a much stricter notion of causality linking input and output; the
-input signals change and these propagate across the circuit, producing outputs
-and updating state.
+Here there is a much stricter notion of causality linking input and output;
+signals provided as input to a digital circuit propagate across the components,
+producing outputs and updating state.
 At a low level a digital circuit is still constructed using analog circuit
 component, but the higher-level \emph{abstraction} to digital components and
 discrete signals makes it far easier to design and reuse them.
@@ -84,7 +83,7 @@ on the inputs received at that moment.
 A far more useful class of circuits is that of \emph{sequential} circuits, which
 have have \emph{delay} and \emph{feedback} in addition to logic gates.
 Most sequential circuits can be divided into two parts:
-the \emph{combinational logic} for performing logical functions, an the
+the \emph{combinational logic} for performing logical functions, and the
 \emph{state registers} for storing data.
 
 A typical digital circuit operates by using the combinational logic to perform
@@ -99,7 +98,7 @@ circuit.
 A \emph{synchronous} circuit is one in which the state only changes in time with
 some global clock signal, whereas in \emph{asynchronous} circuits the state
 changes as soon as the inputs do.
-The latter type of circuits are useful when speed is of the essence, but are
+The latter type of circuits is useful when speed is of the essence, but are
 harder to design because small differences in how quickly components process
 inputs can lead to the circuit assuming an unexpected state.
 For this reason, most practical circuits are restricted to the synchronous
@@ -130,6 +129,8 @@ on the basis of their interfaces: we should not have to perform any sort of
 semantic check or `peek inside' a circuit to find out if composition is
 permitted.
 
+\todo[inline]{Maybe think about what it means for composition to be `permitted'}
+
 Compositionality is an appealing paradigm to follow because it means we can
 repeatedly split complicated circuits into simpler parts until we reach some
 indivisible atomic components.
@@ -150,9 +151,8 @@ and verify if composition \emph{preserves} these properties.
 
 While it is possible to work with this surface-level notion of
 compositionality, it is important to establish a mathematical
-foundation to determine what it means to compose and the properties that
-arise from it; for this, we turn to
-\emph{category theory}~\cite{maclane1978categories}.
+foundation to determine the meaning and properties of composition; for this, we
+turn to \emph{category theory}~\cite{maclane1978categories}.
 A \emph{category} is made up of \emph{objects} and \emph{morphisms} (`arrows')
 between them.
 Any two arrows \(\morph{f}{A}{B}\) and \(\morph{g}{B}{C}\) can be
@@ -217,7 +217,7 @@ String diagrams do not add any more computational power to one-dimensional
 reasoning, but they are
 immensely beneficial because the categorical axioms of associativity and
 unitality are `absorbed' by the notation: two morphisms are equal if and only if
-their string diagrams are isomorphic~\cite{kelly1980coherence,kissinger2014abstract}.
+their string diagrams are isomorphic~\cite{kelly1980coherence,kissinger2014abstract,selinger2011survey}.
 This makes proofs far less bureaucratic, as one can focus on the non-trivial
 steps without having to constantly rearrange the bracketing of a term.
 String diagrams also make the work more approachable and easier to explain to
@@ -410,7 +410,7 @@ the feedback loop is built as one piece so it cannot be broken.
 
 \section{Contributions}
 
-This contributions of this thesis are split into two parts,
+The contributions of this thesis are split into two parts,
 \emph{Semantics of Digital Circuits}, and
 \emph{Graph Rewriting for Digital Circuits}.
 These sections respectively correspond to two papers:
