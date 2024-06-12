@@ -159,14 +159,14 @@ and the circuit evaluated step-by-step.
     eval.PerformCycle([TRUE, FALSE])
     eval.PerformCycle([FALSE, FALSE])
   \end{lstlisting}
-  This automatically applies the streaming and value rules in order to
-  determine the output values over time.
+  This automatically applies the reduction rules to determine the output values
+  over time.
   The inputs detailed above produce the output stream \(
   \bot\mathsf{f} \streamcons \mathsf{t}\mathsf{f} \streamcons
   \mathsf{t}\mathsf{f} \streamcons \mathsf{f}\mathsf{t}
-  \).
-  This is the expected output as the delay causes the outputs to be shifted back
-  one time-step, and subsequently the first output is underdefined.
+  \), illustrated below in the small boxes.
+  This is the expected output as the delay causes the first tick of outputs to
+  be underdefined.
   \begin{center}
     \includesvg[scale=0.225]{figures/circuits/hdl/latch-outputs}
   \end{center}
