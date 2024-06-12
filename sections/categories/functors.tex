@@ -14,6 +14,51 @@ A class of maps that enjoy some useful properties are known as \emph{functors}.
         \item \(F(g \circ f) = F(g) \circ F(f)\) for every \(\morph{f}{A}{B}\)
               and \(\morph{g}{B}{C}\).
     \end{itemize}
+
+    \begin{center}
+        \begin{tikzcd}[row sep=large]
+            A
+            \arrow{r}{\id[A]}
+            \arrow{d}{F}
+            &
+            A
+            \arrow{d}{F}
+            \\
+            FA
+            \arrow{r}{\id[FA]}
+            &
+            FA
+        \end{tikzcd}
+        \qquad
+        \begin{tikzcd}[column sep=large]
+            A
+            \arrow{rr}{g \circ f}
+            \arrow{dr}{f}
+            \arrow{ddd}{F}
+            &
+            &
+            C
+            \arrow{ddd}{F}
+            \\
+            &
+            B
+            \arrow{d}{F}
+            \arrow{ur}{g}
+            &
+            \\
+            &
+            FB
+            \arrow{dr}{Fg}
+            &
+            \\
+            FA
+            \arrow{rr}{F(g \circ f)}
+            \arrow{ur}{Ff}
+            &
+            &
+            FC
+        \end{tikzcd}
+    \end{center}
 \end{definition}
 
 A functor \(F\) maps an object \(X\) in one category to an object \(FX\) in
@@ -33,13 +78,13 @@ The functoriality equations are represented as in
 
 \input{floats/functoriality-equations}
 
-\begin{definition}[Endofunctor]
-    An \emph{endofunctor} on category \(\mcc\) is a functor \(\mcc \to \mcc\).
-\end{definition}
-
 \subsection{Examples of functors}
 
 Many notions in mathematics and computer science can be viewed as functors.
+
+\begin{definition}[Endofunctor]
+    An \emph{endofunctor} on category \(\mcc\) is a functor \(\mcc \to \mcc\).
+\end{definition}
 
 \begin{example}[Powerset functor]
     The notion of powerset can be interpreted as an endofunctor \(
@@ -126,22 +171,23 @@ One way a category \(\mcc\) can be related to another category \(\mcd\) is that
 the former is the latter with `some of the bits taken out'.
 
 \begin{definition}[Subcategory]
-    Given a category \(\mcc\), a \emph{subcategory} of \(\mcc\) is a category
-    \(\mcd\) with objects and morphisms subclasses of the objects and morphisms
-    in \(\mcc\) subject to the following conditions:
+    Given a category \(\mcc\), a \emph{subcategory} \(\mcd\) of \(\mcc\) is a
+    subclass of the objects in \(\mcc\) and a subclass of the morphims in
+    \(\mcd\) such that
     \begin{itemize}
-        \item for every object \(A \in \mcd\), \(\id[A] \in \mor{\mcd}{A}{A}\);
-        \item for every morphism \(f \in \mor{\mcd}{A}{B}\), \(A\) and \(B\) are
-              in \(\mcd\); and
-        \item for morphisms \(f \in \mor{\mcd}{A}{B}\) and
-              \(g \in \mor{\mcd}{B}{C}\), \(g \circ f \in \mor{\mcd}{A}{C}\).
+        \item for every object \(A \in \mcd\), \(\id[A] \in \mcd\);
+        \item for every morphism \(\morph{f}{A}{B} \in \mcd\), \(A,B \in \mcd\);
+              and
+        \item for morphisms \(\morph{f}{A}{B}, \morph{g}{B}{C} \in \mcd\)
+              \(g \circ f \in \mcd\).
     \end{itemize}
 \end{definition}
 
-Given a category \(\mcc\) and a subcategory \(\mcd\), there is an obvious
-induced functor \(\morph{S}{\mcd}{\mcc}\) mapping objects and morphisms
-in \(\mcd\) to the same objects in \(\mcc\); this is called an
-\emph{inclusion functor}, and is often written with a hooked arrow
+These conditions on a subcategory \(\mcd\) enforce that \(\mcd\) also has the
+structure of a category.
+This means there is an obvious induced functor \(\morph{S}{\mcd}{\mcc}\) mapping
+objects and morphisms in \(\mcd\) to the same objects in \(\mcc\); this is
+called an \emph{inclusion functor}, and is often written with a hooked arrow
 \(\mcd \hookrightarrow \mcd\).
 An inclusion functor is clearly faithful, since there cannot be two morphisms in
 the subcategory that map to the same morphism in the parent category.
