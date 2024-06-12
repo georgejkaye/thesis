@@ -177,9 +177,9 @@ The use of the instant feedback rule means that the tool can also handle
 circuits with non-delay-guarded feedback that exhibit combinational behaviour.
 
 \begin{example}
-  Recall the cyclic combinational circuit from \cref{ex:cyclic-combinational}
-  containing two blackbox circuits \(f\) and \(g\), in which the control signal
-  dictates the order the two circuits are applied.
+  Recall the circuit from \cref{ex:cyclic-combinational}
+  containing blackboxes \(f\) and \(g\), in which the control signal
+  dictates the order the circuits are applied.
   \begin{lstlisting}
     // Input wires
     let x = sig.UseWire(1)
@@ -233,7 +233,7 @@ protocols.
 \begin{example}
   Recall the circuit from \cref{ex:protocols}, which reduces to the identity
   when the first input is fixed as either true or false.
-  This circuit can be designed as follows:
+  The can be designed as follows:
   \begin{lstlisting}
     let v = sig.UseWire(1)
     let w = sig.UseWire(1)
