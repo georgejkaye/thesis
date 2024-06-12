@@ -68,7 +68,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload stats to the server
-        uses: georgejkaye/latex-stats-uploader@v1.2
+        uses: georgejkaye/latex-stats-uploader@v1.3
         with:
           main: main.tex
           pdf: ${{ github.event.repository.name }}-${{ steps.name.outputs.name }}.pdf
