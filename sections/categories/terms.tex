@@ -143,20 +143,26 @@ In a string diagram, a generator \(\morph{\phi}{m}{n}\) is drawn as a box with
 Composite terms are drawn as boxes \(
 \iltikzfig{strings/category/f-wires-tile}[box=f,dom=m,cod=n]
 \); composition is then depicted as \emph{horizontal juxtaposition} and
-tensor as \emph{vertical juxtaposition}.
-\[
-    \iltikzfig{strings/category/f-wires-tile}[box=f,dom=m,cod=n]
-    \seq
-    \iltikzfig{strings/category/f-wires-tile}[box=g,dom=n,cod=p]
-    =
-    \iltikzfig{strings/category/composition-tiles}[box1=f,box2=g,dom1=m,dom2=n,cod2=p]
-    \qquad
-    \iltikzfig{strings/category/f-wires-tile}[box=f,dom=m,cod=n]
-    \tensor
-    \iltikzfig{strings/category/f-wires-tile}[box=g,dom=p,cod=q]
-    =
-    \iltikzfig{strings/monoidal/tensor-tiles}[box1=f,box2=g,dom1=m,cod1=n,dom2=p,cod2=q]
-\]
+tensor as \emph{vertical juxtaposition}; both are illustrated in
+\cref{fig:strings-composition}.
+\begin{figure}
+    \centering
+    \begin{gather*}
+        \iltikzfig{strings/category/f-wires-tile}[box=f,dom=m,cod=n]
+        \seq
+        \iltikzfig{strings/category/f-wires-tile}[box=g,dom=n,cod=p]
+        =
+        \iltikzfig{strings/category/composition-tiles}[box1=f,box2=g,dom1=m,dom2=n,cod2=p]
+        \\[0.5em]
+        \iltikzfig{strings/category/f-wires-tile}[box=f,dom=m,cod=n]
+        \tensor
+        \iltikzfig{strings/category/f-wires-tile}[box=g,dom=p,cod=q]
+        =
+        \iltikzfig{strings/monoidal/tensor-tiles}[box1=f,box2=g,dom1=m,cod1=n,dom2=p,cod2=q]
+    \end{gather*}
+    \caption{Sequential and parallel composition of string diagrams}
+    \label{fig:strings-composition}
+\end{figure}
 
 \begin{remark}
     The direction that the `flow' of string diagrams travels from inputs to
@@ -167,8 +173,8 @@ tensor as \emph{vertical juxtaposition}.
 \end{remark}
 
 \begin{example}\label{ex:term-diagrams}
-    Recall the set of logic gate generators \(\Sigma\) from \cref{ex:terms}.
-    We will draw each generator using the usual notation, i.e.\
+    Recall the set of generators from \cref{ex:terms}.
+    We will draw each logic gate using the usual notation, i.e.\
     \(
     \andgate \coloneqq \iltikzfig{circuits/components/gates/and-tile}
     \), \(

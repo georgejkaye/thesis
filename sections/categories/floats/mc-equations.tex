@@ -1,50 +1,53 @@
 \begin{figure}
     \begin{center}
-        \begin{tabular}{ccccc}
-            \(f \tensor \id[I] = f\)
-             &
-             &
-            \(\id[I] \tensor f = f\)
-             &
-             &
-            \((f \tensor g) \tensor h = f \tensor (g \tensor h)\)
+        \begin{tabular}{ccccccc}
+            \(f \tensor \id[I]\) & \(=\) & \(f\)
+                                 &       &
+            \(\id[I] \tensor f\) & \(=\) & \(f\)
             \\[1em]
-            \(
             \iltikzfig{strings/monoidal/unit-l-lhs}[box=f,colour=white,dom=A,cod=B]
-            =
+                                 &
+            \(=\)
+                                 &
             \iltikzfig{strings/category/f}[box=f,dom=A,cod=B,colour=white]
-            \)
-             &   &
-            \(
+                                 &       &
             \iltikzfig{strings/monoidal/unit-r-lhs}[box=f,colour=white,dom=A,cod=B]
-            =
+                                 &
+            \(=\)
+                                 &
             \iltikzfig{strings/category/f}[box=f,dom=A,cod=B,colour=white]
-            \)
-             &   &
-            \(\iltikzfig{strings/monoidal/associativity-lhs}[box1=f,box2=g,box3=h,colour=white,dom1=A,cod1=B,dom2=C,cod2=D,dom3=E,cod3=F,colour=white]
-            =
-            \iltikzfig{strings/monoidal/associativity-rhs}[box1=f,box2=g,box3=h,colour=white,dom1=A,cod1=B,dom2=C,cod2=D,dom3=E,cod3=F,colour=white]
-            \)
         \end{tabular}
         \\[1em]
         \rule[1em]{\textwidth}{0.1mm}
         \\[0.1em]
-        \begin{tabular}{cccc}
-            \((f \tensor g) \seq (h \tensor k) = (f \seq h) \tensor (g \seq k)\)
-             &  &
-            \(\id[A] \tensor \id[B] = \id[A \tensor B]\)
+        \begin{tabular}{ccccccc}
+            \((f \tensor g) \tensor h\) & \(=\) & \(f \tensor (g \tensor h)\)
+                                        &       &
+            \(\id[A] \tensor \id[B]\)   & \(=\) & \(\id[A \tensor B]\)
             \\[1em]
-            \(
-            \iltikzfig{strings/monoidal/interchange-lhs}[box1=f,box2=g,box3=h,box4=k,colour=white,dom1=A,cod1=C,dom2=D,cod2=F]
-            =
-            \iltikzfig{strings/monoidal/interchange-rhs}[box1=f,box2=g,box3=h,box4=k,colour=white,dom1=A,cod1=C,dom2=D,cod2=F]
-            \)
-             &  &
-            \(
+            \iltikzfig{strings/monoidal/associativity-lhs}[box1=f,box2=g,box3=h,colour=white,dom1=A,cod1=B,dom2=C,cod2=D,dom3=E,cod3=F,colour=white]
+                                        &
+            \(=\)
+                                        &
+            \iltikzfig{strings/monoidal/associativity-rhs}[box1=f,box2=g,box3=h,colour=white,dom1=A,cod1=B,dom2=C,cod2=D,dom3=E,cod3=F,colour=white]
+                                        &       &
             \iltikzfig{strings/monoidal/identity-tensor-lhs}[colour=white,obj1=A,obj2=B]
-            =
+                                        &
+            \(=\)
+                                        &
             \iltikzfig{strings/category/identity}[colour=white,obj=A \tensor B]
-            \)
+        \end{tabular}
+        \\[1em]
+        \rule[1em]{\textwidth}{0.1mm}
+        \\[0.1em]
+        \begin{tabular}{ccc}
+            \((f \tensor g) \seq (h \tensor k)\) & \(=\) & \((f \seq h) \tensor (g \seq k)\)
+            \\[1em]
+            \iltikzfig{strings/monoidal/interchange-lhs}[box1=f,box2=g,box3=h,box4=k,colour=white,dom1=A,cod1=C,dom2=D,cod2=F]
+                                                 &
+            \(=\)
+                                                 &
+            \iltikzfig{strings/monoidal/interchange-rhs}[box1=f,box2=g,box3=h,box4=k,colour=white,dom1=A,cod1=C,dom2=D,cod2=F]
         \end{tabular}
     \end{center}
     \caption{
