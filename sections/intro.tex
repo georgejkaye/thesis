@@ -6,7 +6,7 @@ and much more.
 These days, digital circuits are so common that one may doubt that there are
 \emph{any} gaps in our theoretical understanding of them.
 
-But while the \emph{design} of increasingly more efficient circuits is a
+But while the \emph{design} of faster and more efficient circuits is a
 well-trodden area, it is relatively self-contained.
 We wish to support the existing techniques and procedures with alternatives
 successfully applied in other fields, such as that of programming languages.
@@ -23,23 +23,28 @@ The first point of order is to unpack exactly what this means.
 The term `\emph{circuit}' (or `\emph{network}') is often used for any system
 constructed by connecting wires between primitive components.
 Two common constructs are the ability to \emph{fork} wires or \emph{join} them
-together, traditionally drawn using black dots as shown below.
-
-\begin{center}
-    \iltikzfig{circuits/forkjoin}
-\end{center}
-
+together, traditionally drawn using black dots as shown in \cref{fig:forkjoin}
 These circuits are not particularly interesting as they are structural in
 nature; it is the other components that add meaning.
+
+\begin{figure}
+    \centering
+    \iltikzfig{circuits/forkjoin}
+    \caption{
+        A circuit of forks and joins with no other primitives
+    }
+    \label{fig:forkjoin}
+\end{figure}
+
 When it comes to picking a set of components, there is a plethora of choices
 for various applications; even when restricting to \emph{electronic} circuits
 there are different flavours to consider.
 One variety is that of \emph{analog} circuits constructed from components such
-as resistors, capacitors and inductors, such as in the following circuit
-diagram.
+as resistors, capacitors and inductors, such as in \cref{fig:analog}
 
-\begin{center}
-    \scalebox{0.5}{
+\begin{figure}
+    \centering
+    \scalebox{0.75}{
         \begin{circuitikz}
             \draw (0,0) to[inductor] (2.5,0);
             \draw (2.5,0) to[short, *-] (4,0);
@@ -51,7 +56,13 @@ diagram.
             \draw (-2,-2) to (-2,0);
         \end{circuitikz}
     }
-\end{center}
+    \caption{
+        An analog circuit, using a \emph{voltmeter}, an \emph{inductor}, a
+        \emph{capacitor}, a \emph{resistor}, and a \emph{voltage source} as
+        primitives
+    }
+    \label{fig:analog}
+\end{figure}
 
 Reasoning with analog circuits requires manipulating equations relating
 quantities such as voltage, current and resistance; in a parallel line of work
@@ -68,12 +79,18 @@ component, but the higher-level \emph{abstraction} to digital components and
 discrete signals makes it far easier to design and reuse them.
 
 Digital circuits are constructed by connecting \emph{logic gates} together with
-wires, to the inputs of other logic gates as illustrated in the below example.
-\begin{center}
-    \iltikzfig{circuits/examples/sr-latch/real-circuit-no-text}
-\end{center}
+wires, to the inputs of other logic gates as illustrated in \cref{fig:digital}.
 A key point to note is that when designing a digital circuit, one may create
 \emph{cycles}: paths from a component to itself.
+
+\begin{figure}
+    \centering
+    \iltikzfig{circuits/examples/sr-latch/real-circuit-no-text}
+    \caption{
+        A digital circuit, with \(\nandgate\) gates as primitives
+    }
+    \label{fig:digital}
+\end{figure}
 
 Digital circuits can further be divided into classes based on their components.
 A \emph{combinational} circuit is a circuit that just contains logical
@@ -109,18 +126,25 @@ kind, and so this is where we are focusing our mathematical theory.
 A (synchronous sequential) circuit can be viewed as a component with some
 input and output wires; these wires can be connected to other components to
 create a bigger and more complex circuits.
-This is called \emph{composing} circuits; we can do this
-\emph{horizontally} (if the outputs of the first match with the inputs of the
-second), \emph{vertically}, or even by connecting an output wire to an input
-wire, creating a \emph{feedback loop}.
+This is called \emph{composing} circuits, and some ways of doing this are
+shown in \cref{fig:composition}.
+We can compose circuits \emph{horizontally} (if the outputs of the first match
+with the inputs of the second), \emph{vertically}, or even by connecting an
+output wire to an input wire, creating a \emph{feedback loop}.
 
-\begin{center}
+\begin{figure}
+    \centering
     \iltikzfig{strings/category/composition}
     \qquad
     \iltikzfig{strings/monoidal/tensor}
     \qquad
     \iltikzfig{strings/traced/trace-rhs}
-\end{center}
+    \caption{
+        Three types of composition: \emph{sequential}, \emph{parallel} (tensor)
+        and using a \emph{trace operator}
+    }
+    \label{fig:composition}
+\end{figure}
 
 Our goal is to define a \emph{fully compositional} theory of synchronous
 sequential circuits.
@@ -129,8 +153,6 @@ on the basis of their interfaces: we should not have to perform any sort of
 semantic check or `peek inside' a circuit to find out if composition is
 permitted.
 
-\todo[inline]{Maybe think about what it means for composition to be `permitted'}
-
 Compositionality is an appealing paradigm to follow because it means we can
 repeatedly split complicated circuits into simpler parts until we reach some
 indivisible atomic components.
@@ -138,16 +160,24 @@ If one defines the behaviour of these components and how they interact
 with composition, it is possible to establish the behaviour of some
 larger circuit \emph{inductively} by breaking it down into its constituent
 parts.
-For example, some circuit \(f\) might be decomposed as follows:
-\[
-    \iltikzfig{strings/compositional/example-0}
-    =
-    \iltikzfig{strings/compositional/example-1}
-    =
-    \iltikzfig{strings/compositional/example-2}
-\]
+For example, some circuit \(f\) might be decomposed as in
+\cref{fig:decomposition}.
 To prove that \(f\) has some property, we can prove it holds for \(g\) and \(k\)
 and verify if composition \emph{preserves} these properties.
+
+\begin{figure}
+    \centering
+    \iltikzfig{strings/compositional/example-0}
+    \(=\)
+    \iltikzfig{strings/compositional/example-1}
+    \(=\)
+    \iltikzfig{strings/compositional/example-2}
+    \caption{
+        Decomposing a large circuit \(f\) into smaller circuits \(g\)
+        and \(k\)
+    }
+    \label{fig:decomposition}
+\end{figure}
 
 While it is possible to work with this surface-level notion of
 compositionality, it is important to establish a mathematical
@@ -206,18 +236,23 @@ Fortunately, symmetric monoidal categories admit an intuitive graphical notation
 known as \emph{string diagrams}, in which generators are drawn as boxes
 connected by wires, with the identity depicted as an empty wire and the symmetry
 as swapping over wires.
-For example, the term described above can be depicted diagrammatically as
-follows.
-\[
+For example, the term described above can be depicted diagrammatically as in
+\cref{fig:string}, which is far easier to comprehend than the original term
+string.
+
+\begin{figure}
+    \centering
     \iltikzfig{strings/example-smc}
-\]
-This is far easier to comprehend than the original term string.
+    \caption{Example of a string diagram}
+    \label{fig:string}
+\end{figure}
 
 String diagrams do not add any more computational power to one-dimensional
 reasoning, but they are
 immensely beneficial because the categorical axioms of associativity and
 unitality are `absorbed' by the notation: two morphisms are equal if and only if
-their string diagrams are isomorphic~\cite{kelly1980coherence,kissinger2014abstract,selinger2011survey}.
+their string diagrams share the same connectivity between
+boxes~\cite{kelly1980coherence,kissinger2014abstract,selinger2011survey}.
 This makes proofs far less bureaucratic, as one can focus on the non-trivial
 steps without having to constantly rearrange the bracketing of a term.
 String diagrams also make the work more approachable and easier to explain to
@@ -243,12 +278,9 @@ Progress towards full compositionality for sequential circuits has been hampered
 by the presence of the dreaded \emph{non-delay-guarded feedback loop}; a cycle
 that does not pass through any state registers.
 Non-delay-guarded feedback can lead to undefined behaviour; for example, if we
-assume that the circuit \(f\) below contains no registers, then it is not
-immediately obvious how to compute the first input of the circuit below, as it
-would depend on itself.
-\[
-    \iltikzfig{strings/traced/trace-rhs}
-\]
+assume that the rightmost circuit \(f\) in \cref{fig:composition} contains no
+registers, then it is not immediately obvious how to compute the first input, as
+it would depend on itself.
 
 Some approaches try to nullify this by considering only some `safe' subset of
 circuits which will always be well-behaved~\cite{christensen2021wire}, by
@@ -269,33 +301,46 @@ Consider the circuit below, where \(f\) and \(g\) are inverses, i.e.\
 \iltikzfig{circuits/examples/yanking-simple}
 \).
 If we were to enforce that every loop in our circuits is
-somehow delay-guarded, we would not be able to `yank out' the otherwise trivial
-loop of wires and simplify the circuit, because that would implicitly delete a
-delay and alter the outputs of the circuit over time.
-\[
+somehow delay-guarded, the line of equational reasoning in \cref{fig:yanking}
+is forbidden; `yanking out' the otherwise trivial loop of wires would implicitly
+delete a delay and alter the outputs of the circuit over time.
+\begin{figure}
+    \centering
     \iltikzfig{circuits/examples/yanking-lhs}
-    =
+    \(=\)
     \iltikzfig{circuits/examples/yanking-rhs}
-    =
+    \(=\)
     \iltikzfig{circuits/examples/yanking-simple}
-\]
+    \caption{
+        Example of diagrammatic equational reasoning by `yanking' a feedback
+        loop
+    }
+    \label{fig:yanking}
+\end{figure}
 
 Non-delay-guarded feedback can also be used in clever ways to create sequential
 circuits that exhibit combinational behaviour.
-The following is a classic example~\cite{malik1994analysis} in which the
-feedback is just used to share the two subcircuits \(
+The circuit in \cref{fig:cyclic} is a classic example~\cite{malik1994analysis}
+in which the feedback is just used to share the two subcircuits \(
 \iltikzfig{strings/category/f}[box=f]
 \) and \(
 \iltikzfig{strings/category/f}[box=g]
 \); the circuit acts as \(g \circ f\) or
 \(f \circ g\) depending on the control input \(\mathsf{c}\).
-\[
-    \iltikzfig{circuits/examples/cyclic-combinational/circuit}
-\]
 Such circuits, while not following conventional design methodology, are more
 efficient in terms of circuit size and power consumption.
 This once more illustrates how working in a setting where not all loops are
 delay-guarded may be beneficial to us.
+
+\begin{figure}
+    \centering
+    \iltikzfig{circuits/examples/cyclic-combinational/circuit}
+    \caption{
+        Example of a circuit with non-delay-guarded feedback that can
+        exhibit combinational behaviour~\cite{malik1994analysis}
+    }
+    \label{fig:cyclic}
+\end{figure}
 
 \section{Theories of digital circuits}
 
@@ -325,42 +370,57 @@ The first steps towards a categorical theory of digital circuits took place
 after the turn of the millennium, when Lafont presented an
 \emph{algebraic theory of boolean circuits}~\cite{lafont2003algebraic}.
 This work already bears a great resemblance to the framework presented in this
-thesis; circuits
-are presented as morphisms in a symmetric monoidal category freely generated
-over a set of primitive logic gates.
+thesis; circuits are presented as morphisms in a symmetric monoidal category
+freely generated over a set of primitive logic gates.
 However, Lafont's work only considered circuits for \emph{Boolean functions};
 these circuits did not have any notion of delay or feedback.
-\[
+Lafont also made use of a diagrammatic language (shown in \cref{fig:history}),
+but the equations of monoidal categories still had to be applied explicitly.
+
+\begin{figure}
+    \centering
     \iltikzfig{circuits/examples/lafont}
-\]
+    \qquad
+    \iltikzfig{circuits/examples/sr-latch/circuit}
+    \caption{
+        Two representations of digital circuits, the first by
+        Lafont~\cite{lafont2003algebraic} and the second by Ghica, Jung, and
+        Lopez~\cite{ghica2016categorical,ghica2017diagrammatic}
+    }
+    \label{fig:history}
+\end{figure}
+
 It was not until 2016 that \emph{sequential} circuits were given the
 categorical treatment by Ghica and Jung~\cite{ghica2016categorical}, who were
 later joined by Lopez when considering how to use this for a graph-rewriting
 based operational semantics~\cite{ghica2017diagrammatic}.
-\[
-    \iltikzfig{circuits/examples/sr-latch/circuit}
-\]
 In this line of work, sequential circuits were modelled as morphisms in a
 \emph{symmetric traced monoidal category}, a symmetric monoidal category
 extended with a \emph{trace operator}.
 In the context of sequential circuits, the trace operator models
-\emph{feedback}.
-\[
-    \trace{}{
-        \iltikzfig{strings/category/f-2-2}[colour=white,box=f]
-    }
-    =
-    \iltikzfig{strings/traced/trace-rhs}[colour=white,box=f]
-\]
+\emph{feedback}: \(
+\trace{}{
+    \iltikzfig{strings/category/f-2-2}[colour=white,box=f]
+}
+=
+\iltikzfig{strings/traced/trace-rhs}[colour=white,box=f]
+\).
+
 This marks a departure from many other recent works on compositional processes
 such as the work on string diagrammatic
 \emph{signal flow theory}~\cite{bonchi2021survey} or analog
 circuits~\cite{boisseau2022string}, which operate in a setting with a
 \emph{Frobenius} structure.
 In addition to any application-specific components, these settings also contain
-four structural components, forming what is known mathematically as a
-\emph{commutative monoid} and a \emph{cocommutative comonoid}.
-\[
+the four structural components shown in \cref{fig:frob}, forming what is known
+mathematically as a \emph{commutative monoid} and a
+\emph{cocommutative comonoid}.
+These components are used for model the forks and joins we alluded to earlier in
+this chapter; as also illustrated in \cref{fig:frob}, one can use them to create
+a feedback loop.
+
+\begin{figure}
+    \centering
     \iltikzfig{strings/structure/monoid/merge}
     \quad
     \iltikzfig{strings/structure/monoid/init}
@@ -368,22 +428,20 @@ four structural components, forming what is known mathematically as a
     \iltikzfig{strings/structure/comonoid/copy}
     \quad
     \iltikzfig{strings/structure/comonoid/discard}
-\]
-These components are used for model the forks and joins we alluded to earlier in
-this chapter; it is also possible to use them to create a feedback loop.
-\[
+    \qquad
     \iltikzfig{strings/traced/trace-from-product}
-\]
+    \caption{
+        The four generators of a Frobenius structure, and the construction of
+        a trace using them
+    }
+    \label{fig:frob}
+\end{figure}
+
 So why not opt for such a route for sequential circuits?
-The issue arises in the form of \emph{copying}: we would like the following
-equation on circuits to hold for any circuit \(
+The issue arises in the form of \emph{copying}: we would like the leftmost
+equation in \cref{fig:copy} circuits to hold for any circuit \(
 \iltikzfig{strings/category/f}[box=f]
-\):
-\[
-    \iltikzfig{strings/structure/cartesian/naturality-copy-lhs}[box=f]
-    =
-    \iltikzfig{strings/structure/cartesian/naturality-copy-rhs}[box=f]
-\]
+\).
 What this means is that running \(f\) and then copying the outputs
 should be exactly the same as copying the inputs and running two copies of
 \(f\) in parallel.
@@ -391,18 +449,28 @@ But this seemingly innocent equation causes the construction of the feedback
 loop using smaller components to fall apart.
 This is because if we instantiate the circuit \(
 \iltikzfig{strings/category/f}[box=f]
-\) in the equation above to the \(
+\) to the \(
 \iltikzfig{strings/structure/monoid/init}
-\) component, we have the following equations.
-\[
+\) component, it can be propagated over the `end' of the trace and break the
+loop, also illustrated in \cref{fig:copy}.
+
+\begin{figure}
+    \centering
+    \iltikzfig{strings/structure/cartesian/naturality-copy-lhs}[box=f]
+    \(=\)
+    \iltikzfig{strings/structure/cartesian/naturality-copy-rhs}[box=f]
+    \qquad
     \iltikzfig{strings/structure/bialgebra/init-copy-lhs}
-    =
+    \(=\)
     \iltikzfig{strings/structure/bialgebra/init-copy-rhs}
     \qquad
     \iltikzfig{strings/traced/trace-from-product}
-    =
+    \(=\)
     \iltikzfig{strings/traced/trace-from-product-1}
-\]
+    \caption{The copying equation, and its implications}
+    \label{fig:copy}
+\end{figure}
+
 This is known as the \emph{no-cloning theorem}; any setting with a Frobenius
 structure cannot also admit copying.
 For this reason, we need to model circuits in a \emph{traced} category in which
@@ -469,8 +537,8 @@ circuit can be expressed as one of these stream functions, and every such stream
 function can be mapped to a syntactic circuit which has the original stream
 function as its behaviour.
 
-Along the way, we also define a category \(\mealyi\)  of Mealy machines lifted
-to work on lattices as a `bridge' between circuits and stream functions.
+We also define a category \(\mealyi\) of Mealy machines lifted to work on
+lattices, as a `bridge' between circuits and stream functions.
 As well as being essential for showing the soundness and completeness of the
 denotational semantics, having this category of Mealy machines is nice to have
 in its own right, as it shows how existing circuit
@@ -479,7 +547,7 @@ mathematic framework.
 
 Circuits that map to the same stream function are called
 \emph{denotationally equivalent}.
-By quotienting \(\scircsigma\) by denotational equivalence we obtain a category
+Quotienting \(\scircsigma\) by denotational equivalence we obtain a category
 \(\scircsigmai\); this is the category against which we will compare our next
 two semantic theories.
 
@@ -511,7 +579,7 @@ correct one using the well-known universal property that it is the largest
 adequate congruence relation~\cite{gordon1998operational}.
 Quotienting \(\scircsigma\) by observational equivalence gives us another
 semantic category of circuits \(\scircsigmaobs\).
-By establishing an isomorphism between \(\scircsigmai\) and \(\scircsigmae\)
+By establishing an isomorphism between \(\scircsigmai\) and \(\scircsigmaobs\)
 we show that the operational semantics is also sound and complete: two circuits
 have the same behaviour as stream functions if and only if they reduce to the
 same outputs for all inputs.
@@ -531,7 +599,7 @@ building up to an algebraic semantics for circuits without having to add any
 arbitrary quotients.
 We try to stick to standard equations on algebraic structures and small `local'
 equations detailing the interactions on individual generators, but the nature of
-digital circuits means that some larger circuits including \emph{context} are
+digital circuits means that some larger equations including \emph{context} are
 necessary to include.
 The main result is showing this set of equations \(\mce_\interpretation\)
 suffice to bring any circuit to a pseudo-normal form.
@@ -583,7 +651,7 @@ An overview of the categories involved can be seen in
 
 \subsubsection{\cref{chap:hypergraphs}: String diagrams as hypergraphs}
 
-Previous work on hypergraph string diagram hypergraph rewriting showed how terms
+Previous work on string diagram rewriting using hypergraphs showed how terms
 in a freely generated symmetric monoidal category \(\smcsigma\) equipped with a
 \emph{special commutative Frobenius structure} \(\frob\) correspond to morphisms
 in a category of \emph{cospans of hypergraphs} \(\cspdhyp\), and terms without a
@@ -608,16 +676,15 @@ Reasoning on terms interpreted as cospans of hypergraphs is performed using
 \emph{double pushout (DPO) graph rewriting}.
 The main computational step during this procedure is identifying a valid
 \emph{pushout complement}: the context of the rewrite step.
-Bonchi et al showed that for Frobenius terms, any pushout complement corresponds
-to a term rewrite~\cite{bonchi2022string}, and for symmetric monoidal terms
-exactly one pushout complement corresponds to a term
+Bonchi et al.\ showed that for Frobenius terms, any pushout complement
+corresponds to a term rewrite~\cite{bonchi2022string}, and for symmetric
+monoidal terms exactly one pushout complement corresponds to a term
 rewrite~\cite{bonchi2022stringa}: the \emph{boundary complement}.
 
-For the traced and traced comonoid case some pushout complements are valid and
-some are not.
-We characterise those that are as \emph{traced boundary complements} in the case
-of the former and \emph{traced left-boundary complements} in the case of the
-latter.
+For the traced case and the traced comonoid case some pushout complements are
+valid and some are not.
+We characterise those that are as \emph{traced boundary complements} for the
+former and \emph{traced left-boundary complements} for the latter.
 
 \subsubsection{\cref{chap:graphs-applications}: Applications of graph rewriting}
 
