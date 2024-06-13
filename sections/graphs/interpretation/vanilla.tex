@@ -304,8 +304,6 @@ true for its components, using a result about pushouts in \(\propcat\).
 \end{theorem}
 
 To apply this result, we need to show that \(\hypsigma\) is a pushout.
-Recall that in a category with an initial object, every coproduct can be
-expressed as a pushout by \cref{lem:coproducts-pushout}.
 
 \begin{definition}
     Let \(\permsprop\) be the sub-PROP of \(\finsetprop\)
@@ -326,7 +324,21 @@ As all the functions are bijections, there can be morphisms of no other form.
 \end{proof}
 
 Subsequently, \(\smcsigma + \frob\) can be expressed as a pushout and the
-`3-for-2' condition applied to show the faithfulness of \(\termtohypsigma\).
+`3-for-2' condition applied to show the faithfulness of \(\termtohypsigma\),
+using another well-known categorical lemma.
+
+\begin{lemma}[\cite{borceux1994handbook}, Prop.\ 2.8.2]\label{lem:coproducts-pushout}
+    If a category \(\mcc\) has pushouts and an initial object, then \(\mcc\)
+    also has coproducts.
+\end{lemma}
+\begin{proof}
+    Given objects \(A,B \in \mcc\), the coproduct \(A + B\) is constructed as
+    follows:
+    \begin{gather*}
+        \includestandalone{figures/category/diagrams/coproduct-pushout}%
+    \end{gather*}
+    This is a coproduct due to the universal property of pushouts.
+\end{proof}
 
 \begin{proposition}
     \(\morph{\termtohypsigma}{\smcsigma}{\cspdhyp}\) is faithful.

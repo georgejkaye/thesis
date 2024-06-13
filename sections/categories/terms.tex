@@ -1,9 +1,7 @@
 \section{Terms}
 
-We are interested in using category theory as a tool to study \emph{processes},
-which we model as \emph{terms}.
-First we must specify the primitive components that can be used to build
-processes in a given setting.
+We are interested in using category theory as a tool to study \emph{circuits}
+built from some primitive components, or \emph{generators}.
 
 \begin{definition}[Generators]\label{def:generators}
     A set of \emph{generators} \(\generators\) is a set equipped with two
@@ -175,13 +173,13 @@ tensor as \emph{vertical juxtaposition}; both are illustrated in
 \begin{example}\label{ex:term-diagrams}
     Recall the set of generators from \cref{ex:terms}.
     We will draw each logic gate using the usual notation, i.e.\
-    \(
-    \andgate \coloneqq \iltikzfig{circuits/components/gates/and-tile}
-    \), \(
-    \orgate \coloneqq \iltikzfig{circuits/components/gates/or-tile}
-    \), and \(
-    \notgate \coloneqq \iltikzfig{circuits/components/gates/not-tile}
-    \).
+    \[
+        \andgate \coloneqq \iltikzfig{circuits/components/gates/and-tile}
+        \quad
+        \orgate \coloneqq \iltikzfig{circuits/components/gates/or-tile}
+        \quad
+        \notgate \coloneqq \iltikzfig{circuits/components/gates/not-tile}
+    \]
     Now the terms in \cref{ex:terms} can be illustrated as:
     \begin{gather*}
         \iltikzfig{strings/terms/example-0}

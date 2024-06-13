@@ -24,9 +24,8 @@ There is an obvious question: what are these equations?
     \).
 \end{example}
 
-Rather than having to conjure up equations in this adh
-It turns out that all the work has actually already been done before us, as the
-required equations are the equations of \emph{symmetric monoidal categories}.
+It turns out that the required equations are the equations of
+\emph{symmetric monoidal categories}.
 To grasp how these equations are derived one requires quite a
 bit of technical knowledge, so we will build it up one step at a time.
 We start with the basic notion of a \emph{category}.
@@ -69,7 +68,6 @@ A morphism \(f \in \mor{\mcc}{A}{B}\) is also called an \emph{arrow}, and will
 often be written \(\morph{f}{A}{B}\) accordingly.
 When clear from context, we will use the notation \(A \in \mcc\) or
 \(f \in \mcc\) for objects and morphisms belonging to a particular category.
-The subscripts on the object and morphism classes are also often omitted.
 
 \begin{remark}
     The definition of a category uses \emph{classes} rather than sets as one
@@ -77,10 +75,9 @@ The subscripts on the object and morphism classes are also often omitted.
     the impossibility of the `set of all sets'.
 \end{remark}
 
-By treating terms as morphisms, it is clear to see how they they slip into the
-categorical setting.
-One difference is that in the previous section we used `left-to-right'
-composition \(\seq\) rather than `right-to-left' composition \(\circ\).
+We interpret terms as morphisms; one difference here is that we previously used
+`left-to-right' composition \(\seq\) rather than `right-to-left' composition
+\(\circ\).
 
 \begin{notation}
     \emph{Diagrammatic order} composition is written as
@@ -115,19 +112,19 @@ The definition of a category is quite abstract and might take some getting used
 to: it can be helpful to consider some concrete examples.
 
 \begin{example}[Preorder]
-    A \emph{preorder} is a binary relation \(\leq\) on a set \(X\) which is
-    reflexive and transitive.
+    A \emph{preorder} is a reflexive transitive binary relation \(\leq\) on a
+    set \(X\).
     Any preorder generates a category \(\mcc_\leq\): the objects are the
     elements of \(X\) and \(\mcc_\leq(x, y)\) contains exactly one morphism if
     \(x \leq y\) and none otherwise.
 \end{example}
 
 \begin{example}[Sets]
-    The category \(\set\) has sets as objects and functions as morphisms.
-    Composition is then just function composition.
-    Compare this with the category \(\rel\), which has the same objects as
-    \(\set\) but with \emph{relations} as morphisms.
-    There is also a category \(\finset\) containing only the \emph{finite} sets
+    The category \(\set\) has sets as objects and functions as morphisms, with
+    composition of functions as composition.
+    There are other categories with sets as objects, such as \(\rel\), which has
+    \emph{relaions} as morphisms and composition of relations as morphisms.
+    There is also a category \(\finset\) containing the \emph{finite} sets
     and functions between them.
 \end{example}
 
@@ -246,14 +243,11 @@ There is also a way to describe \emph{invertible} morphisms.
     isomorphisms are the bijective functions.
 \end{example}
 
-Often we want to say that a \emph{category} has some property or admits
-some class of constructions.
-This is specified in terms of a \emph{universal property}: a unique
-morphism that shows that a certain candidate construction is the `best' way to
+Constructions in categories are specified in terms of a
+\emph{universal property}: a unique morphism that indicates the `best' way to
 describe something.
-
-The first universal properties we will consider give particular objects in a
-category special significance.
+The first universal properties we will consider give particular objects special
+significance.
 
 \begin{definition}[Initial object]
     An object \(C\) in a category \(\mcc\) is \emph{initial} if, for any other
@@ -383,22 +377,6 @@ The dual of the pushout is a \emph{pullback}.
     projection respectively.
 \end{example}
 
-Using universal properties means we do not need to restrict ourselves to a
+Universal properties mean we do not need to restrict ourselves to a
 concrete category when using or proving results; we can instead say, for
 example, that the result holds in all categories with products.
-It is also often the case that if a category satisfies some universal
-properties, then others follow for free.
-We demonstrate this with a well-known result.
-
-\begin{lemma}[\cite{borceux1994handbook}, Prop.\ 2.8.2]\label{lem:coproducts-pushout}
-    If a category \(\mcc\) has pushouts and an initial object, then \(\mcc\)
-    also has coproducts.
-\end{lemma}
-\begin{proof}
-    Given objects \(A,B \in \mcc\), the coproduct \(A + B\) is constructed as
-    follows:
-    \begin{gather*}
-        \includestandalone{figures/category/diagrams/coproduct-pushout}%
-    \end{gather*}
-    This is a coproduct due to the universal property of pushouts.
-\end{proof}
