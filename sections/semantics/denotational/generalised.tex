@@ -68,7 +68,7 @@ generators for each \(n \in \natplus\), as well as the bundlers.
         ]
          & \coloneqq
         (\listvar{v}) \mapsto (\listvar{v}, \listvar{v})
-         & \qquad
+        \\
         \circuittofuncig[
             \iltikzfig{strings/structure/comonoid/discard}[colour=comb,obj=n]
         ]
@@ -81,7 +81,7 @@ generators for each \(n \in \natplus\), as well as the bundlers.
          & \coloneqq
         (\listvar{v}, \listvar{w})
         \mapsto \listvar{v} \sqcup \listvar{w}
-         & \qquad
+        \\
         \circuittofuncig[
             \iltikzfig{strings/structure/monoid/init}[colour=comb,obj=n]
         ]
@@ -112,93 +112,92 @@ manner.
         \circuittomealyig[
             \iltikzfig{circuits/components/gates/gate}[colour=comb]
         ]
-         & \coloneqq \left(
-        \{()\},
-        (\listvar{v}_0,\listvar{v}_1,\dots,\listvar{v}_{m-1}) \mapsto
+         & \coloneqq
+        (\{()\},
+         &             & (\listvar{v}_0,\dots,\listvar{v}_{m-1}) \mapsto
         \left\langle
         (),
         \gateinterpretation[g]\left(
         \listvar{v}_0,\listvar{v}_1,\dots,\listvar{v}_{m-1}
         \right)
         \right\rangle,
-        ()
-        \right)
+         &             & ())
         \\
         \circuittomealyig[
             \iltikzfig{strings/structure/comonoid/copy}[colour=comb,obj=n]
         ]
-         & \coloneqq \left(
+         & \coloneqq (
         \{()\},
-        \listvar{v}
+         &             & \listvar{v}
         \mapsto
         \left\langle(), (\listvar{v},\listvar{v})\right\rangle,
-        ()
-        \right)
+         &             & ()
+        )
         \\
         \circuittomealyig[
             \iltikzfig{strings/structure/monoid/merge}[colour=comb,obj=n]
         ]
-         & \coloneqq \left(
+         & \coloneqq (
         \{()\},
-        (\listvar{v}, \listvar{w}) \mapsto
+         &             & (\listvar{v}, \listvar{w}) \mapsto
         \left\langle(), \listvar{v} \ljoin \listvar{w}\right\rangle,
-        ()
-        \right)
+         &             & ()
+        )
         \\
         \circuittomealyig[
             \iltikzfig{strings/structure/comonoid/discard}[colour=comb,obj=n]
         ]
-         & \coloneqq \left(
+         & \coloneqq
+        (
         \{()\},
-        \listvar{v} \mapsto
+         &             & \listvar{v} \mapsto
         \left\langle(), ()\right\rangle,
-        ()
-        \right)
+         &             & ()
+        )
         \\
         \circuittomealyig[
             \iltikzfig{strings/strictifiers/expand}[colour=comb,obj=n]
         ]
          & \coloneqq
-        \left(
+        (
         \{()\},
-        ((), (v_0,v_1,\dots,v_{n-1})) \mapsto ((v_0), (v_1), \dots, (v_{n-1})),
-        ()
-        \right)
+         &             & (v_0,v_1,\dots,v_{n-1}) \mapsto ((v_0), (v_1), \dots, (v_{n-1})),
+         &             & ()
+        )
         \\
         \circuittomealyig[
             \iltikzfig{strings/strictifiers/collapse}[colour=comb,obj=n]
         ]
          & \coloneqq
-        \left(
+        (
         \{()\},
-        ((), ((v_0), (v_1), \dots, (v_{n-1}))) \mapsto (v_0,v_1,\dots,v_{n-1})
-        \right)
+         &             & ((v_0), (v_1), \dots, (v_{n-1})) \mapsto (v_0,v_1,\dots,v_{n-1}),
+         &             & ()
+        )
         \\
         \circuittomealyig[
             \iltikzfig{circuits/components/values/vs}[val=\listvar{v},width=n]
         ]
          & \coloneqq
-        \left(
-        \left(
+        (
         \{s_{\listvar{v}}, s_\bot\},
-        \{
+         &             & \{
         s_{\listvar{v}} \mapsto \left\langle{s_\bot,\listvar{v}}\right\rangle,
         s_\bot \mapsto \left\langle{s_\bot,\bot}\right\rangle
-        \}\right),
-        s_{\listvar{v}}
-        \right)
+        \},
+         &             & s_{\listvar{v}}
+        )
         \\
         \circuittomealyig[
             \iltikzfig{circuits/components/waveforms/delay}[width=n]
         ]
          & \coloneqq
-        \left(
-        \left(
+        (
         \{ s_{\listvar{v}} \,|\, \listvar{v} \in \valuetuple{n}\},
-        (s_{\listvar{v}}, \listvar{w}) \mapsto
-        \left\langle{s_{\listvar{w}},\listvar{v}}\right\rangle\right),
-        s_{\bot^n}
-        \right)
+         &             & (s_{\listvar{v}}, \listvar{w}) \mapsto
+        \left\langle{s_{\listvar{w}},\listvar{v}}\right\rangle,
+         &             & s_{\bot^n}
+        )
     \end{align*}
 \end{definition}
 
@@ -210,9 +209,9 @@ translate them into stream functions or coloured circuits.
     Let the coloured PROP morphisms
     \(\morph{\mealytostreamig}{\mealyig}{\streamig}\),
     \(\morph{\streamtomealyig}{\streamig}{\mealyig}\) and
-    \(\morph{\streamtomealyig}{\mealyig}{\scircsigmag}\) be defined in the same
-    same way as the monochromatic versions.
-    Subsequently, let \(\morph{\circuittostreamig}{\scircsigmag}{\streamig}\)
+    \(\morph{\streamtomealyig}{\mealyig}{\scircsigmag}\) be defined as the
+    monochromatic versions, and let
+    \(\morph{\circuittostreamig}{\scircsigmag}{\streamig}\)
     be defined as \(\mealytostreamig \circ \circuittomealyig\).
 \end{definition}
 

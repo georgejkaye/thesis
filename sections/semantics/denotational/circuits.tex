@@ -352,9 +352,9 @@ an (infinite) tail component.
     \(\tau\) we write it as \(\sigma \coloneqq a \streamcons \tau\).
 \end{notation}
 
-Streams will serve as the inputs and outputs to circuits.
-The denotations of sequential circuits will therefore be
-\emph{stream functions}, which consume and produce streams.
+Streams will serve as the inputs and outputs to circuits, so the denotations of
+sequential circuits will be \emph{stream functions}, which consume and produce
+streams.
 Just like with functions, we cannot claim that all streams are the
 denotations of sequential circuits.
 
@@ -368,7 +368,6 @@ Casuality is a form of continuity; a causal stream function is a stream function
 in which the \(i\)-th element of its output stream only depends on elements
 \(0\) through \(i\) inclusive of the input stream; it cannot look into the
 future.
-
 A neat consequence of causality is that it enables us to lift the stream
 operations of initial value and stream derivative to stream \emph{functions}.
 

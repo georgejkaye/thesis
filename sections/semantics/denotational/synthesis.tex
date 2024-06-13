@@ -471,7 +471,7 @@ we must show a lemma linking the behaviour circuits in the image of
 \begin{proof}
     The machine \(\circuittomealyi[
         \iltikzfig{circuits/productivity/mealy-form}[core=f,state=\listvar{s},dom=m,cod=n,delay=x]
-    ]\) is the fixpoint of \(
+    ]\) is computed as the fixpoint of the machine \(
     \left(\valuetuple{x},
     (\listvar{r}, \listvar{a}) \mapsto \left\langle
     \listvar{r}, g(\listvar{s}, \listvar{a})
@@ -483,13 +483,13 @@ we must show a lemma linking the behaviour circuits in the image of
     \proj{1}\left(g(\listvar{s}, \listvar{a})\right)
     \right\rangle, \listvar{s}\right)
     \).
-    Since the initial output and stream derivative of \(
+    The output and derivative of \(
     \mealytocircuiti[
         \circuittomealyi[
             \iltikzfig{circuits/productivity/mealy-form}[core=f,state=\listvar{s},dom=m,cod=n,delay=x]
         ]
     ]
-    \) are the output and transition of the Mealy machine, the original
+    \) are the output and transition of the Mealy machine, so the original
     statement holds by \cref{lem:sequential-combinational-semantics}.
 \end{proof}
 
