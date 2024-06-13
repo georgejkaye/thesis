@@ -40,57 +40,53 @@ When it comes to picking a set of components, there is a plethora of choices
 for various applications; even when restricting to \emph{electronic} circuits
 there are different flavours to consider.
 One variety is that of \emph{analog} circuits constructed from components such
-as resistors, capacitors and inductors, such as in \cref{fig:analog}
-
-\begin{figure}
-    \centering
-    \scalebox{0.75}{
-        \begin{circuitikz}
-            \draw (0,0) to[inductor] (2.5,0);
-            \draw (2.5,0) to[short, *-] (4,0);
-            \draw (4,0) to[resistor] (4,-2);
-            \draw (2.5,0) to[capacitor] (2.5,-2);
-            \draw (2.5,-2) to[short, *-] (4,-2);
-            \draw (-2,-2) to[american voltage source] (2.5,-2);
-            \draw (-2,0) to [voltmeter] (0,0);
-            \draw (-2,-2) to (-2,0);
-        \end{circuitikz}
-    }
-    \caption{
-        An analog circuit, using a \emph{voltmeter}, an \emph{inductor}, a
-        \emph{capacitor}, a \emph{resistor}, and a \emph{voltage source} as
-        primitives
-    }
-    \label{fig:analog}
-\end{figure}
-
+as resistors, capacitors and inductors, such as in the left of
+\cref{fig:circuits}.
 Reasoning with analog circuits requires manipulating equations relating
 quantities such as voltage, current and resistance; in a parallel line of work
 to our own, analog circuits have already been given a compositional mathematical
 treatment~\cite{boisseau2022string}.
+
+\begin{figure}
+    \centering
+    \raisebox{-2.2em}{
+        \scalebox{0.75}{
+            \begin{circuitikz}
+                \draw (0,0) to[inductor] (2.5,0);
+                \draw (2.5,0) to[short, *-] (4,0);
+                \draw (4,0) to[resistor] (4,-2);
+                \draw (2.5,0) to[capacitor] (2.5,-2);
+                \draw (2.5,-2) to[short, *-] (4,-2);
+                \draw (-2,-2) to[american voltage source] (2.5,-2);
+                \draw (-2,0) to [voltmeter] (0,0);
+                \draw (-2,-2) to (-2,0);
+            \end{circuitikz}
+        }
+    }
+    \qquad
+    \iltikzfig{circuits/examples/sr-latch/real-circuit-no-text}
+    \caption{
+        An analog circuit, using a \emph{voltmeter}, an \emph{inductor}, a
+        \emph{capacitor}, a \emph{resistor}, and a \emph{voltage source} as
+        primitive components; and a digital circuit, using
+        \emph{\(\nandgate\) gates} as primitive components
+    }
+    \label{fig:circuits}
+\end{figure}
 
 We are concerned with \emph{digital} circuits that operate over a finite
 number of \emph{discrete} values.
 Here there is a much stricter notion of causality linking input and output;
 signals provided as input to a digital circuit propagate across the components,
 producing outputs and updating state.
-At a low level a digital circuit is still constructed using analog circuit
-component, but the higher-level \emph{abstraction} to digital components and
-discrete signals makes it far easier to design and reuse them.
-
 Digital circuits are constructed by connecting \emph{logic gates} together with
-wires, to the inputs of other logic gates as illustrated in \cref{fig:digital}.
+wires, to the inputs of other logic gates as illustrated in the right of
+\cref{fig:circuits}.
 A key point to note is that when designing a digital circuit, one may create
 \emph{cycles}: paths from a component to itself.
-
-\begin{figure}
-    \centering
-    \iltikzfig{circuits/examples/sr-latch/real-circuit-no-text}
-    \caption{
-        A digital circuit, with \(\nandgate\) gates as primitives
-    }
-    \label{fig:digital}
-\end{figure}
+At a low level the components of a digital circuit are still constructed using
+analog parts, but the higher-level \emph{abstraction} to digital components and
+discrete signals makes it far easier to design and reuse them.
 
 Digital circuits can further be divided into classes based on their components.
 A \emph{combinational} circuit is a circuit that just contains logical
@@ -601,8 +597,8 @@ We try to stick to standard equations on algebraic structures and small `local'
 equations detailing the interactions on individual generators, but the nature of
 digital circuits means that some larger equations including \emph{context} are
 necessary to include.
-The main result is showing this set of equations \(\mce_\interpretation\)
-suffice to bring any circuit to a pseudo-normal form.
+Ultimately, we define a set of equations \(\mce_\interpretation\) and show that
+these equations suffice to bring any circuit to a pseudo-normal form.
 
 Quotienting \(\scircsigma\) by these equations gives us our last semantic
 category \(\scircsigmae\).
