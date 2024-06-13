@@ -47,18 +47,20 @@ parallel composition.
               A
               \) called the \emph{right unitor}
     \end{itemize}
-    such that the \emph{pentagon} and the \emph{triangle} diagrams below
-    commute:
-    \begin{center}
-        \vspace{-1em}
-
-        \includestandalone{figures/category/coherences/pentagon}
-
-        \vspace{1em}
-
-        \includestandalone{figures/category/coherences/triangle}
-    \end{center}
+    such that the \emph{pentagon} and the \emph{triangle} diagrams in
+    \cref{fig:mc-diagrams} commute.
 \end{definition}
+
+\begin{figure}
+    \centering
+    \includestandalone{figures/category/coherences/pentagon}
+
+    \vspace{1em}
+
+    \includestandalone{figures/category/coherences/triangle}
+    \caption{Commutative diagrams for monoidal categories}
+    \label{fig:mc-diagrams}
+\end{figure}
 
 \begin{example}
     \(\set\) is a monoidal category, with the tensor product defined as the
@@ -118,16 +120,20 @@ isormorphism.
     A \emph{symmetric monoidal category} (SMC) is a monoidal category \(\mcc\)
     equipped with a natural isomorphism \(
     \swap{A}{B} \colon A \tensor B \cong B \tensor A
-    \) such that the following diagrams commute:
-    \begin{center}
-        \includestandalone{figures/category/coherences/symmetry-unit}
-        \includestandalone{figures/category/coherences/symmetry-inverse}
-
-        \vspace{1em}
-
-        \includestandalone[scale=0.95]{figures/category/coherences/hexagon}
-    \end{center}
+    \) such that the diagrams in \cref{fig:smc-diagrams} commute.
 \end{definition}
+
+\begin{figure}
+    \centering
+    \includestandalone{figures/category/coherences/symmetry-unit}
+    \includestandalone{figures/category/coherences/symmetry-inverse}
+
+    \vspace{1em}
+
+    \includestandalone[scale=0.95]{figures/category/coherences/hexagon}
+    \caption{Commutative diagrams for symmetric monoidal categories}
+    \label{fig:smc-diagrams}
+\end{figure}
 
 As \(\sigma\) is a natural isomorphism, it induces
 a \emph{family} of morphisms \(

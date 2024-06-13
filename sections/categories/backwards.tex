@@ -24,38 +24,8 @@ First we consider removing the acyclicity condition.
     }{
         \mcc(A, B)
     }
-    \) for any three objects \(A\), \(B\) and \(X\) subject to the following
-    equations:
-    \begin{itemize}
-        \item \textbf{Tightening (naturality in \(A,B\))}\\\null\qquad
-              \(\trace{X}[A][D]{
-                  \id[X] \tensor f \seq g \seq \id[X] \seq h
-              }
-              =
-              f \seq \trace{X}[B][C]{g} \seq h
-              \)
-        \item \textbf{Sliding (naturality in \(X\))}\\\null\qquad
-              \(
-              \trace{X}[A][B]{f \seq g \tensor \id[B]}
-              =
-              \trace{Y}[A][B]{g \tensor \id[A] \seq f}
-              \)
-        \item \textbf{Yanking}\\\null\qquad
-              \(
-              \trace{X}[X][X]{\swap{X}{X}} = \id[X]
-              \)
-        \item \textbf{Vanishing}\\\null\qquad
-              \(
-              \trace{X}[A][B]{\trace{X}[Y \tensor A][Y \tensor B]{f}}
-              =
-              \trace{X \tensor Y}[A][B]{f}
-              \)
-        \item \textbf{Superposing}\\\null\qquad
-              \(
-              \trace{X}[A \tensor C][B \tensor F]{f \tensor g}
-              = \trace{X}[A][B]{f} \tensor g
-              \)
-    \end{itemize}
+    \) for any three objects \(A\), \(B\) and \(X\) subject to the equations in
+    \cref{fig:stmc-equations}.
 \end{definition}
 
 What this means is that in a STMC, if we have a morphism
@@ -107,13 +77,17 @@ We will now consider another setting in which this is not the case.
     \morph{\ccunit[A]}{I}{\dual{A} \tensor A}
     \) and the \emph{counit} \(
     \morph{\cccounit[A]}{A \tensor \dual{A}}{I}
-    \) satisfying the following \emph{snake equations}:
-    \begin{center}
-        \includestandalone{figures/category/coherences/snake-1}
-        \quad
-        \includestandalone{figures/category/coherences/snake-2}
-    \end{center}
+    \) such that the diagrams in~\cref{fig:snake-equations} commute.
 \end{definition}
+
+\begin{figure}
+    \centering
+    \includestandalone{figures/category/coherences/snake-1}
+    \quad
+    \includestandalone{figures/category/coherences/snake-2}
+    \caption{Commutative diagrams of a compact closed category}
+    \label{fig:snake-equations}
+\end{figure}
 
 In string diagrams, the dual is drawn as a wire flowing from right-to-left
 instead of left-to-right; when labelling wires with objects we will drop the
