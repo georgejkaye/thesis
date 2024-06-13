@@ -92,8 +92,6 @@ majority of examples in this thesis, is that of gate-level circuits.
     the \(\bot\) value is no information at all (a disconnected wire), whereas
     the \(\top\) value is both true and false information at once
     (a short circuit).
-    This notion of information content will also come in very important when
-    defining the semantics of circuits in the upcoming sections.
 \end{remark}
 
 \section{Combinational circuits}
@@ -230,36 +228,37 @@ boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
 \begin{example}[More logic gates]
     The \(\andgate\), \(\orgate\), and \(\notgate\) gates are not the only logic
     gates used in circuit design.
-
     A \(\nandgate\) gate \(
     \iltikzfig{circuits/components/gates/nand}
     \) acts as as the inverse of an \(\andgate\) gate: it
     outputs true if none of the inputs are true.
-    In \(\ccirc{\belnapsignature}\) this is constructed as \(
-    \iltikzfig{circuits/components/gates/nand}
-    \coloneqq
-    \iltikzfig{circuits/components/gates/nand-construction}
-    \).
     Similarly, a \(\norgate\) gate \(
     \iltikzfig{circuits/components/gates/nor}
-    \) is the inverse of an \(\orgate\) gate, and
-    is constructed as \(
-    \iltikzfig{circuits/components/gates/nor}
-    \coloneqq
-    \iltikzfig{circuits/components/gates/nor-construction}
-    \).
+    \) is the inverse of an \(\orgate\) gate.
+    These two gates can be constructed in terms of the primitive gates in
+    \(\belnapsignature\):
+
+    \[
+        \iltikzfig{circuits/components/gates/nand}
+        \coloneqq
+        \iltikzfig{circuits/components/gates/nand-construction}
+        \qquad
+        \iltikzfig{circuits/components/gates/nor}
+        \coloneqq
+        \iltikzfig{circuits/components/gates/nor-construction}
+    \]
 
     Another type of gate is the \(\xorgate\) gate \(
     \iltikzfig{circuits/components/gates/xor}
     \), which outputs true if and only if exactly one of the inputs is
     true.
-    In \(\ccirc{\belnapsignature}\) this is constructed as \(
-    \iltikzfig{circuits/components/gates/xor}
-    \coloneqq
-    \iltikzfig{circuits/components/gates/xor-construction-1}
-    =
-    \iltikzfig{circuits/components/gates/xor-construction-2}
-    \).
+    In \(\ccirc{\belnapsignature}\) this is constructed as \[
+        \iltikzfig{circuits/components/gates/xor}
+        \coloneqq
+        \iltikzfig{circuits/components/gates/xor-construction-1}
+        =
+        \iltikzfig{circuits/components/gates/xor-construction-2}.
+    \]
 \end{example}
 
 \begin{example}[Half adder]\label{ex:half-adder}
@@ -273,14 +272,11 @@ boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
     The sum is computed using an \(\xorgate\) gate and the carry by an
     \(\andgate\) gate.
     The design of a half adder along with its construction in
-    \(\ccirc{\belnapsignature}\) at different levels of unfolding definitions
-    is shown below.
+    \(\ccirc{\belnapsignature}\) is shown below.
     \[
         \iltikzfig{circuits/examples/half-adder/circuit}
         \qquad
         \iltikzfig{circuits/examples/half-adder/circuit-ccirc}
-        =
-        \iltikzfig{circuits/examples/half-adder/circuit-ccirc-1}
         =
         \iltikzfig{circuits/examples/half-adder/circuit-ccirc-2}
     \]
@@ -520,9 +516,9 @@ generalised circuit signature generates \(\natplus\)-coloured PROPs.
     containing
     \begin{gather*}
         \iltikzfig{circuits/components/gates/gate}[gate=g,colour=comb,dom=\circuitsignaturearity(g),cod=\circuitsignaturecoarity(g)]
-        \quad
+        \,
         \text{for each}\ g \in \circuitsignaturegates
-        \\
+        \\[1em]
         \iltikzfig{strings/structure/monoid/init}[colour=comb,obj=n]
         \quad
         \iltikzfig{strings/structure/comonoid/copy}[colour=comb,obj=n]
