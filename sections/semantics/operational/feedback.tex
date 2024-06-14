@@ -49,15 +49,17 @@ Our first reduction will transform any circuit in global trace-delay form into
 pre-Mealy form.
 
 \begin{lemma}\label{lem:mealy-rule}
-    The rule \(
-    \iltikzfig{circuits/productivity/trace-delay}[core=f,state=\listvar{v},dom=m,cod=n,delay=y,trace=x,valwidth=z]
-    \reduction[(\mealyeqn)]
-    \iltikzfig{circuits/productivity/mealy-rule}[core=f,trace=x,delays=y,values=z]
-    \) is sound.
+    The follwoing rule is sound: \[
+        \iltikzfig{circuits/productivity/trace-delay}[core=f,state=\listvar{v},dom=m,cod=n,delay=y,trace=x,valwidth=z]
+        \reduction[(\mealyeqn)]
+        \iltikzfig{circuits/productivity/mealy-rule}[core=f,trace=x,delays=y,values=z]
+    \]
 \end{lemma}
 \begin{proof}
     It is a simple exercise to check the corresponding stream functions.
 \end{proof}
+
+\input{sections/semantics/operational/floats/sr-latch-pre-mealy}
 
 By assembling a circuit into global trace-delay form and
 applying the \((\mealyeqn)\) rule, we can establish a word \(\listvar{s}\)

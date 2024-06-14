@@ -1,9 +1,9 @@
 \section{Productivity}\label{sec:productivity}
 
-For an open circuit it is not possible to reduce an entire circuit down to some
-output values, as there will still be open wires awaiting the next inputs.
+It is not possible to reduce an open circuit to some output values, as there will
+be open wires awaiting the next inputs.
 Nevertheless, if we precompose a circuit with some inputs we can provide some
-rules for propagating these inputs across the circuit.
+rules for propagating them across the circuit.
 
 Formally, for sequential circuit \(
 \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
@@ -17,11 +17,11 @@ Formally, for sequential circuit \(
 We first consider the combinational case, with our final global transformation.
 
 \begin{lemma}[Streaming]\label{lem:streaming}
-    The \emph{streaming rule} \(
-    \iltikzfig{circuits/axioms/generalised-streaming-lhs}[box=f]
-    \reduction[(\streamingeqn)]
-    \iltikzfig{circuits/axioms/generalised-streaming-rhs}[box=f]
-    \) is sound.
+    The following \emph{streaming rule} is sound: \[
+        \iltikzfig{circuits/axioms/generalised-streaming-lhs}[box=f]
+        \reduction[(\streamingeqn)]
+        \iltikzfig{circuits/axioms/generalised-streaming-rhs}[box=f]
+    \]
 \end{lemma}
 \begin{proof}
     Once again this can be shown by considering the stream semantics.
@@ -70,15 +70,15 @@ The final rules we present will reduce this copy to values, as desired.
         \iltikzfig{circuits/axioms/fork-lhs}[val=v]
         \reduction[(\forkeqn)]
         \iltikzfig{circuits/axioms/fork-rhs}[val=v]
-        \quad
+        \qquad
         \iltikzfig{circuits/axioms/join-lhs}[val1=v,val2=w]
         \reduction[(\joineqn)]
         \iltikzfig{circuits/axioms/join-rhs}[val1=v,val2=w]
-        \quad
+        \\
         \iltikzfig{circuits/axioms/stub-lhs}[val=v]
         \reduction[(\stubeqn)]
         \iltikzfig{strings/monoidal/empty}
-        \quad
+        \qquad
         \iltikzfig{circuits/axioms/gate-lhs}[gate=p,input=\listvar{v}]
         \reduction[(\gateeqn)]
         \iltikzfig{circuits/axioms/gate-rhs}[gate=p,input=\listvar{v}]
@@ -102,9 +102,9 @@ required, as more is involved than than just copying circuit components.
 \begin{lemma}\label{lem:reduce-core-terminating}
     For a combinational circuit \(
     \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
-    \) and \(\listvar{v} \in \valuetuple{m}\), there exists a word
+    \) and \(\listvar{v} \in \valuetuple{m}\), there exists
     \(\listvar{w} \in \valuetuple{n}\) such that applying the value
-    rules exhaustively to \(
+    rules to \(
     \iltikzfig{circuits/components/circuits/f-applied}[box=f,colour=comb]
     \) terminates at \(
     \iltikzfig{circuits/components/values/vs}[val=\listvar{w}]
@@ -177,8 +177,7 @@ circuit.
 \begin{remark}
     This style of operational semantics differs from some other approaches in
     the area, such as the work on signal flow graphs~\cite{bonchi2021survey}.
-
-    In \emph{loc.\ cit.\ } the operational semantics is specified in terms of
+    In these works, the operational semantics is specified in terms of
     the state transitions that take place in a circuit over time.
     For example, the rule that applies to the fork in signal flow graphs is
     \[

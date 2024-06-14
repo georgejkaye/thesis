@@ -10,15 +10,15 @@ rules.
         \iltikzfig{circuits/axioms/fork-lhs}[val=\listvar{v}, cod=n]
         \reduction[(\forkeqn)]
         \iltikzfig{circuits/axioms/fork-rhs}[val=\listvar{v}, cod=n]
-        \quad
+        \qquad
         \iltikzfig{circuits/axioms/join-lhs}[val1=\listvar{v},val2=\listvar{w}, cod=n]
         \reduction[(\joineqn)]
         \iltikzfig{circuits/axioms/join-rhs}[val1=\listvar{v},val2=\listvar{w}, cod=n]
-        \quad
+        \\[1em]
         \iltikzfig{circuits/axioms/stub-lhs}[val=\listvar{v}]
         \reduction[(\stubeqn)]
         \iltikzfig{strings/monoidal/empty}
-        \quad
+        \qquad
         \iltikzfig{circuits/axioms/gate-lhs}[gate=p,input=\listvar{v}]
         \reduction[(\gateeqn)]
         \iltikzfig{circuits/axioms/gate-rhs}[gate=p,input=\listvar{v}]
@@ -26,7 +26,7 @@ rules.
         \iltikzfig{circuits/axioms/unbundle-lhs}
         \reduction[(\spliteqn)]
         \iltikzfig{circuits/axioms/unbundle-rhs}
-        \quad
+        \qquad
         \iltikzfig{circuits/axioms/bundle-lhs}
         \reduction[(\combineeqn)]
         \iltikzfig{circuits/axioms/bundle-rhs}
@@ -40,7 +40,7 @@ rules.
     There are no overlaps between the rules.
 \end{proof}
 
-\begin{lemma}
+\begin{lemma}l
     For a generalised combinational circuit \(
     \iltikzfig{strings/category/f}[box=f,colour=comb,dom=\listvar{m},cod=\listvar{n}]
     \) and \(\listvar{v} \in \valuetuple{\listvar{m}}\), there exists a word
