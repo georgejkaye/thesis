@@ -24,64 +24,64 @@ of a PROP morphism from \(\scircsigma\) to \(\mealyi\) is fairly intuitive.
         \circuittomealy[
             \iltikzfig{circuits/components/gates/gate}[colour=comb]
         ]{\interpretation}
-         & \coloneqq \left(
+         & \coloneqq (
         \{s\},
-        \left(s, \listvar{v}\right) \mapsto
+         &             & \left(s, \listvar{v}\right) \mapsto
         \left\langle{s, \gateinterpretation[g](\listvar{v})}\right\rangle,
-        s
-        \right)
+         &             & s
+        )
         \\
         \circuittomealy[
             \iltikzfig{strings/structure/comonoid/copy}[colour=comb]
         ]{\interpretation}
-         & \coloneqq \left(
+         & \coloneqq (
         \{s\},
-        (s, v) \mapsto \left\langle{s, (v, v)}\right\rangle,
-        s
-        \right)
+         &             & (s, v) \mapsto \left\langle{s, (v, v)}\right\rangle,
+         &             & s
+        )
         \\
         \circuittomealy[
             \iltikzfig{strings/structure/monoid/merge}[colour=comb]
         ]{\interpretation}
-         & \coloneqq \left(
+         & \coloneqq (
         \{s\},
-        (s, (v, w)) \mapsto
+         &             & (s, (v, w)) \mapsto
         \left\langle{s, (v \ljoin w)}\right\rangle,
-        s
-        \right)
+         &             & s
+        )
         \\
         \circuittomealy[
             \iltikzfig{strings/structure/comonoid/discard}[colour=comb]
         ]{\interpretation}
-         & \coloneqq \left(
+         & \coloneqq (
         \{s\},
-        (s, v) \mapsto
+         &             & (s, v) \mapsto
         \left\langle{s, ()}\right\rangle,
-        s
-        \right)
+         &             & s
+        )
         \\
         \circuittomealy[
             \iltikzfig{circuits/components/values/vs}[val=v]
         ]{\interpretation}
          & \coloneqq
-        \left(
+        (
         \{s_v, s_\bot\},
-        \{
+         &             & \{
         s_v \mapsto \left\langle{s_\bot,v}\right\rangle,
         s_\bot \mapsto \left\langle{s_\bot,\bot}\right\rangle
         \},
-        s_v
-        \right)
+         &             & s_v
+        )
         \\
         \circuittomealy[
             \iltikzfig{circuits/components/waveforms/delay}
         ]{\interpretation}
          & \coloneqq
-        \left(
+        (
         \{ s_v \,|\, v \in \values\},
-        (s_v, a) \mapsto \left\langle{v,s_a}\right\rangle,
-        s_\bot
-        \right)
+         &             & (s_v, a) \mapsto \left\langle{v,s_a}\right\rangle,
+         &             & s_\bot
+        )
     \end{align*}
 \end{definition}
 

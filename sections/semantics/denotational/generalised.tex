@@ -113,35 +113,35 @@ manner.
             \iltikzfig{circuits/components/gates/gate}[colour=comb]
         ]
          & \coloneqq
-        (\{()\},
+        (\{s\},
          &             & (\listvar{v}_0,\dots,\listvar{v}_{m-1}) \mapsto
         \left\langle
-        (),
+        s,
         \gateinterpretation[g]\left(
         \listvar{v}_0,\listvar{v}_1,\dots,\listvar{v}_{m-1}
         \right)
         \right\rangle,
-         &             & ())
+         &             & s)
         \\
         \circuittomealyig[
             \iltikzfig{strings/structure/comonoid/copy}[colour=comb,obj=n]
         ]
          & \coloneqq (
-        \{()\},
+        \{s\},
          &             & \listvar{v}
         \mapsto
-        \left\langle(), (\listvar{v},\listvar{v})\right\rangle,
-         &             & ()
+        \left\langle s, (\listvar{v},\listvar{v})\right\rangle,
+         &             & s
         )
         \\
         \circuittomealyig[
             \iltikzfig{strings/structure/monoid/merge}[colour=comb,obj=n]
         ]
          & \coloneqq (
-        \{()\},
+        \{s\},
          &             & (\listvar{v}, \listvar{w}) \mapsto
-        \left\langle(), \listvar{v} \ljoin \listvar{w}\right\rangle,
-         &             & ()
+        \left\langle s, \listvar{v} \ljoin \listvar{w}\right\rangle,
+         &             & s
         )
         \\
         \circuittomealyig[
@@ -149,10 +149,10 @@ manner.
         ]
          & \coloneqq
         (
-        \{()\},
+        \{s\},
          &             & \listvar{v} \mapsto
-        \left\langle(), ()\right\rangle,
-         &             & ()
+        \left\langle s, s\right\rangle,
+         &             & s
         )
         \\
         \circuittomealyig[
@@ -160,9 +160,9 @@ manner.
         ]
          & \coloneqq
         (
-        \{()\},
+        \{s\},
          &             & (v_0,v_1,\dots,v_{n-1}) \mapsto ((v_0), (v_1), \dots, (v_{n-1})),
-         &             & ()
+         &             & s
         )
         \\
         \circuittomealyig[
@@ -170,9 +170,9 @@ manner.
         ]
          & \coloneqq
         (
-        \{()\},
+        \{s\},
          &             & ((v_0), (v_1), \dots, (v_{n-1})) \mapsto (v_0,v_1,\dots,v_{n-1}),
-         &             & ()
+         &             & s
         )
         \\
         \circuittomealyig[
@@ -209,9 +209,8 @@ translate them into stream functions or coloured circuits.
     Let the coloured PROP morphisms
     \(\morph{\mealytostreamig}{\mealyig}{\streamig}\),
     \(\morph{\streamtomealyig}{\streamig}{\mealyig}\) and
-    \(\morph{\streamtomealyig}{\mealyig}{\scircsigmag}\) be defined as the
-    monochromatic versions, and let
-    \(\morph{\circuittostreamig}{\scircsigmag}{\streamig}\)
+    \(\morph{\streamtomealyig}{\mealyig}{\scircsigmag}\) be defined as before,
+    and let \(\morph{\circuittostreamig}{\scircsigmag}{\streamig}\)
     be defined as \(\mealytostreamig \circ \circuittomealyig\).
 \end{definition}
 
