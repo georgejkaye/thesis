@@ -58,8 +58,8 @@ combinational circuit components across the opening forks of the explosion.
     \((\notforkeqn)\), and is immediate for the fork.
     The infinite register \(
     \iltikzfig{circuits/components/waveforms/infinite-register}[val=v]
-    \) can also be treated as a base case and is covered by \((\infregforkeqn)\).
-    The inductive cases are then trivial.
+    \) is also a base case and is covered by \((\infregforkeqn)\).
+    The inductive cases are trivial.
 \end{proof}
 
 \begin{proposition}\label{prop:exploded-belnap}
@@ -106,7 +106,7 @@ combinational circuit components across the opening forks of the explosion.
     \(\iltikzfig{circuits/components/gates/not}\) gates.
     Any infinite registers containing \(\bot\) can be converted to
     \(\iltikzfig{strings/structure/monoid/init}[colour=comb]\) components using
-    \((\botregeqn)\), and any other registers can be combined into one by
+    \((\botregeqn)\), and other registers can be combined using
     \((\infregforkeqn)\).
 
     For the composition inductive case, we have two exploded circuits and we

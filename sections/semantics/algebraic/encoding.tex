@@ -51,7 +51,7 @@ While two `inverse' homomorphisms may not be isomorphisms, the round
 trip will always map to a state with the same behaviour.
 
 \begin{lemma}
-    For Mealy homomorphisms \(\morph{h}{(S,f)}{(T,g)}\) and
+    Given two Mealy homomorphisms \(\morph{h}{(S,f)}{(T,g)}\) and
     \(\morph{h^\prime}{(T,g)}{(S,f)}\), any state \(s \in S\) and input
     \(a \in A\), \(
     \mealyfunctiontransition{f}(s, a)
@@ -111,7 +111,7 @@ and
     \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[f],state=\listvar{s},colour=seq,dom=m,cod=n,delay=x]
     \) and \(
     \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[g],state=\listvar{t},colour=seq,dom=m,cod=n,delay=y]
-    \), there exists at least one Mealy homomorphism \(
+    \), there exists a Mealy homomorphism \(
     \morph{h}{(S_{f,\listvar{s}},f)}{(S_{g,\listvar{t}},g)}
     \).
 \end{proposition}
@@ -198,32 +198,38 @@ Using the encoding equations we can derive some lemmas that will come in useful
 for showing the final result.
 
 \begin{lemma}\label{lem:unroll-waveform}
-    For a value \(v \in \values\), \(
+    For \(v \in \values\), \(
     \iltikzfig{circuits/algebraic/unroll-waveform/step-0}[value=v]
     =
     \iltikzfig{circuits/algebraic/unroll-waveform/step-6}[value=v]
     \) by the encoding equations.
 \end{lemma}
 \begin{proof}
-    The proof is straightforward:
-    \begin{gather*}
-        \iltikzfig{circuits/algebraic/unroll-waveform/step-0}[value=v]
-        \coloneqq
-        \iltikzfig{circuits/algebraic/unroll-waveform/step-1}[value=v]
-        \eqaxioms[(\joinforkeqn)]
-        \iltikzfig{circuits/algebraic/unroll-waveform/step-2}[value=v]
-        \eqaxioms[(\forkeqn)]
-        \iltikzfig{circuits/algebraic/unroll-waveform/step-3}[value=v]
-        \eqaxioms[(\delayforkeqn)]
-        \\
-        \iltikzfig{circuits/algebraic/unroll-waveform/step-4}[value=v]
-        \coloneqq
-        \iltikzfig{circuits/algebraic/unroll-waveform/step-5}[value=v]
-        =
-        \iltikzfig{circuits/algebraic/unroll-waveform/step-6}[value=v]
-    \end{gather*}
-    This completes the proof.
+    The proof is straightforward and is illustrated in
+    \cref{fig:unroll-waveform}.
 \end{proof}
+
+\begin{figure}
+    \centering
+    \begin{gather*}
+        \scalebox{0.9}{\iltikzfig{circuits/algebraic/unroll-waveform/step-0}[value=v]}
+        \coloneqq
+        \scalebox{0.9}{\iltikzfig{circuits/algebraic/unroll-waveform/step-1}[value=v]}
+        \eqaxioms[(\joinforkeqn)]
+        \scalebox{0.9}{\iltikzfig{circuits/algebraic/unroll-waveform/step-2}[value=v]}
+        \eqaxioms[(\forkeqn)]
+        \\[1em]
+        \scalebox{0.9}{\iltikzfig{circuits/algebraic/unroll-waveform/step-3}[value=v]}
+        \eqaxioms[(\delayforkeqn)]
+        \scalebox{0.9}{\iltikzfig{circuits/algebraic/unroll-waveform/step-4}[value=v]}
+        \coloneqq
+        \scalebox{0.9}{\iltikzfig{circuits/algebraic/unroll-waveform/step-5}[value=v]}
+        =
+        \scalebox{0.9}{\iltikzfig{circuits/algebraic/unroll-waveform/step-6}[value=v]}
+    \end{gather*}
+    \caption{Proof of \cref{lem:unroll-waveform}}
+    \label{fig:unroll-waveform}
+\end{figure}
 
 \begin{lemma}\label{lem:generalised-streaming}
     For a combinational circuit \(
@@ -240,14 +246,25 @@ for showing the final result.
     \).
     The case for the primitive is immediate by \((\streamingeqn)\).
     For \(\iltikzfig{strings/structure/comonoid/copy}[colour=comb]\) we have
-    that \(
-    \iltikzfig{circuits/productivity/generalised-streaming/fork-step-0}
-    \eqaxioms[(\joinforkeqn)]
-    \iltikzfig{circuits/productivity/generalised-streaming/fork-step-1}
-    \eqaxioms[(\delayforkeqn)]
-    \iltikzfig{circuits/productivity/generalised-streaming/fork-step-2}
-    \).
-    For \(\iltikzfig{strings/structure/monoid/merge}[colour=comb]\) we have that
+    that \[
+        \iltikzfig{circuits/productivity/generalised-streaming/fork-step-0}
+        \eqaxioms[(\joinforkeqn)]
+        \iltikzfig{circuits/productivity/generalised-streaming/fork-step-1}
+        \eqaxioms[(\delayforkeqn)]
+        \iltikzfig{circuits/productivity/generalised-streaming/fork-step-2}
+    \]
+    The proof for \(\iltikzfig{strings/structure/monoid/merge}[colour=comb]\) is
+    illustrated in \cref{fig:generalised-streaming-join}.
+    The case for \(\iltikzfig{strings/structure/comonoid/discard}[colour=comb]\) is
+    trivial, and the case for \(\iltikzfig{strings/structure/monoid/init}[colour=comb]\)
+    follows by \((\comonoiduniteqnletter)\) and \((\bottomdelayeqn)\).
+    The cases for \(\iltikzfig{strings/category/identity}[colour=comb]\) and
+    \(\iltikzfig{strings/symmetric/symmetry}[colour=comb]\) follow by axioms of STMCs.
+    Since the underlying circuit is combinational, for the inductive cases we just
+    need to check composition and tensor, which are trivial.
+\end{proof}
+
+\begin{figure}
     \begin{gather*}
         \iltikzfig{circuits/productivity/generalised-streaming/join-step-2}
         \eqaxioms[(\monoidassoceqnletter)]
@@ -255,41 +272,21 @@ for showing the final result.
         \eqaxioms[(\monoidassoceqnletter)]
         \iltikzfig{circuits/productivity/generalised-streaming/join-step-4}
         \eqaxioms[(\monoidcommeqnletter)]
+        \\[1em]
         \iltikzfig{circuits/productivity/generalised-streaming/join-step-5}
         =
-        \\
         \iltikzfig{circuits/productivity/generalised-streaming/join-step-6}
         \eqaxioms[(\monoidassoceqnletter)]
         \iltikzfig{circuits/productivity/generalised-streaming/join-step-7}
         \eqaxioms[(\monoidassoceqnletter)]
+        \\[1em]
         \iltikzfig{circuits/productivity/generalised-streaming/join-step-8}
         \eqaxioms[(\monoidassoceqnletter)]
         \iltikzfig{circuits/productivity/generalised-streaming/join-step-9}
     \end{gather*}
-    The case for \(\iltikzfig{strings/structure/comonoid/discard}[colour=comb]\) is
-    trivial, and the case for \(\iltikzfig{strings/structure/monoid/init}[colour=comb]\)
-    follows by \((\comonoiduniteqnletter)\) and \((\bottomdelayeqn)\).
-    The cases for \(\iltikzfig{strings/category/identity}[colour=comb]\) and
-    \(\iltikzfig{strings/symmetric/symmetry}[colour=comb]\) follow by axioms of STMCs.
-    Since the underlying circuit is combinational, for the inductive cases we just
-    need to check composition and tensor, which are also trivial.
-\end{proof}
-
-\begin{lemma}\label{lem:interpretation-combinational}
-    Let \(\iltikzfig{strings/category/f}[box=f,colour=comb]\) be a combinational
-    circuit such that \(
-    \circuittofunci[\iltikzfig{strings/category/f}[box=f,colour=comb]]
-    =
-    g\).
-    Then \(\circuittostreami[
-        \iltikzfig{circuits/components/circuits/f-applied}[box=f,colour=comb]
-    ]
-    =
-    g(\listvar{v}) \streamcons \bot \streamcons \bot \streamcons \dots\).
-\end{lemma}
-\begin{proof}
-
-\end{proof}
+    \caption{Proof of \cref{lem:generalised-streaming} for the join}
+    \label{fig:generalised-streaming-join}
+\end{figure}
 
 \begin{lemma}\label{lem:combinational-circuit-inputs}
     Let \(\iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]\) be a
@@ -443,16 +440,17 @@ into one with an encoded state.
         \coloneqq
         \iltikzfig{circuits/algebraic/encoding-state/step-0}[box=g]
         \eqaxioms[\text{(\cref{lem:unroll-waveform})}]
+        \\[1em]
         \iltikzfig{circuits/algebraic/encoding-state/step-1}[box=g]
         \eqaxioms[\text{(\cref{lem:generalised-streaming})}]
-        \\[0.5em]
         \iltikzfig{circuits/algebraic/encoding-state/step-2}[box=g]
         \eqaxioms[\text{(\cref{lem:essentially-combinational-applied})}]
+        \\[1em]
         \iltikzfig{circuits/algebraic/encoding-state/step-3}[box=g]
         \coloneqq
-        \\[0.5em]
         \iltikzfig{circuits/algebraic/encoding-state/step-4}[box=g]
         \coloneqq
+        \\[1em]
         \iltikzfig{circuits/algebraic/encoding-state/step-5}[box=g]
     \end{gather*}
     The proof is completed by sliding the encoder around the trace.
@@ -463,7 +461,7 @@ equations can be used to encode the states of any circuit as those of a
 denotationally equivalent one.
 
 \begin{corollary}\label{cor:encoding-circuits}
-    For denotationally equivalent circuits \(
+    For two denotationally equivalent circuits \(
     \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[f],state=\listvar{s},colour=seq,dom=m,cod=n,delay=x]
     \) and \(
     \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[g],state=\listvar{t},colour=seq,dom=m,cod=n,delay=y]
