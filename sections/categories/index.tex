@@ -2,9 +2,14 @@
 
 When setting about developing a mathematical foundation for something,
 the first step is to decide exactly what foundation to pick.
-In this thesis, our foundation is that of \emph{category theory}, in which
-mathematical structures are expressed in terms of \emph{objects} and composable
-\emph{morphisms} between them.
+As a basis, we will model circuits as \emph{terms} constructed by combining
+primitive generators in sequence and parallel (\cref{sec:terms}).
+But terms on their own are not enough, as there may be many terms that represent
+the same structure.
+To use the necessary `structural' equations and identify these terms, we turn
+to \emph{category theory}, in which mathematical structures are expressed using
+\emph{categories}: collections of \emph{objects} and composable \emph{morphisms}
+between them (\cref{sec:categories}).
 
 Category theory started out in the early 1940s, when Eilenberg and Mac Lane
 were working on problems in algebraic topology.
@@ -41,8 +46,8 @@ instantiated to a plethora of settings.
     algebraic structures.
 \end{example}
 
-Category theory has found a home among computer scientists, as
-it can be used to shed new light upon topics such as semantics of programming
+Category theory is especially relevant to computer scientists, and it has been
+used to shed light upon topics such as semantics of programming
 languages~\cite{oles1982categorytheoretic}, databases~\cite{spivak2012functorial},
 probabilistic programming~\cite{cho2019disintegration,fritz2020synthetic}, and
 machine learning~\cite{fong2019backprop,cockett2020reverse}.
@@ -50,24 +55,26 @@ Category theory also underpins functional programming languages such as
 Haskell and OCaml, which use categorical concepts such as functors and monads
 for computational purposes.
 
-One application of category theory we are particularly interested in is that of
-\emph{process theories}; here a morphism \(A \to B\) is a process that
-transforms some input \(A\) into an output \(B\).
-Modelling processes categorically relies on a class of categories known as
-\emph{symmetric monoidal categories}~\cite{maclane1963natural}, in which the
-usual \emph{sequential} composition is joined by another operation called the
-\emph{tensor}, a notion of \emph{parallel} composition.
-Our setting of digital circuits introduces another way of creating new things
-from simpler components: we can create a \emph{feedback loop} by attaching some
-outputs to inputs.
+Using category theory, a circuit can be modelled as a morphism \(A \to B\), but
+this is not expressive enough to work with complicated, two-dimensional
+circuits.
+By using functors (\cref{sec:functors}) and natural transformations
+(\cref{sec:natural-transformations}), we can define a class of categories known
+as \emph{symmetric monoidal categories}~\cite{maclane1963natural}, in which the
+usual \emph{sequential} composition is joined by \emph{parallel} composition
+and morphisms for \emph{swapping} inputs (\cref{sec:monoidal-categories}).
+In digital circuits, we additionally create a
+\emph{feedback loop} by attaching some outputs to inputs.
 This too can be viewed in a categorical perspective in the form of a
-\emph{symmetric traced monoidal category}~\cite{joyal1996traced}.
+\emph{symmetric traced monoidal category}~\cite{joyal1996traced}
+(\cref{sec:traced-compact-closed}).
 
-The use of symmetric monoidal categories to model compositional processes, has
-seen an explosion in the past thirty years.
-In additional to the aforementioned quantum protocols~\cite{coecke2008interacting},
-they have been used in the study of cyclic lambda
-calculi~\cite{hasegawa1997recursion}, dynamical
+To reason with circuits we must additionally make use of a
+\emph{monoidal theory}
+(\cref{sec:monoidal-theories}), a set of context-specific equations between
+the primitive components in a category.
+Monoidal theories have been successfully applied to study quantum
+protocols~\cite{coecke2008interacting}, dynamical
 systems~\cite{baez2015categories,fong2016categorical}, signal flow
 diagrams~\cite{bonchi2014categorical,bonchi2015full,bonchi2017refinement,bonchi2021survey},
 linear algebra~\cite{bonchi2017interacting,zanasi2015interacting,bonchi2019graphical,boisseau2022graphical},
@@ -89,5 +96,5 @@ inspiration was taken in particular from the opening of
 \input{sections/categories/natural-transformations}
 \input{sections/categories/monoidal-categories}
 \input{sections/categories/props}
-\input{sections/categories/monoidal-theories}
 \input{sections/categories/backwards}
+\input{sections/categories/monoidal-theories}
