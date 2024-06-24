@@ -17,7 +17,7 @@ Frobenius terms; wires cannot arbitrarily fork or join, and cycles may not be
 created.
 The former is tackled by a condition on the connectivity of vertices.
 
-\begin{definition}[Degree (\cite{bonchi2022stringa}, Def. 12)]
+\begin{definition}[Degree {\cite[Def.\ 12]{bonchi2022stringa}}]
     For a hypergraph \(F \in \hyp\), the \emph{degree} of a vertex
     \(v \in \vertices{F}\) is a tuple \((i,o)\) where \(i\) is the number of
     pairs \((e,i)\) where \(e\) is a hyperedge with \(v\) as its \(i\)th target,
@@ -25,7 +25,7 @@ The former is tackled by a condition on the connectivity of vertices.
     hyperedge with \(v\) as its \(j\)th target.
 \end{definition}
 
-\begin{definition}[Monogamy (\cite{bonchi2022stringa}, Def. 13)]
+\begin{definition}[Monogamy {\cite[Def.\ 13]{bonchi2022stringa}}]
     For a cospan \(\cospan{m}[f]{F}[g]{n}\) in
     \(\cspdhyp\), let \(\mathsf{in}(F)\) and \(\mathsf{out}(F)\) be the image of
     \(f\) and \(g\) respectively.
@@ -75,7 +75,7 @@ Since our goal is to assemble monogamous cospans into a category, it is
 necessary to check that the property is preserved by the various categorical
 operations.
 
-\begin{lemma}[\cite{bonchi2022stringa}, Lem. 15]\label{lem:identities-symmetries-monogamous}
+\begin{lemma}[\cite{bonchi2022stringa}, Lem.\ 15]\label{lem:identities-symmetries-monogamous}
     Identities and symmetries are monogamous.
 \end{lemma}
 \begin{proof}
@@ -83,7 +83,7 @@ operations.
     interfaces, so the cospans are monogamous.
 \end{proof}
 
-\begin{lemma}[\cite{bonchi2022stringa}, Lem. 16]\label{lem:monogamicity-preserved-composition}
+\begin{lemma}[\cite{bonchi2022stringa}, Lem.\ 16]\label{lem:monogamicity-preserved-composition}
     Monogamicity is preserved by composition.
 \end{lemma}
 \begin{proof}
@@ -100,7 +100,7 @@ operations.
     \(0\), the merged vertices will have at most degree \((1, 1)\).
 \end{proof}
 
-\begin{lemma}[\cite{bonchi2022stringa}, Lem. 17]\label{lem:monogamicity-preserved-tensor}
+\begin{lemma}[\cite{bonchi2022stringa}, Lem.\ 17]\label{lem:monogamicity-preserved-tensor}
     Monogamicity is preserved by tensor.
 \end{lemma}
 \begin{proof}
@@ -112,13 +112,13 @@ As seen in \cref{ex:monogamous}, monogamy makes no guarantees about cycles.
 Since symmetric monoidal terms cannot have cycles, a notion of \emph{acyclicity}
 must also be enforced.
 
-\begin{definition}[Predecessor (\cite{bonchi2022stringa}, Def. 18)]
+\begin{definition}[Predecessor {\cite[Def.\ 18]{bonchi2022stringa}}]
     A hyperedge \(e\) is a \emph{predecessor} of another hyperedge \(e^\prime\)
     if there exists a node \(v\) in the sources of \(e\) and the targets of
     \(e^\prime\).
 \end{definition}
 
-\begin{definition}[Path (\cite{bonchi2022stringa}, Def. 19)]
+\begin{definition}[Path {\cite[Def.\ 19]{bonchi2022stringa}}]
     A \emph{path} between two hyperedges \(e\) and \(e^\prime\) is a sequence of
     hyperedges \(e_0, \dots, e_{n-1}\) such that \(e = e_0\),
     \(e^\prime = e_{n-1}\), and for each \(i < n-1\), \(e_i\) is a predecessor
@@ -130,7 +130,7 @@ must also be enforced.
 Since nodes are single-element subgraphs, one can also talk about paths from
 nodes.
 
-\begin{definition}[Acyclicity (\cite{bonchi2022stringa}, Def. 20)]
+\begin{definition}[Acyclicity {\cite[Def.\ 20]{bonchi2022stringa}}]
     A hypergraph \(F\) is acyclic if there is no path from a node to itself.
     A cospan \(\cospan{m}{F}{n}\) is acyclic if \(F\) is.
 \end{definition}
@@ -153,7 +153,7 @@ nodes.
 Once again, for acyclicity to be a suitable condition on a category of cospans,
 it needs to be preserved by categorical operations.
 
-\begin{lemma}[\cite{bonchi2022stringa}, Prop. 21]\label{lem:identities-symmetries-monogamous-acyclic}
+\begin{lemma}[\cite{bonchi2022stringa}, Prop.\ 21]\label{lem:identities-symmetries-monogamous-acyclic}
     Identities and symmetries are acyclic.
 \end{lemma}
 \begin{proof}
@@ -161,7 +161,7 @@ it needs to be preserved by categorical operations.
     hypergraphs cannot contain cycles.
 \end{proof}
 
-\begin{lemma}[\cite{bonchi2022stringa}, Prop. 21]\label{lem:monogamous-acyclicity-preserved-tensor}
+\begin{lemma}[\cite{bonchi2022stringa}, Prop.\ 21]\label{lem:monogamous-acyclicity-preserved-tensor}
     Acyclicity is preserved by tensor.
 \end{lemma}
 \begin{proof}
@@ -173,7 +173,7 @@ cospans may not preserve acyclicity.
 It is only when acyclicity is combined with monogamy that composition can be
 safely performed.
 
-\begin{lemma}[\cite{bonchi2022stringa}, Prop. 21]\label{lem:monogamous-acyclicity-preserved-composition}
+\begin{lemma}[\cite{bonchi2022stringa}, Prop.\ 21]\label{lem:monogamous-acyclicity-preserved-composition}
     Monogamous acyclicity is preserved by composition.
 \end{lemma}
 \begin{proof}
@@ -218,13 +218,13 @@ Bonchi et al showed this by proving that \(\smcsigma\) is isomorphic to
 The first is a lemma showing that a special class of subgraphs can always be
 `extracted' from a parent graph.
 
-\begin{definition}[Convex subgraph (\cite{bonchi2022stringa}, Def. 23)]
+\begin{definition}[Convex subgraph {\cite[Def.\ 23]{bonchi2022stringa}}]
     A subgraph \(G \subseteq F\) is convex if for any nodes \(v, v^\prime\) in
     \(G\) and any path \(p\) from \(v\) to \(v^\prime\), every edge \(e\) in
     \(p\) is also in \(G\).
 \end{definition}
 
-\begin{lemma}[Decomposition (\cite{bonchi2022stringa}, Lem. 24)]
+\begin{lemma}[Decomposition {\cite[Lem.\ 24]{bonchi2022stringa}}]
     \label{lem:decomposition}
     For a monogamous acyclic cospan \(\cospan{m}{F}{n}\) and
     and convex subgraph \(L\) of \(G\), there exist
@@ -250,7 +250,7 @@ Essentially, we can always `pull out' a convex subgraph of a monogamous acyclic
 cospan in such a way that the remaining cospans are still monogamous acyclic.
 This is an important part of characterising the image of \(\termtohypsigma\).
 
-\begin{theorem}[\cite{bonchi2022stringa}, Thm. 25]\label{thm:monogamous-acyclic-full}
+\begin{theorem}[\cite{bonchi2022stringa}, Thm.\ 25]\label{thm:monogamous-acyclic-full}
     A cospan \(\cospan{m}{F}{n}\) is in the image of
     \(\termtohypsigma\) if and only if \(\cospan{m}{F}{n}\)
     is monogamous acyclic.
@@ -292,7 +292,7 @@ true for its components, using a result about pushouts in \(\propcat\).
     \(F\), then the third is also in the image of \(F\).
 \end{definition}
 
-\begin{theorem}[\cite{macdonald2009amalgamations}, Thm. 3.3]
+\begin{theorem}[\cite{macdonald2009amalgamations}, Thm.\ 3.3]
     \label{thm:faithful-pushout}
     Let \(\morph{F_A}{\mcc}{\mca}\) and \(\morph{F_B}{\mcc}{\mcb}\) be faithful
     functors such that the following diagram is a pushout.
@@ -364,7 +364,7 @@ using another well-known categorical lemma.
 Since \(\termandfrobtohypsigma\) is full and faithful, we have reached our
 final destination.
 
-\begin{corollary}[\cite{bonchi2022stringa}, Cor. 26]
+\begin{corollary}[\cite{bonchi2022stringa}, Cor.\ 26]
     There is an isomorphism of PROPs \(\smcsigma \cong \macspdhyp\).
 \end{corollary}
 
