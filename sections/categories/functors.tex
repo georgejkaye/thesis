@@ -2,7 +2,11 @@
 
 It is actually quite rare that we are only making use of one category at a time.
 In order to compare categories, we need a notion of \emph{mapping between} them.
-A class of maps that enjoy some useful properties are known as \emph{functors}.
+Such a map \(\morph{F}{\mcc}{\mcd}\) sends an object \(A \in \mcc\) to an
+object \(FA \in \mcd\), and a morphism \(\morph{f}{A}{B} \in \mcc\) to
+\(\morph{Ff}{FA}{FB}\).
+This is generally not a strong enough definition to be useful, so some
+additional restrictions must be added to define the notion of a \emph{functor}.
 
 \begin{definition}[Functor]
     Given two categories \(\mcc\) and \(\mcd\), a \emph{functor} \(
@@ -61,10 +65,8 @@ A class of maps that enjoy some useful properties are known as \emph{functors}.
     \end{center}
 \end{definition}
 
-A functor \(F\) maps an object \(X\) in one category to an object \(FX\) in
-another, and morphisms \(\morph{f}{X}{Y}\) to \(\morph{Ff}{FX}{FY}\).
-The two equations are known as the \emph{functoriality} equations; if a map
-satisfies these it is \emph{functorial} i.e.\ it is a functor.
+The two equations above are known as the \emph{functoriality} equations; if a
+map satisfies these it is \emph{functorial} i.e.\ it is a functor.
 
 Functors have a graphical representation as `functorial
 boxes'~\cite{mellies2006functorial}; the notation for applying a functor
@@ -101,28 +103,31 @@ Many notions in mathematics and computer science can be viewed as functors.
 \end{example}
 
 \begin{example}[Free monoid]\label{ex:free-monoid}
-    When talking about a mathematical structure, there is often a notion
-    of its \emph{free construction}, which can be viewed as the most
-    `bare-bones' version.
-    For example, the set of lists \(\freemon{X}\) is the carrier of the
+    The \emph{free construction} of a mathematical structure can be viewed as
+    its most `bare-bones' version.
+    Recall the definition of monoids from \cref{ex:monoid}: the set of words
+    \(\freemon{X}\) as defined in \cref{not:words} is the carrier of the
     \emph{free monoid} on \(X\).
     This means there is a functor \(\morph{F}{\set}{\mon}\) (the
     \emph{free functor}) that acts on objects as \(
-    X \mapsto (\freemon{X}, \concat, [])
-    \) and sends morphisms \(X \to Y\) to the corresponding monoid homomorphism
+    X \mapsto (
+    \freemon{X},
+    (\listvar{v}, \listvar{w}) \mapsto \listvar{v}\listvar{w},
+    \varepsilon
+    )\) and sends morphisms \(X \to Y\) to the corresponding monoid homomorphism
     \(\freemon{X} \to \freemon{Y}\).
 
     There is also a \emph{forgetful} or \emph{underlying} functor
     \(\morph{U}{\mon}{\set}\) which sends a monoid \((X, *, e)\) to its carrier
     set \(X\) and `forgets' the monoid structure.
-    These functors form a relationship known as an \emph{adjunction}, but this
+    The functors \(F\) and \(U\) form an \emph{adjunction}, but this
     is beyond the scope of this thesis.
 \end{example}
 
 \subsection{Functors as morphisms}
 
-Although it is possible to view functors purely as a standalone concept, the
-core tenet of category theory is to view everything in terms of morphisms, and
+It is possible to view functors purely as a standalone concept, but the
+core tenet of category theory is to view everything in terms of morphisms;
 functors are no different.
 
 \begin{example}[Identity functor]
@@ -148,7 +153,7 @@ define a category containing all `small' categories.
 \begin{example}[Category of categories]
     \(\cat\) is the category in which \(\ob{\cat}\) are small categories and
     \(\mor{\cat}{\mcc}{\mcd}\) contains functors \(\mcc \to \mcd\).
-    Identity is the identity functor, and composition is function composition.
+    Identity is the identity functor, and composition is functor composition.
 \end{example}
 
 Using the category of categories means we can reason about categories using the
@@ -207,11 +212,12 @@ the former is the latter with `some of the bits taken out'.
     subclass of the objects in \(\mcc\) and a subclass of the morphims in
     \(\mcd\) such that
     \begin{itemize}
-        \item for every object \(A \in \mcd\), \(\id[A] \in \mcd\);
-        \item for every morphism \(\morph{f}{A}{B} \in \mcd\), \(A,B \in \mcd\);
-              and
-        \item for morphisms \(\morph{f}{A}{B}, \morph{g}{B}{C} \in \mcd\)
-              \(g \circ f \in \mcd\).
+        \item for every object \(A \in \mcd\), the identity \(\id[A]\) is in
+              \(\mcd\);
+        \item for every morphism \(\morph{f}{A}{B} \in \mcd\), the source and
+              targets \(A\) and \(B\) are in \(\mcd\); and
+        \item for morphisms \(\morph{f}{A}{B}, \morph{g}{B}{C} \in \mcd\), the
+              composition \(g \circ f\) is in \(\mcd\).
     \end{itemize}
 \end{definition}
 
@@ -260,7 +266,9 @@ long as it has the required properties.
 
 \begin{remark}
     Usually, isomorphism of categories is too restrictive; often the weaker
-    notion \emph{equivalence of categories} is used.
+    notion \emph{equivalence of categories} is used, in which the two functors
+    \(F\) and \(G\) need only be \emph{naturally isomorphic} to the identity
+    functor rather than equal.
     However, in this thesis it turns out that all the results we need really are
     strong enough to be isomorphisms.
 \end{remark}
@@ -307,8 +315,8 @@ far.
     When the category \(\mathcal{J}\) is the empty category, the only functor
     \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) is the empty functor.
     Since there are no objects in \(\mathcal{J}\), a cone of \(F\) is just an
-    object \(C\), so the limit of \(F\) is an object \(L\) to which there is a
-    unique morphism \(C \to L\); the terminal object.
+    object \(N\), so the limit of \(F\) is an object \(L\) to which there is a
+    unique morphism \(N \to L\); the terminal object.
 
 \end{example}
 
@@ -360,7 +368,7 @@ for the rest we must flip the arrows and consider the dual version.
     \end{center}
 \end{definition}
 
-\begin{definition}[Limit]
+\begin{definition}[Colimit]
     Let \(\mathcal{J}\) and \(\mathcal{C}\) be categories, and let
     \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) be a functor.
     The \emph{colimit of \(F\)} is a cocone to \(F\) \((L,\phi)\) such that for

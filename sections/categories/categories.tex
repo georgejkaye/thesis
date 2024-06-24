@@ -5,9 +5,8 @@ precisely the same way.
 As we have already seen, this is far too strong a relation; there may be
 many terms that, while constructed in different ways, look the same when drawn
 out as a diagram modulo the tiling.
-To identify the terms that actually describe the same process, we need to impose
-some equations on terms.
-There is an obvious question: what are these equations?
+We can identify terms that describe the same process using \emph{equations}, but
+which ones?
 
 \begin{example}
     Consider the term \(\id[m] \seq f\), read as `do nothing and
@@ -28,7 +27,7 @@ It turns out that the required equations are the equations of
 \emph{symmetric monoidal categories}.
 To grasp how these equations are derived one requires quite a
 bit of technical knowledge, so we will build it up one step at a time.
-We start with the basic notion of a \emph{category}.
+We start with a \emph{category}.
 
 \begin{definition}[Category]
     \label{def:category}
@@ -37,7 +36,7 @@ We start with the basic notion of a \emph{category}.
     for every pair of objects \(A, B \in \ob{\mcc}\); and a \emph{composition}
     operation \(
     \morph{
-        {-} \circ {=}
+        {-} \circ {-}
     }{
         \mor{\mcc}{B}{C} \times \mor{\mcc}{A}{B}
     }{
@@ -45,20 +44,18 @@ We start with the basic notion of a \emph{category}.
     }
     \) such that
     \begin{itemize}
-        \item composition is \emph{unital}: for every \(
-              A \in \ob{\mcc}
-              \) there exists an \emph{identity morphism} \(
-              \id[A] \in \mor{\mcc}{A}{A}
-              \) satisfying \(
+        \item
+              for any object \(A \in \ob{\mcc}\) there exists a unique
+              \emph{identity} morphism \(\id[A]\);
+        \item
+              for any \(f \in \mor{\mcc}{A}{B}\), it holds that \(
               f \circ \id[A] = f = \id[B] \circ f
-              \) for any \(
-              f \in \mor{\mcc}{A}{B}
               \); and
-        \item composition is \emph{associative}: for any morphisms \(
+        \item for any morphisms \(
               f \in \mor{\mcc}{A}{B}
               \), \(
               g \in \mor{\mcc}{B}{C}
-              \) and \(h \in \mor{\mcc}{C}{D}\), \(
+              \) and \(h \in \mor{\mcc}{C}{D}\), it holds that \(
               (h \circ g) \circ f = h \circ (g \circ f).
               \)
     \end{itemize}
@@ -123,7 +120,7 @@ to: it can be helpful to consider some concrete examples.
     The category \(\set\) has sets as objects and functions as morphisms, with
     composition of functions as composition.
     There are other categories with sets as objects, such as \(\rel\), which has
-    \emph{relaions} as morphisms and composition of relations as morphisms.
+    \emph{relations} as morphisms and composition of relations as morphisms.
     There is also a category \(\finset\) containing the \emph{finite} sets
     and functions between them.
 \end{example}
@@ -142,11 +139,11 @@ to: it can be helpful to consider some concrete examples.
     \(X \to Y\).
 \end{example}
 
-\begin{example}[Monoids]
-    A \emph{monoid} is a tuple \((A, *, \bullet)\) where \(A\) is a set called
+\begin{example}[Monoids]\label{ex:monoid}
+    A \emph{monoid} is a tuple \((A, *, e)\) where \(A\) is a set called
     the \emph{carrier}, \(\morph{*}{A \times A}{A}\) is a binary operation
-    called the \emph{multiplication}, and \(\bullet \in A\) is an element called
-    the \emph{unit}, such that \(a * \bullet = a = \bullet * a\) for any
+    called the \emph{multiplication}, and \(e \in A\) is an element called
+    the \emph{unit}, such that \(a * e = a = e * a\) for any
     \(a \in A\).
     A \emph{monoid homomorphism} between two monoids \((A, *, e_A)\) and
     \((B, +, e_B)\) is a map \(\morph{h}{A}{B}\) such that
@@ -157,9 +154,9 @@ to: it can be helpful to consider some concrete examples.
 
 \begin{example}[Product category]
     Given two categories \(\mcc\) and \(\mcd\), their \emph{product category}
-    \(\mcc \times \mcd\) is the category with objects are defined as \(
+    \(\mcc \times \mcd\) is the category with objects defined as \(
     \ob{\mcc \times \mcd} \coloneqq \ob{\mcc} \times \ob{\mcd}
-    \) and the morphisms as \[
+    \) and the morphisms as defined as \[
         \mor{(\mcc \times \mcd)}{(A, A^\prime)}{(B, B^\prime)}
         \coloneqq
         \{
@@ -172,21 +169,20 @@ to: it can be helpful to consider some concrete examples.
     For morphisms \(\morph{f}{A}{B}, \morph{g}{B}{C} \in \mcc\) and \(
     \morph{f^\prime}{A^\prime}{B^\prime}, \morph{g^\prime}{B^\prime}{C^\prime}
     \in \mcd\), the composition of \(\morph{(f,g)}{(A,A^\prime)}{(B,B^\prime)}\)
-    and \(\morph{(g,g^\prime)}{(B,B^\prime)}{(C,C^\prime)}\) is defined as
-    \((g \circ f, g^\prime \circ f^\prime)\).
+    and \(\morph{(g,g^\prime)}{(B,B^\prime)}{(C,C^\prime)}\) is defined as \(
+    (g, g^\prime) \circ (f, f^\prime)
+    \coloneqq
+    (g \circ f, g^\prime \circ f^\prime)\).
 \end{example}
 
 \subsection{Universal properties}
 
-One of the reasons that category theory is an appealing foundation is because
-of how it can be used to \emph{abstract} away from concrete constructions.
-Rather than proving results about some particular objects and morphisms, we can
+Category theory is an appealing foundation is because it can be used to
+\emph{abstract} away from concrete constructions.
+Rather than proving results about particular objects and morphisms, we can
 show how they are an instantiation of some more abstract concept.
-This means that the important theorems only need to be shown for the abstract
-case and then reused in a variety of applications.
-
-One simple way we can abstract away from concrete definitions is by considering
-the properties of a particular morphism.
+One such way we can do this is by considering the properties a morphism might
+have.
 
 \begin{definition}[Monomorphism]
     A morphism \(\morph{f}{A}{B} \in \mcc\) is called a \emph{monomorphism} (or
@@ -248,11 +244,11 @@ There is also a way to describe \emph{invertible} morphisms.
     isomorphisms are the bijective functions.
 \end{example}
 
-Constructions in categories are specified in terms of a
-\emph{universal property}: a unique morphism that indicates the `best' way to
-describe something.
-The first universal properties we will consider give particular objects special
-significance.
+Often we are concerned with particular \emph{constructions} in a category;
+some interaction of objects and morphisms which has special properties.
+These are specified in terms of a \emph{universal property}: a unique morphism
+that indicates the `best' way to describe something.
+We will first consider universal properties concerning special objects.
 
 \begin{definition}[Initial object]
     An object \(C\) in a category \(\mcc\) is \emph{initial} if, for any other
@@ -267,6 +263,8 @@ significance.
 
 Most categorical notions also have a \emph{dual}, in which all the
 arrows are flipped.
+This means that when defining constructions and proving results about them, we
+often also get results for free about the dual case.
 
 \begin{definition}[Terminal object]
     An object \(C\) in a category \(\mcc\) is \emph{terminal} if, for any other
@@ -280,12 +278,12 @@ arrows are flipped.
 \end{example}
 
 If a category has an initial or terminal object, then it is
-\emph{unique up to unique isomorphism}: if we have two objects that
-satisfies the universal property, then these objects are isomorphic in a unique
-way.
+\emph{unique up to unique isomorphism}; this means that if we have two objects
+that satisfy the universal property, then these objects are isomorphic in a
+unique way.
 
-The next properties we will see illustrate how a notion of objects being `built
-up' from other objects can be expressed in terms of the morphisms between them.
+We will now explore some universal properties that illustrate how common
+structures can be expressed in terms of the morphisms between them.
 
 \begin{definition}[Product]
     Given a category \(\mcc\) and objects \(A,B \in \mcc\), their \emph{product}
@@ -301,6 +299,11 @@ up' from other objects can be expressed in terms of the morphisms between them.
     A category \(\mcc\) is said to \emph{have products} if the product exists
     for all objects \(A,B \in \mcc\).
 \end{definition}
+
+Again, if a category has a product \(A \times B\) then it is unique up to unique
+isomorphism: any other construction \(A \times^\prime B\) also satisfying the
+universal property must be isomorphic to \(A \times B\).
+This means that we are justified in referring to `the' product if one exists.
 
 \begin{example}
     The product in \(\set\) is the Cartesian product.
@@ -379,8 +382,8 @@ The dual of the pushout is a \emph{pullback}.
     \(\set\) also has pullbacks: given morphisms \(\morph{f}{B}{A}\) and
     \(\morph{g}{C}{A}\), the pullback is defined as
     \(\{(b,c) \in B \times C \,|\, f(b) = g(c)\}\) and the maps
-    \(\morph{h}{D}{B}\) and \(\morph{k}{D}{C}\) defined as the first and second
-    projection respectively.
+    \(\morph{h}{D}{B}\) and \(\morph{k}{D}{C}\) are defined as the first and
+    second projection respectively.
 \end{example}
 
 Universal properties mean we do not need to restrict ourselves to a

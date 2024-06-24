@@ -27,7 +27,6 @@ natural transformation \(\morph{\eta}{F}{G}\) is a \emph{family} of morphisms
 \(A \in \mcd\).
 Subsequently, one can think of a natural transformation as a way of inducing
 morphisms of a certain structure across an \emph{entire category}.
-
 Graphically, the naturality equation can be seen as how a natural transformation
 can be `pushed through' morphisms, as shown in \cref{fig:naturality-equations}.
 
@@ -38,8 +37,8 @@ vein natural transformations are morphisms between functors.
 
 \begin{definition}[Functor category]
     Given two categories \(\mcc\) and \(\mcd\), a \emph{functor category}
-    \([\mcc,\mcd]\) has objects the functors \(\mcc \to \mcd\) and as morphisms
-    \(F \to G\) the natural transformations between these functors.
+    \([\mcc,\mcd]\) has as objects the functors \(\mcc \to \mcd\) and as
+    morphisms \(F \to G\) the natural transformations between these functors.
 \end{definition}
 
 Like with the category of categories, viewing functors in this way allows us to
@@ -50,7 +49,7 @@ reason with them in the same way as regular objects and morphisms.
 Natural transformations also often arise across mathematics and
 computer science.
 
-\begin{example}[Singleton]
+\begin{example}[Singleton transformation]
     Recall the \(\listf\) functor from \cref{ex:list-functor}.
     An example of a natural transformation is the
     \emph{singleton transformation} \(\morph{[-]}{\idf}{\listf}\), which

@@ -67,7 +67,7 @@ inputs and outputs; an \emph{identity} for single wires, empty space, and
 a \emph{symmetry} for swapping over two wires.
 The two inductive cases are called \emph{composition} and \emph{tensor}
 respectively.
-Intuitively, these can be thought of generating larger terms by sequencing
+Intuitively, these can be thought of as generating larger terms by composing
 subterms in sequence or parallel.
 
 Although here identities and symmetries only operate on single wires, it is
@@ -113,11 +113,11 @@ context.
     \) be a set of \emph{logic gate generators}.
     Examples of terms in \((\Sigma_g)_\mathsf{t}\) include
     \begin{gather*}
-        (\orgate \seq \id[1]) \tensor ((\id[1] \tensor \notgate) \seq \andgate)
+        \morph{(\orgate \seq \id[1]) \tensor ((\id[1] \tensor \notgate) \seq \andgate)}{4}{2}
         \\
-        ((\id[1] \tensor \id[1]) \seq \orgate) \tensor ((\id[1] \tensor \notgate) \seq \andgate)
+        \morph{((\id[1] \tensor \id[1]) \seq \orgate) \tensor ((\id[1] \tensor \notgate) \seq \andgate)}{4}{2}
         \\
-        ((\id[1] \tensor \id[1]) \tensor (\id[1] \tensor \notgate)) \seq (\orgate \tensor \andgate)
+        \morph{((\id[1] \tensor \id[1]) \tensor (\id[1] \tensor \notgate)) \seq (\orgate \tensor \andgate)}{4}{2}
     \end{gather*}
 \end{example}
 
@@ -250,9 +250,8 @@ must be specified in terms of their colours and their ordering.
 \begin{notation}[Words]
     Given a set \(A\), the set of (finite) words of elements of \(A\) is denoted
     \(\freemon{A}\).
-    Words are written \(x_0x_1x_2{\cdots}x_{n-1}\); variables representing
-    arbitrary words are generally written with an
-    overline \(
+    Words are written \(x_0x_1x_2{\cdots}x_{n-1}\); arbitrary words are written
+    with an overline \(
     \listvar{x}, \listvar{y}, \listvar{z}... \in \freemon{A}
     \).
     Given two words \(\listvar{x}, \listvar{y}\), their concatenation is
@@ -272,17 +271,16 @@ must be specified in terms of their colours and their ordering.
     \(\morph{\dom,\cod}{\Sigma}{\freemon{C}}\).
 \end{definition}
 
-Coloured terms are then generated in the same way as monochromatic terms, but
-with the additional constraint that terms can only be composed if the coloured
-wires in the interfaces match up.
+Coloured terms are generated in the same way as before, but terms can only be
+composed if the coloured wires in the interfaces match up.
 
 \begin{definition}[Coloured terms]
     For a countable set \(C\) and a set of \(C\)-coloured generators, a
     \((C,\Sigma)\)-term is written \(\morph{f}{\listvar{m}}{\listvar{n}}\),
     where \(\listvar{m},\listvar{n} \in \freemon{C}\).
     The set of \((C,\Sigma)\)-terms, denoted \((C,\Sigma)_\mathsf{t}\), is
-    generated in the same way as the monochromatic set of terms, but with an
-    identity and symmetry for each colour \(c \in C\), composition between
+    generated as the monochromatic set of terms, but with an
+    identity and symmetry for each \(c \in C\), composition between
     terms whose output and input words agree on colours, and addition replaced
     by word concatenation.
 \end{definition}
@@ -293,8 +291,7 @@ wires in the interfaces match up.
 \end{remark}
 
 When drawing coloured terms string diagrammatically, the wires that connect the
-generators are coloured with the appropriate colour.
-This makes it easy to see which terms can be composed.
+generators are coloured appropriately.
 
 \begin{example}
     Recall the logic gate generators from \cref{ex:terms}; let us now say that

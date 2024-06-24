@@ -2,7 +2,7 @@
 
 When considering string diagrams for symmetric monoidal categories, there is a
 strict notion of causality: it is not possible to create a cycle from the output
-of a box to its input, and outputs may only be joined to outputs.
+of a box to its input, and outputs may only be joined to inputs.
 This enforces an implicit \emph{left-to-right} directionality across the page.
 
 This may not always be desirable: one may wish to model a feedback
@@ -28,11 +28,8 @@ First we consider removing the acyclicity condition.
     \cref{fig:stmc-equations}.
 \end{definition}
 
-What this means is that in a STMC, if we have a morphism
-\(\morph{f}{X \tensor A}{X \tensor B}\) we also have a morphism \(
-\morph{\trace{X}[A][B]{f}}{A}{B}
-\).
-
+This means that if we have a morphism \(\morph{f}{X \tensor A}{X \tensor B}\) in
+a STMC, we also have the morphism \(\morph{\trace{X}[A][B]{f}}{A}{B}\).
 Traced categories were given the string diagrammatic treatment in
 \cite{joyal1996traced}, in which the trace is depicted as a loop.
 \begin{gather*}
@@ -61,7 +58,10 @@ simply as \(\trace{X}{f}\).
     trace is an operation known as the `partial trace'.
 \end{example}
 
-In a computer science contexts, traces are often used to model \emph{fixpoints}.
+In the context of computer science, traces are often used to model
+\emph{fixpoints}~\cite{hasegawa1997recursion}; we will examine this in further
+detail in \cref{sec:cartesian-structure} as a possible application of our work
+on traced string diagram rewriting.
 
 \subsection{Compact closed categories}
 
@@ -100,10 +100,11 @@ The unit and counit `bend' wires: the unit is drawn as \(
 \).
 As a result of this units and counits are often referred to as \emph{cups} and
 \emph{caps} respectively.
-The snake equations are depicted as in \cref{fig:ccc-equations}, which
-should shed some light on their name.
+The two equations of compact closed categories are depicted as in
+\cref{fig:ccc-equations}; this should provide some insight as to why they are
+often referred to as \emph{snake equations}.
 
-\input{floats/ccc-equations}
+\input{sections/categories/floats/ccc-equations}
 
 There are some cases where the actual directionality of wires is irrelevant;
 we only care about the ability to bend wires.
@@ -123,10 +124,10 @@ trace, the cup and the cap.
 This is no coincidence, as there is a well-known result that allows one to
 construct a trace in a compact closed setting.
 
-\begin{proposition}[Canonical trace (\cite{joyal1996traced}, Prop. 3.1)]
+\begin{proposition}[Canonical trace {\cite[Prop. 3.1]{joyal1996traced}}]
     \label{prop:canonical-trace}
-    Any compact closed category has a trace called the \emph{canonical trace},
-    defined as \[
+    Given a compact closed category \(\mcc\), a trace on \(\mcc\) can be
+    constructed as follows: \[
         \trace{X}{f}
         \coloneqq
         \ccunit[X] \tensor \id[A]
@@ -138,6 +139,7 @@ construct a trace in a compact closed setting.
     \[
         \iltikzfig{strings/compact-closed/canonical-trace}[colour=white,box=f,dom=A,cod=B,trace=X]
     \]
+    This is called the \emph{canonical trace}.
 \end{proposition}
 
 In this thesis we are primarily concerned with traced categories, but a plethora
