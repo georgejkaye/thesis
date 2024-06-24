@@ -169,6 +169,11 @@ to: it can be helpful to consider some concrete examples.
         f^\prime \in \mor{\mcd}{A^\prime}{B^\prime}
         \}
     \]
+    For morphisms \(\morph{f}{A}{B}, \morph{g}{B}{C} \in \mcc\) and \(
+    \morph{f^\prime}{A^\prime}{B^\prime}, \morph{g^\prime}{B^\prime}{C^\prime}
+    \in \mcd\), the composition of \(\morph{(f,g)}{(A,A^\prime)}{(B,B^\prime)}\)
+    and \(\morph{(g,g^\prime)}{(B,B^\prime)}{(C,C^\prime)}\) is defined as
+    \((g \circ f, g^\prime \circ f^\prime)\).
 \end{example}
 
 \subsection{Universal properties}
@@ -265,13 +270,13 @@ arrows are flipped.
 
 \begin{definition}[Terminal object]
     An object \(C\) in a category \(\mcc\) is \emph{terminal} if, for any other
-    object \(X \in \mcd\) there exists a unique morphism \(X \to C\).
+    object \(X \in \mcc\) there exists a unique morphism \(X \to C\).
 \end{definition}
 
 \begin{example}
     In \(\set\), the terminal object is the singleton set \(\{\star\}\):
     from any set \(X\) there is a unique function \(X \to \{\star\}\); namely
-    the function with action \(x \mapsto \star\).
+    the function \(x \mapsto \star\).
 \end{example}
 
 If a category has an initial or terminal object, then it is
@@ -327,8 +332,9 @@ Finally, we will look at properties showing how pairs of morphisms with a
 common domain or codomain can be in some way `unified'.
 
 \begin{definition}[Pushout]
-    Given morphisms \(\morph{f}{A}{B}\) and \(\morph{g}{A}{C}\), a
-    \emph{pushout} is an object \(D\) and a pair of morphisms
+    Given a category \(\mcc\) and morphisms
+    \(\morph{f}{A}{B}\) and \(\morph{g}{A}{C}\), a
+    \emph{pushout} is an object \(D \in \mcc\) and a pair of morphisms
     \(\morph{h}{B}{D}\) and \(\morph{k}{C}{D}\) such that for any other pair of
     morphisms \(\morph{h^\prime}{B}{Z}\) and \(\morph{k^\prime}{C}{Z}\) there
     exists a unique morphism \(\morph{u}{D}{Z}\), i.e.\ the following diagram
@@ -344,7 +350,7 @@ common domain or codomain can be in some way `unified'.
     \(\set\) has pushouts: given morphisms \(\morph{f}{A}{B}\) and
     \(\morph{g}{A}{C}\), the pushout is the union of \(B\) and \(C\) identifying
     elements with a common preimage in \(X\).
-    Concretely, let \({\sim} \subseteq B \cup C\) be a relation defined as
+    Concretely, let \({\sim} \subseteq B \times C\) be a relation defined as
     \(\{(b, c) \,|\, \exists a \in A.\, b = f(a) \wedge c = g(a)\}\).
     Then the pushout set \(D\) is defined as \(B \cup C / \sim\) with the
     morphisms \(\morph{h}{B}{D}\) and \(\morph{k}{C}{D}\) sending elements in
@@ -356,12 +362,12 @@ symbol as shown above.
 The dual of the pushout is a \emph{pullback}.
 
 \begin{definition}[Pullback]
-    Given morphisms \(\morph{f}{B}{A}\) and \(\morph{g}{C}{A}\), a
-    \emph{pullback} is an object \(D\) and a pair of morphisms
-    \(\morph{h}{D}{B}\) and \(\morph{k}{D}{C}\) such that for any other pair of
-    morphisms \(\morph{h^\prime}{Z}{B}\) and \(\morph{k^\prime}{Z}{C}\) there
-    exists a unique morphism \(\morph{u}{Z}{D}\), i.e.\ the following diagram
-    commutes:
+    Given a category \(\mcc\) and morphisms \(\morph{f}{B}{A}\) and
+    \(\morph{g}{C}{A}\), a \emph{pullback} is an object \(D \in \mcc\) and a
+    pair of morphisms \(\morph{h}{D}{B}\) and \(\morph{k}{D}{C}\) such that for
+    any other pair of morphisms \(\morph{h^\prime}{Z}{B}\) and
+    \(\morph{k^\prime}{Z}{C}\) there exists a unique morphism
+    \(\morph{u}{Z}{D}\), i.e.\ the following diagram commutes:
     \begin{center}
         \includestandalone{figures/category/diagrams/pullback}
     \end{center}
@@ -372,7 +378,7 @@ The dual of the pushout is a \emph{pullback}.
 \begin{example}
     \(\set\) also has pullbacks: given morphisms \(\morph{f}{B}{A}\) and
     \(\morph{g}{C}{A}\), the pullback is defined as
-    \(\{(b,c) \in B \times C \, f(b) = g(c)\}\) and the maps
+    \(\{(b,c) \in B \times C \,|\, f(b) = g(c)\}\) and the maps
     \(\morph{h}{D}{B}\) and \(\morph{k}{D}{C}\) defined as the first and second
     projection respectively.
 \end{example}

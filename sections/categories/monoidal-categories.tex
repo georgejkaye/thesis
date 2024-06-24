@@ -69,9 +69,9 @@ parallel composition.
 \end{example}
 
 \begin{notation}
-    We adopt the convention that \(f \tensor g \seq h \tensor k\) should be
-    bracketed as \((f \tensor g) \seq (h \tensor k)\), i.e.\ \(\tensor\) binds
-    more strongly than \(\fatsemi\).
+    We adopt the convention that \(\tensor\) takes precedence over \(\seq\),
+    i.e.\ \(f \tensor g \seq h \tensor k\) should be
+    bracketed as \((f \tensor g) \seq (h \tensor k)\).
 \end{notation}
 
 We will use the \(\tensor\) bifunctor extensively through this thesis.
@@ -155,5 +155,5 @@ The equations of strict symmetric monoidal categories are listed in
 \begin{example}
     \(\set\) is a symmetric monoidal category, with \(
     \morph{\swap{A}{B}}{A \times B}{B \times A}
-    \) defined as the function that swaps elements of a pair.
+    \) defined as the function \(\swap{A,B}(a, b) = (b, a)\).
 \end{example}

@@ -119,6 +119,41 @@ Many notions in mathematics and computer science can be viewed as functors.
     is beyond the scope of this thesis.
 \end{example}
 
+\subsection{Functors as morphisms}
+
+Although it is possible to view functors purely as a standalone concept, the
+core tenet of category theory is to view everything in terms of morphisms, and
+functors are no different.
+
+\begin{example}[Identity functor]
+    A trivial endofunctor for any category \(\mcc\) is the
+    \emph{identity functor} \(\morph{\idf}{\mcc}{\mcc}\) which acts as the
+    identity on objects and morphisms.
+\end{example}
+
+\begin{example}[Functor composition]
+    If \(\morph{F}{\mcc}{\mcd}\) and \(\morph{G}{\mcc}{\mcd}\) are functors
+    then their composite \(\morph{G \circ F}{\mcc}{\mcd}\) is also a functor.
+\end{example}
+
+Identity and (associative) composition are all we need to define a category.
+Although we cannot define a category containing \emph{all} categories, we can
+define a category containing all `small' categories.
+
+\begin{definition}
+    A category \(\mcc\) is \emph{small} if \(\ob{\mcc}\) and
+    \(\mor{\mcc}{A}{B}\) are sets for all \(A, B \in \mcc\).
+\end{definition}
+
+\begin{example}[Category of categories]
+    \(\cat\) is the category in which \(\ob{\cat}\) are small categories and
+    \(\mor{\cat}{\mcc}{\mcd}\) contains functors \(\mcc \to \mcd\).
+    Identity is the identity functor, and composition is function composition.
+\end{example}
+
+Using the category of categories means we can reason about categories using the
+same line of reasoning as for objects and morphisms.
+
 \subsection{Full and faithful functors}
 
 One important way we can class functors is based on how they act on the classes
@@ -149,13 +184,13 @@ Every morphism \(FA \to FB\) is in the image of a full functor.
 
 \begin{definition}[Fully faithful functor~\cite{maclane1978categories}]
     A functor \(\morph{F}{\mcc}{\mcd}\) is \emph{fully faithful} if \(F_{A,B}\)
-    is bijective; i.e.\ the functor is full and faithful.
+    is bijective for all \(A, B \in \mcc\); i.e.\ the functor is full and
+    faithful.
 \end{definition}
 
 \begin{example}
-    Consider the categories \(\set\) and \(\mon\), and the functors
-    \(\morph{F}{\set}{\mon}\) and \(\morph{U}{\mon}{\set}\) defined in
-    \cref{ex:free-monoid}.
+    Recall the categories \(\set\) and \(\mon\), and the functor
+    \(\morph{U}{\mon}{\set}\) defined in \cref{ex:free-monoid}.
     \(U\) is faithful as monoid homomorphisms are just functions, but it is not
     full as not all functions are monoid homomorphisms.
     Note that even though \(U\) is faithful, it is not injective on objects
@@ -230,40 +265,6 @@ long as it has the required properties.
     strong enough to be isomorphisms.
 \end{remark}
 
-\subsection{Functors as morphisms}
-
-Although it is possible to view functors purely as a standalone concept, the
-core tenet of category theory is to view everything in terms of morphisms, and
-functors are no different.
-
-\begin{example}[Identity functor]
-    A trivial endofunctor for any category \(\mcc\) is the
-    \emph{identity functor} \(\morph{\idf}{\mcc}{\mcc}\) which acts as the
-    identity on objects and morphisms.
-\end{example}
-
-\begin{example}[Functor composition]
-    If \(\morph{F}{\mcc}{\mcd}\) and \(\morph{G}{\mcc}{\mcd}\) are functors
-    then their composite \(\morph{G \circ F}{\mcc}{\mcd}\) is also a functor.
-\end{example}
-
-Identity and (associative) composition are all we need to define a category.
-Although we cannot define a category containing \emph{all} categories, we can
-define a category containing all `small' categories.
-
-\begin{definition}
-    A category \(\mcc\) is \emph{small} if \(\ob{\mcc}\) and
-    \(\mor{\mcc}{A}{B}\) are sets.
-\end{definition}
-
-\begin{example}[Category of categories]
-    \(\cat\) is the category in which \(\ob{\cat}\) are small categories and
-    \(\mor{\cat}{\mcc}{\mcd}\) contains functors \(\mcc \to \mcd\).
-    Identity is the identity functor, and composition is function composition.
-\end{example}
-
-Using the category of categories means we can reason about categories using the
-same line of reasoning as for objects and morphisms.
 
 \section{Universal properties through functors}
 

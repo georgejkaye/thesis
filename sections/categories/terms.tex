@@ -248,7 +248,7 @@ When the wires are coloured, more information is needed: the inputs and outputs
 must be specified in terms of their colours and their ordering.
 
 \begin{notation}[Words]
-    Given a set \(A\), the set of words of elements of \(A\) is denoted
+    Given a set \(A\), the set of (finite) words of elements of \(A\) is denoted
     \(\freemon{A}\).
     Words are written \(x_0x_1x_2{\cdots}x_{n-1}\); variables representing
     arbitrary words are generally written with an
@@ -257,10 +257,13 @@ must be specified in terms of their colours and their ordering.
     \).
     Given two words \(\listvar{x}, \listvar{y}\), their concatenation is
     denoted \(\listvar{xy}\).
-    The word of length \(n\) containing just element \(x\) is written \(x^n\).
+    For an element \(a \in A\), the concatenation of this element \(n\) times is
+    written \(a^n\), e.g.\ \(a^3 \coloneqq aaa\).
     Given a word \(\listvar{x}\), its \emph{length} is denoted
     \(\wordlen{\listvar{x}}\); for \(i < \wordlen{\listvar{x}}\) the
-    \(i\)-\emph{th element of \(\listvar{x}\)} is denoted \(\listvar{x}(i)\).
+    \(i\)-\emph{th element of \(\listvar{x}\)} is denoted \(\listvar{x}(i)\),
+    i.e.\ in word \(\listvar{x} \coloneqq abc\), \(\listvar{x}(0) = a\),
+    \(\listvar{x}(1) = b\) and \(\listvar{x}(2) = c\).
 \end{notation}
 
 \begin{definition}[Coloured generators]
