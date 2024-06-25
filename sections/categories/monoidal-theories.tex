@@ -9,8 +9,8 @@ with \emph{each other}.
 These equations are provided by a \emph{monoidal theory}.
 
 \begin{definition}
-    For a set of generators \(\generators\), an \emph{equation} in \(\smcsigma\)
-    is a pair of terms \(\morph{t,u}{m}{n}\).
+    An \emph{equation} is a pair of terms with the same domain and
+    codomain.
 \end{definition}
 
 \begin{definition}[Monoidal theory]
@@ -47,6 +47,21 @@ In a quotient category \(\mcc / \mce\) the morphisms are the
 When the set of equations \(\equations\) is empty,
 \(\smc{\generators, \emptyset} = \smc{\generators}\), and we recover an ordinary
 PROP.
+
+We can also use the same procedure to define \emph{coloured} monoidal theories.
+
+\begin{definition}[Coloured monoidal theory]
+    A \emph{coloured monoidal theory} is a tuple
+    \((C, \generators, \equations)\) where \(C\) is a countable set of colours,
+    \(\generators\) is a set of \(C\)-coloured generators, and \(\equations\)
+    is a set of equations.
+\end{definition}
+
+\begin{definition}
+    Given a coloured monoidal theory \((C, \generators, \equations)\), let
+    \(\smc{C, \generators, \equations} \coloneqq \smc{C, \generators} / \equations\).
+\end{definition}
+
 
 \subsection{Case study: commutative monoids}
 
