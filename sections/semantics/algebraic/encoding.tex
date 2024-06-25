@@ -1,14 +1,9 @@
 \section{Encoding equations}\label{sec:encoding}
 
-A circuit in Mealy form is a syntactic representation of a Mealy machine: it
-has a combinational core acting as the Mealy machine. and registers containing
-the initial state of the machine.
-As we saw in the operational semantics, as a circuit is applied to inputs these
-registers are updated with new values as the circuit transitions to new states.
-When reasoning algebraically, we cannot evaluate these states as we have no
-inputs to compute with.
-However, the states a circuit \emph{might} assume will still be important as
-they dictate whether an equation is valid.
+A circuit in Mealy form is a syntactic representation of a Mealy machine: the
+combinational is the Mealy function, and the registers are the initial state.
+It is important to determine the states that the circuit might assume, as these
+determine whether or not an equation is valid.
 
 \begin{definition}[States]
     Let \(\morph{f}{\valuetuple{x+m}}{\valuetuple{x+n}}\) be a
@@ -63,11 +58,8 @@ trip will always map to a state with the same behaviour.
     Immediate as Mealy homomorphisms preserve outputs.
 \end{proof}
 
-We will use pairs of `inverse' Mealy homomorphisms as state encoders and
-decoders between circuits.
-To create circuits representing these homomorphisms, we once again use the
-functional completeness map for an interpretation.
-This means we need to ensure the encoders and decoders are monotone.
+We will use Mealy homomorphisms as circuits to encode state sets; this means we
+need to ensure the encoders and decoders are monotone.
 
 \begin{lemma}
     For partial orders \(S\) and \(T\) and monotone Mealy coalgebra
@@ -100,14 +92,14 @@ For two circuits \(
 \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[f],state=\listvar{s},colour=seq,dom=m,cod=n,delay=x]
 \) and \(
 \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[g],state=\listvar{t},colour=seq,dom=m,cod=n,delay=y]
-\), the encoders and decoders we will use for circuits will be homomorphisms
+\), the encoders and decoders will be homomorphisms
 \((S_{f,\listvar{s}},f) \to (S_{g,\listvar{t}},g)\)
 and
 \((S_{g,\listvar{t}},g) \to (S_{f,\listvar{s}},f)\).
 
 
 \begin{proposition}
-    For two denotationally equivalent circuits \(
+    Given two denotationally equivalent circuits \(
     \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[f],state=\listvar{s},colour=seq,dom=m,cod=n,delay=x]
     \) and \(
     \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[g],state=\listvar{t},colour=seq,dom=m,cod=n,delay=y]
@@ -181,10 +173,8 @@ but only in certain contexts.
 
 \input{sections/semantics/algebraic/floats/encoding-equation}
 
-After applying the encoding equation, the state has not actually changed; we
-have just inserted a pair of an encoder and a decoder circuit.
-To translate the state we use similar equations to the rules used in the
-productivity reduction procedure.
+The encoding equation only inserts encoder circuits; to actually change the
+state we need some more equations.
 
 \begin{lemma}
     The equations on the bottom four rows of \cref{fig:encoding-equation} are
@@ -194,21 +184,21 @@ productivity reduction procedure.
     It is a straightforward exercise to compare the stream functions.
 \end{proof}
 
-Using the encoding equations we can derive some lemmas that will come in useful
-for showing the final result.
+To show the final result we must prove some lemmas; first we show how we can
+`pump' a value out of an infinite waveform.
 
 \begin{lemma}\label{lem:unroll-waveform}
     For \(v \in \values\), \(
     \iltikzfig{circuits/algebraic/unroll-waveform/step-0}[value=v]
     =
     \iltikzfig{circuits/algebraic/unroll-waveform/step-6}[value=v]
-    \) by the encoding equations.
+    \) using the encoding equations.
 \end{lemma}
 \begin{proof}
     The proof is straightforward and is illustrated in
     \cref{fig:unroll-waveform}.
 \end{proof}
-
+%
 \begin{figure}
     \centering
     \begin{gather*}
@@ -230,6 +220,9 @@ for showing the final result.
     \caption{Proof of \cref{lem:unroll-waveform}}
     \label{fig:unroll-waveform}
 \end{figure}
+
+The next lemma shows how the familiar `streaming' rule from the operational
+semantics can be derived equationally.
 
 \begin{lemma}\label{lem:generalised-streaming}
     For a combinational circuit \(
@@ -263,7 +256,7 @@ for showing the final result.
     Since the underlying circuit is combinational, for the inductive cases we just
     need to check composition and tensor, which are trivial.
 \end{proof}
-
+%
 \begin{figure}
     \begin{gather*}
         \iltikzfig{circuits/productivity/generalised-streaming/join-step-2}
@@ -284,9 +277,12 @@ for showing the final result.
         \eqaxioms[(\monoidassoceqnletter)]
         \iltikzfig{circuits/productivity/generalised-streaming/join-step-9}
     \end{gather*}
-    \caption{Proof of \cref{lem:generalised-streaming} for the join}
+    \caption{Proof of \cref{lem:generalised-streaming} for the join case}
     \label{fig:generalised-streaming-join}
 \end{figure}
+
+We next show how the encoding equations can be used to translate combinational
+circuits with inputs into values.
 
 \begin{lemma}\label{lem:combinational-circuit-inputs}
     Let \(\iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]\) be a
@@ -355,6 +351,9 @@ for showing the final result.
     \(\listvar{w} = g(\listvar{v})\).
 \end{proof}
 
+Finally, we use the above lemma to show how values can be applied to
+\emph{essentially} combinational circuits.
+
 \begin{lemma}\label{lem:essentially-combinational-applied}
     Let \(\morph{f}{\valuetuple{m}}{\valuetuple{n}}\) be a monotone function
     such that \(
@@ -409,8 +408,9 @@ for showing the final result.
     This completes the proof.
 \end{proof}
 
-We will now show that the encoding equations allow us to translate a circuit
-into one with an encoded state.
+With these lemmas in our toolkit, we can now show that the encoding equations
+allow us to translate a circuit into one with an encoded state, and therefore
+translate between the state sets of any two denotationally equivalent circuits.
 
 \begin{theorem}
     For a circuit \(
@@ -435,47 +435,34 @@ into one with an encoded state.
     \iltikzfig{circuits/synthesis/normalised-function}[box=g]
     \) by definition of complete interpretations.
     This means we have
-    \begin{gather*}
+    \begin{align*}
         \iltikzfig{circuits/algebraic/encoding-state/step-0a}[box=g]
-        \coloneqq
+         & \coloneqq
         \iltikzfig{circuits/algebraic/encoding-state/step-0}[box=g]
-        \eqaxioms[\text{(\cref{lem:unroll-waveform})}]
         \\[1em]
+         & =
         \iltikzfig{circuits/algebraic/encoding-state/step-1}[box=g]
-        \eqaxioms[\text{(\cref{lem:generalised-streaming})}]
+         &
+        \text{\cref{lem:unroll-waveform}}
+        \\[1em]
+         & =
         \iltikzfig{circuits/algebraic/encoding-state/step-2}[box=g]
-        \eqaxioms[\text{(\cref{lem:essentially-combinational-applied})}]
+         &
+        \text{\cref{lem:generalised-streaming}}
         \\[1em]
+         & =
         \iltikzfig{circuits/algebraic/encoding-state/step-3}[box=g]
-        \coloneqq
+         &
+        \text{\cref{lem:essentially-combinational-applied}}
+        \\[1em]&\coloneqq
         \iltikzfig{circuits/algebraic/encoding-state/step-4}[box=g]
-        \coloneqq
         \\[1em]
-        \iltikzfig{circuits/algebraic/encoding-state/step-5}[box=g]
-    \end{gather*}
+         & \coloneqq\iltikzfig{circuits/algebraic/encoding-state/step-5}[box=g]
+    \end{align*}
     The proof is completed by sliding the encoder around the trace.
 \end{proof}
 
-Before proceeding to our next set of equations, we will show how the encoding
-equations can be used to encode the states of any circuit as those of a
-denotationally equivalent one.
-
-\begin{corollary}\label{cor:encoding-circuits}
-    For two denotationally equivalent circuits \(
-    \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[f],state=\listvar{s},colour=seq,dom=m,cod=n,delay=x]
-    \) and \(
-    \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[g],state=\listvar{t},colour=seq,dom=m,cod=n,delay=y]
-    \), there exists \(
-    \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[h],state=\listvar{t},colour=seq,dom=m,cod=n,delay=x]
-    \) such that \(
-    \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[f],state=\listvar{s},colour=seq,dom=m,cod=n,delay=x]
-    =
-    \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[h],state=\listvar{t},colour=seq,dom=m,cod=n,delay=x]
-    \) in \(\scircsigma / \encodingequations\).
-\end{corollary}
-
-If we have the right encoders, we can translate the initial state of a circuit
-into a different word, and end up with a new circuit in a Mealy form with a
-sequential core.
-Since the encoders, decoders, and core are essentially combinational,
-these can be normalised once again to obtain a new normalised core.
+With the right encoders, the initial state of a circuit can be translated into
+a different word, giving us a new circuit in Mealy form.
+As all the involved components are essentially combinational, the circuit can
+be normalised again to produce a circuit in normalised Mealy form.

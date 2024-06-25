@@ -2,11 +2,9 @@
 
 It is now possible to collect all the equations together and define a sound and
 complete algebraic theory of sequential digital circuits.
-We start by defining a category of syntactic circuits quotiented by all the
-equations we have seen so far.
 
 \begin{definition}
-    For an interpretation \(\interpretation\), let
+    For a complete interpretation \(\interpretation\), let
     \(\mce_{\interpretation}\) be \(
     \mealyequations +
     \normalisingequations +
@@ -16,8 +14,15 @@ equations we have seen so far.
     \(\scircsigma / \mce_{\interpretation}\).
 \end{definition}
 
+For this to be a \emph{complete} set, we must be able to translate
+a circuit \(
+\iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
+\) into another circuit \(
+\iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
+\) with the same behaviour by only using these equations.
+
 \begin{theorem}
-    For a functionally complete interpretation \(\interpretation\), \(
+    For a complete interpretation \(\interpretation\), \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     =
     \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
@@ -34,7 +39,6 @@ equations we have seen so far.
 \begin{proof}
     All the equations are sound, so we only need to consider the \(\ifdir\)
     direction.
-
     By \cref{thm:normalising}, the two circuits can be brought to
     normalised Mealy form using
     \(
@@ -43,11 +47,11 @@ equations we have seen so far.
     \normalisingequations
     \).
     By \cref{def:mealy-to-circuit} and
-    \cref{thm:circuit-stream-correspondence} there must exist a circuit \(
-    \iltikzfig{strings/category/f}[box=h,colour=seq]
-    \coloneqq
-    \iltikzfig{circuits/algebraic/encoding}[transition={h_0},output={h_1},state={\listvar{s}}]
-    \) such that \(
+    \cref{thm:circuit-stream-correspondence} there must exist a circuit \[
+        \iltikzfig{strings/category/f}[box=h,colour=seq]
+        \coloneqq
+        \iltikzfig{circuits/algebraic/encoding}[transition={h_0},output={h_1},state={\listvar{s}}]
+    \] such that \(
     \circuittostream[
         \iltikzfig{strings/category/f}[box=f,colour=seq]
     ]{\interpretation}
@@ -60,13 +64,15 @@ equations we have seen so far.
         \iltikzfig{strings/category/f}[box=g,colour=seq]
     ]{\interpretation}
     \).
-    The circuit \(
+    The state words of \(
     \iltikzfig{strings/category/f}[box=h,colour=seq]
-    \) is encoded such that the state words are in the image of a Mealy encoding
-    \(\gamma_\leq\); applying the encoding equation with \(\gamma_\leq\) to the
-    normalised Mealy forms obtained above will yield the circuit \(
+    \) are in the image of a Mealy encoding \(\gamma_\leq\); applying the
+    encoding equation with \(\gamma_\leq\) to the normalised Mealy forms
+    obtained above therefore produce circuits with the same state sets as \(
     \iltikzfig{strings/category/f}[box=h,colour=seq]
     \).
+    To finish the proof, restriction equations can be used to bring the circuit
+    to the desired form.
 \end{proof}
 
 As always, the soundness and completeness of the algebraic semantics means we
@@ -76,20 +82,9 @@ can establish another isomorphism of PROPs.
     \(\scircsigmai \cong \scircsigmae\).
 \end{corollary}
 
-This means that given a circuit \(
-\iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
-\) we know that we can translate it into another circuit \(
-\iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
-\) with the same behaviour by only using equations in \(\mce_\interpretation\).
-
-Of course, the procedure of using the normalisation equations to translate a
-circuit into normalised Mealy form before using the encoding equation (possibly
-multiple times depending on how lucky one gets with their orderings) may be
-tedious; one might wonder how this is beneficial to the operational approach in
-the previous chapter.
-The beauty of the \emph{algebraic} semantics is that we \emph{don't} need to
-do this every time.
-Equations can be proven as lemmas and then used repeatedly in the future as
-`shortcuts', possibly saving many reasoning steps.
-In time, the algebraicist will build up a powerful repertoire of equations and
-wield them to bend circuits to their will.
+One might wonder how this improves on the operational approach, as the
+normal form is quite complicated.
+The beauty of the \emph{algebraic} semantics is that equations can be proven
+as lemmas and used in the future as shortcuts; in time, the algebraicist will
+build up a repertoire of equations and use them to bend circuits to
+their will.

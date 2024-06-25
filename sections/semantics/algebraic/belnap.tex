@@ -1,47 +1,36 @@
 \section{Algebraic semantics for Belnap logic}\label{sec:algebraic-belnap}
 
+\input{sections/semantics/algebraic/floats/explode-equations-1}
+
 For a sound and complete equational theory, equations are required to bring any
-essentially combinational circuit into a canonical form; it is instructive to
-illustrate the equations required for the Belnap interpretation to be
-normalisable.
-
-Recall from \cref{sec:denotational-belnap} that the canonical form for circuits
-using components in the Belnap signature \(\belnapsignature\) is a circuit that
-`explodes' its inputs into two circuits computing the `falsy' and the `truthy'
+essentially combinational circuit into a canonical form.
+We will now demonstrate this for the Belnap interpretation; recall from
+\cref{sec:denotational-belnap} that the canonical form for Belnap circuits is a
+circuit that `explodes' its inputs into circuits for the `falsy' and `truthy'
 components of the output, before joining these together.
+The first equations we will define translate any essentially combinational
+circuit into such an exploded circuit.
 
-Since this form is a variation of the standard disjunctive normal form for
-Boolean circuits, most of the equations required here should be familiar.
-
-\begin{definition}
-    Let the set \(\mathcal{X}\) of \emph{explosion equations} be defined as
-    in \cref{fig:explosion-equations}.
+\begin{definition}[Explosion equations]
+    Let the set of \emph{explosion equations} \(\mathcal{X}\) be defined as the
+    equations listed
+    in \cref{fig:explosion-equations-1,fig:explosion-equations-2}.
 \end{definition}
 
-\input{sections/semantics/algebraic/floats/explode-equations}
-
-Most of the equations in \(\mathcal{X}\) are well-known; the only interesting
-one is \((\belnapexpeqn)\).
-This says that we can always `explode' a wire into (trivial) falsy and truthy
-subcircuits before joining them back together.
-While on its own this may not seem very useful, when combined with the other
-equations it sets the stage for translating an entire circuit into an exploded
-form.
-
 \begin{lemma}
-    The equations in \cref{fig:explosion-equations} are sound.
+    The explosion equations are sound.
 \end{lemma}
 \begin{proof}
     By checking all the inputs.
 \end{proof}
 
-The purpose of the explosion equations is to translate any circuit into an
-exploded form.
-Broadly, the strategy here is to use the \((\belnapexpeqn)\) equation to
-introduce an empty explosion on the right of a circuit, then use the remaining
-equations to push the components of the original circuit inside the explosion.
-The first thing to do is to propagate essentially
-combinational circuit components across the opening forks of the explosion.
+Most of the equations in \(\mathcal{X}\) are well-known; the only interesting
+one is \((\belnapexpeqn)\), which says that we can always `explode' a wire and
+join it back together.
+To translate a circuit into exploded form, we use this equation to introduce an
+`empty explosion', then propagate the original components across with the
+other equations.
+The first obstacle to this is the forks at the left of the explosion.
 
 \begin{lemma}\label{lem:explode-copy}
     For any essentially combinational Belnap circuit \(
@@ -61,6 +50,9 @@ combinational circuit components across the opening forks of the explosion.
     \) is also a base case and is covered by \((\infregforkeqn)\).
     The inductive cases are trivial.
 \end{proof}
+
+Once the circuit is past the opening forks, the remaining equations are used to
+push them across the translators.
 
 \begin{proposition}\label{prop:exploded-belnap}
     Given an essentially combinational Belnap circuit \(
@@ -118,23 +110,20 @@ combinational circuit components across the opening forks of the explosion.
     can then be propagated across the translators.
     For tensor, the circuits can be interleaved using axioms of STMCs.
 \end{proof}
+%
+\input{sections/semantics/algebraic/floats/explode-equations-2}
 
-This form already looks very similar to a circuit in the image of
-\(\mealytofunc_\belnap\) in that it is the join of two circuits prefixed by
-`translators'.
-These two circuits are not necessarily in the correct form specified by
-\(\mealytofunc_\belnap\), as they must be in \emph{truthy} or \emph{falsy}
-disjunctive normal form.
-The equations required to bring circuits into such a form are
-relatively standard.
+This already looks similar to a circuit in the image of
+\(\mealytofunc_\belnap\), but the two subcircuits must also be translated into
+truthy or falsy disjunctive normal form.
 
-\begin{definition}
-    Let \(\mathcal{F}\) be defined as the set of \emph{normal form equations}
-    listed in \cref{fig:normal-form-equations}.
+\begin{definition}[Normal form equations]
+    Let the set of \emph{normal form equations} \(\mathcal{F}\) be defined as
+    the equations listed in \cref{fig:normal-form-equations}.
 \end{definition}
 
 \begin{lemma}
-    The normal form equations are sound.
+    The equations in \(\mathcal{F}\) are sound.
 \end{lemma}
 \begin{proof}
     By checking all the inputs.
@@ -144,9 +133,6 @@ relatively standard.
 
 We will now show that these equations suffice to translate the subcircuits in
 the exploded circuit into falsy or truthy disjunctive normal form.
-First we will consider the case for the truthy circuit; we need to show that
-the equations in \(\mathcal{F}\) can translate the circuit into a construct of
-forks composed with a circuit in truthy disjunctive normal form.
 
 \begin{lemma}\label{lem:truthy-conjunction-normalising}
     Given a Belnap circuit \(
@@ -189,54 +175,54 @@ forks composed with a circuit in truthy disjunctive normal form.
     a truthy conjunction.
 \end{proof}
 
-\begin{example}
-    Consider the circuit \(
-    \iltikzfig{circuits/examples/conjunction/step-0}
-    \); we transform it into a truthy conjunction as follows.
-    \begin{gather*}
-        \iltikzfig{circuits/examples/conjunction/step-0}
-        \eqaxioms[(\forkuniteqn)]
-        \iltikzfig{circuits/examples/conjunction/step-1}
-        \eqaxioms[(\forkuniteqn)]
-        \iltikzfig{circuits/examples/conjunction/step-2}
-        \eqaxioms[(\forkcommeqn)]
-        \\
-        \iltikzfig{circuits/examples/conjunction/step-3}
-        \eqaxioms[(\forkassoceqn)]
-        \iltikzfig{circuits/examples/conjunction/step-4}
-        \eqaxioms[(\andcomm)]
-        \iltikzfig{circuits/examples/conjunction/step-5}
-        \eqaxioms[(\andforkeqn)]
-        \\
-        \iltikzfig{circuits/examples/conjunction/step-6}
-        \eqaxioms[(\andassoc)]
-        \iltikzfig{circuits/examples/conjunction/step-7}
-        \eqaxioms[(\forkassoceqn)]
-        \\
-        \iltikzfig{circuits/examples/conjunction/step-8}
-        \eqaxioms[(\andidemeqn)]
-        \iltikzfig{circuits/examples/conjunction/step-9}
-        \eqaxioms[(\andassoc)]
-        \\
-        \iltikzfig{circuits/examples/conjunction/step-10}
-        \eqaxioms[(\andcomm)]
-        \iltikzfig{circuits/examples/conjunction/step-11}
-        \eqaxioms[(\andassoc)]
-        \\
-        \iltikzfig{circuits/examples/conjunction/step-12}
-        \eqaxioms[(\andidemeqn)]
-        \iltikzfig{circuits/examples/conjunction/step-13}
-        \eqaxioms[(\andassoc)]
-        \\
-        \iltikzfig{circuits/examples/conjunction/step-14}
-        \eqaxioms[(\andidemeqn)]
-        \iltikzfig{circuits/examples/conjunction/step-15}
-        \eqaxioms
-        \iltikzfig{circuits/examples/conjunction/step-16}
-        \eqaxioms[(\andideqn)]
-        \iltikzfig{circuits/examples/conjunction/step-17}
-    \end{gather*}
-\end{example}
+% \begin{example}
+%     Consider the circuit \(
+%     \iltikzfig{circuits/examples/conjunction/step-0}
+%     \); we transform it into a truthy conjunction as follows.
+%     \begin{gather*}
+%         \iltikzfig{circuits/examples/conjunction/step-0}
+%         \eqaxioms[(\forkuniteqn)]
+%         \iltikzfig{circuits/examples/conjunction/step-1}
+%         \eqaxioms[(\forkuniteqn)]
+%         \iltikzfig{circuits/examples/conjunction/step-2}
+%         \eqaxioms[(\forkcommeqn)]
+%         \\
+%         \iltikzfig{circuits/examples/conjunction/step-3}
+%         \eqaxioms[(\forkassoceqn)]
+%         \iltikzfig{circuits/examples/conjunction/step-4}
+%         \eqaxioms[(\andcomm)]
+%         \iltikzfig{circuits/examples/conjunction/step-5}
+%         \eqaxioms[(\andforkeqn)]
+%         \\
+%         \iltikzfig{circuits/examples/conjunction/step-6}
+%         \eqaxioms[(\andassoc)]
+%         \iltikzfig{circuits/examples/conjunction/step-7}
+%         \eqaxioms[(\forkassoceqn)]
+%         \\
+%         \iltikzfig{circuits/examples/conjunction/step-8}
+%         \eqaxioms[(\andidemeqn)]
+%         \iltikzfig{circuits/examples/conjunction/step-9}
+%         \eqaxioms[(\andassoc)]
+%         \\
+%         \iltikzfig{circuits/examples/conjunction/step-10}
+%         \eqaxioms[(\andcomm)]
+%         \iltikzfig{circuits/examples/conjunction/step-11}
+%         \eqaxioms[(\andassoc)]
+%         \\
+%         \iltikzfig{circuits/examples/conjunction/step-12}
+%         \eqaxioms[(\andidemeqn)]
+%         \iltikzfig{circuits/examples/conjunction/step-13}
+%         \eqaxioms[(\andassoc)]
+%         \\
+%         \iltikzfig{circuits/examples/conjunction/step-14}
+%         \eqaxioms[(\andidemeqn)]
+%         \iltikzfig{circuits/examples/conjunction/step-15}
+%         \eqaxioms
+%         \iltikzfig{circuits/examples/conjunction/step-16}
+%         \eqaxioms[(\andideqn)]
+%         \iltikzfig{circuits/examples/conjunction/step-17}
+%     \end{gather*}
+% \end{example}
 
 The proof for the falsy circuit is almost exactly the same.
 
@@ -278,7 +264,7 @@ conjunctive normal forms.
     \iltikzfig{circuits/components/gates/not}
     \) or \(
     \iltikzfig{strings/structure/monoid/merge}[colour=comb]
-    \) generators, there exists a circuit \[
+    \) generators, there exists \[
         \iltikzfig{circuits/axioms/belnap/translation/exploded-form-cnf}[box=f,dom=m,cod=1]
     \] in which \(
     \iltikzfig{strings/category/f}[box=g_0,colour=comb]
@@ -301,23 +287,23 @@ conjunctive normal forms.
     First, all the \(
     \iltikzfig{circuits/components/gates/and}
     \) components need to be propagated to the far right of the \(
-    \iltikzfig{strings/category/f-3-1}[box=f_0,colour=comb]
+    \iltikzfig{strings/category/f-3-1-compressed}[box=f_0,colour=comb]
     \) circuit using \((\oranddisteqn)\), and all the \(
     \iltikzfig{circuits/components/gates/or}
     \) components need to be propagated to the far right of the \(
-    \iltikzfig{strings/category/f-3-1}[box=f_1,colour=comb]
+    \iltikzfig{strings/category/f-3-1-compressed}[box=f_1,colour=comb]
     \) circuit using \((\andorddisteqn)\).
     This means that the circuits are split into two halves, each containing
     one type of gate.
 
-    For these circuits to be in truthy or falsy conjunctive normal form, they
+    For these circuits to be in truthy or falsy disjunctivenormal form, they
     need to contain exactly one \(
     \iltikzfig{strings/structure/monoid/init}[colour=comb]
-    \) component to act as the conjunctive unit.
+    \) component.
     If there is not already such a component inside the \(
-    \iltikzfig{strings/category/f-3-1}[box=f_0,colour=comb]
+    \iltikzfig{strings/category/f-3-1-compressed}[box=f_0,colour=comb]
     \) or \(
-    \iltikzfig{strings/category/f-3-1}[box=f_1,colour=comb]
+    \iltikzfig{strings/category/f-3-1-compressed}[box=f_1,colour=comb]
     \) subcircuits, one can be inserted using the \((\botanduniteqn)\) equation
     for the former and the \((\botoruniteqn)\) equation for the latter.
     If there are multiple unit components, these can be propagated through the
@@ -350,5 +336,5 @@ Putting this all together gives us the desired canonical form theorem.
 \end{proof}
 
 This shows that the equations detailed in this section can translate any
-essentially combinational circuit in \(\scirc{\belnapinterpretation}\) to one in
-the image of the Belnap functional completeness map.
+essentially combinational Belnap circuit into a circuit in the image of the
+functional completeness map.

@@ -1,39 +1,7 @@
 \section{Restriction equations}\label{sec:restriction}
 
-Encoding using Mealy homomorphisms allows us to map between circuits with the
-same behaviour but different implementations.
-In order to obtain a (pseudo-)normal form for circuits there needs to be a
-canonical such encoding for any circuit behaviour.
-We already have a suitable candidate for this: the image of
-\(\mealytocircuiti\), the map from Mealy machines to circuits.
-Circuits in this image are already in normalised Mealy form, so this is a good
-start.
-However, they are more specialised than that: their internal states are made up
-only of \(\bot\) and \(\top\) elements, and the width of the state is equal to
-the number of stream derivatives of the original stream function.
-We will establish this as our pseudo-normal form for circuits; depending on the
-ordering of the states picked, there may be multiple such circuits.
-
-\begin{corollary}
-    Given a circuit \(
-    \iltikzfig{strings/category/f}[box=f,colour=seq]
-    \), there exists \(x \in \nat\) and word \(\listvar{s} \in \{\bot,\top\}^x\)
-    and normalised circuit \(
-    \iltikzfig{strings/category/f}[box=g,colour=comb]
-    \) such that \(
-    \circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]
-    =
-    \circuittostreami[\iltikzfig{circuits/productivity/mealy-form}[core=|g|,colour=seq]]
-    \) by equations in \(
-    \mealyequations + \normalisingequations + \encodingequations
-    \).
-\end{corollary}
-
-By \cref{cor:encoding-circuits}, we have that there is an encoding that maps
-state sets between denotationally equivalent circuits.
-If we can encode a circuit's state sets to one where the states are all elements
-of \(\{\bot,\top\}^x\), does this mean we have a sound and complete equational
-theory?
+We can now map the state set of one circuit to another using encodings.
+Does this mean that the two circuits will now be structurally equal?
 Unfortunately not: all it means is that the circuits agree on the set of
 circuit states.
 
@@ -43,14 +11,13 @@ circuit states.
         \quad
         \iltikzfig{circuits/examples/state-change/circuit-simpler-mealy}
     \]
-    Both circuits have circuit states \(
-    \{\belnaptrue\belnapfalse,\belnapfalse\belnaptrue\}
-    \), but their combinational cores do \emph{not} have the same semantics.
+    Both circuits have circuit states \(\{\belnaptrue\belnapfalse\}\), but their
+    combinational cores do \emph{not} have the same semantics.
     They only act the same because they receive certain inputs.
 \end{example}
 
 The final family of equations required is one for mapping between combinational
-circuits that agree on the context, but may differ otherwise.
+circuits that agree on the subset of possible inputs they actually receive.
 
 \begin{notation}
     Given sets \(A\), \(B\) and \(C\) where \(C \subseteq A\) and a function
