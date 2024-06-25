@@ -1,106 +1,120 @@
 \begin{figure}
+    \setlength{\tabcolsep}{3pt}
     \centering
     \begin{tabular}{ccc}
-        \(\trace{X}[A][D]{
-            \id[X] \tensor f \seq g \seq \id[X] \tensor h
+        \scalebox{0.9}{\(\trace{X}[A][D]{
+                \id[X] \tensor f \seq g \seq \id[X] \tensor h
+            }
+            \)}
+        \qquad
+         &
+        \(=\)
+         &
+        \scalebox{0.9}{\(f \seq \trace{X}[B][C]{g} \seq h\)}
+        \\[1em]
+        \scalebox{0.85}{\(
+            \iltikzfig{strings/traced/naturality-lhs}[colour=white,box1=f,box2=g,box3=h,dom=A,cod=D]
+            \)}\qquad
+         &
+        \(=\)
+         &
+        \scalebox{0.85}{\(
+            \iltikzfig{strings/traced/naturality-rhs}[colour=white,box1=f,box2=g,box3=h,dom=A,cod=D]
+            \)}
+    \end{tabular}
+    \\[1em]
+    \rule[1em]{\textwidth}{0.1mm}
+    \\[0.1em]
+    \begin{tabular}{ccccccc}
+        \scalebox{0.9}{\(
+            \trace{X}[A][B]{f \seq g \tensor \id[B]}
+            \)}
+         &
+        \(=\)
+         &
+        \scalebox{0.9}{\(
+            \trace{Y}[A][B]{g \tensor \id[A] \seq f}
+            \)}
+         &
+         &
+        \scalebox{0.9}{\(
+            \trace{X}[X][X]{\swap{X}{X}}
+            \)}
+         &
+        \(=\)
+         &
+        \scalebox{0.9}{\(\id[X]\)}
+        \\[1em]
+        \scalebox{0.9}{\(
+            {\iltikzfig{strings/traced/sliding-lhs}[colour=white,box1=f,box2=g,dom=A,cod=B]}
+            \)}
+         &
+        \(=\)
+         &
+        \scalebox{0.9}{\(
+            \iltikzfig{strings/traced/sliding-rhs}[colour=white,box1=f,box2=g,dom=A,cod=B]
+            \)}
+         &
+        \qquad\qquad
+         &
+        \scalebox{0.9}{\(
+            \iltikzfig{strings/traced/yanking-lhs}[obj=X,colour=white]
+            \)}
+         &
+        \(=\)
+         &
+        \scalebox{0.9}{\(
+            \iltikzfig{strings/category/identity}[obj=X,colour=white]
+            \)}
+    \end{tabular}
+    \\[1em]
+    \rule[1em]{\textwidth}{0.1mm}
+    \\[0.1em]
+    \begin{tabular}{ccccccc}
+        \scalebox{0.9}{\(
+            \trace{X}[A][B]{\trace{Y}[X \tensor A][X \tensor B]{f}}
+            \)
         }
-        \)
          &
         \(=\)
          &
-        \(f \seq \trace{X}[B][C]{g} \seq h\)
+        \scalebox{0.9}{
+            \(
+            \trace{X \tensor Y}[A][B]{f}
+            \)
+        }
+         &
+         &
+        \scalebox{0.9}{
+            \( \trace{X}[A][B]{f} \tensor g\)
+        }
+         &
+        \(=\)
+         &
+        \scalebox{0.9}{\(
+            \trace{X}[A \tensor C][B \tensor D]{f \tensor g}
+            \)}
         \\[1em]
-        \(
-        \iltikzfig{strings/traced/naturality-lhs}[colour=white,box1=f,box2=g,box3=h,dom=A,cod=D]
-        \)
+        \scalebox{0.85}{
+            \iltikzfig{strings/traced/vanishing-lhs}[colour=white,box=f,dom=A,cod=B,trace1=X,trace2=Y]
+        }
          &
         \(=\)
          &
-        \(
-        \iltikzfig{strings/traced/naturality-rhs}[colour=white,box1=f,box2=g,box3=h,dom=A,cod=D]
-        \)
-    \end{tabular}
-    \\[1em]
-    \rule[1em]{\textwidth}{0.1mm}
-    \\[0.1em]
-    \begin{tabular}{ccc}
-        \(
-        \trace{X}[A][B]{f \seq g \tensor \id[B]}
-        \)
+        \scalebox{0.85}{
+            \iltikzfig{strings/traced/vanishing-rhs}[colour=white,box=f,dom=A,cod=B,trace1=X,trace2=Y]
+        }
+         &
+         &
+        \scalebox{0.85}{
+            \iltikzfig{strings/traced/superposing-lhs}[colour=white,box1=f,box2=g,dom1=A,cod1=B,dom2=C,cod2=D,trace=X]
+        }
          &
         \(=\)
          &
-        \(
-        \trace{Y}[A][B]{g \tensor \id[A] \seq f}
-        \)
-        \\[1em]
-        \(
-        \iltikzfig{strings/traced/sliding-lhs}[colour=white,box1=f,box2=g,dom=A,cod=B]
-        \)
-         &
-        \(=\)
-         &
-        \(\iltikzfig{strings/traced/sliding-rhs}[colour=white,box1=f,box2=g,dom=A,cod=B]\)
-    \end{tabular}
-    \\[1em]
-    \rule[1em]{\textwidth}{0.1mm}
-    \\[0.1em]
-    \begin{tabular}{ccc}
-        \(
-        \trace{X}[X][X]{\swap{X}{X}}
-        \)
-         &
-        \(=\)
-         &
-        \(\id[X]\)
-        \\[1em]
-        \(
-        \iltikzfig{strings/traced/yanking-lhs}[obj=X,colour=white]
-        \)
-         &
-        \(=\)
-         &
-        \(
-        \iltikzfig{strings/category/identity}[obj=X,colour=white]
-        \)
-    \end{tabular}
-    \\[1em]
-    \rule[1em]{\textwidth}{0.1mm}
-    \\[0.1em]
-    \begin{tabular}{ccc}
-        \(
-        \trace{X}[A][B]{\trace{Y}[X \tensor A][X \tensor B]{f}}
-        \)
-         &
-        \(=\)
-         &
-        \(
-        \trace{X \tensor Y}[A][B]{f}
-        \)
-        \\[1em]
-        \iltikzfig{strings/traced/vanishing-lhs}[colour=white,box=f,dom=A,cod=B,trace1=X,trace2=Y]
-         &
-        \(=\)
-         &
-        \iltikzfig{strings/traced/vanishing-rhs}[colour=white,box=f,dom=A,cod=B,trace1=X,trace2=Y]
-    \end{tabular}
-    \\[1em]
-    \rule[1em]{\textwidth}{0.1mm}
-    \\[0.1em]
-    \begin{tabular}{ccc}
-        \( \trace{X}[A][B]{f} \tensor g\)
-         &
-        \(=\)
-         &
-        \(
-        \trace{X}[A \tensor C][B \tensor D]{f \tensor g}
-        \)
-        \\[1em]
-        \iltikzfig{strings/traced/superposing-lhs}[colour=white,box1=f,box2=g,dom1=A,cod1=B,dom2=C,cod2=D,trace=X]
-         &
-        \(=\)
-         &
-        \iltikzfig{strings/traced/superposing-rhs}[colour=white,box1=f,box2=g,dom1=A,cod1=B,dom2=C,cod2=D,trace=X]
+        \scalebox{0.85}{
+            \iltikzfig{strings/traced/superposing-rhs}[colour=white,box1=f,box2=g,dom1=A,cod1=B,dom2=C,cod2=D,trace=X]
+        }
     \end{tabular}
     \caption{Equations of STMCs in string diagram notation}
     \label{fig:stmc-equations}
