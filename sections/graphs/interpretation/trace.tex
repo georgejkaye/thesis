@@ -168,7 +168,7 @@ interface.
 \end{example}
 
 To use partial monogamous cospans as a setting for interpreting traced terms,
-they must be assebled into a sub-PROP of \(\cspdhyp\).
+they must be assembled into a sub-PROP of \(\cspdhyp\).
 
 \begin{lemma}\label{lem:identities-symmetries-partial-monogamous}
     Identities and symmetries are partial monogamous.
@@ -209,10 +209,8 @@ partial monogamous cospans themselves form a PROP.
     partial monogamous cospans of hypergraphs.
 \end{definition}
 
-We must additionally show that \(\pmcspdhyp\) is also traced.
-Although \(\cspdhyp\) already has a trace in the form of the canonical trace, we
-must make sure that using the trace in this manner does not create cospans that
-are not partial monogamous.
+We must show that \(\pmcspdhyp\) is also traced, by making sure the canonical
+trace does not create cospans that are not partial monogamous.
 
 \begin{theorem}\label{thm:partial-monogamous-trace}
     The canonical trace is a trace on \(\pmcspdhyp\).
@@ -222,13 +220,12 @@ are not partial monogamous.
     \cospan{x + m}[f + h]{F}[g + k]{x + n}
     \); we must show that its trace \(
     \cospan{m}[h]{F^\prime}[k]{n}
-    \) is also partial monogamous.
-    Only the vertices in the image of \(f\) and \(g\) are affected by the trace:
-    for each element \(a \in x\), \(f(a)\) and \(g(a)\) will be merged
-    together in the traced graph, summing their degrees.
-    If these vertices are in the image of \(h\) or \(k\) then this will be
-    preserved in the traced cospan.
-    We now consider the various cases:
+    \) is partial monogamous.
+    For each vertex \(a \in x\), \(f(a)\) and \(g(a)\) are merged together in the
+    traced graph, summing their degrees.
+    If a vertex is in the image of \(h\) or \(k\), this is also the case in the
+    traced cospan.
+    We consider the various cases:
     \begin{itemize}
         \item if \(f(a) = g(a)\), then this vertex must have degree \((0, 0)\);
               the traced vertex will still have degree \((0, 0)\) and will no
@@ -238,12 +235,12 @@ are not partial monogamous.
               \(g(a)\) have degree \((0, 0)\); the traced vertex will still
               have degree \((0, 0)\) and be in both interfaces of the traced
               cospan;
-        \item if \(f(a)\) is also in the image of \(n \to F\), then \(f(i)\)
-              has \((0, 0)\) and \(g(a)\) will have degree
-              \((1,0)\), so the traced vertex will have degree \((1, 0)\) and
-              be in the image of \(n \to F^\prime\);
+        \item if \(f(a)\) is in the image of \(n \to F\), then \(f(i)\)
+              has \((0, 0)\) and \(g(a)\) has degree
+              \((1,0)\), so the traced vertex has degree \((1, 0)\) and
+              is in the image of \(n \to F^\prime\);
         \item if \(g(i)\) is in the image of \(m \to F\), then the above
-              argument applies in reverse; and
+              applies in reverse; and
         \item if neither vertex is in the image of \(m \to F\) and \(n \to F\),
               then the traced vertex will have degree \((1,1)\) and be in the
               image of no interface.
@@ -265,25 +262,21 @@ that this particular sub-PROP is the one that corresponds to traced terms.
     and only if it is partial monogamous.
 \end{theorem}
 \begin{proof}
-    Since the generators of \(\stmcsigma\) are mapped to monogamous cospans
-    by \(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\) and partial
-    monogamy is preserved by composition
+    For the \(\onlyifdir\) direction, the generators of \(\stmcsigma\) are mapped to
+    monogamous cospans by \(
+    \termandfrobtohypsigma \circ \tracedtosymandfrobsigma
+    \), and partial monogamy is preserved by composition
     (\cref{lem:partial-monogamicity-preserved-composition}),
     tensor (\cref{lem:partial-monogamicity-preserved-tensor}),
     and trace
-    (\cref{thm:partial-monogamous-trace}),
-    every cospan in the image of
-    \(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\) is partial
-    monogamous.
+    (\cref{thm:partial-monogamous-trace}).
 
-    Now we show that any partial monogamous cospan \(
+    For the \(\ifdir\) direction, we show that any partial monogamous cospan \(
     \cospan{m}[f]{F}[g]{n}
-    \) must be in the image of \(
+    \) is in the image of \(
     \termandfrobtohypsigma \circ \tracedtosymandfrobsigma
-    \) by constructing an isomorphic cospan from a trace of cospans, in which
-    each component under the trace is in the image of \(\termtohypsigma\);
-    subsequently this means that the entire cospan must be in the image of
-    \(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\).
+    \) by constructing an isomorphic trace of cospans, in which
+    each component under the trace is in the image of \(\termtohypsigma\).
     The components of the new cospan are as follows:
     \begin{itemize}
         \item let \(L\) be the discrete hypergraph containing vertices with
@@ -305,35 +298,33 @@ that this particular sub-PROP is the one that corresponds to traced terms.
         \,\seq\,
         \cospan{L + S + n}[\id]{L + E + n}[\id]{L + T + n}
     \end{gather*}
-    Finally we take the trace of \(L + T\) over this composite to obtain a
-    cospan which can be checked to be isomorphic to the original cospan
-    \(\cospan{m}[f]{F}[g]{n}\) by applying the pushouts.
+    We take the trace of \(L + T\) over this composite to obtain a
+    cospan isomorphic to the original.
     The components of the composite under the trace are all monogamous acyclic
-    so must be in the image of \(\termtohypsigma\) by
+    so are in the image of \(\termtohypsigma\) by
     \cref{thm:monogamous-acyclic-full}; this means there is a term
     \(f \in \smcsigma\) such that \(\termtohypsigma[f]\) is isomorphic to the
     original composite.
-    Clearly the trace of \(f\) is in \(\stmcsigma\), and so the trace of the
-    composite is in the image of
+    The trace of \(f\) is in \(\stmcsigma\), so the trace of the composite is in
+    the image of
     \(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\).
 \end{proof}
 
-As with the proof for the Frobenius case
+As with the Frobenius case
 (\cref{thm:isomorphism-smcfrob-cospans}), the large composite cospan may seem
 confusing.
-Like before, we stack up the edges in the cospan
-\(\cospan{\tilde{m}}{\tilde{E}}{\tilde{n}}\), but now we join up the connections
+We stack up the edges in the cospan
+\(\cospan{\tilde{m}}{\tilde{E}}{\tilde{n}}\), but now join up the connections
 by tracing the targets of the edges around, and shuffling them to the correct
 source.
-The graph \(L\) is used to make sure any identity loops are not omitted.
+The graph \(L\) contains any identity loops.
 
-\begin{example}
-    Consider the following term and its interpretation as a cospan of
-    hypergraphs.
+\begin{example}\label{ex:trace-composite}
+    Consider the following term and its cospan interpretation:
     \begin{center}
         \iltikzfig{graphs/trace/correspondence/original-term}
-        \qquad
-        \begin{tikzcd}
+        \quad
+        \begin{tikzcd}[column sep=tiny]
             \iltikzfig{graphs/trace/correspondence/inputs}
             \arrow{r}
             &
@@ -344,46 +335,7 @@ The graph \(L\) is used to make sure any identity loops are not omitted.
         \end{tikzcd}
     \end{center}
     We assemble the latter into the composite cospan of
-    \cref{thm:termtohyp-image} as follows:
-    \begin{center}
-        \(\trace{4}{
-            \begin{tikzcd}[column sep=tiny, ampersand replacement=\&]
-                \iltikzfig{graphs/trace/correspondence/s-inputs}
-                \arrow{r}
-                \&
-                \iltikzfig{graphs/trace/correspondence/s}
-                \&
-                \arrow{l}
-                \iltikzfig{graphs/trace/correspondence/s-outputs}
-            \end{tikzcd}
-            \seq
-            \begin{tikzcd}[row sep=tiny,column sep=tiny, ampersand replacement=\&]
-                \iltikzfig{graphs/trace/correspondence/l-inputs}
-                \arrow{r}
-                \&
-                \iltikzfig{graphs/trace/correspondence/l}
-                \&
-                \arrow{l}
-                \iltikzfig{graphs/trace/correspondence/l-outputs}
-                \\
-                \iltikzfig{graphs/trace/correspondence/e-inputs}
-                \arrow{r}
-                \&
-                \iltikzfig{graphs/trace/correspondence/e}
-                \&
-                \arrow{l}
-                \iltikzfig{graphs/trace/correspondence/e-outputs}
-                \\
-                \iltikzfig{graphs/trace/correspondence/l-inputs}
-                \arrow{r}
-                \&
-                \iltikzfig{graphs/trace/correspondence/l}
-                \&
-                \arrow{l}
-                \iltikzfig{graphs/trace/correspondence/l-outputs}
-            \end{tikzcd}
-        }\)
-    \end{center}
+    \cref{thm:termtohyp-image} as shown in \cref{fig:trace-composite}.
     Both of the components under the trace correspond to terms in \(\smcsigma\),
     so applying the trace to this produces a term in \(\stmcsigma\) which is
     equal to the original by string diagrammatic deformations.
@@ -391,6 +343,52 @@ The graph \(L\) is used to make sure any identity loops are not omitted.
         \iltikzfig{graphs/trace/correspondence/term}
     \end{center}
 \end{example}
+
+\begin{figure}
+    \centering
+    \(\trace{4}{
+        \begin{tikzcd}[column sep=tiny, ampersand replacement=\&]
+            \scalebox{0.7}{\(\iltikzfig{graphs/trace/correspondence/s-inputs}\)}
+            \arrow{r}
+            \&
+            \scalebox{0.7}{\(\iltikzfig{graphs/trace/correspondence/s}\)}
+            \&
+            \arrow{l}
+            \scalebox{0.7}{\(\iltikzfig{graphs/trace/correspondence/s-outputs}\)}
+        \end{tikzcd}
+        \seq
+        \begin{tikzcd}[row sep=tiny,column sep=tiny, ampersand replacement=\&]
+            \scalebox{0.7}{\(\iltikzfig{graphs/trace/correspondence/l-inputs}\)}
+            \arrow{r}
+            \&
+            \scalebox{0.7}{\(\iltikzfig{graphs/trace/correspondence/l}\)}
+            \&
+            \arrow{l}
+            \scalebox{0.7}{\(\iltikzfig{graphs/trace/correspondence/l-outputs}\)}
+            \\
+            \scalebox{0.7}{\(\iltikzfig{graphs/trace/correspondence/e-inputs}\)}
+            \arrow{r}
+            \&
+            \scalebox{0.7}{\(\iltikzfig{graphs/trace/correspondence/e}\)}
+            \&
+            \arrow{l}
+            \scalebox{0.7}{\(\iltikzfig{graphs/trace/correspondence/e-outputs}\)}
+            \\
+            \scalebox{0.7}{\(\iltikzfig{graphs/trace/correspondence/l-inputs}\)}
+            \arrow{r}
+            \&
+            \scalebox{0.7}{\(\iltikzfig{graphs/trace/correspondence/l}\)}
+            \&
+            \arrow{l}
+            \scalebox{0.7}{\(\iltikzfig{graphs/trace/correspondence/l-outputs}\)}
+        \end{tikzcd}
+    }\)
+    \caption{
+        The cospan of \cref{ex:trace-composite} in the form of
+        \cref{thm:termtohyp-image}
+    }
+    \label{fig:trace-composite}
+\end{figure}
 
 This shows that \(
 \termandfrobtohypsigma \circ \tracedtosymandfrobsigma

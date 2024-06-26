@@ -95,9 +95,9 @@ operations.
     The interfaces remain mono as pushouts along monos are monos in
     \(\hypsigmac\).
     The only altered vertices are those in the image of
-    \(g\) and \(h\), which are merged pointwise; since vertices in the image of
+    \(g\) and \(h\), which are merged pointwise; vertices in the image of
     \(g\) have out-degree \(0\) and those in the image of \(h\) have in-degree
-    \(0\), the merged vertices will have at most degree \((1, 1)\).
+    \(0\) so the merged vertices have at most degree \((1, 1)\).
 \end{proof}
 
 \begin{lemma}[\cite{bonchi2022stringa}, Lem.\ 17]\label{lem:monogamicity-preserved-tensor}
@@ -113,7 +113,7 @@ Since symmetric monoidal terms cannot have cycles, a notion of \emph{acyclicity}
 must also be enforced.
 
 \begin{definition}[Predecessor {\cite[Def.\ 18]{bonchi2022stringa}}]
-    A hyperedge \(e\) is a \emph{predecessor} of another hyperedge \(e^\prime\)
+    A hyperedge \(e\) is a \emph{predecessor} of hyperedge \(e^\prime\)
     if there exists a node \(v\) in the sources of \(e\) and the targets of
     \(e^\prime\).
 \end{definition}
@@ -153,7 +153,7 @@ nodes.
 Once again, for acyclicity to be a suitable condition on a category of cospans,
 it needs to be preserved by categorical operations.
 
-\begin{lemma}[\cite{bonchi2022stringa}, Prop.\ 21]\label{lem:identities-symmetries-monogamous-acyclic}
+\begin{lemma}[{\cite[Prop.\ 21]{bonchi2022stringa}}]\label{lem:identities-symmetries-monogamous-acyclic}
     Identities and symmetries are acyclic.
 \end{lemma}
 \begin{proof}
@@ -161,7 +161,7 @@ it needs to be preserved by categorical operations.
     hypergraphs cannot contain cycles.
 \end{proof}
 
-\begin{lemma}[\cite{bonchi2022stringa}, Prop.\ 21]\label{lem:monogamous-acyclicity-preserved-tensor}
+\begin{lemma}[{\cite[Prop.\ 21]{bonchi2022stringa}}]\label{lem:monogamous-acyclicity-preserved-tensor}
     Acyclicity is preserved by tensor.
 \end{lemma}
 \begin{proof}
@@ -173,7 +173,7 @@ cospans may not preserve acyclicity.
 It is only when acyclicity is combined with monogamy that composition can be
 safely performed.
 
-\begin{lemma}[\cite{bonchi2022stringa}, Prop.\ 21]\label{lem:monogamous-acyclicity-preserved-composition}
+\begin{lemma}[{\cite[Prop.\ 21]{bonchi2022stringa}}]\label{lem:monogamous-acyclicity-preserved-composition}
     Monogamous acyclicity is preserved by composition.
 \end{lemma}
 \begin{proof}
@@ -191,7 +191,7 @@ safely performed.
 This shows that monogamous acyclic cospans of hypergraphs form a category.
 
 \begin{definition}[\cite{bonchi2022stringa}]
-    Let \(\macspdhyp\) be the sub-PROP of \(\cspdhyp\) containing only the
+    Let \(\macspdhyp\) be defined as the sub-PROP of \(\cspdhyp\) containing the
     monogamous acyclic cospans of hypergraphs.
 \end{definition}
 

@@ -5,7 +5,7 @@ relatively new field.
 One of the first approaches was developed at the turn of the 2010s using
 \emph{string graphs}~\cite{%
     dixon2010open,dixon2013opengraphs,kissinger2012pictures%
-}.
+}, an example of which is illustrated in \cref{fig:string-graph}.
 String graphs have two classes of nodes for \emph{boxes} and \emph{wires}; the
 former nodes represent generators in string diagrams and the latter nodes
 represent the wires between them.
@@ -14,9 +14,12 @@ represented by arbitrarily many wire nodes connected together; all of these
 different depictions are identified by a notion of \emph{wire homeomorphism}, in
 which adjacent wire nodes can be collapsed into one.
 
-\begin{center}
+\begin{figure}
+    \centering
     \iltikzfig{graphs/examples/string-graph}
-\end{center}
+    \caption{Example of an interfaced string graph}
+    \label{fig:string-graph}
+\end{figure}
 
 String graphs modulo wire homeomorphism are a suitable setting for modelling
 traced or compact closed categories, but their main drawback is that a given
@@ -27,25 +30,27 @@ diagram rewriting modulo \emph{Frobenius structure} using
 \emph{hypergraphs}~\cite{%
     bonchi2016rewriting,zanasi2017rewriting,bonchi2017confluence,%
     bonchi2018rewriting,bonchi2022string,bonchi2022stringa,bonchi2022stringb%
-}.
+}, such as that in \cref{fig:hypergraph-intro}.
 Hypergraphs are a generalisation of graphs in which edges can have arbitrarily
 many sources and targets, rather than just one each.
 When interpreting string diagrams as hypergraphs, generators are represented as
 hyperedges and connections between generators indicated by if they source or
 target vertices.
-The beauty of the hypergraph formalism is that there is no restriction for
-nodes to only be incident on a single source and target, so one can easily
-model structures such as monoids or comonoids.
+As there is no restriction for nodes to only be incident on a single source and
+target, one can model structures such as monoids or comonoids.
 
-\begin{center}
+\begin{figure}
+    \centering
     \iltikzfig{graphs/examples/hypergraph}
-\end{center}
+    \caption{Example of an interfaced hypergraph}
+    \label{fig:hypergraph-intro}
+\end{figure}
 
 While string diagrams `absorb' the equations of SMCs, hypergraphs go one further
 and absorb the equations of
 a \emph{special commutative Frobenius algebra}: string diagrams
 equal by Frobenius equations are interpreted as isomorphic hypergraphs.
-This means that, in some sense, rewriting using hypergraphs can be even more
+This means rewriting using hypergraphs can be even more
 advantageous than using string diagrams.
 
 Naturally, there have also been variations on this work where the complete

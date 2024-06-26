@@ -17,12 +17,10 @@ One can think of the category \(\mathbf{X}\) as a `template' for the structure
 of a hypergraph: the object \(\star\) represents the nodes and each object
 \((k, l)\) represents hyperedges with \(k\) sources and \(l\) targets; each such
 edge must pick \(k\) sources and \(l\) targets from \(\star\).
-
 Objects in \(\hyp\) are functors that instantiate each object in \(\mathbf{X}\)
 to a concrete set.
-For a hypergraph \(F \in \hyp\) we write \(\vertices{F}\) for its
-set of nodes and \(\edges{F}{k}{l}\) for the set of edges with \(k\) sources and
-\(l\) targets.
+For a hypergraph \(F \in \hyp\) we write \(\vertices{F}\) for its nodes and
+\(\edges{F}{k}{l}\) for its edges with \(k\) sources and \(l\) targets.
 
 \begin{example}\label{ex:hypergraph}
     Let a hypergraph \(F\) be defined as follows:
@@ -47,11 +45,9 @@ set of nodes and \(\edges{F}{k}{l}\) for the set of edges with \(k\) sources and
     \end{gather*}
     Much like with regular graphs, it is more intuitive to draw out hypergraphs
     rather than look at their combinatorial representation.
-    We draw nodes as black dots, and hyperedges as `bubbles' with ordered tentacles
-    on the left and right that connect to source and target nodes respectively.
-    \[
-        \iltikzfig{graphs/blank-example-2}
-    \]
+    We draw nodes as black dots and hyperedges as `bubbles' with ordered tentacles
+    on the left and right that connect to source and target nodes respectively,
+    as illustrated in \cref{fig:hypergraph-ex}.
     Note that the vertices do not have any notion of ordering or directionality.
 \end{example}
 
@@ -60,62 +56,89 @@ transformations: structure-preserving maps between hypergraphs.
 
 \begin{definition}[Hypergraph homomorphism]\label{def:hypergraph-homomorphism}
     For two hypergraphs \(F, G \in \hyp\), a \emph{hypergraph homomorphism}
-    \(F \to G\) consists of functions
+    \(F \to G\) is a pair of functions
     \(\morph{\vertices{f}}{\vertices{F}}{\vertices{G}}\) and
     \(\morph{\edges{f}{k}{l}}{\edges{F}{k}{l}}{\edges{G}{k}{l}}\) such that the
     following diagrams commute:
     \input{floats/hypergraph-homs}
 \end{definition}
-
+%
 \begin{example}\label{ex:hypergraph-homomorphism}
     Consider the following hypergraph \(G\):
-    \begin{gather*}
-        \vertices{G} \coloneqq \{v_6,v_7,v_8\}
-        \quad
-        \edges{G}{2}{1} \coloneqq \{e_2\}
-        \\
-        \sources{0}(e_3) \coloneqq v_6
-        \quad
-        \sources{1}(e_3) \coloneqq v_7
-        \quad
-        \targets{0}(e_3) \coloneqq v_8
-        \\
-        \iltikzfig{graphs/blank-smaller}
-    \end{gather*}
+    \begin{center}
+        \begin{minipage}{0.75\textwidth}
+            \begin{gather*}
+                \vertices{G} \coloneqq \{v_6,v_7,v_8\}
+                \quad
+                \edges{G}{2}{1} \coloneqq \{e_2\}
+                \\
+                \sources{0}(e_3) \coloneqq v_6
+                \quad
+                \sources{1}(e_3) \coloneqq v_7
+                \quad
+                \targets{0}(e_3) \coloneqq v_8
+            \end{gather*}
+        \end{minipage}
+        \begin{minipage}{0.2\textwidth}
+            \centering
+
+            \vspace{1.5em}
+
+            \iltikzfig{graphs/blank-smaller}
+        \end{minipage}
+    \end{center}
+
     Recall the hypergraph \(F\) from \cref{ex:hypergraph}.
     A homomorphism \(\morph{h}{G}{F}\) is a map from the vertices and edges
     of the former to those of the the latter preserving sources and targets;
     one possible homomorphism could be
-    \begin{gather*}
-        \vertices{h}(v_6) \coloneqq v_1
-        \quad
-        \vertices{h}(v_7) \coloneqq v_0
-        \quad
-        \vertices{h}(v_8) \coloneqq v_3
-        \quad
-        \edges{h}{2}{1}(e_2) \coloneqq e_0
-    \end{gather*}
-    The image of the homomorphism is illustrated below:
-    \[
-        \iltikzfig{graphs/blank-hom-2}
-    \]
+    \begin{center}
+        \begin{minipage}{0.75\textwidth}
+            \begin{gather*}
+                \vertices{h}(v_6) \coloneqq v_1
+                \quad
+                \vertices{h}(v_7) \coloneqq v_0
+                \quad
+                \vertices{h}(v_8) \coloneqq v_3
+                \\
+                \edges{h}{2}{1}(e_2) \coloneqq e_0
+            \end{gather*}
+        \end{minipage}
+        \begin{minipage}{0.2\textwidth}
+            \centering
+
+            \vspace{1.5em}
+
+            \iltikzfig{graphs/blank-hom-2}
+        \end{minipage}
+    \end{center}
+
     Injective hypergraph homomorphisms are often known as \emph{embeddings}.
     However, there is no requirement for hypergraph homomorphisms to be
     injective.
-    Conisder another hypergraph \(H\) defined as
-    \begin{gather*}
-        \vertices{H} \coloneqq \{v_9\}
-        \quad
-        \edges{H}{2}{1} \coloneqq \{e_4\}
-        \\
-        \sources{0}(e_4) = v_9
-        \quad
-        \sources{1}(e_4) = v_9
-        \quad
-        \targets{0}(e_4) = v_9
-        \\
-        \iltikzfig{graphs/blank-merge}
-    \end{gather*}
+    Consider another hypergraph \(H\) defined as
+    \begin{center}
+        \begin{minipage}{0.75\textwidth}
+            \begin{gather*}
+                \vertices{H} \coloneqq \{v_9\}
+                \quad
+                \edges{H}{2}{1} \coloneqq \{e_4\}
+                \\
+                \sources{0}(e_4) = v_9
+                \quad
+                \sources{1}(e_4) = v_9
+                \quad
+                \targets{0}(e_4) = v_9
+            \end{gather*}
+        \end{minipage}
+        \begin{minipage}{0.2\textwidth}
+            \centering
+
+            \vspace{1.5em}
+
+            \iltikzfig{graphs/blank-merge}
+        \end{minipage}
+    \end{center}
     There is a non-injective homomorphism \(\morph{k}{G}{H}\) defined as
     follows:
     \begin{gather*}
@@ -133,14 +156,25 @@ transformations: structure-preserving maps between hypergraphs.
 
 \subsection{Labelled hypergraphs}
 
+\begin{figure}
+    \centering
+    \iltikzfig{graphs/blank-example-2}
+    \qquad
+    \iltikzfig{graphs/signature-example}
+    \qquad
+    \iltikzfig{graphs/blank-example-labelled-2}
+    \caption{Illustration of the hypergraph from \cref{ex:hypergraph}, the
+        hypergraph signature from \cref{ex:labelled-hypergraph-signature}, and the
+        labelling of the former with latter from \cref{ex:labelled-hypergraph}
+    }
+    \label{fig:hypergraph-ex}
+\end{figure}
+
 The graphical notation for hypergraphs is particularly evocative of string
 diagrams: generators
 correspond to hyperedges and wires to the nodes between them.
 The only thing missing is that the hyperedges are not \emph{labelled} with
 generator symbols.
-These labels can be assigned using a hypergraph homomorphism to a
-\emph{signature} graph.
-
 
 \begin{definition}[Hypergraph signature~\cite{bonchi2016rewriting}]
     For a set of generators \(\generators\) with arities and coarities as defined
@@ -184,20 +218,16 @@ These labels can be assigned using a hypergraph homomorphism to a
         \quad
         \targets{1}(e_\psi) \coloneqq v
     \end{gather*}
-    and is drawn as follows, where we notate the vertices and edges with the
-    appropriate colour and label to aid in clarity.
-    \[
-        \iltikzfig{graphs/signature-example}
-    \]
+    and is drawn as in the middle of \cref{fig:hypergraph-ex}, where the edges
+    are notated with the appropriate label to aid in clarity.
 \end{example}
 
-A hypergraph \(F\) labelled with generators from \(\generators\) is defined
-as a hypergraph homomorphism \(\morph{\Gamma}{F}{\hypsignature{\generators}}\);
+A hypergraph \(F\) labelled over \(\generators\) is a hypergraph homomorphism
+\(\morph{\Gamma}{F}{\hypsignature{\generators}}\);
 an edge \(e \in \edges{F}{k}{l}\) is labelled with generator
 \(\phi\) if \(\edges{\Gamma}{k}{l}(e) = e_\phi\).
-This means a category of hypergraphs \emph{labelled} over a set of generators
-\(\generators\) is a category in which the objects are all hypergraph
-homomorphisms to \(\hypsignature{\generators}\).
+This means a category of \emph{labelled} hypergraphs is a category in which the
+objects are hypergraph homomorphisms to \(\hypsignature{\generators}\).
 This is a well-studied categorical template, and it has a special name.
 
 \begin{definition}[Slice category~\cite{lawvere1963functorial}]\label{def:slice-category}
@@ -215,7 +245,7 @@ labelled hypergraphs.
 
 \begin{definition}[Labelled hypergraphs~\cite{bonchi2016rewriting}]
     For a set of generators \(\generators\), the category of
-    \emph{\(\Sigma\)-labelled hypergraphs} is defined as the slice category
+    \emph{\(\Sigma\)-labelled hypergraphs} is the slice category
     \(\hypsigma \coloneqq \hyp \slice \hypsignature{\Sigma}\).
 \end{definition}
 
@@ -231,24 +261,20 @@ labelled hypergraphs.
         \edges{\Gamma}{1}{2}(e_1) \coloneqq e_\psi
     \end{gather*}
     We draw a labelled hypergraph as a regular hypergraph but with labelled
-    edges.
-    \[
-        \iltikzfig{graphs/blank-example-labelled-2}
-    \]
+    edge, as shown in \cref{fig:hypergraph-ex}.
     If there are multiple generators with the same arity and coarity
     in a signature, there may well be multiple valid labellings of a hypergraph.
 \end{example}
 
 \subsection{Coloured hypergraphs}
 
-We may not always deal with monochromatic PROPs, but additionally have a
-countable set of \emph{colours}.
-Accordingly, hypergraph signatured can also be generalised to \emph{coloured}
+We may additionally work over a countable set of \emph{colours}.
+Accordingly, hypergraph signatured can be generalised to \emph{coloured}
 hypergraph signatures.
 
 \begin{definition}[Coloured hypergraph signature~\cite{bonchi2016rewriting}]\label{def:coloured-hypergraph-signature}
-    For a set of generators \(\generators\) and colours \(C\) as defined
-    in \cref{def:generators}, the corresponding
+    For a countable set set \(C\) and a set of \(C\)-coloured generators
+    \(\generators\) as defined in \cref{def:generators}, the corresponding
     \emph{coloured hypergraph signature}
     \(\hypsignature{(C,\Sigma)}\) in an object of \(\hyp\) defined as
     follows:
@@ -291,18 +317,30 @@ hypergraph signatures.
         \quad
         \targets{1}(e_\psi) \coloneqq v_{\redbullet}
     \end{gather*}
-    and is drawn by labelling edges appropriately:
-    \[
-        \iltikzfig{graphs/signature-example-coloured}
-    \]
+    and is drawn by labelling edges appropriately as in
+    \cref{fig:coloured-hypergraph-ex}.
 \end{example}
-
+%
+\begin{figure}
+    \centering
+    \iltikzfig{graphs/signature-example-coloured}
+    \qquad
+    \iltikzfig{graphs/blank-example-labelled-coloured-2}
+    \caption{
+        Illustration of the coloured hypergraph signature from
+        \cref{ex:coloured-hypergraph-signature} and the labelling of the hypergraph
+        in \cref{ex:hypergraph} from \cref{ex:coloured-hypergraph}
+    }
+    \label{fig:coloured-hypergraph-ex}
+\end{figure}
+%
 \begin{definition}[Coloured hypergraphs~\cite{bonchi2016rewriting}]
-    For a countable set of colours \(C\), let \(\hypsigmac\) be the category
+    For a countable set \(C\) and set of \(C\)-coloured generators \(\Sigma\),
+    let \(\hypsigmac\) be the category
     of \emph{\((C,\generators)\)-labelled hypergraphs}, defined as the slice
     category \(\hyp \slice \hypsignature{(\mcc,\generators)}\).
 \end{definition}
-
+%
 \begin{example}\label{ex:coloured-hypergraph}
     Returning again to the hypergraph \(F\) in \cref{ex:hypergraph}, we can
     label it with colours and generators from \((C,\generators[c])\) with
@@ -325,8 +363,5 @@ hypergraph signatures.
         \edges{\Gamma}{1}{2}(e_1) \coloneqq e_{\psi}
     \end{gather*}
     Coloured hypergraphs are drawn as labelled hypergraphs, but their vertices
-    are additionally coloured.
-    \[
-        \iltikzfig{graphs/blank-example-labelled-coloured-2}
-    \]
+    are additionally coloured, as shown in \cref{fig:coloured-hypergraph-ex}.
 \end{example}

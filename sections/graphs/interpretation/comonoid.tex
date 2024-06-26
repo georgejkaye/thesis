@@ -27,7 +27,7 @@ Compare the two Frobenius equations with the bialgebra equation shown below:
     =
     \iltikzfig{strings/structure/bialgebra/merge-copy-rhs}
 \]
-When operating in a Frobenius setting, it is possible to derive the bialgebra
+In a Frobenius setting, it is possible to derive the bialgebra
 equation \(\bialgcommoneqn\) from the Frobenius equations combined with the
 equations of monoids and comonoids.
 
@@ -48,13 +48,14 @@ equations of monoids and comonoids.
         \eqaxioms[(\frobreqn)]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-3}
         \eqaxioms[(\frobleqn)]
+        \\[0.5em]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-4}
         \eqaxioms[(\monoidassoceqn)]
-        \\[0.5em]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-5}
         \eqaxioms[(\monoidcommeqn)]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-6}
         \eqaxioms[(\frobleqn)]
+        \\[0.5em]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-7}
         \eqaxioms[(\frobspeceqn)]
         \iltikzfig{strings/structure/bialgebra/frobenius-bialgebra/step-8}
@@ -68,27 +69,19 @@ involved map to the same (discrete) cospan of hypergraphs.
     \frobtohypsigma[
         \iltikzfig{strings/structure/frobenius/frobenius-l}
     ]
-    \,
     =
-    \,
     \frobtohypsigma[
         \iltikzfig{strings/structure/frobenius/frobenius-r}
     ]
-    \,
     =
-    \,
     \frobtohypsigma[
         \iltikzfig{strings/structure/bialgebra/merge-copy-lhs}
     ]
-    \,
     =
-    \,
     \frobtohypsigma[
         \iltikzfig{strings/structure/bialgebra/merge-copy-rhs}
     ]
-    \,
     =
-    \,
     \iltikzfig{graphs/example-frobenius-collapse}
 \end{gather*}
 
@@ -171,15 +164,13 @@ structure to fork wires; vertices must still only have one `in' connection.
     \((0, m)\) allow for the interpretation of terms such as \(
     \trace{}{\iltikzfig{strings/structure/comonoid/copy}[colour=white]}
     \).
-    \[
+    \begin{gather*}
         \frobtohypsigma[\trace{}{\iltikzfig{strings/structure/comonoid/copy}}]
-        =
-        \trace{}{\frobtohypsigma[\iltikzfig{strings/structure/comonoid/copy}]}
         =
         \trace{}{\iltikzfig{graphs/fork-cospan}}
         =
         \iltikzfig{graphs/trace-fork-cospan}
-    \]
+    \end{gather*}
 \end{remark}
 
 We must ensure that partial left-monogamy is preserved by the categorical
@@ -203,16 +194,13 @@ operations, so that partial left-monogamous cospans form another PROP.
     \) is partial left-monogamous.
 \end{lemma}
 \begin{proof}
-    We only need to check the in-degree of vertices, as the out-degree can be
-    arbitrary.
     Only the vertices in the image of \(n \to G\) have their in-degree modified;
-    they will gain the in-tentacles of the corresponding vertices in the image
-    of \(n \to F\).
-    Initially the vertices in \(n \to G\) must have in-degree \(0\) by partial
-    monogamy.
-    They can only gain at most one in-tentacle from vertices in \(n \to F\)
-    as each of these vertices has in-degree \(0\) or \(1\) and \(n \to G\) is
-    mono.
+    they gain the in-tentacles of the corresponding vertices in the image of
+    \(n \to F\).
+    Initially the vertices in \(n \to G\) have in-degree \(0\) by partial
+    monogamy; they will gain at most one in-tentacle from vertices in
+    \(n \to F\) as each of these vertices has in-degree \(0\) or \(1\) and
+    \(n \to G\) is mono.
     So the composite graph is partial left-monogamous.
 \end{proof}
 
@@ -225,8 +213,7 @@ operations, so that partial left-monogamous cospans form another PROP.
     \) is partial left-monogamous.
 \end{lemma}
 \begin{proof}
-    The elements of the original graphs are unaffected so
-    the degrees are unchanged.
+    The elements of the original graphs are unaffected.
 \end{proof}
 
 This means we can assemble the partial left-monogamous cospans of hypergraphs
@@ -244,13 +231,12 @@ terms with a (co)monoid structure, it has the additional structure of a trace.
     The canonical trace is a trace on \(\plmcspdhyp\).
 \end{proposition}
 \begin{proof}
-    We must show that for any set of vertices in the image
+    We must show that for any vertices in the image
     of \(x + n \to K\) merged by the canonical trace, at most one of them can
     have in-degree \(1\).
-    But this must be the case because any image in the image of
+    This follows because anything in the image of
     \(x + m \to K\) must have in-degree \(0\), and \(x + m \to K\) is
-    moreover mono so it cannot merge vertices in the image of
-    \(x + n \to K\).
+    mono so it cannot merge vertices in the image of \(x + n \to K\).
 \end{proof}
 
 We now have the setting in which we will model terms with a comonoid structure.

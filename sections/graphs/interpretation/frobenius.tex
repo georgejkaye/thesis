@@ -35,7 +35,7 @@ The monoid and comonoid are subject to the usual equations of (co)unitality,
     \iltikzfig{strings/structure/monoid/commutativity-lhs}
     =
     \iltikzfig{strings/structure/monoid/commutativity-rhs}
-    \quad
+    \\[1em]
     \iltikzfig{strings/structure/comonoid/unitality-l-lhs}
     =
     \iltikzfig{strings/structure/comonoid/unitality-l-rhs}
@@ -93,6 +93,7 @@ cocommutative comonoids along with the `Frobenius' and `special' equations.
         \eqaxioms[(\frobleqn)]
         \iltikzfig{strings/structure/frobenius/example-equational/step-2}
         \eqaxioms[(\monoidassoceqn)]
+        \\[1em]
         \iltikzfig{strings/structure/frobenius/example-equational/step-3}
         \eqaxioms[(\frobreqn)]
         \iltikzfig{strings/structure/frobenius/example-3}
@@ -402,7 +403,7 @@ to the \emph{countable} setting we work in.
     In \(\mcc \slice 1\) there is a morphism
     \((A, \morph{!_A}{A}{1}) \to (B, \morph{!_B}{B}{1})\) in
     for every morphism \(\morph{f}{A}{B} \in \mcc\) such
-    that \(f \seq !_B = !_A\); since both \(f \seq !_B\) and \(!_A\) are
+    that \(f \seq !_B = {!_A}\); since both \(f \seq !_B\) and \(!_A\) are
     morphisms \(A \to 1\) they must be the same unique morphism.
     Therefore \(\mcc \cong \mcc \slice 1\).
 \end{proof}
@@ -667,9 +668,8 @@ sources and targets must be the same: the job of the two outer cospans is to
 the left by going `over the top' of the edges via the identity cospan
 \(\cospan{N}{N}{N}\).
 
-\begin{example}
-    Consider the following term and its interpretation as a cospan of
-    hypergraphs.
+\begin{example}\label{ex:frobenius-composite}
+    Consider the following term and its cospan interpretation:
     \begin{center}
         \iltikzfig{graphs/frobenius/correspondence/original-term}
         \qquad
@@ -684,50 +684,7 @@ the left by going `over the top' of the edges via the identity cospan
         \end{tikzcd}
     \end{center}
     This cospan can be assembled into the form detailed in the above proof as
-    follows:
-    \begin{center}
-        \begin{tikzcd}[column sep=tiny]
-            \iltikzfig{graphs/frobenius/correspondence/l-inputs}
-            \arrow{r}
-            &
-            \iltikzfig{graphs/frobenius/correspondence/l}
-            &
-            \arrow{l}
-            \iltikzfig{graphs/frobenius/correspondence/l-outputs}
-        \end{tikzcd}
-        \hspace{-1.1em}
-        \(\seq\)
-        \hspace{-1.1em}
-        \begin{tikzcd}[column sep=tiny, row sep=0.1cm]
-            \iltikzfig{graphs/frobenius/correspondence/e-inputs}
-            \arrow{r}
-            &
-            \iltikzfig{graphs/frobenius/correspondence/n}
-            &
-            \arrow{l}
-            \iltikzfig{graphs/frobenius/correspondence/e-outputs}
-            \\
-            \iltikzfig{graphs/frobenius/correspondence/e-inputs}
-            \arrow{r}
-            &
-            \iltikzfig{graphs/frobenius/correspondence/e}
-            &
-            \arrow{l}
-            \iltikzfig{graphs/frobenius/correspondence/e-outputs}
-        \end{tikzcd}
-        \hspace{-1.1em}
-        \(\seq\)
-        \hspace{-1.1em}
-        \begin{tikzcd}[column sep=tiny]
-            \iltikzfig{graphs/frobenius/correspondence/r-inputs}
-            \arrow{r}
-            &
-            \iltikzfig{graphs/frobenius/correspondence/r}
-            &
-            \arrow{l}
-            \iltikzfig{graphs/frobenius/correspondence/r-outputs}
-        \end{tikzcd}
-    \end{center}
+    shown in \cref{fig:frobenius-composite}.
     By following the vertex maps, one can verify that this is indeed isomorphic
     to the original cospan.
     The outermost components correspond to terms in \(\frob\) and the
@@ -737,6 +694,56 @@ the left by going `over the top' of the edges via the identity cospan
     \]
     This term is equal to the original term by the Frobenius equations.
 \end{example}
+
+\begin{figure}
+    \centering
+    \begin{tikzcd}[column sep=tiny]
+        \scalebox{0.7}{\iltikzfig{graphs/frobenius/correspondence/l-inputs}}
+        \arrow{r}
+        &
+        \scalebox{0.7}{\iltikzfig{graphs/frobenius/correspondence/l}}
+        &
+        \arrow{l}
+        \scalebox{0.7}{\iltikzfig{graphs/frobenius/correspondence/l-outputs}}
+    \end{tikzcd}
+    \hspace{-1em}
+    \(\seq\)
+    \hspace{-1em}
+    \begin{tikzcd}[column sep=tiny, row sep=0.1cm]
+        \scalebox{0.7}{\iltikzfig{graphs/frobenius/correspondence/e-inputs}}
+        \arrow{r}
+        &
+        \scalebox{0.7}{\iltikzfig{graphs/frobenius/correspondence/n}}
+        &
+        \arrow{l}
+        \scalebox{0.7}{\iltikzfig{graphs/frobenius/correspondence/e-outputs}}
+        \\
+        \scalebox{0.7}{\iltikzfig{graphs/frobenius/correspondence/e-inputs}}
+        \arrow{r}
+        &
+        \scalebox{0.7}{\iltikzfig{graphs/frobenius/correspondence/e}}
+        &
+        \arrow{l}
+        \scalebox{0.7}{\iltikzfig{graphs/frobenius/correspondence/e-outputs}}
+    \end{tikzcd}
+    \hspace{-1em}
+    \(\seq\)
+    \hspace{-1em}
+    \begin{tikzcd}[column sep=tiny]
+        \scalebox{0.7}{\iltikzfig{graphs/frobenius/correspondence/r-inputs}}
+        \arrow{r}
+        &
+        \scalebox{0.7}{\iltikzfig{graphs/frobenius/correspondence/r}}
+        &
+        \arrow{l}
+        \scalebox{0.7}{\iltikzfig{graphs/frobenius/correspondence/r-outputs}}
+    \end{tikzcd}
+    \caption{
+        The cospan of \cref{ex:frobenius-composite} in the form of
+        \cref{thm:isomorphism-smcfrob-cospans}
+    }
+    \label{fig:frobenius-composite}
+\end{figure}
 
 This result means that any two terms in \(\smcsigma + \frob\) which are equal by
 the Frobenius equations can be mapped to isomorphic cospans of hypergraphs.

@@ -123,8 +123,8 @@ words.
     hypergraphs.
 \end{definition}
 
-By applying \cref{thm:csp-construction} with the functor \(D\), we obtain the
-category of interfaced hypergraphs.
+Instantiating \cref{thm:csp-construction} with \(D\) produces the category of
+interfaced hypergraphs.
 
 \begin{corollary}
     There is a PROP \(\cspdhyp\) where the morphisms are isomorphism classes of
@@ -152,18 +152,18 @@ category of interfaced hypergraphs.
         \iltikzfig{graphs/example-interfaces-2}
         \seq
         \iltikzfig{graphs/example-2-interfaces}
-        =
+        =\\[1em]
         \iltikzfig{graphs/example-composition-2}
     \end{gather*}
     Tensor in \(\cspdhyp\) is by direct product; putting cospans on top of each
     other.
-    \[
+    \begin{gather*}
         \iltikzfig{graphs/example-interfaces-2}
         \tensor
         \iltikzfig{graphs/example-2-interfaces}
-        =
+        =\\[1em]
         \iltikzfig{graphs/example-tensor-2}
-    \]
+    \end{gather*}
 \end{example}
 
 \subsection{Coloured cospans}
@@ -260,19 +260,19 @@ this functor gives us a category of \emph{coloured} interfaced hypergraphs
 \begin{example}
     Composition in \(\cspdchyp\) is as in \(\cspdhyp\) but now the glueing
     must also preserve colours.
-    \[
+    \begin{gather*}
         \iltikzfig{graphs/example-interfaces-coloured-2}
         \seq
         \iltikzfig{graphs/example-2-interfaces-coloured}
-        =
+        =\\[1em]
         \iltikzfig{graphs/example-composition-coloured-2}
-    \]
+    \end{gather*}
     The tensor is exactly the same as in \(\cspdhyp\).
-    \[
+    \begin{gather*}
         \iltikzfig{graphs/example-interfaces-coloured-2}
         \tensor
         \iltikzfig{graphs/example-2-interfaces-coloured}
-        =
+        =\\[1em]
         \iltikzfig{graphs/example-tensor-coloured-2}
-    \]
+    \end{gather*}
 \end{example}
