@@ -80,6 +80,7 @@ be unsound.
         \coloneqq
         \iltikzfig{circuits/examples/control/circuit-applied}
         \reduction
+        \\[1em]
         \iltikzfig{circuits/examples/control/circuit-applied-1}
         \reduction
         \iltikzfig{circuits/examples/control/circuit-applied-2}
@@ -146,7 +147,7 @@ When a circuit contains uncertain values \(
 \iltikzfig{circuits/components/values/vs-longer}[val=\listvar{v_0?}],
 \iltikzfig{circuits/components/values/vs-longer}[val=\listvar{v_1?}],
 \dots
-\iltikzfig{circuits/components/values/vs-longer}[val=\listvar{v_{n-1}?}],
+\iltikzfig{circuits/components/values/vs-longerer}[val=\listvar{v_{n-1}?}],
 \) where the maximum length of a given \(v_i\) is \(k\), there are \(k\)
 possible value assignments.
 For a given assignment \(i < k\), each value will produce a concrete value
@@ -194,23 +195,23 @@ ordinary value in future reductions and outputs.
     One sticking point that arises when using the categorical framework is the
     presence of the \(\bot\) and \(\top\) values, which would not normally
     be explicitly provided to a circuit.
-    These values mean that some well-know Boolean identities do not always hold.
+    These values mean that some well-known Boolean identities do not always hold.
     By using uncertain values, we can specify the values that \emph{will} be
     applied to a circuit and apply reductions that are not valid in general but
     are in this context.
 
-    Consider the circuit \(
-    \iltikzfig{circuits/examples/protocol/protocol-circuit}
-    \); when we restrict the first two inputs to be true/false inverses, we can
-    reduce the circuit to one with combinational behaviour.
+    In the following example, setting the first two inputs to true/false
+    inverses reduces the circuit to one with combinational behaviour.
     \begin{gather*}
         \iltikzfig{circuits/examples/protocol/circuit-with-protocol}
         \reduction
+        \\[0.25em]
         \iltikzfig{circuits/examples/protocol/circuit-with-protocol-1}
         \reduction
         \\[0.25em]
         \iltikzfig{circuits/examples/protocol/circuit-with-protocol-2}
         \reduction
+        \\[0.25em]
         \iltikzfig{circuits/examples/protocol/circuit-with-protocol-3}
         \reduction
         \\[0.25em]
@@ -218,6 +219,7 @@ ordinary value in future reductions and outputs.
         \reduction
         \iltikzfig{circuits/examples/protocol/circuit-with-protocol-5}
         \reduction
+        \\[0.25em]
         \iltikzfig{circuits/examples/protocol/circuit-with-protocol-6}
         \reduction
         \iltikzfig{circuits/examples/protocol/circuit-with-protocol-7}

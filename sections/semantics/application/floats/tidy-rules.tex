@@ -1,6 +1,26 @@
 \begin{figure}
     \centering
     \(
+    \iltikzfig{circuits/axioms/gate-stub-lhs}
+    \reduction
+    \iltikzfig{circuits/axioms/gate-stub-rhs}
+    \)
+    \quad
+    \(
+    \iltikzfig{circuits/axioms/stub-lhs}
+    \reduction
+    \iltikzfig{strings/monoidal/empty}
+    \)
+    \quad
+    \(
+    \iltikzfig{circuits/examples/tidying/redundant-trace-lhs}[box=f]
+    \reduction
+    \iltikzfig{circuits/examples/tidying/redundant-trace-rhs}[box=f]
+    \)
+    \\[0.25em]
+    \rule{\textwidth}{0.1mm}
+    \\[0.5em]
+    \(
     \iltikzfig{strings/structure/monoid/unitality-l-lhs}
     \reduction
     \iltikzfig{strings/structure/monoid/unitality-l-rhs}
@@ -17,7 +37,9 @@
     \reduction
     \iltikzfig{strings/structure/comonoid/unitality-l-rhs}
     \)
-    \quad
+    \\[0.25em]
+    \rule{\textwidth}{0.1mm}
+    \\[0.5em]
     \(
     \iltikzfig{strings/structure/comonoid/unitality-r-lhs}
     \reduction
@@ -29,32 +51,15 @@
     \reduction
     \iltikzfig{strings/structure/bialgebra/merge-discard-rhs}
     \)
-    \\[0.25em]
-    \rule{\textwidth}{0.1mm}
-    \\[0.5em]
-    \(
-    \iltikzfig{circuits/axioms/gate-stub-lhs}
-    \reduction
-    \iltikzfig{circuits/axioms/gate-stub-rhs}
-    \)
-    \quad
-    \(
-    \iltikzfig{circuits/axioms/stub-lhs}
-    \reduction
-    \iltikzfig{strings/monoidal/empty}
-    \)
     \quad
     \(
     \iltikzfig{circuits/axioms/unobservable-lhs}
     \reduction
     \iltikzfig{circuits/axioms/unobservable-rhs}
     \)
-    \quad
-    \(
-    \iltikzfig{circuits/examples/tidying/redundant-trace-lhs}[box=f]
-    \reduction
-    \iltikzfig{circuits/examples/tidying/redundant-trace-rhs}[box=f]
-    \)
+    \\[0.25em]
+    \rule{\textwidth}{0.1mm}
+    \\[0.5em]
     \caption{Rules for tidying up circuits in Mealy form}
     \label{fig:tidy-rules}
 \end{figure}

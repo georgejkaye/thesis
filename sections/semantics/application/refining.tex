@@ -13,6 +13,26 @@ run as fast as possible and reduce the \emph{clock cycle}.
     in the register must be in the image of the gates.
 \end{example}
 
+The streaming rule permits retiming using the composite register construct, but
+can also be used to retime raw delay components.
+
+\begin{lemma}[Timelessness]
+    For any primitive \(\iltikzfig{circuits/components/gates/gate}\),
+    \(
+    \iltikzfig{circuits/axioms/timelessness-redundant-1} =
+    \iltikzfig{circuits/axioms/timelessness-redundant-5}
+    \).
+\end{lemma}
+\begin{proof}
+    \(
+    \iltikzfig{circuits/axioms/timelessness-redundant-1} =
+    \iltikzfig{circuits/axioms/timelessness-redundant-2} =
+    \iltikzfig{circuits/axioms/timelessness-redundant-3} =
+    \iltikzfig{circuits/axioms/timelessness-redundant-4} =
+    \iltikzfig{circuits/axioms/timelessness-redundant-5}
+    \)
+\end{proof}
+
 When reasoning equationally, the behaviour of the circuits on either side of the
 equation must have exactly the same behaviour.
 However, when reasoning with circuits it is sometimes the case that this is too
@@ -35,7 +55,7 @@ behaviour of a circuit.
 \end{definition}
 
 \begin{definition}
-    Given two sequential circuits \(
+    For two sequential circuits \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \) and \(
     \iltikzfig{strings/category/f}[box=g,colour=seq,dom=m,cod=n]
@@ -53,30 +73,61 @@ behaviour of a circuit.
 \end{definition}
 
 Including this notion of equivalence in algebraic reasoning allows us to reason
-with \emph{inequalities} as well as equalities.
-This means that given a circuit, we can use equations as normal, determine that
-one component
+with \emph{inequalities} as well as equalities, so more efficient circuits can
+be identified.
+The simplest form of reasoning with logical equivalence is where we have the
+same circuit but guarded by different numbers of delays.
+
+\begin{notation}
+    We write \(
+    \iltikzfig{circuits/components/waveforms/delay-p}
+    \) for the composition of \(p\) delay components, i.e.\ \(
+    \iltikzfig{circuits/components/waveforms/delay-p}[num=0]
+    \coloneqq
+    \iltikzfig{circuits/components/waveforms/delay-0}
+    \) and \(
+    \iltikzfig{circuits/components/waveforms/delay-p}[num=k+1]
+    \coloneqq
+    \iltikzfig{circuits/components/waveforms/delay-kp1}
+    \).
+\end{notation}
+
+\begin{lemma}
+    For a combinational circuit \(
+    \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n]
+    \) and \(p,q \in \nat\) such that \(p < q\), then \(
+    \iltikzfig{circuits/components/waveforms/box-delay}[box=f,num=p]
+    \ll
+    \iltikzfig{circuits/components/waveforms/box-delay}[box=f,num=q]
+    \).
+\end{lemma}
+
+This means that to reason with delays we can use streaming and
+timelessness to propagate them across combinational components, and then use
+logical equivalence to
 
 \begin{example}
-    Take the circuit \(
-    \iltikzfig{circuits/examples/refinement/circuit}
-    \).
-    For an input stream \(\sigma\), this circuit produces output stream
-    \(
-    \bot \land \sigma(0) \streamcons \sigma(1)
-    \streamcons \sigma(2) \streamcons \dots
-    \).
-    By using equalities and logical eqivalence we can obtain a much simpler
-    circuit:
+    One source of delay in circuits is the time gates take to process input
+    signals.
+    We can model this by inserting delay components after each gate, such as in
+    the following circuit:
     \[
         \iltikzfig{circuits/examples/refinement/circuit}
-        =
-        \iltikzfig{circuits/examples/refinement/circuit-1}
-        \ll
-        \iltikzfig{circuits/examples/refinement/circuit-2}
-        =
-        \iltikzfig{circuits/examples/refinement/circuit-3}
     \]
+    During reasoning we can permit these delays to be moved around, so long as
+    when we finish any gates are still guarded by delays.
+    \begin{gather*}
+        \iltikzfig{circuits/examples/refinement/circuit}
+        =
+        \iltikzfig{circuits/examples/refinement/circuit-2}
+        \gg
+        \\[1em]
+        \iltikzfig{circuits/examples/refinement/circuit-3}
+        =
+        \iltikzfig{circuits/examples/refinement/circuit-4}
+        =
+        \iltikzfig{circuits/examples/refinement/circuit-5}
+    \end{gather*}
 \end{example}
 
 While this is a somewhat contrived toy example, it is possible that this
@@ -105,11 +156,12 @@ purposes.
     Adding a flipflop to a scan chain requires some extra inputs: the
     \(\mathsf{scan}_\mathsf{en}\) wire toggles if the flipflop operates in
     normal mode or if it takes \(\mathsf{scan}_\mathsf{in}\) as its value.
-    \[
+    \begin{gather*}
         \iltikzfig{circuits/examples/scan-chain/flipflop-before-chain}
         \xRightarrow{\text{scan}}
+        \\[1em]
         \iltikzfig{circuits/examples/scan-chain/scan-chain}
-    \]
+    \end{gather*}
 \end{example}
 
 One could factor in these transformations when designing the circuit, but this
