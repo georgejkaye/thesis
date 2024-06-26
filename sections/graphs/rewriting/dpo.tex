@@ -50,37 +50,27 @@ theory by adding the reductions for both directions of each equation.
 
 \begin{definition}[\cite{bonchi2022stringa}, Sec.\ 2.4]
     For a monoidal theory \((\generators,\equations)\), let
-    \(\mcr_{\equations}\) be the rewriting system defined as
-    \begin{gather*}\{
-        \rrule{
-            \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
-        }{
-            \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
-        }
-        \,|\,
+    \(\mcr_{\equations}\) be the rewriting system defined as containing rules
+    \(\rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
-        =
+    }{
         \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
-        \in
-        \mce
-        \} \cup \{
-        \rrule{
-            \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
-        }{
-            \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
-        }
-        \,|\,
+    }\) and \(
+    \rrule{
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
+    }{
         \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
-        =
-        \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
-        \in
-        \mce
-        \}.
-    \end{gather*}
+    }\) for each \(
+    \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
+    =
+    \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
+    \in
+    \mce
+    \).
 \end{definition}
 
-\begin{proposition}[\cite{bonchi2022stringa}, Prop.\ 2.18]
-    Given two terms \(
+\begin{proposition}[{\cite[Prop.\ 2.18]{bonchi2022stringa}}]
+    For two terms \(
     \iltikzfig{strings/category/f}[box=g,colour=white],
     \iltikzfig{strings/category/f}[box=h,colour=white]
     \in \stmc{\generators,\equations}
@@ -95,16 +85,13 @@ theory by adding the reductions for both directions of each equation.
     \).
 \end{proposition}
 
-The equivalent for graphs is, unsurprisingly, \emph{graph rewriting}.
-While there are many graph rewriting techniques, we use one known as
+The equivalent for graphs is \emph{graph rewriting}.
+While there are many graph rewriting techniques, we use
 \emph{double pushout (DPO)} rewriting, which was introduced in the early 70s by
 Ehrig, Pfender, and Schneider~\cite{ehrig1973graphgrammars} as one of the first
 \emph{algebraic} approaches to graph rewriting.
 Although first defined in the category of graphs, it has since been generalised
 to encompass a variety of combinatorial structures.
-We will later see the precise categorical properties required for DPO rewriting
-to be well-defined, but first we will define the procedure in terms of
-hypergraphs.
 
 A double pushout rewrite rule is defined by mapping to the left and right hand
 side of a rule from their shared interface.
@@ -130,15 +117,15 @@ rather than the category of interfaced hypergraphs \(\cspdhyp\).
 This is because identifying the occurrence of a DPO rule in a larger graph will
 be performed using a hypergraph homomorphism.
 
-We will actually use an extension of traditional DPO rewriting, known as
+We will use an extension of DPO rewriting, known as
 \emph{double pushout rewriting with interfaces}
 (DPOI rewriting)~\cite{bonchi2017confluence}.
 This framework enjoys the \emph{Knuth-Bendix property}~\cite{knuth1970simple};
 graph rewriting is confluent when all \emph{critical pairs are joinable}.
-Put more simply, this means that a rewriting system is confluent if, whenever
+This means that a rewriting system is confluent if, whenever
 there is an overlap of rules in a graph \(G\) such that \(G\) could rewrite to
-\(H\) or \(H^\prime\), there exists another graph \(K\) and series of rewrites
-such that both \(H\) and \(H^\prime\) rewrite to \(K\).
+\(H\) or \(H^\prime\), there exists another graph \(K\) and rewrites
+such that \(H\) and \(H^\prime\) rewrite to \(K\).
 
 \begin{definition}[DPOI rewriting]\label{def:dpo-rewriting}
     Let \(\mcr\) be a set of DPO rules.
@@ -317,9 +304,9 @@ the complete DPO diagram.
         \qquad
         \includestandalone{figures/graphs/dpo/example/rule}
     \]
-    Now consider the term \(
+    Consider the term \(
     \iltikzfig{graphs/dpo/example/term}
-    \); a complete DPO rewrite is performed as follows:
+    \); a DPO rewrite is performed as follows:
     \begin{center}
         \includestandalone{figures/graphs/dpo/example/rewrite}
     \end{center}

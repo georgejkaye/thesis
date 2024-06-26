@@ -223,8 +223,7 @@ be `split apart' and `glued together' by using pushouts and pullbacks.
     which case the top square must be a pushout.
 \end{example}
 
-Regardless of intuition, proving the necessary van Kampen condition might be
-tricky.
+Proving the necessary van Kampen condition might be tricky.
 Fortunately, adhesivity is preserved by several categorical constructions, so
 by using \(\set\) as a base it is straightforward to show that more complicated
 categories are also adhesive.
@@ -305,15 +304,15 @@ However, there may be useful rewrite rules which are \emph{not} left-linear.
         \iltikzfig{graphs/dpo/non-left-linear/c1}
         \to
         \iltikzfig{graphs/dpo/non-left-linear/h1}
-        \qquad
+        \\
         \iltikzfig{graphs/dpo/non-left-linear/c2}
         \to
         \iltikzfig{graphs/dpo/non-left-linear/h2}
-        \\[0.5em]
+        \\
         \iltikzfig{graphs/dpo/non-left-linear/c3}
         \to
         \iltikzfig{graphs/dpo/non-left-linear/h3}
-        \qquad
+        \\[0.5em]
         \iltikzfig{graphs/dpo/non-left-linear/c4}
         \to
         \iltikzfig{graphs/dpo/non-left-linear/h4}
@@ -331,7 +330,7 @@ due to the presence of the Frobenius algebra.
     Each of the five complements and rewrites in \cref{ex:non-left-linear}
     corresponds to a valid application of equations on terms, perhaps modulo
     Frobenius equations.
-    The first rewrite \(
+    The first complement \(
     \iltikzfig{graphs/dpo/non-left-linear/h1}
     \) is the `obvious' one:
     \begin{gather*}
@@ -343,7 +342,7 @@ due to the presence of the Frobenius algebra.
         =
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-1-2}
     \end{gather*}
-    The second rewrite \(
+    The complement \(
     \iltikzfig{graphs/dpo/non-left-linear/h2}
     \) uses the compact closed structure:
     \begin{gather*}
@@ -351,13 +350,9 @@ due to the presence of the Frobenius algebra.
         =
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-2-0}
         =
-        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-2-1}
-        =
-        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-2-2}
-        =
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-2-3}
     \end{gather*}
-    The third rewrite \(
+    The complement \(
     \iltikzfig{graphs/dpo/non-left-linear/h3}
     \) uses the unitality of the monoid:
     \begin{gather*}
@@ -365,13 +360,9 @@ due to the presence of the Frobenius algebra.
         =
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-3-0}
         =
-        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-3-1}
-        =
-        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-3-2}
-        =
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-3-3}
     \end{gather*}
-    Similarly, the third rewrite \(
+    Similarly, the complement \(
     \iltikzfig{graphs/dpo/non-left-linear/h4}
     \) uses the counitality of the comonoid:
     \begin{gather*}
@@ -379,13 +370,9 @@ due to the presence of the Frobenius algebra.
         =
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-4-0}
         =
-        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-4-1}
-        =
-        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-4-2}
-        =
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-4-3}
     \end{gather*}
-    The fifth rewrite \(
+    The complement \(
     \iltikzfig{graphs/dpo/non-left-linear/h5}
     \) uses the Frobenius equations:
     \begin{gather*}
@@ -397,14 +384,10 @@ due to the presence of the Frobenius algebra.
         =
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-2}
         =
+        \\
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-3}
         =
-        \\
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-4}
-        =
-        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-5}
-        =
-        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-6}
         =
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-7}
     \end{gather*}
@@ -488,42 +471,41 @@ rewrite in a Frobenius setting.
     \).
 \end{notation}
 
-\begin{theorem}[\cite{bonchi2022string}, Thm.\ 4.9]
-    Let  \(\rrule{
+\begin{theorem}[{\cite[Thm.\ 4.9]{bonchi2022string}}]
+    For a rule \(\rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white]
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white]
-    }\) be a rule in \(
+    }\) in \(
     \smcsigma + \frob
-    \).
-    Then, \(
-    \iltikzfig{strings/category/f}[box=g,colour=white]
-    \rewrite[\rrule{
-            \iltikzfig{strings/category/f}[box=l,colour=white]
-        }{
-            \iltikzfig{strings/category/f}[box=r,colour=white]
-        }]
-    \iltikzfig{strings/category/f}[box=h,colour=white]
-    \) if and only if \(
-    \termandfrobtohypsigma[
-        \foldinterfaces[
-            \iltikzfig{strings/category/f}[box=g,colour=white]
-        ]
-    ]
-    \grewrite[
-        \termandfrobtohypsigma[
-            \rrule{
+    \), \[
+        \iltikzfig{strings/category/f}[box=g,colour=white]
+        \rewrite[\rrule{
                 \iltikzfig{strings/category/f}[box=l,colour=white]
             }{
                 \iltikzfig{strings/category/f}[box=r,colour=white]
-            }
+            }]
+        \iltikzfig{strings/category/f}[box=h,colour=white]
+    \] if and only if \[
+        \termandfrobtohypsigma[
+            \foldinterfaces[
+                \iltikzfig{strings/category/f}[box=g,colour=white]
+            ]
         ]
-    ]
-    \termandfrobtohypsigma[
-        \foldinterfaces[
-            \iltikzfig{strings/category/f}[box=g,colour=white]
+        \grewrite[
+            \termandfrobtohypsigma[
+                \rrule{
+                    \iltikzfig{strings/category/f}[box=l,colour=white]
+                }{
+                    \iltikzfig{strings/category/f}[box=r,colour=white]
+                }
+            ]
         ]
-    ]\).
+        \termandfrobtohypsigma[
+            \foldinterfaces[
+                \iltikzfig{strings/category/f}[box=g,colour=white]
+            ]
+        ].\]
 \end{theorem}
 
 \subsection{Multicoloured rewriting}
@@ -531,36 +513,36 @@ rewrite in a Frobenius setting.
 The results generalise in the obvious way to the coloured setting.
 
 \begin{notation}
-    For rule \(
+    For a term rewrite rule \(
     \rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white,dom=\listvar{i},cod=\listvar{j}]
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
     }
     \) in \(\smcsigmac + \frobc\), its interpretation as a DPO rule is written
-    as \(
-    \termandfrobtohypsigmac[
-        \rrule{
-            \iltikzfig{strings/category/f}[box=l,colour=white]
-        }{
-            \iltikzfig{strings/category/f}[box=r,colour=white]
-        }
-    ]
-    \coloneqq
-    \spann{
+    as \[
         \termandfrobtohypsigmac[
-            \foldinterfacesc[
+            \rrule{
                 \iltikzfig{strings/category/f}[box=l,colour=white]
-            ]
-        ]
-    }{\listvar{ij}}{
-        \termandfrobtohypsigmac[
-            \foldinterfacesc[
+            }{
                 \iltikzfig{strings/category/f}[box=r,colour=white]
-            ]
+            }
         ]
-    }
-    \).
+        \coloneqq
+        \spann{
+            \termandfrobtohypsigmac[
+                \foldinterfacesc[
+                    \iltikzfig{strings/category/f}[box=l,colour=white]
+                ]
+            ]
+        }{\listvar{ij}}{
+            \termandfrobtohypsigmac[
+                \foldinterfacesc[
+                    \iltikzfig{strings/category/f}[box=r,colour=white]
+                ]
+            ]
+        }
+        .\]
 \end{notation}
 
 \begin{definition}[\cite{bonchi2022string}]
@@ -572,7 +554,7 @@ The results generalise in the obvious way to the coloured setting.
     \).
 \end{definition}
 
-\begin{theorem}[\cite{bonchi2022string}, Prop.\ 4.10]
+\begin{theorem}[{\cite[Prop.\ 4.10]{bonchi2022string}}]
     Given a rewrite rule \(\rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white]
     }{

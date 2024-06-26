@@ -228,7 +228,7 @@ This is not necessary in the traced case.
         \iltikzfig{graphs/dpo/convex/rewrite-2}
         =
         \iltikzfig{graphs/dpo/convex/rewrite-4}
-        =
+        =\\[1em]
         \iltikzfig{graphs/dpo/convex/rewrite-5}
         =
         \iltikzfig{graphs/dpo/convex/example-h}
@@ -273,46 +273,46 @@ We need to show that rewriting a term with a rule \(\rrule{
 this rule.
 
 \begin{theorem}\label{thm:traced-rewrite-correspondence}
-    For a rewrite rule \(\rrule{
+    For a term rewrite rule \(\rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white]
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white]
     }\) in \(
     \stmcsigma
-    \), \(
-    \iltikzfig{strings/category/f}[box=g,colour=white]
-    \rewrite[\rrule{
-            \iltikzfig{strings/category/f}[box=l,colour=white]
-        }{
-            \iltikzfig{strings/category/f}[box=r,colour=white]
-        }]
-    \iltikzfig{strings/category/f}[box=h,colour=white]
-    \) if and only if \(
-    \termandfrobtohypsigma[
-        \foldinterfaces[
-            \tracedtosymandfrobsigma[
-                \iltikzfig{strings/category/f}[box=g,colour=white]
+    \), \[
+        \iltikzfig{strings/category/f}[box=g,colour=white]
+        \rewrite[\rrule{
+                \iltikzfig{strings/category/f}[box=l,colour=white]
+            }{
+                \iltikzfig{strings/category/f}[box=r,colour=white]
+            }]
+        \iltikzfig{strings/category/f}[box=h,colour=white]
+    \] if and only if \[
+        \termandfrobtohypsigma[
+            \foldinterfaces[
+                \tracedtosymandfrobsigma[
+                    \iltikzfig{strings/category/f}[box=g,colour=white]
+                ]
             ]
         ]
-    ]
-    \grewrite[
+        \grewrite[
+            \termandfrobtohypsigma[
+                \rrule{
+                    \tracedtosymandfrobsigma[
+                        \iltikzfig{strings/category/f}[box=l,colour=white]
+                    ]
+                }{
+                    \tracedtosymandfrobsigma[
+                        \iltikzfig{strings/category/f}[box=r,colour=white]
+                    ]
+                }
+            ]
+        ]
         \termandfrobtohypsigma[
-            \rrule{
-                \tracedtosymandfrobsigma[
-                    \iltikzfig{strings/category/f}[box=l,colour=white]
-                ]
-            }{
-                \tracedtosymandfrobsigma[
-                    \iltikzfig{strings/category/f}[box=r,colour=white]
-                ]
-            }
-        ]
-    ]
-    \termandfrobtohypsigma[
-        \foldinterfaces[
-            \iltikzfig{strings/category/f}[box=g,colour=white]
-        ]
-    ]\).
+            \foldinterfaces[
+                \iltikzfig{strings/category/f}[box=g,colour=white]
+            ]
+        ].\]
 \end{theorem}
 \begin{proof}
     First the \((\Rightarrow)\) direction.
@@ -416,12 +416,12 @@ this rule.
     ]
     \) is partial monogamous.
 
-    Now for the \(\ifdir\) direction: we assume that we have a traced DPO
+    Now for the \(\ifdir\) direction: we assume we have a traced DPO
     rewrite, so there exist cospans \(
     \cospan{0}{L}{i + j},
     \cospan{0}{R}{i + j},
     \cospan{i + j}{C}{m + n}
-    \) as defined above such that the DPO diagram commutes and
+    \) as above such that the DPO diagram commutes and
     \(i + j \to C \to G\) is a traced boundary complement.
     We must show that \(
     \iltikzfig{strings/category/f}[box=g,colour=white]
@@ -529,38 +529,38 @@ this generalises to the coloured setting as well.
         \iltikzfig{strings/category/f}[box=r,colour=white]
     }\) in \(
     \stmcsigmac
-    \), \(
-    \iltikzfig{strings/category/f}[box=g,colour=white]
-    \rewrite[\rrule{
-            \iltikzfig{strings/category/f}[box=l,colour=white]
-        }{
-            \iltikzfig{strings/category/f}[box=r,colour=white]
-        }]
-    \iltikzfig{strings/category/f}[box=h,colour=white]
-    \) if and only if \(
-    \termandfrobtohypsigmac[
-        \foldinterfacesc[
-            \tracedtosymandfrobsigmac[
-                \iltikzfig{strings/category/f}[box=g,colour=white]
+    \), \[
+        \iltikzfig{strings/category/f}[box=g,colour=white]
+        \rewrite[\rrule{
+                \iltikzfig{strings/category/f}[box=l,colour=white]
+            }{
+                \iltikzfig{strings/category/f}[box=r,colour=white]
+            }]
+        \iltikzfig{strings/category/f}[box=h,colour=white]
+    \] if and only if \[
+        \termandfrobtohypsigmac[
+            \foldinterfacesc[
+                \tracedtosymandfrobsigmac[
+                    \iltikzfig{strings/category/f}[box=g,colour=white]
+                ]
             ]
         ]
-    ]
-    \grewrite[
+        \grewrite[
+            \termandfrobtohypsigmac[
+                \rrule{
+                    \tracedtosymandfrobsigmac[
+                        \iltikzfig{strings/category/f}[box=l,colour=white]
+                    ]
+                }{
+                    \tracedtosymandfrobsigmac[
+                        \iltikzfig{strings/category/f}[box=r,colour=white]
+                    ]
+                }
+            ]
+        ]
         \termandfrobtohypsigmac[
-            \rrule{
-                \tracedtosymandfrobsigmac[
-                    \iltikzfig{strings/category/f}[box=l,colour=white]
-                ]
-            }{
-                \tracedtosymandfrobsigmac[
-                    \iltikzfig{strings/category/f}[box=r,colour=white]
-                ]
-            }
-        ]
-    ]
-    \termandfrobtohypsigmac[
-        \foldinterfacesc[
-            \iltikzfig{strings/category/f}[box=g,colour=white]
-        ]
-    ]\).
+            \foldinterfacesc[
+                \iltikzfig{strings/category/f}[box=g,colour=white]
+            ]
+        ].\]
 \end{theorem}
