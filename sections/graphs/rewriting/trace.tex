@@ -523,21 +523,19 @@ As always, colouring in the nodes does not affect the machinery of the proof, so
 this generalises to the coloured setting as well.
 
 \begin{theorem}\label{thm:traced-rewrite-correspondence-coloured}
-    For a rewrite rule \(\rrule{
+    For a traced rule \(\rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white]
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white]
-    }\) in \(
-    \stmcsigmac
-    \), \[
-        \iltikzfig{strings/category/f}[box=g,colour=white]
-        \rewrite[\rrule{
-                \iltikzfig{strings/category/f}[box=l,colour=white]
-            }{
-                \iltikzfig{strings/category/f}[box=r,colour=white]
-            }]
-        \iltikzfig{strings/category/f}[box=h,colour=white]
-    \] if and only if \[
+    }\), \(
+    \iltikzfig{strings/category/f}[box=g,colour=white]
+    \rewrite[\rrule{
+            \iltikzfig{strings/category/f}[box=l,colour=white]
+        }{
+            \iltikzfig{strings/category/f}[box=r,colour=white]
+        }]
+    \iltikzfig{strings/category/f}[box=h,colour=white]
+    \) if and only if \[
         \termandfrobtohypsigmac[
             \foldinterfacesc[
                 \tracedtosymandfrobsigmac[

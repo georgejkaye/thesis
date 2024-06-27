@@ -1,12 +1,8 @@
 \section{Pushout complements}
 
-The reader should now have a good grasp on how DPO rewriting
-works; find a matching, compute the pushout complement, and perform one more
-pushout to complete the rewrite.
-While the final step is a deterministic procedure, finding the pushout
-complement is a little more subtle.
-First of all, a pushout complement may not even exist for arbitrary morphisms
-\(i+j \to L \to G\).
+While computing the rewritten graph from a context is a deterministic procedure,
+finding the pushout complement specifying said context
+is a little more subtle.
 
 \begin{definition}
     A morphism \(i+j \to L \to G\) is called a \emph{matching} if it
@@ -15,7 +11,10 @@ First of all, a pushout complement may not even exist for arbitrary morphisms
 
 If there is no pushout complement, there is no possible rewrite, so it is
 important to know when one exists.
-Fortunately, the existence conditions are well-known.
+Fortunately, there are two well-known conditions for existence of pushout
+complements when rewriting with hypergraphs.
+The first ensures that all the sources and targets of a hyperedges are present
+in a candidate context.
 
 \begin{definition}[No-dangling-hyperedges condition~\cite{corradini1997algebraic}, Prop.\ 3.3.4]
     Given morphisms \(i+j \xrightarrow{a} L \xrightarrow{f} G\) in
@@ -58,6 +57,8 @@ Fortunately, the existence conditions are well-known.
     \end{center}
 \end{example}
 
+The second condition enforces that merging of vertices is well-defined.
+
 \begin{definition}[No-identification condition~\cite{corradini1997algebraic}, Prop.\ 3.3.4]
     Given morphisms \(i+j \xrightarrow{a} L \xrightarrow{f} G\) in
     \(\hypsigma\), they satisfy the \emph{no-identification} condition if any
@@ -97,12 +98,13 @@ Fortunately, the existence conditions are well-known.
     \end{center}
 \end{example}
 
-With these two conditions, we can establish when pushout complements exist at
-all and subsequently when there is an opportunity for a rewrite.
+With these two conditions, we can establish when pushout complements exist for
+a pair of hypergraph homomorphisms.
+If there is a pushout complement, then there is an opportunity for a rewrite.
 
 \begin{proposition}[\cite{corradini1997algebraic}, Prop.\ 3.3.4]
     \label{prop:pushout-complement}
-    The morphisms \(i+j \to L \to G\) have at least one pushout
+    The morphisms \(i+j \to L \to G \in \hypsigma\) have at least one pushout
     complement if and only if they satisfy the no-dangling and no-identification
     conditions.
 \end{proposition}
@@ -114,6 +116,9 @@ matching.
 To answer this question, we must examine a class of categories to which
 \(\hypsigma\) belongs to, known as \emph{adhesive} categories.
 One can think of these as categories in which graph rewriting `plays nicely'.
+
+To define what an adhesive category is, we must first define a special kind of
+pushout that interacts in a particular way with other pushouts and pullbacks.
 
 \begin{definition}[van Kampen square {\cite[Def.\ 2.1]{lack2005adhesive}}]
     Let there be a commutative cube as drawn below.
@@ -144,6 +149,13 @@ One can think of these as categories in which graph rewriting `plays nicely'.
     is a pushout.
 \end{definition}
 
+In an adhesive category, VK squares arise when performing pushouts of
+\emph{monomorphisms}.
+This is important for graph rewriting because monomorphisms in categories of
+graphs generally correspond to \emph{embeddings}; graph homomorphisms where
+subgraphs can be `cut out' of a graph without causing the rest of the graph to
+become degenerate.
+
 \begin{definition}
     Given a span \(\spann{A}[f]{B}[g]{C}\) with a pushout \(\cospan{B}{D}{C}\),
     the pushout is called a \emph{pushout along a monomorphism} if \(f\) or
@@ -161,7 +173,7 @@ One can think of these as categories in which graph rewriting `plays nicely'.
 
 The definition of van Kampen square and subsequently adhesive categories may
 look a bit confusing to the uninitiated.
-At a high level, an adhesive category is one in which one in which objects can
+Succinctly, objects in an adhesive category can
 be `split apart' and `glued together' by using pushouts and pullbacks.
 
 \begin{example}
@@ -242,11 +254,8 @@ categories are also adhesive.
     category over \(\set\), so they are adhesive.
 \end{proof}
 
-The notion of splitting and gluing is very useful when it comes to graph
-rewriting, as it corresponds to how we extract and insert various subgraphs
-during the rewriting process.
-In particular, for certain DPO rules in an adhesive category a pushout
-complement is \emph{uniquely} defined for a given matching.
+The key property adhesive categories enjoy is that, for certain DPO rules, a
+pushout complement is \emph{uniquely} defined for a given matching.
 
 \begin{definition}[Left-linear rules]
     A DPO rule \(\spann{L}[f]{i+j}{R}\) is called \emph{left-linear} if \(f\)
@@ -265,12 +274,10 @@ complement is \emph{uniquely} defined for a given matching.
     \cite[Lems. 4.3.6 - 4.3.9]{kissinger2012pictures} for the grisly details.
 \end{proof}
 
-This means that, for a large class of rewrite rules, if we find a matching we
-can be sure that rewriting is defined uniquely.
 However, there may be useful rewrite rules which are \emph{not} left-linear.
 
 \begin{example}\label{ex:non-left-linear}
-    Consider the following rule.
+    Consider the following (reasonable) rule.
     \[
         \rrule{
             \iltikzfig{strings/category/identity}
@@ -283,15 +290,10 @@ However, there may be useful rewrite rules which are \emph{not} left-linear.
         \iltikzfig{graphs/dpo/non-left-linear/k}
         \to
         \iltikzfig{graphs/dpo/non-left-linear/r}
-    \]
-    A rule where a generator is inserted into an identity wire is perfectly
-    reasonable, but its interpretation as a span of hypergraphs is not
-    left-linear.
-    This means that the pushout complement may not be unique for a given
-    matching.
-    For example, consider trying to use the above rule in the term
+    \].
+    Now consider applying the above rule to the term
     \(\iltikzfig{graphs/dpo/non-left-linear/g-term}\) using the following pair
-    of morphisms on graphs:
+    of morphisms:
     \[
         \iltikzfig{graphs/dpo/non-left-linear/k}
         \to
@@ -301,25 +303,25 @@ However, there may be useful rewrite rules which are \emph{not} left-linear.
     \]
     This matching yields the following pushout complements and rewrites:
     \begin{gather*}
-        \iltikzfig{graphs/dpo/non-left-linear/c1}
+        \scalebox{0.9}{\iltikzfig{graphs/dpo/non-left-linear/c1}}
         \to
-        \iltikzfig{graphs/dpo/non-left-linear/h1}
-        \\
-        \iltikzfig{graphs/dpo/non-left-linear/c2}
-        \to
-        \iltikzfig{graphs/dpo/non-left-linear/h2}
-        \\
-        \iltikzfig{graphs/dpo/non-left-linear/c3}
-        \to
-        \iltikzfig{graphs/dpo/non-left-linear/h3}
+        \scalebox{0.9}{\iltikzfig{graphs/dpo/non-left-linear/h1}}
         \\[0.5em]
-        \iltikzfig{graphs/dpo/non-left-linear/c4}
+        \scalebox{0.9}{\iltikzfig{graphs/dpo/non-left-linear/c2}}
         \to
-        \iltikzfig{graphs/dpo/non-left-linear/h4}
+        \scalebox{0.9}{\iltikzfig{graphs/dpo/non-left-linear/h2}}
         \\[0.5em]
-        \iltikzfig{graphs/dpo/non-left-linear/c5}
+        \scalebox{0.9}{\iltikzfig{graphs/dpo/non-left-linear/c3}}
         \to
-        \iltikzfig{graphs/dpo/non-left-linear/h5}
+        \scalebox{0.9}{\iltikzfig{graphs/dpo/non-left-linear/h3}}
+        \,\,
+        \scalebox{0.9}{\iltikzfig{graphs/dpo/non-left-linear/c4}}
+        \to
+        \scalebox{0.9}{\iltikzfig{graphs/dpo/non-left-linear/h4}}
+        \\
+        \scalebox{0.9}{\iltikzfig{graphs/dpo/non-left-linear/c5}}
+        \to
+        \scalebox{0.9}{\iltikzfig{graphs/dpo/non-left-linear/h5}}
     \end{gather*}
 \end{example}
 
@@ -331,19 +333,15 @@ due to the presence of the Frobenius algebra.
     corresponds to a valid application of equations on terms, perhaps modulo
     Frobenius equations.
     The first complement \(
-    \iltikzfig{graphs/dpo/non-left-linear/h1}
+    \scalebox{0.9}{\iltikzfig{graphs/dpo/non-left-linear/h1}}
     \) is the `obvious' one:
     \begin{gather*}
         \iltikzfig{graphs/dpo/non-left-linear/g-term}
         =
-        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-1-0}
-        =
-        \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-1-1}
-        =
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-1-2}
     \end{gather*}
     The complement \(
-    \iltikzfig{graphs/dpo/non-left-linear/h2}
+    \scalebox{0.9}{\iltikzfig{graphs/dpo/non-left-linear/h2}}
     \) uses the compact closed structure:
     \begin{gather*}
         \iltikzfig{graphs/dpo/non-left-linear/g-term}
@@ -353,7 +351,7 @@ due to the presence of the Frobenius algebra.
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-2-3}
     \end{gather*}
     The complement \(
-    \iltikzfig{graphs/dpo/non-left-linear/h3}
+    \scalebox{0.9}{\iltikzfig{graphs/dpo/non-left-linear/h3}}
     \) uses the unitality of the monoid:
     \begin{gather*}
         \iltikzfig{graphs/dpo/non-left-linear/g-term}
@@ -362,8 +360,8 @@ due to the presence of the Frobenius algebra.
         =
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-3-3}
     \end{gather*}
-    Similarly, the complement \(
-    \iltikzfig{graphs/dpo/non-left-linear/h4}
+    The complement \(
+    \scalebox{0.9}{\iltikzfig{graphs/dpo/non-left-linear/h4}}
     \) uses the counitality of the comonoid:
     \begin{gather*}
         \iltikzfig{graphs/dpo/non-left-linear/g-term}
@@ -373,7 +371,7 @@ due to the presence of the Frobenius algebra.
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-4-3}
     \end{gather*}
     The complement \(
-    \iltikzfig{graphs/dpo/non-left-linear/h5}
+    \scalebox{0.9}{\iltikzfig{graphs/dpo/non-left-linear/h5}}
     \) uses the Frobenius equations:
     \begin{gather*}
         \iltikzfig{graphs/dpo/non-left-linear/g-term}
@@ -391,9 +389,11 @@ due to the presence of the Frobenius algebra.
         =
         \iltikzfig{graphs/dpo/non-left-linear/g-term-rewrite-5-7}
     \end{gather*}
-    All of the rewrites other than the first were `hidden' behind the Frobenius
-    equations, but were exposed automatically by the graph rewriting framework.
 \end{example}
+
+In the above example, all of the rewrites other than the first were `hidden'
+behind the Frobenius equations, but were exposed automatically by the graph
+rewriting framework.
 
 Even if every rewrite is correct, there is still the question of how to find
 them all.
@@ -433,11 +433,9 @@ context.
     \(v \in G\).
 \end{proposition}
 
-This means that given a DPO rule and an incidence of this rule inside a
-larger graph such that the no-dangling and no-identification conditions are
-satisfied, we can enumerate all the possible pushout complements.
-It can be shown that each of these pushout complements correspond to a valid
-rewrite in a Frobenius setting.
+Given a DPO rule and matching, we can enumerate all the possible pushout
+complements; it can be shown that each of these pushout complements correspond
+to a valid rewrite in a Frobenius setting.
 
 \begin{notation}
     Given a rewrite rule \(
@@ -478,15 +476,15 @@ rewrite in a Frobenius setting.
         \iltikzfig{strings/category/f}[box=r,colour=white]
     }\) in \(
     \smcsigma + \frob
-    \), \[
-        \iltikzfig{strings/category/f}[box=g,colour=white]
-        \rewrite[\rrule{
-                \iltikzfig{strings/category/f}[box=l,colour=white]
-            }{
-                \iltikzfig{strings/category/f}[box=r,colour=white]
-            }]
-        \iltikzfig{strings/category/f}[box=h,colour=white]
-    \] if and only if \[
+    \), \(
+    \iltikzfig{strings/category/f}[box=g,colour=white]
+    \rewrite[\rrule{
+            \iltikzfig{strings/category/f}[box=l,colour=white]
+        }{
+            \iltikzfig{strings/category/f}[box=r,colour=white]
+        }]
+    \iltikzfig{strings/category/f}[box=h,colour=white]
+    \) if and only if \[
         \termandfrobtohypsigma[
             \foldinterfaces[
                 \iltikzfig{strings/category/f}[box=g,colour=white]

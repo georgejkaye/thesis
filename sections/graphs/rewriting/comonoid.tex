@@ -1,16 +1,11 @@
 \section{Rewriting with commutative comonoid structure}
 
-Hypergraphs were originally chosen as the combinatorial domain for rewriting
-terms in \(\stmcsigma + \frob\) because they allow rewriting modulo
+Hypergraphs are a good fit for rewriting terms in
+\(\smcsigma + \frob\) because they allow rewriting modulo
 \emph{Frobenius structure}.
-In the traced rewriting system described in the previous section we did not
-fully exploit this, only using the combinatorial structure to absorb instances
-of yanking.
-We will now show how we can take more advantage of the hypergraph language by
-rewriting  modulo \emph{cocommutative comonoid} structure.
-
-It is not difficult to see how one might extend the results of the previous
-section for this aim; the partial monogamy conditions need to be weakened to
+We can take advantage of this to rewriting modulo
+\emph{cocommutative comonoid} structure on top of the trace.
+To do this, the partial monogamy conditions are weakened to
 partial \emph{left-}monogamy conditions.
 
 \begin{definition}[Traced left-boundary complement]
@@ -39,11 +34,8 @@ partial \emph{left-}monogamy conditions.
 \end{definition}
 
 Just like traced rewriting, there may be multiple traced left-boundary
-complements.
-In fact, since partial left-monogamy is a weaker restriction than partial
-monogamy, there are even more potential rewrites.
-These arise because we are now absorbing the equations of a cocommutative
-comonoid.
+complements, which arise because we are now absorbing the equations of a
+cocommutative comonoid.
 
 \begin{example}
     Consider the following rule and its interpretation.
@@ -54,14 +46,21 @@ comonoid.
             \iltikzfig{graphs/dpo/non-unique-comonoid/rule-rhs}
         }
         \qquad
-        \raisebox{-2em}{\includestandalone{figures/graphs/dpo/non-unique-comonoid/rule}}
+        \raisebox{-3em}{\includestandalone{figures/graphs/dpo/non-unique-comonoid/rule}}
     \end{gather*}
-    Two valid rewrites are as follows:
-    \begin{center}
-        \includestandalone{figures/graphs/dpo/non-unique-comonoid/rewrite-1}
-        \quad
-        \includestandalone{figures/graphs/dpo/non-unique-comonoid/rewrite-2}
-    \end{center}
+    Two valid rewrites of this rule in \(
+    \iltikzfig{graphs/dpo/non-unique-comonoid/j}
+    \to
+    \iltikzfig{graphs/dpo/non-unique-comonoid/g}\) are:
+    \begin{gather*}
+        \iltikzfig{graphs/dpo/non-unique-comonoid/c1}
+        \to
+        \iltikzfig{graphs/dpo/non-unique-comonoid/h1}
+        \qquad
+        \iltikzfig{graphs/dpo/non-unique-comonoid/c2}
+        \to
+        \iltikzfig{graphs/dpo/non-unique-comonoid/h2}
+    \end{gather*}
     The first rewrite is the `obvious' one, but the second also holds by
     cocommutativity:
     \begin{gather*}
@@ -81,7 +80,7 @@ To show the soundness and completeness of traced comonoid rewriting, we follow
 the same procedure as in the traced setting.
 
 \begin{theorem}
-    For a rule \(\rrule{
+    For a rewrite rule \(\rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white]
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white]
@@ -95,32 +94,32 @@ the same procedure as in the traced setting.
             \iltikzfig{strings/category/f}[box=r,colour=white]
         }]
     \iltikzfig{strings/category/f}[box=h,colour=white]
-    \) if and only if \(
-    \termandfrobtohypsigma[
-        \foldinterfaces[
-            \tracedandcomonoidtofrobsigma[
-                \iltikzfig{strings/category/f}[box=g,colour=white]
+    \) if and only if \[
+        \termandfrobtohypsigma[
+            \foldinterfaces[
+                \tracedandcomonoidtofrobsigma[
+                    \iltikzfig{strings/category/f}[box=g,colour=white]
+                ]
             ]
         ]
-    ]
-    \grewrite[
+        \grewrite[
+            \termandfrobtohypsigma[
+                \rrule{
+                    \tracedandcomonoidtofrobsigma[
+                        \iltikzfig{strings/category/f}[box=l,colour=white]
+                    ]
+                }{
+                    \tracedandcomonoidtofrobsigma[
+                        \iltikzfig{strings/category/f}[box=r,colour=white]
+                    ]
+                }
+            ]
+        ]
         \termandfrobtohypsigma[
-            \rrule{
-                \tracedandcomonoidtofrobsigma[
-                    \iltikzfig{strings/category/f}[box=l,colour=white]
-                ]
-            }{
-                \tracedandcomonoidtofrobsigma[
-                    \iltikzfig{strings/category/f}[box=r,colour=white]
-                ]
-            }
-        ]
-    ]
-    \termandfrobtohypsigma[
-        \foldinterfaces[
-            \iltikzfig{strings/category/f}[box=g,colour=white]
-        ]
-    ]\).
+            \foldinterfaces[
+                \iltikzfig{strings/category/f}[box=g,colour=white]
+            ]
+        ].\]
 \end{theorem}
 \begin{proof}
     As \cref{thm:traced-rewrite-correspondence}, but with partial left-monogamy
@@ -132,7 +131,7 @@ structure by building on the machinery used for the traced case.
 Predictably, the same also holds for the coloured setting.
 
 \begin{theorem}
-    For a rule \(\rrule{
+    For a rewrite rule \(\rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white]
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white]
@@ -146,30 +145,30 @@ Predictably, the same also holds for the coloured setting.
             \iltikzfig{strings/category/f}[box=r,colour=white]
         }]
     \iltikzfig{strings/category/f}[box=h,colour=white]
-    \) if and only if \(
-    \termandfrobtohypsigmac[
-        \foldinterfacesc[
-            \tracedandcomonoidtofrobsigmac[
-                \iltikzfig{strings/category/f}[box=g,colour=white]
+    \) if and only if \[
+        \termandfrobtohypsigmac[
+            \foldinterfacesc[
+                \tracedandcomonoidtofrobsigmac[
+                    \iltikzfig{strings/category/f}[box=g,colour=white]
+                ]
             ]
         ]
-    ]
-    \grewrite[
+        \grewrite[
+            \termandfrobtohypsigmac[
+                \rrule{
+                    \tracedandcomonoidtofrobsigmac[
+                        \iltikzfig{strings/category/f}[box=l,colour=white]
+                    ]
+                }{
+                    \tracedandcomonoidtofrobsigmac[
+                        \iltikzfig{strings/category/f}[box=r,colour=white]
+                    ]
+                }
+            ]
+        ]
         \termandfrobtohypsigmac[
-            \rrule{
-                \tracedandcomonoidtofrobsigmac[
-                    \iltikzfig{strings/category/f}[box=l,colour=white]
-                ]
-            }{
-                \tracedandcomonoidtofrobsigmac[
-                    \iltikzfig{strings/category/f}[box=r,colour=white]
-                ]
-            }
-        ]
-    ]
-    \termandfrobtohypsigmac[
-        \foldinterfacesc[
-            \iltikzfig{strings/category/f}[box=g,colour=white]
-        ]
-    ]\).
+            \foldinterfacesc[
+                \iltikzfig{strings/category/f}[box=g,colour=white]
+            ]
+        ].\]
 \end{theorem}

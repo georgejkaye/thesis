@@ -48,9 +48,9 @@ the former the rules are \emph{directed} whereas equations are not.
 Of course, it is straightforward to derive a rewriting system from an equational
 theory by adding the reductions for both directions of each equation.
 
-\begin{definition}[\cite{bonchi2022stringa}, Sec.\ 2.4]
+\begin{definition}[{\cite[Sec.\ 2.4]{bonchi2022stringa}}]
     For a monoidal theory \((\generators,\equations)\), let
-    \(\mcr_{\equations}\) be the rewriting system defined as containing rules
+    \(\mcr_{\equations}\) be the rewriting system containing rules
     \(\rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
     }{
@@ -150,8 +150,7 @@ such that \(H\) and \(H^\prime\) rewrite to \(K\).
     \end{center}
 \end{definition}
 
-The DPO diagram above may look intimidating at first glance, so we will
-break it down and describe what happens during a typical graph rewrite.
+We will now describe what happens during a typical graph rewrite.
 The first thing to note is that the graphs all have a \emph{single} interface
 \(G \leftarrow m + n\); this means that to perform graph rewriting on graphs in
 \(\hypsigma\), interfaces of terms in \(\smcsigma + \frob\) must be `folded'
@@ -172,7 +171,7 @@ as inputs of generators may now connect to outputs of the term.
 This is not an issue, as long as we `unfold' the interfaces once rewriting is
 completed.
 
-\begin{proposition}[\cite{bonchi2022string}, Prop.\ 4.8]
+\begin{proposition}[{\cite[Prop.\ 4.8]{bonchi2022string}}]
     For a term \(
     \iltikzfig{strings/category/f}[box=f,colour=white,dom=m,cod=n]
     \in
@@ -198,7 +197,8 @@ completed.
 We are now ready to begin rewriting.
 Say we have a DPO rule \(\spann{L}{i + j}{R}\) and a larger cospan of
 hypergraphs \(\cospan{m}{G}{n}\).
-We suggestively assemble them as follows:
+We suggestively assemble them as follows, using the transformation above to
+`convert' the latter cospan to one with a single interface.
 
 \begin{center}
     \begin{tikzcd}[row sep = small, column sep = small]
@@ -280,6 +280,9 @@ in.
 
 To actually compute the rewritten graph, we perform another pushout to retrieve
 the complete DPO diagram.
+Note that the interface \(m+n\) of the original graph is preserved throughout
+the process; we can use \(\foldinterfaces\) to return to a cospan of the form
+\(\cospan{m}{H}{n}\).
 
 \begin{center}
     \begin{tikzcd}[row sep = small, column sep = small]
