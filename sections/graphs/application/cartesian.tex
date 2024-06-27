@@ -9,11 +9,9 @@ categories~\cite{cazanescu1990new}.
     category-theoretic product.
 \end{definition}
 
-As the tensor is a product, every object in a Cartesian category is
-automatically equipped with a comonoid structure.
-An alternative way of viewing a Cartesian category is as a category with such
-comonoid structure in which the comonoid and the counit are \emph{natural}:
-morphisms can be `pushed' through them.
+Every object in a Cartesian category is equipped with a comonoid structure.
+Equivalently, such a category has a comonoid structure in which the comonoid and
+the counit are \emph{natural}: morphisms can be `pushed' through them.
 
 \begin{theorem}[\cite{fox1976coalgebras}]
     A category \(\mcc\) equipped with a commutative comonoid structure is
@@ -23,8 +21,6 @@ morphisms can be `pushed' through them.
 
 \input{sections/graphs/application/floats/cartesian-equations}
 
-The two equations at the bottom of \cref{fig:cartesian-equations} show how
-morphisms in Cartesian categories can be \emph{copied} and \emph{discarded}.
 Sequential circuits have a natural notion of copying and discarding data, so it
 makes sense that the semantic categories of circuits should be Cartesian.
 In \cite{ghica2016categorical}, the equational theory is used to show that this
@@ -76,7 +72,7 @@ The hypergraph interpretations of these rules is shown in
     The combination of Cartesian equations with the underlying compact closed
     structure of \(\cspdhyp\) may prompt alarm bells, as a compact closed
     category in which the tensor is the Cartesian product is trivial.
-    However, it is important to note that \(\cspdhyp\) is \emph{not} subject to
+    However, \(\cspdhyp\) is \emph{not} subject to
     these equations: it is only a setting for performing graph
     rewrites.
 \end{remark}
@@ -93,16 +89,12 @@ The hypergraph interpretations of these rules is shown in
     \label{fig:cartesian-graphs}
 \end{figure}
 
-Reasoning about Cartesian categories by using the hypergraph interpretation is
-beneficial because the equations of the comonoid no longer have to be applied
-explicitly, and one can focus on the two naturality equations
+Using hypergraphs to reason about Cartesian categories is appealing because one
+can focus on applying the two naturality equations
 \((\cartnatcopyeqn)\) and \((\cartnatdisceqn)\).
-
-As an example, we will consider \emph{fixpoint operators}, which are closely
-linked to traced Cartesian categories.
-Several equivalent axiomatisations for fixpoint operators
-exist~\cite{hasegawa1997recursion,simpson2000complete}; we use the equations
-presented in~\cite{hasegawa2009traced}.
+As a case study, we will consider \emph{fixpoint operators}; several equivalent
+axiomatisations exist~\cite{hasegawa1997recursion,simpson2000complete}, but we
+use the equations presented in~\cite{hasegawa2009traced}.
 
 \begin{definition}[\cite{hasegawa2009traced}]
     Let \(\mcc\) be a Cartesian category.
@@ -140,12 +132,16 @@ presented in~\cite{hasegawa2009traced}.
 
 The notation we use for fixpoint operator is already evocative of a trace, and
 the two are indeed equivalent.
+This was independently observed by Bloom and Ésik \cite{bloom1993iteration},
+Ștefănescu \cite{stefanescu2000network}, and Hyland, the former two before the
+notion of traced monoidal categories were formalised.
 
-\begin{theorem}[\cite{hasegawa1997recursion}, Thm.\ 3.1, \cite{hasegawa1999models}]
+\begin{theorem}[{\cite[Thm.\ 3.1]{hasegawa1997recursion}, \cite{hasegawa1999models}}]
     A category is traced if and only if it has a Conway operator.
 \end{theorem}
 \begin{proof}
     This can be shown by constructing a one operator using the other.
+    \vspace{-1em}
     \begin{gather*}
         (\iltikzfig{strings/category/f-2-1}[box=f,colour=white])^{\dagger_{X,A}}
         =
@@ -158,10 +154,6 @@ the two are indeed equivalent.
     As these constructions are inverses, the conditions are equivalent.
 \end{proof}
 
-In addition to Hasegawa's proof, the above result was independently observed by
-Bloom and Ésik \cite{bloom1993iteration},
-Ștefănescu \cite{stefanescu2000network}, and Hyland, the former two before the
-notion of traced monoidal categories were formalised.
 
 \begin{example}[Unfolding]
     Reasoning about fixpoints in a traced category can be performed using the
