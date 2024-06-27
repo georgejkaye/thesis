@@ -15,7 +15,7 @@ To represent this in our diagrams, we will colour any trace source tentacle red.
     follows, where the \(\wedge\), \(\neg\) and \(\delta\) edges respectively
     represent the \(\orgate\) gate, \(\notgate\) gate, and delay.
     \begin{center}
-        \begin{tikzcd}[bezier bounding box=true]
+        \begin{tikzcd}[bezier bounding box=true,column sep=tiny]
             \iltikzfig{graphs/circuits/sr-latch/inputs}
             \arrow{r}
             &
@@ -31,7 +31,7 @@ Since the transformation into global trace-delay form is purely through axioms
 of STMCs, in the hypergraph interpretation a circuit and corresponding
 trace-delay form are isomorphic.
 
-\begin{example}
+\begin{example}\label{ex:graph-trace-delay}
     We may suggestively adjust the positioning of the nodes and vertices in
     order to evoke an idea of global trace-delay form, but the graph
     interpretation of the SR NOR latch from \cref{ex:sr-latch-interpretation}
@@ -41,7 +41,7 @@ trace-delay form are isomorphic.
     Moreover, even though the source of the delay looks like a trace in the
     diagram, it is not marked as such; it is just an artefact of our drawing.
     \begin{center}
-        \begin{tikzcd}[bezier bounding box=true]
+        \begin{tikzcd}[bezier bounding box=true,column sep=tiny]
             \iltikzfig{graphs/circuits/sr-latch/inputs}
             \arrow{r}
             &
@@ -61,10 +61,9 @@ As this is a reduction parameterised over an arbitrary core \(
 core.
 
 \begin{example}\label{ex:sr-latch-mealy-graph}
-    Applying the Mealy rewrite to the SR latch graph produces the following
-    cospan.
+    Applying the Mealy rewrite to \cref{ex:graph-trace-delay} produces:
     \begin{center}
-        \begin{tikzcd}[bezier bounding box=true]
+        \begin{tikzcd}[bezier bounding box=true,column sep=tiny]
             \iltikzfig{graphs/circuits/sr-latch/inputs}
             \arrow{r}
             &
@@ -97,13 +96,13 @@ are no red tentacles in the right hand side of the rule or the rewritten graph.
     after being rewritten by the instant feedback rewrite is shown below.
     \begin{center}
         \begin{tikzcd}[bezier bounding box=true, column sep=tiny]
-            \iltikzfig{graphs/circuits/sr-latch/inputs}
+            \scalebox{0.8}{\iltikzfig{graphs/circuits/sr-latch/inputs}}
             \arrow{r}
             &
-            \iltikzfig{graphs/circuits/sr-latch/instant-feedback}
+            \scalebox{0.8}{\iltikzfig{graphs/circuits/sr-latch/instant-feedback}}
             &
             \arrow{l}
-            \iltikzfig{graphs/circuits/sr-latch/outputs}
+            \scalebox{0.8}{\iltikzfig{graphs/circuits/sr-latch/outputs}}
         \end{tikzcd}
     \end{center}
 \end{example}
@@ -119,41 +118,44 @@ inputs and perform the streaming rewrite.
     some value registers.
     \begin{center}
         \begin{tikzcd}[bezier bounding box=true, column sep=tiny]
-            \iltikzfig{graphs/circuits/sr-latch/inputs}
+            \scalebox{0.8}{\iltikzfig{graphs/circuits/sr-latch/inputs}}
             \arrow{r}
             &
-            \iltikzfig{graphs/circuits/sr-latch/applied}
+            \scalebox{0.8}{\iltikzfig{graphs/circuits/sr-latch/applied}}
             &
             \arrow{l}
-            \iltikzfig{graphs/circuits/sr-latch/outputs}
+            \scalebox{0.8}{\iltikzfig{graphs/circuits/sr-latch/outputs}}
         \end{tikzcd}
     \end{center}
     This graph is then rewritten by the streaming rule.
     \begin{center}
         \begin{tikzcd}[bezier bounding box=true, column sep=tiny]
-            \iltikzfig{graphs/circuits/sr-latch/inputs}
+            \scalebox{0.8}{\iltikzfig{graphs/circuits/sr-latch/inputs}}
             \arrow{r}
             &
-            \iltikzfig{graphs/circuits/sr-latch/streamed}
+            \scalebox{0.8}{\iltikzfig{graphs/circuits/sr-latch/streamed}}
             &
             \arrow{l}
-            \iltikzfig{graphs/circuits/sr-latch/outputs}
+            \scalebox{0.8}{\iltikzfig{graphs/circuits/sr-latch/outputs}}
         \end{tikzcd}
     \end{center}
 \end{example}
 
 The final step is to propgate the values across the `top' subcircuit using the
-value rules, which have straightforward hypergraph interpretations.
+value rules, which have straightforward hypergraph interpretations illustrated
+in \cref{fig:graph-values}.
 
-\begin{center}
-    \includestandalone{figures/graphs/circuits/gate/rule}
+\begin{figure}
+    \scalebox{0.8}{\includestandalone{figures/graphs/circuits/gate/rule}}
     \quad
-    \includestandalone{figures/graphs/circuits/fork-rewrite/rule}
+    \scalebox{0.8}{\includestandalone{figures/graphs/circuits/fork-rewrite/rule}}
     \\
-    \includestandalone{figures/graphs/circuits/join/rule}
+    \scalebox{0.8}{\includestandalone{figures/graphs/circuits/join/rule}}
     \quad
-    \raisebox{0.6em}{\includestandalone{figures/graphs/circuits/stub/rule}}
-\end{center}
+    \scalebox{0.8}{\includestandalone{figures/graphs/circuits/stub/rule}}
+    \caption{Hypergraph interpretations of the value rules}
+    \label{fig:graph-values}
+\end{figure}
 
 \begin{example}
     When applying the value rules to the streamed circuit from
@@ -161,13 +163,13 @@ value rules, which have straightforward hypergraph interpretations.
     possible to propagate the values:
     \begin{center}
         \begin{tikzcd}[bezier bounding box=true, column sep=tiny]
-            \iltikzfig{graphs/circuits/sr-latch/inputs}
+            \scalebox{0.8}{\iltikzfig{graphs/circuits/sr-latch/inputs}}
             \arrow{r}
             &
-            \iltikzfig{graphs/circuits/sr-latch/values-1}
+            \scalebox{0.8}{\iltikzfig{graphs/circuits/sr-latch/values-1}}
             &
             \arrow{l}
-            \iltikzfig{graphs/circuits/sr-latch/outputs}
+            \scalebox{0.8}{\iltikzfig{graphs/circuits/sr-latch/outputs}}
         \end{tikzcd}
     \end{center}
     We can then repeatedly apply the gate and eliminate rule in order to obtain
@@ -175,13 +177,13 @@ value rules, which have straightforward hypergraph interpretations.
     joined with delay edges.
     \begin{center}
         \begin{tikzcd}[bezier bounding box=true, column sep=tiny]
-            \iltikzfig{graphs/circuits/sr-latch/inputs}
+            \scalebox{0.8}{\iltikzfig{graphs/circuits/sr-latch/inputs}}
             \arrow{r}
             &
-            \iltikzfig{graphs/circuits/sr-latch/values-2}
+            \scalebox{0.8}{\iltikzfig{graphs/circuits/sr-latch/values-2}}
             &
             \arrow{l}
-            \iltikzfig{graphs/circuits/sr-latch/outputs}
+            \scalebox{0.8}{\iltikzfig{graphs/circuits/sr-latch/outputs}}
         \end{tikzcd}
     \end{center}
     To identify the outputs, one simply needs to traverse from the outputs of

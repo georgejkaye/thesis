@@ -84,8 +84,8 @@ The hypergraph interpretations of these rules is shown in
 \begin{figure}
     \centering
     \includestandalone{figures/graphs/dpo/cartesian/copy/rule}
-    \qquad
-    \raisebox{1em}{\includestandalone{figures/graphs/dpo/cartesian/discard/rule}}
+
+    \includestandalone{figures/graphs/dpo/cartesian/discard/rule}
     \caption{
         Interpretations of equations in \(\mathbf{Cart}\) for
         generator \(e\).
@@ -123,7 +123,11 @@ presented in~\cite{hasegawa2009traced}.
         \iltikzfig{strings/structure/cartesian/fixpoint-lhs}
         =
         \iltikzfig{strings/structure/cartesian/fixpoint-rhs}
-        \qquad
+        \quad
+        \iltikzfig{strings/structure/cartesian/diagonal-fixpoint-lhs}
+        =
+        \iltikzfig{strings/structure/cartesian/diagonal-fixpoint-rhs}
+        \\[0.5em]
         \iltikzfig{strings/structure/cartesian/dinaturality-fixpoint-lhs}
         =
         \iltikzfig{strings/structure/cartesian/dinaturality-fixpoint-rhs}
@@ -131,10 +135,6 @@ presented in~\cite{hasegawa2009traced}.
         \iltikzfig{strings/structure/cartesian/naturality-fixpoint-lhs}
         =
         \iltikzfig{strings/structure/cartesian/naturality-fixpoint-rhs}
-        \qquad
-        \iltikzfig{strings/structure/cartesian/diagonal-fixpoint-lhs}
-        =
-        \iltikzfig{strings/structure/cartesian/diagonal-fixpoint-rhs}
     \end{gather*}
 \end{definition}
 
