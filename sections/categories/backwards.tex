@@ -157,9 +157,23 @@ The canonical trace allows us to adapt existing results for our setting as well.
 
 While working in a traced or compact closed category allows one to model more
 processes than working in a vanilla symmetric monoidal category, it is by no
-means the only way of adding structure to a category.
-For example, we may wish to enforce that the tensor product behaves in a
-particular way.
+means the only way in which categories can have structure.
+However, when stacking multiple structures on top of each other, we must be
+careful that we do not accidentally create something unwanted.
+
+One common structure in a category is \emph{finite products}, which were
+discussed in \cref{def:product}.
+
+\begin{theorem}[{\cite[Thm.\ 1]{houston2008finite}}]
+    If a compact closed category has finite products then it also has finite
+    coproducts.
+\end{theorem}
+
+It may not be the case that we want coproducts, so in this case a compact closed
+category is not suitable.
+On the other hand, adding structure to a category can cause it to become
+\emph{trivial}: it can only have one object and one morphism.
+This can arise when enforcing more structure on the tensor product.
 
 \begin{definition}[Cartesian category]
     A monoidal category is \emph{Cartesian} if its tensor product is given by
