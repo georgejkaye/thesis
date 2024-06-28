@@ -1,13 +1,11 @@
 \section{Sequential circuits}
 
-When rewriting circuits with hypergraphs there is no distinguishing between a
-wire going `backwards' or a regular wire, so we must explicitly keep track of
-traces if we need to rewrite them later.
-To represent this in our diagrams, we will colour any trace source tentacle red.
+When rewriting circuits with hypergraphs we must explicitly keep track of
+traces if we need to rewrite them later, which we do by colouring them red.
 
 \begin{example}\label{ex:sr-latch-interpretation}
     Recall the SR NOR latch circuit from \cref{ex:sr-latch}.
-    This is interpreted as a partial left-monogamous cospan of hypergraphs as
+    This is interpreted as
     follows, where the \(\wedge\), \(\neg\) and \(\delta\) edges respectively
     represent the \(\orgate\) gate, \(\notgate\) gate, and delay.
     \begin{center}
@@ -160,10 +158,9 @@ in \cref{fig:graph-values}.
     the graph.
 \end{example}
 
-Once the circuit has been translated into Mealy form, the productive rewrite
-strategy preserves this so the initial global transformations do not have to be
-performed for each input value; one only needs to use the streaming rule
-followed by the value rules.
+The initial global transformations do not have to be performed for each
+timestep; for subsequent inputs one only needs to use the streaming and value
+rules.
 
 \begin{remark}
     Note that the fork rule is not left-linear as it uses the comonoid
