@@ -32,19 +32,14 @@ semantic relation; this makes the framework as a whole more modular and
 
 \subsubsection{Denotational semantics}
 
-While circuits and streams had been linked in previous
-work~\cite{ghica2017diagrammatica}, this was not expressed formally.
-In \cref{chap:denotational} we presented a rigorous \emph{denotational}
-semantics in terms of certain types of stream functions.
-
-Previously, the semantics of circuit components was defined as part of
-equations on the syntactic category; in \cref{sec:circuits} we defined the
+The semantics of circuit components was previously defined as part of
+equations on the syntactic category; in \cref{chap:denotational} we defined the
 notion of an \emph{interpretation} \(\interpretation\) of components as
 morphisms in a PROP of monotone functions \(\funci\) in order to keep syntax and
 semantics separate.
 This interpretation parameterises the PROP \(\streami\) in which morphisms are
 causal, monotone, finitely specified stream functions; these are the denotations
-of sequential circuits (\cref{sec:circuits}).
+of sequential circuits.
 The major contribution of this section is that this PROP has a \emph{trace}: the
 least fixed point.
 
@@ -62,10 +57,7 @@ primitive Mealy machines, and in the other by \emph{encoding} states of a
 Mealy machine while preserving monotonicity.
 Using these PROP morphisms, we showed in \cref{sec:denotational-completeness}
 that \(\streami\) is a sound and complete denotational semantics for sequential
-circuits: every morphism in \(\scircsigma\) has a corresponding stream function
-in \(\streami\), and conversely every stream function in \(\streami\) has
-a circuit in \(\scircsigma\) with the same behaviour as the original stream
-function.
+circuits.
 
 \subsubsection{Operational semantics}
 
@@ -75,16 +67,10 @@ The major contribution of \cref{chap:operational} was the introduction of the
 `instant feedback' rule in \cref{sec:feedback}: eliminating non-delay-guarded
 feedback by iterating a circuit a certain number of times.
 This rule played a key part in the productive reduction strategy presented in
-\cref{sec:productivity}; while a similar strategy had been defined previously,
-this is refined presentation that drops the requirement
-to `unfold' a circuit and copy the components: we only require streaming
-followed by reductions detailing how values interact with
-combinational components.
-
-A final contribution in \cref{sec:observational} was the formalism of a notion
+\cref{sec:productivity}, which is integral to the formalism of a notion
 of \emph{observational equivalence} using a relation \(\sim_\interpretation\).
-We showed that this relation is sound and complete with respect to the
-denotational semantics, and showed that this is the
+We showed this relation is sound and complete with respect to the
+denotational semantics, and that it is the
 \emph{largest adequate congruence}~\cite{morris1969lambdacalculus,gordon1980denotational}
 on \(\scircsigma\).
 
@@ -118,7 +104,7 @@ Our second major contribution is to extend this for settings with a
 In \cref{chap:hypergraphs} we defined two sub-PROPs of \(\cspdhyp\):
 the PROP \(\pmcspdhyp\) of \emph{partial monogamous} cospans and
 the PROP \(\plmcspdhyp\) of \emph{partial left-monogamous} cospans.
-We showed that the former are in correspondence with \emph{traced} terms and the
+We showed the former are in correspondence with \emph{traced} terms and the
 latter are in correspondence with such terms equipped with a
 \emph{cocommutative comonoid} structure: terms equal by equations of STMCs or
 cocommutative comonoids are mapped to ismorphic cospans of hypergraphs.
@@ -140,17 +126,14 @@ The framework presented in this thesis is parameterised over a
 \emph{signature} specifying signals and components, and an
 \emph{interpretation} mapping them to behaviour.
 Throughout the thesis we have considered a particular instantiation in terms of
-\emph{Belnap's four-valued logic}, showing how one can derive the required
-properties and equations.
+\emph{Belnap's four-valued logic}.
 In \cref{sec:denotational-belnap} we showed how the Belnap interpretation is
 \emph{functionally complete} in that all monotone functions between Belnap
 values can be expressed in terms of the three Belnap operations, and in
 \cref{sec:algebraic-belnap} we defined the equations required to bring any
 essentially combinational Belnap circuit into a normal form.
-
-The Belnap interpretation is but one possible setting in which one could apply
-our work; we envision that similar strategies could be applied for reasoning
-about transistor-level circuits all the way up to more abstract viewpoints.
+We envision that similar strategies could be applied for reasoning
+about transistor-level circuits to more abstract viewpoints.
 
 \subsection{Implementations}
 
@@ -160,7 +143,7 @@ Unfortunately, any circuit larger than this quickly explodes in size and scope,
 and as such is not suitable for rendering in a book.
 
 For experimenting with the Belnap interpretation, we developed a small tool
-(\url{https://github.com/georgejkaye/catcircs}) which can generate the
+(\url{https://belnap.georgejkaye.com}) which can generate the
 corresponding circuits given Belnap functions and truth tables.
 On a larger scale, we also developed a \emph{hardware description language} for
 designing and evaluating with circuits using the operational semantics,
@@ -199,10 +182,8 @@ our rigorous foundations will provide a new perspective on the way forward.
 
 \subsection{More applications}
 
-This thesis has been primarily theoretical in nature.
 In \cref{chap:semantics-applications} we presented some ideas for how
-the categorical framework could be applied to real-world digital circuits, but
-these were just that: ideas.
+the categorical framework could be applied to real-world digital circuits.
 It would be interesting to actually develop these ideas into proper
 industry-grade techniques for working with circuits.
 We could then compare \emph{benchmarks} with existing procedures, allowing us to
@@ -232,11 +213,8 @@ the techniques used here to a more \emph{continuous} settings.
 A concept important in circuit design that is not present in our abstraction is
 that of \emph{fan-out}, the idea that there are only so many times one can fork
 a wire before the signal it carries becomes unstable.
-This cannot be modelled with discrete values using local interactions unless a
-signal immediately degrades to a \(\bot\) value upon one fork, which is
-certainly not desired.
-Instead, one would need to work with continuous signals that degrade by some
-factor on each fork.
+To model this, one would need to work with continuous signals that degrade by
+some factor on each fork.
 One immediate issue that would arise is that the fork would no longer be
 coassociativity of the comonoid, as different branches would carry different
 `strengths' of signals.
@@ -265,5 +243,5 @@ to handle asynchronous circuits.
 This would be a significant change; since stream
 functions have discrete elements, what would the denotation of circuits over
 continuous time be?
-It is possible that modelling asynchronous circuits would required a completely
+It is possible that modelling asynchronous circuits would require a completely
 different way of reasoning.
