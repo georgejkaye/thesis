@@ -8,19 +8,18 @@ programming languages to hardware.
 The first part of the thesis defines the syntactic foundations required to
 create sequential circuit morphisms, and then builds three different semantic
 theories on top of this: denotational, operational and algebraic.
-We characterise the denotational semantics of sequential semantics as certain
+We characterise the denotational semantics of sequential circuits as certain
 \emph{causal stream functions}, as well as providing a link to existing circuit
 methodologies by mapping between circuit morphisms, stream functions and
 \emph{Mealy machines}.
 The operational semantics is defined as a strategy for applying some global
-transformations following by local reductions in order to demonstrate how a
+transformations followed by local reductions in order to demonstrate how a
 circuit processes a value, leading to a notion of
 \emph{observational equivalence}.
 The algebraic semantics consists of equations for bringing circuits into
 a pseudo-normal form, and then \emph{encoding} between different state sets.
-This part of the thesis is concluded with a discussion of some potentially
-novel applications, such as those for using \emph{partial evaluation} for
-digital circuits.
+This part of the thesis concludes with a discussion of some novel applications,
+such as those for using \emph{partial evaluation} for digital circuits.
 
 While mathematically rigorous, the categorical string diagram formalism is not
 suited for reasoning computationally.
@@ -30,7 +29,6 @@ diagram rewriting with \emph{hypergraphs} so that it is compatible with the
 We identify the properties that characterise cospans of hypergraphs
 corresponding to traced comonoid terms, and demonstrate how to identify
 rewriting contexts valid for rewriting modulo traced comonoid structure.
-As an example we apply the graph rewriting framework to
-\emph{fixpoint operators} as well as the operational semantics from the first
-part, and present a new hardware description language based on these theoretical
-developments.
+We apply the graph rewriting framework to \emph{fixpoint operators} as well as
+the operational semantics from the first part, and present a new hardware
+description language based on these theoretical developments.

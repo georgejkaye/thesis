@@ -23,7 +23,7 @@ The first point of order is to unpack exactly what this means.
 The term `\emph{circuit}' (or `\emph{network}') is often used for any system
 constructed by connecting wires between primitive components.
 Two common constructs are the ability to \emph{fork} wires or \emph{join} them
-together, traditionally drawn using black dots as shown in \cref{fig:forkjoin}
+together, traditionally drawn using black dots as shown in \cref{fig:forkjoin}.
 These circuits are not particularly interesting as they are structural in
 nature; it is the other components that add meaning.
 
@@ -89,12 +89,12 @@ analog parts, but the higher-level \emph{abstraction} to digital components and
 discrete signals makes it far easier to design and reuse them.
 
 Digital circuits can further be divided into classes based on their components.
-A \emph{combinational} circuit is a circuit that just contains logical
+A \emph{combinational} circuit is a circuit that only contains logical
 operations for computing functions.
-Such circuits have no memory; the outputs at one tick of the clock only depend
+Such circuits have no memory; the outputs at each tick of the clock only depend
 on the inputs received at that moment.
 A far more useful class of circuits is that of \emph{sequential} circuits, which
-have have \emph{delay} and \emph{feedback} in addition to logic gates.
+have \emph{delay} and \emph{feedback} in addition to logic gates.
 Most sequential circuits can be divided into two parts:
 the \emph{combinational logic} for performing logical functions, and the
 \emph{state registers} for storing data.
