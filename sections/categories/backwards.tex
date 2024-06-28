@@ -152,3 +152,89 @@ The canonical trace allows us to adapt existing results for our setting as well.
     \(\mcc\) one can construct a compact closed category \(\mathsf{Int}(\mcc)\).
     However, this will not be of relevance to us.
 \end{remark}
+
+\subsection{Adding more structure}
+
+While working in a traced or compact closed category allows one to model more
+processes than working in a vanilla symmetric monoidal category, it is by no
+means the only way of adding structure to a category.
+For example, we may wish to enforce that the tensor product behaves in a
+particular way.
+
+\begin{definition}[Cartesian category]
+    A monoidal category is \emph{Cartesian} if its tensor product is given by
+    the category-theoretic product.
+\end{definition}
+
+\begin{lemma}
+    In a Cartesian category, the monoidal unit is the terminal object.
+\end{lemma}
+\begin{proof}
+    We must show that any arrow \(\morph{f}{A}{I}\) is unique.
+    Using the left unitor \(\morph{\lambda_A}{A}{I \times A}\) and the
+    projection maps \(\morph{\proj{0}}{I \times A}{I}\) and
+    \(\morph{\proj{1}}{I \times A}{A}\), we can construct the following diagram:
+    \begin{center}
+        \begin{tikzcd}
+            & A \arrow[swap]{dl}{f} \arrow{d}{\lambda} \arrow{dr}{\id[A]} &
+            \\
+            I
+            &
+            I \times A \arrow{l}{\proj{0}} \arrow[swap]{r}{\proj{1}}
+            &
+            A
+        \end{tikzcd}
+        \vspace{0.5em}
+    \end{center}
+    By the universal property of the product, any morphism \(\morph{f}{A}{I}\)
+    can be uniquely factored as \(\lambda \seq \proj{0}\).
+\end{proof}
+
+Accordingly, the unique maps \(\morph{!_A}{A}{I}\) are drawn string
+diagrammatically as \(
+\iltikzfig{strings/structure/comonoid/discard}
+\), which will help with reasoning.
+
+\begin{proposition}
+    If a compact closed category is Cartesian, then it must be trivial i.e.\ it
+    must have only one object and morphism.
+\end{proposition}
+\begin{proof}
+    We show that any object \(A\) is isomorphic to the monoidal unit \(I\) by
+    proving that the composites \(A \to I \to A\) and \(I \to A \to I\) are both
+    the identity.
+    For the former, \(\morph{!_A}{A}{I}\) is unique because \(I\)
+    is the terminal object, and \(I \to A\) is uniquely determined to be
+    \(\eta_A \seq \proj{1}\) by the universal property of the product.
+    \begin{center}
+        \begin{tikzcd}
+            & I \arrow[swap]{dl}{f} \arrow{d}{\eta_A} \arrow{dr}{\id[A]} &
+            \\
+            \dual{A}
+            &
+            \dual{A} \times A \arrow{l}{\proj{0}} \arrow[swap]{r}{\proj{1}}
+            &
+            A
+        \end{tikzcd}
+        \vspace{0.5em}
+    \end{center}
+
+    So we must show that \(!_A \seq \eta_A \seq \proj{0} = \id[A]\).
+    This is clear when using string diagrams, noting that the cap is equal to
+    the unique morphism \(\morph{!_{A \times \dual{A}}}{A \times \dual{A}}{I}\).
+    \[
+        \iltikzfig{strings/compact-closed/cartesian-trivial/step-0}
+        =
+        \iltikzfig{strings/compact-closed/cartesian-trivial/step-1}
+        =
+        \iltikzfig{strings/compact-closed/cartesian-trivial/step-2}
+        =
+        \iltikzfig{strings/compact-closed/cartesian-trivial/step-3}
+    \]
+    The latter equality holds because there is exactly one morphism
+    \(I \to I\).
+    So any object \(A\) is isomorphic to \(I\).
+\end{proof}
+
+This means that if we want to reason about wires going backwards in Cartesian
+categories, we must do so in a traced setting.
