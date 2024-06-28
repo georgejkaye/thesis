@@ -3,15 +3,11 @@
 One important class of categories with a traced comonoid structure are
 \emph{traced Cartesian}, or \emph{dataflow},
 categories~\cite{cazanescu1990new}.
-
-\begin{definition}[Cartesian category~\cite{fox1976coalgebras}]
-    A monoidal category is \emph{Cartesian} if its tensor is given by the
-    category-theoretic product.
-\end{definition}
-
-Every object in a Cartesian category is equipped with a comonoid structure.
-Equivalently, such a category has a comonoid structure in which the comonoid and
-the counit are \emph{natural}: morphisms can be `pushed' through them.
+Recall from \cref{def:cartesian-category} that a Cartesian category in one in
+which the tensor is given by the category-theoretic product.
+We can equivalently view this as a category in which each object is equipped
+with a commutative comonoid structure in which the comonoid and counit are
+\emph{natural}: morphisms can be `pushed' through them.
 
 \begin{theorem}[\cite{fox1976coalgebras}]
     A category \(\mcc\) equipped with a commutative comonoid structure is
@@ -143,7 +139,7 @@ notion of traced monoidal categories were formalised.
     This can be shown by constructing a one operator using the other.
     \vspace{-1em}
     \begin{gather*}
-        (\iltikzfig{strings/category/f-2-1}[box=f,colour=white])^{\dagger_{X,A}}
+        \left(\iltikzfig{strings/category/f-2-1}[box=f,colour=white]\right)^{\dagger_{X,A}}
         =
         \iltikzfig{strings/structure/cartesian/fixpoint-from-trace}
         \qquad
@@ -154,6 +150,9 @@ notion of traced monoidal categories were formalised.
     As these constructions are inverses, the conditions are equivalent.
 \end{proof}
 
+This means that we can reason about fixpoints using the same principles as
+reasoning with the trace and the comonoid structure, with the addition of the
+Cartesian equations.
 
 \begin{example}[Unfolding]
     Reasoning about fixpoints in a traced category can be performed using the
@@ -185,10 +184,3 @@ context of \emph{control flow}.
 The details of this section could also be applied to the cocartesian case by
 flipping all the directions and working with partial \emph{right}-monogamous
 cospans.
-
-However, attempting to combine the product and coproduct approaches for settings
-with a \emph{biproduct} would simply yield the category \(\cspdhyp\), a
-hypergraph category subject to the Frobenius
-equations in \cref{fig:frobenius-equations}.
-A category with biproducts is not necessarily subject to such equations, so this
-would not be a suitable approach.

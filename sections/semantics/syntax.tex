@@ -10,16 +10,12 @@ with some global clock.
 
 \begin{remark}
     Digital (electric) circuits are not to be confused with \emph{electronic}
-    circuits of switches and resistors, which are quite different.
+    circuits of switches and resistors.
     Essentially, the difference boils down to the difference between traced
-    categories and compact closed categories discussed in the previous section.
-    Digital circuits have a clear notion of \emph{causality}; one provides
-    inputs and produces outputs.
-    Conversely, electronic circuits are \emph{relational} in nature; they do not
-    produce outputs per se but simply respect various equations.
-    Fortunately for those so inclined, electronic circuits were given the
-    categorical treatment by Boisseau and Sobocinski in
-    \cite{boisseau2022string}.
+    categories and compact closed categories: digital circuits have a clear
+    notion of \emph{causality} whereas electronic circuits are \emph{relational}
+    in nature.
+    For a study of the latter, see \cite{boisseau2022string}.
 \end{remark}
 
 \begin{remark}
@@ -28,12 +24,8 @@ with some global clock.
 
 \section{Circuit signatures}
 
-When working with digital circuits, the first thing to do is to construct them.
-Categorically, this corresponds to defining a category in which a morphism
+To construct circuits, we define a category in which a morphism
 \(m \to n\) is a circuit with \(m\) inputs and \(n\) outputs.
-These circuits are purely \emph{syntactic}, in that they do not have meaning
-assigned to them other than their structure.
-
 Rather than restricting to any particular gate set, we parameterise a given
 category of circuits over a \emph{circuit signature} containing details about
 the available components.
@@ -602,4 +594,3 @@ Most of the upcoming results will be shown for the monochromatic case, as the
 proofs are more elegant.
 However, most of the results also generalise to the coloured case, and this will
 be remarked upon throughout.
-
