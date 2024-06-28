@@ -69,16 +69,9 @@ function.
 
 \subsubsection{Operational semantics}
 
-A denotational semantics for sequential circuits is an important tool in our
-arsenal, but in some situations it is not ideal because it obscures how the
-\emph{structure} of a circuit affects its behaviour.
-In \cref{chap:operational} we defined a reduction-based
-\emph{operational semantics} for showing how inputs applied to a circuit are
-propagated across components and transformed into next states and outputs.
-
 Previous work had defined an restricted operational semantics for closed
 circuits without non-delay-guarded feedback~\cite{ghica2017diagrammatic}.
-The major contribution of this chapter was the introduction of the
+The major contribution of \cref{chap:operational} was the introduction of the
 `instant feedback' rule in \cref{sec:feedback}: eliminating non-delay-guarded
 feedback by iterating a circuit a certain number of times.
 This rule played a key part in the productive reduction strategy presented in
@@ -91,25 +84,12 @@ combinational components.
 A final contribution in \cref{sec:observational} was the formalism of a notion
 of \emph{observational equivalence} using a relation \(\sim_\interpretation\).
 We showed that this relation is sound and complete with respect to the
-denotational semantics in that two circuits have the same denotation if and only
-if their observational behaviour is the same.
-Following Morris~\cite{morris1969lambdacalculus,gordon1980denotational}, we
-showed that \(\sim_\interpretation\) is the \emph{largest adequate congruence}
-on \(\scircsigma\), so it is indeed the most appropriate notion of observational
-equivalence.
+denotational semantics, and showed that this is the
+\emph{largest adequate congruence}~\cite{morris1969lambdacalculus,gordon1980denotational}
+on \(\scircsigma\).
 
 \subsubsection{Algebraic semantics}
 
-Operational semantics provides an intuitive way of reasoning step-by-step
-about circuits, but computing observational equivalence for large circuits can
-be intractible.
-It is more efficient to reason equationally; an equational theory for circuits
-was presented in~\cite{ghica2016categorical} using `natural laws', but this was
-not complete; in fact it was not possible to show this was so without a formal
-denotational semantics.
-
-The new denotational semantics allows us to revisit the equational theory with
-a new perspective.
 In \cref{chap:algebraic} we presented a sound and complete algebraic semantics
 for sequential circuits, which can be divided into three broad classes.
 The first class (\cref{sec:normalising}) contains equations for
