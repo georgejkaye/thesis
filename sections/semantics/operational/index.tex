@@ -66,7 +66,7 @@ ignored'.
             }
             \\
             \inferrule*{
-                \inferrule{ }{\overline{2} \Rightarrow \overline{3}} \\
+                \inferrule{ }{\overline{2} \Rightarrow \overline{2}} \\
                 \inferrule{ }{\overline{3} \Rightarrow \overline{3}}
             }{
                 add \, \overline{2} \, \overline{3} \Rightarrow \overline{5}
@@ -105,12 +105,12 @@ such that reductions may be applied to their parent expressions and so on.
     \overline{n_0 + n_1}
     \) and \(
     mul \, \overline{n_0} \, \overline{n_1}
-    \,\reduction[(\text{Add})]\,
+    \,\reduction[(\text{Mul})]\,
     \overline{n_0 \cdot n_1}
     \).
     Note that as the numbers \(\overline{n}\) are the `primitives' of the
-    language (their meaning is theirselves), there is no corresponding reduction
-    for the \((\text{Value})\) rule.
+    language, there is no corresponding reduction for the \((\text{Value})\)
+    rule.
     Using these reductions an expression can be reduced to a value.
     \begin{gather*}
         add \, (mul \, \overline{4} \, \overline{2}) \, (add \, \overline{2} \, \overline{3})

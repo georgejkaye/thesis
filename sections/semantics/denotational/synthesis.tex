@@ -1,11 +1,11 @@
 \section{Between circuits and Mealy machines}\label{sec:synthesis}
 
-We have now established the close links between \(\streami\) and \(\mealyi\).
-These results are nice to have but hardly ground-breaking; the main contribution
-of this chapter is to introduce \(\scircsigma\) to the mix and define maps
-\(\scircsigma \to \mealyi\) and \(\mealyi \to \scircsigma\), allowing us to use
-monotone Mealy machines as a stepping stone in the correspondence between
-sequential circuits and stream functions.
+The close links between \(\streami\) and \(\mealyi\) are nice to have but hardly
+ground-breaking; the main contribution of this chapter is to introduce
+\(\scircsigma\) to the mix by defining maps \(\scircsigma \to \mealyi\) and
+\(\mealyi \to \scircsigma\).
+This allows us to use monotone Mealy machines as a stepping stone in the
+correspondence between sequential circuits and stream functions.
 By exploiting the coalgebraic properties shared between Mealy machines and
 stream functions, this can be used to show that \(\streami\) is both a
 \emph{sound} and \emph{complete} denotational semantics: there is a stream
@@ -109,7 +109,7 @@ The `purest' semantics of a sequential circuit is a stream function in
 
 \begin{definition}
     Let \(\morph{\circuittostreami}{\scircsigma}{\streami}\) be defined as
-    \(\mealytostreami \circ \circuittostreami\).
+    \(\mealytostreami \circ \circuittomealyi\).
 \end{definition}
 
 We have now finally established the \emph{denotation} of a sequential circuit \(
@@ -184,8 +184,8 @@ We already know by \cref{cor:minimal-mealy} that given a stream function
 All that remains is to translate this into a circuit morphism.
 For regular Mealy machines, there is a standard procedure in circuit
 design~\cite{kohavi2009switching} in which each state of a Mealy machine is
-\emph{encoded} as a power of values, and combinational logic used to transform
-inputs into appropriate outputs.
+\emph{encoded} as a power of values, and the Mealy function is interpreted as
+a circuit using combinational logic.
 
 \begin{example}\label{ex:boolean-to-circuit}
     Consider the following Mealy machine operating on Boolean values.
@@ -265,7 +265,7 @@ states.
     First the \(\onlyifdir\) direction.
     Let \(s_i, s_j \in S\) such that \(s_i \stateorder s_j\); we need to show
     that for every \(l < |S|\),
-    \(\gamma_\leq(s_i)(l) \sqsubseteq \gamma_leq(s_j)(l)\).
+    \(\gamma_\leq(s_i)(l) \sqsubseteq \gamma_\leq(s_j)(l)\).
     The only way this can be violated is if \(s_i(l) = \top\) and
     \(s_j(l) = \bot\); this can only occur if \(s_l \stateorder s_i\) and
     \(s_l \not\stateorder s_j\).
@@ -293,7 +293,7 @@ function?
 The useful interpretations are those that \emph{can} model every function.
 
 \begin{definition}[Functional completeness]\label{def:functional-completeness}
-    A \emph{complete interpretation} as a tuple
+    A \emph{complete interpretation} is a tuple
     \((\interpretation,\mealytofunc)\) in which \(\interpretation\) is an
     interpretation of a signature \(\signature\) and \(
     \morph{\mealytofunc}{\funci}{\scircsigma}
@@ -331,7 +331,7 @@ to a circuit \(\mealytofunc[f]\) as the \emph{normalised circuit for \(f\)}.\
 
 \begin{example}
     The Belnap interpretation from \cref{ex:belnap-interpretation} is
-    functionally complete; for interests of space we postpone the proof for
+    functionally complete; for interests of space we postpone the proof to
     \cref{sec:denotational-belnap}.
     This is due to a variation of the standard functional
     completeness method for Boolean values.
@@ -439,14 +439,14 @@ there is a canonical term in \(\scircsigma\) for each monotone Mealy machine.
 \end{definition}
 
 Before proceeding to the result that this PROP morphism is behaviour-preserving,
-we must show a lemma linking the behaviour circuits in the image of
+we must show a lemma linking the behaviour of circuits in the image of
 \(\mealytocircuiti\) to initial outputs and stream derivatives.
 
 \begin{proposition}
     \label{prop:mealy-form-image}
     For a combinational circuit \(
     \iltikzfig{strings/category/f-2-2}[box=f,dom1=x,dom2=m,cod1=x,cod2=n,colour=comb]
-    \), let \(\mathsf{mf}(g)\) be the map with action \(
+    \), let \(\mathsf{mf}(f)\) be the map with action \(
     (\listvar{s}) \mapsto
     \circuittostreami[
         \iltikzfig{circuits/productivity/mealy-form}[core=f,state=\listvar{s},dom=m,cod=n,delay=x]
@@ -500,10 +500,8 @@ circuits and back again using \(\circuittomealyi \circ \mealytocircuiti\) is
 be equal.
 This is an important new result, as it means that rather than showing
 results about the denotational semantics of circuits in \(\scircsigma\) by
-directly comparing it with \(\streami\), we can view morphisms of the former as
-Mealy machines instead, which simultaneously are a much more natural
-interpretation of sequential circuits and also have close coalgebraic links with
-stream functions.
+interpreting them in \(\streami\), we can view morphisms of the former as
+Mealy machines instead.
 
 \begin{theorem}\label{thm:mealy-to-circuit}
     \(
@@ -511,7 +509,7 @@ stream functions.
     \).
 \end{theorem}
 \begin{proof}
-    Let \((S ,f)\) be monotone Mealy machine and let \(s \in S\) be an arbitrary
+    Let \((S ,f)\) be a monotone Mealy machine and let \(s \in S\) be an arbitrary
     state.
     By \cref{prop:mealy-to-stream}, the initial output of
     \(\mealytostreami[(S, f, s)]\) is
@@ -529,7 +527,9 @@ stream functions.
     =
     \iltikzfig{circuits/synthesis/mealy-term-spaced}
     \); by applying \(\mealytocircuiti\) and \(\mealytofunc\),
-    we have that \[
+    there exists a combinational circuit \(
+    \iltikzfig{strings/category/f-3-2}[box=g,colour=comb]
+    \) such that \[
         \mealytocircuiti[(S, f, s_0)]
         =
         \iltikzfig{circuits/synthesis/mealy-term-spaced}

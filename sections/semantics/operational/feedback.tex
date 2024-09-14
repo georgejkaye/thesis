@@ -15,7 +15,7 @@ it follows immediately from axioms of STMCs.
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \) there exists a combinational circuit \(
     \iltikzfig{circuits/productivity/pre-mealy-core}
-    \) and \(\overline{v} \in \valuetuple{z}\) such that \(
+    \) and values \(\overline{v} \in \valuetuple{z}\) such that \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     =
     \iltikzfig{circuits/productivity/trace-delay}[core=f,state=\listvar{v},dom=m,cod=n,delay=y,trace=x,valwidth=z]
@@ -49,7 +49,7 @@ Our first reduction will transform any circuit in global trace-delay form into
 pre-Mealy form.
 
 \begin{lemma}\label{lem:mealy-rule}
-    The follwoing rule is sound: \[
+    The following rule is sound: \[
         \iltikzfig{circuits/productivity/trace-delay}[core=f,state=\listvar{v},dom=m,cod=n,delay=y,trace=x,valwidth=z]
         \reduction[(\mealyeqn)]
         \iltikzfig{circuits/productivity/mealy-rule}[core=f,trace=x,delays=y,values=z]
@@ -98,7 +98,7 @@ tenet in order to stick to `well-behaved' circuits.
     weaken this further by removing the sliding axiom, so no components can be
     `pushed round' into the next tick of execution.
     Neither of these are suitable for us as we actually \emph{want} to allow
-    non-delay-guarded trace.
+    non-delay-guarded feedback.
 \end{remark}
 
 In fact, careful use of non-delay-guarded feedback can still result in useful
@@ -206,9 +206,8 @@ We can use this in the syntactic setting.
     \) where \(c\) is the length of the longest chain in \(\valuetuple{x}\).
 \end{definition}
 
-Using these constructs we can replace a combinational circuit wrapped in
-non-delay-guarded feedback with a behaviourally equivalent circuit with no
-feedback at all.
+Using these constructs we can eliminate non-delay-guarded feedback around a
+combinational circuit.
 
 \begin{proposition}\label{prop:instant-feedback}
     The instant feedback rule \(
@@ -251,6 +250,10 @@ trace-delay form, the rule need only be applied once to the global loop.
 Although the value of \(c\) increases as the number of feedback wires increases,
 it only does so linearly in the height of the lattice.
 
+\begin{remark}
+    \todo[inline]{'bad' circuits? berry comparison}
+\end{remark}
+
 With a method to eliminate non-delay-guarded feedback, we can establish the
 class of circuits which will act as the keystone of both the operational
 semantics in this section and the algebraic semantics of the next.
@@ -265,8 +268,8 @@ semantics in this section and the algebraic semantics of the next.
 
 \begin{theorem}\label{thm:all-mealy-form}
     For a sequential circuit
-    \(\iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]\), there exist
-    at least one combinational circuit \(
+    \(\iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]\), there
+    exists at least one combinational circuit \(
     \iltikzfig{strings/category/f-2-2}[box=g,colour=comb,dom1=x,dom2=m,cod1=x,cod2=n]
     \) and values \(\listvar{s} \in \valuetuple{x}\) such that \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]

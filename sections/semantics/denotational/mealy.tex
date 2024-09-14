@@ -486,7 +486,7 @@ morphism.
 A causal stream function \(\morph{f}{\stream{A}}{\stream{B}}\) is just an
 \((A,B)\)-Mealy machine.
 This means that when such a function has finitely many stream
-derivatives, the states of a a finite Mealy machine can be retrieved by
+derivatives, the states of a finite Mealy machine can be retrieved by
 repeatedly taking stream derivatives.
 
 \begin{example}
@@ -550,13 +550,13 @@ machine.
     Since \(S\) is generated from the function \(f\) and is the \emph{smallest}
     possible set, there are no unreachable states in \(S\).
     Since the output and transition of states in
-    \(\streamtomealyi[f]\) are initial output and stream derivative, two
+    \(\streamtomealyi[f]\) are the initial output and stream derivative, two
     states can only have the same `behaviour' if they are derived from the same
     original stream function.
 \end{proof}
 
 We will encode this data into a PROP morphism from \(\streami\) to \(\mealyi\);
-in order to this we must verify the produced Mealy machine is monotone.
+in order to do this we must verify that the produced Mealy machine is monotone.
 
 \begin{lemma}\label{lem:head-tail-monotone}
     The functions \(\sigma \mapsto \streaminit(\sigma)\) and
@@ -602,7 +602,7 @@ in order to this we must verify the produced Mealy machine is monotone.
     \streaminit(f(b \streamcons \sigma)) =
     \initialoutput{f}{b}
     \).
-    For stream derivative, \(
+    For the stream derivative, \(
     \streamderivative{f}{a}(\sigma) \coloneqq
     \streamderv(f(a \streamcons \sigma)) \leq_{\stream{B}}
     \streamderv(f(b \streamcons \sigma)) \coloneqq
