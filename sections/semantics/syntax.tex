@@ -143,7 +143,7 @@ boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
     straightforward to define versions for arbitrary bit wires.
     Much like we often draw multiple wires as one
     (\cref{not:arbitrary-width-wires}), we can also draw these `thicker'
-    constructs as the single-bit versions:
+    constructs in a similar way to the single-bit versions:
     \begin{gather*}
         \iltikzfig{strings/structure/monoid/init}[colour=comb,obj=n]
         \quad
@@ -222,7 +222,7 @@ boxes \iltikzfig{strings/category/f}[box=f,colour=comb,dom=m,cod=n].
     gates used in circuit design.
     A \(\nandgate\) gate \(
     \iltikzfig{circuits/components/gates/nand}
-    \) acts as as the inverse of an \(\andgate\) gate: it
+    \) acts as the inverse of an \(\andgate\) gate: it
     outputs true if none of the inputs are true.
     Similarly, a \(\norgate\) gate \(
     \iltikzfig{circuits/components/gates/nor}
@@ -300,7 +300,7 @@ The first set of generators are \emph{instantaneous values} for each value in
 \(\values \setminus \bullet\).
 Value generators are intended to be interpreted as an \emph{initial state}:
 in the first cycle of execution they will emit their value, and produce the
-disconnected \(\bullet\) vaulue after that.
+disconnected \(\bullet\) value after that.
 This is why there is no \(\bullet\) value generator; instead it is a
 \emph{combinational} generator \(
 \iltikzfig{strings/structure/monoid/init}[colour=comb]
@@ -390,7 +390,7 @@ morphisms are drawn as green boxes \(
 
 \begin{example}[SR latch]\label{ex:sr-latch}
     A sequential circuit one might come across early on in an electronics
-    textbook is the the \emph{SR NOR latch}, one of the simplest registers.
+    textbook is the \emph{SR NOR latch}, one of the simplest registers.
     A possible design and interpretation in \(\scirc{\belnapsignature}\) are
     illustrated below.
     \begin{gather*}
@@ -405,13 +405,13 @@ morphisms are drawn as green boxes \(
     negations of each other.
     When Set receives a true signal, the \(\mathsf{Q}\) output is forced true,
     and will remain as such even if the Set input stops being pulsed true.
-    It is only until the Reset input is pulsed true that the \(\mathsf{Q}\)
+    It is only when the Reset input is pulsed true that the \(\mathsf{Q}\)
     output will return to false.
     (It is illegal for both Set and Reset to be pulsed high simultaneously; this
     issue is fixed in more complicated latches).
 
     SR latches work because of delays in how gates and wires transmit signals;
-    one of the feedback lops between the two \(\norgate\) gates will `win'.
+    one of the feedback loops between the two \(\norgate\) gates will `win'.
     We can model this in \(\scircsigma\) by using a different number of delay
     generators between the top and the bottom of the latch.
     We have opted for just the one because otherwise the upcoming examples

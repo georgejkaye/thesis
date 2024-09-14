@@ -28,11 +28,11 @@ translate into sequential circuit morphisms is nice to have in its own right.
     \(\morph{f}{S}{(S \times B)^A}\) is the \emph{Mealy function}.
 \end{definition}
 
-An \((M,N)\)-Mealy machine is parameterised over a set \(A\) of \emph{inputs} and
+An \((A,B)\)-Mealy machine is parameterised over a set \(A\) of \emph{inputs} and
 a set \(B\) of \emph{outputs}.
 Each Mealy machine then has a set \(S\) of \emph{states}; the Mealy function
-takes in a pair \((s, a)\) consisting a currrent state and input and produces a
-pair \(\langle{t,b}\rangle\) consisting of a transition and output.
+takes in a pair \((s, a)\) of a current state and an input, and
+produces a pair \(\langle{t,b}\rangle\) of a transition state and an output.
 
 \begin{notation}
     We will use the shorthand \(
@@ -51,11 +51,11 @@ pair \(\langle{t,b}\rangle\) consisting of a transition and output.
         \\
         f(s_0, \mathsf{f}) \mapsto \langle{s_0, \mathsf{f}}\rangle
         \qquad
-        f(s_0, \mathsf{t}) \mapsto \langle{s_0, \mathsf{t}}\rangle
+        f(s_0, \mathsf{t}) \mapsto \langle{s_1, \mathsf{t}}\rangle
         \\
         f(s_1, \mathsf{f}) \mapsto \langle{s_1, \mathsf{t}}\rangle
         \qquad
-        f(s_1, \mathsf{t}) \mapsto \langle{s_1, \mathsf{f}}\rangle
+        f(s_1, \mathsf{t}) \mapsto \langle{s_0, \mathsf{f}}\rangle
     \end{gather*}
     This is a Mealy machine with two states; at state \(s_0\) the output is the
     input, and at state \(s_1\) the output is the negation.
@@ -79,8 +79,7 @@ The natural question for the categorist to ask is
 And as is often the case, we can, using the notion of a \emph{coalgebra}.
 
 \begin{definition}[Coalgebra]
-    Let \(\mcc\) and \(\mcd\) be categories, and let \(\morph{F}{\mcc}{\mcc}\)
-    be an endofunctor.
+    For a category \(\mcc\), let \(\morph{F}{\mcc}{\mcc}\) be an endofunctor.
     A \emph{coalgebra} for \(F\), or \(F\)-coalgebra, is an object
     \(A \in \mcc\) along with a morphism \(\morph{\alpha}{A}{FA} \in \mcc\),
     usually written \((A,\alpha)\).
@@ -104,7 +103,7 @@ and a function, so this is a coalgebra in \(\set\).
     Given sets \(A\) and \(B\), let \(\Gamma\) be the set of causal stream
     functions \(\stream{A} \to \stream{B}\), and let
     \(\morph{\nu}{\Gamma}{\Gamma \times B}^A\) be the function defined as \(
-    (f, a) \mapsto \langle{\initialoutput{s}{a},\streamderivative{s}{a}}\rangle
+    (f, a) \mapsto \langle{\initialoutput{f}{a},\streamderivative{f}{a}}\rangle
     \).
     Then \((\Gamma,\nu)\) is a \((A,B)\)-Mealy coalgebra.
 \end{example}
@@ -112,17 +111,17 @@ and a function, so this is a coalgebra in \(\set\).
 The above example lays the groundwork to establish connections between circuits,
 stream functions and Mealy machines.
 If we inspect it a little closer, we find that stream functions are even more
-special than just being `a' \((A,B)\)-Mealy coalgebra.
+special than just being `an' \((A,B)\)-Mealy coalgebra.
 
 \begin{definition}[Mealy homomorphism]\label{def:mealy-homomorphism}
-    For sets \(A\) and \(B\), an \emph{Mealy homomorphism} between two
+    For sets \(A\) and \(B\), a \emph{Mealy homomorphism} between two
     \((A,B)\)-Mealy coalgebra \((S,f)\) and \((T,g)\) is a function
     \(\morph{h}{S}{T}\) preserving transitions and
     outputs, i.e.\ if \(f(s,a) = (r,b)\), then \(g(h(s),a) = (h(r),b)\).
 \end{definition}
 
-The \emph{final} \((M,N)\)-Mealy coalgebra is a \((M,N)\)-Mealy coalgebra to
-which every other \((M,N)\)-Mealy coalgebra has a unique homomorphism to.
+The \emph{final} \((A,B)\)-Mealy coalgebra is a \((A,B)\)-Mealy coalgebra to
+which every other \((A,B)\)-Mealy coalgebra has a unique homomorphism.
 
 \begin{proposition}[\cite{rutten2006algebraic}, Prop.\ 2.2]
     \label{prop:final-coalgebra}
@@ -150,14 +149,14 @@ which every other \((M,N)\)-Mealy coalgebra has a unique homomorphism to.
 \end{proof}
 
 For a Mealy coalgebra \((S, f)\) and a start state \(s_0\),
-\(!(s)(\sigma)\) maps to the stream of outputs that \((S, f)\) would produce
+\(!(s_0)(\sigma)\) maps to the stream of outputs that \((S, f)\) would produce
 by applying \(f\) to each element of \(\sigma\), starting from \(s_0\).
 
 \subsection{Monotone Mealy machines}
 
 In order to use Mealy machines as a bridge between \(\scircsigma\) and
-\(\streami\), they must be assembled into another traced PROP
-PROP morphisms defined between all three categories in play.
+\(\streami\), they must be assembled into another traced PROP, and morphisms
+defined between all three categories in play.
 But not all Mealy machines defined thus far correspond to circuits in
 \(\scircsigma\); as with stream functions, we must refine our notion of Mealy
 machine in order to find those that do.
@@ -176,21 +175,7 @@ following:
     \(S\) is finite, and \(\mealytostream\) must preserve transitions.
 \end{proof}
 
-We establish monotonicity by appealing to an ordering on the corresponding
-stream functions; first an ordering on stream \emph{functions} is required.
-
-\begin{definition}
-    Let \(A\) and \(B\) be posets.
-    For stream functions \(\morph{f,g}{\stream{A}}{\stream{B}}\), we say that
-    \(f \stateorder g\) if, for all \(\sigma \in \stream{A}\),
-    \(f(\sigma) \leq_{\stream{B}} g(\sigma)\).
-\end{definition}
-
-\begin{definition}[State order]
-    Let \(A\) and \(B\) posets.
-    For an \((A,B)\)-Mealy machine \((S, f)\) and states \(s,s^\prime \in S\)
-    we say that \(s \stateorder s^\prime\) if \(!(s) \stateorder !(s^\prime)\).
-\end{definition}
+\todo[inline]{Fix the preorder-poset disaster}
 
 \begin{definition}[Monotone Mealy machine]
     Let \(A\) and \(B\) be posets; an \((A,B)\)-Mealy machine is called a
@@ -230,10 +215,12 @@ standard.
     \emph{cascade product} is an initialised \((A,C)\)-Mealy machine defined as
     \[
         \left(S \times T, ((s, t), a) \mapsto \left\langle
+        \left(
         \mealyfunctiontransition{f}(s,a),
         \mealyfunctiontransition{g}(t, \mealyfunctionoutput{f}(s, a))
+        \right),
+        \mealyfunctionoutput{g}(t, \mealyfunctionoutput{f}(s, a))
         \right\rangle,
-        \mealyfunctionoutput{g}(t, \mealyfunctionoutput{f}(s, a)),
         (s_0, t_0)\right).
     \]
 \end{definition}
@@ -252,9 +239,9 @@ inputs, then executes the second on the outputs of the first; the inputs are
         \qquad
         g(t_0, \mathsf{t}) \coloneqq \langle{t_1,\mathsf{t}}\rangle
         \qquad
-        g(t_0, \mathsf{f}) \coloneqq \langle{t_1,\mathsf{t}}\rangle
+        g(t_1, \mathsf{f}) \coloneqq \langle{t_1,\mathsf{t}}\rangle
         \qquad
-        g(t_0, \mathsf{t}) \coloneqq \langle{t_1,\mathsf{t}}\rangle
+        g(t_1, \mathsf{t}) \coloneqq \langle{t_1,\mathsf{t}}\rangle
         \\
         \includestandalone{figures/mealy/example2-init}
     \end{gather*}
@@ -310,12 +297,12 @@ Tensor product is far more straightforward.
     machine defined as \[
         (S \times T, \left((s, t), (a, c)\right) \mapsto \left\langle
         \left(
-        \mealyfunctiontransition{f}\left(s, a\right),
-        \mealyfunctiontransition{f}\left(s, a\right)
+        \mealyfunctiontransition{f}\mleft(s, a\mright),
+        \mealyfunctiontransition{g}\mleft(s, a\mright)
         \right),
         \left(
-        \mealyfunctionoutput{f}\left(s, a\right),
-        \mealyfunctionoutput{f}\left(s, a\right)
+        \mealyfunctionoutput{f}\mleft(s, a\mright),
+        \mealyfunctionoutput{g}\mleft(s, a\mright)
         \right)\right\rangle,
         (s_0, t_0)
         ).
@@ -338,7 +325,7 @@ Tensor product is far more straightforward.
         \qquad
         h((s_0, t_0), \mathsf{tf})
         \coloneqq
-        \left\langle(s_0, t_1), \mathsf{tf}\right\rangle
+        \left\langle(s_1, t_0), \mathsf{tf}\right\rangle
         \\
         h((s_0, t_0), \mathsf{ft})
         \coloneqq
@@ -346,7 +333,7 @@ Tensor product is far more straightforward.
         \qquad
         h((s_0, t_0), \mathsf{tt})
         \coloneqq
-        \left\langle(s_0, t_0), \mathsf{tt}\right\rangle
+        \left\langle(s_1, t_1), \mathsf{tt}\right\rangle
         \\
         h((s_1, t_0), \mathsf{ff})
         \coloneqq
@@ -354,7 +341,7 @@ Tensor product is far more straightforward.
         \qquad
         h((s_1, t_0), \mathsf{tf})
         \coloneqq
-        \left\langle(s_0, t_0), \mathsf{ft}\right\rangle
+        \left\langle(s_0, t_0), \mathsf{ff}\right\rangle
         \\
         h((s_1, t_0), \mathsf{ft})
         \coloneqq
@@ -370,7 +357,7 @@ Tensor product is far more straightforward.
         \qquad
         h((s_0, t_1), \mathsf{tf})
         \coloneqq
-        \left\langle(s_0, t_1), \mathsf{tf}\right\rangle
+        \left\langle(s_1, t_1), \mathsf{tt}\right\rangle
         \\
         h((s_1, t_1), \mathsf{ft})
         \coloneqq
@@ -422,7 +409,7 @@ This can be computed in much the same way as it was for stream functions.
     \)-Mealy machine.
     For a state \(s \in S\) and input \(\listvar{a} \in \valuetuple{m}\), let
     \(\mu_{s,\listvar{a}}\) be the least fixpoint of \(
-    \listvar{r} \mapsto \proj{0}\left(f\left(s, \listvar{ra}\right)\right)
+    \listvar{r} \mapsto \proj{0}\mleft(f\left(s, \listvar{ra}\right)\mright)
     \).
     The \emph{least fixed point} of \((S, f)\) with start state \(s_0\) is a \(
     (\valuetuple{m}, \valuetuple{n})
@@ -468,7 +455,7 @@ We must show that this is the trace on \(\mealyi\).
     The function \(
     f^\prime \coloneqq (s, \listvar{a})
     \mapsto
-    \proj{1}\left(f((\mu_{s,\listvar{a}})\listvar{a})\right)
+    \proj{1}\mleft(f((\mu_{s,\listvar{a}})\listvar{a})\mright)
     \) is a composition of monotone functions, so it is itself monotone.
     This means \((S, f^\prime)\) is a monotone \(
     (\valuetuple{m}, \valuetuple{n})

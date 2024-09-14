@@ -66,7 +66,7 @@ additional restrictions must be added to define the notion of a \emph{functor}.
 \end{definition}
 
 The two equations above are known as the \emph{functoriality} equations; if a
-map satisfies these it is \emph{functorial} i.e.\ it is a functor.
+map satisfies these it is said to be \emph{functorial}.
 
 Functors have a graphical representation as `functorial
 boxes'~\cite{mellies2006functorial}; the notation for applying a functor
@@ -137,8 +137,8 @@ functors are no different.
 \end{example}
 
 \begin{example}[Functor composition]
-    If \(\morph{F}{\mcc}{\mcd}\) and \(\morph{G}{\mcc}{\mcd}\) are functors
-    then their composite \(\morph{G \circ F}{\mcc}{\mcd}\) is also a functor.
+    If \(\morph{F}{\mcc}{\mcd}\) and \(\morph{G}{\mcd}{\mce}\) are functors
+    then their composite \(\morph{G \circ F}{\mcc}{\mce}\) is also a functor.
 \end{example}
 
 Identity and (associative) composition are all we need to define a category.
@@ -209,7 +209,7 @@ the former is the latter with `some of the bits taken out'.
 
 \begin{definition}[Subcategory]
     Given a category \(\mcc\), a \emph{subcategory} \(\mcd\) of \(\mcc\) is a
-    subclass of the objects in \(\mcc\) and a subclass of the morphims in
+    subclass of the objects in \(\mcc\) and a subclass of the morphisms in
     \(\mcd\) such that
     \begin{itemize}
         \item for every object \(A \in \mcd\), the identity \(\id[A]\) is in
@@ -226,7 +226,7 @@ structure of a category.
 This means there is an obvious induced functor \(\morph{S}{\mcd}{\mcc}\) mapping
 objects and morphisms in \(\mcd\) to the same objects in \(\mcc\); this is
 called an \emph{inclusion functor}, and is often written with a hooked arrow
-\(\mcd \hookrightarrow \mcd\).
+\(\mcd \hookrightarrow \mcc\).
 An inclusion functor is clearly faithful, since there cannot be two morphisms in
 the subcategory that map to the same morphism in the parent category.
 Inclusion functors that are also \emph{full} are of particular interest.
@@ -416,5 +416,5 @@ limits or colimits.
 Sometimes a functor may not preserve \emph{all} (co)limits but only some of
 them.
 For example, we may talk about \(F\) being a coproduct-preserving functor .
-This is defined in the same way as above: \(F(A+B)\) must itself a coproduct
+This is defined in the same way as above: \(F(A+B)\) must itself be a coproduct
 \(FA + FB\).

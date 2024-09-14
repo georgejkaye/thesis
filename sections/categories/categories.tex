@@ -109,7 +109,7 @@ The definition of a category is quite abstract and might take some getting used
 to: it can be helpful to consider some concrete examples.
 
 \begin{example}[Preorder]
-    A \emph{preorder} is a reflexive transitive binary relation \(\leq\) on a
+    A \emph{preorder} is a reflexive, transitive binary relation \(\leq\) on a
     set \(X\).
     Any preorder generates a category \(\mcc_\leq\): the objects are the
     elements of \(X\) and \(\mcc_\leq(x, y)\) contains exactly one morphism if
@@ -148,7 +148,7 @@ to: it can be helpful to consider some concrete examples.
     A \emph{monoid homomorphism} between two monoids \((A, *, e_A)\) and
     \((B, +, e_B)\) is a map \(\morph{h}{A}{B}\) such that
     \(h(a * a^\prime) = h(a) + h(a^\prime)\) and \(h(e_A) = e_B\).
-    There is a category \(\mon\) with monoids as the objects as monoids and
+    There is a category \(\mon\) with monoids as the objects and
     monoid homomorphisms as the morphisms.
 \end{example}
 
@@ -177,7 +177,7 @@ to: it can be helpful to consider some concrete examples.
 
 \subsection{Universal properties}
 
-Category theory is an appealing foundation is because it can be used to
+Category theory is an appealing foundation because it can be used to
 \emph{abstract} away from concrete constructions.
 Rather than proving results about particular objects and morphisms, we can
 show how they are an instantiation of some more abstract concept.
@@ -272,9 +272,9 @@ often also get results for free about the dual case.
 \end{definition}
 
 \begin{example}
-    In \(\set\), the terminal object is the singleton set \(\{\star\}\):
-    from any set \(X\) there is a unique function \(X \to \{\star\}\); namely
-    the function \(x \mapsto \star\).
+    In \(\set\), the terminal object is the set containing a single object
+    \(\star\): from any set \(X\) there is a unique function
+    \(X \to \{\star\}\); namely the function \(x \mapsto \star\).
 \end{example}
 
 If a category has an initial or terminal object, then it is
@@ -352,7 +352,7 @@ common domain or codomain can be in some way `unified'.
 \begin{example}
     \(\set\) has pushouts: given morphisms \(\morph{f}{A}{B}\) and
     \(\morph{g}{A}{C}\), the pushout is the union of \(B\) and \(C\) identifying
-    elements with a common preimage in \(X\).
+    elements with a common preimage in \(A\).
     Concretely, let \({\sim} \subseteq B \times C\) be a relation defined as
     \(\{(b, c) \,|\, \exists a \in A.\, b = f(a) \wedge c = g(a)\}\).
     Then the pushout set \(D\) is defined as \(B \cup C / \sim\) with the

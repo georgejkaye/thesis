@@ -1,5 +1,8 @@
 \chapter{Introduction}
 
+\todo[inline]{Nomenclature}
+\todo[inline]{Index}
+
 Today's society has become dependent on digital
 circuits~\cite{katz2005contemporary}, which run our computers, homes, vehicles
 and much more.
@@ -95,7 +98,7 @@ Such circuits have no memory; the outputs at each tick of the clock only depend
 on the inputs received at that moment.
 A far more useful class of circuits is that of \emph{sequential} circuits, which
 have \emph{delay} and \emph{feedback} in addition to logic gates.
-Most sequential circuits can be divided into two parts:
+Sequential circuits can be divided into two parts:
 the \emph{combinational logic} for performing logical functions, and the
 \emph{state registers} for storing data.
 
@@ -121,7 +124,7 @@ kind, and so this is where we are focusing our mathematical theory.
 
 A (synchronous sequential) circuit can be viewed as a component with some
 input and output wires; these wires can be connected to other components to
-create a bigger and more complex circuits.
+create bigger and more complex circuits.
 This is called \emph{composing} circuits, and some ways of doing this are
 shown in \cref{fig:composition}.
 We can compose circuits \emph{horizontally} (if the outputs of the first match
@@ -411,7 +414,7 @@ In addition to any application-specific components, these settings also contain
 the four structural components shown in \cref{fig:frob}, forming what is known
 mathematically as a \emph{commutative monoid} and a
 \emph{cocommutative comonoid}.
-These components are used for model the forks and joins we alluded to earlier in
+These components are used to model the forks and joins alluded to earlier in
 this chapter; as also illustrated in \cref{fig:frob}, one can use them to create
 a feedback loop.
 
@@ -536,7 +539,7 @@ function as its behaviour.
 We also define a category \(\mealyi\) of Mealy machines lifted to work on
 lattices, as a `bridge' between circuits and stream functions.
 As well as being essential for showing the soundness and completeness of the
-denotational semantics, having this category of Mealy machines is nice to have
+denotational semantics, this category of Mealy machines is nice to have
 in its own right, as it shows how existing circuit
 methodologies~\cite{kohavi2009switching} are compatible with our rigorous
 mathematic framework.
@@ -691,7 +694,7 @@ structure can aid reasoning in settings with a \emph{Cartesian} structure, of
 which the semantic categories of digital circuits are an example.
 
 Subsequently, we illustrate how graph rewriting can be used as a combinatorial
-implemnetation of the operational semantics for digital circuits.
+implementation of the operational semantics for digital circuits.
 This culminates in the presentation of a graph-rewriting-based hardware
 description language based on the work throughout the thesis, with which one can
 design and (partially) evaluate circuits in a step-by-step manner.

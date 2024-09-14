@@ -9,7 +9,7 @@ input, but all of the previous ones as well.
 
 \begin{remark}
     In \cite{mendler2012constructive}, the semantics of digital circuits with
-    delays cycles are presented using \emph{timed ternary simulation}, an
+    delays and cycles are presented using \emph{timed ternary simulation}, an
     algorithm to compute how a sequence of circuit outputs stabilises over time
     given the inputs and value of the current state.
     This differs from our approach as we assign each circuit a concrete stream
@@ -110,7 +110,7 @@ Conversely, by repeatedly taking the meet, one obtains its \emph{infimum}
     If \(A\) is a lattice, then for any \(n \in \nat\), \(A^n\) is also a
     lattice by comparing elements pointwise.
     The \(\bot\) is then the word containing \(n\) copies of the \(\bot\)
-    element in \(A\), and the same for the \(\top\) element.
+    element in \(A\), and similarly for the \(\top\) element.
 
     Recall the set \(A \coloneqq \{0,1,2\}\) from
     \cref{ex:powerset-lattice} and the lattice structure on its powerset
@@ -303,8 +303,8 @@ circuit maps to a monotone function.
 \begin{remark}
     One might wonder why the fork and the join have different semantics, as they
     would be physically realised by the same wiring.
-    This is because digital circuits have a notion of \emph{causality}: outputs
-    can only connect to inputs.
+    This is because digital circuits have a notion of \emph{static causality}:
+    outputs can only connect to inputs.
     This is why the semantics of combinational circuits is \emph{functions} and
     not \emph{relations}.
 
@@ -444,7 +444,7 @@ To equip streams with a similar notion, we must set an order on them.
 Monotonicity of stream functions is then defined in the normal way; this
 completes the trio of properties we need to express the semantics of
 sequential circuits as stream functions.
-To use stream functions with these properties as a denotation semantics for
+To use stream functions with these properties as a denotational semantics for
 circuits we must assemble them into another PROP and map into it from
 \(\scircsigma\) using a \emph{PROP morphism}, a strict symmetric monoidal
 functor between PROPs.
@@ -537,7 +537,7 @@ point.
     \in \streami
     \), and stream \(\sigma \in \valuetuplestream{x+m}\), let
     \(\mu_f(\sigma)\) be the least fixed point of the endofunction \(
-    \tau \mapsto \proj{0}\left(f(\tau\sigma)\right)
+    \tau \mapsto \proj{0}\mleft(f(\tau\sigma)\mright)
     \).
 \end{notation}
 
@@ -545,16 +545,16 @@ We must show that this notion of least fixed point is a trace on \(\streami\).
 The original proof idea for the following is due to David Sprunger.
 
 \begin{proposition}
-    The function \(\sigma \mapsto \proj{1}\left(f(\mu_f(\sigma)\sigma)\right)\)
+    The function \(\sigma \mapsto \proj{1}\mleft(f(\mu_f(\sigma)\sigma)\mright)\)
     is a trace on \(\streami\).
 \end{proposition}
 \begin{proof}
     To show this, we need to prove that
-    \(\sigma \mapsto \proj{1}\left(f(\mu_f(\sigma)\sigma)\right)\) is in
+    \(\sigma \mapsto \proj{1}\mleft(f(\mu_f(\sigma)\sigma)\mright)\) is in
     \(\streami\): it is causal, finitely specified, and monotone.
 
     Since \(
-    \morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{x+m}}
+    \morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{x+n}}
     \) is a morphism of \(\streami\), it has finitely many stream derivatives.
     For each stream derivative \(\streamderivative{f}{\,\listvar{w}}\), let the
     function \(
@@ -591,7 +591,7 @@ The original proof idea for the following is due to David Sprunger.
     That the mapping \(\mu_f\) is causal and monotone is
     straightforward: each of the functions in the join is causal and monotone,
     and join preserves these properties.
-    It remains to show this mapping has finitely many stream derivatives.
+    It remains to show that this mapping has finitely many stream derivatives.
 
     When equipped with \(\stateorder\), the set of functions
     \(\valuetuplestream{x+m} \to \valuetuplestream{x}\)
@@ -644,14 +644,14 @@ The original proof idea for the following is due to David Sprunger.
     applying stream derivative to the latter produces another element of \(G\).
     \begin{align*}
         \streamderivative{\sigma \mapsto \left(\widehat{\streamderivative{f}{\, \listvar{w}}}(\left(g_{k-1}(\sigma)\right)\sigma)\right)}{ab}
-         & = \sigma \mapsto \streamderv\left(\widehat{\streamderivative{f}{\, \listvar{w}}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)            \\
-         & = \sigma \mapsto \streamderv\left(\proj{0}\left(\streamderivative{f}{\, \listvar{w}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\right) \\
-         & = \sigma \mapsto \proj{0}\left(\streamderv\left(\streamderivative{f}{\, \listvar{w}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\right) \\
-         & = \sigma \mapsto \proj{0}\left(\streamderivative{\left(\streamderivative{f}{\, \listvar{w}}(\left(g_{k-1}(\sigma)\right)\sigma)\right)}{ab}\right)    \\
-         & = \sigma \mapsto \proj{0}\left(\streamderivative{f}{\, ab \streamcons \listvar{w}}(\left(g_{k-1}(\sigma)\right)\sigma)\right)                         \\
+         & = \sigma \mapsto \streamderv\left(\widehat{\streamderivative{f}{\, \listvar{w}}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)              \\
+         & = \sigma \mapsto \streamderv\left(\proj{0}\mleft(\streamderivative{f}{\, \listvar{w}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\mright)\right) \\
+         & = \sigma \mapsto \proj{0}\mleft(\streamderv\left(\streamderivative{f}{\, \listvar{w}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\mright) \\
+         & = \sigma \mapsto \proj{0}\mleft(\streamderivative{\left(\streamderivative{f}{\, \listvar{w}}(\left(g_{k-1}(\sigma)\right)\sigma)\right)}{ab}\mright)    \\
+         & = \sigma \mapsto \proj{0}\mleft(\streamderivative{f}{\, ab \streamcons \listvar{w}}(\left(g_{k-1}(\sigma)\right)\sigma)\mright)                         \\
          & = \sigma \mapsto \widehat{\streamderivative{f}{\, ab \streamcons \listvar{w}}}(\left(g_{k-1}(\sigma)\right)\sigma)
     \end{align*}
-    As \(\proj{0}\left(\streamderivative{f}{ab \streamcons \listvar{w}}\right)\)
+    As \(\proj{0}\mleft(\streamderivative{f}{ab \streamcons \listvar{w}}\mright)\)
     is in \(G\), the latter  is closed under stream derivative.
     Subsequently, \(\mu_f\) has finitely many stream derivatives.
 

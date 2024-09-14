@@ -479,8 +479,8 @@ we must show a lemma linking the behaviour circuits in the image of
     \), which is \(
     \left(\valuetuple{x},
     \listvar{v} \mapsto \left\langle
-    \proj{0}\left(g(\listvar{s},\listvar{a})\right),
-    \proj{1}\left(g(\listvar{s}, \listvar{a})\right)
+    \proj{0}\mleft(g(\listvar{s},\listvar{a})\mright),
+    \proj{1}\mleft(g(\listvar{s}, \listvar{a})\mright)
     \right\rangle, \listvar{s}\right)
     \).
     The output and derivative of \(
@@ -515,11 +515,11 @@ stream functions.
     state.
     By \cref{prop:mealy-to-stream}, the initial output of
     \(\mealytostreami[(S, f, s)]\) is
-    \(\listvar{a} \mapsto \mealyfunctionoutput{f}\left(s, \listvar{a}\right)\)
+    \(\listvar{a} \mapsto \mealyfunctionoutput{f}\mleft(s, \listvar{a}\mright)\)
     and the stream derivative of \(\mealytostreami[(S, f, s)]\) is \(
     \listvar{a}
     \mapsto
-    \mealytostreami[(\mealyfunctiontransition{f}\left(s, \listvar{a}\right))]
+    \mealytostreami[(\mealyfunctiontransition{f}\mleft(s, \listvar{a}\mright))]
     \).
 
     Now we consider the composite
@@ -556,13 +556,13 @@ stream functions.
     \begin{align*}
         \initialoutput{\circuittostreami[\mealytocircuiti[(S, f, s)]]}{\listvar{a}}
          & =
-        \proj{1}\left(\circuittofunci[g](\listvar{v}, \gamma_\leq(s), \listvar{a})\right)
+        \proj{1}\mleft(\circuittofunci[g](\listvar{v}, \gamma_\leq(s), \listvar{a})\mright)
         \\
          & =
-        \proj{1}\left(\circuittofunci[\mealytofunc[\gamma_\leq(f)]](\gamma_\leq(s), \listvar{a})\right)
+        \proj{1}\mleft(\circuittofunci[\mealytofunc[\gamma_\leq(f)]](\gamma_\leq(s), \listvar{a})\mright)
         \\
          & =
-        \proj{1}\left(\gamma_\leq(f)(\gamma_\leq(s), \listvar(a))\right)
+        \proj{1}\mleft(\gamma_\leq(f)(\gamma_\leq(s), \listvar(a))\mright)
         \\
          & =
         \proj{1}\left(
@@ -585,10 +585,10 @@ stream functions.
         \right)
         \\
          & =
-        \proj{0}\left(\circuittofunci[\mealytofunc[\gamma_\leq(f)]](\gamma_\leq(s), \listvar{a})\right)
+        \proj{0}\mleft(\circuittofunci[\mealytofunc[\gamma_\leq(f)]](\gamma_\leq(s), \listvar{a})\mright)
         \\
          & =
-        \proj{0}\left(\gamma_\leq(f)(\gamma_\leq(s), \listvar(a))\right)
+        \proj{0}\mleft(\gamma_\leq(f)(\gamma_\leq(s), \listvar(a))\mright)
         \\
          & =
         \proj{0}\left(
