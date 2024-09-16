@@ -19,7 +19,8 @@ evaluation to circuits.
 
 \subsection{Shortcut rules}\label{sec:shortcut}
 
-It is often the case that we know that some of the inputs to a circuit is fixed.
+It is often the case that we know that some of the inputs to a circuit are
+fixed.
 This can be modelled by precomposing the relevant input with an
 \emph{infinite waveform} \(
 \iltikzfig{circuits/components/waveforms/infinite-register}[val=v]
@@ -74,7 +75,8 @@ be unsound.
     \), in which the control signal to the multiplexer determines which of two
     subcircuits will become the output.
     We will assume that the control signal is held at false, and reduce
-    accordingly.
+    accordingly by instantiating the rule in \cref{fig:waveform-rules} detailing
+    the interaction of gates and waveforms to the \(\notgate\) case.
     \begin{gather*}
         \iltikzfig{circuits/examples/control/circuit-mux-applied}
         \coloneqq
@@ -96,7 +98,7 @@ be unsound.
 
 \subsection{Shortcuts after streaming}
 
-The rules in the previous sections are intended for use on circuit before we
+The rules in the previous sections are intended for use on circuits before we
 even apply values to them.
 However, there is still potential for partial evaluation when we consider the
 outputs of a circuit one step at a time.
@@ -156,8 +158,8 @@ defined as \(v_i(j)\) if \(|v_i| > j\) or \(\bot\) otherwise.
 To avoid confusion with our syntax sugar for arbitrary-width values, we will
 always end uncertain value lists with \(?\).
 When writing out specific uncertain words, we delimit the elements with vertical
-bars like \(\mathsf{f}|\mathsf{t}\) to allude to the fact this value is either
-the first \emph{or} the second element.
+bars like \(\mathsf{f}|\mathsf{t}\) to allude to the fact that this value is
+either the first \emph{or} the second element.
 
 \begin{example}
     If a circuit contains uncertain values \(

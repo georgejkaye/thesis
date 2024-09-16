@@ -9,7 +9,7 @@ to `pick' the appropriate nodes.
 
 \begin{definition}[Cospan]
     A \emph{cospan} is a pair of morphisms \(X \to A\)
-    and \(X \to B\), written \(\cospan{X}{A}{Y}\).
+    and \(Y \to A\), written \(\cospan{X}{A}{Y}\).
     A \emph{cospan morphism} \(
     (\cospan{X}[f]{A}[g]{Y}) \to (\cospan{X}[h]{B}[k]{Y})
     \) is a morphism \(\morph{\alpha}{A}{B}\) such that the following diagram
@@ -24,7 +24,7 @@ to `pick' the appropriate nodes.
     \(\alpha\) is an isomorphism.
 \end{definition}
 
-Cospans wll be used to model interfaced hypergraphs; for a cospan
+Cospans will be used to model interfaced hypergraphs; for a cospan
 \(\cospan{X}{A}{Y}\) the `apex' \(A\) will be a hypergraph and the `legs`
 \(X \to A\) and \(Y \to A\) are input and output maps respectively.
 Since we will be comparing interfaced hypergraphs with string diagram terms,
@@ -86,7 +86,7 @@ output; this is formally performed by another functor.
 \begin{theorem}[\cite{bonchi2022string}, Thm.\ 3.6]\label{thm:csp-construction}
     Let \(\mathbb{X}\) be a PROP in which the monoidal product is a coproduct,
     let \(\mcc\) be a category with finite colimits, and
-    let \(\morph{F}{\mathbb{X}}{\mcc}\) a coproduct-preserving functor.
+    let \(\morph{F}{\mathbb{X}}{\mcc}\) be a coproduct-preserving functor.
     Then there exists a PROP \(\csp[F]{\mcc}\) whose arrows
     \(\listvar{m} \to \listvar{n}\) are isomorphism classes of \(\mcc\)
     cospans \(\cospan{Fn}{C}{Fn}\).
@@ -103,8 +103,8 @@ output; this is formally performed by another functor.
     preserves coproducts.
 \end{proof}
 
-\(F\) is the functor that will be used to the objects in the cospan legs with
-some notion of ordering.
+\(F\) is the functor that will be used to map the objects in the cospan legs
+with some notion of ordering.
 For our purpose, the domain of this functor will be the PROP of finite sets
 \(\{0,1,2,\dots,m-1\}\).
 
@@ -136,7 +136,7 @@ interfaced hypergraphs.
     We assign interfaces to it as the cospan \(\cospan{3}[f]{F}[g]{3}\), where
     \begin{gather*}
         f(D0) = v_0 \quad f(D1) = v_1 \\
-        g(D0) = v_4 \quad g(D1) = v_5 \quad g(D2) = v_2
+        g(D0) = v_5 \quad g(D1) = v_4 \quad g(D2) = v_2
     \end{gather*}
     Interfaces are drawn on the left and right of a main graph, with numbers
     illustrating the action of the cospan maps.
@@ -247,9 +247,9 @@ way as the monochromatic version.
 
 \begin{definition}[\cite{bonchi2022string}, Rem.\ 3.12]
     Let \(\morph{\pickinterfacesc{C}}{\finsetpropwithnat \slice C}{\hypsigmac}\)
-    be defined as functor sending a word \(\overline{n}\) to the corresponding
-    discrete coloured hypergraph containing vertices coloured as in
-    \(\overline{n}\), and sending a function \(\overline{m} \to \overline{n}\)
+    be defined as the functor sending a word \(\overline{n}\) to the
+    corresponding discrete coloured hypergraph containing vertices coloured as
+    in \(\overline{n}\), and sending a function \(\overline{m} \to \overline{n}\)
     to the induced homomorphism of discrete hypergraphs.
 \end{definition}
 

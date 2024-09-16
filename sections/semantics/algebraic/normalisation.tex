@@ -37,9 +37,9 @@ how Mealy form can be derived using smaller equations.
 \begin{proposition}\label{prop:mealy-equations}
     Given a sequential circuit \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
-    \), there exists combinational circuit \(
+    \), there exists a combinational circuit \(
     \iltikzfig{strings/category/f-2-2}[box=g,colour=comb,dom1=x,dom2=m,cod1=x,cod2=n]
-    \) and \(\listvar{s} \in \valuetuple{x}\) such that \(
+    \) and values \(\listvar{s} \in \valuetuple{x}\) such that \(
     \iltikzfig{strings/category/f}[box=f,colour=seq]
     =
     \iltikzfig{circuits/productivity/mealy-form}[core=g]
@@ -53,7 +53,7 @@ how Mealy form can be derived using smaller equations.
         \iltikzfig{circuits/axioms/delay-to-register/step-0}
         \eqaxioms[(\joinunitleqn)]
         \iltikzfig{circuits/axioms/delay-to-register/step-1}
-        \qquad
+        \qquad\quad
         \iltikzfig{circuits/axioms/value-to-register/step-0}
         \eqaxioms[(\joinunitreqn)]
         \iltikzfig{circuits/axioms/value-to-register/step-1}

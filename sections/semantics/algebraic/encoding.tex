@@ -22,14 +22,14 @@ determine whether or not an equation is valid.
     \iltikzfig{circuits/examples/bottrue/circuit}
     \).
     The semantics of the combinational core are clearly
-    \(sr \mapsto (s \lor r)s(s \lor r)\), where the first two characters are the
+    \((s, r) \mapsto \left(s \lor r, s, s \lor r\right)\), where the first two characters are the
     next state and the third is the output.
     The initial state is \(\bot\belnaptrue\), so the subsequent states are
-    \((\bot \lor \belnaptrue)\bot = \belnaptrue\bot\) and
-    \((\belnaptrue \lor \bot)\belnaptrue = \belnaptrue\belnaptrue\).
-    As \((\belnaptrue \lor \belnaptrue)\belnaptrue = \belnaptrue\belnaptrue\),
+    \((\bot \lor \belnaptrue, \bot) = (\belnaptrue,\bot)\) and
+    \((\belnaptrue \lor \bot, \belnaptrue) = (\belnaptrue, \belnaptrue)\).
+    As \((\belnaptrue \lor \belnaptrue, \belnaptrue) = (\belnaptrue, \belnaptrue)\),
     there are no more circuit states and the complete set is
-    \(\{\bot\belnaptrue,\belnaptrue\bot,\belnaptrue\belnaptrue\}\).
+    \(\{(\bot, \belnaptrue),(\belnaptrue,\bot),(\belnaptrue,\belnaptrue)\}\).
 
     Note that as the output of the circuit is computed as \(s \lor r\), for each
     circuit state the output is \(\belnaptrue\).

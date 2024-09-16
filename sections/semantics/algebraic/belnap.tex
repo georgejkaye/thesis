@@ -57,7 +57,7 @@ push them across the translators.
 \begin{proposition}\label{prop:exploded-belnap}
     Given an essentially combinational Belnap circuit \(
     \iltikzfig{strings/category/f}[box=f,dom=m,cod=1,colour=seq]
-    \), there exists combinational Belnap circuits \(
+    \), there exist combinational Belnap circuits \(
     \iltikzfig{strings/category/f-3-1}[box=f_0,dom1=1,dom2=m,dom3=m,cod=1,colour=comb]
     \) and \(
     \iltikzfig{strings/category/f-3-1}[box=f_1,dom1=1,dom2=m,dom3=m,cod=1,colour=comb]
@@ -159,11 +159,11 @@ the exploded circuit into falsy or truthy disjunctive normal form.
     \) propagates the \(
     \iltikzfig{circuits/components/gates/and}
     \) components in the circuit as far to the right as possible, so all the
-    fork and eliminate constructs are all in the left half of the term.
+    fork and eliminate constructs are in the left half of the term.
     Using \((\forkcommeqn)\), \((\forkassoceqn)\) to rearrange the forks, and
     \((\forkuniteqn)\) to introduce forks where necessary,
-    we can manipulate these forks such that there is a wire for each of the \(m\)
-    inputs feeds into each of the \(n\) outputs.
+    we can manipulate these forks such that each of the \(m\) inputs has a
+    connection to each of the \(n\) outputs.
     Similarly, we can use \((\andideqn)\) to introduce infinite registers where
     appropriate, so we have a circuit of the form below. \[
         \iltikzfig{circuits/algebraic/belnap-rearrange-forks}
