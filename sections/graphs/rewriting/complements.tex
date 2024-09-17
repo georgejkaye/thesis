@@ -13,7 +13,7 @@ If there is no pushout complement, there is no possible rewrite, so it is
 important to know when one exists.
 Fortunately, there are two well-known conditions for existence of pushout
 complements when rewriting with hypergraphs.
-The first ensures that all the sources and targets of a hyperedges are present
+The first ensures that all the sources and targets of a hyperedge are present
 in a candidate context.
 
 \begin{definition}[No-dangling-hyperedges condition~\cite{corradini1997algebraic}, Prop.\ 3.3.4]
@@ -114,7 +114,7 @@ what about when there is \emph{exactly one} pushout complement?
 When this is the case, the rewrite is uniquely specified for a given rule and
 matching.
 To answer this question, we must examine a class of categories to which
-\(\hypsigma\) belongs to, known as \emph{adhesive} categories.
+\(\hypsigma\) belongs, known as \emph{adhesive} categories.
 One can think of these as categories in which graph rewriting `plays nicely'.
 
 To define what an adhesive category is, we must first define a special kind of
@@ -427,14 +427,13 @@ context.
     Define a map \(\morph{q}{i + j + \tilde{G}}{G}\) sending elements in
     \(\tilde{G}\) from \(G\) to themselves, and sending vertices from
     \(i + j\) to their image under \(i + j \to L \to G\).
-    Then a pushout complement \(i + j \to C \to G\) is valid if and only
-    \(C\) is obtained as a quotient on the exploded context
-    that only identifies vertices in the image of \(q^{-1}(v)\) for each vertex
-    \(v \in G\).
+    Then a pushout complement \(i + j \to C \to G\) is valid if and only the
+    context \(C\) is a quotient on the exploded context that only identifies
+    vertices in the image of \(q^{-1}(v)\) for each vertex \(v \in G\).
 \end{proposition}
 
 Given a DPO rule and matching, we can enumerate all the possible pushout
-complements; it can be shown that each of these pushout complements correspond
+complements; it can be shown that each pushout complement corresponds
 to a valid rewrite in a Frobenius setting.
 
 \begin{notation}

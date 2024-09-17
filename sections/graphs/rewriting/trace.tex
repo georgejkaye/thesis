@@ -94,7 +94,7 @@ for terms in a traced setting.
     \spann{L}{i + j}{R} \in \mcr
     \) and cospan \(
     \cospan{i + j}{C}{m + n} \in \hypsigma
-    \) such that diagram in \cref{def:dpo-rewriting} commutes and \(i + j \to C\)
+    \) such that the diagram in \cref{def:dpo-rewriting} commutes and \(i + j \to C\)
     is a traced boundary complement.
 \end{definition}
 
@@ -310,7 +310,9 @@ this rule.
         ]
         \termandfrobtohypsigma[
             \foldinterfaces[
-                \iltikzfig{strings/category/f}[box=g,colour=white]
+                \tracedtosymandfrobsigma[
+                    \iltikzfig{strings/category/f}[box=h,colour=white]
+                ]
             ]
         ].\]
 \end{theorem}
@@ -404,7 +406,7 @@ this rule.
     \seq
     \cospan{i + j}{C}{m + n}
     \).
-    Cospan composition is pushout, so \(\cospan{L}{G}{C}\) is a pushout.
+    Cospan composition is by pushout, so \(\cospan{L}{G}{C}\) is a pushout.
     Using the same reasoning, \(\cospan{R}{G}{C}\) is also a pushout; this
     gives us the DPO diagram.
     All that remains is to check that the aforementioned pushouts are traced

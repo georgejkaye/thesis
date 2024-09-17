@@ -226,7 +226,7 @@ protocols.
 \begin{example}
   Recall the circuit from \cref{ex:protocols}, which reduces to the identity
   when the first input is fixed as either true or false.
-  The can be designed as follows:
+  This can be designed as follows:
   \begin{lstlisting}
     let v = sig.UseWire(1)
     let w = sig.UseWire(1)
@@ -252,7 +252,7 @@ protocols.
       sig, [GetVariable([TRUE, FALSE]), GetUnspecified(sig)], circ
     )
   \end{lstlisting}
-  For each input provided, the tool prepends infinite waveforms containing the1
+  For each input provided, the tool prepends infinite waveforms containing the
   (potentially uncertain) waveforms.
   \begin{center}
     \includesvg[scale=0.275]{figures/circuits/hdl/protocol/rewrite-1}

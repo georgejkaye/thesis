@@ -3,8 +3,8 @@
 One important class of categories with a traced comonoid structure are
 \emph{traced Cartesian}, or \emph{dataflow},
 categories~\cite{cazanescu1990new}.
-Recall from \cref{def:cartesian-category} that a Cartesian category in one in
-which the tensor is given by the category-theoretic product.
+Recall from \cref{def:cartesian-category} that the tensor in a Cartesian
+category is given by the category-theoretic product.
 We can equivalently view this as a category in which each object is equipped
 with a commutative comonoid structure in which the comonoid and counit are
 \emph{natural}: morphisms can be `pushed' through them.
@@ -61,7 +61,7 @@ monoidal theory of commutative comonoids.
 
 \input{sections/graphs/application/floats/cartesian-prop}
 
-The hypergraph interpretations of these rules is shown in
+The hypergraph interpretations of these rules are shown in
 \cref{fig:cartesian-graphs}.
 
 \begin{remark}
@@ -126,17 +126,17 @@ use the equations presented in~\cite{hasegawa2009traced}.
     \end{gather*}
 \end{definition}
 
-The notation we use for fixpoint operator is already evocative of a trace, and
+The notation we use for fixpoint operators is already evocative of a trace, and
 the two are indeed equivalent.
 This was independently observed by Bloom and Ésik \cite{bloom1993iteration},
-Ștefănescu \cite{stefanescu2000network}, and Hyland, the former two before the
+\c{S}tef\u{a}nescu \cite{stefanescu2000network}, and Hyland, the former two before the
 notion of traced monoidal categories were formalised.
 
 \begin{theorem}[{\cite[Thm.\ 3.1]{hasegawa1997recursion}, \cite{hasegawa1999models}}]
     A category is traced if and only if it has a Conway operator.
 \end{theorem}
 \begin{proof}
-    This can be shown by constructing a one operator using the other.
+    This can be shown by constructing one operator using the other.
     \vspace{-1em}
     \begin{gather*}
         \left(\iltikzfig{strings/category/f-2-1}[box=f,colour=white]\right)^{\dagger_{X,A}}

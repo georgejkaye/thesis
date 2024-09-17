@@ -21,7 +21,7 @@ applied to terms without any sort of special graph interpretation.
     \iltikzfig{strings/category/f}[box=g,colour=white]
     \rewrite[\mcr]
     \iltikzfig{strings/category/f}[box=h,colour=white]
-    \) if there exists rewrite rule \(\rrule{
+    \) if there exists a rewrite rule \(\rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
@@ -228,7 +228,7 @@ rewritten.
     \end{tikzcd}
 \end{center}
 
-We now need to identify the \emph{context} in which the rewrite will occur in.
+We now need to identify the \emph{context} in which the rewrite will occur.
 Essentially, the context is the `graph \(G\) with \(L\) cut out', which can be
 formally defined with what is known as a \emph{pushout complement}.
 This can be thought of as a `reverse pushout'.
@@ -299,7 +299,7 @@ the process; we can use \(\foldinterfaces\) to return to a cospan of the form
 \begin{example}
     Consider the following term rewrite rule and its interpretation as a DPO
     rule. \[
-        \raisebox{1.5em}{\(\rrule{
+        \raisebox{2em}{\(\rrule{
                 \iltikzfig{strings/category/generator}[box=e_1]
             }{
                 \iltikzfig{strings/category/generator}[box=e_2]
