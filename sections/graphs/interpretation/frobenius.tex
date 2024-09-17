@@ -332,7 +332,7 @@ this arises as a special case of the following theorem.
 \begin{corollary}[\cite{bonchi2022string}, Cor.\ 3.9]
     \label{cor:finset-to-hyp}
     There is a faithful PROP homomorphism
-    \(\morph{\tilde{\pickinterfaces}}{\csp{\finset}}{\cspdhyp}\)
+    \(\morph{\tilde{\pickinterfaces}}{\csp{\finsetprop}}{\cspdhyp}\)
 \end{corollary}
 
 With this we can derive a map from Frobenius terms to cospans of hypergraphs.
@@ -505,7 +505,7 @@ discrete hypergraphs.
     For a countable set \(C\), let
     \(\morph{D_C}{\finsetpropwithnat \slice C}{\hypcsigmac}\) be
     defined as the functor that maps a coloured word \(\listvar{w}\) to the
-    discrete coloured hypergraph containing an appropriately coloured vertex for
+    discrete coloured hypergraph containing an appropriately coloured node for
     each element of \(\listvar{w}\).
 \end{definition}
 
@@ -586,7 +586,7 @@ isomorphism between Frobenius terms and cospans of hypergraphs by decomposing a
 given cospan into a particular form.
 
 \begin{theorem}[\cite{bonchi2022string}, Theorem 4.1]\label{thm:isomorphism-smcfrob-cospans}
-    There is an isomorphism of PROPs \(\smcsigma + \frob \cong \cspdchyp\).
+    There is an isomorphism of PROPs \(\smcsigma + \frob \cong \cspdhyp\).
 \end{theorem}
 \begin{proof}
     Since \(\smcsigma + \frob\) is a coproduct in \(\propcat\), this can be
@@ -685,7 +685,7 @@ the left by going `over the top' of the edges via the identity cospan
     \end{center}
     This cospan can be assembled into the form detailed in the above proof as
     shown in \cref{fig:frobenius-composite}.
-    By following the vertex maps, one can verify that this is indeed isomorphic
+    By following the node maps, one can verify that this is indeed isomorphic
     to the original cospan.
     The outermost components correspond to terms in \(\frob\) and the
     innermost to a term in \(\smcsigma\).
@@ -762,7 +762,7 @@ the Frobenius equations can be mapped to isomorphic cospans of hypergraphs.
     \[
         \iltikzfig{graphs/example-frobenius-collapse}
     \]
-    All of the Frobenius structure collapses into one vertex, much like when we
+    All of the Frobenius structure collapses into one node, much like when we
     considered the correspondence between Frobenius terms and finite sets.
 \end{example}
 
@@ -774,7 +774,7 @@ can restate the correspondence for coloured terms and hypergraphs.
 \begin{definition}
     Let \(\morph{\termandfrobtohypsigmac}{\smcsigmac}{\cspdchyp}\) be defined
     as \(\termandfrobtohypsigma\) but assigning appropriate colours to the
-    danging vertices.
+    danging nodes.
 \end{definition}
 
 \begin{definition}
@@ -790,5 +790,5 @@ can restate the correspondence for coloured terms and hypergraphs.
 \end{theorem}
 \begin{proof}
     In the same manner as \cref{thm:isomorphism-smcfrob-cospans}, but the
-    components of the composite cospan now have appropriately coloured vertices.
+    components of the composite cospan now have appropriately coloured nodes.
 \end{proof}

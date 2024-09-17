@@ -68,7 +68,7 @@ the input and output.
 But this means that not every hypergraph can act as an interface to a
 hypergraph, as any edges in the hypergraphs would also need to be mapped
 somewhere.
-We must restrict the interface hypergraphs to those that contain only vertices.
+We must restrict the interface hypergraphs to those that contain only nodes.
 
 \begin{definition}[Discrete hypergraph]
     A \emph{discrete hypergraph} is a hypergraph in which each edge set is
@@ -77,10 +77,10 @@ We must restrict the interface hypergraphs to those that contain only vertices.
 
 The legs of cospans representing interfaced hypergraphs will be discrete
 hypergraphs; if a hypergraph \(F\) has \(m\) inputs then the input hypergraph
-\(A\) will contain \(m\) vertices.
+\(A\) will contain \(m\) nodes.
 This is not enough to fully specify the interfaces, as there must also be a
 notion of \emph{order}.
-We need a way of specifying which vertex corresponds to which numbered input or
+We need a way of specifying which node corresponds to which numbered input or
 output; this is formally performed by another functor.
 
 \begin{theorem}[\cite{bonchi2022string}, Thm.\ 3.6]\label{thm:csp-construction}
@@ -118,7 +118,7 @@ words.
 
 \begin{definition}
     Let \(\morph{D}{\finsetprop}{\hypsigma}\) be defined as the functor sending
-    an object \(n\) to the discrete hypergraphs with \(n\) vertices, and sending
+    an object \(n\) to the discrete hypergraphs with \(n\) nodes, and sending
     a function \(m \to n\) to the induced homomorphism of discrete
     hypergraphs.
 \end{definition}
@@ -135,8 +135,8 @@ interfaced hypergraphs.
     Recall the labelled hypergraph \(F\) from \cref{ex:labelled-hypergraph}.
     We assign interfaces to it as the cospan \(\cospan{3}[f]{F}[g]{3}\), where
     \begin{gather*}
-        f(D0) = v_0 \quad f(D1) = v_1 \\
-        g(D0) = v_5 \quad g(D1) = v_4 \quad g(D2) = v_2
+        f(0) = v_0 \quad f(1) = v_1 \\
+        g(0) = v_5 \quad g(1) = v_4 \quad g(2) = v_2
     \end{gather*}
     Interfaces are drawn on the left and right of a main graph, with numbers
     illustrating the action of the cospan maps.
@@ -145,9 +145,11 @@ interfaced hypergraphs.
     \]
     For clarity, we number the outputs after the inputs, but this does not
     reflect the mapping performed by \(D\).
-    Composition in \(\cspdhyp\) is by pushout; effectively the vertices in the
+    Composition in \(\cspdhyp\) is by pushout; effectively the nodes in the
     output of the first cospan are `glued together' with the inputs of the
     second.
+    Note that although we write different numbers for the glued cospan legs,
+    they are actually mapped from the \emph{same} finite set of three elements.
     \begin{gather*}
         \iltikzfig{graphs/example-interfaces-2}
         \seq
@@ -248,7 +250,7 @@ way as the monochromatic version.
 \begin{definition}[\cite{bonchi2022string}, Rem.\ 3.12]
     Let \(\morph{\pickinterfacesc{C}}{\finsetpropwithnat \slice C}{\hypsigmac}\)
     be defined as the functor sending a word \(\overline{n}\) to the
-    corresponding discrete coloured hypergraph containing vertices coloured as
+    corresponding discrete coloured hypergraph containing nodes coloured as
     in \(\overline{n}\), and sending a function \(\overline{m} \to \overline{n}\)
     to the induced homomorphism of discrete hypergraphs.
 \end{definition}

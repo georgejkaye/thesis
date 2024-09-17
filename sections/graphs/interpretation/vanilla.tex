@@ -15,14 +15,13 @@ We will use some of this machinery when it comes to tackling the traced case.
 There are two features that distinguish vanilla symmetric monoidal terms from
 Frobenius terms; wires cannot arbitrarily fork or join, and cycles may not be
 created.
-The former is tackled by a condition on the connectivity of vertices.
+The former is tackled by a condition on the connectivity of nodes.
 
 \begin{definition}[Degree {\cite[Def.\ 12]{bonchi2022stringa}}]
-    For a hypergraph \(F \in \hyp\), the \emph{degree} of a vertex
+    For a hypergraph \(F \in \hyp\), the \emph{degree} of a node
     \(v \in \vertices{F}\) is a tuple \((i,o)\) where \(i\) is the number of
-    pairs \((e,i)\) where \(e\) is a hyperedge with \(v\) as its \(i\)th target,
-    and \(o\) is similarly the number of pairs \((e,j)\) where \(e\) is a
-    hyperedge with \(v\) as its \(j\)th target.
+    hyperedges with with \(v\) as a target, and \(o\) is the number of
+    hyperedges with \(v\) as a source.
 \end{definition}
 
 \begin{definition}[Monogamy {\cite[Def.\ 13]{bonchi2022stringa}}]
@@ -79,7 +78,7 @@ operations.
     Identities and symmetries are monogamous.
 \end{lemma}
 \begin{proof}
-    The cospans involved are discrete and all vertices are in both
+    The cospans involved are discrete and all nodes are in both
     interfaces, so the cospans are monogamous.
 \end{proof}
 
@@ -94,10 +93,10 @@ operations.
     \).
     The interfaces remain mono as pushouts along monos are monos in
     \(\hypsigmac\).
-    The only altered vertices are those in the image of
-    \(g\) and \(h\), which are merged pointwise; vertices in the image of
+    The only altered nodes are those in the image of
+    \(g\) and \(h\), which are merged pointwise; nodes in the image of
     \(g\) have out-degree \(0\) and those in the image of \(h\) have in-degree
-    \(0\) so the merged vertices have at most degree \((1, 1)\).
+    \(0\) so the merged nodes have at most degree \((1, 1)\).
 \end{proof}
 
 \begin{lemma}[\cite{bonchi2022stringa}, Lem.\ 17]\label{lem:monogamicity-preserved-tensor}
@@ -105,7 +104,7 @@ operations.
 \end{lemma}
 \begin{proof}
     The degrees of nodes are unaffected as tensor is by coproduct and
-    only vertices in the original interfaces will be in the new interfaces.
+    only nodes in the original interfaces will be in the new interfaces.
 \end{proof}
 
 As seen in \cref{ex:monogamous}, monogamy makes no guarantees about cycles.
@@ -184,7 +183,7 @@ safely performed.
     \).
     A cycle cannot be created by composition because there cannot be a path in
     \(F\) that starts in the image of \(g\) or a path in \(G\) that ends in the
-    image of \(h\), because these vertices have out-degree and in-degree \(0\)
+    image of \(h\), because these nodes have out-degree and in-degree \(0\)
     respectively.
 \end{proof}
 

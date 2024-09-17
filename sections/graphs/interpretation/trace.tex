@@ -116,7 +116,7 @@ loop \(
     \(\finvectk{k}\)~\cite[Sec.\ 6.1]{hasegawa1997recursion}.
 \end{remark}
 
-These closed loops can be modelled as vertices disconnected from either
+These closed loops can be modelled as nodes disconnected from either
 interface.
 
 \begin{definition}[Partial monogamy]
@@ -221,28 +221,28 @@ trace does not create cospans that are not partial monogamous.
     \); we must show that its trace \(
     \cospan{m}[h]{F^\prime}[k]{n}
     \) is partial monogamous.
-    For each vertex \(a \in x\), \(f(a)\) and \(g(a)\) are merged together in the
+    For each node \(a \in x\), \(f(a)\) and \(g(a)\) are merged together in the
     traced graph, summing their degrees.
-    If a vertex is in the image of \(h\) or \(k\), this is also the case in the
+    If a node is in the image of \(h\) or \(k\), this is also the case in the
     traced cospan.
     We consider the various cases:
     \begin{itemize}
-        \item if \(f(a) = g(a)\), then this vertex must have degree \((0, 0)\);
-              the traced vertex will still have degree \((0, 0)\) and will no
+        \item if \(f(a) = g(a)\), then this node must have degree \((0, 0)\);
+              the traced node will still have degree \((0, 0)\) and will no
               longer be in the interface;
         \item if \(f(a)\) is also in the image of \(n \to F\) and \(g(i)\) is
               also in the image of \(m \to F\), then both \(f(a)\) and
-              \(g(a)\) have degree \((0, 0)\); the traced vertex will still
+              \(g(a)\) have degree \((0, 0)\); the traced node will still
               have degree \((0, 0)\) and be in both interfaces of the traced
               cospan;
         \item if \(f(a)\) is in the image of \(n \to F\), then \(f(i)\)
               has \((0, 0)\) and \(g(a)\) has degree
-              \((1,0)\), so the traced vertex has degree \((1, 0)\) and
+              \((1,0)\), so the traced node has degree \((1, 0)\) and
               is in the image of \(n \to F^\prime\);
         \item if \(g(i)\) is in the image of \(m \to F\), then the above
               applies in reverse; and
-        \item if neither vertex is in the image of \(m \to F\) and \(n \to F\),
-              then the traced vertex will have degree \((1,1)\) and be in the
+        \item if neither node is in the image of \(m \to F\) and \(n \to F\),
+              then the traced node will have degree \((1,1)\) and be in the
               image of no interface.
     \end{itemize}
     In all these cases, partial monogamy is preserved.
@@ -279,16 +279,16 @@ that this particular sub-PROP is the one that corresponds to traced terms.
     each component under the trace is in the image of \(\termtohypsigma\).
     The components of the new cospan are as follows:
     \begin{itemize}
-        \item let \(L\) be the discrete hypergraph containing vertices with
+        \item let \(L\) be the discrete hypergraph containing nodes with
               degree
               \((0,0)\) that are not in the image of \(f\) or \(g\);
         \item let \(E\) be the hypergraph containing hyperedges of \(F\)
               disconnected from each other along with their source and target
-              vertices;
+              nodes;
         \item let \(V\) be the discrete hypergraph containing all the
-              vertices of \(F\); and
+              nodes of \(F\); and
         \item let \(S\) and \(T\) be the discrete hypergraphs containing
-              the source and target vertices of hyperedges in \(F\)
+              the source and target nodes of hyperedges in \(F\)
               respectively, with the ordering determined by some order
               \(e_1,e_2,\cdots,e_n\) on the edges in \(F\).
     \end{itemize}
@@ -409,11 +409,11 @@ every cospan has a corresponding term.
     The partial monogamous cospans from \cref{ex:partial-monogamous} are shown
     below with their corresponding terms in \(\stmcsigma\).
     \[
-        \iltikzfig{graphs/monogamy/yes-0}
+        \iltikzfig{graphs/partial-monogamy/yes-0}
         \quad
         \raisebox{-0.5em}{\iltikzfig{graphs/terms/term-0}}
         \qquad
-        \iltikzfig{graphs/monogamy/yes-1}
+        \iltikzfig{graphs/partial-monogamy/yes-1}
         \quad
         \iltikzfig{graphs/terms/term-1}
     \]

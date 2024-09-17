@@ -48,7 +48,7 @@ For a hypergraph \(F \in \hyp\) we write \(\vertices{F}\) for its nodes and
     We draw nodes as black dots and hyperedges as `bubbles' with ordered tentacles
     on the left and right that connect to source and target nodes respectively,
     as illustrated in \cref{fig:hypergraph-ex}.
-    Note that the vertices do not have any notion of ordering or directionality.
+    Note that the nodes do not have any notion of ordering or directionality.
 \end{example}
 
 Since it is a functor category, the morphisms in \(\hyp\) are natural
@@ -90,7 +90,7 @@ transformations: structure-preserving maps between hypergraphs.
     \end{center}
 
     Recall the hypergraph \(F\) from \cref{ex:hypergraph}.
-    A homomorphism \(\morph{h}{G}{F}\) is a map from the vertices and edges
+    A homomorphism \(\morph{h}{G}{F}\) is a map from the nodes and edges
     of the former to those of the the latter preserving sources and targets;
     one possible homomorphism could be
     \begin{center}
@@ -151,7 +151,7 @@ transformations: structure-preserving maps between hypergraphs.
         \quad
         \edges{h}{2}{1}(e_2) \coloneqq e_3
     \end{gather*}
-    Although the vertices of \(G\) are merged by \(h\), the sources and
+    Although the nodes of \(G\) are merged by \(h\), the sources and
     targets are preserved.
 \end{example}
 
@@ -364,6 +364,6 @@ hypergraph signatures.
         \quad
         \edges{\Gamma}{1}{2}(e_1) \coloneqq e_{\psi}
     \end{gather*}
-    Coloured hypergraphs are drawn as labelled hypergraphs, but their vertices
+    Coloured hypergraphs are drawn as labelled hypergraphs, but their nodes
     are additionally coloured, as shown in \cref{fig:coloured-hypergraph-ex}.
 \end{example}

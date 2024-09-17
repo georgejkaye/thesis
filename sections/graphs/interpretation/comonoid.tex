@@ -6,7 +6,7 @@ morphisms combinatorially.
 But we can go further.
 When modelling \emph{Frobenius} terms, we were modelling them modulo the
 Frobenius equations; when interpreted as cospans of hypergraphs the
-comonoid and monoid structures merged together into single vertices so we did
+comonoid and monoid structures merged together into single nodes so we did
 not need to consider the equations of associativity, commutativity or unitality.
 
 In the realm of sequential circuits we also have monoid and comonoid structures,
@@ -130,7 +130,7 @@ comonoid structure, the notion of monogamy will once again need to be modified.
 Partial monogamy is now too strong, as this means wires cannot fork.
 Weakening to no monogamy at all is too much, as we do not want wires to join as
 well as fork.
-Effectively, vertices need to be `monogamous on one side'.
+Effectively, nodes need to be `monogamous on one side'.
 
 \begin{definition}[Partial left-monogamy]
     For a cospan \(\cospan{m}[f]{H}[g]{n}\), we say it is
@@ -139,9 +139,9 @@ Effectively, vertices need to be `monogamous on one side'.
     \((0,m)\) or \((1,m)\) otherwise, for some \(m \in \nat\).
 \end{definition}
 
-Partial left-monogamy is a weakening of partial monogamy that allows vertices
+Partial left-monogamy is a weakening of partial monogamy that allows nodes
 to have multiple `out' connections, which represent the use of the comonoid
-structure to fork wires; vertices must still only have one `in' connection.
+structure to fork wires; nodes must still only have one `in' connection.
 
 \begin{example}\label{ex:partial-left-monogamous}
     The following cospans are partial left-monogamous:
@@ -159,8 +159,8 @@ structure to fork wires; vertices must still only have one `in' connection.
 \end{example}
 
 \begin{remark}
-    As with the vertices not in the interfaces with degree \((0, 0)\) in the
-    vanilla traced case, the vertices not in the interface with degree
+    As with the nodes not in the interfaces with degree \((0, 0)\) in the
+    vanilla traced case, the nodes not in the interface with degree
     \((0, m)\) allow for the interpretation of terms such as \(
     \trace{}{\iltikzfig{strings/structure/comonoid/copy}[colour=white]}
     \).
@@ -194,12 +194,12 @@ operations, so that partial left-monogamous cospans form another PROP.
     \) is partial left-monogamous.
 \end{lemma}
 \begin{proof}
-    Only the vertices in the image of \(n \to G\) have their in-degree modified;
-    they gain the in-tentacles of the corresponding vertices in the image of
+    Only the nodes in the image of \(n \to G\) have their in-degree modified;
+    they gain the in-tentacles of the corresponding nodes in the image of
     \(n \to F\).
-    Initially the vertices in \(n \to G\) have in-degree \(0\) by partial
-    monogamy; they will gain at most one in-tentacle from vertices in
-    \(n \to F\) as each of these vertices has in-degree \(0\) or \(1\) and
+    Initially the nodes in \(n \to G\) have in-degree \(0\) by partial
+    monogamy; they will gain at most one in-tentacle from nodes in
+    \(n \to F\) as each of these nodes has in-degree \(0\) or \(1\) and
     \(n \to G\) is mono.
     So the composite graph is partial left-monogamous.
 \end{proof}
@@ -231,12 +231,12 @@ terms with a (co)monoid structure, it has the additional structure of a trace.
     The canonical trace is a trace on \(\plmcspdhyp\).
 \end{proposition}
 \begin{proof}
-    We must show that for any vertices in the image
+    We must show that for any nodes in the image
     of \(x + n \to K\) merged by the canonical trace, at most one of them can
     have in-degree \(1\).
     This follows because anything in the image of
     \(x + m \to K\) must have in-degree \(0\), and \(x + m \to K\) is
-    mono so it cannot merge vertices in the image of \(x + n \to K\).
+    mono so it cannot merge nodes in the image of \(x + n \to K\).
 \end{proof}
 
 We now have the setting in which we will model terms with a comonoid structure.
