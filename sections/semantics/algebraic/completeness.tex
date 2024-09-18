@@ -39,40 +39,49 @@ a circuit \(
 \begin{proof}
     All the equations are sound, so we only need to consider the \(\ifdir\)
     direction.
-    By \cref{thm:normalising}, the two circuits can be brought to
-    normalised Mealy form using
-    \(
-    \mealyequations +
-    \instantfeedbackeqn +
-    \normalisingequations
-    \).
-    By \cref{def:mealy-to-circuit} and
-    \cref{thm:circuit-stream-correspondence} there must exist a circuit \[
-        \iltikzfig{strings/category/f}[box=h,colour=seq]
-        \coloneqq
-        \iltikzfig{circuits/algebraic/encoding}[transition={h_0},output={h_1},state={\listvar{s}}]
-    \] such that \(
-    \circuittostream[
-        \iltikzfig{strings/category/f}[box=f,colour=seq]
-    ]{\interpretation}
+    Using \cref{thm:normalising}, the circuits \(
+    \iltikzfig{strings/category/f}[box=f,colour=seq]
+    \) and \(
+    \iltikzfig{strings/category/f}[box=g,colour=seq]
+    \) can be brought to Mealy form, so we have that \(
+    \circuittostreami[
+        \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[\hat{f}],state=\listvar{s}, colour=seq]
+    ]
     =
-    \circuittostream[
-        \iltikzfig{strings/category/f}[box=h,colour=seq]
-    ]{\interpretation}
-    =
-    \circuittostream[
-        \iltikzfig{strings/category/f}[box=g,colour=seq]
-    ]{\interpretation}
+    \circuittostreami[
+        \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[\hat{g}],state=\listvar{t}, colour=seq]
+    ]
     \).
-    The state words of \(
-    \iltikzfig{strings/category/f}[box=h,colour=seq]
-    \) are in the image of a Mealy encoding \(\gamma_\leq\); applying the
-    encoding equation with \(\gamma_\leq\) to the normalised Mealy forms
-    obtained above therefore produce circuits with the same state sets as \(
-    \iltikzfig{strings/category/f}[box=h,colour=seq]
+    This induces Mealy machines \((S_{\hat{f}, \listvar{s}}, \hat{f})\) and
+    \((S_{\hat{g}, \listvar{t}}, \hat{g})\).
+    As their stream functions are equal, there are Mealy homomorphisms
+    \(\morph{\phi}{S_{\hat{f}, \listvar{s}}}{S_{\hat{g}, \listvar{t}}}\) and
+    \(\morph{\psi}{S_{\hat{g}, \listvar{t}}}{S_{\hat{f}, \listvar{s}}}\) and
+    subsequently the composite of these homomorphisms is also a Mealy
+    homomorphism; these will act as a decoder-encoder pair.
+
+    Using the encoding equation, we have by \cref{thm:encoding} that \[
+        \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[\hat{f}],state=\listvar{s}, colour=seq]
+        =
+        \iltikzfig{circuits/algebraic/state-encoded-theorem}.
+    \]
+    The circuit \(
+    \iltikzfig{circuits/algebraic/state-encoded-theorem-core}
+    \) is a composition of normalised circuits, so it is essentially
+    combinational; when restricted to the set \(S_{\hat{g}, \listvar{t}}\) its
+    truth table is the same as that of \(
+    \iltikzfig{strings/category/f-wide}[box=\mealytofunc[\hat{g}], colour=seq]
+    \), as the encoder-decoder pair were defined precisely as the Mealy
+    homomorphisms that translate between the two Mealy machines.
+    Using the normalisation equations again, the encoded circuit can be
+    brought into normalised Mealy form.
+    Finally, the restriction equations can be used to translate from \(
+    \iltikzfig{circuits/algebraic/state-encoded-theorem}
+    \) into \(
+    \circuittostreami[
+        \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[\hat{g}],state=\listvar{t}, colour=seq]
+    ]
     \).
-    To finish the proof, restriction equations can be used to bring the circuit
-    to the desired form.
 \end{proof}
 
 As always, the soundness and completeness of the algebraic semantics means we

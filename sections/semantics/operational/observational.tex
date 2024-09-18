@@ -9,23 +9,6 @@ This is due to Morris~\cite{morris1969lambdacalculus}, who named it
 `extensional equivalence': essentially, two processes are observationally
 equivalent if they cannot be distinguished by their input-output behaviour.
 
-\begin{notation}[Waveform]\label{def:waveform}
-    The empty waveform is defined as \(
-    \iltikzfig{circuits/components/waveforms/sigma0}
-    \coloneqq
-    \iltikzfig{strings/category/identity}[colour=comb,obj=n]
-    \).
-    Given values \(\overline{v} \in \valuetuple{n}\) and sequence \(
-    \overline{\underline{w}} \in (\valuetuple{n})^\star
-    \), the waveform for sequence \(
-    \overline{v} \streamcons \overline{\underline{w}}
-    \) is drawn as \(
-    \iltikzfig{circuits/components/waveforms/sigmatp1-spaced}
-    \coloneqq
-    \iltikzfig{circuits/components/waveforms/sigmatp1-construction-spaced}
-    \).
-\end{notation}
-
 Testing for observational equivalence is traditionally performed by checking
 that a program behaves the same in all \emph{contexts}.
 For digital circuits, this means that for all possible streams of inputs, the
@@ -47,9 +30,37 @@ Fortunately, since circuits are constructed from a finite number of
     the \(c\) delay components, as the values transition to \(\bot\).
 \end{proof}
 
+To test all of the possible internal states of a circuit, we must use
+sequences of inputs long enough in time to guarantee that every possible state
+of a circuit is triggered.
+
+\begin{notation}[Waveform]\label{def:waveform}
+    The empty waveform is defined as \(
+    \iltikzfig{circuits/components/waveforms/sigma0}
+    \coloneqq
+    \iltikzfig{strings/category/identity}[colour=comb,obj=n]
+    \).
+    Given values \(\overline{v} \in \valuetuple{n}\) and sequence \(
+    \overline{\underline{w}} \in (\valuetuple{n})^\star
+    \), the waveform for sequence \(
+    \overline{v} \streamcons \overline{\underline{w}}
+    \) is drawn as \(
+    \iltikzfig{circuits/components/waveforms/sigmatp1-spaced}
+    \coloneqq
+    \iltikzfig{circuits/components/waveforms/sigmatp1-construction-spaced}
+    \).
+\end{notation}
+
+As a circuit with \(c\) delay components has at most \(|\values|^c\) states,
+to fully evaluate the behaviour of a circuit it suffices to check every
+waveform of length \(|\values|^c + 1\).
+This is because even if such a waveform causes all \(|\values|^c\) states to
+occur, the final element must produce a previously visited state, as there are
+no other states that could arise.
+
 \begin{corollary}\label{cor:repeated-state}
     Given a circuit in Mealy form \(
-    \iltikzfig{circuits/productivity/mealy-form}[dom=m,cod=n,delay=x]
+    \iltikzfig{circuits/productivity/mealy-form}[dom=m,cod=n,delay=x,box=f]
     \) and input sequence \(\listlistvar{v} \in \valuetupleseq{m}\) of length
     \(|\values|^c + 1\), there exists a state \(
     \listvar{r} \in \valuetuple{x}

@@ -14,7 +14,7 @@ determine whether or not an equation is valid.
     closed under \(
     \listvar{r}
     \mapsto
-    \proj{x}\mleft(\tilde{f}_0(\listvar{r},\listvar{v})\mright)
+    \proj{x}\mleft(f_0(\listvar{r},\listvar{v})\mright)
     \) for any \(\listvar{v} \in \valuetuple{m}\).
 \end{definition}
 
@@ -97,23 +97,6 @@ For two circuits \(
 \((S_{f,\listvar{s}},f) \to (S_{g,\listvar{t}},g)\)
 and
 \((S_{g,\listvar{t}},g) \to (S_{f,\listvar{s}},f)\).
-
-
-\begin{proposition}
-    Given two denotationally equivalent circuits \(
-    \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[f],state=\listvar{s},colour=seq,dom=m,cod=n,delay=x]
-    \) and \(
-    \iltikzfig{circuits/productivity/mealy-form-wide}[core=\mealytofunc[g],state=\listvar{t},colour=seq,dom=m,cod=n,delay=y]
-    \), there exists a Mealy homomorphism \(
-    \morph{h}{(S_{f,\listvar{s}},f)}{(S_{g,\listvar{t}},g)}
-    \).
-\end{proposition}
-\begin{proof}
-    As the two circuits are denotationally equivalent, at least one valid
-    mapping of states can be obtained by sending states in the former to the
-    state in the latter obtained after inputting the same word.
-\end{proof}
-
 These are homomorphisms on the subset of states that a circuit
 can assume, \emph{not} the entire set of words that can fit into the state.
 This means that encoding and decoding circuits cannot be inserted arbitrarily
@@ -124,8 +107,10 @@ but only in certain contexts.
     \iltikzfig{strings/category/f-2-2-wide}[box=\mealytofunc[f],colour=seq,dom1=x,dom2=m,cod1=x,cod2=y]
     \) and \(\listvar{s} \in \valuetuple{x}\), let
     \(\morph{\mathsf{enc}}{S_{f,\listvar{s}}}{\valuetuple{y}}\) and
-    \(\morph{\mathsf{dec}}{\valuetuple{y}}{S_{f, \listvar{s}}}\) be Mealy
-    homomorphisms.
+    \(\morph{\mathsf{dec}}{\valuetuple{y}}{S_{f, \listvar{s}}}\) be functions
+    such that \(
+    \morph{\mathsf{dec} \circ \mathsf{enc}}{S_{f, \listvar{s}}}{S_{f, \listvar{s}}}
+    \) is a Mealy homomorphism.
     Then the \emph{encoding equation} \((\encodingequation)\) in
     \cref{fig:encoding-equation} is sound, where
     \(\mathsf{enc}_\mathsf{m}\) and \(\mathsf{dec}_\mathsf{m}\) are monotone
@@ -143,19 +128,16 @@ but only in certain contexts.
     =
     g(\proj{0}(f(\mathsf{dec}(\mathsf{enc}(\listvar{t})), \listvar{v})))
     \).
-    When \(\listvar{t} \in S_{f, \listvar{s}}\) we have that \(
-    \mathsf{dec}(\mathsf{enc}(\listvar{s}))\) acts the same as
-    \(\listvar{s}\),
-    so
-    \(
+    As \(\mathsf{dec} \circ \mathsf{enc}\) is a Mealy homomorphism, for
+    \(\listvar{t} \in S_{f, \listvar{s}}\) we have that \(
     \mealyoutput{g(\listvar{t})}{\listvar{v}}
     =
     \proj{1}(f(\listvar{t}), \listvar{v})
-    \) and \(
+    \) and that \(
     \mealytransition{g(\listvar{t})}{\listvar{v}}
-    \) acts the same \(
+    \) shares outputs and transitions with \(
     g(\proj{0}(f(\listvar{t})), \listvar{v})
-    \) by definition of Mealy homomorphisms.
+    \).
     As \(
     \iltikzfig{circuits/algebraic/state-encoding}[core=\mealytofunc[f],delay=x,state=\listvar{s}]
     \coloneqq
@@ -413,7 +395,7 @@ With these lemmas in our toolkit, we can now show that the encoding equations
 allow us to translate a circuit into one with an encoded state, and therefore
 translate between the state sets of any two denotationally equivalent circuits.
 
-\begin{theorem}
+\begin{theorem}\label{thm:encoding}
     For a circuit \(
     \iltikzfig{strings/category/f-2-2-wide}[box=\mealytofunc[f],colour=seq,dom1=x,dom2=m,cod1=x,cod2=y]
     \) and initial state \(\listvar{s} \in \valuetuple{x}\), the
