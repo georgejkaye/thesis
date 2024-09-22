@@ -30,7 +30,8 @@ of particular components.
 First we consider the interpretation of the \emph{values} that flow through the
 wires in our circuits.
 In the denotational semantics the set of values will need to have a bit more
-structure, as they must be ordered by how much \emph{information} they contain.
+structure, as it must be ordered by how much \emph{information} each value
+carries.
 
 \begin{definition}[Partially ordered set]
     A \emph{partially ordered set}, or \emph{poset} for short, is a set \(A\)
@@ -43,30 +44,74 @@ structure, as they must be ordered by how much \emph{information} they contain.
         \item for all \(a, b, c \in A\), if \(a \leq b\) and \(b \leq c\) then
               \(a \leq c\).
     \end{itemize}
+    A poset \((A, leq)\) is called a \emph{finite poset} if \(A\) is finite.
 \end{definition}
 
-The minimum element of such an ordered set of values represents a complete
-\emph{lack} of information, corresponding to the disconnected wire generator \(
-\iltikzfig{strings/structure/monoid/init}[colour=comb]
-\).
-At the other end of the order will be a value representing \emph{all} pieces of
-information; a `short circuit'.
-This structure is known as a \emph{lattice}.
-
-\begin{definition}
-    Given a poset \((A, \leq)\) and elements \(a, b\in A\), an
-    \emph{upper bound} is an element \(c\) such that \(a \leq c\) and
-    \(b \leq c\).
-    An element \(d \in A\) is called the \emph{least upper bound} (or `join'),
-    denoted \(a \vee b\), if it is an upper bound of \(a\) and \(b\), and for
-    all other upper bounds \(c\) of \(a\) and \(b\), \(d \leq c\).
-
-    Similarly, a \emph{lower bound} of \(a\) and \(b\) is an element \(c\) such
-    that \(c \leq a\) and \(c \leq b\), and an element \(d \in A\) is called the
-    \emph{greatest lower bound} (or `meet'), denoted \(a \wedge b\), if \(d\) is
-    a lower bound of \(a\) and \(b\) and for all other lower bounds \(c\) of
-    \(a\) and \(b\), \(c \leq d\).
+\begin{definition}[Minimal and maximal elements]
+    In a poset \((A, \leq)\), a \emph{minimal element} is an element \(b \in A\) such that for
+    all elements \(y \in A\), \(b \leq y\).
+    Similarly, a \emph{maximal element} is an element \(a \in A\)
+    such that for all elements \(x \in A\), \(x \leq a\).
 \end{definition}
+
+\begin{example}
+    The natural numbers \(\nat\) are a poset ordered in the usual way; they have
+    a minimal element \(0\) but not a maximal element.
+    However, any finite subset of the natural numbers \emph{does} have a
+    maximal element.
+\end{example}
+
+The above example illustrates a useful property induced by the \emph{finiteness}
+of a poset.
+
+\begin{lemma}\label{lem:maximal-minimal}
+    In a finite poset \((A, \leq)\), there exists at least one maximal element
+    and at least one minimal element.
+\end{lemma}
+\begin{proof}
+    If there is no maximal element, then \(A\) has an infinite chain of
+    elements \(a_1 \leq a_2 \leq a_3 \leq \cdots\), which contradicts the
+    finiteness of \(A\).
+    The same proof holds for the minimal element.
+\end{proof}
+
+Even in a finite set there is no reason that minimal and maximal elements
+are \emph{unique}.
+For our values we would like this to be the case: the unique minimal element
+will represent a complete \emph{lack} of information, and the unique maximal
+element will represent \emph{every} piece of information at once.
+To enforce the uniqueness of these elements we must add even more structure to
+a poset of values, elevating it to what is known as a \emph{lattice}.
+
+\begin{definition}[Lower and upper bounds]
+    Given a poset \((A, \leq)\), a \emph{lower bound} of a subset
+    \(B \subseteq A\) is an element \(x \in B\) such that for all \(b \in B\),
+    \(x \leq b\).
+    Similarly, an \emph{upper bound} of \(C \subseteq A\) is an element
+    \(y \in C\) such that for all \(b \in B\), \(b \leq y\).
+\end{definition}
+
+\begin{definition}[Join and meet]
+    Given a poset \((A, \leq)\), a lower bound \(x\) of \(B \subseteq A\) is
+    called an \emph{meet} (or infimum, or greatest lower bound) if for all lower
+    bounds \(b \in B\), \(b \leq x\).
+    Similarly, an upper bound \(y\) of \(B\) is called a \emph{join} (or
+    supremum, or least upper bound) if for all upper bounds \(c \in B\),
+    \(y \leq c\).
+\end{definition}
+
+\begin{lemma}
+    If a poset \((A, \leq)\) has an infimum then it is unique, and if it has a
+    supremum then it is also unique.
+\end{lemma}
+\begin{proof}
+    Assume that \(A\) has two infima \(a\) and \(b\).
+    This means that both \(a\) and \(b\) are lower bounds, and as \(a\) is a
+    \emph{greatest} lower bound then \(b \leq a\).
+    But \(b\) is also a greatest lower bound, so \(a \leq b\).
+    Therefore \(a = b\).
+    The same principle holds for the uniqueness of the supremum.
+\end{proof}
 
 In general, the join and meet of a pair of elements in a poset need not exist.
 We are interested in the structures in which they \emph{always} exist.
@@ -74,8 +119,24 @@ We are interested in the structures in which they \emph{always} exist.
 \begin{definition}[Lattice]
     A \emph{lattice} is a poset \((A, \leq)\) in which each pair of elements
     \(a,b \in A\) has a least upper bound and a greatest lower bound.
+    A lattice is called a \emph{finite lattice} if \(A\) is finite, and
+    \emph{bounded} if \(A\) has an infimum and a supremum.
 \end{definition}
 
+Much like how every non-empty finite poset has at least one maximimal and
+minimal element, every non-empty finite lattice has a join and meet.
+
+\begin{lemma}
+    A non-empty finite lattice \((A, \leq)\) is bounded.
+\end{lemma}
+\begin{proof}
+    We know by \cref{lem:maximal-minimal} that \(A\) must have at least one
+    minimal and maximal elements as it is finite.
+\end{proof}
+
+
+In a \emph{finite} lattice there must exist an element called the
+\emph{supremum} (denoted\(\top\))
 By repeatedly taking the join of elements in a \emph{finite} lattice, one
 obtains its \emph{supremum} \(\top\), the greatest element.
 Conversely, by repeatedly taking the meet, one obtains its \emph{infimum}
