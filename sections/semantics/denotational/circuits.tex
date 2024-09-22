@@ -78,7 +78,7 @@ a poset of values.
     \(y \in C\) such that for all \(b \in B\), \(b \leq y\).
 \end{definition}
 
-\begin{definition}[Join and meet]
+\begin{definition}[Meet and join]
     Given a poset \((A, \leq)\), a lower bound \(x\) of \(B \subseteq A\) is
     called an \emph{meet} (or infimum, or greatest lower bound) if for all lower
     bounds \(b \in B\), \(b \leq x\).
@@ -87,6 +87,10 @@ a poset of values.
     \(y \leq c\).
 \end{definition}
 
+We usually draw the meet and the join operations as rotated versions of the
+order operation; for example, in the above definitions we have used \(\wedge\)
+and \(\vee\) for the order \(\leq\), and in subsequent sections we will use
+\(\lmeet\) and \(\ljoin\) for the order \(\sqsubseteq\).
 In general, the join and meet of a pair of elements in a poset need not exist.
 We are interested in the structures in which they \emph{always} exist, which are
 known as \emph{lattices}.
@@ -138,8 +142,8 @@ minimal element, every non-empty finite lattice has a join and meet.
 
     The diagram clearly illustrates the lattice structure on this poset: the
     join is union and the meet is intersection.
-    Subsequently the supremum \(\top\) is the set \(A\) and the
-    infimum \(\bot\) is the empty set \(\{\}\).
+    Subsequently the greatest element \(\top\) is the set \(A\) and the
+    least element \(\bot\) is the empty set \(\{\}\).
 \end{example}
 
 \begin{remark}
@@ -166,7 +170,6 @@ minimal element, every non-empty finite lattice has a join and meet.
 Values in a circuit signature are interpreted as elements of a finite
 lattice; now the concepts of no information and all information are encoded
 as the \(\bot\) and \(\top\) element.
-
 Now the primitives in the signature must be interpreted.
 Clearly they should be interpreted as functions between the values, but these
 functions must respect the order on the value lattice; one should not be able to
