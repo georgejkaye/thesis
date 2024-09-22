@@ -47,41 +47,28 @@ carries.
     A poset \((A, leq)\) is called a \emph{finite poset} if \(A\) is finite.
 \end{definition}
 
-\begin{definition}[Minimal and maximal elements]
-    In a poset \((A, \leq)\), a \emph{minimal element} is an element \(b \in A\) such that for
-    all elements \(y \in A\), \(b \leq y\).
-    Similarly, a \emph{maximal element} is an element \(a \in A\)
+\begin{definition}[Least and greatest elements]
+    In a poset \((A, \leq)\), a \emph{least element} is an element \(b \in A\)
+    such that for all elements \(y \in A\), \(b \leq y\).
+    Similarly, a \emph{greatest element} is an element \(a \in A\)
     such that for all elements \(x \in A\), \(x \leq a\).
 \end{definition}
 
 \begin{example}
     The natural numbers \(\nat\) are a poset ordered in the usual way; they have
-    a minimal element \(0\) but not a maximal element.
+    a least element \(0\) but not a greatest element.
     However, any finite subset of the natural numbers \emph{does} have a
     maximal element.
 \end{example}
 
-The above example illustrates a useful property induced by the \emph{finiteness}
-of a poset.
-
-\begin{lemma}\label{lem:maximal-minimal}
-    In a finite poset \((A, \leq)\), there exists at least one maximal element
-    and at least one minimal element.
-\end{lemma}
-\begin{proof}
-    If there is no maximal element, then \(A\) has an infinite chain of
-    elements \(a_1 \leq a_2 \leq a_3 \leq \cdots\), which contradicts the
-    finiteness of \(A\).
-    The same proof holds for the minimal element.
-\end{proof}
-
-Even in a finite set there is no reason that minimal and maximal elements
-are \emph{unique}.
-For our values we would like this to be the case: the unique minimal element
-will represent a complete \emph{lack} of information, and the unique maximal
-element will represent \emph{every} piece of information at once.
+Even in a finite set there is no reason that least and greatest elements should
+be \emph{unique}.
+However, in our context of digital circuits we would like this to be the case:
+the unique least element will represent a complete \emph{lack} of information,
+and the unique greatest element will represent \emph{every} piece of information
+at once.
 To enforce the uniqueness of these elements we must add even more structure to
-a poset of values, elevating it to what is known as a \emph{lattice}.
+a poset of values.
 
 \begin{definition}[Lower and upper bounds]
     Given a poset \((A, \leq)\), a \emph{lower bound} of a subset
@@ -100,27 +87,15 @@ a poset of values, elevating it to what is known as a \emph{lattice}.
     \(y \leq c\).
 \end{definition}
 
-\begin{lemma}
-    If a poset \((A, \leq)\) has an infimum then it is unique, and if it has a
-    supremum then it is also unique.
-\end{lemma}
-\begin{proof}
-    Assume that \(A\) has two infima \(a\) and \(b\).
-    This means that both \(a\) and \(b\) are lower bounds, and as \(a\) is a
-    \emph{greatest} lower bound then \(b \leq a\).
-    But \(b\) is also a greatest lower bound, so \(a \leq b\).
-    Therefore \(a = b\).
-    The same principle holds for the uniqueness of the supremum.
-\end{proof}
-
 In general, the join and meet of a pair of elements in a poset need not exist.
-We are interested in the structures in which they \emph{always} exist.
+We are interested in the structures in which they \emph{always} exist, which are
+known as \emph{lattices}.
 
 \begin{definition}[Lattice]
     A \emph{lattice} is a poset \((A, \leq)\) in which each pair of elements
     \(a,b \in A\) has a least upper bound and a greatest lower bound.
     A lattice is called a \emph{finite lattice} if \(A\) is finite, and
-    \emph{bounded} if \(A\) has an infimum and a supremum.
+    \emph{bounded} if it has a minimum element and a maximum element.
 \end{definition}
 
 Much like how every non-empty finite poset has at least one maximimal and
@@ -130,17 +105,17 @@ minimal element, every non-empty finite lattice has a join and meet.
     A non-empty finite lattice \((A, \leq)\) is bounded.
 \end{lemma}
 \begin{proof}
-    We know by \cref{lem:maximal-minimal} that \(A\) must have at least one
-    minimal and maximal elements as it is finite.
+    As each pair of elements in \(A\) has a meet, and as \(A\) is finite, we
+    can define the element \(x\) as the meet of every
+    element in \(A\), i.e.\ \(
+    x \coloneqq (((a_0 \wedge a_1) \wedge a_2) \wedge \dots a_{n-1})
+    \).
+    This element is the greatest element in \(A\) by definition of the meet:
+    \((a_0 \wedge a_1) \leq a_0\) and \((a_0 \wedge a_1) \leq a_1\),
+    \(((a_0 \wedge a_1) \wedge a_2) \leq (a_0 \wedge a_1)\) and
+    \(((a_0 \wedge a_1) \wedge a_2) \leq a_2\), and so on.
+    The same proof holds in reverse for the join and the greatest element.
 \end{proof}
-
-
-In a \emph{finite} lattice there must exist an element called the
-\emph{supremum} (denoted\(\top\))
-By repeatedly taking the join of elements in a \emph{finite} lattice, one
-obtains its \emph{supremum} \(\top\), the greatest element.
-Conversely, by repeatedly taking the meet, one obtains its \emph{infimum}
-\(\bot\), the least element.
 
 \begin{example}\label{ex:powerset-lattice}
     Let \(A = \{0,1,2\}\), and let \((\mcp A, \subseteq)\) be the poset defined
