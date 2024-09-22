@@ -2,6 +2,8 @@
     \setlength{\tabcolsep}{3pt}
     \centering
     \begin{tabular}{ccc}
+        \multicolumn{3}{c}{\textbf{Tightening}}
+        \\[0.4em]
         \scalebox{0.9}{\(\trace{X}[A][D]{
                 \id[X] \tensor f \seq g \seq \id[X] \tensor h
             }
@@ -11,7 +13,7 @@
         \(=\)
          &
         \scalebox{0.9}{\(f \seq \trace{X}[B][C]{g} \seq h\)}
-        \\[1em]
+        \\[0.6em]
         \scalebox{0.85}{\(
             \iltikzfig{strings/traced/naturality-lhs}[colour=white,box1=f,box2=g,box3=h,dom=A,cod=D]
             \)}\qquad
@@ -22,10 +24,14 @@
             \iltikzfig{strings/traced/naturality-rhs}[colour=white,box1=f,box2=g,box3=h,dom=A,cod=D]
             \)}
     \end{tabular}
-    \\[1em]
-    \rule[1em]{\textwidth}{0.1mm}
+    \\[0.6em]
+    \rule[0.6em]{\textwidth}{0.1mm}
     \\[0.1em]
     \begin{tabular}{ccccccc}
+        \multicolumn{3}{c}{\textbf{Sliding}}
+        &&
+        \multicolumn{3}{c}{\textbf{Yanking}}
+        \\[0.4em]
         \scalebox{0.9}{\(
             \trace{X}[A][B]{f \seq g \tensor \id[B]}
             \)}
@@ -44,7 +50,7 @@
         \(=\)
          &
         \scalebox{0.9}{\(\id[X]\)}
-        \\[1em]
+        \\[0.6em]
         \scalebox{0.9}{\(
             {\iltikzfig{strings/traced/sliding-lhs}[colour=white,box1=f,box2=g,dom=A,cod=B]}
             \)}
@@ -67,10 +73,14 @@
             \iltikzfig{strings/category/identity}[obj=X,colour=white]
             \)}
     \end{tabular}
-    \\[1em]
-    \rule[1em]{\textwidth}{0.1mm}
+    \\[0.6em]
+    \rule[0.6em]{\textwidth}{0.1mm}
     \\[0.1em]
     \begin{tabular}{ccccccc}
+        \multicolumn{3}{c}{\textbf{Vanishing}}
+        &&
+        \multicolumn{3}{c}{\textbf{Superposing}}
+        \\[0.4em]
         \scalebox{0.9}{\(
             \trace{X}[A][B]{\trace{Y}[X \tensor A][X \tensor B]{f}}
             \)
@@ -94,7 +104,7 @@
         \scalebox{0.9}{\(
             \trace{X}[A \tensor C][B \tensor D]{f \tensor g}
             \)}
-        \\[1em]
+        \\[0.6em]
         \scalebox{0.85}{
             \iltikzfig{strings/traced/vanishing-lhs}[colour=white,box=f,dom=A,cod=B,trace1=X,trace2=Y]
         }
