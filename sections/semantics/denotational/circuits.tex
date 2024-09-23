@@ -88,16 +88,17 @@ a poset of values.
 \end{definition}
 
 We usually draw the meet and the join operations as rotated versions of the
-order operation; for example, in the above definitions we have used \(\wedge\)
-and \(\vee\) for the order \(\leq\), and in subsequent sections we will use
-\(\lmeet\) and \(\ljoin\) for the order \(\sqsubseteq\).
+order operation.
+For example, in the above definitions we have used \(\wedge\) and \(\vee\) for
+the order \(\leq\); in subsequent sections we will use \(\lmeet\) and
+\(\ljoin\) for the order \(\sqsubseteq\).
 In general, the join and meet of a pair of elements in a poset need not exist.
 We are interested in the structures in which they \emph{always} exist, which are
 known as \emph{lattices}.
 
 \begin{definition}[Lattice]
     A \emph{lattice} is a poset \((A, \leq)\) in which each pair of elements
-    \(a,b \in A\) has a least upper bound and a greatest lower bound.
+    \(a,b \in A\) has a meet and join.
     A lattice is called a \emph{finite lattice} if \(A\) is finite, and
     \emph{bounded} if it has a minimum element and a maximum element.
 \end{definition}
@@ -105,20 +106,24 @@ known as \emph{lattices}.
 Much like how every non-empty finite poset has at least one maximimal and
 minimal element, every non-empty finite lattice has a join and meet.
 
+\begin{notation}
+    For a poset \((A, \leq)\), we write \(\bigwedge A\) for the meet of
+    all the elements in \(A\) (if it exists) and \(\bigvee A\) for the join of
+    all the elements in \(A\) (again, if it exists).
+\end{notation}
+
 \begin{lemma}
     A non-empty finite lattice \((A, \leq)\) is bounded.
 \end{lemma}
 \begin{proof}
     As each pair of elements in \(A\) has a meet, and as \(A\) is finite, we
-    can define the element \(x\) as the meet of every
-    element in \(A\), i.e.\ \(
-    x \coloneqq (((a_0 \wedge a_1) \wedge a_2) \wedge \dots a_{n-1})
-    \).
+    can define the element \(x\) as \(\bigwedge A\).
     This element is the greatest element in \(A\) by definition of the meet:
     \((a_0 \wedge a_1) \leq a_0\) and \((a_0 \wedge a_1) \leq a_1\),
     \(((a_0 \wedge a_1) \wedge a_2) \leq (a_0 \wedge a_1)\) and
     \(((a_0 \wedge a_1) \wedge a_2) \leq a_2\), and so on.
-    The same proof holds in reverse for the join and the greatest element.
+    The same proof holds in reverse for the join and the greatest element by
+    using the join \(\bigvee A\).
 \end{proof}
 
 \begin{example}\label{ex:powerset-lattice}
@@ -186,8 +191,8 @@ are \(\bot\), then it should produce \(\bot\); we cannot produce information
 from nothing.
 
 \begin{definition}
-    Let \(A,B\) be finite lattices, where \(\bot_A\) is the infimum of \(A\) and
-    \(\bot_B\) is the infimum of \(B\).
+    Let \(A,B\) be finite lattices, where \(\bot_A\) is the least element of
+    \(A\) and \(\bot_B\) is the least element of \(B\).
     A function \(\morph{f}{A}{B}\) is \(\bot\)-preserving if
     \(f(\bot_A) = \bot_B\).
 \end{definition}
@@ -202,8 +207,8 @@ stage for the entire denotational semantics.
     \circuitsignaturecoarity
     )\), an \emph{interpretation} of
     \(\signature\) is a tuple \((\sqsubseteq, \gateinterpretation)\) where
-    \((\values, \sqsubseteq)\) is a lattice with \(\bullet\) as the
-    infimum, and \(\gateinterpretation\) maps each
+    \((\values, \sqsubseteq)\) is a lattice with \(\bullet\) as the least
+    element, and \(\gateinterpretation\) maps each
     \(p \in \circuitsignaturegates\) to a \(\bot\)-preserving monotone function
     \(
     \valuetuple{\circuitsignaturearity(p)}
@@ -400,12 +405,13 @@ Just like with functions, we cannot claim that all streams are the
 denotations of sequential circuits.
 
 \begin{definition}[Causal stream function~\cite{rutten2006algebraic}]
-    A stream function \(\morph{f}{\stream{A}}{\stream{B}}\) is \emph{causal} if
-    for all \(i \in \nat\), \(j \leq i\), and \(\sigma,\tau \in \stream{M}\),
-    \(\sigma(j) = \tau(j)\) implies that \(f(\sigma)(i) = f(\tau)(i)\).
+    A stream function \(\morph{f}{\stream{A}}{\stream{B}}\) is \emph{causal} if,
+    for all \(i \in \nat\) and \(\sigma,\tau \in \stream{A}\) we have that
+    \(\sigma(j) = \tau(j)\) for all \(j \leq i\), then
+    \(f(\sigma)(i) = f(\tau)(i)\).
 \end{definition}
 
-Casuality is a form of continuity; a causal stream function is a stream function
+Causality is a form of continuity; a causal stream function is a stream function
 in which the \(i\)-th element of its output stream only depends on elements
 \(0\) through \(i\) inclusive of the input stream; it cannot look into the
 future.
@@ -425,7 +431,7 @@ output truly is arbitrary; the \(\streaminit\) function only depends on the
 first element of the stream.
 
 \begin{definition}[Functional stream derivative~\cite{rutten2006algebraic}]
-    For a causal stream function \(\morph{f}{\stream{A}}{\stream{B}}\) and
+    For a stream function \(\morph{f}{\stream{A}}{\stream{B}}\) and
     \(a \in A\), the
     \emph{functional stream derivative of \(f\) on input \(a\)} is a stream
     function \(\streamderivative{f}{a}\) defined as \(
@@ -471,13 +477,13 @@ This means they cannot specify infinite \emph{behaviour}.
     \}\) is finite.
 \end{definition}
 
-The final condition arises since the components of circuits are monotone.
-To equip streams with a similar notion, we must set an order on them.
+Since the components of our circuits are monotone, a denotational semantics for
+circuits must take values in stream functions which are themselves monotone.
 
 \begin{notation}
-    For a poset \(A\) and streams \(\sigma,\tau \in \stream{A}\), we say that
-    \(\sigma \leq_{\stream{A}} \tau\) if \(\sigma(i) \leq_A \tau(i)\) for all
-    \(i \in \nat\).
+    For a poset \((A, \leq_A)\) and streams \(\sigma,\tau \in \stream{A}\), we
+    say that \(\sigma \leq_{\stream{A}} \tau\) if \(\sigma(i) \leq_A \tau(i)\)
+    for all \(i \in \nat\).
 \end{notation}
 
 Monotonicity of stream functions is then defined in the normal way; this
@@ -490,15 +496,17 @@ functor between PROPs.
 To this end, we must show that these properties are preserved by composition.
 
 \begin{lemma}\label{lem:causality-preserved}
-    Causality is preserved by composition and tensor product.
+    Causality is preserved by function composition and Cartesian product.
 \end{lemma}
 \begin{proof}
     If the \(i\)-th element of two stream functions \(f\) and \(g\) only depends
-    on the first \(i+1\) elements of the input, then so will their composition.
+    on the first \(i+1\) elements of the input, then so will their composition
+    and product.
 \end{proof}
 
 \begin{lemma}\label{lem:finitely-specified-preserved}
-    Finite specification is preserved by composition and tensor product.
+    Finite specification is preserved by function composition and Cartesian
+    product.
 \end{lemma}
 \begin{proof}
     For both the composition and product of two stream functions \(f\) and
@@ -507,7 +515,7 @@ To this end, we must show that these properties are preserved by composition.
 \end{proof}
 
 \begin{lemma}\label{lem:monotonicity-preserved}
-    Monotonicity is preserved by composition and tensor product.
+    Monotonicity is preserved by function composition and Cartesian product.
 \end{lemma}
 \begin{proof}
     The composition and product of any monotone function is monotone.
@@ -524,10 +532,16 @@ functions form a PROP.
 \end{proposition}
 \begin{proof}
     Identity is the identity function, the symmetry swaps streams, composition
-    is function composition, and tensor is product.
+    is composition of functions, and tensor product on morphisms
+    \(\morph{f}{\valuetuplestream{m}}{\valuetuplestream{n}}\) and
+    \(\morph{g}{\valuetuplestream{p}}{\valuetuplestream{q}}\) is the Cartesian
+    product of functions composed with the components of the isomorphism
+    \(\valuetuplestream{m} \times \valuetuplestream{n}
+    \cong \valuetuplestream{m+n}\).
 
-    As these constructs satisfy the categorical axioms, and as composition and
-    tensor preserve causality (\cref{lem:causality-preserved}),
+    As these constructs satisfy the categorical axioms, and as function
+    composition and Cartesian product preserve causality
+    (\cref{lem:causality-preserved}),
     finite specification (\cref{lem:finitely-specified-preserved}),
     and monotonicity (\cref{lem:monotonicity-preserved}), this data defines a
     symmetric monoidal category.
@@ -542,14 +556,59 @@ A usual candidate for the trace when considering settings with some sort of
 order is the \emph{least fixed point}.
 
 \begin{definition}
-    For a poset \(A\) and an endofunction \(\morph{f}{A}{A}\), the least fixed
-    point of \(f\) is a value \(\mu_f\) such that \(f(\mu_f) = f\).
+    For a poset \((A, \leq)\) and function \(\morph{f}{A}{A}\), the least
+    fixed point of \(f\) is a value \(\mu_f\) such that \(f(\mu_f) = f\) and,
+    for all values \(v\) such that \(f(v) = v\), \(\mu_f \leq v\).
 \end{definition}
 
-For a lattice with a unique minimal element \(\bot\) and join \(\ljoin\), the
-least fixpoint of a function \(f\) can be computed as
-\(f(\bot) \ljoin f(f(\bot)) \ljoin f(f(f(\bot))) \dots\); iterating the function
-repeatedly from the \(\bot\) element.
+Least fixed points are ubiquitious in program semantics, and many important
+theorems have been proved about them.
+One that will come in very useful for us is the
+\emph{Kleene fixed-point theorem}.
+
+\begin{definition}[Directed subset]
+    For a poset \((A, \leq)\), a non-empty subset \(B \subseteq A\) is called a
+    \emph{directed subset} if every pair of elements in \(B\) has an upper bound
+    in \(B\).
+\end{definition}
+
+\begin{notation}[Image]
+    For a function \(\morph{f}{A}{B}\) and subset \(C \subseteq A\), we write
+    \(f[C] \subseteq B\) for the \emph{image} of \(C\) under \(f\).
+\end{notation}
+
+\begin{definition}[Scott continuity]
+    For posets \((A, \leq_A)\) and \((B, \leq_B)\), a function
+    \(\morph{f}{A}{B}\) is called \emph{Scott-continuous} if for every directed
+    subset \(C \subseteq A\), \(f(\bigvee C) = \bigvee f[C]\).
+\end{definition}
+
+\begin{theorem}[Kleene fixed-point theorem~\cite{tarski1955latticetheoretical}]
+    Let \((A, \leq)\) be a poset in which each of its directed subsets has a
+    join, and let \(\morph{f}{L}{L}\) be a Scott-continuous function.
+    Then \(f\) has a least fixed point, defined as the join of the sequence
+    \(\bot, f(\bot), f(f(\bot)) \cdots\).
+\end{theorem}
+
+We will use this to compute the least fixed point of monotone stream functions,
+and subsequently to define a trace on \(\streami\).
+Although we have not enforced that stream functions of circuits are
+Scott-continuous, by virtue of working in a finite lattice we get this property
+for free.
+
+\begin{lemma}\label{lem:finite-monotone-scott}
+    In a \((A, \leq)\) in which every chain \(a_0 \leq a_1 \leq \cdots a_{n-1}\)
+    is finite, all monotone functions \(A \to A\) are Scott-continuous.
+\end{lemma}
+\begin{proof}
+    The directed subsets of a lattice with finite chains are the subsets with a
+    greatest element; for such a subset \(B\) with greatest element \(b_0\) we
+    have that \(\bigvee B = b_0\).
+    Moreover, for a function \(\morph{f}{A}{A}\) and \(b \in B\) we have that
+    \(f(b) \leq f(b_0)\), so \(f(b_0)\) is the greatest element in \(f[B]\).
+    Subsequently, \(f(\bigvee B) = f(b_0) = \bigvee f[B]\) and so the function
+    is Scott-continuous.
+\end{proof}
 
 To compute the least fixed point of stream functions, they will need to be
 ordered.
@@ -564,29 +623,37 @@ ordered.
 A trace on \(\streami\) can now be defined in terms of a least fixed
 point.
 
-\begin{notation}
-    Given stream functions \(\sigma \in A^m\) and \(\tau \in A^n\), we write
-    \(\sigma\tau \in A^{m+n}\) for their pointwise concatenation, i.e\
-    \((\sigma\tau)(i) = \sigma(i)\tau(i)\).
-\end{notation}
-
-\begin{notation}
-    For a morphism \(
+\begin{lemma}\label{lem:lfp-stream-function}
+    Given a morphism \(
     \morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{x+n}}
     \in \streami
-    \), and stream \(\sigma \in \valuetuplestream{x+m}\), let
-    \(\mu_f(\sigma)\) be the least fixed point of the endofunction \(
-    \tau \mapsto \proj{0}\mleft(f(\tau\sigma)\mright)
-    \).
-\end{notation}
+    \), and stream \(\sigma \in \valuetuplestream{m}\), the function \(
+    \tau \mapsto \proj{0}\mleft(f(\tau,\sigma)\mright)
+    \) has a least fixed point.
+\end{lemma}
+\begin{proof}
+    The function \(\tau \mapsto \proj{0}\mleft(f(\tau,\sigma)\mright)\) is
+    monotone as \(f\) and the projection function are monotone.
+    While \(\valuetuplestream{x}\) is not a finite lattice, it has finite
+    chains as there is a minimum element \(\bot\bot\bot\dots\) and maximum
+    elemnet \(\top\top\top\dots\); by \cref{lem:finite-monotone-scott} we have
+    that any monotone function is Scott-continuous.
+    Subsequently, by the Kleene fixed point theorem, this function has a least
+    fixed point.
+\end{proof}
 
 We must show that this notion of least fixed point is a trace on \(\streami\).
 The original proof idea for the following is due to David Sprunger.
 
-\begin{proposition}
-    The function \(\sigma \mapsto \proj{1}\mleft(f(\mu_f(\sigma)\sigma)\mright)\)
-    is a trace on \(\streami\).
-\end{proposition}
+\begin{theorem}
+    For a function \(\morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{x+n}}\),
+    let \(\mu_f(\sigma)\) be the least fixed point of the function \(
+    \tau \mapsto \proj{0}\mleft(f(\tau,\sigma)\mright)
+    \) as defined in \cref{lem:lfp-stream-function}.
+    Then a trace on \(\streami\) is defined for each function \(f\) as the
+    stream function
+    \(\sigma \mapsto \proj{1}\mleft(f(\mu_f(\sigma)\sigma)\mright)\).
+\end{theorem}
 \begin{proof}
     To show this, we need to prove that
     \(\sigma \mapsto \proj{1}\mleft(f(\mu_f(\sigma)\sigma)\mright)\) is in
