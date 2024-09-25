@@ -112,7 +112,7 @@ minimal element, every non-empty finite lattice has a join and meet.
     all the elements in \(A\) (again, if it exists).
 \end{notation}
 
-\begin{lemma}
+\begin{lemma}\label{cref:finite-bounded}
     A non-empty finite lattice \((A, \leq)\) is bounded.
 \end{lemma}
 \begin{proof}
@@ -477,8 +477,9 @@ This means they cannot specify infinite \emph{behaviour}.
     \}\) is finite.
 \end{definition}
 
-Since the components of our circuits are monotone, a denotational semantics for
-circuits must take values in stream functions which are themselves monotone.
+As the components of our circuits are monotone, a denotational semantics for
+circuits must also be monotone.
+This means we need to lift the order on values to an order on streams.
 
 \begin{notation}
     For a poset \((A, \leq_A)\) and streams \(\sigma,\tau \in \stream{A}\), we
@@ -486,8 +487,90 @@ circuits must take values in stream functions which are themselves monotone.
     for all \(i \in \nat\).
 \end{notation}
 
-Monotonicity of stream functions is then defined in the normal way; this
-completes the trio of properties we need to express the semantics of
+However, because the lattice of streams is \emph{infinite}, we need a stronger
+condition than just monotonicity.
+
+\begin{definition}[Directed subset]
+    For a poset \((A, \leq)\), a non-empty subset \(B \subseteq A\) is called a
+    \emph{directed subset} if every pair of elements in \(B\) has an upper bound
+    in \(B\).
+\end{definition}
+
+\begin{notation}[Image]
+    For a function \(\morph{f}{A}{B}\) and subset \(C \subseteq A\), we write
+    \(f[C] \subseteq B\) for the \emph{image} of \(C\) under \(f\).
+\end{notation}
+
+\begin{definition}[Scott continuity]
+    For posets \((A, \leq_A)\) and \((B, \leq_B)\), a function
+    \(\morph{f}{A}{B}\) is called \emph{Scott-continuous} if for every directed
+    subset \(C \subseteq A\), \(f(\bigvee C) = \bigvee f[C]\).
+\end{definition}
+
+\begin{example}\label{ex:directed-subsets}
+    An example of a directed subset of \(\belnapvalues^\omega\) is the set \(T\)
+    defined as \(\{\belnaptrue^n\bot \,|\, n \in \nat\}\); the join of this set
+    is \(\belnaptrue^\omega\).
+
+    An example of a Scott-continuous function \(
+    \belnapvalues^\omega \to \belnapvalues^\omega
+    \) is the function defined as \[
+        f(\sigma)(0) = \bot \qquad f(\sigma)(i+1) = f(sigma)(i);
+    \] this is Scott-continuous because finding the join of a set and then
+    prepending it with \(\bot\) is the same as prepending \(\bot\) to each
+    stream in the set and then finding their join.
+
+    An example of a stream function that is monotone but \emph{not}
+    Scott-continuous is the function defined as \(
+    g(\belnaptrue^n\bot^\omega) \coloneqq \belnapfalse^\omega (n )
+    \) and \(g(\belnaptrue^\omega) \coloneqq \top^\omega\) (the other inputs
+    do not matter for this example).
+    We can show this is not Scott-continuous by considering the set \(T\) above,
+    as \(f(\bigsqcup T) = f(\belnaptrue^\omega) = \top^\omega \neq
+    \belnapfalse^\omega = \bigsqcup f[T]
+    \).
+    However, note that this function is \emph{not} causal: as
+    \(\belnaptrue^\omega\) has the same prefix as every element in \(T\),
+    \(f(\belnaptrue^\omega)\) must also share output prefixes.
+\end{example}
+
+The revelation at the end of the above example begs the question: do we actually
+need to enforce Scott-continuity on our stream functions or can we somehow get
+it for free?
+
+\begin{lemma}
+    Let \((A, \leq_A)\) and \((B, \leq_B)\) be finite lattices, and let
+    \((\stream{A}, \leq_{\stream{A}})\) and \((\stream{B}, \leq_{\stream{B}})\)
+    be the induced lattices on streams.
+    Then a causal and monotone function \(\stream{A} \to \stream{B}\) must also
+    be Scott-continuous.
+\end{lemma}
+\begin{proof}
+    Consider a directed subset \(D \subseteq \stream{A}\); we need to show that for an
+    arbitrary causal, monotone and finitely specified function \(f\) we have
+    that \(f\left(\bigvee D\right) = \bigvee f[D]\).
+
+    First consider the case when \(\bigvee D \in D\).
+    In this case, \(\bigvee D\) must be the greatest element in \(D\), and as
+    \(f\) is monotone then \(f(\bigvee D)\) must be the greatest element in
+    \(f[D]\); subsequently, \(f\left(\bigvee D\right) = \bigvee f[D]\).
+
+    Now consider the case when \(\bigvee D \not\in D\); this will only arise if
+    there is no greatest element in \(D\), such as in the directed subset from
+    \cref{ex:directed-subsets}.
+    Subsequently, \(D\) must be infinite, but as the lattice \(A\) is finite
+    there exists for each \(i \in \nat\) an element \(a_i \in A\) such that
+    \(D\) contains infinitely many streams with \(a\) as their \(i\)th element,
+    so \(\left(\bigvee D\right)(i) = a\).
+    Crucially, this means that every prefix of \(\bigvee D\) must exist as a
+    prefix of a stream in \(D\).
+    As \(f\) is causal, this means that for each prefix of
+    \(f\left(\bigvee D\right)\) must also exist a \(d \in D\) such that
+    \(f(d)\) has that prefix, and as such
+    \(\bigvee f[D] = f\left(\bigvee D\right)\).
+\end{proof}
+
+This completes the trio of properties we need to express the semantics of
 sequential circuits as stream functions.
 To use stream functions with these properties as a denotational semantics for
 circuits we must assemble them into another PROP and map into it from
@@ -566,22 +649,7 @@ theorems have been proved about them.
 One that will come in very useful for us is the
 \emph{Kleene fixed-point theorem}.
 
-\begin{definition}[Directed subset]
-    For a poset \((A, \leq)\), a non-empty subset \(B \subseteq A\) is called a
-    \emph{directed subset} if every pair of elements in \(B\) has an upper bound
-    in \(B\).
-\end{definition}
 
-\begin{notation}[Image]
-    For a function \(\morph{f}{A}{B}\) and subset \(C \subseteq A\), we write
-    \(f[C] \subseteq B\) for the \emph{image} of \(C\) under \(f\).
-\end{notation}
-
-\begin{definition}[Scott continuity]
-    For posets \((A, \leq_A)\) and \((B, \leq_B)\), a function
-    \(\morph{f}{A}{B}\) is called \emph{Scott-continuous} if for every directed
-    subset \(C \subseteq A\), \(f(\bigvee C) = \bigvee f[C]\).
-\end{definition}
 
 \begin{theorem}[Kleene fixed-point theorem~\cite{tarski1955latticetheoretical}]
     Let \((A, \leq)\) be a poset in which each of its directed subsets has a
@@ -597,18 +665,25 @@ Scott-continuous, by virtue of working in a finite lattice we get this property
 for free.
 
 \begin{lemma}\label{lem:finite-monotone-scott}
-    In a \((A, \leq)\) in which every chain \(a_0 \leq a_1 \leq \cdots a_{n-1}\)
-    is finite, all monotone functions \(A \to A\) are Scott-continuous.
+    Let \((A, \leq_A)\) and \((B, \leq_B)\) be non-empty finite lattices.
+    Then for the (infinite) lattices
+    \((\stream{A}, \leq_{\stream{A}})\) and
+    \((\stream{B}, \leq_{\stream{B}})\), every monotone function
+    \(\morph{f}{\stream{A}}{\stream{B}}\) is Scott continuous.
 \end{lemma}
 \begin{proof}
-    The directed subsets of a lattice with finite chains are the subsets with a
-    greatest element; for such a subset \(B\) with greatest element \(b_0\) we
-    have that \(\bigvee B = b_0\).
-    Moreover, for a function \(\morph{f}{A}{A}\) and \(b \in B\) we have that
-    \(f(b) \leq f(b_0)\), so \(f(b_0)\) is the greatest element in \(f[B]\).
-    Subsequently, \(f(\bigvee B) = f(b_0) = \bigvee f[B]\) and so the function
-    is Scott-continuous.
+    As \(A\) and \(B\) are finite lattices, by \cref{lem:finite-bounded} they
+    must be bounded.
+    This means that \(\stream{A}\) and \(\stream{B}\) are also bounded: the
+    least element is the stream \(\stream{\bot}\) and the greatest element is
+    the stream \(\stream{\top}\).
+
+    Every directed subset of \(\stream{A}\) must have a greatest element \(a\)
+
+
 \end{proof}
+
+\lemma
 
 To compute the least fixed point of stream functions, they will need to be
 ordered.
