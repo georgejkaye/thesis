@@ -537,6 +537,7 @@ condition than just monotonicity.
 The revelation at the end of the above example begs the question: do we actually
 need to enforce Scott-continuity on our stream functions or can we somehow get
 it for free?
+It turns out that causality and monotonicity together are enough.
 
 \begin{lemma}
     Let \((A, \leq_A)\) and \((B, \leq_B)\) be finite lattices, and let
@@ -546,22 +547,28 @@ it for free?
     be Scott-continuous.
 \end{lemma}
 \begin{proof}
-    Consider a directed subset \(D \subseteq \stream{A}\); we need to show that for an
-    arbitrary causal, monotone and finitely specified function \(f\) we have
-    that \(f\left(\bigvee D\right) = \bigvee f[D]\).
+    Consider a directed subset \(D \subseteq \stream{A}\); we need to show that
+    for an arbitrary causal, monotone and finitely specified function \(f\) we
+    have that \(f\left(\bigvee D\right) = \bigvee f[D]\).
 
-    First consider the case when \(\bigvee D \in D\).
-    In this case, \(\bigvee D\) must be the greatest element in \(D\), and as
-    \(f\) is monotone then \(f(\bigvee D)\) must be the greatest element in
+    First consider the case when there is a greatest element in \(D\).
+    In this case, \(\bigvee D\) must be the greatest element, and as such
+    \(\bigvee D \in D\).
+    As \(f\) is monotone then \(f(\bigvee D)\) must be the greatest element in
     \(f[D]\); subsequently, \(f\left(\bigvee D\right) = \bigvee f[D]\).
 
-    Now consider the case when \(\bigvee D \not\in D\); this will only arise if
-    there is no greatest element in \(D\), such as in the directed subset from
-    \cref{ex:directed-subsets}.
-    Subsequently, \(D\) must be infinite, but as the lattice \(A\) is finite
-    there exists for each \(i \in \nat\) an element \(a_i \in A\) such that
-    \(D\) contains infinitely many streams with \(a\) as their \(i\)th element,
-    so \(\left(\bigvee D\right)(i) = a\).
+    Now consider the case where there is no greatest element in \(D\) and
+    subsequently \(\bigvee D \not\in D\); if there is no greatest element,
+    \(D\) must be infinite.
+    Even though it is infinite, \(D\) is a directed subset so each pair of
+    elements must have an upper bound, and as \(\leq_{\stream{A}}\) is computed
+    pointwise by using \(\leq_A\) we can consider what the upper bounds are
+    pointwise too.
+    Because \(A\) is finite, there cannot be an infinite chain of upper bounds
+    for each element \(i\); there must exist an element \(a_i \in A\) such that
+    \(D\) contains infinitely many streams \(\sigma\) such that
+    \(\sigma(i) = a_i\).
+    This means that \(\left(\bigvee D\right)(i) = a\).
     Crucially, this means that every prefix of \(\bigvee D\) must exist as a
     prefix of a stream in \(D\).
     As \(f\) is causal, this means that for each prefix of
