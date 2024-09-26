@@ -586,7 +586,7 @@ functor between PROPs.
 To this end, we must show that these properties are preserved by composition.
 
 \begin{lemma}\label{lem:causality-preserved}
-    Causality is preserved by function composition and Cartesian product.
+    Causality is preserved by composition and Cartesian product.
 \end{lemma}
 \begin{proof}
     If the \(i\)-th element of two stream functions \(f\) and \(g\) only depends
@@ -595,7 +595,7 @@ To this end, we must show that these properties are preserved by composition.
 \end{proof}
 
 \begin{lemma}\label{lem:finitely-specified-preserved}
-    Finite specification is preserved by function composition and Cartesian
+    Finite specification is preserved by composition and Cartesian
     product.
 \end{lemma}
 \begin{proof}
@@ -605,7 +605,7 @@ To this end, we must show that these properties are preserved by composition.
 \end{proof}
 
 \begin{lemma}\label{lem:monotonicity-preserved}
-    Monotonicity is preserved by function composition and Cartesian product.
+    Monotonicity is preserved by composition and Cartesian product.
 \end{lemma}
 \begin{proof}
     The composition and product of any monotone function is monotone.
@@ -678,14 +678,6 @@ to be ordered.
 A trace on \(\streami\) can now be defined in terms of a least fixed
 point.
 
-\begin{lemma}
-    For a finite lattice \((A, \leq)\) and the lattice \((\stream{A}, \leq)\),
-    every directed subset of \(\stream{A}\) has a join.
-\end{lemma}
-\begin{proof}
-    \todo[inline]{Complete lattice proof}
-\end{proof}
-
 \begin{lemma}\label{lem:lfp-stream-function}
     Given a morphism \(
     \morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{x+n}}
@@ -701,20 +693,24 @@ point.
     By \cref{prop:monotone-causal-scott} this means that \(f\) is
     Scott-continuous.
     Subsequently, by the Kleene fixed point theorem, this function has a least
-    fixed point.
+    fixed point, defined as \(
+    \proj{0}\mleft(f(\bot^\omega, \sigma)\mright) \ljoin
+    \proj{0}\mleft(f(\proj{0}\mleft(f(\bot^\omega, \sigma)\mright), \sigma)\mright) \ljoin
+    \cdots
+    \).
 \end{proof}
 
-We must show that this notion of least fixed point is a trace on \(\streami\).
-The original proof idea for the following is due to David Sprunger.
+We must show that this notion of least fixed point is a trace on \(\streami\);
+the original proof idea for the following is due to David Sprunger.
 
 \begin{theorem}
     For a function \(\morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{x+n}}\),
     let \(\mu_f(\sigma)\) be the least fixed point of the function \(
     \tau \mapsto \proj{0}\mleft(f(\tau,\sigma)\mright)
     \) as defined in \cref{lem:lfp-stream-function}.
-    Then a trace on \(\streami\) is defined for each function \(f\) as the
-    stream function
-    \(\sigma \mapsto \proj{1}\mleft(f(\mu_f(\sigma)\sigma)\mright)\).
+    Then, the stream function \(
+    \sigma \mapsto \proj{1}\mleft(f(\mu_f(\sigma)\sigma)\mright)
+    \) is causal, monotone, and finitely specified.
 \end{theorem}
 \begin{proof}
     To show this, we need to prove that
@@ -828,10 +824,66 @@ The original proof idea for the following is due to David Sprunger.
     finitely specified, and as these properties are preserved by composition,
     the composite must also have them, so
     \(\sigma \mapsto \proj{1}(f(\mu_f(\sigma)\sigma))\) is in \(\streami\).
-    To show that this is a trace, it remains to check the axioms of STMCs.
+\end{proof}
+
+\begin{theorem}
+    A trace on \(\streami\) is given for a function \(
+    \morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{x+n}}
+    \) by the stream function \(
+    \sigma \mapsto \proj{1}(f(\mu_\sigma, \sigma))
+    \).
+\end{theorem}
+\begin{proof}
+    Since we showed in \cref{thm:trace-well-defined} that the given stream
+    function is in \(\streami\), we just need to show that this construction is
+    a trace by verifying the axioms of STMCs.
     Most of these hold in a straightforward way; the only interesting one is
     the sliding axiom.
-    \todo[inline]{Sliding}
+    We need to show that for stream functions \(
+    \morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{y+n}}
+    \) and \(
+    \morph{g}{\valuetuplestream{y}}{\valuetuplestream{x}}
+    \), we have that \(
+    \trace{y}{(\tau, \sigma) \mapsto f(g(\tau), \sigma)}
+    =
+    \trace{x}{
+        (\tau, \sigma)
+        \mapsto
+        g(\proj{0}\mleft(f(\tau, \sigma)\mright),
+        \proj{1}\mleft(f(\tau, \sigma)\mright))
+    }
+    \).
+    To show this, we need to compute the least fixed point of
+    \(\tau \mapsto \proj{0}\mleft(f(g(\tau), \sigma)\mright)\) and
+    \(\tau \mapsto g(\proj{0}\mleft(f(\tau, \sigma)\mright))\) for fixed \(\sigma\);
+    for the former this is \[
+        \mu_\sigma^l =
+        \proj{0}\mleft(f(g(\bot^\omega, \sigma))\mright) \ljoin
+        \proj{0}\mleft(f(g(\proj{0}\mleft(f(g(\bot^\omega), \sigma))\mright), \sigma)\mright) \ljoin
+        \cdots\]
+    and for the latter this is \[
+        \mu_\sigma^r =
+        g(\proj{0}\mleft(f(\bot^\omega, sigma)\mright)) \ljoin
+        g(\proj{0}\mleft(f(g(\proj{0}\mleft(f(g(\bot^\omega), \sigma)\mright)), \sigma)\mright)) \ljoin
+        \cdots
+    \]
+    Plugging these back into the original functions gets us \begin{align*}
+        \sigma \mapsto \proj{1}\mleft(f(g(\mu_\sigma^l), \sigma)\mright)
+         & =
+        \sigma \mapsto \proj{1}\mleft(f(g(\proj{0}\mleft(f(g(\proj{0}\mleft(f(g(\dots f(g(\proj{0}\mleft(f(g(\bot^\omega, \sigma))\mright)))\mright)))\mright)))\mright)))
+    \end{align*} and \begin{align*}
+        \sigma \mapsto \proj{1}(g(\proj{0}(f(\mu_\sigma^r, \sigma))), \proj{1}(f(\mu_\sigma^r, \sigma)))
+         & =
+        \sigma \mapsto \proj{1}(f(\mu_\sigma^r, \sigma))
+        \\
+         & =
+        \sigma \mapsto \proj{1}(f(
+        g(\proj{0}\mleft(f(g(\dots f(g(\proj{0}\mleft(f(g(\bot^\omega), \sigma)\mright)), \sigma)\mright)), \sigma))))
+        \\
+         & =
+        \sigma \mapsto \proj{1}(f(
+        g(\proj{0}\mleft(f(g(\dots f(g(\proj{0}\mleft(f(\bot^\omega, \sigma)\mright)), \sigma)\mright)), \sigma))))
+    \end{align*}
 \end{proof}
 
 \begin{remark}
