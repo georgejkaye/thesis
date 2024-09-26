@@ -539,13 +539,13 @@ need to enforce Scott-continuity on our stream functions or can we somehow get
 it for free?
 It turns out that causality and monotonicity together are enough.
 
-\begin{lemma}
+\begin{proposition}\label{prop:monotone-causal-scott}
     Let \((A, \leq_A)\) and \((B, \leq_B)\) be finite lattices, and let
     \((\stream{A}, \leq_{\stream{A}})\) and \((\stream{B}, \leq_{\stream{B}})\)
     be the induced lattices on streams.
     Then a causal and monotone function \(\stream{A} \to \stream{B}\) must also
     be Scott-continuous.
-\end{lemma}
+\end{proposition}
 \begin{proof}
     Consider a directed subset \(D \subseteq \stream{A}\); we need to show that
     for an arbitrary causal, monotone and finitely specified function \(f\) we
@@ -656,8 +656,6 @@ theorems have been proved about them.
 One that will come in very useful for us is the
 \emph{Kleene fixed-point theorem}.
 
-
-
 \begin{theorem}[Kleene fixed-point theorem~\cite{tarski1955latticetheoretical}]
     Let \((A, \leq)\) be a poset in which each of its directed subsets has a
     join, and let \(\morph{f}{L}{L}\) be a Scott-continuous function.
@@ -667,33 +665,8 @@ One that will come in very useful for us is the
 
 We will use this to compute the least fixed point of monotone stream functions,
 and subsequently to define a trace on \(\streami\).
-Although we have not enforced that stream functions of circuits are
-Scott-continuous, by virtue of working in a finite lattice we get this property
-for free.
-
-\begin{lemma}\label{lem:finite-monotone-scott}
-    Let \((A, \leq_A)\) and \((B, \leq_B)\) be non-empty finite lattices.
-    Then for the (infinite) lattices
-    \((\stream{A}, \leq_{\stream{A}})\) and
-    \((\stream{B}, \leq_{\stream{B}})\), every monotone function
-    \(\morph{f}{\stream{A}}{\stream{B}}\) is Scott continuous.
-\end{lemma}
-\begin{proof}
-    As \(A\) and \(B\) are finite lattices, by \cref{lem:finite-bounded} they
-    must be bounded.
-    This means that \(\stream{A}\) and \(\stream{B}\) are also bounded: the
-    least element is the stream \(\stream{\bot}\) and the greatest element is
-    the stream \(\stream{\top}\).
-
-    Every directed subset of \(\stream{A}\) must have a greatest element \(a\)
-
-
-\end{proof}
-
-\lemma
-
-To compute the least fixed point of stream functions, they will need to be
-ordered.
+To compute the least fixed point of stream functions, they will themselves need
+to be ordered.
 
 \begin{definition}\label{def:state-order}
     Let \(A\) and \(B\) be posets and let
@@ -705,6 +678,14 @@ ordered.
 A trace on \(\streami\) can now be defined in terms of a least fixed
 point.
 
+\begin{lemma}
+    For a finite lattice \((A, \leq)\) and the lattice \((\stream{A}, \leq)\),
+    every directed subset of \(\stream{A}\) has a join.
+\end{lemma}
+\begin{proof}
+    \todo[inline]{Complete lattice proof}
+\end{proof}
+
 \begin{lemma}\label{lem:lfp-stream-function}
     Given a morphism \(
     \morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{x+n}}
@@ -715,11 +696,10 @@ point.
 \end{lemma}
 \begin{proof}
     The function \(\tau \mapsto \proj{0}\mleft(f(\tau,\sigma)\mright)\) is
-    monotone as \(f\) and the projection function are monotone.
-    While \(\valuetuplestream{x}\) is not a finite lattice, it has finite
-    chains as there is a minimum element \(\bot\bot\bot\dots\) and maximum
-    elemnet \(\top\top\top\dots\); by \cref{lem:finite-monotone-scott} we have
-    that any monotone function is Scott-continuous.
+    causal and monotone because \(f\) and the projection function are
+    causal and monotone.
+    By \cref{prop:monotone-causal-scott} this means that \(f\) is
+    Scott-continuous.
     Subsequently, by the Kleene fixed point theorem, this function has a least
     fixed point.
 \end{proof}
@@ -848,8 +828,10 @@ The original proof idea for the following is due to David Sprunger.
     finitely specified, and as these properties are preserved by composition,
     the composite must also have them, so
     \(\sigma \mapsto \proj{1}(f(\mu_f(\sigma)\sigma))\) is in \(\streami\).
-    To show that this is a trace, it remains to check the axioms of STMCs,
-    which can all be shown to hold fairly easily.
+    To show that this is a trace, it remains to check the axioms of STMCs.
+    Most of these hold in a straightforward way; the only interesting one is
+    the sliding axiom.
+    \todo[inline]{Sliding}
 \end{proof}
 
 \begin{remark}
