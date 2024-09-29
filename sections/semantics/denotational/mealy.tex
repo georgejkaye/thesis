@@ -173,12 +173,14 @@ following:
     \(S\) is finite, and \(\mealytostream\) must preserve transitions.
 \end{proof}
 
-\todo[inline]{Fix the preorder-poset disaster}
+As defined so far there is no need for Mealy machines to have any sort of
+monotonicity condition, so we must impose one.
 
 \begin{definition}[Monotone Mealy machine]
-    Let \(A\), \(B\) and \(S\) be posets; an \((A,B)\)-Mealy machine \((S, f)\)
-    is called a \emph{monotone} Mealy machine if \(f\) is \(\bot\)-preserving
-    and monotone with respect to the appropriate orders.
+    Let \(A\), \(B\) be posets; an \((A,B)\)-Mealy machine \((S, f)\)
+    is called a \emph{monotone} Mealy machine if \(S\) is also a poset and
+    \(f\) is \(\bot\)-preserving and monotone with respect to the ordering on
+    \(A\), \(B\), and \(S\).
 \end{definition}
 
 To map to Mealy machines from circuits we need to assemble the former into
@@ -406,13 +408,13 @@ This can be computed in much the same way as it was for stream functions.
     \)-Mealy machine.
     For a state \(s \in S\) and input \(\listvar{a} \in \valuetuple{m}\), let
     \(\mu_{s}(\listvar{a})\) be the least fixed point of \(
-    \listvar{r} \mapsto \proj{0}\mleft(f\left(s, \listvar{ra}\right)\mright)
+    \listvar{r} \mapsto \proj{0}\mleft(f\left(s, \listvar{r} \concat \listvar{a}\right)\mright)
     \).
     The \emph{least fixed point} of an initialised Mealy machine \((S, f, s_0)\)
     is a \((\valuetuple{m}, \valuetuple{n})\)-Mealy machine \(\left(
     S, (s, \listvar{a})
     \mapsto
-    f\left(\left(\mu_{s}\left(\listvar{a}\right)\right)\listvar{a}\right), s_0
+    f\left(\mu_{s}\listvar{a} \concat \listvar{a}\right), s_0
     \right)
     \)
 \end{definition}
@@ -441,7 +443,8 @@ We must show that this is the trace on \(\mealyi\).
 \end{proposition}
 \begin{proof}
     Let \((S, f)\) be a monotone
-    \((\valuetuple{x+m}, \valuetuple{x+n})\)-Mealy machine.
+    \((\valuetuple{x+m}, \valuetuple{x+n})\)-Mealy machine; this means that
+    \(S\) must be a poset.
     The Mealy function \(
     \morph{f}{
         S \times \valuetuple{x+m}
@@ -449,16 +452,15 @@ We must show that this is the trace on \(\mealyi\).
         S \times \valuetuple{x+n}
     }
     \) is monotone with regards to the orders on \(S\) and
-    \(\valuetuple{x+m}\) and \(S \times x+n\) is finite, so
+    \(\valuetuple{x+m}\) and \(S \times (x+n)\) is finite, so
     \(f\) has a least fixed point.
     The function \(
     f^\prime \coloneqq (s, \listvar{a})
     \mapsto
-    \proj{1}\mleft(f((\mu_{s,\listvar{a}})\listvar{a})\mright)
-    \) is a composition of monotone functions, so it is itself monotone.
-    This means \((S, f^\prime)\) is a monotone \(
-    (\valuetuple{m}, \valuetuple{n})
-    \)-Mealy machine.
+    \proj{1}\mleft(f(\mu_{s}(\listvar{a}) \concat \listvar{a})\mright)
+    \) is a composition of \(\bot\)-preserving monotone functions, so it is
+    itself \(\bot\)-preserving monotone; this makes \((S, f^\prime)\) a monotone
+    \((\valuetuple{m}, \valuetuple{n})\)-Mealy machine.
     This construction is a trace for the same reason as the trace of
     \(\streami\) is.
 \end{proof}
@@ -611,7 +613,7 @@ in order to do this we must verify that the produced Mealy machine is monotone.
 \end{proof}
 
 \begin{lemma}\label{lem:stream-to-mealy-is-monotone}
-    Given a stream function \(f \in \streami\), \(\streamtomealyi[f]\) is
+    Given \(f \in \streami\), \(\streamtomealyi[f]\) is
     a monotone Mealy machine.
 \end{lemma}
 \begin{proof}
@@ -637,7 +639,7 @@ Ideally we would be able to work in whichever setting is most beneficial at a
 given time, so we need to show that the translations are
 \emph{behaviour-preserving}.
 
-\begin{proposition}\label{prop:mealy-to-stream}
+\begin{proposition}\label{prop:mealy-stream-id}
     \(\mealytostreami \circ \streamtomealyi = \id[\streami]\).
 \end{proposition}
 \begin{proof}

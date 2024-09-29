@@ -291,6 +291,15 @@ circuit maps to a monotone function.
     functions \(\valuetuple{m} \to \valuetuple{n}\).
 \end{definition}
 
+The natural way to map from a PROP of syntax into a PROP of semantics is to
+use a functor.
+
+\begin{definition}
+    A \emph{PROP morphism} is a strict symmetric monoidal functor between two
+    PROPs i.e.\ a functor that preserves the strict symmetric monoidal
+    structure.
+\end{definition}
+
 \begin{definition}
     Let \(\morph{\circuittofunci}{\ccircsigma}{\funci}\) be the PROP morphism
     with action defined as%

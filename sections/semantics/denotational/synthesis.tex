@@ -338,32 +338,65 @@ to a circuit \(\mealytofunc[f]\) as the \emph{normalised circuit for \(f\)}.\
 \end{example}
 
 With the knowledge that any monotone function has a corresponding circuit
-in \(\scircsigma\), we set about encoding the Mealy function.
+in \(\scircsigma\), we set about encoding an arbitrary Mealy function
+\(S \times \valuetuple{m} \to S \times \valuetuple{n}\) into a function
+\(\valuetuple{k} \times \valuetuple{n} \to \valuetuple{k} \times \valuetuple{n}\).
+One point to note here is that there may be more values in \(\valuetuple{k}\)
+than there are states in \(S\), so we may need to `fill in the gaps' in a way
+that is compatible with monotonicity.
 
 \begin{definition}[Monotone completion]\label{def:monotone-completion}
-    For lattices \(M, N, P\) such that \(M \subseteq N\), and a monotone
-    function \(\morph{f}{M}{P}\), let the \emph{monotone completion} of \(f\) be
-    the function \(\morph{f_\mathsf{m}}{N}{P}\) recursively defined as \[
+    Let \(A\) be a finite poset and let \(B\) be a finite lattice such that
+    \(A \subseteq B\).
+    Then for another finite lattice \(C\) and a monotone function
+    \(\morph{f}{A}{C}\), let the \emph{monotone \(B\)-completion} of \(f\) be
+    the function \(\morph{f_\mathsf{m}}{B}{C}\) recursively defined as \[
         f_\mathsf{m}(v) = \begin{cases}
             f(v)
              &
-            \text{if}\ v \in M
+            \text{if}\ v \in A
             \\
-            \bot
+            \bot_C
              &
-            \text{if}\ v = \bot^m, \bot \not\in M
+            \text{if}\ v = \bot_B, \bot \not\in A
             \\
-            \bigsqcup \{ f_\mathsf{m}(w) \,|\, w \leq_N v \}
+            \bigvee \{ f_\mathsf{m}(w) \,|\, w \leq_B v, w \neq v \}
              &
             \text{otherwise}
         \end{cases}
     \]
 \end{definition}
 
+\begin{example}
+    For \(n \in \nat\), let \(\nat_{n}\) be the subset of the natural numbers
+    containing the numbers \(0,1,\dots,n-1\) with the usual order.
+    Let \(\morph{f}{\{2,4\}}{\nat}\) be defined as \(2 \mapsto 6\) and
+    \(4 \mapsto 7\).
+    The monotone \(\nat_5\)-completion of \(f\) is a function
+    \(\morph{f_\mathsf{m}}{\nat_5}{\nat}\), defined as follows:
+    \(f_\mathsf{m}(0) = 0\) as \(0\) is the least element of \(\nat_5\);
+    \(f_\mathsf{m}(1) = 0\) as \(0 \leq 1\) and \(g_\mathsf{m}(1) = 0\);
+    \(f_\mathsf{m}(2) = 6\) as \(2 \in \{2, 4\}\) and \(g(2) = 6\);
+    \(f_\mathsf{m}(3) = 6\) because \(
+    f_\mathsf{m}(3) =
+    f_\mathsf{m}(0) \vee f_\mathsf{m}(1) \vee f_\mathsf{m}(2)
+    = 0 \vee 0 \vee 6 = 6
+    \); and \(f_\mathsf{m}(4) = 7\) because \(f(4) = 7\).
+\end{example}
+
+A Mealy function can now be encoded over powers of \(\values\) by using the
+monotone completion of some encoding function.
+
 \begin{definition}[Monotone Mealy encoding]\label{def:mealy-encoding}
     For a monotone Mealy machine \((S, f, s_0)\) with \(k\) states and an
-    encoding \(\gamma_\leq\), a \emph{monotone Mealy encoding} is a
-    function
+    encoding \(\morph{\gamma_\leq}{S}{\valuetuple{k}}\), let
+    \(\morph{\gamma^p_\leq}{\gamma_\leq[S] \times \valuetuple{m}}{\valuetuple{k} \times \valuetuple{n}}\)
+    be defined as the function \(
+    (\gamma_\leq(s), \listvar{x}) \mapsto
+    (\gamma_\leq(\mealyfunctiontransition{f}(s, \listvar{x})),
+    \mealyfunctionoutput{f}(s, \listvar{x}))
+    \).
+    The \emph{monotone Mealy encoding} of \((S, f, s_0)\) is a function
     \(
     \morph{
         \gamma_\leq(f)
@@ -372,15 +405,11 @@ in \(\scircsigma\), we set about encoding the Mealy function.
     }{
         \valuetuple{k} \times \valuetuple{n}
     }
-    \) defined as the monotone completion of the function \(
-    (\gamma_\leq(s), \listvar{x})
-    \mapsto
-    (
-    \gamma_\leq(\mealyfunctiontransition{f}(s, \listvar{x})),
-    \mealyfunctionoutput{f}(s, \listvar{x})
-    )
-    \).
+    \) defined as the \((\valuetuple{k} \times \valuetuple{m})\)-completion of
+    \(\gamma_\leq^p\).
 \end{definition}
+
+
 
 To obtain the syntactic circuit for a monotone Mealy function encoded
 in this way, it needs to be a morphism in \(\funci\).
@@ -394,7 +423,7 @@ It is monotone by definition, but we need to make sure it is also
     A Mealy encoding is monotone as it is a monotone completion.
     There cannot be a state encoded as \(\bot^k\), since at least one bit must
     be \(\top\); this means the monotone completion will send the input
-    \(\bot^k\bot^m\) to \(\bot^k\bot^n\): it is
+    \((\bot^k, \bot^m)\) to \((\bot^k, \bot^n)\): it is
     \(\bot\)-preserving.
 \end{proof}
 
@@ -409,13 +438,15 @@ Mealy machines to circuits might be nondeterministic.
 \begin{definition}[Chosen state order]
     Let \((S, f, s_0)\) be a monotone Mealy machine with input space
     \(\valuetuple{m}\), and let \(\leq\) be a total order on \(\values\);
-    \(\leq\) can be extended to \(\freemon{(\values^m)}\) using the
-    lexicographic order.
-    Given a state \(s\), let \(t_{s,\leq} \in \freemon{(\values^m)}\) be
-    the minimal element of the subset of words that transition from \(s_0\) to
-    \(s\), ordered by \(\leq\).
-    Then the \emph{chosen state order} \(\leq_S\) is a total order on \(S\)
-    defined as \(s \leq_S s^\prime\) if \(t_{s,\leq} \leq t_{s^\prime,\leq}\).
+    \(\leq\) can be extended to a total order \(\leq_\star\) on
+    \(\freemon{(\values^m)}\) using the lexicographic order.
+    Let \(S^\prime\) be the set of accessible states of \(S\).
+    For each state \(s \in S^\prime\), let
+    \(t_{s,\leq} \in \freemon{(\values^m)}\) be the minimal element of the
+    subset of words that transition from \(s_0\) to \(s\), ordered by \(\leq\).
+    Then the \emph{chosen state order} \(\leq_{S^\prime}\) is a total order on
+    \(S^\prime\) defined as \(s \leq_{S^\prime} s^\prime\) if
+    \(t_{s,\leq} \leq_\star t_{s^\prime,\leq}\).
 \end{definition}
 
 The PROP morphism from monotone Mealy machines to circuits can then be
