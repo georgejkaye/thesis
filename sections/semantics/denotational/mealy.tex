@@ -95,15 +95,13 @@ and a function, so this is a coalgebra in \(\set\).
 \end{definition}
 
 \begin{example}
-    In \cite{bonsangue2008coalgebraic}, the notation \(
-    f(s)(a) = \langle{\initialoutput{s}{a},\streamderivative{s}{a}}\rangle
-    \) is used to describe the Mealy function, which coincides with the notation
-    used for stream functions.
-
+    In \cite{bonsangue2008coalgebraic}, the notation used for the transition
+    and the output Mealy machines coincides with the notation used for
+    the initial output and stream derivative of causal stream functions.
     Given sets \(A\) and \(B\), let \(\Gamma\) be the set of causal stream
     functions \(\stream{A} \to \stream{B}\), and let
-    \(\morph{\nu}{\Gamma}{\Gamma \times B}^A\) be the function defined as \(
-    (f, a) \mapsto \langle{\initialoutput{f}{a},\streamderivative{f}{a}}\rangle
+    \(\morph{\nu}{\Gamma}{(\Gamma \times B)^A}\) be the function defined as \(
+    (f, a) \mapsto \langle{\streamderivative{f}{a},\initialoutput{f}{a},}\rangle
     \).
     Then \((\Gamma,\nu)\) is a \((A,B)\)-Mealy coalgebra.
 \end{example}
@@ -152,7 +150,7 @@ For a Mealy coalgebra \((S, f)\) and a start state \(s_0\),
 \(!(s_0)(\sigma)\) maps to the stream of outputs that \((S, f)\) would produce
 by applying \(f\) to each element of \(\sigma\), starting from \(s_0\).
 
-\subsection{Monotone Mealy machines}
+\subsection{Mealy machines on posets}
 
 In order to use Mealy machines as a bridge between \(\scircsigma\) and
 \(\streami\), they must be assembled into another traced PROP, and morphisms
@@ -178,9 +176,9 @@ following:
 \todo[inline]{Fix the preorder-poset disaster}
 
 \begin{definition}[Monotone Mealy machine]
-    Let \(A\) and \(B\) be posets; an \((A,B)\)-Mealy machine is called a
-    \emph{monotone} Mealy machine if \(f\) is monotone with respect to the
-    appropriate orders.
+    Let \(A\), \(B\) and \(S\) be posets; an \((A,B)\)-Mealy machine \((S, f)\)
+    is called a \emph{monotone} Mealy machine if \(f\) is \(\bot\)-preserving
+    and monotone with respect to the appropriate orders.
 \end{definition}
 
 To map to Mealy machines from circuits we need to assemble the former into
@@ -194,7 +192,6 @@ machines.
     An \emph{initialised} Mealy machine is a tuple \((S, f, s_0)\), where
     \((S, f)\) is a Mealy machine, and \(s_0 \in S\) is an \emph{initial state}.
 \end{definition}
-
 
 \begin{example}\label{ex:mealy-init}
     We can initialise the \((\booleans,\booleans)\)-Mealy machine
@@ -408,14 +405,16 @@ This can be computed in much the same way as it was for stream functions.
     (\valuetuple{x+m}, \valuetuple{x+n})
     \)-Mealy machine.
     For a state \(s \in S\) and input \(\listvar{a} \in \valuetuple{m}\), let
-    \(\mu_{s,\listvar{a}}\) be the least fixpoint of \(
+    \(\mu_{s}(\listvar{a})\) be the least fixed point of \(
     \listvar{r} \mapsto \proj{0}\mleft(f\left(s, \listvar{ra}\right)\mright)
     \).
-    The \emph{least fixed point} of \((S, f)\) with start state \(s_0\) is a \(
-    (\valuetuple{m}, \valuetuple{n})
-    \)-Mealy machine \(
-    (S, (s, \listvar{a}) \mapsto f((\mu_{s,\listvar{a}})\listvar{a}))
-    \) with start state \(s_0\).
+    The \emph{least fixed point} of an initialised Mealy machine \((S, f, s_0)\)
+    is a \((\valuetuple{m}, \valuetuple{n})\)-Mealy machine \(\left(
+    S, (s, \listvar{a})
+    \mapsto
+    f\left(\left(\mu_{s}\left(\listvar{a}\right)\right)\listvar{a}\right), s_0
+    \right)
+    \)
 \end{definition}
 
 \begin{example}\label{ex:trace-mealy}
@@ -451,7 +450,7 @@ We must show that this is the trace on \(\mealyi\).
     }
     \) is monotone with regards to the orders on \(S\) and
     \(\valuetuple{x+m}\) and \(S \times x+n\) is finite, so
-    \(f\) has a fixed point.
+    \(f\) has a least fixed point.
     The function \(
     f^\prime \coloneqq (s, \listvar{a})
     \mapsto
@@ -483,11 +482,12 @@ morphism.
 
 \subsection{Streams to Mealy machines}
 
-A causal stream function \(\morph{f}{\stream{A}}{\stream{B}}\) is just an
-\((A,B)\)-Mealy machine.
-This means that when such a function has finitely many stream
-derivatives, the states of a finite Mealy machine can be retrieved by
-repeatedly taking stream derivatives.
+So far we have seen how a causal, finitely specified, and \(\bot\)-preserving
+monotone stream function can be retrieved from a monotone Mealy machine.
+It is also possible to retrieve a Mealy machine for a given stream function in
+\(\streami\) by repeatedly taking stream derivatives; since we know there are
+finitely many we will be able to compute a finite set of states in a Mealy
+machine.
 
 \begin{example}
     Let \(\morph{f}{\belnapvalues}{\belnapvalues}\) be a stream function defined
@@ -615,8 +615,10 @@ in order to do this we must verify that the produced Mealy machine is monotone.
     a monotone Mealy machine.
 \end{lemma}
 \begin{proof}
-    Each state in the derived Mealy machine is a monotone stream function and
-    the Mealy function is the pairing of the initial output and stream
+    Each state in the derived Mealy machine is a monotone stream function, so
+    this is a poset ordered by \(\stateorder\) as defined in
+    \cref{def:state-order}. and
+    The Mealy function is the pairing of the initial output and stream
     derivative; by \cref{lem:initial-derivative-monotone} these are monotone so
     the Mealy function must also be monotone.
 \end{proof}
