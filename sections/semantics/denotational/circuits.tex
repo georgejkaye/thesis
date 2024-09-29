@@ -182,7 +182,7 @@ lose information by performing a computation.
 
 \begin{definition}
     Let \((A, \leq_A)\) and \((B, \leq_B)\) be partial orders.
-    A function \(\morph{f}{A}{B}\) is monotone if, for every \(x, y \in A\),
+    A function \(\morph{f}{A}{B}\) is \emph{monotone} if, for every \(x, y \in A\),
     \(x \leq_A y\) if and only if \(f(x) \leq_B f(y)\).
 \end{definition}
 
@@ -193,7 +193,7 @@ from nothing.
 \begin{definition}
     Let \(A,B\) be finite lattices, where \(\bot_A\) is the least element of
     \(A\) and \(\bot_B\) is the least element of \(B\).
-    A function \(\morph{f}{A}{B}\) is \(\bot\)-preserving if
+    A function \(\morph{f}{A}{B}\) is \emph{\(\bot\)-preserving} if
     \(f(\bot_A) = \bot_B\).
 \end{definition}
 
@@ -477,8 +477,9 @@ This means they cannot specify infinite \emph{behaviour}.
     \}\) is finite.
 \end{definition}
 
-As the components of our circuits are monotone, a denotational semantics for
-circuits must also be monotone.
+As the components of our circuits are monotone and \(\bot\)-preserving, a
+denotational semantics for circuits must also be monotone and
+\(\bot\)-preserving.
 This means we need to lift the order on values to an order on streams.
 
 \begin{notation}
@@ -487,13 +488,93 @@ This means we need to lift the order on values to an order on streams.
     for all \(i \in \nat\).
 \end{notation}
 
-However, because the lattice of streams is \emph{infinite}, we need a stronger
-condition than just monotonicity.
+For these three properties to be suitable as a denotational semantics for
+sequential circuits, we must show that stream functions with these
+properties form a category we can map into from \(\scircsigma\).
+We will first show that these categories form a symmetric monoidal category, so
+we need a suitable candidate for composition and tensor.
+There are fairly obvious choices here: for the former we use regular function
+composition and for the latter we use the Cartesian product.
+
+\begin{lemma}\label{lem:causality-preserved}
+    Causality is preserved by composition and Cartesian product.
+\end{lemma}
+\begin{proof}
+    If the \(i\)-th element of two stream functions \(f\) and \(g\) only depends
+    on the first \(i+1\) elements of the input, then so will their composition
+    and product.
+\end{proof}
+
+\begin{lemma}\label{lem:finitely-specified-preserved}
+    Finite specification is preserved by composition and Cartesian
+    product.
+\end{lemma}
+\begin{proof}
+    For both the composition and product of two stream functions \(f\) and
+    \(g\), the largest the set of stream derivatives could be is the product of
+    stream derivatives of \(f\) and \(g\), so this will also be finite.
+\end{proof}
+
+\begin{lemma}\label{lem:monotonicity-preserved}
+    \(\bot\)-preserving monotonicity is preserved by composition and Cartesian
+    product.
+\end{lemma}
+\begin{proof}
+    The composition and product of any monotone function is monotone, and must
+    preserve the \(\bot\) element.
+\end{proof}
+
+As the categorical operations preserve the desired properties, these stream
+functions form a PROP.
+
+\begin{proposition}
+    There is a PROP \(\streami\) in which the morphisms \(m \to n\) are the
+    causal, finitely specified and \(\bot\)-preserving monotone stream
+    functions \(\valuetuplestream{m} \to \valuetuplestream{n}\).
+\end{proposition}
+\begin{proof}
+    Identity is the identity function, the symmetry swaps streams, composition
+    is composition of functions, and tensor product on morphisms
+    \(\morph{f}{\valuetuplestream{m}}{\valuetuplestream{n}}\) and
+    \(\morph{g}{\valuetuplestream{p}}{\valuetuplestream{q}}\) is the Cartesian
+    product of functions composed with the components of the isomorphism
+    \(\valuetuplestream{m} \times \valuetuplestream{n}
+    \cong \valuetuplestream{m+n}\).
+
+    As these constructs satisfy the categorical axioms, and as function
+    composition and Cartesian product preserve causality
+    (\cref{lem:causality-preserved}),
+    finite specification (\cref{lem:finitely-specified-preserved}),
+    and monotonicity (\cref{lem:monotonicity-preserved}), this data defines a
+    symmetric monoidal category.
+\end{proof}
+
+Modelling sequential circuits as stream functions deals with temporal
+aspects, but what about feedback?
+As the assignment of denotations needs to be compositional, we need
+to map the trace on \(\scircsigma\) to a trace on \(\streami\).
+A usual candidate for the trace when considering partially ordered settings is
+the \emph{least fixed point}.
+
+\begin{definition}[Least fixed point]
+    For a poset \((A, \leq)\) and function \(\morph{f}{A}{A}\), the least
+    fixed point of \(f\) is a value \(\mu_f\) such that \(f(\mu_f) = f\) and,
+    for all values \(v\) such that \(f(v) = v\), \(\mu_f \leq v\).
+\end{definition}
+
+Least fixed points are ubiquitious in program semantics, where they are often
+used to model \emph{recursion}; since feedback is a form of recursion it seems
+apt that we should also follow this route.
+As fixed points are so important, they are the subject of many theorems; one
+that will come in very useful for us is the \emph{Kleene fixed-point theorem},
+which is concerned with a special class of monotone functions.
 
 \begin{definition}[Directed subset]
     For a poset \((A, \leq)\), a non-empty subset \(B \subseteq A\) is called a
     \emph{directed subset} if every pair of elements in \(B\) has an upper bound
     in \(B\).
+    If this set has a join \(\bigvee B\) then this element is called a
+    \emph{directed join}.
 \end{definition}
 
 \begin{notation}[Image]
@@ -502,23 +583,38 @@ condition than just monotonicity.
 \end{notation}
 
 \begin{definition}[Scott continuity]
-    For posets \((A, \leq_A)\) and \((B, \leq_B)\), a function
-    \(\morph{f}{A}{B}\) is called \emph{Scott-continuous} if for every directed
-    subset \(C \subseteq A\), \(f(\bigvee C) = \bigvee f[C]\).
+    Given two posets \((A, \leq_A)\) and \((B, \leq_B)\), a function
+    \(\morph{f}{A}{B}\) is \emph{Scott-continuous} if for every directed
+    subset \(C \subseteq A\) it holds that \(f(\bigvee_A C) = \bigvee_B(f[C])\)
+    i.e.\ \(f\) preserves directed joins.
 \end{definition}
+
+\begin{theorem}[Kleene fixed-point theorem~\cite{tarski1955latticetheoretical}]
+    Let \((A, \leq)\) be a poset in which each of its directed subsets has a
+    join, and let \(\morph{f}{L}{L}\) be a Scott-continuous function.
+    Then \(f\) has a least fixed point, defined as \(
+    \bot \vee f(\bot) \vee f(f(\bot)) \vee \cdots
+    \).
+\end{theorem}
+
+\begin{remark}
+    The Kleene fixed-point theorem was not actually proved by Kleene, but is
+    only named after him!
+    The result is often instead attributed to Tarski.
+\end{remark}
+
+As we have so far only considered monotone functions, it is useful to get some
+intuition for what Scott-continuity brings to the table.
 
 \begin{example}\label{ex:directed-subsets}
     An example of a directed subset of \(\belnapvalues^\omega\) is the set \(T\)
     defined as \(\{\belnaptrue^n\bot \,|\, n \in \nat\}\); the join of this set
-    is \(\belnaptrue^\omega\).
-
-    An example of a Scott-continuous function \(
+    is \(\belnaptrue^\omega\). One Scott-continuous function \(
     \belnapvalues^\omega \to \belnapvalues^\omega
-    \) is the function defined as \[
-        f(\sigma)(0) = \bot \qquad f(\sigma)(i+1) = f(sigma)(i);
-    \] this is Scott-continuous because finding the join of a set and then
-    prepending it with \(\bot\) is the same as prepending \(\bot\) to each
-    stream in the set and then finding their join.
+    \) is defined as \(f(\sigma)(0) = \bot\) and
+    \(f(\sigma)(i+1) = f(sigma)(i)\); this is Scott-continuous because finding
+    the join of a set and then prepending it with \(\bot\) is the same as
+    prepending \(\bot\) to each stream in the set and then finding their join.
 
     An example of a stream function that is monotone but \emph{not}
     Scott-continuous is the function defined as \(
@@ -534,10 +630,8 @@ condition than just monotonicity.
     \(f(\belnaptrue^\omega)\) must also share output prefixes.
 \end{example}
 
-The revelation at the end of the above example begs the question: do we actually
-need to enforce Scott-continuity on our stream functions or can we somehow get
-it for free?
-It turns out that causality and monotonicity together are enough.
+So far we have not explicitly enforced Scott-continuity on stream functions; it
+turns that it is implied by causality and monotonicity.
 
 \begin{proposition}\label{prop:monotone-causal-scott}
     Let \((A, \leq_A)\) and \((B, \leq_B)\) be finite lattices, and let
@@ -568,115 +662,16 @@ It turns out that causality and monotonicity together are enough.
     for each element \(i\); there must exist an element \(a_i \in A\) such that
     \(D\) contains infinitely many streams \(\sigma\) such that
     \(\sigma(i) = a_i\).
-    This means that \(\left(\bigvee D\right)(i) = a\).
-    Crucially, this means that every prefix of \(\bigvee D\) must exist as a
-    prefix of a stream in \(D\).
-    As \(f\) is causal, this means that for each prefix of
-    \(f\left(\bigvee D\right)\) must also exist a \(d \in D\) such that
+    This means that \(\left(\bigvee D\right)(i) = a\), so every prefix of
+    \(\bigvee D\) must exist as a prefix of a stream in \(D\).
+    As \(f\) is causal, for each prefix
+    \(f\left(\bigvee D\right)\) there must also exist a \(d \in D\) such that
     \(f(d)\) has that prefix, and as such
     \(\bigvee f[D] = f\left(\bigvee D\right)\).
 \end{proof}
 
-This completes the trio of properties we need to express the semantics of
-sequential circuits as stream functions.
-To use stream functions with these properties as a denotational semantics for
-circuits we must assemble them into another PROP and map into it from
-\(\scircsigma\) using a \emph{PROP morphism}, a strict symmetric monoidal
-functor between PROPs.
-To this end, we must show that these properties are preserved by composition.
-
-\begin{lemma}\label{lem:causality-preserved}
-    Causality is preserved by composition and Cartesian product.
-\end{lemma}
-\begin{proof}
-    If the \(i\)-th element of two stream functions \(f\) and \(g\) only depends
-    on the first \(i+1\) elements of the input, then so will their composition
-    and product.
-\end{proof}
-
-\begin{lemma}\label{lem:finitely-specified-preserved}
-    Finite specification is preserved by composition and Cartesian
-    product.
-\end{lemma}
-\begin{proof}
-    For both the composition and product of two stream functions \(f\) and
-    \(g\), the largest the set of stream derivatives could be is the product of
-    stream derivatives of \(f\) and \(g\), so this will also be finite.
-\end{proof}
-
-\begin{lemma}\label{lem:monotonicity-preserved}
-    Monotonicity is preserved by composition and Cartesian product.
-\end{lemma}
-\begin{proof}
-    The composition and product of any monotone function is monotone.
-\end{proof}
-
-As the categorical operations preserve the desired properties, these stream
-functions form a PROP.
-
-\begin{proposition}
-    There is a PROP \(\streami\) where morphisms \(m \to n\) are the causal,
-    finitely specified and monotone stream functions \(
-    \valuetuplestream{m} \to \valuetuplestream{n}
-    \).
-\end{proposition}
-\begin{proof}
-    Identity is the identity function, the symmetry swaps streams, composition
-    is composition of functions, and tensor product on morphisms
-    \(\morph{f}{\valuetuplestream{m}}{\valuetuplestream{n}}\) and
-    \(\morph{g}{\valuetuplestream{p}}{\valuetuplestream{q}}\) is the Cartesian
-    product of functions composed with the components of the isomorphism
-    \(\valuetuplestream{m} \times \valuetuplestream{n}
-    \cong \valuetuplestream{m+n}\).
-
-    As these constructs satisfy the categorical axioms, and as function
-    composition and Cartesian product preserve causality
-    (\cref{lem:causality-preserved}),
-    finite specification (\cref{lem:finitely-specified-preserved}),
-    and monotonicity (\cref{lem:monotonicity-preserved}), this data defines a
-    symmetric monoidal category.
-\end{proof}
-
-Modelling sequential circuits as stream functions deals with the temporal
-aspects of the former, but what about feedback?
-As the assignment of denotations to circuits needs to be compositional, we need
-to map the trace on \(\scircsigma\) to a trace on \(\streami\).
-
-A usual candidate for the trace when considering settings with some sort of
-order is the \emph{least fixed point}.
-
-\begin{definition}
-    For a poset \((A, \leq)\) and function \(\morph{f}{A}{A}\), the least
-    fixed point of \(f\) is a value \(\mu_f\) such that \(f(\mu_f) = f\) and,
-    for all values \(v\) such that \(f(v) = v\), \(\mu_f \leq v\).
-\end{definition}
-
-Least fixed points are ubiquitious in program semantics, and many important
-theorems have been proved about them.
-One that will come in very useful for us is the
-\emph{Kleene fixed-point theorem}.
-
-\begin{theorem}[Kleene fixed-point theorem~\cite{tarski1955latticetheoretical}]
-    Let \((A, \leq)\) be a poset in which each of its directed subsets has a
-    join, and let \(\morph{f}{L}{L}\) be a Scott-continuous function.
-    Then \(f\) has a least fixed point, defined as the join of the sequence
-    \(\bot, f(\bot), f(f(\bot)) \cdots\).
-\end{theorem}
-
-We will use this to compute the least fixed point of monotone stream functions,
-and subsequently to define a trace on \(\streami\).
-To compute the least fixed point of stream functions, they will themselves need
-to be ordered.
-
-\begin{definition}\label{def:state-order}
-    Let \(A\) and \(B\) be posets and let
-    \(\morph{f, g}{\stream{A}}{\stream{B}}\) be stream functions.
-    We say \(f \stateorder g\) if \(f(\sigma) \leq_{\stream{B}} g(\sigma)\)
-    for all \(\sigma \in \stream{A}\).
-\end{definition}
-
-A trace on \(\streami\) can now be defined in terms of a least fixed
-point.
+This means we can use the Kleene fixed point theorem as a tool to show that the
+least fixed point is a trace on \(\streami\).
 
 \begin{lemma}\label{lem:lfp-stream-function}
     Given a morphism \(
@@ -689,33 +684,44 @@ point.
 \begin{proof}
     The function \(\tau \mapsto \proj{0}\mleft(f(\tau,\sigma)\mright)\) is
     causal and monotone because \(f\) and the projection function are
-    causal and monotone.
-    By \cref{prop:monotone-causal-scott} this means that \(f\) is
-    Scott-continuous.
-    Subsequently, by the Kleene fixed point theorem, this function has a least
-    fixed point, defined as \(
+    causal and monotone, so it is Scott-continuous by
+    \cref{prop:monotone-causal-scott}.
+    By the Kleene fixed point theorem, this function has a least fixed point,
+    defined as \(
     \proj{0}\mleft(f(\bot^\omega, \sigma)\mright) \ljoin
     \proj{0}\mleft(f(\proj{0}\mleft(f(\bot^\omega, \sigma)\mright), \sigma)\mright) \ljoin
     \cdots
     \).
 \end{proof}
 
-We must show that this notion of least fixed point is a trace on \(\streami\);
-the original proof idea for the following is due to David Sprunger.
+We must show that this notion of least fixed point is a trace on \(\streami\).
+The first step is to show that taking the least fixed point of a stream function
+in \(\streami\) produces another causal, finitely specified,
+\(\bot\)-preserving, and monotone stream function.
+The original proof idea for this is due to David Sprunger, and relies on an
+ordering on stream functions themselves.
 
-\begin{theorem}
+\begin{definition}\label{def:state-order}
+    Let \(A\) and \(B\) be posets and let
+    \(\morph{f, g}{\stream{A}}{\stream{B}}\) be stream functions.
+    We say \(f \stateorder g\) if \(f(\sigma) \leq_{\stream{B}} g(\sigma)\)
+    for all \(\sigma \in \stream{A}\).
+\end{definition}
+
+\begin{theorem}\label{thm:trace-well-defined}
     For a function \(\morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{x+n}}\),
     let \(\mu_f(\sigma)\) be the least fixed point of the function \(
     \tau \mapsto \proj{0}\mleft(f(\tau,\sigma)\mright)
-    \) as defined in \cref{lem:lfp-stream-function}.
+    \).
     Then, the stream function \(
-    \sigma \mapsto \proj{1}\mleft(f(\mu_f(\sigma)\sigma)\mright)
-    \) is causal, monotone, and finitely specified.
+    \sigma \mapsto \proj{1}\mleft(f(\mu_f(\sigma), \sigma)\mright)
+    \) is in \(\streami\).
 \end{theorem}
 \begin{proof}
     To show this, we need to prove that
     \(\sigma \mapsto \proj{1}\mleft(f(\mu_f(\sigma)\sigma)\mright)\) is in
-    \(\streami\): it is causal, finitely specified, and monotone.
+    \(\streami\): it is causal, finitely specified, \(\bot\)-preserving and
+    monotone.
 
     Since \(
     \morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{x+n}}
@@ -734,8 +740,9 @@ the original proof idea for the following is due to David Sprunger.
     \mapsto
     \proj{0}(\streamderivative{f}{\listvar{w}}(\tau\sigma))
     \).
-    Note that each of these functions are causal and monotone, because they are
-    constructed from pieces that are causal and monotone.
+    Note that each of these functions are causal, \(\bot\)-preserving, and
+    monotone, because they are constructed from pieces that are causal
+    \(\bot\)-preserving and monotone.
 
     In particular, \(\mu_f(\sigma)\) is the least fixed point of
     \(\widehat{f_\varepsilon}\left((-)\sigma\right)\).
@@ -826,18 +833,23 @@ the original proof idea for the following is due to David Sprunger.
     \(\sigma \mapsto \proj{1}(f(\mu_f(\sigma)\sigma))\) is in \(\streami\).
 \end{proof}
 
+Even if \(\streami\) is closed under least fixed point, this does not mean that
+it is a valid trace.
+To verify this we must establish that the categorical axioms of the trace hold.
+
 \begin{theorem}
     A trace on \(\streami\) is given for a function \(
     \morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{x+n}}
     \) by the stream function \(
-    \sigma \mapsto \proj{1}(f(\mu_\sigma, \sigma))
-    \).
+    \sigma \mapsto \proj{1}(f(\mu_f(\sigma), \sigma))
+    \), where \(\mu_f(\sigma)\) is the least fixed point of the function \(
+    \tau \mapsto \proj{0}\mleft(f(\tau,\sigma)\mright)
+    \) for fixed \(\sigma\).
 \end{theorem}
 \begin{proof}
-    Since we showed in \cref{thm:trace-well-defined} that the given stream
-    function is in \(\streami\), we just need to show that this construction is
-    a trace by verifying the axioms of STMCs.
-    Most of these hold in a straightforward way; the only interesting one is
+    By \cref{thm:trace-well-defined}, \(\streami\) is closed under taking the
+    least fixed point, so we just need to show that the axioms of STMCs hold.
+    Most of these follow in a straightforward way; the only interesting one is
     the sliding axiom.
     We need to show that for stream functions \(
     \morph{f}{\valuetuplestream{x+m}}{\valuetuplestream{y+n}}
@@ -853,44 +865,52 @@ the original proof idea for the following is due to David Sprunger.
         \proj{1}\mleft(f(\tau, \sigma)\mright))
     }
     \).
-    To show this, we need to compute the least fixed point of
-    \(\tau \mapsto \proj{0}\mleft(f(g(\tau), \sigma)\mright)\) and
-    \(\tau \mapsto g(\proj{0}\mleft(f(\tau, \sigma)\mright))\) for fixed \(\sigma\);
-    for the former this is \[
-        \mu_\sigma^l =
-        \proj{0}\mleft(f(g(\bot^\omega, \sigma))\mright) \ljoin
+
+    Let \(l \coloneqq (\tau, \sigma) \mapsto f(g(\tau), \sigma)\) and
+    \(r \coloneqq (\tau, \sigma)
+    \mapsto
+    g(\proj{0}\mleft(f(\tau, \sigma)\mright),
+    \proj{1}\mleft(f(\tau, \sigma)\mright))\); we must apply the candidate
+    trace construction to both of these and check they are equal.
+    For \(l\), the least fixed point of \(
+    \tau \mapsto \proj{0}\mleft(f(g(\tau), \sigma)\mright)
+    \) is \[
+        \mu_l(\sigma) =
+        \proj{0}\mleft(f(g(\bot^\omega), \sigma)\mright) \ljoin
         \proj{0}\mleft(f(g(\proj{0}\mleft(f(g(\bot^\omega), \sigma))\mright), \sigma)\mright) \ljoin
-        \cdots\]
-    and for the latter this is \[
-        \mu_\sigma^r =
-        g(\proj{0}\mleft(f(\bot^\omega, sigma)\mright)) \ljoin
+        \cdots.\]
+    Plugging this into the candidate trace construction we have that \begin{align*}
+         &
+        \sigma \mapsto \proj{1}\mleft(f(g(\mu_l^l(\sigma)), \sigma)\mright)
+        \\
+         & \qquad=
+        \sigma \mapsto \proj{1}\mleft(f(g(\proj{0}\mleft(f(g(\dots f(g(\proj{0}\mleft(f(g(\bot^\omega), \sigma)\mright)), \sigma)))\mright)), \sigma)\mright)
+    \end{align*}
+    For the right-hand side, the least fixed point of \(
+    \tau \mapsto g(\proj{0}\mleft(f(\tau, \sigma)\mright))
+    \) is \[
+        \mu_r(\sigma) =
+        g(\proj{0}\mleft(f(\bot^\omega, \sigma)\mright)) \ljoin
         g(\proj{0}\mleft(f(g(\proj{0}\mleft(f(g(\bot^\omega), \sigma)\mright)), \sigma)\mright)) \ljoin
         \cdots
     \]
-    Plugging these back into the original functions gets us \begin{align*}
-        \sigma \mapsto \proj{1}\mleft(f(g(\mu_\sigma^l), \sigma)\mright)
-         & =
-        \sigma \mapsto \proj{1}\mleft(f(g(\proj{0}\mleft(f(g(\proj{0}\mleft(f(g(\dots f(g(\proj{0}\mleft(f(g(\bot^\omega, \sigma))\mright)))\mright)))\mright)))\mright)))
-    \end{align*} and \begin{align*}
-        \sigma \mapsto \proj{1}(g(\proj{0}(f(\mu_\sigma^r, \sigma))), \proj{1}(f(\mu_\sigma^r, \sigma)))
-         & =
+    When plugged into the candidate trace construction this produces \begin{align*}
+         & \sigma \mapsto \proj{1}\mleft(g(\proj{0}(f(\mu_r(\sigma), \sigma))), \proj{1}(f(\mu_r(\sigma), \sigma))\mright)
+        \\
+         & \qquad =
         \sigma \mapsto \proj{1}(f(\mu_\sigma^r, \sigma))
         \\
-         & =
+         & \qquad=
         \sigma \mapsto \proj{1}(f(
         g(\proj{0}\mleft(f(g(\dots f(g(\proj{0}\mleft(f(g(\bot^\omega), \sigma)\mright)), \sigma)\mright)), \sigma))))
         \\
-         & =
+         & \qquad=
         \sigma \mapsto \proj{1}(f(
         g(\proj{0}\mleft(f(g(\dots f(g(\proj{0}\mleft(f(\bot^\omega, \sigma)\mright)), \sigma)\mright)), \sigma))))
     \end{align*}
+    Both the left-hand and the right-hand sides of the sliding equation are
+    equal, so the construction is indeed a trace.
 \end{proof}
-
-\begin{remark}
-    Using the least fixpoint as a trace is a common idea in
-    denotational semantics for programming languages, where it is used to
-    model \emph{recursion}.
-\end{remark}
 
 We now have two traced PROPs: a \emph{syntactic} PROP of sequential circuit
 terms \(\scircsigma\) and a \emph{semantic} PROP of causal, finitely
