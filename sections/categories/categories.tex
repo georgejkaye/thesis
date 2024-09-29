@@ -29,10 +29,15 @@ To grasp how these equations are derived one requires quite a
 bit of technical knowledge, so we will build it up one step at a time.
 We start with a \emph{category}.
 
-\begin{definition}[Category]
+\begin{definition}[Category]\index{category}
     \label{def:category}
-    A \emph{category} \(\mcc\) consists of a class of \emph{objects}
-    \(\ob{\mcc}\); a class of \emph{morphisms} \(\mor{\mcc}{A}{B}\)
+    A \emph{category} \(\mcc\)\nomenclature{\(\mcc,\mcd,\dots\)}{categories}
+    consists of a class of \emph{objects}
+    \(\ob{\mcc}\)
+    \index{objects}
+    \nomenclature{\(\ob{\mcc}\)}{class of objects in category \(\mcc\)};
+    a class of \emph{morphisms} \(\mor{\mcc}{A}{B}\)
+    \nomenclature{\(\mor{\mcc}{A}{B}\)}{class of morphisms from \(A\) to \(B\) in category \(\mcc\)}
     for every pair of objects \(A, B \in \ob{\mcc}\); and a \emph{composition}
     operation \(
     \morph{
@@ -42,27 +47,35 @@ We start with a \emph{category}.
     }{
         \mor{\mcc}{A}{C}
     }
-    \) such that
+    \)
+    \index{composition!of morphisms}
+    \index{composition!functional order}
+    \nomenclature{\(\circ\)}{functional order composition} such that
     \begin{itemize}
         \item
               for any object \(A \in \ob{\mcc}\) there exists a unique
               \emph{identity} morphism \(\id[A]\);
+              \index{identity!morphism}
+              \nomenclature{\(\id[A]\)}{identity morphism on \(A\)}
         \item
               for any \(f \in \mor{\mcc}{A}{B}\), it holds that \(
               f \circ \id[A] = f = \id[B] \circ f
               \); and
+              \index{unitality!of composition}
         \item for any morphisms \(
               f \in \mor{\mcc}{A}{B}
               \), \(
               g \in \mor{\mcc}{B}{C}
               \) and \(h \in \mor{\mcc}{C}{D}\), it holds that \(
               (h \circ g) \circ f = h \circ (g \circ f).
-              \)
+              \)\index{associativity!of composition}
     \end{itemize}
 \end{definition}
 
-A morphism \(f \in \mor{\mcc}{A}{B}\) is also called an \emph{arrow}, and will
+A morphism \(f \in \mor{\mcc}{A}{B}\) is also called an \emph{arrow}
+\index{arrow}, and will
 often be written \(\morph{f}{A}{B}\) accordingly.
+\nomenclature{\(A \to B\)}{morphism from \(A\) to \(B\)}
 When clear from context, we will use the notation \(A \in \mcc\) or
 \(f \in \mcc\) for objects and morphisms belonging to a particular category.
 
@@ -77,6 +90,9 @@ We interpret terms as morphisms; one difference here is that we previously used
 \(\circ\).
 
 \begin{notation}
+    \index{composition!diagrammatic order}
+    \index{diagrammatic order composition}
+    \nomenclature{\(\seq\)}{diagrammatic order composition}
     \emph{Diagrammatic order} composition is written as
     \(f \seq g \coloneqq g \circ f\).
 \end{notation}
@@ -89,6 +105,7 @@ in~\cref{fig:c-equations}.
 \subsection{Commutative diagrams}
 
 Equations in category theory can be expressed using \emph{commutative diagrams}.
+\index{commutative diagram}
 For example, the unitality and associativity of composition can be illustrated
 as follows:
 
@@ -109,7 +126,10 @@ The definition of a category is quite abstract and might take some getting used
 to: it can be helpful to consider some concrete examples.
 
 \begin{example}[Preorder]
-    A \emph{preorder} is a reflexive, transitive binary relation \(\leq\) on a
+    \index{preorder}
+    \index{category!preorder category}
+    A \emph{preorder} is a reflexive, transitive binary relation \(\lesssim\) on
+    a
     set \(X\).
     Any preorder generates a category \(\mcc_\leq\): the objects are the
     elements of \(X\) and \(\mcc_\leq(x, y)\) contains exactly one morphism if
@@ -117,6 +137,8 @@ to: it can be helpful to consider some concrete examples.
 \end{example}
 
 \begin{example}[Sets]
+    \index{category!of sets}
+    \nomenclature{\(\set\)}{category of sets}
     The category \(\set\) has sets as objects and functions as morphisms, with
     composition of functions as composition.
     There are other categories with sets as objects, such as \(\rel\), which has
@@ -126,6 +148,12 @@ to: it can be helpful to consider some concrete examples.
 \end{example}
 
 \begin{example}[Posets]
+    \index{poset}
+    \index{partial order}
+    \index{partially ordered set}
+    \index{category!of posets}
+    \index{monotone}
+    \nomenclature{\(\leq_A\)}{partial order on set \(A\)}
     A \emph{partial order} on a set \(A\) is a reflexive, antisymmetric and
     transitive relation \({\leq} \subseteq A \times B\).
     A set equipped with a partial order is called a
@@ -140,6 +168,11 @@ to: it can be helpful to consider some concrete examples.
 \end{example}
 
 \begin{example}[Monoids]\label{ex:monoid}
+    \index{monoid}
+    \index{unit}
+    \index{multiplication}
+    \index{monoid homomorphism}
+    \index{category!of monoids}
     A \emph{monoid} is a tuple \((A, *, e)\) where \(A\) is a set called
     the \emph{carrier}, \(\morph{*}{A \times A}{A}\) is a binary operation
     called the \emph{multiplication}, and \(e \in A\) is an element called
@@ -153,6 +186,7 @@ to: it can be helpful to consider some concrete examples.
 \end{example}
 
 \begin{example}[Product category]
+    \index{category!product category}
     Given two categories \(\mcc\) and \(\mcd\), their \emph{product category}
     \(\mcc \times \mcd\) is the category with objects defined as \(
     \ob{\mcc \times \mcd} \coloneqq \ob{\mcc} \times \ob{\mcd}
@@ -175,7 +209,7 @@ to: it can be helpful to consider some concrete examples.
     (g \circ f, g^\prime \circ f^\prime)\).
 \end{example}
 
-\subsection{Universal properties}
+\subsection{Universal properties}\index{universal properties}
 
 Category theory is an appealing foundation because it can be used to
 \emph{abstract} away from concrete constructions.
@@ -184,7 +218,7 @@ show how they are an instantiation of some more abstract concept.
 One such way we can do this is by considering the properties a morphism might
 have.
 
-\begin{definition}[Monomorphism]
+\begin{definition}[Monomorphism]\index{monomorphism}
     A morphism \(\morph{f}{A}{B} \in \mcc\) is called a \emph{monomorphism} (or
     simply \emph{mono} for short) if for any two morphisms
     \(\morph{g_1,g_2}{C}{A}\), if \(f \circ g_1 = f \circ g_2\), then
@@ -206,7 +240,7 @@ have.
 One can think of monomorphisms as morphisms which are \emph{left-cancellative}.
 There is also a way to describe \emph{invertible} morphisms.
 
-\begin{definition}[Isomorphism]
+\begin{definition}[Isomorphism]\index{isomorphism}
     A morphism \(\morph{f}{A}{B} \in \mcc\) is called an \emph{isomorphism} (or
     simply \emph{iso} for short) if there also exists a morphism \(
     \morph{\inverse{f}}{B}{A} \in \mcc
@@ -250,12 +284,12 @@ These are specified in terms of a \emph{universal property}: a unique morphism
 that indicates the `best' way to describe something.
 We will first consider universal properties concerning special objects.
 
-\begin{definition}[Initial object]
+\begin{definition}[Initial object]\index{initial object}
     An object \(C\) in a category \(\mcc\) is \emph{initial} if, for any other
     object \(X \in \mcc\) there exists a unique morphism \(C \to X\).
 \end{definition}
 
-\begin{example}
+\begin{example}\index{initial object!in \(\set\)}
     In \(\set\), the initial object is the empty set \(\emptyset\), as there is
     a unique function from \(\emptyset\) to any set \(X\), the so-called
     `absurd function'.
@@ -266,12 +300,12 @@ arrows are flipped.
 This means that when defining constructions and proving results about them, we
 often also get results for free about the dual case.
 
-\begin{definition}[Terminal object]
+\begin{definition}[Terminal object]\index{terminal object}
     An object \(C\) in a category \(\mcc\) is \emph{terminal} if, for any other
     object \(X \in \mcc\) there exists a unique morphism \(X \to C\).
 \end{definition}
 
-\begin{example}
+\begin{example}\index{terminal object!in \(\set\)}
     In \(\set\), the terminal object is the set containing a single object
     \(\star\): from any set \(X\) there is a unique function
     \(X \to \{\star\}\); namely the function \(x \mapsto \star\).

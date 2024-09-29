@@ -3,7 +3,7 @@
 We are interested in using category theory as a tool to study \emph{circuits}
 built from some primitive components, or \emph{generators}.
 
-\begin{definition}[Generators]\label{def:generators}
+\begin{definition}[Generators]\label{def:generators}\index{generator}
     A set of \emph{generators} \(\generators\) is a set equipped with two
     functions \(\morph{\dom,\cod}{\generators}{\nat}\).
 \end{definition}
@@ -12,7 +12,7 @@ Generators are the primitive building blocks of terms: their domains and
 codomains specify how many input and output wires they have.
 Terms are defined by combining these primitives together.
 
-\begin{definition}[Term]
+\begin{definition}[Term]\index{term}\index{\(\Sigma\)-term}
     \label{def:terms}
     Let \(\generators\) be a set of generators.
     A \(\generators\)-term is written \(\morph{f}{m}{n}\)
@@ -63,17 +63,18 @@ Terms are defined by combining these primitives together.
 
 \(\Sigma\)-terms are constructed recursively.
 There are four base cases: a generator from \(\generators\) with appropriate
-inputs and outputs; an \emph{identity} for single wires, empty space, and
-a \emph{symmetry} for swapping over two wires.
-The two inductive cases are called \emph{composition} and \emph{tensor}
-respectively.
+inputs and outputs; an \emph{identity}\index{identity!term} for single wires,
+empty space\index{empty!term}, and a \emph{symmetry}\index{symmetry!term} for
+swapping over two wires.
+The two inductive cases are called \emph{composition}\index{composition!of terms} and \emph{tensor}
+\index{tensor!term} respectively.
 Intuitively, these can be thought of as generating larger terms by composing
 subterms in sequence or parallel.
 
 Although here identities and symmetries only operate on single wires, it is
 a simple exercise to define them for larger numbers of wires.
 
-\begin{notation}[Composite identities]\label{not:composite-identities}
+\begin{notation}[Composite identities]\label{not:composite-identities}\index{identity!composite term}
     Composite identities \(\id[n]\) are defined inductively for \(n \in \nat\)
     as \(
     \id[0] \coloneqq \id[0]\) and \(
@@ -82,7 +83,7 @@ a simple exercise to define them for larger numbers of wires.
     \id[k] \tensor \id[1]
     \).
 \end{notation}
-\begin{notation}[Composite symmetries]\label{not:composite-symmetries}
+\begin{notation}[Composite symmetries]\label{not:composite-symmetries}\index{symmetry!composite term}
     Composite symmetries \(\swap{m}{n}\) for \(m, n \in \nat\) are defined
     inductively as \[
         \swap{0}{n}
@@ -121,7 +122,7 @@ context.
     \end{gather*}
 \end{example}
 
-\section{String diagrams}
+\section{String diagrams}\index{string diagram}
 
 Even simple terms described using one-dimensional text strings quickly become
 indecipherable.
@@ -220,7 +221,7 @@ these equations can be derived using the mathematical structure of a
     \).
 \end{notation}
 
-\section{Coloured terms}
+\section{Coloured terms}\index{term!coloured}
 
 In \(\Sigma\)-terms, the wires are \emph{monochromatic}; there is no
 distinguishing between them.
@@ -247,7 +248,7 @@ by two natural numbers \(m\) and \(n\), as there are \(m\) input wires and
 When the wires are coloured, more information is needed: the inputs and outputs
 must be specified in terms of their colours and their ordering.
 
-\begin{notation}[Words]\label{not:words}
+\begin{notation}[Words]\label{not:words}\index{word}
     Given a set \(A\), the set of (finite) words of elements of \(A\) is denoted
     \(\freemon{A}\).
     Words are written \(x_0x_1x_2{\cdots}x_{n-1}\); arbitrary words are written
@@ -265,7 +266,7 @@ must be specified in terms of their colours and their ordering.
     \(\listvar{x}(1) = b\) and \(\listvar{x}(2) = c\).
 \end{notation}
 
-\begin{definition}[Coloured generators]
+\begin{definition}[Coloured generators]\index{generator!coloured}
     For a countable set \(C\), a set of \emph{\(C\)-coloured generators}
     \(\Sigma\) is a set equipped with two functions
     \(\morph{\dom,\cod}{\Sigma}{\freemon{C}}\).
