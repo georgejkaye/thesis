@@ -252,7 +252,14 @@ Although the value of \(c\) increases as the number of feedback wires increases,
 it only does so linearly in the height of the lattice.
 
 \begin{remark}
-    \todo[inline]{'bad' circuits? berry comparison}
+    \cite{mendler2012constructive} uses a ternary set of values and monotone
+    functions to present a notion of \emph{constructive} circuits: the circuits
+    that stabilise to unique Boolean values for all Boolean inputs.
+    This definition excludes circuits that may oscillate between two values, as
+    these are not considered to be monotone circuits.
+    Conversely, in our model such circuits \emph{can} be monotone.
+    For example a Belnap circuit may alternate between \(\belnaptrue\) and
+    \(\belnapfalse\) because these occupy the same level of the lattice.
 \end{remark}
 
 With a method to eliminate non-delay-guarded feedback, we can establish the
