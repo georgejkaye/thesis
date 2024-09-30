@@ -8,12 +8,12 @@ content' of processes comes from equations that show how the generators interact
 with \emph{each other}.
 These equations are provided by a \emph{monoidal theory}.
 
-\begin{definition}
+\begin{definition}\index{equation}
     An \emph{equation} is a pair of terms with the same domain and
     codomain.
 \end{definition}
 
-\begin{definition}[Monoidal theory]
+\begin{definition}[Monoidal theory]\index{monoidal theory}
     A \emph{monoidal theory} is a tuple \((\generators, \equations)\) where
     \(\generators\) is a set of generators and \(\equations\) is a set of
     equations.
@@ -25,6 +25,8 @@ When reasoning with a monoidal theory, we therefore need to work in a category
 subject to this identification of morphisms.
 
 \begin{definition}[Quotient category]
+    \index{quotient}\index{category!quotient}
+    \nomenclature{\(\mcc / \mce\)}{category \(\mcc\) quotiented by set of equations \(\mce\)}
     Given a category \(\mcc\) and a set of equations \(\mce\) between
     morphisms in \(\mcc\) with the same source and target, the
     \emph{quotient category} \(\mcc / \mce\) is the category in which
@@ -40,6 +42,7 @@ In a quotient category \(\mcc / \mce\) the morphisms are the
 \(\mce\).
 
 \begin{definition}
+    \nomenclature{\(\smc{\generators, \equations}\)}{\(\smcsigma\) quotiented by set of equations \(\mce\)}
     Given a monoidal theory \((\generators, \equations)\), let
     \(\smc{\generators, \equations} \coloneqq \smc{\generators} / \equations\).
 \end{definition}
@@ -50,7 +53,7 @@ PROP.
 
 We can also use the same procedure to define \emph{coloured} monoidal theories.
 
-\begin{definition}[Coloured monoidal theory]
+\begin{definition}[Coloured monoidal theory]\index{monoidal theory!coloured}
     A \emph{coloured monoidal theory} is a tuple
     \((C, \generators, \equations)\) where \(C\) is a countable set of colours,
     \(\generators\) is a set of \(C\)-coloured generators, and \(\equations\)
@@ -58,6 +61,7 @@ We can also use the same procedure to define \emph{coloured} monoidal theories.
 \end{definition}
 
 \begin{definition}
+    \nomenclature{\(\smc{C, \generators, \equations}\)}{\(\smcsigmac\) quotiented by set of equations \(\mce\)}
     Given a coloured monoidal theory \((C, \generators, \equations)\), let
     \(\smc{C, \generators, \equations} \coloneqq \smc{C, \generators} / \equations\).
 \end{definition}
@@ -78,6 +82,7 @@ As an example, we will explore the monoidal theory of
 \emph{commutative monoids}; using the graphical notation the intended behaviour
 of the two generators is much clearer.
 
+\index{commutative monoid}
 \begin{definition}[Commutative monoids]\label{def:commutative-monoid}
     The monoidal theory of
     \emph{commutative monoids} is \(
@@ -117,6 +122,7 @@ These equations could be described textually, but the string diagrams provide
 intuitive visual interpretations; often it is insightful to reason
 \emph{diagrammatically}.
 
+\index{unitality}
 \begin{example}[Right unitality]
     \(
     \iltikzfig{strings/structure/monoid/unitality-r-lhs}

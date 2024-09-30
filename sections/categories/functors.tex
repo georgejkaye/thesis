@@ -8,7 +8,7 @@ object \(FA \in \mcd\), and a morphism \(\morph{f}{A}{B} \in \mcc\) to
 This is generally not a strong enough definition to be useful, so some
 additional restrictions must be added to define the notion of a \emph{functor}.
 
-\begin{definition}[Functor]
+\begin{definition}[Functor]\index{functor}
     Given two categories \(\mcc\) and \(\mcd\), a \emph{functor} \(
     \morph{F}{\mcc}{\mcd}
     \) maps objects and morphisms in \(\mcc\) to objects and morphisms in
@@ -69,7 +69,7 @@ The two equations above are known as the \emph{functoriality} equations; if a
 map satisfies these it is said to be \emph{functorial}.
 
 Functors have a graphical representation as `functorial
-boxes'~\cite{mellies2006functorial}; the notation for applying a functor
+boxes'~\cite{mellies2006functorial}\index{functor!functorial box}\index{string diagram!functor}; the notation for applying a functor
 \(\morph{F}{\mcc}{\mcd}\) to a morphism \(\morph{f}{X}{Y}\) is shown in
 \cref{fig:functoriality-equations}, along with the depictions of the
 functoriality equations.
@@ -81,11 +81,11 @@ As always, the wire labels are optional and will be omitted if unambiguous.
 
 Many notions in mathematics and computer science can be viewed as functors.
 
-\begin{definition}[Endofunctor]
+\begin{definition}[Endofunctor]\index{functor!endofunctor}
     An \emph{endofunctor} on category \(\mcc\) is a functor \(\mcc \to \mcc\).
 \end{definition}
 
-\begin{example}[Powerset functor]
+\begin{example}[Powerset functor]\index{functor!powerset functor}
     The notion of powerset can be interpreted as an endofunctor \(
     \morph{\powerset}{\set}{\set}
     \), mapping a set \(X\) to its powerset \(\powerset(X)\) and a morphism
@@ -93,7 +93,7 @@ Many notions in mathematics and computer science can be viewed as functors.
     applies \(f\) pointwise.
 \end{example}
 
-\begin{example}[List functor]\label{ex:list-functor}
+\begin{example}[List functor]\label{ex:list-functor}\index{functor!list functor}
     A functor that crops up frequently in computer science is the
     \emph{list functor} \(\morph{\listf}{\set}{\set}\), which sends a set
     \(X\) to its set of lists \(\freemon{X}\), and sends a function
@@ -102,14 +102,14 @@ Many notions in mathematics and computer science can be viewed as functors.
     to each element of a list.
 \end{example}
 
-\begin{example}[Free monoid]\label{ex:free-monoid}
+\begin{example}[Free monoid]\label{ex:free-monoid}\index{free monoid}\index{functor!free monoid}
     The \emph{free construction} of a mathematical structure can be viewed as
     its most `bare-bones' version.
     Recall the definition of monoids from \cref{ex:monoid}: the set of words
     \(\freemon{X}\) as defined in \cref{not:words} is the carrier of the
     \emph{free monoid} on \(X\).
     This means there is a functor \(\morph{F}{\set}{\mon}\) (the
-    \emph{free functor}) that acts on objects as \(
+    \emph{free functor})\index{functor!free functor} that acts on objects as \(
     X \mapsto (
     \freemon{X},
     (\listvar{v}, \listvar{w}) \mapsto \listvar{v}\listvar{w},
@@ -117,7 +117,7 @@ Many notions in mathematics and computer science can be viewed as functors.
     )\) and sends morphisms \(X \to Y\) to the corresponding monoid homomorphism
     \(\freemon{X} \to \freemon{Y}\).
 
-    There is also a \emph{forgetful} or \emph{underlying} functor
+    There is also a \emph{forgetful} or \emph{underlying} functor\index{functor!forgetful functor}
     \(\morph{U}{\mon}{\set}\) which sends a monoid \((X, *, e)\) to its carrier
     set \(X\) and `forgets' the monoid structure.
     The functors \(F\) and \(U\) form an \emph{adjunction}, but this
@@ -130,13 +130,13 @@ It is possible to view functors purely as a standalone concept, but the
 core tenet of category theory is to view everything in terms of morphisms;
 functors are no different.
 
-\begin{example}[Identity functor]
+\begin{example}[Identity functor]\index{functor!identity functor}\index{identity!functor}
     A trivial endofunctor for any category \(\mcc\) is the
     \emph{identity functor} \(\morph{\idf}{\mcc}{\mcc}\) which acts as the
     identity on objects and morphisms.
 \end{example}
 
-\begin{example}[Functor composition]
+\begin{example}[Functor composition]\index{functor!functor composition}\index{composition!of functors}
     If \(\morph{F}{\mcc}{\mcd}\) and \(\morph{G}{\mcd}{\mce}\) are functors
     then their composite \(\morph{G \circ F}{\mcc}{\mce}\) is also a functor.
 \end{example}
@@ -145,12 +145,12 @@ Identity and (associative) composition are all we need to define a category.
 Although we cannot define a category containing \emph{all} categories, we can
 define a category containing all `small' categories.
 
-\begin{definition}
+\begin{definition}\index{category!small category}
     A category \(\mcc\) is \emph{small} if \(\ob{\mcc}\) and
     \(\mor{\mcc}{A}{B}\) are sets for all \(A, B \in \mcc\).
 \end{definition}
 
-\begin{example}[Category of categories]
+\begin{example}[Category of categories]\index{category!of categories}
     \(\cat\) is the category in which \(\ob{\cat}\) are small categories and
     \(\mor{\cat}{\mcc}{\mcd}\) contains functors \(\mcc \to \mcd\).
     Identity is the identity functor, and composition is functor composition.
@@ -171,7 +171,7 @@ of morphisms between two objects.
     to the classes of morphisms \(FA \to FB\) in \(\mcd\).
 \end{notation}
 
-\begin{definition}[Faithful functor~\cite{maclane1978categories}]
+\begin{definition}[Faithful functor~\cite{maclane1978categories}]\index{functor!faithful}
     A functor \(\morph{F}{\mcc}{\mcd}\) is \emph{faithful} if \(F_{A,B}\) is
     injective for all \(A,B \in \mcc\).
 \end{definition}
@@ -180,14 +180,14 @@ A faithful functor \(\morph{F}{\mcc}{\mcd}\) does not coalesce morphisms: every
 morphism \(f \in \mor{\mcc}{A}{B}\) has a unique morphism
 \(Ff \in \mor{\mcd}{FA}{FB}\).
 
-\begin{definition}[Full functor~\cite{maclane1978categories}]
+\begin{definition}[Full functor~\cite{maclane1978categories}]\index{functor!full}
     A functor \(\morph{F}{\mcc}{\mcd}\) is \emph{full} if \(F_{A,B}\) is
     surjective for all \(A,B \in \mcc\).
 \end{definition}
 
 Every morphism \(FA \to FB\) is in the image of a full functor.
 
-\begin{definition}[Fully faithful functor~\cite{maclane1978categories}]
+\begin{definition}[Fully faithful functor~\cite{maclane1978categories}]\index{functor!fully faithful}
     A functor \(\morph{F}{\mcc}{\mcd}\) is \emph{fully faithful} if \(F_{A,B}\)
     is bijective for all \(A, B \in \mcc\); i.e.\ the functor is full and
     faithful.
@@ -207,7 +207,7 @@ faithfulness show how exactly two categories are related.
 One way a category \(\mcc\) can be related to another category \(\mcd\) is that
 the former is the latter with `some of the bits taken out'.
 
-\begin{definition}[Subcategory]
+\begin{definition}[Subcategory]\index{category!subcategory}
     Given a category \(\mcc\), a \emph{subcategory} \(\mcd\) of \(\mcc\) is a
     subclass of the objects in \(\mcc\) and a subclass of the morphisms in
     \(\mcd\) such that
@@ -225,13 +225,14 @@ These conditions on a subcategory \(\mcd\) enforce that \(\mcd\) also has the
 structure of a category.
 This means there is an obvious induced functor \(\morph{S}{\mcd}{\mcc}\) mapping
 objects and morphisms in \(\mcd\) to the same objects in \(\mcc\); this is
-called an \emph{inclusion functor}, and is often written with a hooked arrow
-\(\mcd \hookrightarrow \mcc\).
+called an \emph{inclusion functor}\index{functor!inclusion}, and is
+often written with a hooked arrow \(\mcd \hookrightarrow \mcc\)
+\nomenclature{\(\mcc \hookrightarrow \mcc\)}{inclusion functor from \(\mcc\) to \(\mcd\)}.
 An inclusion functor is clearly faithful, since there cannot be two morphisms in
 the subcategory that map to the same morphism in the parent category.
 Inclusion functors that are also \emph{full} are of particular interest.
 
-\begin{definition}[Full subcategory]
+\begin{definition}[Full subcategory]\index{category!full subcategory}
     A subcategory \(\mcd\) is a \emph{full subcategory} if its inclusion functor
     \(\mcd \to \mcc\) is full and faithful; i.e.\ for all objects
     \(A, B \in \mcd\), the morphisms \(\mor{\mcd}{A}{B} = \mor{\mcc}{A}{B}\).
@@ -248,7 +249,7 @@ Inclusion functors that are also \emph{full} are of particular interest.
 Sometimes a category is not merely a subcategory of another, but the two
 categories are actually (almost) the same.
 
-\begin{definition}
+\begin{definition}\index{isomorphism!of categories}
     Two categories \(\mcc\) and \(\mcd\) are \emph{isomorphic} if there exist
     functors \(\morph{F}{\mcc}{\mcd}\) and \(\morph{G}{\mcd}{\mcc}\) such that
     \(G \circ F = \idf[\mcc]\) and \(F \circ G = \idf[\mcd]\).
@@ -264,7 +265,7 @@ long as it has the required properties.
     bijective on objects.
 \end{lemma}
 
-\begin{remark}
+\begin{remark}\index{equivalence!of categories}
     Usually, isomorphism of categories is too restrictive; often the weaker
     notion \emph{equivalence of categories} is used, in which the two functors
     \(F\) and \(G\) need only be \emph{naturally isomorphic} to the identity
@@ -281,7 +282,7 @@ objects and pullbacks.
 Using functors, these universal constructions can be viewed as special cases of
 even more abstract notions: \emph{limits} and \emph{colimits}.
 
-\begin{definition}[Cone]
+\begin{definition}[Cone]\index{cone}
     Let \(\mathcal{J}\) and \(\mathcal{C}\) be categories, and let
     \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) be a functor.
     A \emph{cone to \(F\)} is an object \(N \in \mathcal{C}\) equipped with
@@ -296,7 +297,7 @@ even more abstract notions: \emph{limits} and \emph{colimits}.
 
 The limit is the `best possible cone'.
 
-\begin{definition}[Limit]
+\begin{definition}[Limit]\index{limit}
     Let \(\mathcal{J}\) and \(\mathcal{C}\) be categories, and let
     \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) be a functor.
     The \emph{limit of \(F\)} is a cone to \(F\) \((L,\phi) \) such that for
@@ -312,6 +313,7 @@ Limits generalise several of the universal constructions we have encountered so
 far.
 
 \begin{example}[Terminal object]\label{ex:terminal-limit}
+    \index{limit!terminal object}\index{terminal object!as a limit}
     When the category \(\mathcal{J}\) is the empty category, the only functor
     \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) is the empty functor.
     Since there are no objects in \(\mathcal{J}\), a cone of \(F\) is just an
@@ -321,6 +323,7 @@ far.
 \end{example}
 
 \begin{example}[Products]\label{ex:product-limit}
+    \index{limit!product}\index{product!as a limit}
     When the category \(\mathcal{J}\) has objects but no morphisms other than
     identities, a functor \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) is one that
     indexes objects of \(\mathcal{C}\) by objects in \(\mathcal{J}\).
@@ -329,6 +332,7 @@ far.
 \end{example}
 
 \begin{example}[Pullbacks]\label{ex:pullback-limit}
+    \index{limit!pullback}\index{pullback!as a limit}
     Let \(\mathcal{J}\) be a category containing objects \(A\), \(B\),
     \(C\) with non-identity morphisms \(B \to A\) and \(C \to A\).
     A cone of \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) is an object \(N\) and
@@ -346,7 +350,7 @@ in.
     \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) has a limit in \(\mathcal{C}\).
 \end{definition}
 
-\begin{definition}[Complete category]
+\begin{definition}[Complete category]\index{category!complete}
     A category \(\mathcal{C}\) is \emph{complete} if it has limits for all
     functors \(\morph{F}{\mathcal{J}}{\mathcal{C}}\), where \(\mathcal{J}\) is a
     small category.
@@ -355,7 +359,7 @@ in.
 Limits do not generalise all the universal constructions we have seen so far;
 for the rest we must flip the arrows and consider the dual version.
 
-\begin{definition}[Cocone]
+\begin{definition}[Cocone]\index{cocone}
     Let \(\mathcal{J}\) and \(\mathcal{C}\) be categories, and let
     \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) be a functor.
     A \emph{cocone to \(F\)} is an object \(N \in \mathcal{C}\) equipped with
@@ -368,7 +372,7 @@ for the rest we must flip the arrows and consider the dual version.
     \end{center}
 \end{definition}
 
-\begin{definition}[Colimit]
+\begin{definition}[Colimit]\index{colimit}
     Let \(\mathcal{J}\) and \(\mathcal{C}\) be categories, and let
     \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) be a functor.
     The \emph{colimit of \(F\)} is a cocone to \(F\) \((L,\phi)\) such that for
@@ -381,6 +385,8 @@ for the rest we must flip the arrows and consider the dual version.
 \end{definition}
 
 \begin{example}
+    \index{colimit!initial object}\index{colimit!coproduct}\index{colimit!pushout}
+    \index{initial object!as a colimit}\index{coproduct!as a colimit}\index{pushout!as a colimit}
     By using the reasoning in
     \cref{ex:terminal-limit,ex:product-limit,ex:pullback-limit} and reversing
     the arrows, it is straightforward to see that initial objects, coproducts,
@@ -396,7 +402,7 @@ colimits.
     \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) has a colimit in \(\mathcal{C}\).
 \end{definition}
 
-\begin{definition}[Cocomplete category]
+\begin{definition}[Cocomplete category]\index{category!cocomplete category}
     A category \(\mathcal{C}\) is \emph{cocomplete} if it has colimits for all
     functors \(\morph{F}{\mathcal{J}}{\mathcal{C}}\), where \(\mathcal{J}\) is a
     small category.
@@ -408,7 +414,7 @@ Since a lot of structure can be expressed in terms of limits or colimits, this
 can be expressed succinctly by saying that a functor merely preserves these
 limits or colimits.
 
-\begin{definition}
+\begin{definition}\index{limit!preservation}\index{colimit!preservation}
     A functor \(\morph{F}{\mcc}{\mcd}\) \emph{preserves all (co)limits} if
     \((FL,F\phi)\) is a (co)limit whenever \((L,\phi)\) is a (co)limit.
 \end{definition}

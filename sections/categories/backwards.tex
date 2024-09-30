@@ -15,6 +15,15 @@ some extra structure.
 First we consider removing the acyclicity condition.
 
 \begin{definition}[Symmetric traced monoidal category \cite{joyal1996traced}]\label{def:stmc}
+    \index{symmetric traced monoidal category}
+    \index{monoidal category!symmetric traced}
+    \index{category!symmetric traced monoidal}
+    \index{sliding}
+    \index{superposing}
+    \index{tightening}
+    \index{yanking}
+    \index{vanishing}
+    \nomenclature{\(\tr^X_{A,B}\)}{trace of \(X\) with input \(A\) and output \(B\)}
     A \emph{symmetric traced monoidal category} (STMC) is a symmetric monoidal
     category \(\mcc\) equipped with a family of functions \(
     \morph{
@@ -32,6 +41,7 @@ This means that if we have a morphism \(\morph{f}{X \tensor A}{X \tensor B}\) in
 a STMC, we also have the morphism \(\morph{\trace{X}[A][B]{f}}{A}{B}\).
 Traced categories were given the string diagrammatic treatment in
 \cite{joyal1996traced}, in which the trace is depicted as a loop.
+\index{string diagram!trace}
 \begin{gather*}
     \trace{X}[A][B]{
         \iltikzfig{strings/category/f-2-2}[colour=white,box=f,dom1=X,dom2=A,cod1=X,cod2=B]
@@ -71,6 +81,14 @@ outputs must be connected to inputs.
 We will now consider another setting in which this is not the case.
 
 \begin{definition}[Compact closed category]
+    \index{compact closed category}
+    \index{category!compact closed}
+    \index{unit}
+    \index{counit}
+    \index{dual}
+    \nomenclature{\(\ccunit[A]\)}{unit of a compact closed category}
+    \nomenclature{\(\cccounit[A]\)}{counit of a compact closed category}
+    \nomenclature{\(\dual{A}\)}{dual of object \(A\)}
     A \emph{compact closed category} (CCC) is a symmetric monoidal category in
     which every object \(X\) has a \emph{dual} \(\dual{X}\) equipped with
     morphisms called the \emph{unit} \(
@@ -93,16 +111,18 @@ In string diagrams, the dual is drawn as a wire flowing from right-to-left
 instead of left-to-right; when labelling wires with objects we will drop the
 notation for duals and recover the information solely from directionality of the
 wires.
+\index{string diagram!dual}
 The unit and counit `bend' wires: the unit is drawn as \(
 \iltikzfig{strings/compact-closed/cup}[obj1=\dual{A},obj2=A,colour=white]
-\) and the counit as \(
+\)
+\index{cup}\index{string diagram!compact closed category}\index{string diagram!cup} and the counit as \(
 \iltikzfig{strings/compact-closed/cap}[obj1=A,obj2=\dual{A},colour=white]
-\).
+\)\index{cap}\index{string diagram!cap}.
 As a result of this units and counits are often referred to as \emph{cups} and
 \emph{caps} respectively.
 The two equations of compact closed categories are depicted as in
 \cref{fig:ccc-equations}; this should provide some insight as to why they are
-often referred to as \emph{snake equations}.
+often referred to as \emph{snake equations}\index{snake equations}.
 
 \input{sections/categories/floats/ccc-equations}
 
@@ -110,6 +130,8 @@ There are some cases where the actual directionality of wires is irrelevant;
 we only care about the ability to bend wires.
 
 \begin{definition}[Self-dual compact closed category]
+    \index{self-dual compact closed category}
+    \index{compact closed category!self-dual}
     A compact closed category is \emph{self-dual} if for every object \(A\),
     \(\dual{A} \coloneqq A\).
 \end{definition}
@@ -125,6 +147,7 @@ This is no coincidence, as there is a well-known result that allows one to
 construct a trace in a compact closed setting.
 
 \begin{proposition}[Canonical trace {\cite[Prop.\ 3.1]{joyal1996traced}}]
+    \index{canonical trace}
     \label{prop:canonical-trace}
     Given a compact closed category \(\mcc\), a trace on \(\mcc\) can be
     constructed as follows: \[
@@ -147,6 +170,7 @@ of related work is based in the compact closed realm.
 The canonical trace allows us to adapt existing results for our setting as well.
 
 \begin{remark}
+    \index{Int-construction}
     It is also possible to consider the other direction: using the
     \emph{Int-construction}~\cite{joyal1996traced}, given any STMC
     \(\mcc\) one can construct a compact closed category \(\mathsf{Int}(\mcc)\).
@@ -176,6 +200,8 @@ On the other hand, adding structure to a category can cause it to become
 This can arise when enforcing more structure on the tensor product.
 
 \begin{definition}[Cartesian category]\label{def:cartesian-category}
+    \index{category!Cartesian category}
+    \index{Cartesian category}
     A monoidal category is \emph{Cartesian} if its tensor product is given by
     the category-theoretic product.
 \end{definition}

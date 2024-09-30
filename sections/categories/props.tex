@@ -6,6 +6,7 @@ We can actually restrict to a subclass of SMCs called \emph{PROP}s: categories
 of \emph{PRO}ducts and \emph{P}ermutations.
 
 \begin{definition}[PROP~\cite{maclane1965categorical}]\label{def:prop}
+    \index{PROP}
     A \emph{PROP} is a strict symmetric monoidal category with the
     natural numbers as objects and addition as tensor product on objects.
 \end{definition}
@@ -15,6 +16,8 @@ object \(n\) is equal to \(\bigotimes_{i < n} 1\), we can represent a morphism
 \(m \to n\) as a box with \(m\) incoming wires and \(n\) outgoing wires.
 
 \begin{definition}\label{def:freely-generated-prop}
+    \index{PROP!freely generated}
+    \nomenclature{\(\smcsigma\)}{PROP generated over set \(\generators\)}
     Given a set of generators \(\generators\), let \(\smcsigma\) be the
     PROP where \(\smcsigma(m, n)\) is the set of \(\Sigma\)-terms of type
     \(m \to n\) quotiented by the equations of SMCs.
@@ -31,6 +34,7 @@ where the wires can be of different colours; appropriately, there are also
 coloured PROPs.
 
 \begin{definition}[Coloured PROP]
+    \index{PROP!coloured}
     Given a set of \emph{colours} \(C\), a \emph{\(C\)-coloured PROP} is a strict
     symmetric monoidal category with the objects as lists in \(\freemon{C}\) and
     tensor product as word concatenation.
@@ -45,6 +49,8 @@ Note that this means the empty list \(\varepsilon\) is the unit
 object in any \(\mcc\)-coloured PROP.
 
 \begin{definition}\label{def:freely-generated-coloured-prop}
+    \index{PROP!freely generated coloured}
+    \nomenclature{\(\smcsigmac\)}{coloured PROP generated over coloured set \(\generators\)}
     Given a countable set of colours \(C\) and \(C\)-coloured generators
     \(\generators\), let \(\smcsigmac\) be the \(C\)-coloured PROP where
     \(\smcsigmac(\listvar{m}, \listvar{n})\) is the set of

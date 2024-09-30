@@ -7,7 +7,7 @@ Of course, there may be many such functors \(\mcc \to \mcd\); the logical next
 step is to consider maps between functors themselves.
 These maps are known as \emph{natural transformations}.
 
-\begin{definition}[Natural transformation]
+\begin{definition}[Natural transformation]\index{natural transformation}
     Given two functors \(\morph{F, G}{\mcc}{\mcd}\), a
     \emph{natural transformation} \(\morph{\eta}{F}{G}\) is a family of
     morphisms \(
@@ -35,7 +35,7 @@ can be `pushed through' morphisms, as shown in \cref{fig:naturality-equations}.
 We established that functors are morphisms between categories; in a similar
 vein natural transformations are morphisms between functors.
 
-\begin{definition}[Functor category]
+\begin{definition}[Functor category]\index{category!functor category}\index{functor!category}
     Given two categories \(\mcc\) and \(\mcd\), a \emph{functor category}
     \([\mcc,\mcd]\) has as objects the functors \(\mcc \to \mcd\) and as
     morphisms \(F \to G\) the natural transformations between these functors.
@@ -49,7 +49,7 @@ reason with them in the same way as regular objects and morphisms.
 Natural transformations also often arise across mathematics and
 computer science.
 
-\begin{example}[Singleton transformation]
+\begin{example}[Singleton transformation]\index{natural transforamtion!singleton}
     Recall the \(\listf\) functor from \cref{ex:list-functor}.
     An example of a natural transformation is the
     \emph{singleton transformation} \(\morph{[-]}{\idf}{\listf}\), which
@@ -57,7 +57,7 @@ computer science.
     defined as \(x \mapsto [x]\).
 \end{example}
 
-\begin{example}[Reduce]
+\begin{example}[Reduce]\index{natural transformation!reduce}
     Recall the functors \(\morph{F}{\set}{\mon}\) and \(\morph{U}{\mon}{\set}\)
     from \cref{ex:free-monoid}.
     Functors can be composed just like morphisms, so \(F \circ U\) is a
@@ -80,6 +80,7 @@ As natural transformations are defined in terms of families of morphisms, they
 can inherit properties of the components.
 
 \begin{definition}[Natural isomorphism]
+    \index{natural transformation!isomorphism}\index{natural isomorphism}
     A natural transformation is called a \emph{natural isomorphism} if every
     component is an isomorphism.
 \end{definition}

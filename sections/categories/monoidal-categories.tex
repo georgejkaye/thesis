@@ -4,13 +4,14 @@ The concepts of functors and natural transformations are used to interpret
 the \emph{parallel} composition \(\tensor\).
 To do this, a special kind of functor known as a \emph{bifunctor} is used.
 
-\begin{definition}[Bifunctor]
+\begin{definition}[Bifunctor]\index{bifunctor}\index{functor!bifunctor}
     A \emph{bifunctor} is a functor with a product category as its domain, i.e.\
     a functor of the form \(\mcc \times \mcd \to \mce\).
 \end{definition}
 
 The notation for functor boxes can be extended in order to show how bifunctors
 map from two categories into one.
+\index{string diagram!bifunctor}
 \[
     \iltikzfig{strings/category/functors/bif}[box1=f,box2=g,dom1=A,dom2=C,cod1=B,cod2=D,colour=white,functor=F]
 \]
@@ -18,6 +19,11 @@ This suggests that a bifunctor is what we need to model
 parallel composition.
 
 \begin{definition}[Monoidal category]
+    \index{monoidal category}\index{category!monoidal category}
+    \index{pentagon equation}\index{triangle equation}
+    \index{associator}\index{left unitor}\index{right unitor}
+    \index{tensor product}\index{monoidal unit}
+    \nomenclature{\(\tensor\)}
     \label{def:monoidal-category}
     A \emph{monoidal category} is a category \(\mcc\) equipped with a
     bifunctor \(\morph{{-} \tensor {=}}{\mcc \times \mcc}{\mcc}\) called the
@@ -79,6 +85,8 @@ For this reason, when drawing string diagrams for monoidal categories we will
 forego drawing the (bi)functor boxes and usually draw wires exclusively in
 their `deconstructed' state: instead of a single wire \(A \tensor B\) we will
 draw two wires \(A\) and \(B\).
+\index{string diagram!parallel composition}
+\index{string diagram!tensor}
 \begin{gather*}
     \iltikzfig{strings/monoidal/tensor-notation-compact}[colour=white,dom1=A,dom2=C,cod1=B,cod2=D,box1=f,box2=g]
     \coloneqq
@@ -96,6 +104,7 @@ In our setting, it is normally sufficient for these isomorphisms to hold `on the
 nose'.
 
 \begin{definition}[Strict monoidal category]
+    \index{monoidal category!strict}\index{strict monoidal category}
     A monoidal category is \emph{strict} if \(\lambda\), \(\rho\) and \(\alpha\)
     are identities.
 \end{definition}
@@ -115,6 +124,8 @@ This can be achieved by equipping the categorical setting with another natural
 isormorphism.
 
 \begin{definition}[Symmetric monoidal category]
+    \index{symmetric monoidal category}\index{monoidal category!symmetric}\index{category!symmetric monoidal}
+    \index{symmetry}\nomenclature{\(\swap{A}{B}\)}{symmetry on objects \(A\) and \(B\)}
     \label{def:symmetric-monoidal-category}
     A \emph{symmetric monoidal category} (SMC) is a monoidal category \(\mcc\)
     equipped with a natural isomorphism \(
@@ -140,7 +151,7 @@ a \emph{family} of morphisms \(
 \) for every pair of objects \(A\) and \(B\).
 In string diagrams, each such morphism \(\swap{A}{B}\) is drawn as \(
 \iltikzfig{strings/symmetric/symmetry}[obj1=A, obj2=B, colour=white]
-\): the swapping of wires \(A\) and \(B\).
+\): the swapping of wires \(A\) and \(B\).\index{string diagram!symmetry}
 As with identities, the use of this morphism is so common that we usually
 drop the box around it.
 

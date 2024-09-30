@@ -138,7 +138,9 @@ to: it can be helpful to consider some concrete examples.
 
 \begin{example}[Sets]
     \index{category!of sets}
+    \index{category!of finite sets}
     \nomenclature{\(\set\)}{category of sets}
+    \nomenclature{\(\finset\)}{category of finite sets}
     The category \(\set\) has sets as objects and functions as morphisms, with
     composition of functions as composition.
     There are other categories with sets as objects, such as \(\rel\), which has
@@ -284,12 +286,12 @@ These are specified in terms of a \emph{universal property}: a unique morphism
 that indicates the `best' way to describe something.
 We will first consider universal properties concerning special objects.
 
-\begin{definition}[Initial object]\index{initial object}
+\begin{definition}[Initial object]\index{initial object}\index{universal properties!initial object}
     An object \(C\) in a category \(\mcc\) is \emph{initial} if, for any other
     object \(X \in \mcc\) there exists a unique morphism \(C \to X\).
 \end{definition}
 
-\begin{example}\index{initial object!in \(\set\)}
+\begin{example}
     In \(\set\), the initial object is the empty set \(\emptyset\), as there is
     a unique function from \(\emptyset\) to any set \(X\), the so-called
     `absurd function'.
@@ -300,12 +302,13 @@ arrows are flipped.
 This means that when defining constructions and proving results about them, we
 often also get results for free about the dual case.
 
-\begin{definition}[Terminal object]\index{terminal object}
+\begin{definition}[Terminal object]
+    \index{terminal object}\index{universal properties!terminal object}
     An object \(C\) in a category \(\mcc\) is \emph{terminal} if, for any other
     object \(X \in \mcc\) there exists a unique morphism \(X \to C\).
 \end{definition}
 
-\begin{example}\index{terminal object!in \(\set\)}
+\begin{example}
     In \(\set\), the terminal object is the set containing a single object
     \(\star\): from any set \(X\) there is a unique function
     \(X \to \{\star\}\); namely the function \(x \mapsto \star\).
@@ -320,6 +323,7 @@ We will now explore some universal properties that illustrate how common
 structures can be expressed in terms of the morphisms between them.
 
 \begin{definition}[Product]\label{def:product}
+    \index{product}\index{universal properties!product}\nomenclature{\(\times\)}{product}
     Given a category \(\mcc\) and objects \(A,B \in \mcc\), their \emph{product}
     is an object \(A \times B\) equipped with a pair of morphisms
     \(\morph{p_0}{A \times B}{A}\) and \(\morph{p_1}{A \times B}{B}\) called
@@ -347,6 +351,8 @@ The dual of a product is a construction with \emph{in}jections rather than
 \emph{pro}jections.
 
 \begin{definition}[Coproduct]
+    \index{coproduct}\index{universal properties!coproduct}
+    \nomenclature{\(+\)}{coproduct}
     Given a category \(\mcc\) and objects \(A,B \in \mcc\), their \emph{coproduct}
     is an object \(A + B\) equipped with a pair of morphisms
     \(\morph{i_0}{A}{A + B}\) and \(\morph{i_1}{B}{A + B}\) called
@@ -369,6 +375,7 @@ Finally, we will look at properties showing how pairs of morphisms with a
 common domain or codomain can be in some way `unified'.
 
 \begin{definition}[Pushout]
+    \index{pushout}\index{universal properties!pushout}
     Given a category \(\mcc\) and morphisms
     \(\morph{f}{A}{B}\) and \(\morph{g}{A}{C}\), a
     \emph{pushout} is an object \(D \in \mcc\) and a pair of morphisms
@@ -398,7 +405,7 @@ A pushout square is normally indicated with a \raisebox{-0.25em}{\(\ulcorner\)}
 symbol as shown above.
 The dual of the pushout is a \emph{pullback}.
 
-\begin{definition}[Pullback]
+\begin{definition}[Pullback]\index{pullback}\index{universal properties!pullback}
     Given a category \(\mcc\) and morphisms \(\morph{f}{B}{A}\) and
     \(\morph{g}{C}{A}\), a \emph{pullback} is an object \(D \in \mcc\) and a
     pair of morphisms \(\morph{h}{D}{B}\) and \(\morph{k}{D}{C}\) such that for
