@@ -11,6 +11,7 @@ The first observation we make does not even need anything new to be defined as
 it follows immediately from axioms of STMCs.
 
 \begin{lemma}[Global trace-delay form]\label{lem:trace-delay}
+    \index{global trace-delay form}
     For a sequential circuit \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \) there exists a combinational circuit \(
@@ -29,6 +30,7 @@ it follows immediately from axioms of STMCs.
 \end{proof}
 
 \begin{example}
+    \index{SR NOR latch}
     The SR NOR latch circuit from \cref{ex:sr-latch} is assembled into global
     trace-delay form in \cref{fig:sr-latch-global-trace-delay}.
 \end{example}
@@ -40,6 +42,7 @@ circuits in the previous section, but rather than the state being determined by
 one word, the instantaneous values and the delays are kept separate.
 
 \begin{definition}[Pre-Mealy form]\label{def:pre-mealy}
+    \index{pre-Mealy form}
     A sequential circuit is in \emph{pre-Mealy form} if it is in the form \(
     \iltikzfig{circuits/productivity/pre-mealy-form}[core=f,state=\listvar{s},dom=m,cod=n,trace=x,delay=y]
     \).
@@ -76,6 +79,7 @@ What matters most is that we \emph{can} do it.
 \end{corollary}
 
 \begin{example}
+    \index{SR NOR latch}
     The \((\mealyeqn)\) rule is applied to the global trace-delay form
     SR NOR latch in \cref{fig:sr-latch-global-trace-delay}.
     Here the initial state word is just \(\bot\).
@@ -83,7 +87,7 @@ What matters most is that we \emph{can} do it.
 
 The result of applying the \((\mealyeqn)\) reduction still differs from the
 image of \(\mealytocircuiti\) as it may have a trace with no delay on it: an
-instance of \emph{non-delay-guarded feedback}.
+instance of \emph{non-delay-guarded feedback}\index{non-delay-guarded feedback}.
 
 The mere mention of non-delay-guarded feedback may trigger alarm bells in
 the minds of those well-acquainted with circuit design.
@@ -92,6 +96,8 @@ non-delay-guarded feedback; one might ask if we should also enforce this
 tenet in order to stick to `well-behaved' circuits.
 
 \begin{remark}
+    \index{category!with feedback}
+    \index{category!with delayed trace}
     \emph{Categories with feedback}~\cite{katis2002feedback} are a weakening of
     traced categories that remove the yanking axiom: this effectively makes all
     traces delay-guarded.
@@ -108,9 +114,8 @@ resources~\cite{malik1994analysis,riedel2004cyclic,mendler2012constructive}.
 The minimal circuit to implement a function often \emph{must} be
 constructed using cycles~\cite{rivest1977necessity,riedel2003synthesis}.
 
-
-
 \begin{example}\label{ex:cyclic-combinational}
+    \index{cyclic combinational}
     A particularly famous circuit~\cite{malik1994analysis} which is useful
     despite the presence of non-delay-guarded feedback is shown in
     \cref{fig:cyclic-combinational}, where \(
@@ -165,15 +170,16 @@ Kleene fixed-point theorem.
     Then, for \(j > c\), \(f^c(x) = f^{j}(x)\).
 \end{lemma}
 \begin{proof}
-    Since \(f\) is monotone, it has a least fixed point by the Kleene
-    fixed-point theorem.
-    This will either be some value \(v\) or, since \(\values\) is finite, the
-    \(\top\) element.
-    The most iterations of \(f\) it would take to obtain this fixed point is \(c\),
-    i.e.\ the function produces a value one step up the lattice each time.
+    Since \(f\) is monotone and \(\values^{n}\) is finite, the former has a
+    least fixed point by the Kleene fixed-point theorem.
+    This will either be some value \(v\) or the \(\top\) element.
+    The most iterations of \(f\) it would take to obtain this fixed point is
+    \(c\), i.e.\ the function produces a value one step up the lattice each
+    time.
 \end{proof}
 
 \begin{definition}[Iteration]\label{def:iteration}
+    \index{iteration}
     Given a combinational circuit \(
     \iltikzfig{strings/category/f-2-2}[box=f,colour=comb,dom1=x,dom2=m,cod1=x,cod2=n],
     \)
@@ -197,6 +203,7 @@ apply \(f\) to reach this fixed point, based on the size of the lattice.
 We can use this in the syntactic setting.
 
 \begin{definition}[Unrolling]\label{def:unrolling}
+    \index{unrolling}
     For an interpretation with values \(\values\), the \emph{unrolling}
     of a combinational circuit \(
     \iltikzfig{strings/category/f-2-2}[box=f,colour=comb,dom1=x,dom2=m,cod1=x,cod2=n]
@@ -211,6 +218,7 @@ Using these constructs we can eliminate non-delay-guarded feedback around a
 combinational circuit.
 
 \begin{proposition}\label{prop:instant-feedback}
+    \index{instant feedback rule}
     The instant feedback rule \(
     \iltikzfig{circuits/instant-feedback/equation-lhs}[box=f]
     \reduction[(\instantfeedbackeqn)]
@@ -231,6 +239,7 @@ combinational circuit.
 \end{proof}
 
 \begin{example}\label{ex:sr-latch-unrolled}
+    \index{SR NOR latch}
     In \cref{fig:sr-latch-unrolled}, the \(\instantfeedbackeqn\) is applied to
     the SR latch circuit in pre-Mealy form from
     \cref{fig:sr-latch-global-trace-delay}.
@@ -267,6 +276,7 @@ class of circuits which will act as the keystone of both the operational
 semantics in this section and the algebraic semantics of the next.
 
 \begin{definition}[Mealy form]\label{def:delay-guarded}
+    \index{Mealy form}
     A sequential circuit
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     is in \emph{Mealy form} if it is in the form \(

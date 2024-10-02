@@ -5,6 +5,7 @@ need to do is to extend some of the equations to arbitrary width wires, and to
 add equations to handle the bundlers.
 
 \begin{definition}
+    \index{Mealy functions!generalised}
     Let the set \(\mealyequations^+\) be defined as \(\mealyequations\) but
     with equations \((\monoidunitleqn)\), \((\monoidunitreqn)\), and
     \((\bottomdelayeqn)\) for wires of each with \(n \in \natplus\).
@@ -16,6 +17,7 @@ The encoding equations need to be extended to act on all wire widths, and we
 need to be able to handle encoders that contain bundlers.
 
 \begin{definition}
+    \index{encoding equations!generalised}
     Let the set \(\encodingequations^+\) be defined as \(\encodingequations\)
     but with all equations adjusted to operate on wires of all widths
     \(n \in \natplus\), and with the addition of equations \[
@@ -40,6 +42,7 @@ need to be able to handle encoders that contain bundlers.
 Finally the restriction schema also needs to operate on arbitrary-width wires.
 
 \begin{definition}
+    \index{restriction equation!generalised}
     Let \((\mathsf{Res}^+)\) be defined as \((\mathsf{Res})\) but extended to
     operate on wires of widths \(n \in \natplus\).
 \end{definition}
@@ -48,6 +51,8 @@ Putting this all together gives us a set of equations for
 generalised circuits.
 
 \begin{definition}
+    \index{\(\scircsigmage\)}
+    \nomenclature{\(\scircsigmage\)}{PROP of generalised sequential circuits quotiented by equations}
     For a generalised interpretation \(\interpretation^+\), let \(
     \mathcal{E}^+_{\mathcal{I}}
     \coloneqq

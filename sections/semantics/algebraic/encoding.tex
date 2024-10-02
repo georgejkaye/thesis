@@ -7,6 +7,8 @@ It is important to determine the states that the circuit might assume, as these
 determine whether or not an equation is valid.
 
 \begin{definition}[States]
+    \index{states}
+    \nomenclature{\(S_{f,\listvar{s}}\)}{set of circuit states of function \(f\) from initial state \(\listvar{s}\)}
     Let \(\morph{f}{\valuetuple{x+m}}{\valuetuple{x+n}}\) be a
     monotone function and let \(\listvar{s} \in  \valuetuple{x}\) be a state.
     Then the \emph{states of \(f\) from \(\listvar{s}\)}, denoted
@@ -41,7 +43,7 @@ determine whether or not an equation is valid.
 
 We need to \emph{encode} the states of one circuit as another; we have already
 encountered this notion using \emph{Mealy homomorphisms}
-(\cref{def:mealy-homomorphism});
+(\cref{def:mealy-homomorphism});\index{Mealy homomorphism}
 functions between the state sets that preserve transitions and outputs.
 While two `inverse' homomorphisms may not be isomorphisms, the round
 trip will always map to a state with the same behaviour.
@@ -103,6 +105,7 @@ This means that encoding and decoding circuits cannot be inserted arbitrarily
 but only in certain contexts.
 
 \begin{proposition}[Encoding equation]\label{prop:encoding-equation}
+    \index{encoding equation}
     For a normalised circuit \(
     \iltikzfig{strings/category/f-2-2-wide}[box=\mealytofunc[f],colour=seq,dom1=x,dom2=m,cod1=x,cod2=y]
     \) and \(\listvar{s} \in \valuetuple{x}\), let

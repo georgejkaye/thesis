@@ -34,6 +34,10 @@ structure, as it must be ordered by how much \emph{information} each value
 carries.
 
 \begin{definition}[Partially ordered set]
+    \index{partially ordered set}
+    \index{partial order}
+    \index{poset}
+    \nomenclature{\(\leq_A\)}{partial order on a set \(A\)}
     A \emph{partially ordered set}, or \emph{poset} for short, is a set \(A\)
     equipped with a reflexive, antisymmetric, and transitive relation \(\leq\),
     i.e.\
@@ -48,10 +52,14 @@ carries.
 \end{definition}
 
 \begin{definition}[Least and greatest elements]
-    In a poset \((A, \leq)\), a \emph{least element} is an element \(b \in A\)
-    such that for all elements \(y \in A\), \(b \leq y\).
-    Similarly, a \emph{greatest element} is an element \(a \in A\)
-    such that for all elements \(x \in A\), \(x \leq a\).
+    \index{least element}
+    \index{greatest element}
+    \nomenclature{\(\bot\)}{least element}
+    \nomenclature{\(\top\)}{greatest element}
+    In a poset \((A, \leq)\), a \emph{least element} is an element \(\bot \in A\)
+    such that for all elements \(y \in A\), \(\bot \leq y\).
+    Similarly, a \emph{greatest element} is an element \(\top \in A\)
+    such that for all elements \(x \in A\), \(x \leq \top\).
 \end{definition}
 
 \begin{example}
@@ -71,6 +79,8 @@ To enforce the uniqueness of these elements we must add even more structure to
 a poset of values.
 
 \begin{definition}[Lower and upper bounds]
+    \index{lower bound}
+    \index{upper bound}
     Given a poset \((A, \leq)\), a \emph{lower bound} of a subset
     \(B \subseteq A\) is an element \(x \in B\) such that for all \(b \in B\),
     \(x \leq b\).
@@ -79,6 +89,14 @@ a poset of values.
 \end{definition}
 
 \begin{definition}[Meet and join]
+    \index{meet}
+    \index{join}
+    \index{greatest lower bound}
+    \index{least upper bound}
+    \index{supremum}
+    \index{infimum}
+    \nomenclature{\(\vee_A\)}{join operation on a poset \(A\)}
+    \nomenclature{\(\wedge_A\)}{join operation on a poset \(A\)}
     Given a poset \((A, \leq)\), a lower bound \(x\) of \(B \subseteq A\) is
     called an \emph{meet} (or infimum, or greatest lower bound) if for all lower
     bounds \(b \in B\), \(b \leq x\).
@@ -97,6 +115,9 @@ We are interested in the structures in which they \emph{always} exist, which are
 known as \emph{lattices}.
 
 \begin{definition}[Lattice]
+    \index{lattice}
+    \index{lattice!bounded}
+    \index{lattice!finite}
     A \emph{lattice} is a poset \((A, \leq)\) in which each pair of elements
     \(a,b \in A\) has a meet and join.
     A lattice is called a \emph{finite lattice} if \(A\) is finite, and
@@ -181,6 +202,7 @@ functions must respect the order on the value lattice; one should not be able to
 lose information by performing a computation.
 
 \begin{definition}
+    \index{monotone}
     Let \((A, \leq_A)\) and \((B, \leq_B)\) be partial orders.
     A function \(\morph{f}{A}{B}\) is \emph{monotone} if, for every \(x, y \in A\),
     \(x \leq_A y\) if and only if \(f(x) \leq_B f(y)\).
@@ -191,6 +213,7 @@ are \(\bot\), then it should produce \(\bot\); we cannot produce information
 from nothing.
 
 \begin{definition}
+    \index{\(\bot\)-preserving}
     Let \(A,B\) be finite lattices, where \(\bot_A\) is the least element of
     \(A\) and \(\bot_B\) is the least element of \(B\).
     A function \(\morph{f}{A}{B}\) is \emph{\(\bot\)-preserving} if
@@ -201,6 +224,8 @@ Assigning interpretations to the combinational components of a circuit sets the
 stage for the entire denotational semantics.
 
 \begin{definition}[Interpretation]
+    \index{interpretation}
+    \nomenclature{\(\interpretation\)}{circuit interpretation}
     For a signature \(
     \signature = (
     \values, \bullet, \circuitsignaturegates, \circuitsignaturearity,
@@ -218,6 +243,7 @@ stage for the entire denotational semantics.
 \end{definition}
 
 \begin{example}\label{ex:belnap-interpretation}
+    \index{Belnap!interpretation}
     Recall the Belnap signature \(
     \belnapsignature = (
     \belnapvalues, \bot, \belnapgates, \belnaparity, \belnapcoarity
@@ -286,8 +312,10 @@ The semantic domain for \emph{combinational} circuits is straightforward: each
 circuit maps to a monotone function.
 
 \begin{definition}
+    \index{\(\funci\)}
+    \nomenclature{\(\funci\)}{PROP of \(\bot\)-preserving monotone functions}
     Let \(\funci\) be the PROP in which the morphisms
-    \(m \to n\) are the monotone \(\bot\)-preserving
+    \(m \to n\) are the \(\bot\)-preserving monotone
     functions \(\valuetuple{m} \to \valuetuple{n}\).
 \end{definition}
 
@@ -295,12 +323,14 @@ The natural way to map from a PROP of syntax into a PROP of semantics is to
 use a functor.
 
 \begin{definition}
+    \index{PROP morphism}
     A \emph{PROP morphism} is a strict symmetric monoidal functor between two
     PROPs i.e.\ a functor that preserves the strict symmetric monoidal
     structure.
 \end{definition}
 
 \begin{definition}
+    \nomenclature{\(\circuittofunci\)}{PROP morphism assigning semantics to circuits in \(\ccircsigma\)}
     Let \(\morph{\circuittofunci}{\ccircsigma}{\funci}\) be the PROP morphism
     with action defined as%
     \vspace{-\abovedisplayskip}
@@ -379,6 +409,8 @@ We therefore have to reason with \emph{infinite sequences} of inputs rather than
 individual values; these are known as \emph{streams}.
 
 \begin{notation}
+    \index{streams}
+    \nomenclature{\(\stream{A}\)}{set of streams of of \(A\)}
     Given a set \(A\), we denote the set of streams (infinite sequences) of
     \(A\) by \(\stream{A}\).
     As a stream can equivalently be viewed as a function \(\nat \to A\), we
@@ -396,6 +428,8 @@ Streams can be viewed a bit like lists, in that they have a head component and
 an (infinite) tail component.
 
 \begin{definition}[Operations on streams]\label{def:stream-operations}
+    \index{initial value}
+    \index{stream derivative}
     Given a stream \(\sigma \in \stream{A}\), its \emph{initial value}
     \(\streaminit(\sigma) \in A\) is defined as \(\sigma \mapsto \sigma(0)\)
     and its \emph{stream derivative} \(\streamderv(\sigma) \in \stream{A}\) is
@@ -414,6 +448,8 @@ Just like with functions, we cannot claim that all streams are the
 denotations of sequential circuits.
 
 \begin{definition}[Causal stream function~\cite{rutten2006algebraic}]
+    \index{stream function!causal}
+    \index{causal stream function}
     A stream function \(\morph{f}{\stream{A}}{\stream{B}}\) is \emph{causal} if,
     for all \(i \in \nat\) and \(\sigma,\tau \in \stream{A}\) we have that
     \(\sigma(j) = \tau(j)\) for all \(j \leq i\), then
@@ -428,6 +464,8 @@ A neat consequence of causality is that it enables us to lift the stream
 operations of initial value and stream derivative to stream \emph{functions}.
 
 \begin{definition}[Initial output~\cite{rutten2006algebraic}]
+    \index{initial output}
+    \nomenclature{\(\initialoutput{f}{a}\)}{initial output of \(f\) on input \(a\)}
     For a causal stream function \(\morph{f}{\stream{A}}{\stream{B}}\) and
     \(a \in A\), the \emph{initial output of \(f\) on input \(a\)} is an element
     \(\initialoutput{f}{a} \in A\) defined as
@@ -440,6 +478,8 @@ output truly is arbitrary; the \(\streaminit\) function only depends on the
 first element of the stream.
 
 \begin{definition}[Functional stream derivative~\cite{rutten2006algebraic}]
+    \index{functional stream derivative}
+    \nomenclature{\(\streamderivative{f}{a}\)}{functional stream derivative of \(f\) on input \(a\)}
     For a stream function \(\morph{f}{\stream{A}}{\stream{B}}\) and
     \(a \in A\), the
     \emph{functional stream derivative of \(f\) on input \(a\)} is a stream
@@ -468,6 +508,7 @@ are built from a finite number of components.
 This means they cannot specify infinite \emph{behaviour}.
 
 \begin{notation}
+    \nomenclature{\(\streamderivative{f}{\listvar{a}}\)}{repeated application of stream derivative of \(f\) for a word \(\listvar{a}\) of inputs}
     Given a finite word \(\listvar{a} \in \freemon{A}\), we abuse notation
     and write \(\streamderivative{f}{\listvar{a}}\) for the repeated
     application of the functional stream derivative for the elements of
@@ -480,6 +521,8 @@ This means they cannot specify infinite \emph{behaviour}.
 \end{notation}
 
 \begin{definition}
+    \index{finitely specified stream function}
+    \index{stream function!finitely specified}
     Given a stream function \(\morph{f}{\stream{A}}{\stream{B}}\), we say it is
     \emph{finitely specified} if the set \(\{
     \streamderivative{f}{\listvar{a}} \,|\, \listvar{a} \in \freemon{A}
@@ -537,6 +580,8 @@ As the categorical operations preserve the desired properties, these stream
 functions form a PROP.
 
 \begin{proposition}
+    \index{\(\streami\)}
+    \nomenclature{\(\streami\)}{PROP of causal, finitely specified, and \(\bot\)-preserving monotone stream functions}
     There is a PROP \(\streami\) in which the morphisms \(m \to n\) are the
     causal, finitely specified and \(\bot\)-preserving monotone stream
     functions \(\valuetuplestream{m} \to \valuetuplestream{n}\).
@@ -566,6 +611,7 @@ A usual candidate for the trace when considering partially ordered settings is
 the \emph{least fixed point}.
 
 \begin{definition}[Least fixed point]
+    \index{least fixed point}
     For a poset \((A, \leq)\) and function \(\morph{f}{A}{A}\), the least
     fixed point of \(f\) is a value \(\mu_f\) such that \(f(\mu_f) = f\) and,
     for all values \(v\) such that \(f(v) = v\), \(\mu_f \leq v\).
@@ -579,6 +625,7 @@ that will come in very useful for us is the \emph{Kleene fixed-point theorem},
 which is concerned with a special class of monotone functions.
 
 \begin{definition}[Directed subset]
+    \index{directed subset}
     For a poset \((A, \leq)\), a non-empty subset \(B \subseteq A\) is called a
     \emph{directed subset} if every pair of elements in \(B\) has an upper bound
     in \(B\).
@@ -587,11 +634,15 @@ which is concerned with a special class of monotone functions.
 \end{definition}
 
 \begin{notation}[Image]
+    \index{image}
+    \nomenclature{\(f[A]\)}{image of set \(A\) under function \(f\)}
     For a function \(\morph{f}{A}{B}\) and subset \(C \subseteq A\), we write
     \(f[C] \subseteq B\) for the \emph{image} of \(C\) under \(f\).
 \end{notation}
 
 \begin{definition}[Scott continuity]
+    \index{Scott continuity}
+    \index{Scott-continuous}
     Given two posets \((A, \leq_A)\) and \((B, \leq_B)\), a function
     \(\morph{f}{A}{B}\) is \emph{Scott-continuous} if for every directed
     subset \(C \subseteq A\) it holds that \(f(\bigvee_A C) = \bigvee_B(f[C])\)
@@ -599,6 +650,7 @@ which is concerned with a special class of monotone functions.
 \end{definition}
 
 \begin{theorem}[Kleene fixed-point theorem~\cite{tarski1955latticetheoretical}]
+    \index{Kleene fixed-point theorem}
     Let \((A, \leq)\) be a poset in which each of its directed subsets has a
     join, and let \(\morph{f}{L}{L}\) be a Scott-continuous function.
     Then \(f\) has a least fixed point, defined as \(
@@ -681,6 +733,26 @@ turns that it is implied by causality and monotonicity.
 
 This means we can use the Kleene fixed point theorem as a tool to show that the
 least fixed point is a trace on \(\streami\).
+
+\begin{notation}[Concatenation]
+    \index{concatenation}
+    \nomenclature{\(\concat\)}{concatenation operation for tuples}
+    For a set \(A\), \(\listvar{a} \in A^m\), and \(\listvar{b} \in A^n\), we
+    write \(\listvar{a} \concat \listvar{b}\) for the \emph{concatenation}
+    of \(\listvar{a}\) and \(\listvar{b}\): the tuple of length \(m+n\)
+    containing the elements of \(\listvar{a}\) followed by the elements of
+    \(\listvar{b}\).
+\end{notation}
+
+\begin{notation}[Projection]
+    \index{projection}
+    \nomenclature{\(\proj{i}\)}{zero-indexed \(i\)-th projection}
+    For a set \(A\), let \(\listvar{a} \in A^m\) and \(\listvar{b} \in A^n\).
+    Then for their concatenation \(
+    \listvar{c} \coloneqq \listvar{a} \concat \listvar{b} \in A^{m+n}\),
+    we write \(\proj{0}(\listvar{c}) = \listvar{a}\) and
+    \(\proj{1}(\listvar{c}) = \listvar{b}\) for the \emph{projections}.
+\end{notation}
 
 \begin{lemma}\label{lem:lfp-stream-function}
     Given a morphism \(

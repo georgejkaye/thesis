@@ -8,6 +8,7 @@ the same semantics have the same normal form.
 
 We have already seen something that looks a bit like a normal form: the
 \emph{Mealy form} from the previous section.
+\index{Mealy form}
 This is by no means a true normal form, as there are many different Mealy forms
 that represent the same behaviour.
 Nevertheless, it is a useful starting point so we will need equations to bring
@@ -19,6 +20,7 @@ how Mealy form can be derived using smaller equations.
 \input{sections/semantics/algebraic/floats/mealy-equations}
 
 \begin{definition}
+    \index{Mealy equations}
     The set \(\mealyequations\) of \emph{Mealy equations} in
     \cref{fig:mealy-equations} are sound.
 \end{definition}
@@ -78,6 +80,7 @@ We already met a method for determining what this canonical circuit is: the
 functional completeness map \(\mealytofunc\) from \(\funci\) to \(\scircsigma\).
 
 \begin{definition}[Normalised circuit]
+    \index{normalised circuit}
     A sequential circuit \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \) is \emph{normalised} if it is in the image of \(\mealytofunc\).
@@ -94,6 +97,8 @@ This is quite an important distinction to make, so we will give it a proper
 name.
 
 \begin{definition}[Essentially combinational]
+    \index{essentially combinational}
+    \index{combinational!essentially}
     A sequential circuit is \emph{essentially combinational} if it is in the
     form \(
     \iltikzfig{circuits/synthesis/normalised-function}[box=f]
@@ -109,6 +114,7 @@ is no standard set of equations for normalising a circuit.
 Instead, these must be specified on an interpretation-by-interpretation basis.
 
 \begin{definition}[Normalising equations]
+    \index{normalising equations}
     For a complete interpretation \((\interpretation,\mealytofunc)\), a set of
     equations \(\normalisingequations\) is \emph{normalising} if any
     essentially combinational circuit \(
@@ -118,6 +124,8 @@ Instead, these must be specified on an interpretation-by-interpretation basis.
 \end{definition}
 
 \begin{definition}[Normalisable interpretation]
+    \index{interpretation!normalisable}
+    \index{normalisable interpretation}
     A complete interpretation \(\interpretation\) is called \emph{normalisable} if there
     exists a set of normalising equations \(\normalisingequations\).
 \end{definition}

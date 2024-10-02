@@ -97,7 +97,7 @@ majority of examples in this thesis, is that of gate-level circuits.
 \section{Combinational circuits}
 
 Before diving straight into sequential circuits, we will define a category of
-\emph{combinational circuits}.\index{combinational circuits}
+\emph{combinational circuits}.\index{combinational circuits}\index{combinational}
 These are circuits with no state; they compute \emph{functions} of their inputs.
 
 \begin{definition}[Combinational circuit generators]
@@ -296,7 +296,7 @@ As we have mentioned earlier, such circuits are called
 Circuits gain state with \emph{delay} and \emph{feedback}.
 The latter means we need to move into a symmetric \emph{traced} monoidal category.
 
-\begin{definition}[Sequential circuits]\index{sequential circuits}
+\begin{definition}[Sequential circuits]\index{sequential circuits}\index{sequential}
     \nomenclature{\(\scircsigma\)}{category of sequential circuits}
     For a circuit signature \(\circuitsignature\) with value set \(\values\),
     let \(\scircsigma\) be the STMC freely generated over the generators of
@@ -400,6 +400,7 @@ morphisms are drawn as green boxes \(
 \).
 
 \begin{example}[SR latch]\label{ex:sr-latch}
+    \index{SR NOR latch}
     A sequential circuit one might come across early on in an electronics
     textbook is the \emph{SR NOR latch}, one of the simplest registers.
     A possible design and interpretation in \(\scirc{\belnapsignature}\) are
@@ -513,6 +514,8 @@ Just like a monochromatic circuit signature generates monochromatic PROPs, a
 generalised circuit signature generates \(\natplus\)-coloured PROPs.
 
 \begin{definition}
+    \index{\(\ccircsigmag\)}
+    \nomenclature{\(\ccircsigmag\)}{category of generalised combinational circuits}
     For a generalised circuit signature \(\circuitsignature\), let the set
     \(\generators[\ccirc{}^+]\) of
     \emph{generalised combinational circuit generators} be defined as the set
@@ -552,6 +555,7 @@ We take inspiration from their observation that a similar idea could also be
 applied to strict categories.
 
 \begin{example}[ALU]
+    \index{ALU}
     The computation of a CPU is performed by an \emph{arithmetic logic unit},
     or ALU for short.
     An ALU takes some input wires of a fixed width and performs an operation
@@ -587,6 +591,8 @@ applied to strict categories.
 Sequential circuits are generalised in the same way.
 
 \begin{definition}
+    \index{\(\scircsigmag\)}
+    \nomenclature{\(\scircsigmag\)}{category of generalised sequential circuits}
     For a generalised circuit signature \(\circuitsignature\), let the set
     \(\generators[\scirc{}^+]\) of
     \emph{generalised sequential circuit generators} be the set of

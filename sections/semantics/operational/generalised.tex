@@ -5,6 +5,7 @@ semantics that does not completely generalise in the obvious way are the value
 rules.
 
 \begin{lemma}[Generalised value rules]
+    \index{generalised value rules}
     The following \emph{generalised value rules} are sound:
     \begin{gather*}
         \iltikzfig{circuits/axioms/fork-lhs}[val=\listvar{v}, cod=n]
@@ -70,6 +71,7 @@ With these rules, the inputs to a generalised circuit can be processed.
 \end{corollary}
 
 \begin{corollary}[Generalised productivity]
+    \index{generalised productivity}
     For sequential circuit \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
     \) and inputs \(\listvar{v} \in \valuetuple{\listvar{m}}\), there exists
@@ -85,6 +87,7 @@ Since register components can now hold words rather than just values, for
 observational equivalence we must consider longer input waveforms.
 
 \begin{definition}[Register width]
+    \index{register width}
     For a generalised sequential circuit \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
     \), let \(c_n\) be the number of \(n\)-width delay components
@@ -95,6 +98,8 @@ observational equivalence we must consider longer input waveforms.
 \end{definition}
 
 \begin{definition}
+    \index{observational equivalence!of generalised circuits}
+    \nomenclature{\(\sim^+_\interpretation\)}{observational equivalence of sequential circuits}
     We say that two generalised sequential circuits \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
     \) and \(
@@ -102,7 +107,7 @@ observational equivalence we must consider longer input waveforms.
     \) with register width at most \(c\) are said to be
     \emph{observationally equivalent under} \(\interpretation\), written \(
     \iltikzfig{strings/category/f}[box=f,colour=seq]
-    \sim_{\interpretation}
+    \sim^+_{\interpretation}
     \iltikzfig{strings/category/f}[box=g,colour=seq]
     \) if applying productivity produces the same output
     waveforms for all input waveforms \(
@@ -134,11 +139,13 @@ nicely to the multicoloured case.
 \end{theorem}
 
 \begin{corollary}
-    \(\sim_\interpretation\) is the largest adequate congruence on
-    \(\scircsigma\).
+    \(\sim^+_\interpretation\) is the largest adequate congruence on
+    \(\scircsigmag\).
 \end{corollary}
 
 \begin{definition}
+    \index{\(\scircsigmagobs\)}
+    \nomenclature{\(\scircsigmagobs\)}{PROP of generalised sequential circuits quotiented by observational equivalence}
     Let \(\scircsigmagobs\) be defined as \(\scircsigmag / \sim^+_{\interpretation}\).
 \end{definition}
 

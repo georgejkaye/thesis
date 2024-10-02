@@ -18,6 +18,7 @@ output behaviour is of critical importance.
 
 We now turn our attention to the next course in our menu of semantics:
 \emph{operational semantics}.
+\index{operational semantics}
 This is quite a different beast to denotational semantics: rather than assigning
 a mathematical structure to each circuit, semantics are derived from how
 something is \emph{executed}.
@@ -85,7 +86,7 @@ large term one has to `drill down' into the contexts until a value is reached
 before propagating these values back up the tree.
 
 A more intuitive way to view this style of operational semantics is using
-a \emph{reduction semantics}.
+a \emph{reduction semantics}.\index{reduction semantics}
 First applied by Plotkin~\cite{plotkin1975callbyname} before being properly
 coined and generalised in the subsequent
 decade~\cite{felleisen1987reduction,felleisen1987calculi}, a reduction semantics
@@ -130,6 +131,9 @@ sequences.
 In an ideal reduction system this should not be an issue.
 
 \begin{definition}
+    \index{confluence}
+    \nomenclature{\(\reduction\)}{reduction}
+    \nomenclature{\(\reductions\)}{multiple reductions}
     A reduction system is \emph{confluent} if, for any term \(e\), if there
     exists distinct reductions \(e \reduction e_1\) and \(e \reduction e_2\),
     then there exists term \(e_3\) along with reduction sequences
@@ -140,6 +144,7 @@ While it is important that different reduction sequences should always converge,
 it is equally important that we are not stuck performing reductions forever.
 
 \begin{definition}
+    \index{termination}
     A reduction system is \emph{terminating} if, for every term \(e\), there is
     no infinite reduction sequence starting from \(e\).
 \end{definition}
@@ -148,6 +153,7 @@ If a reduction system is terminating, then repeatedly applying reductions will
 eventually lead to a term with no opportunity to apply any more.
 
 \begin{definition}
+    \index{normal form}
     A term is in \emph{normal form} if no reductions apply to it.
 \end{definition}
 
@@ -185,7 +191,7 @@ However, what we \emph{can} do is specify some larger transformations to apply
 to a circuit followed by some more traditional exhaustive reductions.
 
 Our goal for this chapter is to develop a sound and complete notion of
-\emph{observational equivalence} i.e.\ circuits are related if and only if
+\emph{observational equivalence}\index{observational equivalence} i.e.\ circuits are related if and only if
 `executing' them using the operational semantics produces the same values.
 To determine which transformations and reductions are sound, we turn to the
 denotational semantics; a reduction between circuits \(
