@@ -1,5 +1,61 @@
 \section{Rewriting with traced structure}
 
+When rewriting in a setting with a trace but not a Frobenius structure, the
+definition of term rewriting from \cref{def:term-rewriting} is inadequate.
+For example, the term rewrite below is clearly valid in a traced setting, but
+when assembling the term into the form of \cref{def:term-rewriting} not all of
+the pieces are traced terms.
+\[
+    \iltikzfig{strings/rewriting/rewrite-trace-frob-l-nobox}
+    =
+    \iltikzfig{strings/rewriting/rewrite-trace-frob}
+\]
+Fortunately, by tweaking the layout of the terms this term can be put into a
+form in which we can isolate the instance of a rewrite rule and the remaining
+context such that all of the pieces are valid traced monoidal terms.
+
+\begin{definition}[Traced rewriting system]\label{def:term-rewriting}
+    \index{traced rewriting system}
+    \index{rewriting system!traced}
+    A \emph{rewriting system} \(\mcr\) for a traced PROP \(\mcc\)
+    consists of a set of \emph{rewrite rules} \(
+    \rrule{
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
+    }{
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
+    }
+    \).
+    Given terms \(
+    \iltikzfig{strings/category/f}[box=g,colour=white,dom=m,cod=n]
+    \) and \(
+    \iltikzfig{strings/category/f}[box=h,colour=white,dom=m,cod=n]
+    \) in \(\stmcsigma\) we write \(
+    \iltikzfig{strings/category/f}[box=g,colour=white]
+    \rewrite[\mcr]
+    \iltikzfig{strings/category/f}[box=h,colour=white]
+    \) if there exists a rewrite rule \(\rrule{
+        \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
+    }{
+        \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
+    }\) in \(\mcr\) and \(
+    \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=j,dom2=m,cod1=i,cod2=n]
+    \) in \(\stmcsigma\) such that \(
+    \iltikzfig{strings/category/f}[box=g,colour=white]
+    =
+    \iltikzfig{strings/rewriting/rewrite-l}
+    \) and \(
+    \iltikzfig{strings/category/f}[box=h,colour=white]
+    =
+    \iltikzfig{strings/rewriting/rewrite-r}
+    \) by axioms of STMCs.
+    We write \(
+    \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
+    \rewrites[\mcr]
+    \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
+    \) if there is a sequence of such rules.
+\end{definition}
+
+
 In the Frobenius setting, every pushout complement is a valid rewrite, but there
 is no reason for the same to be the case for traced or traced comonoid
 rewriting.
@@ -560,7 +616,9 @@ this generalises to the coloured setting as well.
         ]
         \termandfrobtohypsigmac[
             \foldinterfacesc[
-                \iltikzfig{strings/category/f}[box=g,colour=white]
+                \tracedtosymandfrobsigmac[
+                    \iltikzfig{strings/category/f}[box=g,colour=white]
+                ]
             ]
         ].\]
 \end{theorem}

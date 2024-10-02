@@ -4,11 +4,10 @@
 Let us first consider how equations in a monoidal theory are
 applied to terms without any sort of special graph interpretation.
 
-\todo[inline]{Start with non-traced rewrite system}
 
-\begin{definition}[Rewriting system]\label{def:term-rewriting}
-    A \emph{rewriting system} \(\mcr\) for a traced PROP \(\mcc\)
-    consists of a set of \emph{rewrite rules} \(
+\begin{definition}[Rewriting system]
+    A \emph{rewriting system} \(\mcr\) for a PROP \(\mcc\) consists of a set of
+    \emph{rewrite rules} \(
     \rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
     }{
@@ -27,16 +26,18 @@ applied to terms without any sort of special graph interpretation.
         \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
-    }\) in \(\mcr\) and \(
-    \iltikzfig{strings/category/f-2-2}[box=c,colour=white,dom1=j,dom2=m,cod1=i,cod2=n]
-    \) in \(\stmcsigma\) such that \(
+    }\) in \(\mcr\) along with terms \(
+    \iltikzfig{strings/category/f-1-2}[box=c_1,colour=white,dom=m,cod1=i,cod2=k]
+    \) and \(
+    \iltikzfig{strings/category/f-2-1}[box=c_2,colour=white,dom1=j,dom2=k,cod=n]
+    \) in \(\smcsigma\) such that \(
     \iltikzfig{strings/category/f}[box=g,colour=white]
     =
-    \iltikzfig{strings/rewriting/rewrite-l}
+    \iltikzfig{strings/rewriting/rewrite-smc-r}
     \) and \(
     \iltikzfig{strings/category/f}[box=h,colour=white]
     =
-    \iltikzfig{strings/rewriting/rewrite-r}
+    \iltikzfig{strings/rewriting/rewrite-smc-l}
     \) by axioms of STMCs.
     We write \(
     \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
@@ -44,6 +45,12 @@ applied to terms without any sort of special graph interpretation.
     \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
     \) if there is a sequence of such rules.
 \end{definition}
+
+Since Frobenius terms are just symmetric monoidal terms equipped with additional
+generators, this definition is also suitable for term rewriting modulo Frobenius
+structure.
+For use with \emph{traced} terms some tweaking will be required; this will be
+detailed in the next section.
 
 The difference between a rewriting system and an equational theory is that in
 the former the rules are \emph{directed} whereas equations are not.
