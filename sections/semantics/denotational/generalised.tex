@@ -55,45 +55,45 @@ generators for each \(n \in \natplus\), as well as the bundlers.
 \begin{definition}
     Let \(\morph{\circuittofuncig}{\ccircsigmag}{\funcig}\) be the coloured PROP
     morphism with action defined as%
-    \vspace{-\abovedisplayskip}
+    % \vspace{-\abovedisplayskip}
     \begin{align*}
         \circuittofuncig[
             \iltikzfig{circuits/components/gates/gate}[gate=p,dom=\listvar{m},cod=\listvar{n}]
         ]
          & \coloneqq
         \gateinterpretation[p]
-        \\
+        \\[0.75em]
         \circuittofuncig[
             \iltikzfig{strings/structure/comonoid/copy}[colour=comb,obj=n]
         ]
          & \coloneqq
         (\listvar{v}) \mapsto (\listvar{v}, \listvar{v})
-        \\
+        \\[0.75em]
         \circuittofuncig[
             \iltikzfig{strings/structure/comonoid/discard}[colour=comb,obj=n]
         ]
          & \coloneqq
         (\listvar{v}) \mapsto ()
-        \\
+        \\[0.75em]
         \circuittofuncig[
             \iltikzfig{strings/structure/monoid/merge}[colour=comb,obj=n]
         ]
          & \coloneqq
         (\listvar{v}, \listvar{w})
         \mapsto \listvar{v} \sqcup \listvar{w}
-        \\
+        \\[0.75em]
         \circuittofuncig[
             \iltikzfig{strings/structure/monoid/init}[colour=comb,obj=n]
         ]
          & \coloneqq
         () \mapsto \bot^n
-        \\
+        \\[0.75em]
         \circuittofuncig[
             \iltikzfig{strings/strictifiers/expand}[colour=comb,obj=n]
         ]
          & \coloneqq
         (\listvar{v}) \mapsto (\listvar{v}(0), \listvar{v}(1), \dots, \listvar{v}(n-1))
-        \\
+        \\[0.75em]
         \circuittofuncig[
             \iltikzfig{strings/strictifiers/collapse}[colour=comb,obj=n]
         ]
