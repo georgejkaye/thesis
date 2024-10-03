@@ -1,5 +1,6 @@
 \section{Partial evaluation}\label{sec:partial}
 
+\index{partial evaluation}
 Partial evaluation~\cite{jones1996introduction} is a paradigm used in software
 optimisation in which programs are `evaluated as much as possible' while only
 some of the inputs are specified.
@@ -19,6 +20,8 @@ evaluation to circuits.
 
 \subsection{Shortcut rules}\label{sec:shortcut}
 
+\index{shortcut rule}
+\index{infinite waveform}
 It is often the case that we know that some of the inputs to a circuit are
 fixed.
 This can be modelled by precomposing the relevant input with an
@@ -39,6 +42,7 @@ In some interpretations, it may be that we learn something about the output of
 a primitive with only some of the inputs specified.
 
 \begin{example}[Belnap shortcuts]
+    \index{Belnap!shortcut}
     In the Belnap interpretation \(\belnapinterpretation\), if one applies a
     false value to an \(\andgate\) gate then it will output false regardless of
     the other input.
@@ -133,12 +137,15 @@ circuit.
 
 \subsection{Protocols}\label{sec:uncertain}
 
+\index{protocol}
 Sometimes we may not know the exact inputs to a circuit, but know that they make
 up a fixed subset of all possible inputs, or they follow some sort of protocol.
 We can implement this in our reduction framework with \emph{uncertain values}
 which we either know nothing about or know can only take some specified values.
 
 \begin{definition}
+    \index{s@\(\scircsigmap\)}
+    \nomenclature{\(\scircsigmap\)}{PROP of sequential circuits with uncertain values}
     Let \(\scircsigmap\) be the result of extending \(\scircsigma\) with value
     generators for each word \(\listvar{v?} \in \freemon{\values}\).
 \end{definition}
@@ -183,6 +190,7 @@ Once again it is useful to have versions for both waveforms and values, for
 reasoning before and during execution.
 
 \begin{definition}[Uncertain rules]
+    \index{uncertain rule}
     The \emph{uncertain rules} are listed in \cref{fig:uncertain-rules}.
 \end{definition}
 
@@ -194,6 +202,7 @@ ordinary value in future reductions and outputs.
 \input{sections/semantics/application/floats/uncertain-rules}
 
 \begin{example}[Protocols]\label{ex:protocols}
+    \index{protocol}
     One sticking point that arises when using the categorical framework is the
     presence of the \(\bot\) and \(\top\) values, which would not normally
     be explicitly provided to a circuit.

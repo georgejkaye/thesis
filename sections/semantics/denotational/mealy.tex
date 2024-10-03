@@ -22,7 +22,7 @@ denotational semantics, having a PROP of Mealy machines from which we can
 translate into sequential circuit morphisms is nice to have in its own right.
 
 \begin{definition}[Mealy machine~\cite{mealy1955method}]\label{def:mealy}
-    \index{Mealy machine}
+    \index{Mealy!machine}
     Let \(A\) and \(B\) be finite sets.
     A (finite) \((A,B)\)-\emph{Mealy machine} is a tuple \((S, f)\) where
     \(S\) is a finite set called the \emph{state space},
@@ -94,7 +94,7 @@ A Mealy machine is a pair of a set
 and a function, so this is a coalgebra in \(\set\).
 
 \begin{definition}
-    \index{Mealy coalgebra}
+    \index{Mealy!coalgebra}
     For sets \(A\) and \(B\), an \emph{\((A,B)\)-Mealy coalgebra} is a coalgebra
     of the functor \(\morph{Y}{\set}{\set}\), defined as
     \(S \mapsto (S \times B)^A\).
@@ -118,7 +118,7 @@ If we inspect it a little closer, we find that stream functions are even more
 special than just being `an' \((A,B)\)-Mealy coalgebra.
 
 \begin{definition}[Mealy homomorphism]\label{def:mealy-homomorphism}
-    \index{Mealy homomorphism}
+    \index{Mealy!homomorphism}
     For sets \(A\) and \(B\), a \emph{Mealy homomorphism} between two
     \((A,B)\)-Mealy coalgebra \((S,f)\) and \((T,g)\) is a function
     \(\morph{h}{S}{T}\) preserving transitions and
@@ -184,8 +184,8 @@ As defined so far there is no need for Mealy machines to have any sort of
 monotonicity condition, so we must impose one.
 
 \begin{definition}[Monotone Mealy machine]
-    \index{Mealy machine!monotone}
-    \index{monotone Mealy machine}
+    \index{Mealy!machine!monotone}
+    \index{monotone!Mealy!machine}
     Let \(A\), \(B\) be posets; an \((A,B)\)-Mealy machine \((S, f)\)
     is called a \emph{monotone} Mealy machine if \(S\) is also a poset and
     \(f\) is \(\bot\)-preserving and monotone with respect to the ordering on
@@ -200,7 +200,7 @@ the value generators, this information will also need to be specified for Mealy
 machines.
 
 \begin{definition}[Initialised Mealy machine]
-    \index{Mealy machine!initialised}
+    \index{Mealy!machine!initialised}
     \index{initialised Mealy machine}
     An \emph{initialised} Mealy machine is a tuple \((S, f, s_0)\), where
     \((S, f)\) is a Mealy machine, and \(s_0 \in S\) is an \emph{initial state}.
@@ -221,7 +221,7 @@ standard.
 
 \begin{definition}[Cascade product of Mealy machines~\cite{ginzburg2014algebraic}]
     \index{cascade product}
-    \index{Mealy machines!cascade product}
+    \index{Mealy!machines!cascade product}
     \index{composition!of Mealy machines}
     Given an initialised \((A,B)\)-Mealy machine \((S,f,s_0)\) and an
     initialised \((B,C)\)-Mealy machine \((T,g,t_0)\), their
@@ -304,7 +304,7 @@ inputs, then executes the second on the outputs of the first; the inputs are
 Tensor product is far more straightforward.
 
 \begin{definition}[Direct product of Mealy machines]
-    \index{Mealy machines!direct product}
+    \index{Mealy!machines!direct product}
     \index{tensor product!of Mealy machines}
     \index{direct product}
     Given an initialised \((A,B)\)-Mealy machine \((S,f,s_0)\) and an
@@ -423,7 +423,7 @@ This can be computed in much the same way as it was for stream functions.
 
 \begin{definition}
     \index{least fixed point!of Mealy machines}
-    \index{Mealy machine!least fixed point}
+    \index{Mealy!machine!least fixed point}
     Let \((S, f)\) be a monotone \(
     (\valuetuple{x+m}, \valuetuple{x+n})
     \)-Mealy machine.

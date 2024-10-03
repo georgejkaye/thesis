@@ -14,7 +14,7 @@ input, but all of the previous ones as well.
     given the inputs and value of the current state.
     This differs from our approach as we assign each circuit a concrete stream
     function describing its behaviour, rather than having to solve a system of
-    equations in terms of the nodes inside a circuit in order to determine its
+    equations in terms of the vertices inside a circuit in order to determine its
     behaviour.
 \end{remark}
 
@@ -213,7 +213,7 @@ are \(\bot\), then it should produce \(\bot\); we cannot produce information
 from nothing.
 
 \begin{definition}
-    \index{\(\bot\)-preserving}
+    \index{b@\(\bot\)-preserving}
     Let \(A,B\) be finite lattices, where \(\bot_A\) is the least element of
     \(A\) and \(\bot_B\) is the least element of \(B\).
     A function \(\morph{f}{A}{B}\) is \emph{\(\bot\)-preserving} if
@@ -319,15 +319,7 @@ circuit maps to a monotone function.
     functions \(\valuetuple{m} \to \valuetuple{n}\).
 \end{definition}
 
-The natural way to map from a PROP of syntax into a PROP of semantics is to
-use a functor.
-
-\begin{definition}
-    \index{PROP morphism}
-    A \emph{PROP morphism} is a strict symmetric monoidal functor between two
-    PROPs i.e.\ a functor that preserves the strict symmetric monoidal
-    structure.
-\end{definition}
+To map between PROPs we must use a PROP morphism.
 
 \begin{definition}
     \nomenclature{\(\circuittofunci\)}{PROP morphism assigning semantics to circuits in \(\ccircsigma\)}

@@ -23,8 +23,9 @@ The first point of order is to unpack exactly what this means.
 
 \section{Synchronous sequential circuits}
 
-The term `\emph{circuit}' (or `\emph{network}') is often used for any system
-constructed by connecting wires between primitive components.
+The term `\emph{circuit}' (or `\emph{network}')\index{circuit}\index{network}
+is often used for any system constructed by connecting wires between primitive
+components.
 Two common constructs are the ability to \emph{fork} wires or \emph{join} them
 together, traditionally drawn using black dots as shown in \cref{fig:forkjoin}.
 These circuits are not particularly interesting as they are structural in
@@ -41,9 +42,9 @@ nature; it is the other components that add meaning.
 
 When it comes to picking a set of components, there is a plethora of choices
 for various applications; even when restricting to \emph{electronic} circuits
-there are different flavours to consider.
-One variety is \emph{analog} circuits constructed from components such
-as resistors, capacitors and inductors, such as in the left of
+there are different flavours to consider.\index{circuit!electronic}
+One variety is \emph{analog} circuits \index{circuit!analog} constructed from
+components such as resistors, capacitors and inductors, such as in the left of
 \cref{fig:circuits}.
 Reasoning with analog circuits requires manipulating equations relating
 quantities such as voltage, current and resistance; in a parallel line of work
@@ -77,8 +78,8 @@ treatment~\cite{boisseau2022string}.
     \label{fig:circuits}
 \end{figure}
 
-We are concerned with \emph{digital} circuits that operate over a finite
-number of \emph{discrete} values.
+We are concerned with \emph{digital} circuits\index{circuit!digital} that
+operate over a finite number of \emph{discrete} values.
 Here there is a much stricter notion of causality linking input and output;
 signals provided as input to a digital circuit propagate across the components,
 producing outputs and updating state.
@@ -92,12 +93,13 @@ analog parts, but the higher-level \emph{abstraction} to digital components and
 discrete signals makes it far easier to design and reuse them.
 
 Digital circuits can further be divided into classes based on their components.
-A \emph{combinational} circuit is a circuit that only contains logical
-operations for computing functions.
+A \emph{combinational} circuit\index{circuit!combinational} is a circuit that
+only contains logical operations for computing functions.
 Such circuits have no memory; the outputs at each tick of the clock only depend
 on the inputs received at that moment.
-A far more useful class of circuits is that of \emph{sequential} circuits, which
-have \emph{delay} and \emph{feedback} in addition to logic gates.
+A far more useful class of circuits is that of \emph{sequential} circuits
+\index{circuit!sequential}, which have \emph{delay} and \emph{feedback} in
+addition to logic gates.
 Sequential circuits can be divided into two parts:
 the \emph{combinational logic} for performing logical functions, and the
 \emph{state registers} for storing data.
@@ -111,9 +113,11 @@ output and state should be minimised.
 
 With this in mind, there are two different ways one can design a sequential
 circuit.
-A \emph{synchronous} circuit is one in which the state only changes in time with
-some global clock signal, whereas in \emph{asynchronous} circuits the state
-changes as soon as the inputs do.
+A \emph{synchronous} circuit\index{circuit!synchronous} is one in which the
+state only changes in time with
+some global clock signal, whereas in \emph{asynchronous}
+\index{circuit!asynchronous} circuits the state changes as soon as the inputs
+do.
 The latter type of circuits is useful when speed is of the essence, but are
 harder to design because small differences in how quickly components process
 inputs can lead to the circuit assuming an unexpected state.
@@ -124,12 +128,12 @@ kind, and so this is where we are focusing our mathematical theory.
 
 A (synchronous sequential) circuit can be viewed as a component with some
 input and output wires; these wires can be connected to other components to
-create bigger and more complex circuits.
+create bigger and more complex circuits.\index{composition}
 This is called \emph{composing} circuits, and some ways of doing this are
 shown in \cref{fig:composition}.
 We can compose circuits \emph{horizontally} (if the outputs of the first match
 with the inputs of the second), \emph{vertically}, or even by connecting an
-output wire to an input wire, creating a \emph{feedback loop}.
+output wire to an input wire, creating a \emph{feedback loop}\index{feedback}.
 
 \begin{figure}
     \centering
@@ -157,8 +161,8 @@ repeatedly split complicated circuits into simpler parts until we reach some
 indivisible atomic components.
 If one defines the behaviour of these components and how they interact
 with composition, it is possible to establish the behaviour of some
-larger circuit \emph{inductively} by breaking it down into its constituent
-parts.
+larger circuit \emph{inductively}\index{induction} by breaking it down into its
+constituent parts.
 For example, some circuit \(f\) might be decomposed as in
 \cref{fig:decomposition}.
 To prove that \(f\) has some property, we can prove it holds for \(g\) and \(k\)
@@ -181,7 +185,8 @@ and verify if composition \emph{preserves} these properties.
 While it is possible to work with this surface-level notion of
 compositionality, it is important to establish a mathematical
 foundation to determine the meaning and properties of composition; for this, we
-turn to \emph{category theory}~\cite{maclane1978categories}.
+turn to \emph{category theory}~\cite{maclane1978categories}
+\index{category theory}.
 A \emph{category} is made up of \emph{objects} and \emph{morphisms} (`arrows')
 between them.
 Any two arrows \(\morph{f}{A}{B}\) and \(\morph{g}{B}{C}\) can be
@@ -206,6 +211,7 @@ It is straightforward to see how a compositional process with inputs of type
 But to model more complex processes one needs to work with a class of categories
 known as
 \emph{freely generated symmetric monoidal categories}~\cite{maclane1963natural},
+\index{symmetric monoidal categories}
 categories equipped with an additional notion of \emph{parallel} composition
 \(\tensor\) along with a family of morphisms
 \(\morph{\swap{A}{B}}{A\tensor B}{B \tensor A}\) known as \emph{symmetries} to
@@ -232,9 +238,9 @@ These terms can be written as \emph{term strings}, such as the following:
 Terms described in this way are quite unintuitive, as the two different types of
 composition are compressed into a one-dimensional text string.
 Fortunately, symmetric monoidal categories admit an intuitive graphical notation
-known as \emph{string diagrams}, in which generators are drawn as boxes
-connected by wires, with the identity depicted as an empty wire and the symmetry
-as swapping over wires.
+known as \emph{string diagrams}\index{string diagram}, in which generators are
+drawn as boxes connected by wires, with the identity depicted as an empty wire
+and the symmetry as swapping over wires.
 For example, the term described above can be depicted diagrammatically as in
 \cref{fig:string}, which is far easier to comprehend than the original term
 string.
@@ -274,8 +280,9 @@ believe that connecting two well-behaved circuits together will result in
 another well-behaved circuit.
 
 Progress towards full compositionality for sequential circuits has been hampered
-by the presence of the dreaded \emph{non-delay-guarded feedback loop}; a cycle
-that does not pass through any state registers.
+by the presence of the dreaded \emph{non-delay-guarded feedback loop};
+\index{feedback!non-delay-guarded} a cycle that does not pass through any state
+registers.
 Non-delay-guarded feedback can lead to undefined behaviour; for example, if we
 assume that the rightmost circuit \(f\) in \cref{fig:composition} contains no
 registers, then it is not immediately obvious how to compute the first input, as
@@ -346,9 +353,9 @@ delay-guarded may be beneficial to us.
 While this thesis details a fully compositional
 \emph{categorical} theory of digital circuits, this is by no means the first
 time sequential circuits have been given the mathematical treatment.
-\emph{Mealy machines}~\cite{mealy1955method} are the \emph{de facto}
-mathematical structure for specifying the behaviour of sequential circuits, and
-it is well
+\emph{Mealy machines}~\cite{mealy1955method}\index{Mealy!machine} are the
+\emph{de facto} mathematical structure for specifying the behaviour of
+sequential circuits, and it is well
 known how they should be composed~\cite{ginzburg2014algebraic}.
 In more recent times Mealy machines have been given a categorical treatment as
 certain kinds of \emph{coalgebra}~\cite{rutten2006algebraic,bonsangue2008coalgebraic}.
@@ -367,7 +374,7 @@ a ubiquitous concept in formal verification of hardware~\cite{gupta1992formal}.
 
 The first steps towards a categorical theory of digital circuits took place
 after the turn of the millennium, when Lafont presented an
-\emph{algebraic theory of boolean circuits}~\cite{lafont2003algebraic}.
+\emph{algebraic theory of Boolean circuits}~\cite{lafont2003algebraic}.
 This work already bears a great resemblance to the framework presented in this
 thesis; circuits are presented as morphisms in a symmetric monoidal category
 freely generated over a set of primitive logic gates.
@@ -409,7 +416,7 @@ This marks a departure from many other recent works on compositional processes
 such as the work on string diagrammatic
 \emph{signal flow theory}~\cite{bonchi2021survey} or analog
 circuits~\cite{boisseau2022string}, which operate in a setting with a
-\emph{Frobenius} structure.
+\emph{Frobenius} structure\index{Frobenius}.
 In addition to any application-specific components, these settings also contain
 the four structural components shown in \cref{fig:frob}, forming what is known
 mathematically as a \emph{commutative monoid} and a
@@ -437,8 +444,8 @@ a feedback loop.
 \end{figure}
 
 So why not opt for such a route for sequential circuits?
-The issue arises in the form of \emph{copying}: we would like the leftmost
-equation in \cref{fig:copy} circuits to hold for any circuit \(
+The issue arises in the form of \emph{copying}\index{copying}: we would like the
+leftmost equation in \cref{fig:copy} circuits to hold for any circuit \(
 \iltikzfig{strings/category/f}[box=f]
 \).
 What this means is that running \(f\) and then copying the outputs

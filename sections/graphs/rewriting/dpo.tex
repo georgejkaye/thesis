@@ -4,7 +4,9 @@
 Let us first consider how equations in a monoidal theory are
 applied to terms without any sort of special graph interpretation.
 
-
+\index{term rewriting|textbf}
+\index{rewriting!term|textbf}
+\index{rewrite rule}
 \begin{definition}[Rewriting system]
     A \emph{rewriting system} \(\mcr\) for a PROP \(\mcc\) consists of a set of
     \emph{rewrite rules} \(
@@ -46,14 +48,13 @@ applied to terms without any sort of special graph interpretation.
     \) if there is a sequence of such rules.
 \end{definition}
 
-Since Frobenius terms are just symmetric monoidal terms equipped with additional
-generators, this definition is also suitable for term rewriting modulo Frobenius
+Since Frobenius terms are symmetric monoidal terms equipped with additional
+generators, this definition is also suitable for rewriting modulo Frobenius
 structure.
-For use with \emph{traced} terms some tweaking will be required; this will be
+For \emph{traced} terms some tweaking will be required; this will be
 detailed in the next section.
 
-The difference between a rewriting system and an equational theory is that in
-the former the rules are \emph{directed} whereas equations are not.
+Rules in a rewrite system are \emph{directed}, whereas equations are not.
 Of course, it is straightforward to derive a rewriting system from an equational
 theory by adding the reductions for both directions of each equation.
 
@@ -94,22 +95,28 @@ theory by adding the reductions for both directions of each equation.
     \).
 \end{proposition}
 
-The equivalent for graphs is \emph{graph rewriting}.
-While there are many graph rewriting techniques, we use
+\index{graph rewriting|textbf}
+\index{DPO!rewriting}
+\index{double pushout rewriting}
+\index{rewriting!DPO}
+\index{rewriting!double pushout}
+The equivalent for graphs is \emph{graph rewriting}; we use
 \emph{double pushout (DPO)} rewriting, which was introduced in the early 70s by
 Ehrig, Pfender, and Schneider~\cite{ehrig1973graphgrammars} as one of the first
 \emph{algebraic} approaches to graph rewriting.
-Although first defined in the category of graphs, it has since been generalised
-to encompass a variety of combinatorial structures.
+First defined for graphs, it has since been generalised for a variety of
+combinatorial structures.
 
 A double pushout rewrite rule is defined by mapping to the left and right hand
 side of a rule from their shared interface.
 
+\index{span}
 \begin{definition}
     A \emph{span} is a pair of morphisms \(A \to B\) and \(A \to C\), usually
     written \(\spann{B}{A}{C}\).
 \end{definition}
 
+\index{DPO!rule}
 \begin{definition}[DPO rule]\label{def:dpo-rule}
     Given two interfaced hypergraphs \(
     \cospan{i}[a_1]{L}[a_2]{j}
@@ -121,11 +128,11 @@ side of a rule from their shared interface.
     \).
 \end{definition}
 
-A DPO rule is a span in the category of hypergraphs \(\hypsigma\),
-rather than the category of interfaced hypergraphs \(\cspdhyp\).
-This is because identifying the occurrence of a DPO rule in a larger graph will
-be performed using a hypergraph homomorphism.
+A DPO rule is a span in the category of hypergraphs \(\hypsigma\), as we will
+identify occurrences of rules with hypergraph homomorphisms.
 
+\index{DPO!rewriting with interfaces}
+\index{DPOI rewriting}
 We will use an extension of DPO rewriting, known as
 \emph{double pushout rewriting with interfaces}
 (DPOI rewriting)~\cite{bonchi2017confluence}.
@@ -159,12 +166,12 @@ such that \(H\) and \(H^\prime\) rewrite to \(K\).
     \end{center}
 \end{definition}
 
-We will now describe what happens during a typical graph rewrite.
 The first thing to note is that the graphs all have a \emph{single} interface
-\(G \leftarrow m + n\); this means that to perform graph rewriting on graphs in
+\(G \leftarrow m + n\); to perform graph rewriting on graphs in
 \(\hypsigma\), interfaces of terms in \(\smcsigma + \frob\) must be `folded'
 into one using the compact closed structure.
 
+\nomenclature{\(\foldinterfaces\)}{`folding' PROP morphism \(\smcsigma + \frob \to \smcsigma + \frob\)}
 \begin{definition}[\cite{bonchi2022stringa}]\label{def:fold-interfaces}
     Let \(\morph{\foldinterfaces}{\smcsigma + \frob}{\smcsigma + \frob}\)
     be defined as having action \(
@@ -237,6 +244,8 @@ rewritten.
     \end{tikzcd}
 \end{center}
 
+\index{context}
+\index{pushout complement}
 We now need to identify the \emph{context} in which the rewrite will occur.
 Essentially, the context is the `graph \(G\) with \(L\) cut out', which can be
 formally defined with what is known as a \emph{pushout complement}.

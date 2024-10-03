@@ -1,5 +1,11 @@
 \section{Cartesian structure}\label{sec:cartesian-structure}
 
+\index{Cartesian category}
+\index{traced Cartesian category}
+\index{category!Cartesian}
+\index{category!traced Cartesian}
+\index{dataflow category}
+\index{category!dataflow}
 One important class of categories with a traced comonoid structure are
 \emph{traced Cartesian}, or \emph{dataflow},
 categories~\cite{cazanescu1990new}.
@@ -23,6 +29,7 @@ In \cite{ghica2016categorical}, the equational theory is used to show that this
 is the case, but with the stream semantics we have a much more elementary proof.
 
 \begin{theorem}
+    \index{s@\(\streami\)}
     \(\streami\) is Cartesian.
 \end{theorem}
 \begin{proof}
@@ -33,6 +40,9 @@ As the three semantic categories are isomorphic to \(\streami\) they are also
 Cartesian.
 
 \begin{corollary}
+    \index{s@\(\scircsigmai\)}
+    \index{s@\(\scircsigmaobs\)}
+    \index{s@\(\scircsigmae\)}
     \(\scircsigmai\), \(\scircsigmaobs\) and \(\scircsigmae\) are Cartesian.
 \end{corollary}
 
@@ -93,6 +103,7 @@ axiomatisations exist~\cite{hasegawa1997recursion,simpson2000complete}, but we
 use the equations presented in~\cite{hasegawa2009traced}.
 
 \begin{definition}[\cite{hasegawa2009traced}]
+    \index{Conway fixed point operator}
     Let \(\mcc\) be a Cartesian category.
     A \emph{Conway fixed point operator} in \(\mcc\) is a family of functions \(
     \morph{
@@ -155,6 +166,7 @@ reasoning with the trace and the comonoid structure, with the addition of the
 Cartesian equations.
 
 \begin{example}[Unfolding]
+    \index{unfolding}
     Reasoning about fixpoints in a traced category can be performed using the
     \emph{unfolding} rule.
     \begin{gather*}
@@ -177,6 +189,9 @@ Cartesian equations.
     \end{center}
 \end{example}
 
+\index{cocartesian category}
+\index{category!cocartesian}
+\index{iteration}
 The dual notion of traced \emph{cocartesian}
 categories~\cite{bainbridge1976feedback} are also important in computer science:
 a trace in a traced cocartesian category corresponds to \emph{iteration} in the

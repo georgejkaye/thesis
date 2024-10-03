@@ -1,8 +1,10 @@
 \section{Sequential circuits}
 
+\index{operational semantics}
+\index{semantics!operational}
 When performing traced graph rewriting using hypergraphs, any wires going from
 right-to-left are treated in exactly the same way as wires going from
-left-to-right: as tentacles connecting source and target nodes.
+left-to-right: as tentacles connecting source and target vertices.
 However, in the operational semantics for sequential circuits, there are rules
 that operate especially on graphs of a certain form enclosed by a trace.
 While it would be sound to apply these arbitrarily (by virtue of the sliding
@@ -187,6 +189,6 @@ rules.
         \reduction
         \iltikzfig{graphs/circuits/fork-rewrite/term-h}
     \end{gather*}
-    This means that a fork rewrite is only productive if the node in the image
+    This means that a fork rewrite is only productive if the vertex in the image
     of \(f\) has out-degree greater than \(1\).
 \end{remark}

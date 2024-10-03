@@ -15,21 +15,24 @@ We will use some of this machinery when it comes to tackling the traced case.
 There are two features that distinguish vanilla symmetric monoidal terms from
 Frobenius terms; wires cannot arbitrarily fork or join, and cycles may not be
 created.
-The former is tackled by a condition on the connectivity of nodes.
+The former is tackled by a condition on the connectivity of vertices.
 
 \begin{definition}[Degree {\cite[Def.\ 12]{bonchi2022stringa}}]
-    For a hypergraph \(F \in \hyp\), the \emph{degree} of a node
+    \index{degree}
+    For a hypergraph \(F \in \hyp\), the \emph{degree} of a vertex
     \(v \in \vertices{F}\) is a tuple \((i,o)\) where \(i\) is the number of
     hyperedges with with \(v\) as a target, and \(o\) is the number of
     hyperedges with \(v\) as a source.
 \end{definition}
 
 \begin{definition}[Monogamy {\cite[Def.\ 13]{bonchi2022stringa}}]
+    \index{monogamy}
+    \index{cospan!monogamous}
     For a cospan \(\cospan{m}[f]{F}[g]{n}\) in
     \(\cspdhyp\), let \(\mathsf{in}(F)\) and \(\mathsf{out}(F)\) be the image of
     \(f\) and \(g\) respectively.
     We call the cospan \(\cospan{m}[f]{F}[g]{n}\) \emph{monogamous} if \(f\) and
-    \(g\) are mono and, for all nodes \(v\), the degree of \(v\) is
+    \(g\) are mono and, for all vertices \(v\), the degree of \(v\) is
     \begin{center}
         \begin{tabular}{rlcrl}
             \((0,0)\)
@@ -78,7 +81,7 @@ operations.
     Identities and symmetries are monogamous.
 \end{lemma}
 \begin{proof}
-    The cospans involved are discrete and all nodes are in both
+    The cospans involved are discrete and all vertices are in both
     interfaces, so the cospans are monogamous.
 \end{proof}
 
@@ -93,18 +96,18 @@ operations.
     \).
     The interfaces remain mono as pushouts along monos are monos in
     \(\hypsigmac\).
-    The only altered nodes are those in the image of
-    \(g\) and \(h\), which are merged pointwise; nodes in the image of
+    The only altered vertices are those in the image of
+    \(g\) and \(h\), which are merged pointwise; vertices in the image of
     \(g\) have out-degree \(0\) and those in the image of \(h\) have in-degree
-    \(0\) so the merged nodes have at most degree \((1, 1)\).
+    \(0\) so the merged vertices have at most degree \((1, 1)\).
 \end{proof}
 
 \begin{lemma}[\cite{bonchi2022stringa}, Lem.\ 17]\label{lem:monogamicity-preserved-tensor}
     Monogamicity is preserved by tensor.
 \end{lemma}
 \begin{proof}
-    The degrees of nodes are unaffected as tensor is by coproduct and
-    only nodes in the original interfaces will be in the new interfaces.
+    The degrees of vertices are unaffected as tensor is by coproduct and
+    only vertices in the original interfaces will be in the new interfaces.
 \end{proof}
 
 As seen in \cref{ex:monogamous}, monogamy makes no guarantees about cycles.
@@ -112,25 +115,29 @@ Since symmetric monoidal terms cannot have cycles, a notion of \emph{acyclicity}
 must also be enforced.
 
 \begin{definition}[Predecessor {\cite[Def.\ 18]{bonchi2022stringa}}]
+    \index{predecessor}
     A hyperedge \(e\) is a \emph{predecessor} of hyperedge \(e^\prime\)
-    if there exists a node \(v\) in the sources of \(e\) and the targets of
+    if there exists a vertex \(v\) in the sources of \(e\) and the targets of
     \(e^\prime\).
 \end{definition}
 
 \begin{definition}[Path {\cite[Def.\ 19]{bonchi2022stringa}}]
+    \index{path}
     A \emph{path} between two hyperedges \(e\) and \(e^\prime\) is a sequence of
     hyperedges \(e_0, \dots, e_{n-1}\) such that \(e = e_0\),
     \(e^\prime = e_{n-1}\), and for each \(i < n-1\), \(e_i\) is a predecessor
     of \(e_{i+1}\).
     A subgraph \(H\) is the \emph{start} or \emph{end} of a path if it contains
-    a node in the sources of \(e\) or the targets of \(e^\prime\) respectively.
+    a vertex in the sources of \(e\) or the targets of \(e^\prime\) respectively.
 \end{definition}
 
-Since nodes are single-element subgraphs, one can also talk about paths from
-nodes.
+Since vertices are single-element subgraphs, one can also talk about paths from
+vertices.
 
 \begin{definition}[Acyclicity {\cite[Def.\ 20]{bonchi2022stringa}}]
-    A hypergraph \(F\) is acyclic if there is no path from a node to itself.
+    \index{acyclicity}
+    \index{cospan!acyclic}
+    A hypergraph \(F\) is acyclic if there is no path from a vertex to itself.
     A cospan \(\cospan{m}{F}{n}\) is acyclic if \(F\) is.
 \end{definition}
 
@@ -183,13 +190,15 @@ safely performed.
     \).
     A cycle cannot be created by composition because there cannot be a path in
     \(F\) that starts in the image of \(g\) or a path in \(G\) that ends in the
-    image of \(h\), because these nodes have out-degree and in-degree \(0\)
+    image of \(h\), because these vertices have out-degree and in-degree \(0\)
     respectively.
 \end{proof}
 
 This shows that monogamous acyclic cospans of hypergraphs form a category.
 
 \begin{definition}[\cite{bonchi2022stringa}]
+    \index{m@\(\macspdhyp\)}
+    \nomenclature{\(\macspdhyp\)}{PROP of monoamous acyclic cospans of hypergraphs}
     Let \(\macspdhyp\) be defined as the sub-PROP of \(\cspdhyp\) containing the
     monogamous acyclic cospans of hypergraphs.
 \end{definition}
@@ -218,7 +227,8 @@ The first is a lemma showing that a special class of subgraphs can always be
 `extracted' from a parent graph.
 
 \begin{definition}[Convex subgraph {\cite[Def.\ 23]{bonchi2022stringa}}]
-    A subgraph \(G \subseteq F\) is convex if for any nodes \(v, v^\prime\) in
+    \index{convex subgraph}
+    A subgraph \(G \subseteq F\) is convex if for any vertices \(v, v^\prime\) in
     \(G\) and any path \(p\) from \(v\) to \(v^\prime\), every edge \(e\) in
     \(p\) is also in \(G\).
 \end{definition}
@@ -285,6 +295,7 @@ by \cref{thm:isomorphism-smcfrob-cospans}, so we just need to show the same is
 true for its components, using a result about pushouts in \(\propcat\).
 
 \begin{definition}[\cite{macdonald2009amalgamations}, Defs. 3.1, 3.2]
+    \index{3-for-2 property}
     A functor \(\morph{F}{\mcc}{\mcd}\) satisfies the \emph{3-for-2 property}
     if, for each triple of morphisms \(f,g,h \in \mcd\) such that
     \(h = g \circ f\), if any two of \(f\), \(g\) and \(h\) are in the image of
@@ -305,13 +316,14 @@ true for its components, using a result about pushouts in \(\propcat\).
 To apply this result, we need to show that \(\hypsigma\) is a pushout.
 
 \begin{definition}
+    \index{\(\permsprop\)}
+    \nomenclature{\(\permsprop\)}{PROP of finite sets and bijective functions}
     Let \(\permsprop\) be the sub-PROP of \(\finsetprop\)
     containing the bijective functions.
 \end{definition}
 
-A morphism \(m \to m\) in \(\permsprop\) is a
-permutation of wires.
-As all the functions are bijections, there can be morphisms of no other form.
+A morphism in \(\permsprop\) is a permutation of wires.
+As all the functions are bijections, there can only be morphisms \(m \to m\).
 
 \begin{lemma}\label{lem:perms-initial}
     \(\permsprop\) is the initial object in \(\propcat\).
@@ -369,18 +381,13 @@ final destination.
 
 \subsection{Coloured symmetric monoidal terms}
 
-As with the Frobenius case, it is a simple exercise to generalise the above
-results to the countably coloured case.
-Monogamy and acyclicity translate simply to coloured cospans, so the only
-modification is we need to apply the 3-for-2 condition in the category of
-\(C\)-coloured PROPs.
-
-\begin{definition}
-    For a countable set of colours \(C\), let \(\cpropc\) be the category of
-    \(C\)-coloured PROPs and morphisms between them.
-\end{definition}
+To generalise the above results to the countably coloured case, the only
+modification is to apply the 3-for-2 condition in the category of \(C\)-coloured
+PROPs.
 
 \begin{lemma}
+    \index{\(\permspropwithnat\)}
+    \nomenclature{\(\permspropwithnat\)}{PROP of finite sets augmented with natural numbers and bijective functions}
     Let \(\permspropwithnat\) be the sub-PROP of \(\finsetpropwithnat\)
     containing only the bijective functions.
 \end{lemma}

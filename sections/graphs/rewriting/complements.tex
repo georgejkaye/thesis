@@ -1,10 +1,12 @@
 \section{Pushout complements}
 
+\index{pushout complement}
 While computing the rewritten graph from a context is a deterministic procedure,
 finding the pushout complement specifying said context
 is a little more subtle.
 
 \begin{definition}
+    \index{matching}
     A morphism \(i+j \to L \to G\) is called a \emph{matching} if it
     has at least one pushout complement.
 \end{definition}
@@ -17,10 +19,11 @@ The first ensures that all the sources and targets of a hyperedge are present
 in a candidate context.
 
 \begin{definition}[No-dangling-hyperedges condition~\cite{corradini1997algebraic}, Prop.\ 3.3.4]
+    \index{no-dangling-hyperedges condition}
     Given morphisms \(i+j \xrightarrow{a} L \xrightarrow{f} G\) in
     \(\hypsigma\), they satisfy the \emph{no-dangling} condition if, for every
     hyperedge not in
-    the image of \(f\), each of its source and target nodes is either not in
+    the image of \(f\), each of its source and target vertices is either not in
     the image of \(f\) or are in the image of \(f \circ a\).
 \end{definition}
 
@@ -34,11 +37,11 @@ in a candidate context.
         \xrightarrow{f}
         \iltikzfig{graphs/dpo/no-dangling/g}
     \]
-    To obtain the pushout complement we `cut out' any nodes in the
+    To obtain the pushout complement we `cut out' any vertices in the
     rightmost graph which are in the image of \(f\) but not the image of
     \(f \circ a\), as the latter are the interfaces of the rule.
-    However, if we cut out the nodes labelled \(2\) and \(3\), the edge
-    \(e_2\) will be left with `dangling' tentacles connected to no nodes, a
+    However, if we cut out the vertices labelled \(2\) and \(3\), the edge
+    \(e_2\) will be left with `dangling' tentacles connected to no vertices, a
     malformed hypergraph.
     \begin{center}
         \begin{tikzcd}
@@ -57,9 +60,10 @@ in a candidate context.
     \end{center}
 \end{example}
 
-The second condition enforces that merging of nodes is well-defined.
+The second condition enforces that merging of vertices is well-defined.
 
 \begin{definition}[No-identification condition~\cite{corradini1997algebraic}, Prop.\ 3.3.4]
+    \index{no-identification condition}
     Given morphisms \(i+j \xrightarrow{a} L \xrightarrow{f} G\) in
     \(\hypsigma\), they satisfy the \emph{no-identification} condition if any
     two distinct elements merged by \(f\) are also in the image of \(f \circ a\).
@@ -77,7 +81,7 @@ The second condition enforces that merging of nodes is well-defined.
     \]
     When trying to construct a pushout complement, the edge \(e_2\) will be
     removed.
-    However, since nodes \(2\) and \(3\) are not mapped from the rule
+    However, since vertices \(2\) and \(3\) are not mapped from the rule
     interfaces, there is no reason that a pushout would glue them together so
     that they are merged in the final graph.
     Therefore no pushout complement can exist.
@@ -121,6 +125,8 @@ To define what an adhesive category is, we must first define a special kind of
 pushout that interacts in a particular way with other pushouts and pullbacks.
 
 \begin{definition}[van Kampen square {\cite[Def.\ 2.1]{lack2005adhesive}}]
+    \index{van Kampen square}
+    \index{VK square}
     Let there be a commutative cube as drawn below.
     \begin{center}
         \begin{tikzcd}
@@ -157,12 +163,15 @@ subgraphs can be `cut out' of a graph without causing the rest of the graph to
 become degenerate.
 
 \begin{definition}
+    \index{pushout!along a monomorphism}
     Given a span \(\spann{A}[f]{B}[g]{C}\) with a pushout \(\cospan{B}{D}{C}\),
     the pushout is called a \emph{pushout along a monomorphism} if \(f\) or
     \(g\) is a monomorphism.
 \end{definition}
 
 \begin{definition}[Adhesive category {\cite[Def.\ 3.1]{lack2005adhesive}}]
+    \index{adhesive category|textbf}
+    \index{category!adhesive}
     A category is \emph{adhesive} if
     \begin{itemize}
         \item it has pushouts along monomorphisms;
@@ -402,18 +411,19 @@ tackled~\cite{heumuller2011construction}; the pushout complements can be
 enumerated as quotients of an `exploded' context.
 
 \begin{definition}[Exploded context~{\cite[Const.\ 1]{heumuller2011construction}}]
+    \index{exploded context}
     Let \(i+j \to L \xrightarrow{f} G\) be a pair of morphisms in
     \(\hypsigma\).
     Then the \emph{exploded context} for these morphisms is a graph
     \(i + j + \tilde{G}\) where \(\tilde{G}\) is constructed as follows:
     \begin{enumerate}
-        \item for each node \(v \in G\) not in the image of \(f\), add one
-              node to \(\tilde{G}\);
+        \item for each vertex \(v \in G\) not in the image of \(f\), add one
+              vertex to \(\tilde{G}\);
         \item for each hyperedge \(e \in G\) not in the image of \(f\), add one
               hyperedge to \(\tilde{G}\);
         \item for each hyperedge \(e \in \tilde{G}\), let the \(i\)-th source
               \(\tilde{s_i}(e)\) be defined as \(s_i(h)\) if
-              \(s_i(h) \in \tilde{G}\) or a new, fresh node otherwise;
+              \(s_i(h) \in \tilde{G}\) or a new, fresh vertex otherwise;
         \item repeat the above for the targets.
     \end{enumerate}
 \end{definition}
@@ -425,11 +435,11 @@ context.
     For a pair of morphisms \(i+j \to L \to G\) in \(\hypsigma\), let
     \(i + j + \tilde{G}\) be its exploded context.
     Define a map \(\morph{q}{i + j + \tilde{G}}{G}\) sending elements in
-    \(\tilde{G}\) from \(G\) to themselves, and sending nodes from
+    \(\tilde{G}\) from \(G\) to themselves, and sending vertices from
     \(i + j\) to their image under \(i + j \to L \to G\).
     Then a pushout complement \(i + j \to C \to G\) is valid if and only the
     context \(C\) is a quotient on the exploded context that only identifies
-    nodes in the image of \(q^{-1}(v)\) for each node \(v \in G\).
+    vertices in the image of \(q^{-1}(v)\) for each vertex \(v \in G\).
 \end{proposition}
 
 Given a DPO rule and matching, we can enumerate all the possible pushout
@@ -543,6 +553,7 @@ The results generalise in the obvious way to the coloured setting.
 \end{notation}
 
 \begin{definition}[\cite{bonchi2022string}]
+    \nomenclature{\(\foldinterfacesc\)}{`folding' \(C\)-coloured PROP morphism \(\smcsigmac + \frobc \to \smcsigmac + \frobc\)}
     Let \(\morph{\foldinterfacesc}{\smcsigmac + \frobc}{\smcsigmac + \frobc}\)
     be defined as having action \(
     \iltikzfig{strings/category/f}[box=f,colour=white,dom=\listvar{m},cod=\listvar{n}]

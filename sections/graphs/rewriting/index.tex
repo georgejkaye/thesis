@@ -28,9 +28,13 @@ interpretations \(
 Instead, to reason about cospans of hypergraphs modulo the equations of some
 monoidal theory the graphs must be \emph{rewritten}.
 
+\index{rewriting!term}
+\index{term rewriting}
 Traditional term rewriting is inherently one-dimensional, which can be somewhat
 restrictive as it enforces that each generator must have a coarity of \(1\).
 On the other hand, string diagram rewriting is an example of
+\index{rewriting!higher dimensional}
+\index{higher dimensional rewriting}
 \emph{higher dimensional} rewriting, which has its roots in Burroni's work on
 polygraphs~\cite{burroni1993higherdimensional}.
 This higher-dimensional approach briefly entered the world of digital
@@ -41,15 +45,20 @@ explicitly, greatly hampering the tractability of the system.
 
 It is only more recently that rewriting string diagrams modulo the axioms of
 SMCs using \emph{graph rewriting} has been studied, starting with the
+\index{graph rewriting}
+\index{rewriting!graph}
+\index{string graph}
 aforementioned \emph{string graphs} of Dixon and
 Kissinger~\cite{dixon2010open,kissinger2012pictures,dixon2013opengraphs}.
 This only considered rewriting in the presence of a trace rather than
 considering any additional structure, but nevertheless was successfully
 implemented in a proof assistant called
+\index{Quantomatic}
 Quantomatic~\cite{kissinger2015quantomatic}.
 Our work continues to follow that of Bonchi et
-al~\cite{bonchi2022string,bonchi2022stringa}, which has several advantages
-over string graphs.
+al~\cite{bonchi2022string,bonchi2022stringa} on rewriting with
+\index{hypergraph}
+\emph{hypergraphs}, which has several advantages.
 Unlike string graphs, the category of hypergraphs is
 \emph{adhesive}~\cite{lack2004adhesive} which affords it some nice rewriting
 properties.

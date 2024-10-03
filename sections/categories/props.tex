@@ -29,6 +29,28 @@ elements of \(\Sigma\) in various ways using composition and tensor.
 Crucially, many \(\Sigma\)-terms correspond to the \emph{same} morphism in
 \(\smc{\generators}\), as the latter are subject to the equations of SMCs.
 
+In this thesis we will use multiple PROPs to represent different processes;
+often we will need to map between them.
+As PROPs are just special categories the most natural way to do this is by
+using functors.
+
+\begin{definition}[PROP morphism]
+    \index{PROP morphism}
+    A \emph{PROP morphism} is a strict symmetric monoidal functor between two
+    PROPs i.e.\ a functor that preserves the strict symmetric monoidal
+    structure.
+\end{definition}
+
+As we saw earlier, functors can be composed and there is an identity functor,
+so PROPs themselves form a category.
+
+\begin{definition}
+    \index{p@\(\propcat\)}
+    \nomenclature{\(\propcat\)}{category of PROPs}
+    Let \(\propcat\) be the category with PROPs as objects and PROP morphisms
+    as morphisms.
+\end{definition}
+
 When we discussed terms we also mentioned the notion of \emph{coloured} terms
 where the wires can be of different colours; appropriately, there are also
 coloured PROPs.
@@ -50,10 +72,32 @@ object in any \(\mcc\)-coloured PROP.
 
 \begin{definition}\label{def:freely-generated-coloured-prop}
     \index{PROP!freely generated coloured}
+    \index{\(\smcsigmac\)}
     \nomenclature{\(\smcsigmac\)}{coloured PROP generated over coloured set \(\generators\)}
     Given a countable set of colours \(C\) and \(C\)-coloured generators
     \(\generators\), let \(\smcsigmac\) be the \(C\)-coloured PROP where
     \(\smcsigmac(\listvar{m}, \listvar{n})\) is the set of
     \((C,\Sigma)\)-terms of type \(\listvar{m} \to \listvar{n}\) quotiented by
     the equations of SMCs.
+\end{definition}
+
+Just like regular PROPs, there are morphisms of coloured PROPs and these form
+a category.
+
+\begin{definition}
+    \index{@c\(\cprop\)}
+    \index{category!of coloured PROPs}
+    Let \(\cprop\) be the category with coloured PROPs as objects and coloured
+    PROP morphisms as morphisms.
+\end{definition}
+
+It can also be useful to consider the category of coloured PROPs over a fixed
+set of colours \(C\).
+
+\begin{definition}
+    \index{c@\(\cpropc\)}
+    \index{category!of \(C\)-coloured PROPs}
+    For a countable set of colours \(C\), let \(\cpropc\) be the category with
+    \(C\)-coloured PROPs as objects and \(C\)-coloured PROP morphisms as
+    morphisms.
 \end{definition}

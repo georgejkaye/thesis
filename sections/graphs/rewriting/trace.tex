@@ -64,6 +64,7 @@ complement corresponds to a valid rewrite in the symmetric monoidal case by
 characterising it as a \emph{boundary complement}.
 
 \begin{definition}[Boundary complement {\cite[Def.\ 30]{bonchi2022stringa}}]
+    \index{boundary complement}
     For monogamous cospans \(
     \cospan{i}[a_1]{L}[a_2]{j}
     \) and \(
@@ -108,6 +109,7 @@ will weaken them to \emph{traced} boundary complements, replacing references to
 monogamy with partial monogamy.
 
 \begin{definition}[Traced boundary complement]
+    \index{traced boundary complement}
     \label{def:traced-boundary-complement}
     For partial monogamous cospans \(
     \cospan{i}[a_1]{L}[a_2]{j}
@@ -144,6 +146,8 @@ By restricting to traced boundary complements, DPO rewriting can be formulated
 for terms in a traced setting.
 
 \begin{definition}[Traced DPO]
+    \index{traced DPO}
+    \index{DPO!traced}
     For morphisms \(G \leftarrow m + n\) and \(H \leftarrow m + n\) in
     \(\hypsigma\), there is a traced rewrite \(G \trgrewrite[\mcr] H\) if there
     exists a rule \(
@@ -155,14 +159,14 @@ for terms in a traced setting.
 \end{definition}
 
 Traced boundary complements are not much more powerful than regular boundary
-complements; \(c_1\) is still not permitted to merge nodes in the inputs and
+complements; \(c_1\) is still not permitted to merge vertices in the inputs and
 the same for \(c_2\) and the outputs.
 The power of traced DPO, and what increases the number of pushout
 complements, is that the matching \(L \to G\) is no longer required to be mono.
 
-Since \(\cospan{m}{G}{n}\) is partial monogamous, nodes
+Since \(\cospan{m}{G}{n}\) is partial monogamous, vertices
 in \(L\) can only be merged if their degrees sum to no more than \((1,1)\).
-Merging nodes in this way corresponds to using the trace to find a match.
+Merging vertices in this way corresponds to using the trace to find a match.
 
 \begin{example}
     Consider the rule \(
@@ -257,7 +261,7 @@ a choice in rewrites.
 \end{example}
 
 There is another condition on graph rewriting modulo symmetric monoidal
-structure in that the matching must be \emph{convex}: any path between nodes
+structure in that the matching must be \emph{convex}: any path between vertices
 must also be captured.
 This is not necessary in the traced case.
 
@@ -577,7 +581,7 @@ this rule.
 
 This gives us a sound and complete graph rewriting system for terms in
 \(\stmcsigma\).
-As always, colouring in the nodes does not affect the machinery of the proof, so
+As always, colouring in the vertices does not affect the machinery of the proof, so
 this generalises to the coloured setting as well.
 
 \begin{theorem}\label{thm:traced-rewrite-correspondence-coloured}

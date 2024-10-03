@@ -6,7 +6,7 @@ morphisms combinatorially.
 But we can go further.
 When modelling \emph{Frobenius} terms, we were modelling them modulo the
 Frobenius equations; when interpreted as cospans of hypergraphs the
-comonoid and monoid structures merged together into single nodes so we did
+comonoid and monoid structures merged together into single vertices so we did
 not need to consider the equations of associativity, commutativity or unitality.
 
 In the realm of sequential circuits we also have monoid and comonoid structures,
@@ -109,6 +109,8 @@ To characterise categories of terms with a comonoid structure, we must first
 define the monoidal theory of cocommutative comonoids.
 
 \begin{definition}
+    \index{c@\(\ccomon\)}
+    \nomenclature{\(\ccomon\)}{PROP freely generated over the generators and equations of commutative comonoids}
     Let \((\generators[\ccomon], \equations[\ccomon])\) be the symmetric
     monoidal theory of \emph{cocommutative comonoids}, with \(
     \Sigma_{\ccomon} \coloneqq \{
@@ -130,18 +132,20 @@ comonoid structure, the notion of monogamy will once again need to be modified.
 Partial monogamy is now too strong, as this means wires cannot fork.
 Weakening to no monogamy at all is too much, as we do not want wires to join as
 well as fork.
-Effectively, nodes need to be `monogamous on one side'.
+Effectively, vertices need to be `monogamous on one side'.
 
 \begin{definition}[Partial left-monogamy]
+    \index{partial left-monogamy}
+    \index{cospan!partial left-monogamous}
     For a cospan \(\cospan{m}[f]{H}[g]{n}\), we say it is
-    \emph{partial left-monogamous} if \(f\) is mono and, for all nodes
+    \emph{partial left-monogamous} if \(f\) is mono and, for all vertices
     \(v \in H_\star\), the degree of \(v\) is \((0,m)\) if \(v \in f_\star\) and
     \((0,m)\) or \((1,m)\) otherwise, for some \(m \in \nat\).
 \end{definition}
 
-Partial left-monogamy is a weakening of partial monogamy that allows nodes
+Partial left-monogamy is a weakening of partial monogamy that allows vertices
 to have multiple `out' connections, which represent the use of the comonoid
-structure to fork wires; nodes must still only have one `in' connection.
+structure to fork wires; vertices must still only have one `in' connection.
 
 \begin{example}\label{ex:partial-left-monogamous}
     The following cospans are partial left-monogamous:
@@ -159,8 +163,8 @@ structure to fork wires; nodes must still only have one `in' connection.
 \end{example}
 
 \begin{remark}
-    As with the nodes not in the interfaces with degree \((0, 0)\) in the
-    vanilla traced case, the nodes not in the interface with degree
+    As with the vertices not in the interfaces with degree \((0, 0)\) in the
+    vanilla traced case, the vertices not in the interface with degree
     \((0, m)\) allow for the interpretation of terms such as \(
     \trace{}{\iltikzfig{strings/structure/comonoid/copy}[colour=white]}
     \).
@@ -194,12 +198,12 @@ operations, so that partial left-monogamous cospans form another PROP.
     \) is partial left-monogamous.
 \end{lemma}
 \begin{proof}
-    Only the nodes in the image of \(n \to G\) have their in-degree modified;
-    they gain the in-tentacles of the corresponding nodes in the image of
+    Only the vertices in the image of \(n \to G\) have their in-degree modified;
+    they gain the in-tentacles of the corresponding vertices in the image of
     \(n \to F\).
-    Initially the nodes in \(n \to G\) have in-degree \(0\) by partial
-    monogamy; they will gain at most one in-tentacle from nodes in
-    \(n \to F\) as each of these nodes has in-degree \(0\) or \(1\) and
+    Initially the vertices in \(n \to G\) have in-degree \(0\) by partial
+    monogamy; they will gain at most one in-tentacle from vertices in
+    \(n \to F\) as each of these vertices has in-degree \(0\) or \(1\) and
     \(n \to G\) is mono.
     So the composite graph is partial left-monogamous.
 \end{proof}
@@ -220,6 +224,8 @@ This means we can assemble the partial left-monogamous cospans of hypergraphs
 into the desired sub-PROP.
 
 \begin{definition}
+    \index{p@\(\plmcspdhyp\)}
+    \nomenclature{\(\plmcspdhyp\)}{PROP of partial left-monogamous cospans of hypergraphs}
     Let \(\plmcspdhyp\) be the sub-PROP of \(\cspdhyp\) containing only the
     partial left-monogamous cospans of hypergraphs.
 \end{definition}
@@ -228,15 +234,16 @@ As this PROP is not restricted to acyclic cospans like those used for just
 terms with a (co)monoid structure, it has the additional structure of a trace.
 
 \begin{proposition}
+    \index{canonical trace}
     The canonical trace is a trace on \(\plmcspdhyp\).
 \end{proposition}
 \begin{proof}
-    We must show that for any nodes in the image
+    We must show that for any vertices in the image
     of \(x + n \to K\) merged by the canonical trace, at most one of them can
     have in-degree \(1\).
     This follows because anything in the image of
     \(x + m \to K\) must have in-degree \(0\), and \(x + m \to K\) is
-    mono so it cannot merge nodes in the image of \(x + n \to K\).
+    mono so it cannot merge vertices in the image of \(x + n \to K\).
 \end{proof}
 
 We now have the setting in which we will model terms with a comonoid structure.
@@ -244,6 +251,8 @@ To actually define the mapping from \(\stmcsigma + \ccomon\) we will reuse
 some ingredients from the previous sections.
 
 \begin{definition}
+    \nomenclature{\(\comonoidtofrob\)}{PROP morphism \(\ccomon \to \frob\)}
+    \nomenclature{\(\tracedandcomonoidtofrobsigma\)}{PROP morphism \(\stmcsigma + \ccomon \to \smcsigma + \frob\)}
     Let \(
     \morph{
         \comonoidtofrob
@@ -353,6 +362,8 @@ As with \(\frob\), a multicoloured version of \(\ccomon\) is defined as a
 coproduct in \(\cprop\).
 
 \begin{definition}
+    \index{c@\(\ccomonc\)}
+    \nomenclature{\(\ccomonc\)}{PROP of \(C\)-coloured commutative comonoids}
     For a countable set \(C\), let
     \(\ccomonc \coloneqq \Sigma_{c \in C} \ccomon\).
 \end{definition}
@@ -360,6 +371,8 @@ coproduct in \(\cprop\).
 Partial left-monogamy follows as before, so we have a traced coloured PROP.
 
 \begin{definition}
+    \index{p@\(\plmcspdchyp\)}
+    \nomenclature{\(\plmcspdchyp\)}{PROP of partial left-monogamous cospans of hypergraphs}
     Let \(\plmcspdchyp\) be the sub-PROP of \(\cspdchyp\) containing only the
     partial left-monogamous cospans of hypergraphs.
 \end{definition}

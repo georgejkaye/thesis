@@ -1,13 +1,14 @@
 \subsection{Cospans of hypergraphs}
 
 String diagrams also have \emph{input} and \emph{output} interfaces.
-(Labelled) hypergraphs may have suggestively dangling nodes in the pictures,
+(Labelled) hypergraphs may have suggestively dangling vertices in the pictures,
 but this is not actually encoded in the definition; moreover we may wish to
-set a non-dangling node as an input or output.
+set a non-dangling vertex as an input or output.
 To set the interfaces of a hypergraph, hypergraph homomorphisms are used
-to `pick' the appropriate nodes.
+to `pick' the appropriate vertices.
 
 \begin{definition}[Cospan]
+    \index{cospan}
     A \emph{cospan} is a pair of morphisms \(X \to A\)
     and \(Y \to A\), written \(\cospan{X}{A}{Y}\).
     A \emph{cospan morphism} \(
@@ -32,6 +33,7 @@ we require a categorical setting in which the objects are
 \emph{cospans} of hypergraphs, so they must be composable.
 
 \begin{definition}[Composition of cospans]
+    \index{composition!of cospans}
     \label{def:cospan-composition}
     In a category \(\mcc\) with pushouts, the composition of cospans
     \(\cospan{X}[f]{A}[g]{Y}\) and \(\cospan{Y}[h]{B}[k]{Z}\) is a cospan
@@ -42,6 +44,8 @@ we require a categorical setting in which the objects are
 \end{definition}
 
 \begin{definition}[Categories of cospans]
+    \index{category!of cospans}
+    \nomenclature{\(\csp{\mcc}\)}{category of cospans over \(\mcc\)}
     Let \(\mcc\) be a category with finite colimits.
     The category of cospans over \(\mcc\), denoted \(\csp{\mcc}\),
     has as objects the objects of \(\mcc\) and as morphisms \(A \to B\)
@@ -68,19 +72,21 @@ the input and output.
 But this means that not every hypergraph can act as an interface to a
 hypergraph, as any edges in the hypergraphs would also need to be mapped
 somewhere.
-We must restrict the interface hypergraphs to those that contain only nodes.
+We must restrict the interface hypergraphs to those that contain only vertices.
 
 \begin{definition}[Discrete hypergraph]
+    \index{discrete hypergraph}
+    \index{hypergraph!discrete}
     A \emph{discrete hypergraph} is a hypergraph in which each edge set is
     empty.
 \end{definition}
 
 The legs of cospans representing interfaced hypergraphs will be discrete
 hypergraphs; if a hypergraph \(F\) has \(m\) inputs then the input hypergraph
-\(A\) will contain \(m\) nodes.
+\(A\) will contain \(m\) vertices.
 This is not enough to fully specify the interfaces, as there must also be a
 notion of \emph{order}.
-We need a way of specifying which node corresponds to which numbered input or
+We need a way of specifying which vertex corresponds to which numbered input or
 output; this is formally performed by another functor.
 
 \begin{theorem}[\cite{bonchi2022string}, Thm.\ 3.6]\label{thm:csp-construction}
@@ -109,6 +115,8 @@ For our purpose, the domain of this functor will be the PROP of finite sets
 \(\{0,1,2,\dots,m-1\}\).
 
 \begin{definition}
+    \index{f@\(\finsetprop\)}
+    \nomenclature{\(\finsetprop\)}{PROP of finite sets and functions}
     Let \(\finsetprop\) be the PROP with morphisms \(m \to n\) the functions
     between finite sets \([m] \to [n]\).
 \end{definition}
@@ -118,7 +126,7 @@ words.
 
 \begin{definition}
     Let \(\morph{D}{\finsetprop}{\hypsigma}\) be defined as the functor sending
-    an object \(n\) to the discrete hypergraphs with \(n\) nodes, and sending
+    an object \(n\) to the discrete hypergraphs with \(n\) vertices, and sending
     a function \(m \to n\) to the induced homomorphism of discrete
     hypergraphs.
 \end{definition}
@@ -127,6 +135,10 @@ Instantiating \cref{thm:csp-construction} with \(D\) produces the category of
 interfaced hypergraphs.
 
 \begin{corollary}
+    \index{interfaced hypergraphs}
+    \index{hypergraphs!interfaced}
+    \index{c@\(\cspdhyp\)}
+    \nomenclature{\(\cspdhyp\)}{PROP of interfaced hypergraphs}
     There is a PROP \(\cspdhyp\) where the morphisms are isomorphism classes of
     interfaced hypergraphs.
 \end{corollary}
@@ -145,7 +157,7 @@ interfaced hypergraphs.
     \]
     For clarity, we number the outputs after the inputs, but this does not
     reflect the mapping performed by \(D\).
-    Composition in \(\cspdhyp\) is by pushout; effectively the nodes in the
+    Composition in \(\cspdhyp\) is by pushout; effectively the vertices in the
     output of the first cospan are `glued together' with the inputs of the
     second.
     Note that although we write different numbers for the glued cospan legs,
@@ -195,6 +207,8 @@ Since we are working with potentially countably infinite sets of colours, the
 definition of \(\finsetprop\) must first be tweaked.
 
 \begin{definition}
+    \nomenclature{\(\finsetpropwithnat\)}{PROP of finite sets and functions augmented with natural numbers}
+    \index{f@\(\finsetpropwithnat\)}
     Let \(\finsetpropwithnat\) be the category \(\finsetprop\) augmented with the
     set of natural numbers and the functions \([m] \to \nat\) for each finite
     set \([m]\).
@@ -250,7 +264,7 @@ way as the monochromatic version.
 \begin{definition}[\cite{bonchi2022string}, Rem.\ 3.12]
     Let \(\morph{\pickinterfacesc{C}}{\finsetpropwithnat \slice C}{\hypsigmac}\)
     be defined as the functor sending a word \(\overline{n}\) to the
-    corresponding discrete coloured hypergraph containing nodes coloured as
+    corresponding discrete coloured hypergraph containing vertices coloured as
     in \(\overline{n}\), and sending a function \(\overline{m} \to \overline{n}\)
     to the induced homomorphism of discrete hypergraphs.
 \end{definition}
@@ -258,6 +272,10 @@ way as the monochromatic version.
 As with the monochromatic case, applying \cref{thm:coloured-csp-construction} to
 this functor gives us a category of \emph{coloured} interfaced hypergraphs
 \(\cspdchyp\).
+\index{c@\(\cspdchyp\)}
+\nomenclature{\(\cspdchyp\)}{PROP of coloured interfaced hypergraphs}
+\index{hypergraphs!coloured interfaced}
+\index{coloured!interfaced hypergraphs}
 
 \begin{example}
     Composition in \(\cspdchyp\) is as in \(\cspdhyp\) but now the glueing

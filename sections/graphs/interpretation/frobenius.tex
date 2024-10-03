@@ -57,6 +57,9 @@ defined in the previous section.
 
 \begin{definition}
     \label{def:frob}
+    \index{Frobenius|textbf}
+    \index{f@\(\frob\)}
+    \nomenclature{\(\frob\)}{PROP of Frobenius terms and equations}
     The monoidal theory of \emph{special commutative Frobenius algebras} is
     defined as \((\generators[\frob], \equations[\frob])\), where \(
     \generators[\frob] \coloneqq \{
@@ -110,6 +113,9 @@ To define a \emph{coloured} version of \(\frob\) we simply use a different copy
 of \(\frob\) to represent each colour, using a fact about \(\propcat\) and
 \(\cprop\).
 
+\index{p@\(\propcat\)}
+\index{c@\(\cprop\)}
+
 \begin{theorem}[\cite{baez2018props}, Corollary 5.3]
     \(\propcat\) has coproducts.
 \end{theorem}
@@ -124,6 +130,8 @@ a coproduct of copies of \(\frob\).
 
 \begin{definition}[\cite{bonchi2022string}]
     \label{def:frobc}
+    \index{f@\(\frobc\)}
+    \nomenclature{\(\frob\)}{PROP of \(C\)-coloured Frobenius terms and equations}
     For a countable set \(C\), let \(\frobc \in \cprop\) be
     defined as \(\frobc \coloneqq \sum_{c \in C}\frob\).
 \end{definition}
@@ -153,6 +161,8 @@ structure.
 
 \begin{definition}[Hypergraph category~\cite{fong2019hypergraph}]
     \label{def:hypergraph-category}
+    \index{category!hypergraph}
+    \index{hypergraph!category}
     A \emph{hypergraph category} is a category in which every object is equipped
     with a special commutative Frobenius algebra subject to the
     \emph{coherence equations} in \cref{fig:hypergraph-coherence}.
@@ -164,10 +174,16 @@ structure.
     The notion of a hypergraph category has been
     rediscovered numerous times over the years.
     They were originally called \emph{well-supported compact closed categories}
+    \index{category!well-supported compact closed}
+    \index{well-supported compact closed}
     by Carboni and Walters~\cite{carboni1987cartesian}, and have subsequently
     appeared as
     \emph{dgs-monoidal categories}~\cite{katis1997bicategories,gadducci1998inductive,gadducci1999bicategorical,bruni2002normal}
+    \index{dgs-monoidal categories}
+    \index{category!dgs-monoidal}
     and \emph{dungeon categories}~\cite{morton2014belief}.
+    \index{dungeon categories}
+    \index{category!dungeon}
     The term \emph{hypergraph categories} was coined more recently but has
     become the standard in the compositional processes
     community~\cite{kissinger2015finite,fong2015decorated,baez2016compositional,baez2018compositional}.
@@ -190,6 +206,8 @@ It is now possible to formally define what we mean when we say `Frobenius
 terms'.
 
 \begin{definition}
+    \index{h@\(\hypcsigma\)}
+    \nomenclature{\(\hypcsigma\)}{PROP generated over a set of generators \(\Sigma\) and the Frobenius generators}
     For a set of generators \(\generators\), let \(\hypcsigma\) be the PROP
     freely generated over \(\generators + \generators[\frob]\).
 \end{definition}
@@ -216,6 +234,8 @@ We can also proceed similarly for the multi-coloured case.
 \end{proof}
 
 \begin{definition}
+    \index{h@\(\hypcsigmac\)}
+    \nomenclature{\(\hypcsigmac\)}{PROP of \(C\)-coloured Frobenius terms and equations}
     For a set of \(C\)-coloured generators over \(\generators\), let
     \(\hypcsigmac\) be the \(C\)-coloured PROP freely generated over
     \(\generators + \generators[\frobc]\).
@@ -331,13 +351,14 @@ this arises as a special case of the following theorem.
 
 \begin{corollary}[\cite{bonchi2022string}, Cor.\ 3.9]
     \label{cor:finset-to-hyp}
-    There is a faithful PROP homomorphism
+    There is a faithful PROP morphism
     \(\morph{\tilde{\pickinterfaces}}{\csp{\finsetprop}}{\cspdhyp}\)
 \end{corollary}
 
 With this we can derive a map from Frobenius terms to cospans of hypergraphs.
 
 \begin{definition}
+    \nomenclature{\(\frobtohypsigma\)}{PROP morphism \(\frob \to \cspdhyp\)}
     Let \(\morph{\frobtohypsigma}{\frob}{\cspdhyp}\) be the PROP morphism
     defined by using \cref{prop:frob-finset} followed by
     \cref{cor:finset-to-hyp}.
@@ -505,12 +526,12 @@ discrete hypergraphs.
     For a countable set \(C\), let
     \(\morph{D_C}{\finsetpropwithnat \slice C}{\hypcsigmac}\) be
     defined as the functor that maps a coloured word \(\listvar{w}\) to the
-    discrete coloured hypergraph containing an appropriately coloured node for
+    discrete coloured hypergraph containing an appropriately coloured vertex for
     each element of \(\listvar{w}\).
 \end{definition}
 
 \begin{corollary}[\cite{bonchi2022string}, Rem.\ 3.12]\label{cor:finsets-c-to-hyp}
-    There is a faithful PROP homomorphism \(
+    There is a faithful PROP morphism \(
     \morph{
         \widetilde{\pickinterfacesc{C}}
     }{
@@ -544,6 +565,7 @@ The results of the previous section gives us the latter, so all that remains is
 the former.
 
 \begin{definition}[{\cite[Sec.\ 4.1]{bonchi2022string}}]\label{def:hyp-morphisms}
+    \nomenclature{\(\termtohypsigma\)}{PROP morphism \(\smcsigma \to \cspdhyp\)}
     Let \(\morph{\termtohypsigma}{\smcsigma}{\cspdhyp}\) be a PROP
     morphism with the action on generators defined as \[
         \termtohypsigma[\iltikzfig{%
@@ -559,6 +581,7 @@ To map from terms in a hypergraph category to cospans of hypergraphs, we simply
 put the two maps together.
 
 \begin{definition}
+    \nomenclature{\(\termandfrobtohypsigma\)}{PROP morphism \(\smcsigma + \frob \to \cspdhyp\)}
     Let \(
     \morph{\termandfrobtohypsigma}{\smcsigma + \frob}{\cspdhyp}
     \) be the PROP morphism defined as the copairing of \(\termtohypsigma\) and
@@ -605,7 +628,7 @@ given cospan into a particular form.
     image of \(\termtohypsigma\) or \(\frobtohypsigma\).
 
     Consider a cospan \(\cospan{m}[f]{G}[g]{n}\) in \(\cspdchyp\); let \(N\) be
-    the set of nodes, let \(E\) be the set of hyperedges, and let
+    the set of vertices, let \(E\) be the set of hyperedges, and let
     \(\morph{\chi}{E}{\generators}\) be the induced labelling function.
     Pick an order \(e_0, e_1, e_{j-1}\) on the edges; then define \(
     \cospan{\tilde{m}}[s]{\tilde{E}}[t]{\tilde{n}}
@@ -618,8 +641,8 @@ given cospan into a particular form.
     edges concatenated in the order specified.
     It is easy to define functions \(\morph{f^\prime}{m}{N}\),
     \(\morph{g^\prime}{n}{N}\), \(\morph{h}{\tilde{m}}{N}\) and
-    \(\morph{k}{\tilde{n}}{N}\) that send nodes to the corresponding node in the
-    set of all nodes in the graph.
+    \(\morph{k}{\tilde{n}}{N}\) that send vertices to the corresponding vertex in the
+    set of all vertices in the graph.
 
     With this data, the original cospan \(\cospan{m}[f]{G}[g]{n}\) can be
     viewed as the following composition of cospans: \[
@@ -685,7 +708,7 @@ the left by going `over the top' of the edges via the identity cospan
     \end{center}
     This cospan can be assembled into the form detailed in the above proof as
     shown in \cref{fig:frobenius-composite}.
-    By following the node maps, one can verify that this is indeed isomorphic
+    By following the vertex maps, one can verify that this is indeed isomorphic
     to the original cospan.
     The outermost components correspond to terms in \(\frob\) and the
     innermost to a term in \(\smcsigma\).
@@ -762,7 +785,7 @@ the Frobenius equations can be mapped to isomorphic cospans of hypergraphs.
     \[
         \iltikzfig{graphs/example-frobenius-collapse}
     \]
-    All of the Frobenius structure collapses into one node, much like when we
+    All of the Frobenius structure collapses into one vertex, much like when we
     considered the correspondence between Frobenius terms and finite sets.
 \end{example}
 
@@ -772,12 +795,14 @@ The results for the monochromatic case also follow for the coloured case, so we
 can restate the correspondence for coloured terms and hypergraphs.
 
 \begin{definition}
-    Let \(\morph{\termandfrobtohypsigmac}{\smcsigmac}{\cspdchyp}\) be defined
+    \nomenclature{\(\termtohypsigmac\)}{PROP morphism \(\smcsigmac \to \cspdchyp\)}
+    Let \(\morph{\termtohypsigmac}{\smcsigmac}{\cspdchyp}\) be defined
     as \(\termandfrobtohypsigma\) but assigning appropriate colours to the
-    danging nodes.
+    danging vertices.
 \end{definition}
 
 \begin{definition}
+    \nomenclature{\(\termandfrobtohypsigmac\)}{PROP morphism \(\smcsigmac + \frobc \to \cspdchyp\)}
     Let \(
     \morph{\termandfrobtohypsigmac}{\smcsigmac + \frobc}{\cspdchyp}
     \) be the copairing of \(\termtohypsigmac\) and
@@ -790,5 +815,5 @@ can restate the correspondence for coloured terms and hypergraphs.
 \end{theorem}
 \begin{proof}
     In the same manner as \cref{thm:isomorphism-smcfrob-cospans}, but the
-    components of the composite cospan now have appropriately coloured nodes.
+    components of the composite cospan now have appropriately coloured vertices.
 \end{proof}

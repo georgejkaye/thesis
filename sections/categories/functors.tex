@@ -117,7 +117,7 @@ Many notions in mathematics and computer science can be viewed as functors.
     )\) and sends morphisms \(X \to Y\) to the corresponding monoid homomorphism
     \(\freemon{X} \to \freemon{Y}\).
 
-    There is also a \emph{forgetful} or \emph{underlying} functor\index{functor!forgetful functor}
+    There is also a \emph{forgetful} or \emph{underlying} functor\index{functor!forgetful}
     \(\morph{U}{\mon}{\set}\) which sends a monoid \((X, *, e)\) to its carrier
     set \(X\) and `forgets' the monoid structure.
     The functors \(F\) and \(U\) form an \emph{adjunction}, but this
@@ -171,7 +171,8 @@ of morphisms between two objects.
     to the classes of morphisms \(FA \to FB\) in \(\mcd\).
 \end{notation}
 
-\begin{definition}[Faithful functor~\cite{maclane1978categories}]\index{functor!faithful}
+\begin{definition}[Faithful functor~\cite{maclane1978categories}]
+    \index{functor!faithful}\index{faithful functor}
     A functor \(\morph{F}{\mcc}{\mcd}\) is \emph{faithful} if \(F_{A,B}\) is
     injective for all \(A,B \in \mcc\).
 \end{definition}
@@ -180,7 +181,9 @@ A faithful functor \(\morph{F}{\mcc}{\mcd}\) does not coalesce morphisms: every
 morphism \(f \in \mor{\mcc}{A}{B}\) has a unique morphism
 \(Ff \in \mor{\mcd}{FA}{FB}\).
 
-\begin{definition}[Full functor~\cite{maclane1978categories}]\index{functor!full}
+\begin{definition}[Full functor~\cite{maclane1978categories}]
+    \index{functor!full}
+    \index{full!functor}
     A functor \(\morph{F}{\mcc}{\mcd}\) is \emph{full} if \(F_{A,B}\) is
     surjective for all \(A,B \in \mcc\).
 \end{definition}
@@ -207,7 +210,8 @@ faithfulness show how exactly two categories are related.
 One way a category \(\mcc\) can be related to another category \(\mcd\) is that
 the former is the latter with `some of the bits taken out'.
 
-\begin{definition}[Subcategory]\index{category!subcategory}
+\begin{definition}[Subcategory]
+    \index{subcategory}
     Given a category \(\mcc\), a \emph{subcategory} \(\mcd\) of \(\mcc\) is a
     subclass of the objects in \(\mcc\) and a subclass of the morphisms in
     \(\mcd\) such that
@@ -232,7 +236,9 @@ An inclusion functor is clearly faithful, since there cannot be two morphisms in
 the subcategory that map to the same morphism in the parent category.
 Inclusion functors that are also \emph{full} are of particular interest.
 
-\begin{definition}[Full subcategory]\index{category!full subcategory}
+\begin{definition}[Full subcategory]
+    \index{full!subcategory}
+    \index{subcategory!full}
     A subcategory \(\mcd\) is a \emph{full subcategory} if its inclusion functor
     \(\mcd \to \mcc\) is full and faithful; i.e.\ for all objects
     \(A, B \in \mcd\), the morphisms \(\mor{\mcd}{A}{B} = \mor{\mcc}{A}{B}\).
@@ -402,7 +408,7 @@ colimits.
     \(\morph{F}{\mathcal{J}}{\mathcal{C}}\) has a colimit in \(\mathcal{C}\).
 \end{definition}
 
-\begin{definition}[Cocomplete category]\index{category!cocomplete category}
+\begin{definition}[Cocomplete category]\index{category!cocomplete}
     A category \(\mathcal{C}\) is \emph{cocomplete} if it has colimits for all
     functors \(\morph{F}{\mathcal{J}}{\mathcal{C}}\), where \(\mathcal{J}\) is a
     small category.

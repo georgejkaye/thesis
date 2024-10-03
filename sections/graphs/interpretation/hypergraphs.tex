@@ -5,6 +5,9 @@ pattern outlined in \cite{bonchi2022string}.
 Hypergraphs are formally defined as a functor category.
 
 \begin{definition}[Hypergraph~\cite{bonchi2016rewriting}]\label{def:hypergraph}
+    \index{hypergraph|textbf}
+    \index{h@\(\hyp\)}
+    \nomenclature{\(\hyp\)}{category of hypergraphs}
     Let \(\mathbf{X}\) be the category with object set
     \((\nat \times \nat) + \star\) and morphisms
     \(\morph{\sources{i}}{(k,l)}{\star}\) for each \(i < k\)
@@ -14,13 +17,16 @@ Hypergraphs are formally defined as a functor category.
 \end{definition}
 
 One can think of the category \(\mathbf{X}\) as a `template' for the structure
-of a hypergraph: the object \(\star\) represents the nodes and each object
+of a hypergraph: the object \(\star\) represents the vertices and each object
 \((k, l)\) represents hyperedges with \(k\) sources and \(l\) targets; each such
 edge must pick \(k\) sources and \(l\) targets from \(\star\).
 Objects in \(\hyp\) are functors that instantiate each object in \(\mathbf{X}\)
 to a concrete set.
-For a hypergraph \(F \in \hyp\) we write \(\vertices{F}\) for its nodes and
-\(\edges{F}{k}{l}\) for its edges with \(k\) sources and \(l\) targets.
+For a hypergraph \(F \in \hyp\) we write \(\vertices{F}\)
+\index{vertex}\nomenclature{\(\vertices{F}\)}{vertices of a hypergraph \(F\)}
+for its vertices and \(\edges{F}{k}{l}\)
+\index{edge}\nomenclature{\(\edges{F}{k}{l}\)}{edges of a hypergraph \(F\) with \(k\) sources and \(l\) targets}
+for its edges with \(k\) sources and \(l\) targets.
 
 \begin{example}\label{ex:hypergraph}
     Let a hypergraph \(F\) be defined as follows:
@@ -45,16 +51,17 @@ For a hypergraph \(F \in \hyp\) we write \(\vertices{F}\) for its nodes and
     \end{gather*}
     Much like with regular graphs, it is more intuitive to draw out hypergraphs
     rather than look at their combinatorial representation.
-    We draw nodes as black dots and hyperedges as `bubbles' with ordered tentacles
-    on the left and right that connect to source and target nodes respectively,
+    We draw vertices as black dots and hyperedges as `bubbles' with ordered tentacles
+    on the left and right that connect to source and target vertices respectively,
     as illustrated in \cref{fig:hypergraph-ex}.
-    Note that the nodes do not have any notion of ordering or directionality.
+    Note that the vertices do not have any notion of ordering or directionality.
 \end{example}
 
 Since it is a functor category, the morphisms in \(\hyp\) are natural
 transformations: structure-preserving maps between hypergraphs.
 
 \begin{definition}[Hypergraph homomorphism]\label{def:hypergraph-homomorphism}
+    \index{hypergraph!homomorphism}
     For two hypergraphs \(F, G \in \hyp\), a \emph{hypergraph homomorphism}
     \(\morph{f}{F}{G}\) is a pair of functions
     \(\morph{\vertices{f}}{\vertices{F}}{\vertices{G}}\) and
@@ -90,7 +97,7 @@ transformations: structure-preserving maps between hypergraphs.
     \end{center}
 
     Recall the hypergraph \(F\) from \cref{ex:hypergraph}.
-    A homomorphism \(\morph{h}{G}{F}\) is a map from the nodes and edges
+    A homomorphism \(\morph{h}{G}{F}\) is a map from the vertices and edges
     of the former to those of the the latter preserving sources and targets;
     one possible homomorphism could be
     \begin{center}
@@ -115,6 +122,7 @@ transformations: structure-preserving maps between hypergraphs.
     \end{center}
 
     Injective hypergraph homomorphisms are often known as \emph{embeddings}.
+    \index{hypergraph!embedding}
     However, there is no requirement for hypergraph homomorphisms to be
     injective.
     Consider another hypergraph \(H\) defined as
@@ -151,7 +159,7 @@ transformations: structure-preserving maps between hypergraphs.
         \quad
         \edges{h}{2}{1}(e_2) \coloneqq e_3
     \end{gather*}
-    Although the nodes of \(G\) are merged by \(h\), the sources and
+    Although the vertices of \(G\) are merged by \(h\), the sources and
     targets are preserved.
 \end{example}
 
@@ -174,11 +182,14 @@ transformations: structure-preserving maps between hypergraphs.
 
 The graphical notation for hypergraphs is particularly evocative of string
 diagrams: generators
-correspond to hyperedges and wires to the nodes between them.
+correspond to hyperedges and wires to the vertices between them.
 The only thing missing is that the hyperedges are not \emph{labelled} with
 generator symbols.
 
 \begin{definition}[Hypergraph signature~\cite{bonchi2016rewriting}]
+    \index{hypergraph!signature}
+    \nomenclature{\(\Sigma\)}{set of generators}
+    \nomenclature{\(\hypsignature{\generators}\)}{hypergraph signature for a set of generators \(\Sigma\)}
     For a set of generators \(\generators\) with arities and coarities as defined
     in \cref{def:generators}, the corresponding \emph{hypergraph signature}
     \(\hypsignature{\generators}\) is an object of \(\hyp\) defined as follows:
@@ -233,6 +244,8 @@ objects are hypergraph homomorphisms to \(\hypsignature{\generators}\).
 This is a well-studied categorical template, and it has a special name.
 
 \begin{definition}[Slice category~\cite{lawvere1963functorial}]\label{def:slice-category}
+    \index{category!slice}
+    \index{slice category}
     For a category \(\mcc\) and an object \(C \in \mcc\), the
     \emph{slice category} \(\mcc \slice C\) has as objects the morphisms of
     \(\mcc\) with target \(C\) and as morphisms
@@ -246,6 +259,9 @@ When we set \(C\) to some hypergraph signature, this is a perfect setting for
 labelled hypergraphs.
 
 \begin{definition}[Labelled hypergraphs~\cite{bonchi2016rewriting}]
+    \index{hypergraph!labelled}
+    \index{h@\(\hypsigma\)}
+    \nomenclature{\(\hypsigma\)}{category of \(\generators\)-labelled hypergraphs}
     For a set of generators \(\generators\), the category of
     \emph{\(\Sigma\)-labelled hypergraphs} is the slice category
     \(\hypsigma \coloneqq \hyp \slice \hypsignature{\Sigma}\).
@@ -275,6 +291,8 @@ Accordingly, hypergraph signatures can be generalised to \emph{coloured}
 hypergraph signatures.
 
 \begin{definition}[Coloured hypergraph signature~\cite{bonchi2016rewriting}]\label{def:coloured-hypergraph-signature}
+    \index{hypergraph!coloured signature}
+    \index{coloured!hypergraph signature}
     For a countable set set \(C\) and a set of \(C\)-coloured generators
     \(\generators\) as defined in \cref{def:generators}, the
     \emph{coloured hypergraph signature}
@@ -337,6 +355,10 @@ hypergraph signatures.
 \end{figure}
 %
 \begin{definition}[Coloured hypergraphs~\cite{bonchi2016rewriting}]
+    \index{hypergraph!coloured}
+    \index{coloured!hypergraph}
+    \index{h@\(\hypsigmac\)}
+    \nomenclature{\(\hypsigmac\)}{category of \((C,\generators)\)-labelled hypergraphs}
     For a countable set \(C\) and set of \(C\)-coloured generators \(\Sigma\),
     let \(\hypsigmac\) be the category
     of \emph{\((C,\generators)\)-labelled hypergraphs}, defined as the slice
@@ -364,6 +386,6 @@ hypergraph signatures.
         \quad
         \edges{\Gamma}{1}{2}(e_1) \coloneqq e_{\psi}
     \end{gather*}
-    Coloured hypergraphs are drawn as labelled hypergraphs, but their nodes
+    Coloured hypergraphs are drawn as labelled hypergraphs, but their vertices
     are additionally coloured, as shown in \cref{fig:coloured-hypergraph-ex}.
 \end{example}

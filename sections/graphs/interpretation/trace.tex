@@ -8,6 +8,13 @@ Our contribution is to characterise the cospans of hypergraphs that correspond
 to traced terms by weakening the conditions of monogamy and acyclicity described
 in the previous section.
 
+\begin{definition}
+    \index{s@\(\stmcsigma\)}
+    \nomenclature{\(\stmcsigma\)}{traced PROP of traced terms freely generated over \(\Sigma\)}
+    For a set of generators \(\generators\), let \(\stmcsigma\) be the traced
+    PROP freely generated over \(\generators\).
+\end{definition}
+
 First we will establish the morphism \(\stmcsigma \to \cspdhyp\) we will use
 to map traced terms to cospans of hypergraphs.
 We could do this manually fairly easily, but this would mean we would have to
@@ -62,6 +69,7 @@ between traced and compact closed categories.
 \end{proof}
 
 \begin{definition}
+    \nomenclature{\(\tracedtosymandfrobsigma\)}{inclusion functor \(\stmcsigma \to \hypcsigma\)}
     Let \(\morph{\tracedtosymandfrobsigma}{\stmcsigma}{\hypcsigma}\) be defined
     as the inclusion functor induced by \cref{lem:stmc-subcat-hyp}.
 \end{definition}
@@ -82,11 +90,10 @@ section to obtain a cospan of hypergraphs.
 \subsection{Partial monogamy}
 
 Since \(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\) is faithful,
-every distinct traced term in \(\stmcsigma\) has a unique cospan of
-hypergraphs up to isomorphism.
-However, this functor is not clearly not full: as we have previously
-illustrated, there are more terms in \(\hypcsigma\) than there are in
-\(\stmcsigma\).
+every traced term in \(\stmcsigma\) has a unique corresponding cospan of
+hypergraphs.
+This functor is not clearly not full; there are more terms in
+\(\hypcsigma\) than there are in \(\stmcsigma\).
 The next step is to characterise the image of
 \(\termandfrobtohypsigma \circ \tracedtosymandfrobsigma\).
 
@@ -116,15 +123,18 @@ loop \(
     \(\finvectk{k}\)~\cite[Sec.\ 6.1]{hasegawa1997recursion}.
 \end{remark}
 
-These closed loops can be modelled as nodes disconnected from either
+These closed loops can be modelled as vertices disconnected from either
 interface.
 
 \begin{definition}[Partial monogamy]
+    \index{partial monogamy}
+    \index{monogamy!partial}
+    \index{cospan!partial monogamous}
     For a cospan \(\cospan{m}[f]{F}[g]{n}\) in
     \(\cspdhyp\), let \(\mathsf{in}(F)\) be defined as the image of \(f\) and
     let \(\mathsf{out}(F)\) be defined as the image of \(g\).
     A cospan \(\cospan{m}[f]{F}[g]{n} \in \cspdhyp\) is
-    \emph{partial monogamous} if \(f\) and \(g\) are mono and, for all nodes
+    \emph{partial monogamous} if \(f\) and \(g\) are mono and, for all vertices
     \(v\), the degree of \(v\) is
     \begin{center}
         \begin{tabular}{rlcrl}
@@ -186,7 +196,7 @@ they must be assembled into a sub-PROP of \(\cspdhyp\).
     By \cref{lem:monogamicity-preserved-composition}, composition preserves
     monogamicity.
     The only difference between partial monogamous cospans and monogamous ones
-    is that the former may have cycles and nodes of degree \((0,0)\) not in the
+    is that the former may have cycles and vertices of degree \((0,0)\) not in the
     interfaces.
     However, since neither of these can be interfaces they cannot be altered by
     composition, so partial monogamy must also be preserved.
@@ -198,13 +208,15 @@ they must be assembled into a sub-PROP of \(\cspdhyp\).
 \begin{proof}
     Tensor preserves monogamicity by
     \cref{lem:monogamicity-preserved-tensor}, and as tensor does not affect the
-    degree of nodes then it preserves partial monogamy as well.
+    degree of vertices then it preserves partial monogamy as well.
 \end{proof}
 
 As partial monogamicity is preserved by both forms of composition, the
 partial monogamous cospans themselves form a PROP.
 
 \begin{definition}
+    \index{p@\(\pmcspdhyp\)}
+    \nomenclature{\(\pmcspdhyp\)}{PROP of partial monogamous cospans of hypergraphs}
     Let \(\pmcspdhyp\) be the sub-PROP of \(\cspdhyp\) containing only the
     partial monogamous cospans of hypergraphs.
 \end{definition}
@@ -221,28 +233,28 @@ trace does not create cospans that are not partial monogamous.
     \); we must show that its trace \(
     \cospan{m}[h]{F^\prime}[k]{n}
     \) is partial monogamous.
-    For each node \(a \in x\), \(f(a)\) and \(g(a)\) are merged together in the
+    For each vertex \(a \in x\), \(f(a)\) and \(g(a)\) are merged together in the
     traced graph, summing their degrees.
-    If a node is in the image of \(h\) or \(k\), this is also the case in the
+    If a vertex is in the image of \(h\) or \(k\), this is also the case in the
     traced cospan.
     We consider the various cases:
     \begin{itemize}
-        \item if \(f(a) = g(a)\), then this node must have degree \((0, 0)\);
-              the traced node will still have degree \((0, 0)\) and will no
+        \item if \(f(a) = g(a)\), then this vertex must have degree \((0, 0)\);
+              the traced vertex will still have degree \((0, 0)\) and will no
               longer be in the interface;
         \item if \(f(a)\) is also in the image of \(n \to F\) and \(g(i)\) is
               also in the image of \(m \to F\), then both \(f(a)\) and
-              \(g(a)\) have degree \((0, 0)\); the traced node will still
+              \(g(a)\) have degree \((0, 0)\); the traced vertex will still
               have degree \((0, 0)\) and be in both interfaces of the traced
               cospan;
         \item if \(f(a)\) is in the image of \(n \to F\), then \(f(i)\)
               has \((0, 0)\) and \(g(a)\) has degree
-              \((1,0)\), so the traced node has degree \((1, 0)\) and
+              \((1,0)\), so the traced vertex has degree \((1, 0)\) and
               is in the image of \(n \to F^\prime\);
         \item if \(g(i)\) is in the image of \(m \to F\), then the above
               applies in reverse; and
-        \item if neither node is in the image of \(m \to F\) and \(n \to F\),
-              then the traced node will have degree \((1,1)\) and be in the
+        \item if neither vertex is in the image of \(m \to F\) and \(n \to F\),
+              then the traced vertex will have degree \((1,1)\) and be in the
               image of no interface.
     \end{itemize}
     In all these cases, partial monogamy is preserved.
@@ -279,16 +291,16 @@ that this particular sub-PROP is the one that corresponds to traced terms.
     each component under the trace is in the image of \(\termtohypsigma\).
     The components of the new cospan are as follows:
     \begin{itemize}
-        \item let \(L\) be the discrete hypergraph containing nodes with
+        \item let \(L\) be the discrete hypergraph containing vertices with
               degree
               \((0,0)\) that are not in the image of \(f\) or \(g\);
         \item let \(E\) be the hypergraph containing hyperedges of \(F\)
               disconnected from each other along with their source and target
-              nodes;
+              vertices;
         \item let \(V\) be the discrete hypergraph containing all the
-              nodes of \(F\); and
+              vertices of \(F\); and
         \item let \(S\) and \(T\) be the discrete hypergraphs containing
-              the source and target nodes of hyperedges in \(F\)
+              the source and target vertices of hyperedges in \(F\)
               respectively, with the ordering determined by some order
               \(e_1,e_2,\cdots,e_n\) on the edges in \(F\).
     \end{itemize}
@@ -424,11 +436,21 @@ every cospan has a corresponding term.
 The results above all also hold for the coloured case by following the same
 strategy but with the appropriate coloured PROPs.
 
+\begin{definition}
+    \index{s@\(\stmcsigmac\)}
+    \nomenclature{\(\stmcsigmac\)}{traced \(C\)-coloured PROP of traced terms freely generated over \(\Sigma\)}
+    For a countable set of colours \(C\) and a set of generators \(\generators\),
+    let \(\stmcsigmac\) be the traced \(C\)-coloured PROP freely generated over
+    \(\generators\).
+\end{definition}
+
+
 \begin{lemma}\label{lem:stmc-subcat-hypc}
     \(\stmcsigmac\) is a subcategory of \(\hypcsigmac\).
 \end{lemma}
 
 \begin{definition}
+    \nomenclature{\(\tracedtosymandfrobsigma\)}{inclusion functor \(\stmcsigmac \to \hypcsigmac\)}
     Let \(\morph{\tracedtosymandfrobsigmac}{\stmcsigmac}{\hypcsigmac}\) be the
     inclusion functor induced by \cref{lem:stmc-subcat-hypc}.
 \end{definition}

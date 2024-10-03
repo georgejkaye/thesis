@@ -4,6 +4,8 @@ A key part of circuit design comes in \emph{optimising circuits}: making them
 run as fast as possible and reduce the \emph{clock cycle}.
 
 \begin{example}[Retiming]
+    \index{retiming}
+    \index{streaming}
     The clock cycle of a circuit is determined by the longest paths between
     registers. Altering the paths between registers can be achieved using
     \emph{retiming}~\cite{leiserson1991retiming}: moving registers across gates.
@@ -17,6 +19,7 @@ The streaming rule permits retiming using the composite register construct, but
 can also be used to retime raw delay components.
 
 \begin{lemma}[Timelessness]
+    \index{timelessness}
     For any primitive \(\iltikzfig{circuits/components/gates/gate}\),
     \(
     \iltikzfig{circuits/axioms/timelessness-redundant-1} =
@@ -42,6 +45,7 @@ This means we may wish to use transformations that only `morally' preserve the
 behaviour of a circuit.
 
 \begin{definition}
+    \index{stretching}
     For two finite sequences \(
     \listlistvar{v},\listlistvar{w} \in (\valuetuple{m})^k
     \), we say that \(\listlistvar{w}\) is a \emph{stretching} of
@@ -55,6 +59,7 @@ behaviour of a circuit.
 \end{definition}
 
 \begin{definition}
+    \index{logically equivalent}
     For two sequential circuits \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=m,cod=n]
     \) and \(
@@ -134,6 +139,7 @@ While this is a somewhat contrived toy example, it is possible that this
 technique could be applied to actual circuit optimisation procedures.
 
 \begin{example}[Pipelining]
+    \index{pipelining}
     \emph{Pipelining}~\cite{parhi1999vlsi} is a technique in which more
     registers are inserted into a circuit to increase throughput.
     This can be emulated in the compositional framework by applying
@@ -149,6 +155,7 @@ Sometimes additional components must be bolted onto a circuit for \emph{testing}
 purposes.
 
 \begin{example}[Scan chains]
+    \index{scan chain}
     A common way of testing circuits is by using a
     \emph{scan chain}~\cite{mourad2000principles}, a way of forcing the
     inputs to flipflops to test how specific states affect the outputs of the
