@@ -8,7 +8,7 @@ applied to terms without any sort of special graph interpretation.
 \index{rewriting!term|textbf}
 \index{rewrite rule}
 \begin{definition}[Rewriting system]
-    A \emph{rewriting system} \(\mcr\) for a PROP \(\mcc\) consists of a set of
+    A \emph{rewriting system} \(\mcr\) for a PROP \(\mcc\) is a set of
     \emph{rewrite rules} \(
     \rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
@@ -32,20 +32,22 @@ applied to terms without any sort of special graph interpretation.
     \iltikzfig{strings/category/f-1-2}[box=c_1,colour=white,dom=m,cod1=i,cod2=k]
     \) and \(
     \iltikzfig{strings/category/f-2-1}[box=c_2,colour=white,dom1=j,dom2=k,cod=n]
-    \) in \(\smcsigma\) such that \(
-    \iltikzfig{strings/category/f}[box=g,colour=white]
-    =
-    \iltikzfig{strings/rewriting/rewrite-smc-r}
-    \) and \(
-    \iltikzfig{strings/category/f}[box=h,colour=white]
-    =
-    \iltikzfig{strings/rewriting/rewrite-smc-l}
-    \) by axioms of STMCs.
+    \) in \(\smcsigma\) such that \[
+        \iltikzfig{strings/category/f}[box=g,colour=white]
+        =
+        \iltikzfig{strings/rewriting/rewrite-smc-r}
+        \quad
+        \text{and}
+        \quad
+        \iltikzfig{strings/category/f}[box=h,colour=white]
+        =
+        \iltikzfig{strings/rewriting/rewrite-smc-l}
+    \] by axioms of STMCs.
     We write \(
     \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
     \rewrites[\mcr]
     \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
-    \) if there is a sequence of such rules.
+    \) for a sequence of such rules.
 \end{definition}
 
 Since Frobenius terms are symmetric monoidal terms equipped with additional
@@ -110,14 +112,14 @@ combinatorial structures.
 A double pushout rewrite rule is defined by mapping to the left and right hand
 side of a rule from their shared interface.
 
-\index{span}
-\begin{definition}
-    A \emph{span} is a pair of morphisms \(A \to B\) and \(A \to C\), usually
-    written \(\spann{B}{A}{C}\).
+\begin{definition}[Span]
+    \index{span}
+    A \emph{span} is a pair of morphisms \(A \to B\) and \(A \to C\),
+    usually written \(\spann{B}{A}{C}\).
 \end{definition}
 
-\index{DPO!rule}
 \begin{definition}[DPO rule]\label{def:dpo-rule}
+    \index{DPO!rule}
     Given two interfaced hypergraphs \(
     \cospan{i}[a_1]{L}[a_2]{j}
     \) and \(

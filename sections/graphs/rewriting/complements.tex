@@ -400,22 +400,15 @@ due to the presence of the Frobenius algebra.
     \end{gather*}
 \end{example}
 
-In the above example, all of the rewrites other than the first were `hidden'
-behind the Frobenius equations, but were exposed automatically by the graph
-rewriting framework.
+The problem of finding each possible pushout complement has already been
+tackled for hypergraphs~\cite{heumuller2011construction}; they can be enumerated
+as quotients of an `exploded' context.
 
-Even if every rewrite is correct, there is still the question of how to find
-them all.
-For hypergraphs this problem has already been
-tackled~\cite{heumuller2011construction}; the pushout complements can be
-enumerated as quotients of an `exploded' context.
-
-\begin{definition}[Exploded context~{\cite[Const.\ 1]{heumuller2011construction}}]
+\begin{definition}[{\cite[Const.\ 1]{heumuller2011construction}}]
     \index{exploded context}
-    Let \(i+j \to L \xrightarrow{f} G\) be a pair of morphisms in
-    \(\hypsigma\).
-    Then the \emph{exploded context} for these morphisms is a graph
-    \(i + j + \tilde{G}\) where \(\tilde{G}\) is constructed as follows:
+    For morphisms \(i+j \to L \xrightarrow{f} G\) in \(\hypsigma\),
+    their \emph{exploded context} is the graph
+    \(i + j + \tilde{G}\) where \(\tilde{G}\) constructed as follows:
     \begin{enumerate}
         \item for each vertex \(v \in G\) not in the image of \(f\), add one
               vertex to \(\tilde{G}\);
@@ -442,18 +435,17 @@ context.
     vertices in the image of \(q^{-1}(v)\) for each vertex \(v \in G\).
 \end{proposition}
 
-Given a DPO rule and matching, we can enumerate all the possible pushout
-complements; it can be shown that each pushout complement corresponds
-to a valid rewrite in a Frobenius setting.
+Given a DPO rule and matching, we can enumerate all pushout complements; each of
+these corresponds to a valid rewrite in a Frobenius setting.
 
 \begin{notation}
-    Given a rewrite rule \(
+    For a rule \(
     \rrule{
         \iltikzfig{strings/category/f}[box=l,colour=white,dom=i,cod=j]
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white,dom=i,cod=j]
-    }
-    \), its interpretation as a DPO rule is \(
+    } \in \smcsigma + \frob
+    \), its DPO rule is defined as \(
     \termandfrobtohypsigma[
         \rrule{
             \iltikzfig{strings/category/f}[box=l,colour=white]
@@ -479,40 +471,23 @@ to a valid rewrite in a Frobenius setting.
 \end{notation}
 
 \begin{theorem}[{\cite[Thm.\ 4.9]{bonchi2022string}}]
-    For a rule \(\rrule{
-        \iltikzfig{strings/category/f}[box=l,colour=white]
-    }{
-        \iltikzfig{strings/category/f}[box=r,colour=white]
-    }\) in \(
-    \smcsigma + \frob
-    \), \(
+    For rule \(r \in \smcsigma + \frob\), we have that \(
     \iltikzfig{strings/category/f}[box=g,colour=white]
-    \rewrite[\rrule{
-            \iltikzfig{strings/category/f}[box=l,colour=white]
-        }{
-            \iltikzfig{strings/category/f}[box=r,colour=white]
-        }]
+    \rewrite[r]
     \iltikzfig{strings/category/f}[box=h,colour=white]
-    \) if and only if \[
-        \termandfrobtohypsigma[
-            \foldinterfaces[
-                \iltikzfig{strings/category/f}[box=g,colour=white]
-            ]
+    \) if and only if \(
+    \termandfrobtohypsigma[
+        \foldinterfaces[
+            \iltikzfig{strings/category/f}[box=g,colour=white]
         ]
-        \grewrite[
-            \termandfrobtohypsigma[
-                \rrule{
-                    \iltikzfig{strings/category/f}[box=l,colour=white]
-                }{
-                    \iltikzfig{strings/category/f}[box=r,colour=white]
-                }
-            ]
+    ]
+    \grewrite[\termandfrobtohypsigma[r]
+    ]
+    \termandfrobtohypsigma[
+        \foldinterfaces[
+            \iltikzfig{strings/category/f}[box=g,colour=white]
         ]
-        \termandfrobtohypsigma[
-            \foldinterfaces[
-                \iltikzfig{strings/category/f}[box=g,colour=white]
-            ]
-        ].\]
+    ].\)
 \end{theorem}
 
 \subsection{Multicoloured rewriting}
@@ -526,7 +501,7 @@ The results generalise in the obvious way to the coloured setting.
     }{
         \iltikzfig{strings/category/f}[box=r,colour=white,dom=\listvar{i},cod=\listvar{j}]
     }
-    \) in \(\smcsigmac + \frobc\), its interpretation as a DPO rule is written
+    \) in \(\smcsigmac + \frobc\), its interpretation as a DPO rule is defined
     as \[
         \termandfrobtohypsigmac[
             \rrule{
@@ -563,38 +538,20 @@ The results generalise in the obvious way to the coloured setting.
 \end{definition}
 
 \begin{theorem}[{\cite[Prop.\ 4.10]{bonchi2022string}}]
-    Given a rewrite rule \(\rrule{
-        \iltikzfig{strings/category/f}[box=l,colour=white]
-    }{
-        \iltikzfig{strings/category/f}[box=r,colour=white]
-    }\) in \(
-    \smcsigmac + \frobc
-    \), \(
+    For rewrite rule \(r \in \smcsigmac + \frobc\), we have that \(
     \iltikzfig{strings/category/f}[box=g,colour=white]
-    \rewrite[\rrule{
-            \iltikzfig{strings/category/f}[box=l,colour=white]
-        }{
-            \iltikzfig{strings/category/f}[box=r,colour=white]
-        }]
+    \rewrite[r]
     \iltikzfig{strings/category/f}[box=h,colour=white]
-    \) if and only if \[
-        \termandfrobtohypsigmac[
-            \foldinterfacesc[
-                \iltikzfig{strings/category/f}[box=g,colour=white]
-            ]
+    \) if and only if \(
+    \termandfrobtohypsigmac[
+        \foldinterfacesc[
+            \iltikzfig{strings/category/f}[box=g,colour=white]
         ]
-        \grewrite[
-            \termandfrobtohypsigmac[
-                \rrule{
-                    \iltikzfig{strings/category/f}[box=l,colour=white]
-                }{
-                    \iltikzfig{strings/category/f}[box=r,colour=white]
-                }
-            ]
+    ]
+    \grewrite[\termandfrobtohypsigmac[r]]
+    \termandfrobtohypsigmac[
+        \foldinterfacesc[
+            \iltikzfig{strings/category/f}[box=g,colour=white]
         ]
-        \termandfrobtohypsigmac[
-            \foldinterfacesc[
-                \iltikzfig{strings/category/f}[box=g,colour=white]
-            ]
-        ].\]
+    ].\)
 \end{theorem}
