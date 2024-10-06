@@ -37,7 +37,6 @@ carries.
     \index{partially ordered set}
     \index{partial order}
     \index{poset}
-    \nomenclature{\(\leq_A\)}{partial order on a set \(A\)}
     A \emph{partially ordered set}, or \emph{poset} for short, is a set \(A\)
     equipped with a reflexive, antisymmetric, and transitive relation \(\leq\),
     i.e.\
@@ -213,7 +212,7 @@ are \(\bot\), then it should produce \(\bot\); we cannot produce information
 from nothing.
 
 \begin{definition}
-    \index{b@\(\bot\)-preserving}
+    \index{bot@\(\bot\)-preserving}
     Let \(A,B\) be finite lattices, where \(\bot_A\) is the least element of
     \(A\) and \(\bot_B\) is the least element of \(B\).
     A function \(\morph{f}{A}{B}\) is \emph{\(\bot\)-preserving} if
@@ -312,7 +311,7 @@ The semantic domain for \emph{combinational} circuits is straightforward: each
 circuit maps to a monotone function.
 
 \begin{definition}
-    \index{\(\funci\)}
+    \index{funci@\(\funci\)}
     \nomenclature{\(\funci\)}{PROP of \(\bot\)-preserving monotone functions}
     Let \(\funci\) be the PROP in which the morphisms
     \(m \to n\) are the \(\bot\)-preserving monotone
@@ -322,7 +321,7 @@ circuit maps to a monotone function.
 To map between PROPs we must use a PROP morphism.
 
 \begin{definition}
-    \nomenclature{\(\circuittofunci\)}{PROP morphism assigning semantics to circuits in \(\ccircsigma\)}
+    \nomenclature{\(\circuittofunci\)}{PROP morphism \(\ccircsigma \to \funci\)}
     Let \(\morph{\circuittofunci}{\ccircsigma}{\funci}\) be the PROP morphism
     with action defined as%
     \vspace{-\abovedisplayskip}
@@ -572,7 +571,7 @@ As the categorical operations preserve the desired properties, these stream
 functions form a PROP.
 
 \begin{proposition}
-    \index{\(\streami\)}
+    \index{streami@\(\streami\)}
     \nomenclature{\(\streami\)}{PROP of causal, finitely specified, and \(\bot\)-preserving monotone stream functions}
     There is a PROP \(\streami\) in which the morphisms \(m \to n\) are the
     causal, finitely specified and \(\bot\)-preserving monotone stream

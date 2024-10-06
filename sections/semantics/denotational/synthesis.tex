@@ -18,7 +18,7 @@ Circuits have a very natural interpretation as Mealy machines, so the action
 of a PROP morphism from \(\scircsigma\) to \(\mealyi\) is fairly intuitive.
 
 \begin{definition}
-    \nomenclature{\(\circuittomealyi\)}{PROP morphism from sequential circuits to Mealy machines}
+    \nomenclature{\(\circuittomealyi\)}{PROP morphism \(\scircsigma \to \mealyi\)}
     Let \(\morph{\circuittomealyi}{\scircsigma}{\mealyi}\) be the traced PROP
     morphism defined on generators as
     \begin{align*}
@@ -110,7 +110,7 @@ The `purest' semantics of a sequential circuit is a stream function in
 \(\streami\).
 
 \begin{definition}
-    \nomenclature{\(\circuittostreami\)}{PROP morphism from sequential circuits to stream functions}
+    \nomenclature{\(\circuittostreami\)}{PROP morphism \(\scircsigma \to \streami\)}
     Let \(\morph{\circuittostreami}{\scircsigma}{\streami}\) be defined as
     \(\mealytostreami \circ \circuittomealyi\).
 \end{definition}
@@ -169,7 +169,7 @@ Using this idea, it will be convenient to have a mapping from functions to
 these constant stream functions.
 
 \begin{definition}
-    \nomenclature{\(\functostreami\)}{PROP morphism from functions on values to stream functions}
+    \nomenclature{\(\functostreami\)}{PROP morphism \(\funci \to \streami\)}
     Let \(\morph{\functostreami}{\funci}{\streami}\) be defined as the PROP
     morphism with action \(
     \functostreami[f] \coloneqq \sigma \mapsto i \mapsto f(\sigma)(i)
@@ -464,7 +464,7 @@ parameterised by some ordering on the set of values \(\values\), ensuring that
 there is a canonical term in \(\scircsigma\) for each monotone Mealy machine.
 
 \begin{definition}\label{def:mealy-to-circuit}
-    \nomenclature{\(\mealytocircuiti\)}{PROP morphism from Mealy machines to sequential circuits}
+    \nomenclature{\(\mealytocircuiti\)}{PROP morphism \(\mealyi \to \scircsigma\)}
     For a functionally complete interpretation \(\interpretation\) and total
     order \(\leq\) on \(\values\), let \(
     \morph{

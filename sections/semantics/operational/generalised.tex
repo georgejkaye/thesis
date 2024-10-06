@@ -5,7 +5,7 @@ semantics that does not completely generalise in the obvious way are the value
 rules.
 
 \begin{lemma}[Generalised value rules]
-    \index{generalised value rules}
+    \index{generalised!value rules}
     The following \emph{generalised value rules} are sound:
     \begin{gather*}
         \iltikzfig{circuits/axioms/fork-lhs}[val=\listvar{v}, cod=n]
@@ -71,7 +71,7 @@ With these rules, the inputs to a generalised circuit can be processed.
 \end{corollary}
 
 \begin{corollary}[Generalised productivity]
-    \index{generalised productivity}
+    \index{generalised!productivity}
     For sequential circuit \(
     \iltikzfig{strings/category/f}[box=f,colour=seq,dom=\listvar{m},cod=\listvar{n}]
     \) and inputs \(\listvar{v} \in \valuetuple{\listvar{m}}\), there exists
@@ -144,7 +144,7 @@ nicely to the multicoloured case.
 \end{corollary}
 
 \begin{definition}
-    \index{s@\(\scircsigmagobs\)}
+    \index{scircsigmag@\(\scircsigmagobs\)}
     \nomenclature{\(\scircsigmagobs\)}{PROP of generalised sequential circuits quotiented by observational equivalence}
     Let \(\scircsigmagobs\) be defined as \(\scircsigmag / \sim^+_{\interpretation}\).
 \end{definition}
