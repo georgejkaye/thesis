@@ -121,9 +121,9 @@ We have now finally established the \emph{denotation} of a sequential circuit \(
 \morph{\circuittostreami[\iltikzfig{strings/category/f}[box=f,colour=seq]]}{\valuetuplestream{m}}{\valuetuplestream{n}}
 \).
 The existence of the PROP morphism \(\circuittostreami\) confirms that causal,
-finitely specified and monotone stream functions are a \emph{sound} denotational
-semantics for sequential circuits, as every circuit in \(\scircsigma\) has a
-corresponding stream function in \(\streami\).
+finitely specified and \(\bot\)-preserving monotone stream functions are a
+\emph{sound} denotational semantics for sequential circuits, as every circuit in
+\(\scircsigma\) has a corresponding stream function in \(\streami\).
 
 It is useful to verify that this denotational semantics of sequential circuits
 agrees with the denotational semantics we defined earlier for

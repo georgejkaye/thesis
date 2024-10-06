@@ -119,7 +119,7 @@ These are circuits with no state; they compute \emph{functions} of their inputs.
     \(\iltikzfig{strings/structure/comonoid/discard}[colour=comb]\).
     We write \(\ccircsigma\) for the freely generated PROP
     \(\smc{\generators[\ccirc{}]}\).
-    \nomenclature{\(\ccircsigma\)}{category of combinational circuits}
+    \nomenclature{\(\ccircsigma\)}{PROP of combinational circuits}
 \end{definition}
 
 Each primitive symbol \(p \in \circuitsignaturegates\) has a corresponding
@@ -297,7 +297,7 @@ Circuits gain state with \emph{delay} and \emph{feedback}.
 The latter means we need to move into a symmetric \emph{traced} monoidal category.
 
 \begin{definition}[Sequential circuits]\index{sequential circuits}\index{sequential}
-    \nomenclature{\(\scircsigma\)}{category of sequential circuits}
+    \nomenclature{\(\scircsigma\)}{PROP of sequential circuits}
     For a circuit signature \(\circuitsignature\) with value set \(\values\),
     let \(\scircsigma\) be the STMC freely generated over the generators of
     \(\ccircsigma\) along with new generators \(
@@ -515,7 +515,7 @@ generalised circuit signature generates \(\natplus\)-coloured PROPs.
 
 \begin{definition}
     \index{ccircsigmag@\(\ccircsigmag\)}
-    \nomenclature{\(\ccircsigmag\)}{category of generalised combinational circuits}
+    \nomenclature{\(\ccircsigmag\)}{PROP of generalised combinational circuits}
     For a generalised circuit signature \(\circuitsignature\), let the set
     \(\generators[\ccirc{}^+]\) of
     \emph{generalised combinational circuit generators} be defined as the set
@@ -592,7 +592,7 @@ Sequential circuits are generalised in the same way.
 
 \begin{definition}
     \index{scircsigmag@\(\scircsigmag\)}
-    \nomenclature{\(\scircsigmag\)}{category of generalised sequential circuits}
+    \nomenclature{\(\scircsigmag\)}{PROP of generalised sequential circuits}
     For a generalised circuit signature \(\circuitsignature\), let the set
     \(\generators[\scirc{}^+]\) of
     \emph{generalised sequential circuit generators} be the set of
