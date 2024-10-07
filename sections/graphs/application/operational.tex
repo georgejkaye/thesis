@@ -5,12 +5,12 @@
 When performing traced graph rewriting using hypergraphs, any wires going from
 right-to-left are treated in exactly the same way as wires going from
 left-to-right: as tentacles connecting source and target vertices.
-However, in the operational semantics for sequential circuits, there are rules
-that operate especially on graphs of a certain form enclosed by a trace.
-While it would be sound to apply these arbitrarily (by virtue of the sliding
-axioms), for a \emph{productive} procedure we need to be more guided, so we will
-select particular tentacles as the `chosen trace wires' (coloured red) and
-perform global transformations using these.
+In the operational semantics for sequential circuits, there are rules
+that operate especially on graphs of a certain form enclosed by a trace;
+while it would be sound to apply these arbitrarily (by virtue of the sliding
+axioms), for a \emph{productive} procedure we need to be more guided.
+We will select particular tentacles as the `chosen trace wires' (coloured red)
+for global transformations.
 
 \begin{example}\label{ex:sr-latch-interpretation}
     Recall the SR NOR latch circuit from \cref{ex:sr-latch}.
