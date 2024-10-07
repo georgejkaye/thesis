@@ -3,8 +3,7 @@
 It is not immediately obvious how to translate back from stream functions in
 \(\streami\) to circuits in \(\scircsigma\).
 Even though these stream functions have finitely many stream derivatives, how
-does one encapsulate this behaviour into a circuit made from finitely many
-components while taking into account inputs and state?
+does one encapsulate this behaviour into a circuit?
 Fortunately, we have a secret weapon: the
 \emph{Mealy machine}~\cite{mealy1955method}.
 
@@ -14,12 +13,8 @@ a very useful \emph{coalgebraic} viewpoint which we will wield in order to
 build a bridge from circuits into stream functions.
 In particular, there is a unique homomorphism from a Mealy machine to a causal,
 finitely specified stream function.
-
 Our strategy is to assemble a special class of Mealy machines which we dub
 \emph{monotone Mealy machines} into another traced PROP.
-As well as helping us on our way to our end goal of a sound and complete
-denotational semantics, having a PROP of Mealy machines from which we can
-translate into sequential circuit morphisms is nice to have in its own right.
 
 \begin{definition}[Mealy machine~\cite{mealy1955method}]\label{def:mealy}
     \index{Mealy!machine}
@@ -29,11 +24,11 @@ translate into sequential circuit morphisms is nice to have in its own right.
     \(\morph{f}{S}{(S \times B)^A}\) is the \emph{Mealy function}.
 \end{definition}
 
-An \((A,B)\)-Mealy machine is parameterised over a set \(A\) of \emph{inputs} and
-a set \(B\) of \emph{outputs}.
-Each Mealy machine then has a set \(S\) of \emph{states}; the Mealy function
-takes in a pair \((s, a)\) of a current state and an input, and
-produces a pair \(\langle{t,b}\rangle\) of a transition state and an output.
+An \((A,B)\)-Mealy machine is parameterised over a set \(A\) of \emph{inputs}
+and a set \(B\) of \emph{outputs}, and is comprised of a set \(S\) of
+\emph{states} and a function transforming a pair \((s, a)\) of a current state
+and an input into a pair \(\langle{t,b}\rangle\) of a transition state and an
+output.
 
 \begin{notation}
     \nomenclature{\(\mealyfunctiontransition{f}\)}{transition component of Mealy function \(f\)}
@@ -50,27 +45,30 @@ produces a pair \(\langle{t,b}\rangle\) of a transition state and an output.
     Let the set of Booleans be defined as
     \(\booleans \coloneqq \{\mathsf{f},\mathsf{t}\}\).
     We define a \((\booleans,\booleans)\)-Mealy machine \((S, f)\) as follows:
-    \begin{gather*}
-        S \coloneqq \{s_0, s_1\}
-        \\
-        f(s_0, \mathsf{f}) \mapsto \langle{s_0, \mathsf{f}}\rangle
-        \qquad
-        f(s_0, \mathsf{t}) \mapsto \langle{s_1, \mathsf{t}}\rangle
-        \\
-        f(s_1, \mathsf{f}) \mapsto \langle{s_1, \mathsf{t}}\rangle
-        \qquad
-        f(s_1, \mathsf{t}) \mapsto \langle{s_0, \mathsf{f}}\rangle
-    \end{gather*}
+    \begin{center}
+        \begin{minipage}{0.33\textwidth}
+            \[S \coloneqq \{s_0, s_1\}\]
+        \end{minipage}
+        \begin{minipage}{0.66\textwidth}
+            \begin{gather*}
+                f(s_0, \mathsf{f}) \mapsto \langle{s_0, \mathsf{f}}\rangle
+                \qquad
+                f(s_0, \mathsf{t}) \mapsto \langle{s_1, \mathsf{t}}\rangle
+                \\
+                f(s_1, \mathsf{f}) \mapsto \langle{s_1, \mathsf{t}}\rangle
+                \qquad
+                f(s_1, \mathsf{t}) \mapsto \langle{s_0, \mathsf{f}}\rangle
+            \end{gather*}
+        \end{minipage}
+    \end{center}
     This is a Mealy machine with two states; at state \(s_0\) the output is the
     input, and at state \(s_1\) the output is the negation.
     If the input is true then the state switches.
-
-    It is often more intuitive to draw out a Mealy machine.
-    We draw states as circles; if there is a transition from one state to
-    another on input \(v\) that produces output \(w\), we draw an arrow between
-    them labelled with \(v|w\).
+    To illustrate Mealy machines we draw states as circles; an arrow between
+    states labelled \(v|w\) represents a transition on input \(v\) producing
+    output \(w\).
     \begin{center}
-        \includestandalone{figures/mealy/example}
+        \includestandalone[scale=1]{figures/mealy/example}
     \end{center}
 \end{example}
 
@@ -100,10 +98,7 @@ and a function, so this is a coalgebra in \(\set\).
     \(S \mapsto (S \times B)^A\).
 \end{definition}
 
-\begin{example}
-    In \cite{bonsangue2008coalgebraic}, the notation used for the transition
-    and the output Mealy machines coincides with the notation used for
-    the initial output and stream derivative of causal stream functions.
+\begin{example}[\cite{bonsangue2008coalgebraic}]
     Given sets \(A\) and \(B\), let \(\Gamma\) be the set of causal stream
     functions \(\stream{A} \to \stream{B}\), and let
     \(\morph{\nu}{\Gamma}{(\Gamma \times B)^A}\) be the function defined as \(
@@ -160,18 +155,11 @@ by applying \(f\) to each element of \(\sigma\), starting from \(s_0\).
 
 \subsection{Mealy machines on posets}
 
-In order to use Mealy machines as a bridge between \(\scircsigma\) and
-\(\streami\), they must be assembled into another traced PROP, and morphisms
-defined between all three categories in play.
-But not all Mealy machines defined thus far correspond to circuits in
-\(\scircsigma\); as with stream functions, we must refine our notion of Mealy
-machine in order to find those that do.
-
-A Mealy machine \((S, f)\) with start state \(s_0\) specifies the behaviour of a
-circuit in \(\scircsigma\) if the stream function \(!(s_0)\) is in \(\streami\).
-As established, all stream functions in the image of \(!\) are causal, and since
-we only work with \emph{finite} Mealy machines we can also conclude the
-following:
+To use Mealy machines as a bridge between \(\scircsigma\) and \(\streami\) they
+must be assembled into another traced PROP.
+Not all Mealy machines defined so far correspond to circuits in
+\(\scircsigma\); we must refine our notion of Mealy machine in order to find
+those that do: those that map to stream functions in \(\streami\).
 
 \begin{lemma}
     For a Mealy machine \((S, f)\) and state \(s_0 \in S\), \(!(s_0)\)
@@ -181,8 +169,7 @@ following:
     \(S\) is finite, and \(\mealytostream\) must preserve transitions.
 \end{proof}
 
-As defined so far there is no need for Mealy machines to have any sort of
-monotonicity condition, so we must impose one.
+We must also impose a monotonicity condition.
 
 \begin{definition}[Monotone Mealy machine]
     \index{Mealy!machine!monotone}
@@ -195,10 +182,8 @@ monotonicity condition, so we must impose one.
 
 To map to Mealy machines from circuits we need to assemble the former into
 another PROP, in which the morphisms \(m \to n\) are
-\((\valuetuple{m},\valuetuple{n})\)-Mealy machines.
-As circuits in \(\scircsigma\) have a `hardcoded' initial state in the form of
-the value generators, this information will also need to be specified for Mealy
-machines.
+\((\valuetuple{m},\valuetuple{n})\)-Mealy machines; we must also take into
+account the `initial state' of circuits in \(\scircsigma\).
 
 \begin{definition}[Initialised Mealy machine]
     \index{Mealy!machine!initialised}
@@ -213,7 +198,7 @@ machines.
     initialise it as \((S,f,s_0)\).
     In the diagrams, we label the initial state with an arrow.
     \begin{center}
-        \includestandalone{figures/mealy/example-init}
+        \includestandalone[scale=1]{figures/mealy/example-init}
     \end{center}
 \end{example}
 
@@ -240,13 +225,11 @@ standard.
 \end{definition}
 
 The cascade product of two Mealy machines effectively executes the first on the
-inputs, then executes the second on the outputs of the first; the inputs are
-`cascaded' through the two Mealy machines.
+inputs, then executes the second on the outputs of the first.
 
 \begin{example}\label{ex:mealy-cascade}
     Recall the initialised \((\booleans,\booleans)\)-Mealy machine
     \((S, f, s_0)\) from \cref{ex:mealy-init}; we will now compose this with
-    another initialised \((\booleans,\booleans)\)-Mealy machine
     \((\{t_0,t_1\},g,t_0)\) where \(g\) is defined as follows:
     \begin{gather*}
         g(t_0, \mathsf{f}) \coloneqq \langle{t_0,\mathsf{f}}\rangle
@@ -256,11 +239,12 @@ inputs, then executes the second on the outputs of the first; the inputs are
         g(t_1, \mathsf{f}) \coloneqq \langle{t_1,\mathsf{t}}\rangle
         \qquad
         g(t_1, \mathsf{t}) \coloneqq \langle{t_1,\mathsf{t}}\rangle
-        \\
-        \includestandalone{figures/mealy/example2-init}
     \end{gather*}
-    The cascade product of these two machines is another initialised
-    \((\booleans,\booleans)\)-Mealy machine \((R,h,r_0)\) defined as follows:
+    \begin{center}
+        \includestandalone[scale=1]{figures/mealy/example2-init}
+    \end{center}
+    The cascade product \((R, h, r_0)\) of these two machines defined as
+    follows:
     \begin{gather*}
         R \coloneqq \{(s_0,t_0), (s_1,t_0), (s_0,t_1), (s_1,t_1)\}
         \qquad
@@ -297,9 +281,10 @@ inputs, then executes the second on the outputs of the first; the inputs are
         h((s_1, t_1), \mathsf{t})
         \coloneqq
         \left\langle(s_0, t_1), \mathsf{t}\right\rangle
-        \\
-        \includestandalone{figures/mealy/cascade}
     \end{gather*}
+    \begin{center}
+        \includestandalone[scale=1]{figures/mealy/cascade}
+    \end{center}
 \end{example}
 
 Tensor product is far more straightforward.
@@ -399,9 +384,10 @@ Tensor product is far more straightforward.
         h((s_1, t_1), \mathsf{tt})
         \coloneqq
         \left\langle(s_0, t_1), \mathsf{ft}\right\rangle
-        \\
-        \includestandalone{figures/mealy/direct}
     \end{gather*}
+    \begin{center}
+        \includestandalone[scale=1]{figures/mealy/direct}
+    \end{center}
 \end{example}
 
 With cascade product as composition and direct product as tensor, initialised
