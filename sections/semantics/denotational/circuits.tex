@@ -14,7 +14,7 @@ input, but all of the previous ones as well.
     given the inputs and value of the current state.
     This differs from our approach as we assign each circuit a concrete stream
     function describing its behaviour, rather than having to solve a system of
-    equations in terms of the vertices inside a circuit in order to determine its
+    equations in terms of the gates inside a circuit in order to determine its
     behaviour.
 \end{remark}
 
@@ -136,13 +136,13 @@ minimal element, every non-empty finite lattice has a join and meet.
 \end{lemma}
 \begin{proof}
     As each pair of elements in \(A\) has a meet, and as \(A\) is finite, we
-    can define the element \(x\) as \(\bigwedge A\).
-    This element is the greatest element in \(A\) by definition of the meet:
+    can define the least element \(\bot\) as \(\bigwedge A\).
+    This element is the least element of \(A\) by definition of the meet:
     \((a_0 \wedge a_1) \leq a_0\) and \((a_0 \wedge a_1) \leq a_1\),
     \(((a_0 \wedge a_1) \wedge a_2) \leq (a_0 \wedge a_1)\) and
     \(((a_0 \wedge a_1) \wedge a_2) \leq a_2\), and so on.
-    The same proof holds in reverse for the join and the greatest element by
-    using the join \(\bigvee A\).
+    The proof holds in reverse for the greatest element \(\top\) by using the
+    join \(\bigvee A\).
 \end{proof}
 
 \begin{example}\label{ex:powerset-lattice}
@@ -530,7 +530,7 @@ This means we need to lift the order on values to an order on streams.
     for all \(i \in \nat\).
 \end{notation}
 
-For these three properties to be suitable as a denotational semantics for
+For these properties to be suitable as a denotational semantics for
 sequential circuits, we must show that stream functions with these
 properties form a category we can map into from \(\scircsigma\).
 We will first show that these categories form a symmetric monoidal category, so
@@ -662,7 +662,7 @@ intuition for what Scott-continuity brings to the table.
     is \(\belnaptrue^\omega\). One Scott-continuous function \(
     \belnapvalues^\omega \to \belnapvalues^\omega
     \) is defined as \(f(\sigma)(0) = \bot\) and
-    \(f(\sigma)(i+1) = f(sigma)(i)\); this is Scott-continuous because finding
+    \(f(\sigma)(i+1) = f(\sigma)(i)\); this is Scott-continuous because finding
     the join of a set and then prepending it with \(\bot\) is the same as
     prepending \(\bot\) to each stream in the set and then finding their join.
 
@@ -790,7 +790,7 @@ ordering on stream functions themselves.
 \begin{proof}
     To show this, we need to prove that
     \(\sigma \mapsto \proj{1}\mleft(f(\mu_f(\sigma)\sigma)\mright)\) is in
-    \(\streami\): it is causal, finitely specified, \(\bot\)-preserving and
+    \(\streami\): it is causal, finitely specified, and \(\bot\)-preserving
     monotone.
 
     Since \(

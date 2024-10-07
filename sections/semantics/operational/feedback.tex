@@ -48,7 +48,7 @@ one word, the instantaneous values and the delays are kept separate.
     \).
 \end{definition}
 
-Our first reduction will transform any circuit in global trace-delay form into
+Our first reduction transforms a circuit from global trace-delay form to
 pre-Mealy form.
 
 \begin{lemma}\label{lem:mealy-rule}
@@ -67,7 +67,8 @@ pre-Mealy form.
 By assembling a circuit into global trace-delay form and
 applying the \((\mealyeqn)\) rule, we can construct a word \(\listvar{s}\)
 from the juxtaposition of \(\bot\) elements for each register combined with
-the instantaneous values.
+the instantaneous values \(\listvar{v}\) i.e.\ using the notation of the above
+lemma \(\listvar{s} \coloneqq \bot^y\listvar{v}\).
 This word represents the initial state of the circuit, but it is by no means
 unique: it depends on how the circuit is put into global trace-delay form.
 What matters most is that we \emph{can} do it.
@@ -262,9 +263,9 @@ it only does so linearly in the height of the lattice.
 
 \begin{remark}
     \cite{mendler2012constructive} uses a ternary set of values and monotone
-    functions to present a notion of \emph{constructive} circuits: the circuits
+    functions to present \emph{constructive} circuits: the circuits
     that stabilise to unique Boolean values for all Boolean inputs.
-    This definition excludes circuits that may oscillate between two values, as
+    This definition excludes circuits that oscillate between two values, as
     these are not considered to be monotone circuits.
     Conversely, in our model such circuits \emph{can} be monotone.
     For example a Belnap circuit may alternate between \(\belnaptrue\) and

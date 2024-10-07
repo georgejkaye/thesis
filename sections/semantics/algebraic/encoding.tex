@@ -16,7 +16,7 @@ determine whether or not an equation is valid.
     closed under \(
     \listvar{r}
     \mapsto
-    \proj{x}\mleft(f_0(\listvar{r},\listvar{v})\mright)
+    \proj{0}\mleft(f(\listvar{r},\listvar{v})\mright)
     \) for any \(\listvar{v} \in \valuetuple{m}\).
 \end{definition}
 
@@ -120,7 +120,7 @@ but only in certain contexts.
     completions as defined in \cref{def:monotone-completion}.
 \end{proposition}
 \begin{proof}
-    Let \(g\) be the map \(\listvar{r} \mapsto
+    Let \(g\) be defined as the map \(\listvar{r} \mapsto
     \circuittostreami[\iltikzfig{circuits/algebraic/state-encoding}[core=\mealytofunc[f],delay=x,state=\listvar{r}]]
     \); by \cref{prop:mealy-form-image} we know that \(
     \mealyoutput{g(\listvar{t})}{\listvar{v}}

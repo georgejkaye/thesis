@@ -107,8 +107,9 @@ and a function, so this is a coalgebra in \(\set\).
     Given sets \(A\) and \(B\), let \(\Gamma\) be the set of causal stream
     functions \(\stream{A} \to \stream{B}\), and let
     \(\morph{\nu}{\Gamma}{(\Gamma \times B)^A}\) be the function defined as \(
-    (f, a) \mapsto \langle{\streamderivative{f}{a},\initialoutput{f}{a},}\rangle
-    \).
+    f \mapsto a \mapsto \langle{
+        \streamderivative{f}{a},\initialoutput{f}{a}
+    }\rangle\).
     Then \((\Gamma,\nu)\) is a \((A,B)\)-Mealy coalgebra.
 \end{example}
 
@@ -188,7 +189,7 @@ monotonicity condition, so we must impose one.
     \index{monotone!Mealy!machine}
     Let \(A\), \(B\) be posets; an \((A,B)\)-Mealy machine \((S, f)\)
     is called a \emph{monotone} Mealy machine if \(S\) is also a poset and
-    \(f\) is \(\bot\)-preserving and monotone with respect to the ordering on
+    \(f\) is \(\bot\)-preserving monotone with respect to the ordering on
     \(A\), \(B\), and \(S\).
 \end{definition}
 

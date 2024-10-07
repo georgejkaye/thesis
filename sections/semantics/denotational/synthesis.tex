@@ -430,7 +430,7 @@ It is monotone by definition, but we need to make sure it is also
 \end{lemma}
 \begin{proof}
     A Mealy encoding is monotone as it is a monotone completion.
-    There cannot be a state encoded as \(\bot^k\), since at least one bit must
+    There cannot be a state \(\bot^k\) since at least one bit must
     be \(\top\); this means the monotone completion will send the input
     \((\bot^k, \bot^m)\) to \((\bot^k, \bot^n)\): it is
     \(\bot\)-preserving.
