@@ -194,22 +194,17 @@ equivalence for sequential circuits.
 \end{corollary}
 
 The results of the previous section give us an upper bound on the length of
-waveforms required to establish observational semantics; this means that we have
-a terminating strategy for comparing the behaviour of digital circuits.
+waveforms required to establish observational equivalence, so we have a
+terminating strategy for comparing digital circuits.
 Unfortunately, this is still an \emph{exponential} upper bound, so it is
 infeasible to check for the equivalence of circuits with more than a few delay
 components.
-
 Nevertheless, the operational semantics gives us a straightforward way to
-\emph{evaluate} circuits while respecting their internal structure, which can
-unlock more insight as to \emph{why} circuits are behaving the way they
-are.
+\emph{evaluate} circuits while respecting their internal structure, unlocking
+more insight as to \emph{why} circuits are behaving the way they are.
 
 Moreover, while it may be infeasible to check \emph{every single possible input}
-to a circuit, it may be far easier to check equivalence for a subset of known
-inputs.
-Often, it is the case that one knows a particular input is fixed for long
-periods of time: perhaps it is some sort of control signal.
+to a circuit, it is often the case that one knows a particular input is fixed.
 By precomposing the circuit with appropriate infinite waveforms to represent the
 fixed inputs, insight and potential optimisations may be gleaned; this is known
 as \emph{partial evaluation}, which will be examined more
