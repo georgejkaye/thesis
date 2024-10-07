@@ -1,0 +1,99 @@
+\documentclass{article}
+
+\usepackage{geometry}[a4paper, margin=1in]
+
+\title{Foundations of Digital Circuits\\Report on Corrections}
+\author{George Kaye}
+\date{}
+
+\begin{document}
+\maketitle
+
+Throughout the thesis many small typos, layout and typesetting issues have been
+fixed; an index and table of symbols has also been added.
+The report below details the less trivial corrections made.
+
+\section*{Chapter 2: A crash course in category theory}
+
+\begin{itemize}
+    \item pg.37: Add formal definitions of PROP morphism, category of PROPs
+    \item pg.39: Added labels (tightening, sliding, yanking, vanishing,
+          superposing) to STMC axioms
+\end{itemize}
+
+\section*{Chapter 4: Denotational semantics}
+
+\begin{itemize}
+    \item pgs.57-59: Restructured how order-theoretical concepts are introduced
+          \begin{itemize}
+              \item pg.57, Definition 4.7: Explicitly define lower and upper
+                    bounds
+              \item pg.57: Introduce notation for joins and meets
+              \item pg.58, Lemma 4.11: Illustrate how \(\top\) and \(\bot\) in a
+                    finite lattice are obtained
+          \end{itemize}
+    \item pg.61, Definition 4.24: Reworded causality condition
+    \item pg.62, Definition 4.26: Removed causality hypothesis from functional
+          stream derivative definition
+    \item pgs.62-63, Lemmas 4.31-4.33: Explicitly stated that tensor product is
+          Cartesian product
+    \item pgs.64-66: Discuss directed subsets and Scott-continuity to expand on
+          the Kleene fixed-point theorem and the computation of least fixed point
+    \item pg.68: Add theorem for proving the least fixed point satisfies the
+          trace equations, in particular the sliding equation
+    \item pg.70, Example 4.54: Fix Mealy coalgebraic viewpoint of stream functions
+    \item pg.71, Definition 4.58: Changed monotone Mealy machine to have
+          explicitly set poset structure on the states
+    \item pg.83, Definition 4.90, Example 4.91, Definition 4.92: Restructured
+          monotone completion definition, added example and provided types
+          for application to Monotone Mealy encoding
+    \item pg.84, Definition 4.94: Restated chosen state order to operate on
+          \emph{accessible} states
+    \item pg.87, Definition 4.102: Removed \(1\) from symbols required for
+          Boolean completeness
+\end{itemize}
+
+\section*{Chapter 5: Operational semantics}
+
+\begin{itemize}
+    \item pg.100: Explained how \(\overline{s}\) is defined
+    \item pg.103: Added remark about Mendler/Shiple/Berry notion of monotone circuits
+    \item pg.108, Notation 5.36: Moved waveform definition to more appropriate place
+    \item pg.108: Add explanation before Corollary 5.37
+\end{itemize}
+
+\section*{Chapter 6: Algebraic semantics}
+
+\begin{itemize}
+    \item pg.117, Definition 6.10: Fixed notation for states definition
+    \item pg.118: Restructure narrative surrounding encoding equations
+    \item pg.119, Proposition 6.14: Reworded proof
+    \item pg.125, Theorem 6.27: Restructured proof
+\end{itemize}
+
+\section*{Chapter 8: String diagrams as hypergraphs}
+
+\begin{itemize}
+    \item Changed instances of `nodes' to `vertices'
+    \item pgs.153-154, Example 8.23: Fixed example
+    \item pg.156, Example 8.30: Fixed example
+    \item pgs.165-166, Theorem 8.62: Removed reference to colours in monochromatic proof
+\end{itemize}
+
+\section*{Chapter 9: Graph rewriting}
+
+\begin{itemize}
+    \item pg.189, Definition 9.2: Used symmetric monoidal definition of term rewriting first
+    \item pg.199, Proposition 9.29: \(q^{-1}\) is a set of vertices in \(i+j+\tilde{G}\);
+          the identification condition here enforces that a context \(C\) is valid
+          if and only if the map \(i+j \to C\) merges only vertices in this set
+\end{itemize}
+
+\section*{Chapter 10: Applications of graph rewriting}
+
+\begin{itemize}
+    \item pg.212, Theorem 10.8: Added Cartesian category to hypothesis
+    \item pg.213: Added explanation about red wire
+\end{itemize}
+
+\end{document}
