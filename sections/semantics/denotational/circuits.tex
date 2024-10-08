@@ -67,14 +67,11 @@ carries.
     maximal element.
 \end{example}
 
-Even in a finite set there is no reason that least and greatest elements should
-be \emph{unique}.
-However, in our context of digital circuits we would like this to be the case:
-the unique least element will represent a complete \emph{lack} of information,
-and the unique greatest element will represent \emph{every} piece of information
-at once.
-To enforce the uniqueness of these elements we must add even more structure to
-a poset of values.
+In our context of digital circuits the least and greatest elements respectively
+represent signals with a complete \emph{lack} of information and \emph{every}
+piece of information at once.
+However, we need to add more structure than just this; given two signals we want
+a way to be able to combine their information into one signal.
 
 \begin{definition}[Lower and upper bounds]
     \index{lower bound}
@@ -85,6 +82,8 @@ a poset of values.
     Similarly, an \emph{upper bound} of \(C \subseteq A\) is an element
     \(y \in C\) such that for all \(b \in B\), \(b \leq y\).
 \end{definition}
+
+We are interested in the `closest' lower and upper bounds.
 
 \begin{definition}[Meet and join]
     \index{meet}
@@ -119,7 +118,7 @@ known as \emph{lattices}.
     A \emph{lattice} is a poset \((A, \leq)\) in which each pair of elements
     \(a,b \in A\) has a meet and join.
     A lattice is called a \emph{finite lattice} if \(A\) is finite, and
-    \emph{bounded} if it has a minimum element and a maximum element.
+    \emph{bounded} if it has a least element and a greatest element.
 \end{definition}
 
 Much like how every non-empty finite poset has at least one least and
