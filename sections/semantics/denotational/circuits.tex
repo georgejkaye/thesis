@@ -864,9 +864,9 @@ ordering on stream functions themselves.
     \) where \[
         g_k(\sigma) =
         \begin{cases}
-            \bot^\omega                                                              & \text{ if } k = 0              \\
-            \widehat{f_{\,\listvar{w_k}}}(\left(g_{k-1}(\sigma)\right)\sigma)        & \text{ if } 1 \leq k \leq \ell \\
-            \widehat{f_{\,\listvar{w_{\ell-1}}}}(\left(g_{k-1}(\sigma)\right)\sigma) & \text{ if } \ell < k
+            \bot^\omega                                                                & \text{ if } k = 0              \\
+            \widehat{f_{\,\listvar{w_k}}}(\left(g_{k-1}(\sigma), \sigma\right))        & \text{ if } 1 \leq k \leq \ell \\
+            \widehat{f_{\,\listvar{w_{\ell-1}}}}(\left(g_{k-1}(\sigma), \sigma\right)) & \text{ if } \ell < k
         \end{cases}.
     \]
     Let the set \(G \coloneqq \{
@@ -879,29 +879,29 @@ ordering on stream functions themselves.
     Any element of \(G\) is either \(\bot^\omega\) or has the form \(
     \sigma
     \mapsto
-    \widehat{\streamderivative{f}{\,\listvar{w}}}(g_k(\sigma)\sigma)
+    \widehat{\streamderivative{f}{\,\listvar{w}}}(g_k(\sigma), \sigma)
     \) for some \(\sigma \in \valuetuplestream{m}\) and
     \(k > 0\).
     As \(\bot^\omega\) is its own stream derivative, we need to show that
     applying stream derivative to the latter produces another element of \(G\).
     \begin{align*}
-        \streamderivative{\sigma \mapsto \left(\widehat{\streamderivative{f}{\, \listvar{w}}}(\left(g_{k-1}(\sigma)\right)\sigma)\right)}{ab}
-         & = \sigma \mapsto \streamderv\left(\widehat{\streamderivative{f}{\, \listvar{w}}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)              \\
-         & = \sigma \mapsto \streamderv\left(\proj{0}\mleft(\streamderivative{f}{\, \listvar{w}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\mright)\right) \\
-         & = \sigma \mapsto \proj{0}\mleft(\streamderv\left(\streamderivative{f}{\, \listvar{w}}(ab \streamcons \left(g_{k-1}(\sigma)\right)\sigma)\right)\mright) \\
-         & = \sigma \mapsto \proj{0}\mleft(\streamderivative{\left(\streamderivative{f}{\, \listvar{w}}(\left(g_{k-1}(\sigma)\right)\sigma)\right)}{ab}\mright)    \\
-         & = \sigma \mapsto \proj{0}\mleft(\streamderivative{f}{\, ab \streamcons \listvar{w}}(\left(g_{k-1}(\sigma)\right)\sigma)\mright)                         \\
-         & = \sigma \mapsto \widehat{\streamderivative{f}{\, ab \streamcons \listvar{w}}}(\left(g_{k-1}(\sigma)\right)\sigma)
+        \streamderivative{\sigma \mapsto \left(\widehat{\streamderivative{f}{\, \listvar{w}}}\left(g_{k-1}(\sigma), \sigma\right)\right)}{(a,b)}
+         & = \sigma \mapsto \streamderv\left(\widehat{\streamderivative{f}{\, \listvar{w}}}((a,b) \streamcons \left(g_{k-1}(\sigma), \sigma\right))\right)              \\
+         & = \sigma \mapsto \streamderv\left(\proj{0}\mleft(\streamderivative{f}{\, \listvar{w}}((a,b) \streamcons \left(g_{k-1}(\sigma), \sigma\right))\mright)\right) \\
+         & = \sigma \mapsto \proj{0}\mleft(\streamderv\left(\streamderivative{f}{\, \listvar{w}}((a,b) \streamcons \left(g_{k-1}(\sigma), \sigma\right))\right)\mright) \\
+         & = \sigma \mapsto \proj{0}\mleft(\streamderivative{\left(\streamderivative{f}{\, \listvar{w}}(g_{k-1}(\sigma), \sigma)\right)}{(a,b)}\mright)                 \\
+         & = \sigma \mapsto \proj{0}\mleft(\streamderivative{f}{\, (a,b) \streamcons \listvar{w}}(g_{k-1}(\sigma), \sigma)\mright)                                      \\
+         & = \sigma \mapsto \widehat{\streamderivative{f}{\, (a,b) \streamcons \listvar{w}}}(g_{k-1}(\sigma), \sigma)
     \end{align*}
-    As \(\proj{0}\mleft(\streamderivative{f}{ab \streamcons \listvar{w}}\mright)\)
+    As \(\proj{0}\mleft(\streamderivative{f}{(a,b) \streamcons \listvar{w}}\mright)\)
     is in \(G\), the latter  is closed under stream derivative.
     Subsequently, \(\mu_f\) has finitely many stream derivatives.
 
     This means that all the components of
-    \(\sigma \mapsto \proj{1}(f(\mu_f(\sigma)\sigma))\) are causal, monotone and
+    \(\sigma \mapsto \proj{1}(f(\mu_f(\sigma), \sigma))\) are causal, monotone and
     finitely specified, and as these properties are preserved by composition,
     the composite must also have them, so
-    \(\sigma \mapsto \proj{1}(f(\mu_f(\sigma)\sigma))\) is in \(\streami\).
+    \(\sigma \mapsto \proj{1}(f(\mu_f(\sigma), \sigma))\) is in \(\streami\).
 \end{proof}
 
 Even if \(\streami\) is closed under least fixed point, this does not mean that
