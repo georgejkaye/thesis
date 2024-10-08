@@ -191,8 +191,8 @@ greatest element, every non-empty finite lattice has a join and meet.
 \end{remark}
 
 Values in a circuit signature are interpreted as elements of a finite
-lattice; now the concepts of no information and all information are encoded
-as the \(\bot\) and \(\top\) element.
+lattice, so that combining two signals into one wire can be modelled using the
+join.
 Now the primitives in the signature must be interpreted.
 Clearly they should be interpreted as functions between the values, but these
 functions must respect the order on the value lattice; one should not be able to
@@ -682,7 +682,7 @@ intuition for what Scott-continuity brings to the table.
 \end{example}
 
 So far we have not explicitly enforced Scott-continuity on stream functions; it
-turns that it is implied by causality and monotonicity.
+turns out that it is implied by causality and monotonicity.
 
 \begin{proposition}\label{prop:monotone-causal-scott}
     Let \((A, \leq_A)\) and \((B, \leq_B)\) be finite lattices, and let
