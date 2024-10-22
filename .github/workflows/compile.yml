@@ -19,7 +19,7 @@ jobs:
         id: name
         run: echo "name=$(date +'%Y-%m-%d-%H%M')" >> $GITHUB_OUTPUT
       - name: Package the thesis
-        uses: georgejkaye/latex-packager@v1.4
+        uses: georgejkaye/latex-packager@v1.5
         with:
           input-dir: .
           main: main
